@@ -1,0 +1,15 @@
+
+INSTALLATION
+------------
+
+Extract the release tarball or zip file to a sensible location on your hard
+disk.
+
+Then, you currently have 2 choices until I can get around to creating a 
+setup.py script and/or .egg package :-
+
+1) Copy the netaddr folder to the lib/site-packages directory of your Python 
+distribution
+
+2) Add the path of the netaddr folder that you extracted to your PYTHONPATH 
+environment variable.

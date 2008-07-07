@@ -1,0 +1,32 @@
+
+GLOSSARY
+--------
+
+I thought this would be handy for those not familiar with some of the terms
+in this module.
+
+EUI - Extended Unique Identifier
+
+	A set of IEEE standards to represent unique addresses containing additional
+	organisational information. This module support EUI-48 and EUI-64 addresses
+	that are common used. The EUI-48 standard can be used to represent link 
+	layer addresses more commonly known as MAC (Media Access Control) addresses.
+	
+	Further Reading
+	
+    1) Guidelines for use of a 48-bit Extended Unique Identifier :-
+
+        http://standards.ieee.org/regauth/oui/tutorials/EUI48.html
+
+	2) Guidelines for use of a 64-bit Extended Unique Identifier :-
+
+		http://standards.ieee.org/regauth/oui/tutorials/EUI64.html
+
+CIDR - Classless Inter-Domain Routing
+
+	A way of defining groups of Internet Protocol address concisely based on
+	bit masks.
+
+	For further details see RFC 4632 :-
+	
+		http://www.faqs.org/rfcs/rfc4632.html

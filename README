@@ -1,0 +1,57 @@
+INTRODUCTION
+------------
+
+netaddr is a a network address manipulation library written in pure Python.
+
+There are many different types of addressing found within the various levels
+of a networking stack.
+
+If you compare a Media Access Control (MAC) address to an Internet Protocol
+(IP) address, they appear, at a glance, to be very distinct from one another.
+
+However, apart from one being layer 2 (link layer) address and one being a
+layer 3 (network layer) address, the differences in how they are manipulated
+by code in a software module are quite minimal. There is a very significant 
+overlap and similarity in the number and type of operations that are usually
+perform on each one.
+
+Aside: I was a tad surprised that Python is not better served already in this 
+area of endeavour. Perhaps Python isn't as popular with system administrators 
+as Perl and Ruby are. These other two languages are currently streets ahead of
+Python when it comes to support for this problem domain. Hopefully this is a 
+start towards redressing the balance, however minimally. Hopefully we can show
+them a thing or two about how it's done!
+
+Share and enjoy!
+
+INSTALLATION
+------------
+
+See the INSTALL file for details.
+
+DOCUMENTATION
+-------------
+
+You can various levels of documentation the following places :-
+
+1) API documentation (generated with epydoc) can be found here in the folder
+   docs/api/index.html that comes from the netaddr tarball or zip file.
+
+2) I've tried to be as verbose with my docstrings and code comments as seems 
+   sensible. Hopefully I haven't taken it too far and harm the readability 
+   of the actual code.
+
+3) A set of basic HOWTO code samples will be available on the code hosting
+   wiki in due course.
+
+UNIT TESTS
+----------
+
+No code should be trusted without unit tests. I am aiming for full coverage
+but I'm not there yet. We're probably 70% of the way there at the moment.
+Expect this to improve in coming releases.
+
+Running the tests is pretty straight fowards. Just run __init__.py with 
+Python where you extracted the release tarball/zip file and all the tests
+available should run through without error. Please file bug reports on the
+code hosting site if you experience problems.
