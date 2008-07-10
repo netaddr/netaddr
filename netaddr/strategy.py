@@ -394,7 +394,8 @@ class IPv4Strategy(AddrStrategy):
     module's inet_ntoa() and inet_aton() functions making it almost 2.5 times
     faster than a standard AddrStrategy configured for processing IPv4.
 
-    However, bear in mind that these modules might not be available everywhere. Runtimes such as Google App Engine gut the socket module. struct is also
+    However, bear in mind that these modules might not be available everywhere.
+    Runtimes such as Google App Engine gut the socket module. struct is also
     limited to processing 32-bit integer which is fine here but isn't suitable
     for 128-bit IPv6 processing.
     """
@@ -635,7 +636,7 @@ class IPv6Strategy(AddrStrategy):
         integer value provided. The output is configurable :-
 
         compact - (optional) if True, use '::' to represent the first adjacent
-                  group of words with a value of zero. (default: True).
+        group of words with a value of zero. (default: True).
         """
         #   Use basic parent class implementation if compact string form is
         #   not required.

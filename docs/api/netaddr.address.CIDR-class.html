@@ -66,22 +66,14 @@ object --+
 </pre>
 
 <hr />
-<pre class="literalblock">
-
-Represents a block of contiguous IPv4/IPv6 network addresses defined by an
-IP address prefix and either a prefix mask measured in bits or alternatively a traditional subnet mask in IP address format.
-
-Examples of supported formats :-
-
-    1) CIDR address format - &lt;address&gt;/&lt;mask_length&gt;
-
-        192.168.0.0/16
-
-    2) Address and subnet mask combo :-
-
-        192.168.0.0/255.255.0.0
-
-</pre>
+<p>Represents a block of contiguous IPv4/IPv6 network addresses defined 
+  by an IP address prefix and either a prefix mask measured in bits or 
+  alternatively a traditional subnet mask in IP address format.</p>
+  <p>Examples of supported formats :-</p>
+  <p>1) CIDR address format - &lt;address&gt;/&lt;mask_length&gt;</p>
+  <p>192.168.0.0/16</p>
+  <p>2) Address and subnet mask combo :-</p>
+  <p>192.168.0.0/255.255.0.0</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -229,8 +221,8 @@ Examples of supported formats :-
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__contains__" class="summary-sig-name">__contains__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns True if given address falls within this network address 
-      range's boundaries, False otherwise.</td>
+      Returns True if given address or address range falls within the 
+      boundary of this network address False otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__contains__">source&nbsp;code</a></span>
             
@@ -413,6 +405,60 @@ Examples of supported formats :-
       
     </td>
   </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#_retval" class="summary-sig-name" onclick="show_private();">_retval</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">addr</span>)</span><br />
+      Protected method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange._retval">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="first"></a><span class="summary-sig-name">first</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the Addr instance for the lower boundary of this network 
+      address range.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.first">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="last"></a><span class="summary-sig-name">last</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the Addr instance for the upper boundary of this network 
+      address range.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.last">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -423,42 +469,6 @@ Examples of supported formats :-
       Return total number of addresses to be found in this address range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.size">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="start"></a><span class="summary-sig-name">start</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the Addr instance for the lower boundary of this network 
-      address range.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.start">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="stop"></a><span class="summary-sig-name">stop</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the Addr instance for the upper boundary of this network 
-      address range.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.stop">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -527,17 +537,11 @@ Examples of supported formats :-
     </td>
   </tr></table>
   
-  <pre class="literalblock">
-
-Constructor.
-
-addr_mask - a valid CIDR address (IPv4 and IPv6 types supported).
-
-klass - (optional) class used to create each return object.
-        Default: IP objects. See nrange() documentations for
-        additional details on options.
-
-</pre>
+  <p>Constructor.</p>
+  <p>addr_mask - a valid CIDR address (IPv4 and IPv6 types supported).</p>
+  <p>klass - (optional) class used to create each return object. Default: 
+  IP objects. See nrange() documentations for additional details on 
+  options.</p>
   <dl class="fields">
     <dt>Overrides:
         object.__init__
@@ -596,7 +600,7 @@ klass - (optional) class used to create each return object.
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Jul 08 00:36:47 2008
+    Generated by Epydoc 3.0.1 on Thu Jul 10 22:43:48 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

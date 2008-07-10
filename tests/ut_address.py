@@ -170,6 +170,20 @@ class Test_EUI(unittest.TestCase):
         self.failUnless(eui64.ei() == 'FF-FE-C2-52-FF')
         self.failUnless(eui64.to_eui64() == EUI('00-C0-29-FF-FE-C2-52-FF'))
 
+    def testIPv6LinkLocal(self):
+        expected = 'fe80::20f:1fff:fe12:e733'
+
+        mac = EUI('00-0F-1F-12-E7-33')
+        ip1 = mac.ipv6_link_local()
+        self.failUnless(str(ip1) == expected)
+        self.failUnless(ip1 == IP(expected))
+
+        eui64 = EUI('00-0F-1F-FF-FE-12-E7-33')
+        ip2 = eui64.ipv6_link_local()
+        self.failUnless(str(ip2) == expected)
+        self.failUnless(ip2 == IP(expected))
+
+
 #-----------------------------------------------------------------------------
 class Test_Addr_IPv6(unittest.TestCase):
     """
@@ -533,6 +547,58 @@ class Test_CIDR(unittest.TestCase):
 
             self.failUnless(calculated == expected[i],
                 "EXPECTED: %r, ACTUAL: %r" % (expected[i], calculated))
+
+    def testIndexingAndSlicing(self):
+        #   IPv4
+        c1 = CIDR('192.168.0.1/23', klass=str)
+
+        #   Handy methods.
+        self.failUnless(c1.first() == '192.168.0.0')
+        self.failUnless(c1.last() == '192.168.1.255')
+
+        #   As above with indices.
+        self.failUnless(c1[0] == '192.168.0.0')
+        self.failUnless(c1[-1] == '192.168.1.255')
+
+        expected_list = [ '192.168.0.0', '192.168.0.128', '192.168.1.0',
+                          '192.168.1.128', '192.168.2.0' ]
+
+        self.failUnless(list(c1[::128]) == expected_list)
+
+        #   IPv6
+        c2 = CIDR('fe80::/10', klass=str)
+        self.failUnless(c2[0] == 'fe80::')
+        self.failUnless(c2[-1] == 'febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff')
+        self.failUnless(c2.size() == 332306998946228968225951765070086144)
+
+        #FIXME: IPv6 slicing is currently problematic.
+        #FIXME: print list(c2[0:5:1])
+        #FIXME: self.failUnless(list(c2[0:5:1]) == ['fe80::', 'fe80::1', 'fe80::2', 'fe80::3', 'fe80::4'])
+
+    def testContains(self):
+        self.failUnless('192.168.0.1' in CIDR('192.168.0.0/24'))
+        self.failUnless('192.168.0.255' in CIDR('192.168.0.0/24'))
+        self.failUnless(CIDR('192.168.0.0/24') in CIDR('192.168.0.0/23'))
+        self.failUnless(CIDR('192.168.0.0/24') in CIDR('192.168.0.0/24'))
+        self.failUnless('ffff::1' in CIDR('ffff::/127'))
+        self.failIf(CIDR('192.168.0.0/23') in CIDR('192.168.0.0/24'))
+
+    def testEquality(self):
+        #   IPv4.
+        c1 = CIDR('192.168.0.0/24')
+        c2 = CIDR('192.168.0.0/24')
+        self.failUnless(c1 == c2)
+        self.failUnless(c1 is not c2)
+        self.failIf(c1 != c2)
+        self.failIf(c1 is c2)
+
+        #   IPv6.
+        c3 = CIDR('fe80::/10')
+        c4 = CIDR('fe80::/10')
+        self.failUnless(c1 == c2)
+        self.failUnless(c1 is not c2)
+        self.failIf(c1 != c2)
+        self.failIf(c1 is c2)
 
 #-----------------------------------------------------------------------------
 class Test_IP_DNS(unittest.TestCase):
