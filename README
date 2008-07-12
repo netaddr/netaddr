@@ -1,7 +1,17 @@
-INTRODUCTION
-------------
 
-netaddr is a a network address manipulation library written in pure Python.
+INTRODUCTION
+============
+
+netaddr is a network address manipulation library written in pure Python.
+
+It supports the Pythonic manipulation of several common network address
+notations and standards, including :-
+
+- IP version 4
+- IP version 6
+- CIDR (Classless Inter-Domain Routing)
+- IEEE EUI-48 and EUI-64
+- MAC (Media Access Control)
 
 There are many different types of addressing found within the various levels
 of a networking stack.
@@ -11,18 +21,21 @@ If you compare a Media Access Control (MAC) address to an Internet Protocol
 
 However, apart from one being layer 2 (link layer) address and one being a
 layer 3 (network layer) address, the differences in how they are manipulated
-by code in a software module are quite minimal. There is a very significant 
-overlap and similarity in the number and type of operations that are usually
-perform on each one.
+by code in a library are minimal. A significant overlap exists in the number 
+and type of operations that are perform on each one.
 
-Aside: I was a tad surprised that Python is not better served already in this 
+ASIDE: I was a tad surprised that Python is not better served already in this 
 area of endeavour. Perhaps Python isn't as popular with system administrators 
 as Perl and Ruby are. These other two languages are currently streets ahead of
-Python when it comes to support for this problem domain. Hopefully this is a 
-start towards redressing the balance, however minimally. Hopefully we can show
-them a thing or two about how it's done!
+Python when it comes to support in this problem domain. Hopefully netaddr will
+be a new start towards redressing the balance, however minimally. Hopefully we
+can show them a thing or two about how it's done!
 
-Share and enjoy!
+DEPENDENCIES
+------------
+
+- requires Python 2.3 or higher. It does not run under Python 3.x
+
 
 INSTALLATION
 ------------
@@ -34,24 +47,61 @@ DOCUMENTATION
 
 You can various levels of documentation the following places :-
 
-1) API documentation (generated with epydoc) can be found here in the folder
-   docs/api/index.html that comes from the netaddr tarball or zip file.
+- API documentation
 
-2) I've tried to be as verbose with my docstrings and code comments as seems 
-   sensible. Hopefully I haven't taken it too far and harm the readability 
-   of the actual code.
+The API is fully documented and is automatically generated for each release
+using epydoc - http://epydoc.sourceforge.net/. 
 
-3) A set of basic HOWTO code samples will be available on the code hosting
-   wiki in due course.
+It can be found in the docs/api/ directory in the root directory extracted
+from a source release tarball or zip file. Accessing the index.html with 
+the browser of your choice.
+
+- Python docstrings
+
+I've tried to be as verbose with my docstrings and code comments as seems 
+sensible. Hopefully I haven't taken it too far and harm the readability 
+of the actual code.
+
+- online wiki page
+
+A set of basic HOWTO code samples are available on the code hosting site's
+wiki here :-
+
+	http://code.google.com/p/netaddr/w/list
 
 UNIT TESTS
 ----------
 
-No code should be trusted without unit tests. I am aiming for full coverage
-but I'm not there yet. We're probably 70% of the way there at the moment.
-Expect this to improve in coming releases.
+No publicly available code can ever be deemed truly complete and trustworth
+without reasonable unit test coverage (not in my book anyway). Full coverage 
+is the aim but its probably only about 70% of the way there at the moment. 
+Expect this situation to improve in coming releases.
 
-Running the tests is pretty straight fowards. Just run __init__.py with 
-Python where you extracted the release tarball/zip file and all the tests
-available should run through without error. Please file bug reports on the
-code hosting site if you experience problems.
+Running the tests is pretty straightfoward. Have a look in the tests directory
+where you extracted the source release tarball or zip file and run any file
+that starts with a ut_. Tests are expected to run through without any errors.
+
+If any do fail, please help the project along by filling in a bug report 
+here :-
+	
+	http://code.google.com/p/netaddr/issues/list
+
+*IMPORTANT*
+
+For the record, I have made the effort to test this code on both big and little 
+endian architectures throughout its initial development cycle. It took some 
+extra work but for a networking library to take itself seriously this kind of 
+thing is mandatory.
+
+However, I do not own any big endian hardware as I work exclusively on Intel. If 
+you happen to work on big endian hardware (such as SPARC), *PLEASE* ensure you 
+run the *ALL* the unit tests before you use this in library in a production setting.
+
+I'm quite happy that it'll work but there isn't any point in vouching for something
+that I am not able to test all the time. If any unit tests do fail and you are 
+running this library on a natively big-endian platform please make an extra effort 
+to file bug reports.
+
+Thanks for taking the time to read this.
+
+Share and enjoy!

@@ -1,15 +1,52 @@
 
 INSTALLATION
-------------
+============
 
-Extract the release tarball or zip file to a sensible location on your hard
-disk.
+This library is currently available in 3 flavours :-
 
-Then, you currently have 2 choices until I can get around to creating a 
-setup.py script and/or .egg package :-
+- direct checkout from source code repository
+- source release packages (tarball and zip file)
+- binary install packages (Windows only)
 
-1) Copy the netaddr folder to the lib/site-packages directory of your Python 
-distribution
+Source Code Repository Access
+-----------------------------
 
-2) Add the path of the netaddr folder that you extracted to your PYTHONPATH 
-environment variable.
+Project URL: http://code.google.com/p/netaddr/source/checkout
+
+Details for checking out code are available on the page.
+
+Source Release Packages
+-----------------------
+
+Extract the release tarball or zip file or download the latest release from
+the source code repository. Windows binary install packages are also 
+available.
+
+Once you've extracted the files you have several choices :-
+
+- Automated Install
+
+	Run the setup file in the root directory like this :-
+
+		python setup.py install
+
+	This automatically installs the required files to the lib/site-packages
+	directory of the Python distribution you used to run the setup script.
+
+- Manual Install
+
+	Manually copy the netaddr folder to the lib/site-packages directory of 
+	your Python distribution.
+
+- Soft Linking
+
+	Add the path of the netaddr folder under the root directory where you 
+	extracted the source release tarball or zip file to your PYTHONPATH 
+	environment variable.
+
+Binary Install Packages - Windows
+---------------------------------
+
+On Windows, it is usually more convenient to use the binary install packages 
+but you may want to download a source zip file as well if you want access to 
+the API documentation and unit tests.

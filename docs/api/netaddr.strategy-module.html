@@ -30,7 +30,12 @@
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -44,8 +49,6 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
-    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.strategy-module.html"
@@ -56,25 +59,17 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module strategy</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.strategy-pysrc.html">source&nbsp;code</a></span></p>
-<p>Contains various strategy classes that implement the behaviours of 
-  each network address type.</p>
+<p>classes that implement the behaviour of each network address type, 
+  constants used to identify them and shared strategy instances used by 
+  address objects.</p>
 
 <!-- ==================== CLASSES ==================== -->
 <a name="section-Classes"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Classes</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Classes"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Classes</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -117,17 +112,8 @@
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Variables</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Variables"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -182,82 +168,6 @@
  64: '64-bit IEEE Extended Unique Identifier'}"><code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Unspecified</code><code class="variable-quote">'</code><code class="variable-op">, </code>4<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Internet Protocol (version 4</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="netaddr.strategy-module.html#_BYTES_TO_BITS" class="summary-name" onclick="show_private();">_BYTES_TO_BITS</a> = <code title="['00000000',
- '00000001',
- '00000010',
- '00000011',
- '00000100',
- '00000101',
- '00000110',
- '00000111',
-..."><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">00000000</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">00000001</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">00000010</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">0000001</code><code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="netaddr.strategy-module.html#_MAC_std" class="summary-name" onclick="show_private();">_MAC_std</a> = <code title="AddrStrategy(addr_type= AT_LINK, width= 48, word_size= 8, word_fmt= '%\
-02x', delimiter= ':')">AddrStrategy(addr_type= AT_LINK, width= 48, word_si<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="netaddr.strategy-module.html#_MAC_cisco_std" class="summary-name" onclick="show_private();">_MAC_cisco_std</a> = <code title="AddrStrategy(addr_type= AT_LINK, width= 48, word_size= 16, word_fmt= '\
-%04x', delimiter= '.')">AddrStrategy(addr_type= AT_LINK, width= 48, w<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="netaddr.strategy-module.html#_EUI64_std" class="summary-name" onclick="show_private();">_EUI64_std</a> = <code title="AddrStrategy(addr_type= AT_EUI64, width= 64, word_size= 8, word_fmt= '\
-%02x', delimiter= '-', to_upper= True)">AddrStrategy(addr_type= AT_EUI64, width= 64, word<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="netaddr.strategy-module.html#_IPv4_std" class="summary-name" onclick="show_private();">_IPv4_std</a> = <code title="AddrStrategy(addr_type= AT_INET, width= 32, word_size= 8, word_fmt= '%\
-d', delimiter= '.', hex_words= False)">AddrStrategy(addr_type= AT_INET, width= 32, word_s<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="netaddr.strategy-module.html#_IPv6_std" class="summary-name" onclick="show_private();">_IPv6_std</a> = <code title="AddrStrategy(addr_type= AT_INET6, width= 128, word_size= 16, word_fmt=\
- '%x', delimiter= ':')">AddrStrategy(addr_type= AT_INET6, width= 128, word<code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="_EUI48_opt"></a><span class="summary-name">_EUI48_opt</span> = <code title="EUI48Strategy()">EUI48Strategy()</code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="_IPv4_opt"></a><span class="summary-name">_IPv4_opt</span> = <code title="IPv4Strategy()">IPv4Strategy()</code>
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="_IPv6_opt"></a><span class="summary-name">_IPv6_opt</span> = <code title="IPv6Strategy()">IPv6Strategy()</code>
-    </td>
-  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -293,17 +203,8 @@ d', delimiter= '.', hex_words= False)">AddrStrategy(addr_type= AT_INET, width= 3
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Variables Details</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-VariablesDetails"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables Details</span></td>
 </tr>
 </table>
 <a name="AT_DESCR"></a>
@@ -323,127 +224,6 @@ d', delimiter= '.', hex_words= False)">AddrStrategy(addr_type= AT_INET, width= 3
  6<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Internet Protocol (version 6)</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  48<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">MAC (Media Access Control)</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  64<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">64-bit IEEE Extended Unique Identifier</code><code class="variable-quote">'</code><code class="variable-group">}</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="_BYTES_TO_BITS"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_BYTES_TO_BITS</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-<code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">00000000</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">00000001</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">00000010</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">00000011</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">00000100</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">00000101</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">00000110</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">00000111</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-<code class="variable-ellipsis">...</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="_MAC_std"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_MAC_std</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-AddrStrategy(addr_type= AT_LINK, width= 48, word_size= 8, word_fmt= '%<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-02x', delimiter= ':')
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="_MAC_cisco_std"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_MAC_cisco_std</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-AddrStrategy(addr_type= AT_LINK, width= 48, word_size= 16, word_fmt= '<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-%04x', delimiter= '.')
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="_EUI64_std"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_EUI64_std</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-AddrStrategy(addr_type= AT_EUI64, width= 64, word_size= 8, word_fmt= '<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-%02x', delimiter= '-', to_upper= True)
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="_IPv4_std"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_IPv4_std</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-AddrStrategy(addr_type= AT_INET, width= 32, word_size= 8, word_fmt= '%<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-d', delimiter= '.', hex_words= False)
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="_IPv6_std"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_IPv6_std</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-AddrStrategy(addr_type= AT_INET6, width= 128, word_size= 16, word_fmt=<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
- '%x', delimiter= ':')
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -489,13 +269,18 @@ AddrStrategy(addr_type= AT_EUI64, width= 64, word_size= 8, word_fmt= '<span clas
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Jul 10 22:43:48 2008
+    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

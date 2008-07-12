@@ -30,7 +30,12 @@
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -44,8 +49,6 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
-    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.strategy-pysrc.html"
@@ -63,8 +66,8 @@
 <a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#   Released under the BSD license. See the LICENSE file for details.</tt> </tt>
 <a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#-----------------------------------------------------------------------------</tt> </tt>
 <a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-docstring">"""</tt> </tt>
-<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">Contains various strategy classes that implement the behaviours of each</tt> </tt>
-<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">network address type.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">classes that implement the behaviour of each network address type, constants</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">used to identify them and shared strategy instances used by address objects.</tt> </tt>
 <a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
 <a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">socket</tt> <tt class="py-keyword">as</tt> <tt class="py-name">_socket</tt> </tt>
 <a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">struct</tt> <tt class="py-keyword">as</tt> <tt class="py-name">_struct</tt> </tt>
@@ -160,7 +163,7 @@
 <a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-docstring">        Returns True if network address in readable binary form is valid for</tt> </tt>
 <a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt class="py-docstring">        this address type, False otherwise.</tt> </tt>
 <a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="netaddr.address.Addr.bits" class="py-name" href="#" onclick="return doclink('link-21', 'bits', 'link-12');">bits</a></tt><tt class="py-op">,</tt> <tt class="py-name">basestring</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="netaddr.address.Addr.bits" class="py-name" href="#" onclick="return doclink('link-21', 'bits', 'link-12');">bits</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">,</tt> <tt class="py-name">unicode</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 <a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">False</tt> </tt>
 <a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"> </tt>
 <a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">        <tt id="link-22" class="py-name"><a title="netaddr.address.Addr.bits" class="py-name" href="#" onclick="return doclink('link-22', 'bits', 'link-12');">bits</a></tt> <tt class="py-op">=</tt> <tt id="link-23" class="py-name"><a title="netaddr.address.Addr.bits" class="py-name" href="#" onclick="return doclink('link-23', 'bits', 'link-12');">bits</a></tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">delimiter</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt> </tt>
@@ -285,7 +288,7 @@ netaddr.strategy.IPv4Strategy.int_to_words" class="py-name" href="#" onclick="re
 <a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"><tt class="py-docstring">        Returns True if network address in string form is valid for this</tt> </tt>
 <a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line"><tt class="py-docstring">        address type, False otherwise.</tt> </tt>
 <a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-46" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-46', 'addr', 'link-38');">addr</a></tt><tt class="py-op">,</tt> <tt class="py-name">basestring</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-46" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-46', 'addr', 'link-38');">addr</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">,</tt> <tt class="py-name">unicode</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 <a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">False</tt> </tt>
 <a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line"> </tt>
 <a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">        <tt class="py-name">tokens</tt> <tt class="py-op">=</tt> <tt id="link-47" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-47', 'addr', 'link-38');">addr</a></tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">delimiter</tt><tt class="py-op">)</tt> </tt>
@@ -562,7 +565,7 @@ netaddr.strategy.IPv6Strategy.__init__" class="py-name" href="#" onclick="return
 </div><div id="IPv6Strategy.valid_str-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IPv6Strategy.valid_str-expanded"><a name="L475"></a><tt class="py-lineno">475</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
 <a name="L476"></a><tt class="py-lineno">476</tt>  <tt class="py-line"><tt class="py-docstring">        Returns True if IPv6 network address string is valid, False otherwise.</tt> </tt>
 <a name="L477"></a><tt class="py-lineno">477</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L478"></a><tt class="py-lineno">478</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-83" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-83', 'addr', 'link-38');">addr</a></tt><tt class="py-op">,</tt> <tt class="py-name">basestring</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L478"></a><tt class="py-lineno">478</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-83" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-83', 'addr', 'link-38');">addr</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">,</tt> <tt class="py-name">unicode</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 <a name="L479"></a><tt class="py-lineno">479</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">False</tt> </tt>
 <a name="L480"></a><tt class="py-lineno">480</tt>  <tt class="py-line"> </tt>
 <a name="L481"></a><tt class="py-lineno">481</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-string">'::'</tt> <tt class="py-keyword">in</tt> <tt id="link-84" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-84', 'addr', 'link-38');">addr</a></tt><tt class="py-op">:</tt> </tt>
@@ -843,7 +846,7 @@ netaddr.strategy.IPv6Strategy.__init__" class="py-name" href="#" onclick="return
 </div><div id="EUI48Strategy.valid_str-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="EUI48Strategy.valid_str-expanded"><a name="L719"></a><tt class="py-lineno">719</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
 <a name="L720"></a><tt class="py-lineno">720</tt>  <tt class="py-line"><tt class="py-docstring">        Returns True if MAC address string is valid, False otherwise.</tt> </tt>
 <a name="L721"></a><tt class="py-lineno">721</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L722"></a><tt class="py-lineno">722</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-128" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-128', 'addr', 'link-38');">addr</a></tt><tt class="py-op">,</tt> <tt class="py-name">basestring</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L722"></a><tt class="py-lineno">722</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-128" class="py-name"><a title="netaddr.address.CIDR.addr" class="py-name" href="#" onclick="return doclink('link-128', 'addr', 'link-38');">addr</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">,</tt> <tt class="py-name">unicode</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 <a name="L723"></a><tt class="py-lineno">723</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">False</tt> </tt>
 <a name="L724"></a><tt class="py-lineno">724</tt>  <tt class="py-line">        <tt class="py-name">tokens</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
 <a name="L725"></a><tt class="py-lineno">725</tt>  <tt class="py-line">        <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
@@ -1001,13 +1004,18 @@ expandto(location.href);
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Jul 10 22:43:48 2008
+    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

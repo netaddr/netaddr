@@ -30,7 +30,12 @@
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -45,8 +50,6 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
-    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.strategy.IPv4Strategy-class.html"
@@ -80,17 +83,8 @@
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Instance Methods</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-InstanceMethods"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Instance Methods</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -206,6 +200,22 @@
   </tr>
   <tr>
     <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a></code></b>:
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_int">bits_to_int</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_str">bits_to_str</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_words">bits_to_words</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#description">description</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#int_to_bits">int_to_bits</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#str_to_bits">str_to_bits</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#str_to_words">str_to_words</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_bits">valid_bits</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_int">valid_int</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_str">valid_str</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_words">valid_words</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#word_to_bits">word_to_bits</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#words_to_bits">words_to_bits</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#words_to_str">words_to_str</a></code>
+      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__getattribute__</code>,
@@ -219,291 +229,14 @@
       </p>
     </td>
   </tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="bits_to_int"></a><span class="summary-sig-name">bits_to_int</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">bits</span>)</span><br />
-      Returns a network byte order integer that is equivalent to value 
-      represented by network address in readable binary form.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.bits_to_int">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="bits_to_str"></a><span class="summary-sig-name">bits_to_str</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">bits</span>)</span><br />
-      Returns a network address in string form that is equivalent to value 
-      represented by network address in readable binary form.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.bits_to_str">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="bits_to_words"></a><span class="summary-sig-name">bits_to_words</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">bits</span>)</span><br />
-      Returns an integer word sequence that is equivalent to value 
-      represented by network address in readable binary form.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.bits_to_words">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#description" class="summary-sig-name">description</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns description string detailing setup of this AddrStrategy 
-      instance.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.description">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="int_to_bits"></a><span class="summary-sig-name">int_to_bits</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>)</span><br />
-      Returns a network address in readable binary form that is equivalent 
-      to value represented by a network byte order integer.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.int_to_bits">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="str_to_bits"></a><span class="summary-sig-name">str_to_bits</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns a network address in readable binary form that is equivalent 
-      to value represented by network address in string form.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.str_to_bits">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="str_to_words"></a><span class="summary-sig-name">str_to_words</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns an integer word sequence that is equivalent in value to the 
-      network address in string form.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.str_to_words">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="valid_bits"></a><span class="summary-sig-name">valid_bits</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">bits</span>)</span><br />
-      Returns True if network address in readable binary form is valid for 
-      this address type, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.valid_bits">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="valid_int"></a><span class="summary-sig-name">valid_int</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>)</span><br />
-      Returns True if network byte order integer falls within the 
-      boundaries of this address type, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.valid_int">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="valid_str"></a><span class="summary-sig-name">valid_str</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns True if network address in string form is valid for this 
-      address type, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.valid_str">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="valid_words"></a><span class="summary-sig-name">valid_words</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">words</span>)</span><br />
-      Returns True if word sequence is valid for this address type, False 
-      otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.valid_words">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="word_to_bits"></a><span class="summary-sig-name">word_to_bits</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>)</span><br />
-      Returns an integer word value for this address type in a fixed width 
-      readable binary form.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.word_to_bits">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="words_to_bits"></a><span class="summary-sig-name">words_to_bits</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">words</span>)</span><br />
-      Returns a network address in readable binary form that is equivalent 
-      to value represented by word sequence.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.words_to_bits">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="words_to_str"></a><span class="summary-sig-name">words_to_str</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">words</span>)</span><br />
-      Returns a network address in string form that is equivalent to value 
-      represented by word sequence.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.words_to_str">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
 </table>
 <!-- ==================== PROPERTIES ==================== -->
 <a name="section-Properties"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Properties</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Properties"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Properties</span></td>
 </tr>
   <tr>
     <td colspan="2" class="summary">
@@ -518,17 +251,8 @@
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Method Details</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-MethodDetails"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Method Details</span></td>
 </tr>
 </table>
 <a name="__init__"></a>
@@ -673,13 +397,18 @@
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Jul 10 22:43:48 2008
+    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

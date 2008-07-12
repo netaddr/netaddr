@@ -1,9 +1,9 @@
 
 GLOSSARY
---------
+========
 
 I thought this would be handy for those not familiar with some of the terms
-in this module.
+found in this library.
 
 EUI - Extended Unique Identifier
 
@@ -24,8 +24,8 @@ EUI - Extended Unique Identifier
 
 CIDR - Classless Inter-Domain Routing
 
-	A way of defining groups of Internet Protocol address concisely based on
-	bit masks.
+	A way of defining groups of Internet Protocol addresses concisely based on
+	bit masks. Used extensively in routing protocols.
 
 	For further details see RFC 4632 :-
 	

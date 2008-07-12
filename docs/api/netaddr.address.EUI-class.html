@@ -30,7 +30,12 @@
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -45,8 +50,6 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
-    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.address.EUI-class.html"
@@ -74,17 +77,8 @@ object --+
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Instance Methods</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-InstanceMethods"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Instance Methods</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -178,6 +172,25 @@ object --+
   </tr>
   <tr>
     <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.Addr-class.html">Addr</a></code></b>:
+      <code><a href="netaddr.address.Addr-class.html#__eq__">__eq__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__ge__">__ge__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__getitem__">__getitem__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__gt__">__gt__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__hex__">__hex__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__iadd__">__iadd__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__int__">__int__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__isub__">__isub__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__iter__">__iter__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__le__">__le__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__len__">__len__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__long__">__long__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__lt__">__lt__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__setitem__">__setitem__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__str__">__str__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#setvalue">setvalue</a></code>
+      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__getattribute__</code>,
@@ -190,334 +203,14 @@ object --+
       </p>
     </td>
   </tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="netaddr.address.Addr-class.html">Addr</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__eq__"></a><span class="summary-sig-name">__eq__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has the same numerical value as
-      another, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__eq__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__ge__"></a><span class="summary-sig-name">__ge__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a higher or equivalent 
-      numerical value than another, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__ge__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__getitem__" class="summary-sig-name">__getitem__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">index</span>)</span><br />
-      Return the integer value of the word indicated by index.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__getitem__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__gt__"></a><span class="summary-sig-name">__gt__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a higher numerical value 
-      than another, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__gt__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__hex__"></a><span class="summary-sig-name">__hex__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the value of this address as a network byte order hexadecimal
-      string.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__hex__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__iadd__" class="summary-sig-name">__iadd__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">increment</span>)</span><br />
-      Increment the value of this network address by the specified value.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__iadd__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__int__" class="summary-sig-name">__int__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the value of this address as an network byte order int, if 
-      possible.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__int__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__isub__" class="summary-sig-name">__isub__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">decrement</span>)</span><br />
-      Decrement the value of this network address by specified value.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__isub__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__iter__"></a><span class="summary-sig-name">__iter__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Provide an iterator over words (based on word_size) in this address.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__iter__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__le__"></a><span class="summary-sig-name">__le__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a lower or equivalent 
-      numerical value than another, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__le__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__len__"></a><span class="summary-sig-name">__len__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the size of this address (in bits).</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__len__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__long__" class="summary-sig-name">__long__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the value of this address as a network byte order long int.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__long__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__lt__"></a><span class="summary-sig-name">__lt__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a lower numerical value 
-      than another, False otherwise.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__lt__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__setitem__"></a><span class="summary-sig-name">__setitem__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">index</span>,
-        <span class="summary-sig-arg">value</span>)</span><br />
-      Set the value of the word of this address indicated by index.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__setitem__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the string representation for this address.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__str__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="bits"></a><span class="summary-sig-name">bits</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return a human-readable binary digit string representation of this 
-      address.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.bits">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#setvalue" class="summary-sig-name">setvalue</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Sets the value of this address.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.setvalue">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
 </table>
 <!-- ==================== PROPERTIES ==================== -->
 <a name="section-Properties"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Properties</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Properties"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Properties</span></td>
 </tr>
   <tr>
     <td colspan="2" class="summary">
@@ -532,17 +225,8 @@ object --+
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Method Details</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-MethodDetails"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Method Details</span></td>
 </tr>
 </table>
 <a name="__init__"></a>
@@ -619,13 +303,18 @@ object --+
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Jul 10 22:43:48 2008
+    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
