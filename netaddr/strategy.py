@@ -5,8 +5,8 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-Contains various strategy classes that implement the behaviours of each
-network address type.
+classes that implement the behaviour of each network address type, constants
+used to identify them and shared strategy instances used by address objects.
 """
 import socket as _socket
 import struct as _struct
@@ -102,7 +102,7 @@ class AddrStrategy(object):
         Returns True if network address in readable binary form is valid for
         this address type, False otherwise.
         """
-        if not isinstance(bits, basestring):
+        if not isinstance(bits, (str, unicode)):
             return False
 
         bits = bits.replace(self.delimiter, '')
@@ -224,7 +224,7 @@ class AddrStrategy(object):
         Returns True if network address in string form is valid for this
         address type, False otherwise.
         """
-        if not isinstance(addr, basestring):
+        if not isinstance(addr, (str, unicode)):
             return False
 
         tokens = addr.split(self.delimiter)
@@ -475,7 +475,7 @@ class IPv6Strategy(AddrStrategy):
         """
         Returns True if IPv6 network address string is valid, False otherwise.
         """
-        if not isinstance(addr, basestring):
+        if not isinstance(addr, (str, unicode)):
             return False
 
         if '::' in addr:
@@ -719,7 +719,7 @@ class EUI48Strategy(AddrStrategy):
         """
         Returns True if MAC address string is valid, False otherwise.
         """
-        if not isinstance(addr, basestring):
+        if not isinstance(addr, (str, unicode)):
             return False
         tokens = []
         try:

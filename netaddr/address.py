@@ -5,8 +5,8 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-Contains various classes representing various network addresses and address
-aggregates.
+classes and functions representing supported network addresses and associated
+aggregation options.
 """
 from strategy import AT_UNSPEC, AT_LINK, AT_INET, AT_INET6, AT_EUI64
 from strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
@@ -36,7 +36,7 @@ class Addr(object):
         addr_type - (optional) the network address type. If addr is an int or
         long, this argument becomes mandatory.
         """
-        if not isinstance(addr, (basestring, int, long)):
+        if not isinstance(addr, (str, unicode, int, long)):
             raise Exception("addr must be an address in string form or a " \
                 "positive int/long!")
 
@@ -84,7 +84,7 @@ class Addr(object):
         Raises an OverflowError if addr is an int/long value that is is out of
         bounds for the address type this instance represents.
         """
-        if isinstance(addr, basestring):
+        if isinstance(addr, (str, unicode)):
             self.value = self.strategy.str_to_int(addr)
         elif isinstance(addr, (int, long)):
             if self.strategy.valid_int(addr):
@@ -293,7 +293,7 @@ class EUI(Addr):
         addr_type - (optional) the EUI address type (AT_LINK or AT_EUI64). If
         addr is an int or long, this argument becomes mandatory.
         """
-        if not isinstance(addr, (basestring, int, long)):
+        if not isinstance(addr, (str, unicode, int, long)):
             raise Exception("addr must be an address in string form or a " \
                 "positive int/long!")
 
@@ -403,7 +403,7 @@ class IP(Addr):
         addr_type - (optional) the IP address type (AT_INET or AT_INET6). If
         addr is an int or long, this argument becomes mandatory.
         """
-        if not isinstance(addr, (basestring, int, long)):
+        if not isinstance(addr, (str, unicode, int, long)):
             raise Exception("addr must be an address in string form or a " \
                 "positive int/long!")
 
