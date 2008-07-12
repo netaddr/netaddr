@@ -36,7 +36,7 @@ class Test_Addr_IPv4(unittest.TestCase):
         self.ip_addr_min = Addr('0.0.0.0')
         self.ip_addr_max = Addr('255.255.255.255')
         self.int_min = 0
-        self.int_max = 4294967295L
+        self.int_max = 4294967295
         self.hex_max = '0xffffffff'
         self.bit_min = '.'.join(['0'*8 for i in range(4)])
         self.bit_max = '.'.join(['1'*8 for i in range(4)])
@@ -193,7 +193,7 @@ class Test_Addr_IPv6(unittest.TestCase):
         #   Basic address.
         self.size = 128
         self.ip_addr = Addr('::ffff:c0a8:1')
-        self.int_value = 281473913978881L
+        self.int_value = 281473913978881
         self.hex_value = '0xffffc0a80001'
         self.words = (0, 0, 0, 0, 0, 65535, 49320, 1)
         self.bit_value = '0000000000000000:0000000000000000:' \
@@ -205,7 +205,7 @@ class Test_Addr_IPv6(unittest.TestCase):
         self.ip_addr_min = Addr('::')
         self.ip_addr_max = Addr('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')
         self.int_min = 0
-        self.int_max = 340282366920938463463374607431768211455L
+        self.int_max = 340282366920938463463374607431768211455
         self.hex_max = '0xffffffffffffffffffffffffffffffff'
         self.bit_min = ':'.join(['0'*16 for i in range(8)])
         self.bit_max = ':'.join(['1'*16 for i in range(8)])
@@ -304,7 +304,7 @@ class Test_Addr_IPv6(unittest.TestCase):
         ip_addr_other += 1
         self.failUnless(int(ip_addr_other) == 1)
         #   Increment it all the way up to the value of a 'real' address.
-        ip_addr_other += 281473913978880L
+        ip_addr_other += 281473913978880
         self.failUnless(str(ip_addr_other) == \
             str(Addr('::ffff:c0a8:1')))
 
@@ -350,7 +350,7 @@ class TestEUI48Strategy(unittest.TestCase):
         #   Basic address.
         self.size = 48
         self.mac_addr = Addr('00-14-C2-C7-DA-D5')
-        self.int_value = 89167223509L
+        self.int_value = 89167223509
         self.hex_value = '0x14c2c7dad5'
         self.bit_value = '00000000-00010100-11000010-' \
                          '11000111-11011010-11010101'
@@ -359,7 +359,7 @@ class TestEUI48Strategy(unittest.TestCase):
         self.mac_addr_min = Addr('0:0:0:0:0:0')
         self.mac_addr_max = Addr('ff-ff-ff-ff-ff-ff')
         self.int_min = 0
-        self.int_max = 281474976710655L
+        self.int_max = 281474976710655
         self.hex_max = '0xffffffffffff'
         self.bit_min = '-'.join(['0'*8 for i in range(6)])
         self.bit_max = '-'.join(['1'*8 for i in range(6)])
@@ -399,7 +399,7 @@ class TestEUI48Strategy(unittest.TestCase):
         mac_addr_other += 1
         self.failUnless(int(mac_addr_other) == 1)
         #   Increment it all the way up to the value of a 'real' address.
-        mac_addr_other += 89167223508L
+        mac_addr_other += 89167223508
         self.failUnless(str(mac_addr_other) == str(Addr('00:14:c2:c7:da:d5')))
 
         #   Roll around boundaries.
