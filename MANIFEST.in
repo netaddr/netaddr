@@ -1,0 +1,9 @@
+include GLOSSARY
+include INSTALL
+include LICENSE
+include MANIFEST
+include README
+include setup.py
+recursive-include docs *.html *.css *.js *.png *.gif *.jpg *.jpeg
+recursive-include netaddr *.py
+recursive-include tests *.py
