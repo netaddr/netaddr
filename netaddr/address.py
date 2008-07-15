@@ -8,8 +8,8 @@
 classes and functions representing supported network addresses and associated
 aggregation options.
 """
-from strategy import AT_UNSPEC, AT_LINK, AT_INET, AT_INET6, AT_EUI64
-from strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
+from netaddr.strategy import AT_UNSPEC, AT_LINK, AT_INET, AT_INET6, \
+                             AT_EUI64, ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 
 #-----------------------------------------------------------------------------
 _TRANSLATE_STR = ''.join([chr(_i) for _i in range(256)])
@@ -377,8 +377,8 @@ class EUI(Addr):
         else:
             suffix = ["%02x" % i for i in list(self)]
 
-        suffix = map(lambda x: "%02x%02x" % (int(x[0], 16), int(x[1], 16)),
-                     zip(suffix[::2], suffix[1::2]))
+        suffix = ["%02x%02x" % (int(x[0], 16), int(x[1], 16)) for x in \
+            zip(suffix[::2], suffix[1::2])]
 
         #   Subtract 2 again to return MAC address to original value.
         self[0] -= 2
@@ -386,6 +386,7 @@ class EUI(Addr):
         eui64 = ':'.join(suffix)
         addr = prefix + eui64
         return IP(addr)
+
 
 #-----------------------------------------------------------------------------
 class IP(Addr):
@@ -570,7 +571,7 @@ def nrange(start, stop, step=1, klass=None):
 
     #   Set default klass value.
     if klass is None:
-        klass=Addr
+        klass = Addr
 
     if klass in (int, long, hex):
         #   Yield raw value of iterator.
@@ -679,9 +680,9 @@ class AddrRange(object):
         #   Decides on the flavour of a value to be return based on klass
         #   setting.
         if self.klass in (str, unicode):
-                return str(addr)
+            return str(addr)
         elif self.klass in (int, long, hex):
-                return self.klass(int(addr))
+            return self.klass(int(addr))
         else:
             return self.klass(int(addr), self.addr_type)
 
@@ -762,8 +763,9 @@ class AddrRange(object):
             #   implementation details :-
             #   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
             (start, stop, step) = index.indices(self.size())
-            return nrange(Addr(int_start_addr+start, addr_type),
-                          Addr(int_start_addr+stop, addr_type),
+
+            return nrange(Addr(int_start_addr + start, addr_type),
+                          Addr(int_start_addr + stop - step, addr_type),
                           step, klass=self.klass)
         else:
             raise TypeError('unsupported type %r!' % index)
@@ -967,9 +969,9 @@ class CIDR(AddrRange):
         Returns the network address used to initialize this CIDR range.
         """
         if self.klass in (str, unicode):
-                return str(self._addr)
+            return str(self._addr)
         elif self.klass in (int, long, hex):
-                return self.klass(int(self._addr))
+            return self.klass(int(self._addr))
         else:
             return self.klass(int(self._addr), self.addr_type)
 

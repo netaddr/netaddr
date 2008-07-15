@@ -561,7 +561,7 @@ class Test_CIDR(unittest.TestCase):
         self.failUnless(c1[-1] == '192.168.1.255')
 
         expected_list = [ '192.168.0.0', '192.168.0.128', '192.168.1.0',
-                          '192.168.1.128', '192.168.2.0' ]
+                          '192.168.1.128' ]
 
         self.failUnless(list(c1[::128]) == expected_list)
 

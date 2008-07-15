@@ -43,11 +43,11 @@ def _BYTES_TO_BITS():
     """
     lookup = []
     bits_per_byte = range(7, -1, -1)
-    for n in range(256):
+    for num in range(256):
         bits = 8*[None]
         for i in bits_per_byte:
-            bits[i] = '01'[n&1]
-            n >>= 1
+            bits[i] = '01'[num&1]
+            num >>= 1
         lookup.append(''.join(bits))
     return lookup
 
@@ -236,7 +236,7 @@ class AddrStrategy(object):
             for token in tokens:
                 int_val = int(token, self.word_base)
                 if not self.min_word <= int_val <= self.max_word:
-                   return False
+                    return False
         except TypeError:
             return False
         except ValueError:
@@ -525,7 +525,7 @@ class IPv6Strategy(AddrStrategy):
 
                 if '.' in addr:
                     ipv6_prefix = tokens[:-1]
-                    if ipv6_prefix[:-1] != ['0','0','0','0','0']:
+                    if ipv6_prefix[:-1] != ['0', '0', '0', '0', '0']:
                         return False
                     if ipv6_prefix[-1].lower() not in ('0', 'ffff'):
                         return False
@@ -614,7 +614,7 @@ class IPv6Strategy(AddrStrategy):
                 #   IPv4 compatiblility mode.
                 tokens = addr.split(':')
                 ipv4_str = tokens[-1]
-                if IPv4.valid_str(ipv4_str):
+                if ST_IPV4.valid_str(ipv4_str):
                     ipv4_int = ST_IPV4.str_to_int(ipv4_str)
                     ipv4_words = ST_IPV4.int_to_words(ipv4_int)
                     tokens.pop()
@@ -721,7 +721,7 @@ class EUI48Strategy(AddrStrategy):
         """
         if not isinstance(addr, (str, unicode)):
             return False
-        tokens = []
+
         try:
             if '.' in addr:
                 #   Cisco style.
