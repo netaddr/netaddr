@@ -29,10 +29,10 @@ AT_EUI64  = 0x40
 #   Address type description lookup dict.
 AT_DESCR = {
     AT_UNSPEC : 'Unspecified',
-    AT_LINK   : 'MAC (Media Access Control)',
-    AT_EUI64  : '64-bit IEEE Extended Unique Identifier',
-    AT_INET   : 'Internet Protocol (version 4)',
-    AT_INET6  : 'Internet Protocol (version 6)',
+    AT_LINK   : 'MAC',
+    AT_EUI64  : 'EUI-64',
+    AT_INET   : 'IPv4',
+    AT_INET6  : 'IPv6',
 }
 
 #-----------------------------------------------------------------------------
@@ -92,6 +92,11 @@ class AddrStrategy(object):
             self.name = AT_DESCR[addr_type]
         except KeyError:
             self.name = AT_DESCR[AT_UNSPEC]
+
+    def __repr__(self):
+        return "netaddr.address.%s(%r, %r, %r, %r, %r, %r)" % \
+            (self.__class__.__name__, self.width, self.word_size,
+            self.delimiter, self.addr_type, self.hex_words, self.to_upper)
 
     #-------------------------------------------------------------------------
     #   Binary methods.

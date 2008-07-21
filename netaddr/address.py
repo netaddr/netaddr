@@ -121,6 +121,9 @@ class Addr(object):
         """
         return self.strategy.int_to_str(self.value)
 
+    def __repr__(self):
+        return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
+
     def bits(self):
         """
         Return a human-readable binary digit string representation of this
@@ -892,6 +895,10 @@ class AddrRange(object):
     def __str__(self):
         return "%s-%s" % (self.start_addr, self.stop_addr)
 
+    def __repr__(self):
+        return "netaddr.address.%s(%r, %r)" % (self.__class__.__name__,
+            str(self.start_addr), str(self.stop_addr))
+
 #-----------------------------------------------------------------------------
 class CIDR(AddrRange):
     """
@@ -995,6 +1002,10 @@ class CIDR(AddrRange):
 
     def __str__(self):
         return "%s/%d" % (self.start_addr, self.mask_len)
+
+    def __repr__(self):
+        return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
+            str(self._addr), self.mask_len)
 
 #-----------------------------------------------------------------------------
 class Wildcard(AddrRange):
@@ -1140,6 +1151,9 @@ class Wildcard(AddrRange):
                         'hyphenated octets!')
 
         return '.'.join(tokens)
+
+    def __repr__(self):
+        return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
