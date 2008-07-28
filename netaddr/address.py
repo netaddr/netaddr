@@ -6,42 +6,53 @@
 #-----------------------------------------------------------------------------
 """
 classes and functions representing supported network addresses and associated
-aggregation options.
+aggregate types such as CIDR and Wilcards.
 """
 from netaddr.strategy import AT_UNSPEC, AT_LINK, AT_INET, AT_INET6, \
                              AT_EUI64, ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 
 #-----------------------------------------------------------------------------
-_TRANSLATE_STR = ''.join([chr(_i) for _i in range(256)])
+class AddrFormatError(Exception):
+    """
+   Network address format not recognised.
+    """
+    pass
+
+#-----------------------------------------------------------------------------
+class AddrConversionError(Exception):
+    """
+   Attempt convert between address types failed.
+    """
+    pass
 
 #-----------------------------------------------------------------------------
 class Addr(object):
     """
-    A class whose objects represent network addresses of different types based
-    on arguments passed to the constructor.
+    A heuristic-style class whose objects represent any of the supported
+    network address types based on the arguments passed to the constructor.
 
-    The address type can either be auto-detected from the string form of the
-    address or specified explicitly via the second argument.
+    The address type is auto-detected from the the address or explicitly
+    defined via a second address type option.
 
-    The behaviour of this class varies depending on the type of address that
-    it represents.
+    Objects of this class behave differently dependent upon the type of
+    address they represent.
     """
     def __init__(self, addr, addr_type=AT_UNSPEC):
         """
         Constructor.
 
         addr - the string form of a network address, or a network byte order
-        int/long value within the supported range for the address type.
+        integer within the supported range for the address type.
 
-        addr_type - (optional) the network address type. If addr is an int or
-        long, this argument becomes mandatory.
+        addr_type - (optional) the network address type. If addr is an integer,
+        this argument becomes mandatory.
         """
         if not isinstance(addr, (str, unicode, int, long)):
-            raise Exception("addr must be an address in string form or a " \
-                "positive int/long!")
+            raise TypeError("addr must be an network address string or a " \
+                "positive integer!")
 
         if isinstance(addr, (int, long)) and addr_type is None:
-            raise Exception("addr_type must be provided with  int/long " \
+            raise ValueError("addr_type must be provided with int/long " \
                 "address values!")
 
         self.value = None
@@ -64,7 +75,8 @@ class Addr(object):
 
         if self.strategy is None:
             #   Whoops - we fell through and didn't match anything!
-            raise Exception("Failed to detect address type from %r!" % addr)
+            raise AddrFormatError("%r is not a recognised address format!" \
+                % addr)
 
         if addr is None:
             addr = 0
@@ -72,6 +84,7 @@ class Addr(object):
         self.addr_type = self.strategy.addr_type
         self.setvalue(addr)
 
+    #TODO: replace this method with __setattr__() instead.
     def setvalue(self, addr):
         """
         Sets the value of this address.
@@ -79,10 +92,9 @@ class Addr(object):
         addr - the string form of a network address, or a network byte order
         int/long value within the supported range for the address type.
 
-        Raises a TypeError if addr is of an unsupported type.
-
-        Raises an OverflowError if addr is an int/long value that is is out of
-        bounds for the address type this instance represents.
+        Raises a TypeError if addr is of an unsupported type. Raises an
+        OverflowError if addr is an integer outside the bounds for this
+        address type.
         """
         if isinstance(addr, (str, unicode)):
             self.value = self.strategy.str_to_int(addr)
@@ -97,43 +109,38 @@ class Addr(object):
 
     def __int__(self):
         """
-        Returns the value of this address as an network byte order int, if
-        possible.
-
-        If the value of int is greater than 2 ** 31 - 1, a long is returned
-        instead of an int (standard Python behaviour).
+        Returns the value of this address as an network byte order integer.
         """
         return self.value
 
     def __long__(self):
         """
-        Returns the value of this address as a network byte order long int.
-
-        If the value of int is less than 2 ** 31 - 1, an int is returned
-        instead of a long (standard Python behaviour).
+        Returns the value of this address as an network byte order integer.
         """
         return self.value
 
     def __str__(self):
         """
-        Return the string representation for this address. Format varies
-        dependent on address type.
+        Returns the common string representation for this address type.
         """
         return self.strategy.int_to_str(self.value)
 
     def __repr__(self):
+        """
+        Returns an executable Python statement that can be used to recreate an
+        object of equivalent value.
+        """
         return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
 
     def bits(self):
         """
-        Return a human-readable binary digit string representation of this
-        address.
+        Returns a human-readable binary digit string for this address type.
         """
         return self.strategy.int_to_bits(self.value)
 
     def __len__(self):
         """
-        Return the size of this address (in bits).
+        Returns the size of this address (in bits).
         """
         return self.strategy.width
 
@@ -145,7 +152,7 @@ class Addr(object):
 
     def __getitem__(self, index):
         """
-        Return the integer value of the word indicated by index. Raises an
+        Returns the integer value of the word indicated by index. Raises an
         IndexError exception if index is wrong size for address type
 
         Full slicing support is also available.
@@ -192,46 +199,42 @@ class Addr(object):
     def __hex__(self):
         """
         Returns the value of this address as a network byte order hexadecimal
-        string.
+        number.
         """
         return hex(self.value).rstrip('L').lower()
 
-    def __iadd__(self, increment):
+    def __iadd__(self, i):
         """
-        Increment the value of this network address by the specified value.
+        Increment network address by specified value.
 
-        If the result exceeds maximum value for the address type, it rolls
-        around the minimum boundary value.
+        If the result exceeds address type maximum, it rolls around the
+        minimum boundary.
         """
         try:
-            new_value = self.value + increment
+            new_value = self.value + i
             if new_value > self.strategy.max_int:
-                #   Roll around on integer boundaries.
                 self.value = new_value - (self.strategy.max_int + 1)
             else:
                 self.value = new_value
         except TypeError:
-            raise Exception('Increment requires int or long!')
-
+            raise TypeError('Increment value must be an integer!')
         return self
 
-    def __isub__(self, decrement):
+    def __isub__(self, i):
         """
-        Decrement the value of this network address by specified value.
+        Decrement network address by specified value.
 
-        If the result is lower than the address type mininum value it rolls
-        around the maximum boundary value.
+        If the result exceeds address type minimum, it rolls around the
+        maximum boundary.
         """
         try:
-            new_value = self.value - decrement
+            new_value = self.value - i
             if new_value < self.strategy.min_int:
-                #   Roll around on integer boundaries.
                 self.value = new_value + (self.strategy.max_int + 1)
             else:
                 self.value = new_value
         except TypeError:
-            raise Exception('Decrement requires int or long!')
-
+            raise TypeError('Decrement value must be an integer!')
         return self
 
     def __eq__(self, other):
@@ -279,29 +282,35 @@ class Addr(object):
             return True
         return False
 
+    def family(self):
+        """
+        Returns an integer constant identifying this object's address type
+        family.
+        """
+        return self.strategy.addr_type
 
 #-----------------------------------------------------------------------------
 class EUI(Addr):
     """
-    A class whose objects represent IEEE Extended Unique Identifiers. Supports
-    EUI-48 (along with common MAC flavours) and EUI-64.
+    EUI objects represent IEEE Extended Unique Identifiers. Input parsing is
+    flexible, supporting EUI-48, EUI-64 and all MAC (Media Access Control)
+    address flavours.
     """
     def __init__(self, addr, addr_type=AT_UNSPEC):
         """
         Constructor.
 
-        addr - the string form of an EUI-48/64 address or a network byte
-        order int/long value.
+        addr - an EUI/MAC address string or a network byte order integer.
 
-        addr_type - (optional) the EUI address type (AT_LINK or AT_EUI64). If
-        addr is an int or long, this argument becomes mandatory.
+        addr_type - (optional) the specific EUI address type (AT_LINK or
+        AT_EUI64). If addr is an integer, this argument is mandatory.
         """
         if not isinstance(addr, (str, unicode, int, long)):
-            raise Exception("addr must be an address in string form or a " \
-                "positive int/long!")
+            raise TypeError("addr must be an EUI/MAC network address " \
+                "string or a positive integer!")
 
         if isinstance(addr, (int, long)) and addr_type is None:
-            raise Exception("addr_type must be provided with  int/long " \
+            raise ValueError("addr_type must be provided with integer " \
                 "address values!")
 
         self.value = None
@@ -320,7 +329,8 @@ class EUI(Addr):
 
         if self.strategy is None:
             #   Whoops - we fell through and didn't match anything!
-            raise Exception("Failed to detect EUI type from %r!" % addr)
+            raise AddrFormatError("%r is not a recognised EUI or MAC " \
+                "address format!" % addr)
 
         if addr is None:
             addr = 0
@@ -330,30 +340,28 @@ class EUI(Addr):
 
     def oui(self):
         """
-        Returns the OUI (Organisationally Unique Identifier for this
-        EUI-48/MAC address.
+        Returns the OUI (Organisationally Unique Identifier) for this EUI.
         """
         return '-'.join(["%02x" % i for i in self[0:3]]).upper()
 
     def ei(self):
         """
-        Returns the EI (Extension Identifier) for this EUI-48 address.
+        Returns the EI (Extension Identifier) for this EUI.
         """
         if self.strategy == ST_EUI48:
             return '-'.join(["%02x" % i for i in self[3:6]]).upper()
         elif self.strategy == ST_EUI64:
             return '-'.join(["%02x" % i for i in self[3:8]]).upper()
 
-    def to_eui64(self):
+    def eui64(self):
         """
-        Returns the value of this EUI object as a new EUI address initialised
-        as a 64-bit EUI.
+        Returns the value of this EUI object as a new 64-bit EUI object.
 
-        So if this address represents an EUI-48 address it converts the value
-        of this address to EUI-64 as per the standard.
+        If this object represents an EUI-48 it is converted to EUI-64 as per
+        the standard.
 
-        If this class is already and EUI-64 address, it just returns a new
-        object that is numerically equivalent to itself.
+        If this object is already and EUI-64, it just returns a new,
+        numerically equivalent object is returned instead.
         """
         if self.addr_type == AT_LINK:
             eui64_words = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
@@ -365,12 +373,13 @@ class EUI(Addr):
 
     def ipv6_link_local(self):
         """
-        Returns an IP() object class (IPv6 address type) initialised using the
-        value of this EUI.
+        Returns an IPv6 IP object initialised using the value of this EUI.
+
+        See RFC 4921 for details.
         """
         prefix = 'fe80:0000:0000:0000:'
 
-        #   Add 2 to the first octet of this MAC address temporarily.
+        #   Add 2 to the first octet of this EUI address (temporarily).
         self[0] += 2
 
         if self.addr_type == AT_LINK:
@@ -383,7 +392,7 @@ class EUI(Addr):
         suffix = ["%02x%02x" % (int(x[0], 16), int(x[1], 16)) for x in \
             zip(suffix[::2], suffix[1::2])]
 
-        #   Subtract 2 again to return MAC address to original value.
+        #   Subtract 2 again to return EUI to its original value.
         self[0] -= 2
 
         eui64 = ':'.join(suffix)
@@ -394,25 +403,32 @@ class EUI(Addr):
 #-----------------------------------------------------------------------------
 class IP(Addr):
     """
-    A class whose objects represent Internet Protocol network addresses that
-    can be either IPv4 or IPv6.
+    A class whose objects represent Internet Protocol network addresses. Both
+    IPv4 and IPv6 are fully supported and include an optional subnet bit mask
+    prefix.
+
+    NB - parsing of the prefix in this class isn't as strict as the CIDR
+    aggregate class, which does not allow non zero bits to the right of the
+    specified subnet prefix.
+
+    See CIDR() class for further details.
     """
     def __init__(self, addr, addr_type=AT_UNSPEC):
         """
         Constructor.
 
-        addr - the string form of a IPv4 or IPv6 address, or a network byte
-        order int/long value.
+        addr - an IPv4 or IPv6 address string with an optional subnet prefix
+        or a network byte order integer.
 
         addr_type - (optional) the IP address type (AT_INET or AT_INET6). If
-        addr is an int or long, this argument becomes mandatory.
+        addr is an integer, this argument is mandatory.
         """
         if not isinstance(addr, (str, unicode, int, long)):
-            raise Exception("addr must be an address in string form or a " \
-                "positive int/long!")
+            raise TypeError("addr must be an network address string or a " \
+                "positive integer!")
 
         if isinstance(addr, (int, long)) and addr_type is None:
-            raise Exception("addr_type must be provided with  int/long " \
+            raise ValueError("addr_type must be provided with int/long " \
                 "address values!")
 
         self.value = None
@@ -431,7 +447,8 @@ class IP(Addr):
 
         if self.strategy is None:
             #   Whoops - we fell through and didn't match anything!
-            raise Exception("Failed to detect IP version from %r!" % addr)
+            raise AddrFormatError("%r is not a recognised IP address format!"\
+                % addr)
 
         if addr is None:
             addr = 0
@@ -473,11 +490,12 @@ class IP(Addr):
             return self.strategy.width
 
         bits = self.strategy.int_to_bits(self.value)
-        mask_bits = bits.translate(_TRANSLATE_STR, '.0')
+        translate_str = ''.join([chr(_i) for _i in range(256)])
+        mask_bits = bits.translate(translate_str, '.0')
         mask_length = len(mask_bits)
 
         if not 1 <= mask_length <= self.strategy.width:
-            raise Exception('Unexpected mask length %d for address type!' \
+            raise ValueError('Unexpected mask length %d for address type!' \
                 % mask_length)
 
         return mask_length
@@ -513,11 +531,74 @@ class IP(Addr):
 
         return True
 
+    def cidr(self):
+        """
+        Returns a valid CIDR object for this IP address.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def masklen(self):
+        """
+        Returns the subnet prefix of this IP address.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def host(self):
+        """
+        Returns the IP address value without the subnet prefix.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def ipv4(self):
+        """
+        If object's address type is IPv4 it returns a new IP object that is
+        numerically equivalent.
+
+        If object's address type is IPv6 and it's value is mappable to IPv4
+        it return a new IP object intialised as an IPv4 address type.
+
+        An AddrConversionError is raised if IPv6 address is not mappable to
+        IPv4.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def ipv6(self):
+        """
+        If object's address type is IPv6 it returns a new IPv6 IP object that
+        is numerically equivalent.
+
+        If object's address type is IPv4 it returns a new IPv6 IP object
+        intialised as an IPv4 mapped address.
+
+        NB - this method uses the preferred IPv4 embedded in IPv6 form :-
+
+        '::ffff:x.x.x.x' (IPv4-mapped IPv6 address)
+
+        over the (now deprecated form) :-
+
+        '::x.x.x.x' (IPv4-Compatible IPv6 address).
+
+        See RFC 4921 for details.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def is_unicast(self):
+        """
+        Returns True if this address is unicast, False otherwise.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def is_multicast(self):
+        """
+        Returns True if this address is multicast, False otherwise.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
 #-----------------------------------------------------------------------------
 def nrange(start, stop, step=1, klass=None):
     """
-    A generator producing sequences of addresses based on start and stop
-    values, in intervals of step.
+    A generator producing sequences of network addresses based on start and
+    stop values, in intervals of step.
 
     start - first network address as string or instance of Addr (sub)class.
 
@@ -525,17 +606,17 @@ def nrange(start, stop, step=1, klass=None):
 
     step - (optional) size of step between addresses in range. Default is 1.
 
-    klass - (optional) a class used to create each object returned.
-    Default: Addr objects.
+    klass - (optional) the class used to create objects returned.
+    Default: Addr() class.
 
     a) str returns string representation of network address
 
     b) int, long and hex return actual values
 
-    c) Addr (sub)class or duck type(*) return objects of that class.
+    c) Addr (sub)class or duck type* return objects of that class.
 
-    (*) - if you use your own duck class, make sure you handle 2 arguments
-    passed in (addr_value, addr_type) to avoid frustration.
+    * - if you use your own duck class, make sure you handle both arguments
+    (addr_value, addr_type) passed to the constructor.
     """
     if not issubclass(start.__class__, Addr):
         if isinstance(start, (str, unicode)):
@@ -577,7 +658,7 @@ def nrange(start, stop, step=1, klass=None):
         klass = Addr
 
     if klass in (int, long, hex):
-        #   Yield raw value of iterator.
+        #   Yield network address integer values.
         while True:
             index += step
             if negative_step:
@@ -589,7 +670,7 @@ def nrange(start, stop, step=1, klass=None):
             yield klass(index)
 
     elif klass in (str, unicode):
-        #   Yield string representation of address type.
+        #   Yield address string values.
         while True:
             index += step
             if negative_step:
@@ -601,7 +682,7 @@ def nrange(start, stop, step=1, klass=None):
 
             yield str(start.__class__(index, addr_type))
     else:
-        #   Yield network address object.
+        #   Yield network address objects.
         while True:
             index += step
             if negative_step:
@@ -616,14 +697,12 @@ def nrange(start, stop, step=1, klass=None):
 #-----------------------------------------------------------------------------
 class AddrRange(object):
     """
-    Represents a block of contiguous network addresses bounded by an arbitrary
-    start and stop address. There is no requirement that they fall on strict
-    bit mask boundaries.
+    A block of contiguous network addresses bounded by an arbitrary start and
+    stop address. There is no requirement that they fall on strict bit mask
+    boundaries, unlike CIDR addresses.
 
-    This is the only network address aggregate class that supports all network
-    address types (essentially Addr (sub)class objects). Most if not all
-    subclasses of AddrRange tend towards support for only a subset of address
-    types.
+    The only network address aggregate supporting all network address types.
+    Most AddrRange subclasses only support a subset of address types.
     """
     def __init__(self, start_addr, stop_addr, klass=None):
         """
@@ -633,9 +712,10 @@ class AddrRange(object):
 
         stop_addr - stop address for this network address range.
 
-        klass - (optional) class used to create each return object.
-        Default: Addr objects. See nrange() documentations for
-        additional details on options.
+        klass - (optional) class used to create each object returned.
+        Default: Addr() objects.
+
+        See nrange() documentations for additional details on options.
         """
         #   Set start address.
         if not issubclass(start_addr.__class__, Addr):
@@ -647,7 +727,7 @@ class AddrRange(object):
         else:
             self.start_addr = start_addr
 
-            #   Make klass the same class as start_addr object.
+            #   Make klass the same as start_addr object.
             if klass is None:
                 klass = start_addr.__class__
 
@@ -678,10 +758,10 @@ class AddrRange(object):
 
     def _retval(self, addr):
         """
-        Protected method. Not for public use!
+        Protected method. *** Not intended for public use ***
         """
         #   Decides on the flavour of a value to be return based on klass
-        #   setting.
+        #   property.
         if self.klass in (str, unicode):
             return str(addr)
         elif self.klass in (int, long, hex):
@@ -691,21 +771,19 @@ class AddrRange(object):
 
     def first(self):
         """
-        Returns the Addr instance for the lower boundary of this network
-        address range.
+        Returns the lower boundary network address of this range.
         """
         return self._retval(self.start_addr)
 
     def last(self):
         """
-        Returns the Addr instance for the upper boundary of this network
-        address range.
+        Returns the upper boundary network address of this range.
         """
         return self._retval(self.stop_addr)
 
     def __len__(self):
         """
-        Return total number of addresses to be found in this address range.
+        Returns the total number of network addresses in this range.
 
         NB - Use this method only for ranges that contain less than 2 ** 31
         addresses. Raises an IndexError if size is exceeded.
@@ -713,13 +791,13 @@ class AddrRange(object):
         size = self.size()
         if size > (2 ** 31):
             #   Use size() method in this class instead as len() will b0rk!
-            raise IndexError("AddrRange contains more than 2^31 addresses! " \
-                "Try using size() method instead.")
+            raise IndexError("range contains more than 2^31 addresses! " \
+                "Use size() method instead.")
         return size
 
     def size(self):
         """
-        Return total number of addresses to be found in this address range.
+        Returns the total number of network addresses in this range.
 
         NB - Use this method in preference to __len__() when size of ranges
         exceeds 2 ** 31 addresses.
@@ -728,16 +806,12 @@ class AddrRange(object):
 
     def __getitem__(self, index):
         """
-        Return the Addr instance from this address range indicated by index
-        or slice.
+        Returns the network address(es) in this address range indicated by
+        index/slice.
 
-        Raises an IndexError exception if index is out of bounds in relation
-        to size of address range.
-
-        Slicing objects of this class can potentially produce truly massive
-        sequences so generators are returned in preference to sequences. The
-        extra step of wrapping a raw slice with list() or tuple() may be
-        required dependent on context.
+        Slicing objects can produce large sequences so generator objects are
+        returned instead to the usual sequences. Wrapping a raw slice with
+        list() or tuple() may be required dependent on context.
         """
         if isinstance(index, (int, long)):
             if (- self.size()) <= index < 0:
@@ -775,18 +849,18 @@ class AddrRange(object):
 
     def __iter__(self):
         """
-        Returns an iterator object providing lazily evaluated access to all
-        Addr() instances within this network address range.
+        Returns an iterator object providing access to all network addresses
+        within this range.
         """
         return nrange(self.start_addr, self.stop_addr, klass=self.klass)
 
     def __contains__(self, addr):
         """
-        Returns True if given address or address range falls within the
-        boundary of this network address False otherwise.
+        Returns True if given address or range falls within this range, False
+        otherwise.
 
-        addr - object of (sub)class Addr/AddrRange or string based address to
-        be compared.
+        addr - object of Addr/AddrRange (sub)class or a network address string
+        to be compared.
         """
         if isinstance(addr, (str, unicode)):
             #   string address or address range.
@@ -802,15 +876,16 @@ class AddrRange(object):
                 and (addr.stop_addr <= self.stop_addr):
                 return True
         else:
-            raise Exception('%r is an unsupported object/type!' % addr)
+            raise TypeError('%r is an unsupported class or type!' % addr)
 
         return False
 
     def __eq__(self, other):
         """
-        True if the boundary addresses of this address range are the same as
-        those of the other and the address types they represent are the same,
-        False otherwise.
+        True if the boundary of this range is the same as other, False
+        otherwise.
+
+        NB - address types of self and other must match.
         """
         if self.start_addr.addr_type != other.start_addr.addr_type:
             raise TypeError('comparison failure due to type mismatch!')
@@ -823,10 +898,10 @@ class AddrRange(object):
 
     def __ne__(self, other):
         """
-        True if the boundary addresses of this address range are not the same
-        as those of the other, False otherwise.
+        True if the boundary of this range is not the same as other, False
+        otherwise.
 
-        Raises a TypeError if address type of other is not the same as self.
+        NB - address types of self and other must match.
         """
         if self.start_addr.addr_type != other.start_addr.addr_type:
             raise TypeError('comparison failure due to type mismatch!')
@@ -838,9 +913,10 @@ class AddrRange(object):
 
     def __lt__(self, other):
         """
-        True if the lower boundary address of this address range is less than
-        that of the other and the address types they represent are the same,
+        True if the lower boundary of this range is less than other,
         False otherwise.
+
+        NB - address types of self and other must match.
         """
         if self.start_addr.addr_type != other.start_addr.addr_type:
             raise TypeError('comparison failure due to type mismatch!')
@@ -852,9 +928,10 @@ class AddrRange(object):
 
     def __le__(self, other):
         """
-        True if the lower boundary address of this address range is less than
-        or equal to that of the other and the address types they represent
-        are the same, False otherwise.
+        True if the lower boundary of this range is less or equal to other,
+        False otherwise.
+
+        NB - address types of self and other must match.
         """
         if self.start_addr.addr_type != other.start_addr.addr_type:
             raise TypeError('comparison failure due to type mismatch!')
@@ -866,9 +943,10 @@ class AddrRange(object):
 
     def __gt__(self, other):
         """
-        True if the lower boundary address of this address range is greater
-        than that of the other and the address types they represent are the
-        same, False otherwise.
+        True if the lower boundary of this range is greater than other,
+        False otherwise.
+
+        NB - address types of self and other must match.
         """
         if self.start_addr.addr_type != other.start_addr.addr_type:
             raise TypeError('comparison failure due to type mismatch!')
@@ -880,9 +958,10 @@ class AddrRange(object):
 
     def __ge__(self, other):
         """
-        True if the lower boundary address of this address range is greater
-        than or equal to that of the other and the address types they
-        represent are the same, False otherwise.
+        True if the lower boundary of this range is greater or equal to other,
+        False otherwise.
+
+        NB - address types of self and other must match.
         """
         if self.start_addr.addr_type != other.start_addr.addr_type:
             raise TypeError('comparison failure due to type mismatch!')
@@ -896,15 +975,131 @@ class AddrRange(object):
         return "%s-%s" % (self.start_addr, self.stop_addr)
 
     def __repr__(self):
+        """
+        Returns an executable Python statement that can be used to recreate an
+        object of equivalent value.
+        """
         return "netaddr.address.%s(%r, %r)" % (self.__class__.__name__,
             str(self.start_addr), str(self.stop_addr))
 
 #-----------------------------------------------------------------------------
+def abbrev_to_cidr(addr):
+    """
+    Returns a verbose CIDR from an abbreviated CIDR or old-style classful
+    network address, None if format provided was not recognised or supported.
+
+    Uses the old-style classful IP address rules to decide on a default subnet
+    prefix if one is not explicitly provided.
+
+    Only supports IPv4 and IPv4 mapped IPv6 addresses.
+
+    Examples :-
+
+    10                  - 10.0.0.0/8
+    10/16               - 10.0.0.0/16
+    128                 - 128.0.0.0/16
+    128/8               - 128.0.0.0/8
+    192.168             - 192.168.0.0/16
+    ::192.168           - ::192.168.0.0/128
+    ::ffff:192.168/120  - ::ffff:192.168.0.0/120
+    """
+    #   Internal function that returns a prefix value based on the old IPv4
+    #   classful network scheme that has been superseded (almost) by CIDR.
+    def classful_prefix(octet):
+        octet = int(octet)
+        prefix = 32     #   Host address default.
+        if not 0 <= octet <= 255:
+            raise IndexError('Invalid octet: %r!' % octet)
+        if 0 <= octet <= 127:
+            #   Class A
+            prefix = 8
+        elif 128 <= octet <= 191:
+            #   Class B
+            prefix = 16
+        elif 192 <= octet <= 223:
+            #   Class C
+            prefix = 24
+        elif 224 <= octet <= 239:
+            #   Class D (multicast)
+            prefix = 8
+        return prefix
+
+    start = ''
+    tokens = []
+    prefix = None
+
+#FIXME:    #   Check for IPv4 mapped IPv6 addresses.
+    if isinstance(addr, (str, unicode)):
+    ################
+        #   Don't support IPv6 for now...
+        if ':' in addr:
+            return None
+    ################
+#FIXME:        if addr.startswith('::ffff:'):
+#FIXME:            addr = addr.replace('::ffff:', '')
+#FIXME:            start = '::ffff:'
+#FIXME:            if '/' not in addr:
+#FIXME:                prefix = 128
+#FIXME:        elif addr.startswith('::'):
+#FIXME:            addr = addr.replace('::', '')
+#FIXME:            start = '::'
+#FIXME:            if '/' not in addr:
+#FIXME:                prefix = 128
+    ################
+
+    try:
+        #   Single octet partial integer or string address.
+        i = int(addr)
+        tokens = [str(i), '0', '0', '0']
+        return "%s%s/%s" % (start, '.'.join(tokens), classful_prefix(i))
+
+    except ValueError:
+        #   Multi octet partial string address with optional prefix.
+        part_addr = addr
+        tokens = []
+
+        if part_addr == '':
+            #   Not a recognisable format.
+            return None
+
+        if '/' in part_addr:
+            (part_addr, prefix) = part_addr.split('/', 1)
+
+        if '.' in part_addr:
+            tokens = part_addr.split('.')
+        else:
+            tokens = [part_addr]
+
+        if 1 <= len(tokens) <= 4:
+            for i in range(4 - len(tokens)):
+                tokens.append('0')
+        else:
+            #   Not a recognisable format.
+            return None
+
+        if prefix is None:
+            prefix = classful_prefix(tokens[0])
+
+        return "%s%s/%s" % (start, '.'.join(tokens), prefix)
+
+    except TypeError:
+        pass
+    except IndexError:
+        pass
+
+    #   Not a recognisable format.
+    return None
+
+#-----------------------------------------------------------------------------
 class CIDR(AddrRange):
     """
-    Represents a block of contiguous IPv4/IPv6 network addresses defined by an
-    IP address prefix and either a prefix mask measured in bits or
-    alternatively a traditional subnet mask in IP address format.
+    A block of contiguous IPv4 or IPv6 network addresses defined by a base
+    network address and a bitmask prefix or subnet mask address indicating the
+    size/extent of the subnet.
+
+    CIDR does not accept any non zero bits to be set right of the applied
+    bitmask (unlike the IP class which does). Doing so raises an
+    AddrFormatError exception.
 
     Examples of supported formats :-
 
@@ -915,22 +1110,42 @@ class CIDR(AddrRange):
     2) Address and subnet mask combo :-
 
     192.168.0.0/255.255.0.0
+
+    3) Partial or abbreviated formats. Prefixes may be omitted and in this
+    case old classful default prefixes apply :-
+
+    10   - 10.0.0.0/8
+    10.0 - 10.0.0.0/8
+    10/8 - 10.0.0.0/8
+
+    128    - 10.0.0.0/16
+    128.0  - 10.0.0.0/16
+    128/16 - 10.0.0.0/16
+
+    192        - 10.0.0.0/24
+    192.168.0  - 192.168.0.0/24
+    192.168/16 - 192.168.0.0/16
     """
     def __init__(self, addr_mask, klass=IP):
         """
         Constructor.
 
-        addr_mask - a valid CIDR address (IPv4 and IPv6 types supported).
+        addr_mask - a valid IPv4 or IPv6 CIDR address.
 
         klass - (optional) class used to create each return object.
-        Default: IP objects. See nrange() documentations for
-        additional details on options.
+        Default: IP objects
+
+        See nrange() documentations for additional details on options.
         """
+        verbose_addr_mask = abbrev_to_cidr(addr_mask)
+        if verbose_addr_mask is not None:
+            addr_mask = verbose_addr_mask
+
         tokens = addr_mask.split('/')
 
         if len(tokens) != 2:
-            raise Exception('%r is not a recognised CIDR format!' \
-                % addr_mask)
+            raise AddrFormatError('%r is not a recognised CIDR ' \
+                'format!' % addr_mask)
 
         addr = IP(tokens[0])
 
@@ -941,16 +1156,17 @@ class CIDR(AddrRange):
             #   Try subnet mask.
             mask = IP(tokens[1])
             if not mask.is_netmask():
-                raise Exception('%r does not contain a valid subnet mask!' \
-                    % addr_mask)
+                raise AddrFormatError('%r does not contain a valid ' \
+                    'subnet mask!'  % addr_mask)
             prefixlen = mask.prefixlen()
             if mask.addr_type != addr.addr_type:
-                raise Exception('Address and netmask types do not match!')
+                raise AddrFormatError('Address and netmask types do ' \
+                    'not match!')
 
         self._addr = addr
 
         if not 0 <= prefixlen <= self._addr.strategy.width:
-            raise IndexError('CIDR prefix is out of bounds for %s addresses' \
+            raise IndexError('CIDR prefix out of bounds for %s addresses!' \
                 % self._addr.strategy.name)
 
         self.mask_len = prefixlen
@@ -984,19 +1200,19 @@ class CIDR(AddrRange):
 
     def netmask(self):
         """
-        Returns the subnet mask address for this CIDR range.
+        Returns the subnet mask address of this CIDR range.
         """
         return self._retval(self.netmask_addr)
 
     def hostmask(self):
         """
-        Returns the host mask address for this CIDR range.
+        Returns the host mask address of this CIDR range.
         """
         return self._retval(self.hostmask_addr)
 
     def prefixlen(self):
         """
-        Returns size of mask (in bits) for this CIDR range.
+        Returns size of mask (in bits) of this CIDR range.
         """
         return self.mask_len
 
@@ -1004,14 +1220,66 @@ class CIDR(AddrRange):
         return "%s/%d" % (self.start_addr, self.mask_len)
 
     def __repr__(self):
+        """
+        Returns an executable Python statement that can be used to recreate an
+        object of equivalent value.
+        """
         return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
             str(self._addr), self.mask_len)
+
+    def wildcard(self):
+        """
+        Returns a Wildcard range equivalent to this CIDR range.
+
+        If CIDR was initialised with klass=str a wildcard string is returned,
+        in all other cases a Wildcard object is returned.
+
+        NB - Only supports IPv4 CIDR addresses.
+        """
+        t1 = tuple(self.start_addr)
+        t2 = tuple(self.stop_addr)
+
+        if self.addr_type != AT_INET:
+            raise AddrConversionError('IPv6 CIDR addresses are invalid!')
+
+        tokens = []
+
+        seen_hyphen = False
+        seen_asterisk = False
+
+        for i in range(4):
+            if t1[i] == t2[i]:
+                #   A normal octet.
+                tokens.append(str(t1[i]))
+            elif (t1[i] == 0) and (t2[i] == 255):
+                #   An asterisk octet.
+                tokens.append('*')
+                seen_asterisk = True
+            else:
+                #   Create a hyphenated octet - only one allowed per wildcard.
+                if not seen_asterisk:
+                    if not seen_hyphen:
+                        tokens.append('%s-%s' % (t1[i], t2[i]))
+                        seen_hyphen = True
+                    else:
+                        raise SyntaxError('only one hyphenated octet per ' \
+                            'wildcard permitted!')
+                else:
+                    raise SyntaxError("* chars aren't permitted before ' \
+                        'hyphenated octets!")
+
+        wildcard = '.'.join(tokens)
+
+        if self.klass == str:
+            return wildcard
+
+        return Wildcard(wildcard)
 
 #-----------------------------------------------------------------------------
 class Wildcard(AddrRange):
     """
-    Represents a block of contiguous IPv4 network addresses defined using a
-    wildcard/glob style syntax.
+    A block of contiguous IPv4 network addresses defined using a wildcard
+    style syntax.
 
     Individual octets can be represented using the following shortcuts :-
 
@@ -1028,7 +1296,8 @@ class Wildcard(AddrRange):
     values of x are 0 through 254
     values of y are 1 through 255
 
-    NB - only one hyphenated octet per wildcard is allowed.
+    NB - only one hyphenated octet per wildcard is allowed and only asterisks
+    are permitted after a hyphenated octet.
 
     Example wildcards :-
 
@@ -1040,85 +1309,103 @@ class Wildcard(AddrRange):
     '*.*.*.*'           #   the whole IPv4 address space
 
     Aside: Wildcard ranges are not directly equivalent to CIDR ranges as they
-    can represent address ranges that do not conform to bit mask boundaries.
-    All CIDR ranges can be represented as wilcard ranges but the reverse isn't
-    always true.
+    can represent address ranges that do not fall on strict bit mask
+    boundaries. All CIDR ranges can be represented as wildcard ranges but the
+    reverse isn't always true.
     """
     def __init__(self, wildcard, klass=IP):
         """
         Constructor.
 
-        wildcard - a valid wildcard address (only IPv4 is supported).
+        wildcard - a valid IPv4 wildcard address.
 
         klass - (optional) class used to create each return object.
         Default: IP objects. See nrange() documentations for
         additional details on options.
         """
-        if not self.is_wildcard(wildcard):
-            raise Exception('Invalid wildcard address range %r!' \
+        #---------------------------------------------------------------------
+        #TODO: Add support for partial wildcards
+        #TODO: e.g. 192.168.*.* == 192.168.*
+        #TODO:      *.*.*.*     == *
+        def _is_wildcard(wildcard):
+            """
+            True if wildcard address is valid, False otherwise.
+            """
+            seen_hyphen = False
+            seen_asterisk = False
+
+            try:
+                octets = wildcard.split('.')
+                if len(octets) != 4:
+                    return False
+                for o in octets:
+                    if '-' in o:
+                        if seen_hyphen:
+                            return False
+                        seen_hyphen = True
+                        if seen_asterisk:
+                            #   Asterisks cannot precede hyphenated octets.
+                            return False
+                        (o1, o2) = [int(i) for i in o.split('-')]
+                        if o1 >= o2:
+                            return False
+                        if not 0 <= o1 <= 254:
+                            return False
+                        if not 1 <= o2 <= 255:
+                            return False
+                    elif o == '*':
+                        seen_asterisk = True
+                    else:
+                        if seen_hyphen is True:
+                            return False
+                        if seen_asterisk is True:
+                            return False
+                        if not 0 <= int(o) <= 255:
+                            return False
+            except AttributeError:
+                return False
+            except ValueError:
+                return False
+
+            return True
+        #---------------------------------------------------------------------
+
+        if not _is_wildcard(wildcard):
+            raise AddrFormatError('%r is not a recognised wildcard address!' \
                 % wildcard)
 
-        l_tokens = []
-        u_tokens = []
+        t1 = []
+        t2 = []
 
         for octet in wildcard.split('.'):
             if '-' in octet:
                 oct_tokens = octet.split('-')
-                l_tokens += [oct_tokens[0]]
-                u_tokens += [oct_tokens[1]]
+                t1 += [oct_tokens[0]]
+                t2 += [oct_tokens[1]]
             elif octet == '*':
-                l_tokens += ['0']
-                u_tokens += ['255']
+                t1 += ['0']
+                t2 += ['255']
             else:
-                l_tokens += [octet]
-                u_tokens += [octet]
+                t1 += [octet]
+                t2 += [octet]
 
-        start_addr = IP('.'.join(l_tokens))
-        stop_addr = IP('.'.join(u_tokens))
+        start_addr = IP('.'.join(t1))
+        stop_addr = IP('.'.join(t2))
 
         if start_addr.addr_type != AT_INET:
-            raise Exception('%s is an invalid IPv4 wildcard!' % start_addr)
+            raise AddrFormatError('%s is an invalid IPv4 wildcard!' \
+                % start_addr)
 
         super(self.__class__, self).__init__(start_addr, stop_addr,
               klass=klass)
 
-    def is_wildcard(self, wildcard):
+    def cidr(self):
         """
-        True if wildcard address is valid, False otherwise.
+        Returns a valid CIDR object for this wildcard. If conversion fails a
+        AddrConversionError exception is raised as not all wildcards ranges
+        are valid CIDR ranges.
         """
-        seen_hyphen = False
-        seen_asterisk = False
-
-        try:
-            octets = wildcard.split('.')
-            if len(octets) != 4:
-                return False
-            for octet in octets:
-                if '-' in octet:
-                    if seen_hyphen:
-                        return False
-                    seen_hyphen = True
-
-                    if seen_asterisk:
-                        #   Asterisks cannot precede hyphenated octets.
-                        return False
-                    (oct1, oct2) = map(lambda x: int(x), octet.split('-'))
-                    if oct1 >= oct2:
-                        return False
-                    if not 0 <= oct1 <= 254:
-                        return False
-                    if not 1 <= oct2 <= 255:
-                        return False
-                elif octet == '*':
-                    seen_asterisk = True
-                elif octet != '*':
-                    if not 0 <= int(octet) <= 255:
-                        return False
-        except AttributeError:
-            return False
-        except ValueError:
-            return False
-        return True
+        raise NotImplementedError('TODO. Not yet implemented!')
 
     def __str__(self):
         t1 = tuple(self.start_addr)
@@ -1144,15 +1431,21 @@ class Wildcard(AddrRange):
                         tokens.append('%s-%s' % (t1[i], t2[i]))
                         seen_hyphen = True
                     else:
-                        raise Exception('only one hyphenated octet ' \
+                        #FIXME: police properties with __setattr__ instead...
+                        raise AddrFormatError('only one hyphenated octet ' \
                             ' per wildcard allowed!')
                 else:
-                    raise Exception('asterisks not permitted before ' \
+                    #FIXME: police properties with __setattr__ instead...
+                    raise AddrFormatError('asterisks not permitted before ' \
                         'hyphenated octets!')
 
         return '.'.join(tokens)
 
     def __repr__(self):
+        """
+        Returns an executable Python statement that can be used to recreate an
+        object of equivalent value.
+        """
         return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
 
 #-----------------------------------------------------------------------------
