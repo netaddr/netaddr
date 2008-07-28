@@ -161,14 +161,14 @@ class Test_EUI(unittest.TestCase):
         self.failUnless(str(mac) == '00-C0-29-C2-52-FF')
         self.failUnless(mac.oui() == '00-C0-29')
         self.failUnless(mac.ei() == 'C2-52-FF')
-        self.failUnless(mac.to_eui64() == EUI('00-C0-29-FF-FE-C2-52-FF'))
+        self.failUnless(mac.eui64() == EUI('00-C0-29-FF-FE-C2-52-FF'))
 
     def testEUI64(self):
         eui64 = EUI('00-C0-29-FF-FE-C2-52-FF')
         self.failUnless(str(eui64) == '00-C0-29-FF-FE-C2-52-FF')
         self.failUnless(eui64.oui() == '00-C0-29')
         self.failUnless(eui64.ei() == 'FF-FE-C2-52-FF')
-        self.failUnless(eui64.to_eui64() == EUI('00-C0-29-FF-FE-C2-52-FF'))
+        self.failUnless(eui64.eui64() == EUI('00-C0-29-FF-FE-C2-52-FF'))
 
     def testIPv6LinkLocal(self):
         expected = 'fe80::20f:1fff:fe12:e733'
@@ -505,7 +505,7 @@ class Test_Xrange_Generators(unittest.TestCase):
 #-----------------------------------------------------------------------------
 class Test_CIDR(unittest.TestCase):
     """
-    Tests for the CIDR class.
+    Tests for the CIDR aggregate class.
     """
     def test_IPv4_CIDR_Equality(self):
         cidr1 = CIDR('192.168.0.0/255.255.254.0')
@@ -599,6 +599,45 @@ class Test_CIDR(unittest.TestCase):
         self.failUnless(c1 is not c2)
         self.failIf(c1 != c2)
         self.failIf(c1 is c2)
+
+#-----------------------------------------------------------------------------
+class Test_Wildcard(unittest.TestCase):
+    """
+    Tests for the Wildcard aggregate class.
+    """
+    def testValidWildcards(self):
+        valid_wildcards = (
+            ('192.168.0.1', 1),
+            ('0.0.0.0', 1),
+            ('255.255.255.255', 1),
+            ('192.168.0.0-31', 32),
+            ('192.168.0.*', 256),
+            ('192.168.0-1.*', 512),
+            ('192.168-169.*.*', 131072),
+            ('*.*.*.*', 4294967296),
+        )
+
+        for wildcard, expected_size in valid_wildcards:
+            wc = Wildcard(wildcard)
+            self.failUnless(wc.size() == expected_size)
+
+    def testInvalidWildcards(self):
+        invalid_wildcards = (
+            '*.*.*.*.*',
+            '*.*.*',
+            '*.*',
+            '*',
+            '192-193.*',
+            '192-193.0-1.*.*',
+            '192.168.*.0',
+            'a.b.c.*',
+            [],
+            None,
+            False,
+            True,
+        )
+        for wildcard in invalid_wildcards:
+            self.failUnlessRaises(AddrFormatError, Wildcard, wildcard)
 
 #-----------------------------------------------------------------------------
 class Test_IP_DNS(unittest.TestCase):
