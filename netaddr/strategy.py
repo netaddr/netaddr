@@ -6,7 +6,7 @@
 #-----------------------------------------------------------------------------
 """
 classes that implement the behaviour of each network address type, constants
-used to identify them and shared strategy instances used by address objects.
+used to identify them and shared strategy objects.
 """
 import socket as _socket
 import struct as _struct
@@ -19,7 +19,7 @@ import struct as _struct
 BIG_ENDIAN_PLATFORM = _struct.pack('=h', 1) == _struct.pack('>h', 1)
 
 #   Address type constants, used to identify the precise type of an
-#   AddressStrategy instance.
+#   AddressStrategy object.
 AT_UNSPEC = 0x0
 AT_INET   = 0x4
 AT_INET6  = 0x6
@@ -69,24 +69,19 @@ class AddrStrategy(object):
         self.width = width
         self.min_int = 0
         self.max_int = 2 ** width - 1
-
         self.word_size = word_size
         self.word_count = width / word_size
         self.min_word = 0
         self.max_word = 2 ** word_size - 1
-
         self.delimiter = delimiter
         self.word_fmt  = word_fmt
-
         self.hex_words = hex_words
-
         self.word_base = 16
+        self.addr_type = addr_type
+        self.to_upper = to_upper
+
         if self.hex_words is False:
             self.word_base = 10
-
-        self.addr_type = addr_type
-
-        self.to_upper = to_upper
 
         try:
             self.name = AT_DESCR[addr_type]
@@ -94,6 +89,10 @@ class AddrStrategy(object):
             self.name = AT_DESCR[AT_UNSPEC]
 
     def __repr__(self):
+        """
+        Returns an executable Python statement that can be used to recreate an
+        object of equivalent value.
+        """
         return "netaddr.address.%s(%r, %r, %r, %r, %r, %r)" % \
             (self.__class__.__name__, self.width, self.word_size,
             self.delimiter, self.addr_type, self.hex_words, self.to_upper)
@@ -120,7 +119,6 @@ class AddrStrategy(object):
                 return True
         except ValueError:
             return False
-
         return False
 
     def bits_to_int(self, bits):
@@ -149,7 +147,6 @@ class AddrStrategy(object):
             ' for address type!' % bits)
 
         word_bits = bits.split(self.delimiter)
-
         if len(word_bits) != self.word_count:
             raise Exception('invalid number of words found in binary form ' \
                 'string for address type!' % bits)
@@ -193,7 +190,6 @@ class AddrStrategy(object):
         to value represented by a network byte order integer.
         """
         bit_words = []
-
         for word in self.int_to_words(int_val):
             bits = self.word_to_bits(word)
             bit_words.append(bits)
@@ -210,14 +206,12 @@ class AddrStrategy(object):
                 'by this address type!' % int_val)
 
         words = []
-
         for i in range(self.word_count):
             word = int_val & (2 ** self.word_size - 1)
             words.append(int(word))
             int_val >>= self.word_size
 
         words.reverse()
-
         return tuple(words)
 
     #-------------------------------------------------------------------------
@@ -233,7 +227,6 @@ class AddrStrategy(object):
             return False
 
         tokens = addr.split(self.delimiter)
-
         if len(tokens) != self.word_count:
             return False
 
@@ -246,7 +239,6 @@ class AddrStrategy(object):
             return False
         except ValueError:
             return False
-
         return True
 
     def str_to_int(self, addr):
@@ -275,7 +267,6 @@ class AddrStrategy(object):
                 ' of this address type!' % addr)
 
         words = addr.split(self.delimiter)
-
         return tuple([ int(word, self.word_base) for word in words ])
 
     #-------------------------------------------------------------------------
@@ -299,7 +290,6 @@ class AddrStrategy(object):
 
             if not self.min_word <= i <= self.max_word:
                 return False
-
         return True
 
     def words_to_int(self, words):
@@ -310,7 +300,8 @@ class AddrStrategy(object):
         if not self.valid_words(words):
             raise Exception('%r is not a valid word list!' % words)
 
-        #   tuples have no reverse() method and reversed() is only in 2.4
+        #   tuples have no reverse() method and reversed() is only available
+        #   in Python 2.4. Ugly but necessary.
         if isinstance(words, tuple):
             words = list(words)
         words.reverse()
@@ -333,7 +324,6 @@ class AddrStrategy(object):
 
         tokens = [self.word_fmt % i for i in words]
         addr = self.delimiter.join(tokens)
-
         return addr
 
     def words_to_bits(self, words):
@@ -345,7 +335,6 @@ class AddrStrategy(object):
             raise Exception('%r is not a valid word list!' % words)
 
         bit_words = []
-
         for word in words:
             bits = self.word_to_bits(word)
             bit_words.append(bits)
@@ -368,9 +357,7 @@ class AddrStrategy(object):
             int_val >>= 8
 
         bits.reverse()
-
         bit_str = ''.join(bits) or '0'*self.word_size
-
         return ('0'*self.word_size+bit_str)[-self.word_size:]
 
     def description(self):
@@ -399,10 +386,11 @@ class IPv4Strategy(AddrStrategy):
     module's inet_ntoa() and inet_aton() functions making it almost 2.5 times
     faster than a standard AddrStrategy configured for processing IPv4.
 
-    However, bear in mind that these modules might not be available everywhere.
+    However, keep in mind that these modules might not be available everywhere.
+
     Runtimes such as Google App Engine gut the socket module. struct is also
     limited to processing 32-bit integer which is fine here but isn't suitable
-    for 128-bit IPv6 processing.
+    for longer address types such as IPv6.
     """
     def __init__(self):
         super(self.__class__, self).__init__(width=32, word_size=8,
@@ -416,7 +404,6 @@ class IPv4Strategy(AddrStrategy):
         if not self.valid_str(addr):
             raise Exception('%r is not a valid IPv4 dotted decimal' \
                 ' address string.!' % addr)
-
         return _struct.unpack('>I', _socket.inet_aton(addr))[0]
 
     def int_to_str(self, int_val):
@@ -426,7 +413,6 @@ class IPv4Strategy(AddrStrategy):
         """
         if not self.valid_int(int_val):
             raise Exception('%r is not a valid 32-bit int or long!' % int_val)
-
         return _socket.inet_ntoa(_struct.pack('>I', int_val))
 
     def int_to_words(self, int_val):
@@ -437,7 +423,6 @@ class IPv4Strategy(AddrStrategy):
         if not self.valid_int(int_val):
             raise Exception('%r is not a valid int/long value supported ' \
                 'by this address type!' % int_val)
-
         return _struct.unpack('4B', _struct.pack('>I', int_val))
 
     def words_to_int(self, octets):
@@ -469,8 +454,9 @@ class IPv6Strategy(AddrStrategy):
     Supports all address formats detailed in RFC 4291.
 
     NB - This class would benefit greatly from access to inet_pton/inet_ntop()
-    function calls in Python's socket module. Sadly, it isn't available so
-    we'll have to put up with the pure-Python implementation here for now.
+    function calls in Python's socket module. Sadly, they aren't available so
+    we'll have to put up with the pure-Python implementation here (for now at
+    least).
     """
     def __init__(self):
         super(self.__class__, self).__init__(addr_type=AT_INET6,
@@ -480,6 +466,7 @@ class IPv6Strategy(AddrStrategy):
         """
         Returns True if IPv6 network address string is valid, False otherwise.
         """
+        #TODO: Reduce the length of this method ...
         if not isinstance(addr, (str, unicode)):
             return False
 
@@ -658,9 +645,9 @@ class IPv6Strategy(AddrStrategy):
 
         tokens = []
         for i in range(self.word_count):
-            word = int_val & 0xffff
+            word = int_val & (2 ** self.word_size - 1)
             tokens += [the_word_fmt % word]
-            int_val >>= 16
+            int_val >>= self.word_size
 
         tokens.reverse()
 
@@ -743,6 +730,8 @@ class EUI48Strategy(AddrStrategy):
                 elif ':' in addr:
                     #   UNIX style.
                     words = [int("0x%s" % i, 0)  for i in addr.split(':')]
+                else:
+                    return False
                 if len(words) != 6:
                     return False
                 for i in words:
@@ -819,35 +808,17 @@ class EUI48Strategy(AddrStrategy):
         return addr
 
 #-----------------------------------------------------------------------------
-#   Shared strategy instances for supported address types.
-#   NB - underscores hide ugliness in external interface.
+#   Shared strategy objects for supported address types.
 #-----------------------------------------------------------------------------
-#   Basic shared strategy instances.
-_MAC_std = AddrStrategy(addr_type=AT_LINK, width=48, word_size=8,
-                       word_fmt='%02x', delimiter=':')
 
-_MAC_cisco_std = AddrStrategy(addr_type=AT_LINK, width=48, word_size=16,
-                             word_fmt='%04x', delimiter='.')
+#   Optimised strategy objects.
+ST_IPV4  = IPv4Strategy()
+ST_IPV6  = IPv6Strategy()
+ST_EUI48 = EUI48Strategy()
 
-_EUI64_std = AddrStrategy(addr_type=AT_EUI64, width=64, word_size=8,
+#   Standard strategy objects.
+ST_EUI64 = AddrStrategy(addr_type=AT_EUI64, width=64, word_size=8,
                          word_fmt='%02x', delimiter='-', to_upper=True)
-
-_IPv4_std = AddrStrategy(addr_type=AT_INET, width=32, word_size=8,
-                        word_fmt='%d', delimiter='.', hex_words=False)
-
-_IPv6_std = AddrStrategy(addr_type=AT_INET6, width=128, word_size=16,
-                        word_fmt='%x', delimiter=':')
-
-#   Optimised shared strategy instances.
-_EUI48_opt = EUI48Strategy()
-_IPv4_opt  = IPv4Strategy()
-_IPv6_opt  = IPv6Strategy()
-
-#   Names suitable for standard use namespace export.
-ST_EUI48 = _EUI48_opt
-ST_EUI64 = _EUI64_std
-ST_IPV4  = _IPv4_opt
-ST_IPV6  = _IPv6_opt
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
