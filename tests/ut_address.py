@@ -600,6 +600,64 @@ class Test_CIDR(unittest.TestCase):
         self.failIf(c1 != c2)
         self.failIf(c1 is c2)
 
+    def test_CIDR_abbreviations(self):
+        abbreviations = (
+            #   Integer values.
+            (-1, None),
+            (0,   '0.0.0.0/8'),       #   Class A
+            (10,  '10.0.0.0/8'),
+            (127, '127.0.0.0/8'),
+            (128, '128.0.0.0/16'),    #   Class B
+            (191, '191.0.0.0/16'),
+            (192, '192.0.0.0/24'),    #   Class C
+            (223, '223.0.0.0/24'),
+            (224, '224.0.0.0/8'),     #   Class D (multicast)
+            (239, '239.0.0.0/8'),
+            (240, '240.0.0.0/32'),    #   Class E (reserved)
+            (255, '255.0.0.0/32'),
+            (256, None),
+            #   String values.
+            ('-1', None),
+            ('0',   '0.0.0.0/8'),       #   Class A
+            ('10',  '10.0.0.0/8'),
+            ('127', '127.0.0.0/8'),
+            ('128', '128.0.0.0/16'),    #   Class B
+            ('191', '191.0.0.0/16'),
+            ('192', '192.0.0.0/24'),    #   Class C
+            ('223', '223.0.0.0/24'),
+            ('224', '224.0.0.0/8'),     #   Class D (multicast)
+            ('239', '239.0.0.0/8'),
+            ('240', '240.0.0.0/32'),    #   Class E (reserved)
+            ('255', '255.0.0.0/32'),
+            ('256', None),
+            ('128/8',       '128.0.0.0/8'),
+            ('128.0/8',     '128.0.0.0/8'),
+            ('128.0.0.0/8', '128.0.0.0/8'),
+            ('128.0.0/8',   '128.0.0.0/8'),
+            ('192.168',     '192.168.0.0/24'),
+#FIXME:     ('192.168/8',   '192.168.0.0/8'), # Invalid with strict checking!
+            ('0.0.0.0',     '0.0.0.0/8'),
+            ('::/128',      None),            #   Does not support IPv6.
+            ('::10/128',    None),            #   Hmmm... ambiguous IPv6.
+            ('::/128',      None),            #   Does not support IPv6.
+#FIXME:            ('::192.168',   '::192.168.0.0/128'),
+#FIXME:            ('::192.168',   '::192.168.0.0/128'),
+#FIXME:            ('::ffff:192.168/120', '::ffff:192.168.0.0/120'),
+            ('0.0.0.0.0', None),
+            ('', None),
+            (None, None),
+            ([], None),
+            ({}, None),
+        )
+
+        for (abbrev, expected) in abbreviations:
+            result = abbrev_to_cidr(abbrev)
+            self.failUnless(result == expected, "expected %r, result %r" \
+                % (expected, result))
+            if result is not None:
+                cidr = CIDR(abbrev)
+                self.failUnless(str(cidr) == result, "expected %s, result %r" % (cidr, result))
+
 #-----------------------------------------------------------------------------
 class Test_Wildcard(unittest.TestCase):
     """
