@@ -14,14 +14,14 @@ from netaddr.strategy import AT_UNSPEC, AT_LINK, AT_INET, AT_INET6, \
 #-----------------------------------------------------------------------------
 class AddrFormatError(Exception):
     """
-   Network address format not recognised.
+    Network address format not recognised.
     """
     pass
 
 #-----------------------------------------------------------------------------
 class AddrConversionError(Exception):
     """
-   Attempt convert between address types failed.
+    Attempt convert between address types failed.
     """
     pass
 
