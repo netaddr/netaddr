@@ -405,13 +405,15 @@ class IP(Addr):
     """
     A class whose objects represent Internet Protocol network addresses. Both
     IPv4 and IPv6 are fully supported and include an optional subnet bit mask
-    prefix.
+    prefix, e.g.
 
-    NB - parsing of the prefix in this class isn't as strict as the CIDR
-    aggregate class, which does not allow non zero bits to the right of the
-    specified subnet prefix.
+    192.168.0.1/24
+    fe80::20f:1fff:fe12:e733/64
 
-    See CIDR() class for further details.
+    The IP class does not make a requirement to omit non-zero bits to the
+    right of the subnet prefix when it is applied to the address.
+
+    See CIDR() class if you require stricter prefix checking.
     """
     def __init__(self, addr, addr_type=AT_UNSPEC):
         """
@@ -427,34 +429,72 @@ class IP(Addr):
             raise TypeError("addr must be an network address string or a " \
                 "positive integer!")
 
-        if isinstance(addr, (int, long)) and addr_type is None:
+        if isinstance(addr, (int, long)) and addr_type is AT_UNSPEC:
             raise ValueError("addr_type must be provided with int/long " \
                 "address values!")
 
         self.value = None
         self.strategy = None
+        self.prefix = None
 
-        if addr_type is AT_UNSPEC:
+        if addr_type == AT_UNSPEC:
+            pass
+        elif addr_type == AT_INET:
+            self.strategy = ST_IPV4
+        elif addr_type == AT_INET6:
+            self.strategy = ST_IPV6
+        else:
+            raise ValueError('%r is an unsupported address type!')
+
+        if addr is None:
+            addr = 0
+
+        self.setvalue(addr)
+
+    #TODO: replace this method with __setattr__() instead.
+    def setvalue(self, addr):
+        """
+        Sets the value of this address.
+
+        addr - the string form of an IP address, or a network byte order
+        int/long value within the supported range for the address type.
+
+        Raises a TypeError if addr is of an unsupported type.
+        Raises an OverflowError if addr is an integer outside the bounds for
+        this address type.
+        """
+        if isinstance(addr, (str, unicode)):
+            #   String address.
+            if '/' in addr:
+                (addr, masklen) = addr.split('/', 1)
+                self.prefix = int(masklen)
+
             #   Auto-detect address type.
             for strategy in (ST_IPV4, ST_IPV6):
                 if strategy.valid_str(addr):
                     self.strategy = strategy
                     break
-        elif addr_type == AT_INET:
-            self.strategy = ST_IPV4
-        elif addr_type == AT_INET6:
-            self.strategy = ST_IPV6
 
-        if self.strategy is None:
-            #   Whoops - we fell through and didn't match anything!
-            raise AddrFormatError("%r is not a recognised IP address format!"\
-                % addr)
+            if self.strategy is None:
+                raise AddrFormatError('%r is not a valid IPv4/IPv6 address!' \
+                    % addr)
 
-        if addr is None:
-            addr = 0
+            self.addr_type = self.strategy.addr_type
+            self.value = self.strategy.str_to_int(addr)
 
-        self.addr_type = self.strategy.addr_type
-        self.setvalue(addr)
+        elif isinstance(addr, (int, long)):
+            if self.strategy.valid_int(addr):
+                self.addr_type = self.strategy.addr_type
+                self.value = addr
+            else:
+                raise OverflowError('%r cannot be represented in %r bits!' \
+                    % (addr, self.strategy.width))
+        else:
+            raise TypeError('%r is an unsupported type!')
+
+        #   Set default prefix.
+        if self.prefix == None:
+            self.prefix = self.strategy.width
 
     def is_netmask(self):
         """
@@ -535,19 +575,16 @@ class IP(Addr):
         """
         Returns a valid CIDR object for this IP address.
         """
-        raise NotImplementedError('TODO. Not yet implemented!')
+        hostmask = (1 << (self.strategy.width - self.prefix)) - 1
+        start = (self.value | hostmask) - hostmask
+        network = self.strategy.int_to_str(start)
+        return CIDR("%s/%s" % (network, self.prefix))
 
     def masklen(self):
         """
         Returns the subnet prefix of this IP address.
         """
-        raise NotImplementedError('TODO. Not yet implemented!')
-
-    def host(self):
-        """
-        Returns the IP address value without the subnet prefix.
-        """
-        raise NotImplementedError('TODO. Not yet implemented!')
+        return int(self.prefix)
 
     def ipv4(self):
         """
@@ -593,6 +630,20 @@ class IP(Addr):
         Returns True if this address is multicast, False otherwise.
         """
         raise NotImplementedError('TODO. Not yet implemented!')
+
+    def __str__(self):
+        """
+        Returns the common string representation for this IP address.
+        """
+        return self.strategy.int_to_str(self.value)
+
+    def __repr__(self):
+        """
+        Returns an executable Python statement that can be used to recreate an
+        IP object of equivalent value.
+        """
+        return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
+            str(self), self.prefix)
 
 #-----------------------------------------------------------------------------
 def nrange(start, stop, step=1, klass=None):
@@ -1163,20 +1214,18 @@ class CIDR(AddrRange):
                 raise AddrFormatError('Address and netmask types do ' \
                     'not match!')
 
-        self._addr = addr
-
-        if not 0 <= prefixlen <= self._addr.strategy.width:
+        if not 0 <= prefixlen <= addr.strategy.width:
             raise IndexError('CIDR prefix out of bounds for %s addresses!' \
-                % self._addr.strategy.name)
+                % addr.strategy.name)
 
         self.mask_len = prefixlen
-        width = self._addr.strategy.width
-        self.addr_type = self._addr.strategy.addr_type
+        width = addr.strategy.width
+        self.addr_type = addr.strategy.addr_type
 
         int_hostmask = (1 << (width - self.mask_len)) - 1
-        int_stop = int(self._addr) | int_hostmask
+        int_stop = int(addr) | int_hostmask
         int_start = int_stop - int_hostmask
-        int_netmask = self._addr.strategy.max_int ^ int_hostmask
+        int_netmask = addr.strategy.max_int ^ int_hostmask
 
         start_addr = IP(int_start, self.addr_type)
         stop_addr = IP(int_stop, self.addr_type)
@@ -1187,16 +1236,10 @@ class CIDR(AddrRange):
         self.netmask_addr = IP(int_netmask, self.addr_type)
         self.hostmask_addr = IP(int_hostmask, self.addr_type)
 
-    def addr(self):
-        """
-        Returns the network address used to initialize this CIDR range.
-        """
-        if self.klass in (str, unicode):
-            return str(self._addr)
-        elif self.klass in (int, long, hex):
-            return self.klass(int(self._addr))
-        else:
-            return self.klass(int(self._addr), self.addr_type)
+        #   Make cidr() stricter than inet() ...
+        host = (int(addr) | int_netmask) - int_netmask
+        if host != 0:
+            raise TypeError('non-zero bits to the right of netmask! Try %s instead.' % str(self))
 
     def netmask(self):
         """
@@ -1217,7 +1260,7 @@ class CIDR(AddrRange):
         return self.mask_len
 
     def __str__(self):
-        return "%s/%d" % (self.start_addr, self.mask_len)
+        return "%s/%s" % (self.start_addr, self.mask_len)
 
     def __repr__(self):
         """
@@ -1225,7 +1268,7 @@ class CIDR(AddrRange):
         object of equivalent value.
         """
         return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
-            str(self._addr), self.mask_len)
+            str(self.start_addr), self.mask_len)
 
     def wildcard(self):
         """

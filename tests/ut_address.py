@@ -333,7 +333,7 @@ class Test_Addr_IPv6(unittest.TestCase):
         r2 = CIDR('2001:0DB8:0:CD30::/60')
         #DEBUG: print r2
 
-        r3 = CIDR('2001:0DB8::CD3/60')
+        r3 = IP('2001:0DB8::CD3/60')
         #DEBUG: print r3
 
         self.failUnless(r1 == r2)
@@ -533,7 +533,7 @@ class Test_CIDR(unittest.TestCase):
         ]
 
         supernet = CIDR('10.0.0.0/24')
-        subnets = list(str(addr) for addr in supernet)[::16]
+        subnets = list(addr for addr in supernet)[::16]
 
         for i, subnet_addr in enumerate(subnets):
             subnet = CIDR("%s/28" % subnet_addr)
@@ -550,7 +550,7 @@ class Test_CIDR(unittest.TestCase):
 
     def testIndexingAndSlicing(self):
         #   IPv4
-        c1 = CIDR('192.168.0.1/23', klass=str)
+        c1 = CIDR('192.168.0.0/23', klass=str)
 
         #   Handy methods.
         self.failUnless(c1.first() == '192.168.0.0')
