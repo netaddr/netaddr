@@ -8,6 +8,7 @@
 classes and functions representing supported network addresses and associated
 aggregate types such as CIDR and Wilcards.
 """
+import math as _math
 from netaddr.strategy import AT_UNSPEC, AT_LINK, AT_INET, AT_INET6, \
                              AT_EUI64, ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 
@@ -1239,7 +1240,8 @@ class CIDR(AddrRange):
         #   Make cidr() stricter than inet() ...
         host = (int(addr) | int_netmask) - int_netmask
         if host != 0:
-            raise TypeError('non-zero bits to the right of netmask! Try %s instead.' % str(self))
+            raise TypeError('non-zero bits to the right of netmask! ' \
+                'Try %s instead.' % str(self))
 
     def netmask(self):
         """
@@ -1448,7 +1450,34 @@ class Wildcard(AddrRange):
         AddrConversionError exception is raised as not all wildcards ranges
         are valid CIDR ranges.
         """
-        raise NotImplementedError('TODO. Not yet implemented!')
+        size = self.size()
+
+        if size & (size - 1) != 0:
+            raise AddrConversionError('%s cannot be represented with CIDR' \
+                % str(self))
+
+        (mantissa, exponent) = _math.frexp(size)
+
+        #   The check below is only valid up to around 2^53 after which
+        #   rounding on +1 or -1 starts to bite and would cause this logic to
+        #   fail. Fine for our purposes here as we only envisage going up to
+        #   2^32, for now at least.
+        if mantissa != 0.5:
+            raise AddrConversionError('%s cannot be represented with CIDR' \
+                % str(self))
+
+        prefix = 32 - int(exponent - 1)
+        network = str(self.start_addr)
+        try:
+            cidr = CIDR("%s/%d" % (network, prefix))
+        except:
+            raise AddrConversionError('%s cannot be represented with CIDR' \
+                % str(self))
+
+        if self.klass == str:
+            return str(cidr)
+
+        return cidr
 
     def __str__(self):
         t1 = tuple(self.start_addr)
@@ -1491,6 +1520,5 @@ class Wildcard(AddrRange):
         """
         return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
 
-#-----------------------------------------------------------------------------
 if __name__ == '__main__':
     pass

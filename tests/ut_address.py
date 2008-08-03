@@ -656,7 +656,27 @@ class Test_CIDR(unittest.TestCase):
                 % (expected, result))
             if result is not None:
                 cidr = CIDR(abbrev)
-                self.failUnless(str(cidr) == result, "expected %s, result %r" % (cidr, result))
+                self.failUnless(str(cidr) == result, "expected %s, result %r" \
+                    % (cidr, result))
+
+    def test_CIDR_to_Wildcard(self):
+        expected = (
+            ('10.0.0.1/32', '10.0.0.1', 1),
+            ('192.168.0.0/24', '192.168.0.*', 256),
+            ('172.16.0.0/12', '172.16-31.*.*', 1048576),
+            ('0.0.0.0/0', '*.*.*.*', 4294967296),
+        )
+
+        for cidr, wildcard, size in expected:
+            c1 = CIDR(cidr)
+            w1 = c1.wildcard()
+            c2 = w1.cidr()
+            self.failUnless(c1.size() == size)
+            self.failUnless(str(c1) == cidr)
+            self.failUnless(str(w1) == wildcard)
+            self.failUnless(w1.size() == size)
+            self.failUnless(c1 == c2)           #   Test __eq__()
+            self.failUnless(str(c1) == str(c2)) #   Test __str__() values too.
 
 #-----------------------------------------------------------------------------
 class Test_Wildcard(unittest.TestCase):
@@ -696,6 +716,36 @@ class Test_Wildcard(unittest.TestCase):
         )
         for wildcard in invalid_wildcards:
             self.failUnlessRaises(AddrFormatError, Wildcard, wildcard)
+
+    def test_Wildcard_to_CIDR(self):
+        expected = (
+            ('10.0.0.1', '10.0.0.1/32', 1),
+            ('192.168.0.*', '192.168.0.0/24', 256),
+            ('172.16-31.*.*', '172.16.0.0/12', 1048576),
+            ('*.*.*.*', '0.0.0.0/0', 4294967296),
+        )
+
+        for wildcard, cidr, size in expected:
+            w1 = Wildcard(wildcard)
+            c1 = w1.cidr()
+            w2 = c1.wildcard()
+            self.failUnless(w1.size() == size)
+            self.failUnless(str(w1) == wildcard)
+            self.failUnless(str(c1) == cidr)
+            self.failUnless(c1.size() == size)
+            self.failUnless(w1 == w2)           #   Test __eq__()
+            self.failUnless(str(w1) == str(w2)) #   Test __str__() values too.
+
+    def test_Wilcard_without_CIDR_Equivalent(self):
+        """
+        Test valid wildcards that cannot be converted to CIDR.
+        """
+        #TODO: make this test work with failUnlessRaises() ...
+        w1 = Wildcard('10.0.0.5-6')
+        try:
+            w1.cidr()   #   This should raise an exception.
+        except AddrConversionError:
+            pass
 
 #-----------------------------------------------------------------------------
 class Test_IP_DNS(unittest.TestCase):
