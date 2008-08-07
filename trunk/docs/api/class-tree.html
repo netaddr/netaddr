@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class Hierarchy</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="netaddr-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Trees&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">&nbsp;</td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="class-tree.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<center><b>
+ [ <a href="module-tree.html">Module Hierarchy</a>
+ | <a href="class-tree.html">Class Hierarchy</a> ]
+</b></center><br />
+<h1 class="epydoc">Class Hierarchy</h1>
+<ul class="nomargin-top">
+    <li> <strong class="uidlink">object</strong>:
+      <em class="summary">The most base type</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.address.Addr-class.html">netaddr.address.Addr</a></strong>:
+      <em class="summary">The base class containing common functionality for all subclasses 
+        representing various network address types.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.address.EUI-class.html">netaddr.address.EUI</a></strong>:
+      <em class="summary">EUI objects represent IEEE Extended Unique Identifiers.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.address.IP-class.html">netaddr.address.IP</a></strong>:
+      <em class="summary">A class whose objects represent Internet Protocol network 
+        addresses.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.address.AddrRange-class.html">netaddr.address.AddrRange</a></strong>:
+      <em class="summary">A block of contiguous network addresses bounded by an arbitrary 
+        start and stop address.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.address.CIDR-class.html">netaddr.address.CIDR</a></strong>:
+      <em class="summary">A block of contiguous IPv4 or IPv6 network addresses defined by a 
+        base network address and a bitmask prefix or subnet mask address 
+        indicating the size/extent of the subnet.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.address.Wildcard-class.html">netaddr.address.Wildcard</a></strong>:
+      <em class="summary">A block of contiguous IPv4 network addresses defined using a 
+        wildcard style syntax.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.strategy.AddrStrategy-class.html">netaddr.strategy.AddrStrategy</a></strong>:
+      <em class="summary">Very basic support for all common operations performed on each 
+        network type.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.strategy.EUI48Strategy-class.html">netaddr.strategy.EUI48Strategy</a></strong>:
+      <em class="summary">Implements the operations that can be performed on an IEEE 48-bit 
+        EUI (Extended Unique Identifer).</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.strategy.IPv4Strategy-class.html">netaddr.strategy.IPv4Strategy</a></strong>:
+      <em class="summary">An optimised <a href="netaddr.strategy.AddrStrategy-class.html" 
+        class="link">AddrStrategy</a> for IPv4 addresses.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.strategy.IPv6Strategy-class.html">netaddr.strategy.IPv6Strategy</a></strong>:
+      <em class="summary">Implements the operations that can be performed on an Internet 
+        Protocol version 6 network address in accordance with RFC 4291.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink">exceptions.BaseException</strong>:
+      <em class="summary">Common base class for all exceptions</em>
+    <ul>
+    <li> <strong class="uidlink">exceptions.Exception</strong>:
+      <em class="summary">Common base class for all non-exit exceptions.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.AddrConversionError-class.html">netaddr.AddrConversionError</a></strong>:
+      <em class="summary">Conversion between address types or notations failed.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.AddrFormatError-class.html">netaddr.AddrFormatError</a></strong>:
+      <em class="summary">Network address format not recognised.</em>
+    </li>
+    </ul>
+    </li>
+    </ul>
+    </li>
+    </ul>
+    </li>
+</ul>
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="netaddr-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Trees&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >netaddr</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+------------------------------------------------------------------------------
+Release: 0.4
+Date: 7th Aug 2008
+
+Major changes since 0.3.x
+-------------------------
+
+- all general Exception raising has been replaced with more specific 
+  exceptions such as TypeError and ValueError and with the addition of two 
+  custom exception classes, AddrFormatError and AddrConversionError.
+
+- The IP class now accepts a subnet prefix. It is *NOT* strict about non-zero
+  bits to the right of implied subnet mask, unlike the CIDR class (see below).
+
+- The CIDR class is now completely strict about non-zero bits to the right of 
+  the implied subnet netmask and raises a ValueError if they exist, with a 
+  handy hint as to the correct CIDR to be used based on the supplied subnet 
+  prefix.
+
+- The CIDR class now also supports abbreviated CIDR ranges and uses older
+  classful network address rules to decided on a subnet prefix if one is not
+  explicitly provided. Supported forms now include 10, 10/8 and 192.168/16.
+  Currently only supports these options for IPv4 CIDR address ranges.
+
+- __repr__() methods have been defined for all classes in the netaddr module 
+  producing executable Python statements that can be used to re-create the
+  state of any object.
+
+- CIDR and Wildcard classes now have methods that support conversions between 
+  these two aggregate types :-
+  	
+  	* CIDR -> Wildcard
+  	* Wildcard -> CIDR
+  	
+Housekeeping Changes
+--------------------
+
+- massive docstring review and tidy up with the inclusino of epydoc specific 
+  syntax to spruce up auto-generated API documentation.
+
+- Thorough review of code using pylint.
+
+- netaddr module now has the special __version__ variable defined which is 
+  also referenced by setup.py.
+
+- Some minor changes to setup.py and MANIFEST.in.
+
+- constants and custom Exception classes have been moved to __init__.py from
+  strategy.py
+  
+- An import * friendly __all__ has been defined for the netaddr namespace
+  which should remove the need to delve too much into the address and strategy
+  submodules.
+  
+- fixed a number of line-ending issues in several files.
+
+------------------------------------------------------------------------------
