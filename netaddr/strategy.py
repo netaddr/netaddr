@@ -5,35 +5,14 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-classes that implement the behaviour of each network address type, constants
-used to identify them and shared strategy objects.
+network address type logic, constants used to identify them and shared
+strategy objects.
 """
 import socket as _socket
 import struct as _struct
 
-#-----------------------------------------------------------------------------
-#  Constants.
-#-----------------------------------------------------------------------------
-
-#   True if platform is natively big-endian, False otherwise.
-BIG_ENDIAN_PLATFORM = _struct.pack('=h', 1) == _struct.pack('>h', 1)
-
-#   Address type constants, used to identify the precise type of an
-#   AddressStrategy object.
-AT_UNSPEC = 0x0
-AT_INET   = 0x4
-AT_INET6  = 0x6
-AT_LINK   = 0x30
-AT_EUI64  = 0x40
-
-#   Address type description lookup dict.
-AT_DESCR = {
-    AT_UNSPEC : 'Unspecified',
-    AT_LINK   : 'MAC',
-    AT_EUI64  : 'EUI-64',
-    AT_INET   : 'IPv4',
-    AT_INET6  : 'IPv6',
-}
+from netaddr import BIG_ENDIAN_PLATFORM, AT_UNSPEC, AT_INET, AT_INET6, \
+                    AT_LINK, AT_EUI64, AT_DESCR
 
 #-----------------------------------------------------------------------------
 def _BYTES_TO_BITS():
@@ -90,8 +69,8 @@ class AddrStrategy(object):
 
     def __repr__(self):
         """
-        Returns an executable Python statement that can be used to recreate an
-        object of equivalent value.
+        @return: An executable Python statement that can recreate an object
+            with an equivalent state.
         """
         return "netaddr.address.%s(%r, %r, %r, %r, %r, %r)" % \
             (self.__class__.__name__, self.width, self.word_size,
@@ -103,8 +82,10 @@ class AddrStrategy(object):
 
     def valid_bits(self, bits):
         """
-        Returns True if network address in readable binary form is valid for
-        this address type, False otherwise.
+        @param bits: A network address in readable binary form.
+
+        @return: C{True} if network address is valid for this address type,
+            C{False} otherwise.
         """
         if not isinstance(bits, (str, unicode)):
             return False
@@ -123,24 +104,30 @@ class AddrStrategy(object):
 
     def bits_to_int(self, bits):
         """
-        Returns a network byte order integer that is equivalent to value
-        represented by network address in readable binary form.
+        @param bits: A network address in readable binary form.
+
+        @return: A network byte order integer that is equivalent to value
+            represented by network address in readable binary form.
         """
         words = self.bits_to_words(bits)
         return self.words_to_int(words)
 
     def bits_to_str(self, bits):
         """
-        Returns a network address in string form that is equivalent to value
-        represented by network address in readable binary form.
+        @param bits: A network address in readable binary form.
+
+        @return: A network address in string form that is equivalent to value
+            represented by network address in readable binary form.
         """
         words = self.bits_to_words(bits)
         return self.words_to_str(words)
 
     def bits_to_words(self, bits):
         """
-        Returns an integer word sequence that is equivalent to value
-        represented by network address in readable binary form.
+        @param bits: A network address in readable binary form.
+
+        @return: An integer word sequence that is equivalent to value
+            represented by network address in readable binary form.
         """
         if not self.valid_bits(bits):
             raise Exception('%r is not a valid readable binary form string' \
@@ -159,8 +146,10 @@ class AddrStrategy(object):
 
     def valid_int(self, int_val):
         """
-        Returns True if network byte order integer falls within the boundaries
-        of this address type, False otherwise.
+        @param int_val: A network byte order integer.
+
+        @return: C{True} if network byte order integer falls within the
+            boundaries of this address type, C{False} otherwise.
         """
         if not isinstance(int_val, (int, long)):
             return False
@@ -172,8 +161,10 @@ class AddrStrategy(object):
 
     def int_to_str(self, int_val):
         """
-        Returns a network address in string form that is equivalent to value
-        represented by a network byte order integer.
+        @param int_val: A network byte order integer.
+
+        @return: A network address in string form that is equivalent to value
+            represented by a network byte order integer.
         """
         words = self.int_to_words(int_val)
         tokens = [self.word_fmt % i for i in words]
@@ -186,8 +177,10 @@ class AddrStrategy(object):
 
     def int_to_bits(self, int_val):
         """
-        Returns a network address in readable binary form that is equivalent
-        to value represented by a network byte order integer.
+        @param int_val: A network byte order integer.
+
+        @return: A network address in readable binary form that is equivalent
+            to value represented by a network byte order integer.
         """
         bit_words = []
         for word in self.int_to_words(int_val):
@@ -198,8 +191,10 @@ class AddrStrategy(object):
 
     def int_to_words(self, int_val):
         """
-        Returns an integer word sequence that is equivalent to value
-        represented by a network byte order integer.
+        @param int_val: A network byte order integer.
+
+        @return: An integer word sequence that is equivalent to value
+            represented by a network byte order integer.
         """
         if not self.valid_int(int_val):
             raise Exception('%r is not a valid int/long value supported ' \
@@ -220,8 +215,10 @@ class AddrStrategy(object):
 
     def valid_str(self, addr):
         """
-        Returns True if network address in string form is valid for this
-        address type, False otherwise.
+        @param addr: A network address in string form.
+
+        @return: C{True} if network address in string form is valid for this
+            address type, C{False} otherwise.
         """
         if not isinstance(addr, (str, unicode)):
             return False
@@ -243,24 +240,30 @@ class AddrStrategy(object):
 
     def str_to_int(self, addr):
         """
-        Returns a network byte order integer that is equivalent to value
-        represented by network address in string form.
+        @param addr: A network address in string form.
+
+        @return: A network byte order integer that is equivalent to value
+            represented by network address in string form.
         """
         words = self.str_to_words(addr)
         return self.words_to_int(words)
 
     def str_to_bits(self, addr):
         """
-        Returns a network address in readable binary form that is equivalent
-        to value represented by network address in string form.
+        @param addr: A network address in string form.
+
+        @return: A network address in readable binary form that is equivalent
+            to value represented by network address in string form.
         """
         words = self.str_to_words(addr)
         return self.words_to_bits(words)
 
     def str_to_words(self, addr):
         """
-        Returns an integer word sequence that is equivalent in value to the
-        network address in string form.
+        @param addr: A network address in string form.
+
+        @return: An integer word sequence that is equivalent in value to the
+            network address in string form.
         """
         if not self.valid_str(addr):
             raise Exception('%r is not a recognised string representation' \
@@ -275,8 +278,10 @@ class AddrStrategy(object):
 
     def valid_words(self, words):
         """
-        Returns True if word sequence is valid for this address type, False
-        otherwise.
+        @param words: A list or tuple containing integer word values.
+
+        @return: C{True} if word sequence is valid for this address type,
+            C{False} otherwise.
         """
         if not isinstance(words, (list, tuple)):
             return False
@@ -294,8 +299,10 @@ class AddrStrategy(object):
 
     def words_to_int(self, words):
         """
-        Returns a network byte order integer that is equivalent to value
-        represented by word sequence.
+        @param words: A list or tuple containing integer word values.
+
+        @return: A network byte order integer that is equivalent to value
+            represented by word sequence.
         """
         if not self.valid_words(words):
             raise Exception('%r is not a valid word list!' % words)
@@ -316,8 +323,10 @@ class AddrStrategy(object):
 
     def words_to_str(self, words):
         """
-        Returns a network address in string form that is equivalent to value
-        represented by word sequence.
+        @param words: A list or tuple containing integer word values.
+
+        @return: A network address in string form that is equivalent to value
+            represented by word sequence.
         """
         if not self.valid_words(words):
             raise Exception('%r is not a valid word list!' % words)
@@ -328,8 +337,10 @@ class AddrStrategy(object):
 
     def words_to_bits(self, words):
         """
-        Returns a network address in readable binary form that is equivalent
-        to value represented by word sequence.
+        @param words: A list or tuple containing integer word values.
+
+        @return: A network address in readable binary form that is equivalent
+            to value represented by word sequence.
         """
         if not self.valid_words(words):
             raise Exception('%r is not a valid word list!' % words)
@@ -347,8 +358,10 @@ class AddrStrategy(object):
 
     def word_to_bits(self, int_val):
         """
-        Returns an integer word value for this address type in a fixed width
-        readable binary form.
+        @param int_val: An individual integer word value.
+
+        @return: An integer word value for this address type in a fixed width
+            readable binary form.
         """
         bits = []
 
@@ -362,8 +375,8 @@ class AddrStrategy(object):
 
     def description(self):
         """
-        Returns description string detailing setup of this AddrStrategy
-        instance. Useful for debugging.
+        @return: String detailing setup of this L{AddrStrategy} instance.
+            Useful for debugging.
         """
         tokens = []
         for k in sorted(self.__dict__):
@@ -380,26 +393,29 @@ class AddrStrategy(object):
 #-----------------------------------------------------------------------------
 class IPv4Strategy(AddrStrategy):
     """
-    An optimised AddrStrategy for IP version 4 address processing.
+    An optimised L{AddrStrategy} for IPv4 addresses.
 
-    It uses the struct module's pack() and unpack() along with the socket
-    module's inet_ntoa() and inet_aton() functions making it almost 2.5 times
-    faster than a standard AddrStrategy configured for processing IPv4.
+    It uses C{pack()} and C{unpack()} from the C{struct} module along with the
+    C{inet_ntoa()} and C{inet_aton()} functions from the C{socket} module.
+    This makes it approx. 2.5 times faster than a standard L{AddrStrategy}
+    configured for IPv4.
 
-    However, keep in mind that these modules might not be available everywhere.
-
-    Runtimes such as Google App Engine gut the socket module. struct is also
-    limited to processing 32-bit integer which is fine here but isn't suitable
-    for longer address types such as IPv6.
+    However, keep in mind that these modules might not be available everywhere
+    that Python itself is. Runtimes such as Google App Engine gut the
+    C{socket} module. C{struct} is also limited to processing 32-bit integers
+    which is fine for IPv4 but isn't suitable for IPv6.
     """
     def __init__(self):
+        """Constructor."""
         super(self.__class__, self).__init__(width=32, word_size=8,
             word_fmt='%d', delimiter='.', addr_type=AT_INET, hex_words=False)
 
     def str_to_int(self, addr):
         """
-        Returns a network byte order integer that is equivalent to value
-        represented by the IPv4 dotted decimal address string.
+        @param addr: An IPv4 dotted decimal address in string form.
+
+        @return: A network byte order integer that is equivalent to value
+            represented by the IPv4 dotted decimal address string.
         """
         if not self.valid_str(addr):
             raise Exception('%r is not a valid IPv4 dotted decimal' \
@@ -408,8 +424,10 @@ class IPv4Strategy(AddrStrategy):
 
     def int_to_str(self, int_val):
         """
-        Returns an IPv4 dotted decimal address string that is equivalent to
-        value represented by a 32 bit integer in network byte order.
+        @param int_val: A network byte order integer.
+
+        @return: An IPv4 dotted decimal address string that is equivalent to
+            value represented by a 32 bit integer in network byte order.
         """
         if not self.valid_int(int_val):
             raise Exception('%r is not a valid 32-bit int or long!' % int_val)
@@ -417,8 +435,10 @@ class IPv4Strategy(AddrStrategy):
 
     def int_to_words(self, int_val):
         """
-        Returns an integer word (octet) sequence that is equivalent to value
-        represented by network byte order integer.
+        @param int_val: A network byte order integer.
+
+        @return: An integer word (octet) sequence that is equivalent to value
+            represented by network byte order integer.
         """
         if not self.valid_int(int_val):
             raise Exception('%r is not a valid int/long value supported ' \
@@ -427,8 +447,10 @@ class IPv4Strategy(AddrStrategy):
 
     def words_to_int(self, octets):
         """
-        Returns a network byte order integer that is equivalent to value
-        represented by word (octet) sequence.
+        @param octets: A list or tuple containing integer octets.
+
+        @return: A network byte order integer that is equivalent to value
+            represented by word (octet) sequence.
         """
         if not self.valid_words(octets):
             raise Exception('%r is not a valid octet list for an IPv4 ' \
@@ -437,8 +459,10 @@ class IPv4Strategy(AddrStrategy):
 
     def int_to_arpa(self, int_val):
         """
-        Returns the reverse DNS lookup for an IPv4 address in network byte
-        order integer form.
+        @param int_val: A network byte order integer.
+
+        @return: The reverse DNS lookup for an IPv4 address in network byte
+            order integer form.
         """
         words = ["%d" % i for i in self.int_to_words(int_val)]
         words.reverse()
@@ -449,9 +473,7 @@ class IPv4Strategy(AddrStrategy):
 class IPv6Strategy(AddrStrategy):
     """
     Implements the operations that can be performed on an Internet Protocol
-    version 6 network address.
-
-    Supports all address formats detailed in RFC 4291.
+    version 6 network address in accordance with RFC 4291.
 
     NB - This class would benefit greatly from access to inet_pton/inet_ntop()
     function calls in Python's socket module. Sadly, they aren't available so
@@ -459,12 +481,16 @@ class IPv6Strategy(AddrStrategy):
     least).
     """
     def __init__(self):
+        """Constructor."""
         super(self.__class__, self).__init__(addr_type=AT_INET6,
             width=128, word_size=16, word_fmt='%x', delimiter=':')
 
     def valid_str(self, addr):
         """
-        Returns True if IPv6 network address string is valid, False otherwise.
+        @param addr: An IPv6 address in string form.
+
+        @return: C{True} if IPv6 network address string is valid, C{False}
+            otherwise.
         """
         #TODO: Reduce the length of this method ...
         if not isinstance(addr, (str, unicode)):
@@ -551,10 +577,10 @@ class IPv6Strategy(AddrStrategy):
 
     def str_to_int(self, addr):
         """
-        Returns the equivalent network byte order integer for a given IP
-        version 6 address.
+        @param addr: An IPv6 address in string form.
 
-        e.g. '::1' -> 1 (loopback)
+        @return: The equivalent network byte order integer for a given IPv6
+            address.
         """
         if not self.valid_str(addr):
             raise Exception("'%s' is an invalid IPv6 address!" % addr)
@@ -624,11 +650,18 @@ class IPv6Strategy(AddrStrategy):
 
     def int_to_str(self, int_val, compact=True, word_fmt=None):
         """
-        Returns the IP version 6 string form equal to the network byte order
-        integer value provided. The output is configurable :-
+        @param int_val: A network byte order integer.
 
-        compact - (optional) if True, use '::' to represent the first adjacent
-        group of words with a value of zero. (default: True).
+        @param compact: (optional) A boolean flag indicating if compact
+            formatting should be used. If True, this method uses the '::'
+            string to represent the first adjacent group of words with a value
+            of zero. Default: True
+
+        @param word_fmt: (optional) The Python format string used to override
+            formatting for each word.
+
+        @return: The IPv6 string form equal to the network byte order integer
+        value provided.
         """
         #   Use basic parent class implementation if compact string form is
         #   not required.
@@ -684,8 +717,10 @@ class IPv6Strategy(AddrStrategy):
 
     def int_to_arpa(self, int_val):
         """
-        Returns the reverse DNS lookup for an IPv6 address in network byte
-        order integer form.
+        @param int_val: A network byte order integer.
+
+        @return: The reverse DNS lookup for an IPv6 address in network byte
+            order integer form.
         """
         addr = self.int_to_str(int_val, word_fmt='%04x')
         tokens = list(addr.replace(':', ''))
@@ -704,12 +739,15 @@ class EUI48Strategy(AddrStrategy):
     Supports most common MAC address formats including Cisco's string format.
     """
     def __init__(self):
+        """Constructor."""
         super(self.__class__, self).__init__(addr_type=AT_LINK, width=48,
               word_size=8, word_fmt='%02x', delimiter='-', to_upper=True)
 
     def valid_str(self, addr):
         """
-        Returns True if MAC address string is valid, False otherwise.
+        @param addr: An EUI-48 or MAC address in string form.
+
+        @return: C{True} if MAC address string is valid, C{False} otherwise.
         """
         if not isinstance(addr, (str, unicode)):
             return False
@@ -746,6 +784,8 @@ class EUI48Strategy(AddrStrategy):
 
     def str_to_words(self, addr):
         """
+        @param addr: An EUI-48 or MAC address in string form.
+
         Returns an integer word sequence that is equivalent in value to MAC
         address in string form.
         """
@@ -778,13 +818,16 @@ class EUI48Strategy(AddrStrategy):
     def int_to_str(self, int_val, delimiter=None, word_fmt=None,
                    to_upper=True):
         """
-        Returns a MAC address in string form that is equivalent to value
-        represented by a network byte order integer.  The output is
-        configurable :-
+        @param int_val: A network byte order integer.
 
-        delimiter - (optional) the delimiter used between words in address
+        @param delimiter: (optional) A delimiter string override to be used
+            instead of the default between words in string value returned.
 
-        word_fmt - (optional) the string format used for each word in address
+        @param word_fmt: (optional) A Python format string override used to
+            format each word of address instead of the default.
+
+        @return: A MAC address in string form that is equivalent to value
+        represented by a network byte order integer.
         """
         the_delimiter = self.delimiter
         if delimiter is not None:
@@ -811,12 +854,22 @@ class EUI48Strategy(AddrStrategy):
 #   Shared strategy objects for supported address types.
 #-----------------------------------------------------------------------------
 
-#   Optimised strategy objects.
+#-----------------------------
+#   Optimised strategy objects
+#-----------------------------
+
+#: A shared strategy object supporting all operations on IPv4 addresses.
 ST_IPV4  = IPv4Strategy()
+#: A shared strategy object supporting all operations on IPv6 addresses.
 ST_IPV6  = IPv6Strategy()
+#: A shared strategy object supporting all operations on EUI-48 & MAC addresses.
 ST_EUI48 = EUI48Strategy()
 
-#   Standard strategy objects.
+#----------------------------
+#   Standard strategy objects
+#----------------------------
+
+#: A shared strategy object supporting all operations on EUI-64 addresses.
 ST_EUI64 = AddrStrategy(addr_type=AT_EUI64, width=64, word_size=8,
                          word_fmt='%02x', delimiter='-', to_upper=True)
 

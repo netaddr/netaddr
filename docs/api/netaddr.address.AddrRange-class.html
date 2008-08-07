@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.address-module.html">Module&nbsp;address</a> ::
+        <a href="netaddr.address-module.html" onclick="show_private();">Module&nbsp;address</a> ::
         Class&nbsp;AddrRange
       </span>
     </td>
@@ -73,13 +73,13 @@ object --+
 </dd></dl>
 
 <hr />
-<p>Represents a block of contiguous network addresses bounded by an 
-  arbitrary start and stop address. There is no requirement that they fall 
-  on strict bit mask boundaries.</p>
-  <p>This is the only network address aggregate class that supports all 
-  network address types (essentially Addr (sub)class objects). Most if not 
-  all subclasses of AddrRange tend towards support for only a subset of 
-  address types.</p>
+<p>A block of contiguous network addresses bounded by an arbitrary start 
+  and stop address. There is no requirement that they fall on strict bit 
+  mask boundaries, unlike <a href="netaddr.address.CIDR-class.html" 
+  class="link">CIDR</a> addresses.</p>
+  <p>The only network address aggregate supporting all network address 
+  types. Most AddrRange subclasses only support a subset of address 
+  types.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -115,9 +115,29 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="first"></a><span class="summary-sig-name">first</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the Addr instance for the lower boundary of this network 
-      address range.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__setattr__" class="summary-sig-name">__setattr__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Police assignments to various class attributes to ensure nothing gets
+      broken accidentally.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__setattr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#first" class="summary-sig-name">first</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The lower boundary network address of this range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.first">source&nbsp;code</a></span>
             
@@ -133,9 +153,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="last"></a><span class="summary-sig-name">last</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the Addr instance for the upper boundary of this network 
-      address range.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#last" class="summary-sig-name">last</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The upper boundary network address of this range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.last">source&nbsp;code</a></span>
             
@@ -152,7 +172,8 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__len__" class="summary-sig-name">__len__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return total number of addresses to be found in this address range.</td>
+      Returns:
+      The total number of network addresses in this range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__len__">source&nbsp;code</a></span>
             
@@ -169,7 +190,8 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#size" class="summary-sig-name">size</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return total number of addresses to be found in this address range.</td>
+      Returns:
+      The total number of network addresses in this range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.size">source&nbsp;code</a></span>
             
@@ -187,8 +209,9 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__getitem__" class="summary-sig-name">__getitem__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">index</span>)</span><br />
-      Return the Addr instance from this address range indicated by index 
-      or slice.</td>
+      Returns:
+      The network address(es) in this address range indicated by 
+      index/slice.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__getitem__">source&nbsp;code</a></span>
             
@@ -204,9 +227,10 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__iter__"></a><span class="summary-sig-name">__iter__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns an iterator object providing lazily evaluated access to all 
-      Addr() instances within this network address range.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__iter__" class="summary-sig-name">__iter__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      An iterator object providing access to all network addresses within 
+      this range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__iter__">source&nbsp;code</a></span>
             
@@ -224,8 +248,9 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__contains__" class="summary-sig-name">__contains__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns True if given address or address range falls within the 
-      boundary of this network address False otherwise.</td>
+      Returns:
+      <code>True</code> if given address or range falls within this range, 
+      <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__contains__">source&nbsp;code</a></span>
             
@@ -241,11 +266,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__eq__"></a><span class="summary-sig-name">__eq__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__eq__" class="summary-sig-name">__eq__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if the boundary addresses of this address range are the same as 
-      those of the other and the address types they represent are the same,
-      False otherwise.</td>
+      Returns:
+      <code>True</code> if the boundary of this range is the same as other,
+      <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__eq__">source&nbsp;code</a></span>
             
@@ -263,8 +288,9 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__ne__" class="summary-sig-name">__ne__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if the boundary addresses of this address range are not the same
-      as those of the other, False otherwise.</td>
+      Returns:
+      <code>True</code> if the boundary of this range is not the same as 
+      other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__ne__">source&nbsp;code</a></span>
             
@@ -280,11 +306,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__lt__"></a><span class="summary-sig-name">__lt__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__lt__" class="summary-sig-name">__lt__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if the lower boundary address of this address range is less than
-      that of the other and the address types they represent are the same, 
-      False otherwise.</td>
+      Returns:
+      <code>True</code> if the lower boundary of this range is less than 
+      other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__lt__">source&nbsp;code</a></span>
             
@@ -300,11 +326,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__le__"></a><span class="summary-sig-name">__le__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__le__" class="summary-sig-name">__le__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if the lower boundary address of this address range is less than
-      or equal to that of the other and the address types they represent 
-      are the same, False otherwise.</td>
+      Returns:
+      <code>True</code> if the lower boundary of this range is less or 
+      equal to other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__le__">source&nbsp;code</a></span>
             
@@ -320,11 +346,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__gt__"></a><span class="summary-sig-name">__gt__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__gt__" class="summary-sig-name">__gt__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if the lower boundary address of this address range is greater 
-      than that of the other and the address types they represent are the 
-      same, False otherwise.</td>
+      Returns:
+      <code>True</code> if the lower boundary of this range is greater than
+      other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__gt__">source&nbsp;code</a></span>
             
@@ -340,11 +366,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__ge__"></a><span class="summary-sig-name">__ge__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__ge__" class="summary-sig-name">__ge__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if the lower boundary address of this address range is greater 
-      than or equal to that of the other and the address types they 
-      represent are the same, False otherwise.</td>
+      Returns:
+      <code>True</code> if the lower boundary of this range is greater or 
+      equal to other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__ge__">source&nbsp;code</a></span>
             
@@ -371,6 +397,25 @@ object --+
       
     </td>
   </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      An executable Python statement that can recreate an object with an 
+      equivalent state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__repr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
@@ -379,9 +424,7 @@ object --+
       <code>__hash__</code>,
       <code>__new__</code>,
       <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>
+      <code>__reduce_ex__</code>
       </p>
     </td>
   </tr>
@@ -430,15 +473,87 @@ object --+
   </tr></table>
   
   <p>Constructor.</p>
-  <p>start_addr - start address for this network address range.</p>
-  <p>stop_addr - stop address for this network address range.</p>
-  <p>klass - (optional) class used to create each return object. Default: 
-  Addr objects. See nrange() documentations for additional details on 
-  options.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>start_addr</code></strong> - start address for this network address range.</li>
+        <li><strong class="pname"><code>stop_addr</code></strong> - stop address for this network address range.</li>
+        <li><strong class="pname"><code>klass</code></strong> - (optional) class used to create each object returned. Default: <a
+          href="netaddr.address.Addr-class.html" class="link">Addr()</a> 
+          objects. See <a href="netaddr.address-module.html#nrange" 
+          class="link">nrange()</a> documentations for additional details 
+          on options.</li>
+    </ul></dd>
     <dt>Overrides:
         object.__init__
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__setattr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__setattr__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__setattr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Police assignments to various class attributes to ensure nothing gets 
+  broken accidentally.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__setattr__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="first"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">first</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.first">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The lower boundary network address of this range.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="last"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">last</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.last">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The upper boundary network address of this range.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -457,11 +572,19 @@ object --+
     </td>
   </tr></table>
   
-  <p>Return total number of addresses to be found in this address 
-  range.</p>
-  <p>NB - Use this method only for ranges that contain less than 2 ** 31 
-  addresses. Raises an IndexError if size is exceeded.</p>
+  
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The total number of network addresses in this range.
+          <ul>
+            <li>
+              Use this method only for ranges that contain less than 
+              <code>2^31</code> addresses or try the <a 
+              href="netaddr.address.AddrRange-class.html#size" 
+              class="link">size()</a> method. Raises an 
+              <code>IndexError</code> if size is exceeded.
+            </li>
+          </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -479,11 +602,18 @@ object --+
     </td>
   </tr></table>
   
-  <p>Return total number of addresses to be found in this address 
-  range.</p>
-  <p>NB - Use this method in preference to __len__() when size of ranges 
-  exceeds 2 ** 31 addresses.</p>
+  
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The total number of network addresses in this range.
+          <ul>
+            <li>
+              Use this method in preference to <a 
+              href="netaddr.address.AddrRange-class.html#__len__" 
+              class="link">__len__()</a> when size of ranges exceeds 
+              <code>2^31</code> addresses.
+            </li>
+          </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -503,15 +633,36 @@ object --+
     </td>
   </tr></table>
   
-  <p>Return the Addr instance from this address range indicated by index or
-  slice.</p>
-  <p>Raises an IndexError exception if index is out of bounds in relation 
-  to size of address range.</p>
-  <p>Slicing objects of this class can potentially produce truly massive 
-  sequences so generators are returned in preference to sequences. The 
-  extra step of wrapping a raw slice with list() or tuple() may be required
-  dependent on context.</p>
+  
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The network address(es) in this address range indicated by 
+          index/slice. Slicing objects can produce large sequences so 
+          generator objects are returned instead to the usual sequences. 
+          Wrapping a raw slice with <code>list()</code> or 
+          <code>tuple()</code> may be required dependent on context.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__iter__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__iter__</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__iter__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An iterator object providing access to all network addresses 
+          within this range.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -531,11 +682,44 @@ object --+
     </td>
   </tr></table>
   
-  <p>Returns True if given address or address range falls within the 
-  boundary of this network address False otherwise.</p>
-  <p>addr - object of (sub)class Addr/AddrRange or string based address to 
-  be compared.</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - object of Addr/AddrRange (sub)class or a network address string 
+          to be compared.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if given address or range falls within this 
+          range, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__eq__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__eq__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Equality operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__eq__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the boundary of this range is the same as 
+          other, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -554,11 +738,127 @@ object --+
     </td>
   </tr></table>
   
-  <p>True if the boundary addresses of this address range are not the same 
-  as those of the other, False otherwise.</p>
-  <p>Raises a TypeError if address type of other is not the same as 
-  self.</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the boundary of this range is not the same 
+          as other, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__lt__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__lt__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Less-than operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__lt__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the lower boundary of this range is less 
+          than other, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__le__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__le__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Less-than-or-equals operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__le__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the lower boundary of this range is less or 
+          equal to other, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__gt__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__gt__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Greater-than operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__gt__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the lower boundary of this range is greater 
+          than other, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__ge__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__ge__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Greater-than-or-equals operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__ge__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the lower boundary of this range is greater 
+          or equal to other, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -582,6 +882,32 @@ object --+
     <dt>Overrides:
         object.__str__
         <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__repr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__repr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>repr(x)</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An executable Python statement that can recreate an object with 
+          an equivalent state.</dd>
+    <dt>Overrides:
+        object.__repr__
     </dt>
   </dl>
 </td></tr></table>
@@ -618,7 +944,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

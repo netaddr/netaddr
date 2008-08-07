@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.address-module.html">Module&nbsp;address</a> ::
+        <a href="netaddr.address-module.html" onclick="show_private();">Module&nbsp;address</a> ::
         Class&nbsp;EUI
       </span>
     </td>
@@ -69,8 +69,9 @@ object --+
 </pre>
 
 <hr />
-<p>A class whose objects represent IEEE Extended Unique Identifiers. 
-  Supports EUI-48 (along with common MAC flavours) and EUI-64.</p>
+<p>EUI objects represent IEEE Extended Unique Identifiers. Input parsing 
+  is flexible, supporting EUI-48, EUI-64 and all MAC (Media Access Control)
+  address flavours.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -105,9 +106,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="oui"></a><span class="summary-sig-name">oui</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the OUI (Organisationally Unique Identifier for this 
-      EUI-48/MAC address.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#oui" class="summary-sig-name">oui</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The OUI (Organisationally Unique Identifier) for this EUI.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.oui">source&nbsp;code</a></span>
             
@@ -123,8 +124,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="ei"></a><span class="summary-sig-name">ei</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the EI (Extension Identifier) for this EUI-48 address.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#ei" class="summary-sig-name">ei</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The EI (Extension Identifier) for this EUI.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.ei">source&nbsp;code</a></span>
             
@@ -140,11 +142,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#to_eui64" class="summary-sig-name">to_eui64</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the value of this EUI object as a new EUI address initialised
-      as a 64-bit EUI.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#eui64" class="summary-sig-name">eui64</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The value of this EUI object as a new 64-bit EUI object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.to_eui64">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.eui64">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -158,9 +160,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="ipv6_link_local"></a><span class="summary-sig-name">ipv6_link_local</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns an IP() object class (IPv6 address type) initialised using 
-      the value of this EUI.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#ipv6_link_local" class="summary-sig-name">ipv6_link_local</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      An IPv6 <a href="netaddr.address.IP-class.html" class="link">IP</a> 
+      object initialised using the value of this <a 
+      href="netaddr.address.EUI-class.html" class="link">EUI</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.ipv6_link_local">source&nbsp;code</a></span>
             
@@ -186,9 +190,11 @@ object --+
       <code><a href="netaddr.address.Addr-class.html#__len__">__len__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__long__">__long__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__lt__">__lt__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__repr__">__repr__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__setitem__">__setitem__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__str__">__str__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#family">family</a></code>,
       <code><a href="netaddr.address.Addr-class.html#setvalue">setvalue</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
@@ -198,7 +204,6 @@ object --+
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
       <code>__setattr__</code>
       </p>
     </td>
@@ -247,38 +252,118 @@ object --+
   </tr></table>
   
   <p>Constructor.</p>
-  <p>addr - the string form of an EUI-48/64 address or a network byte order
-  int/long value.</p>
-  <p>addr_type - (optional) the EUI address type (AT_LINK or AT_EUI64). If 
-  addr is an int or long, this argument becomes mandatory.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - an EUI/MAC address string or a network byte order integer.</li>
+        <li><strong class="pname"><code>addr_type</code></strong> - (optional) the specific EUI address type (<code>AT_LINK</code> or
+          <code>AT_EUI64</code>). If addr is an integer, this argument is 
+          mandatory.</li>
+    </ul></dd>
     <dt>Overrides:
         object.__init__
     </dt>
   </dl>
 </td></tr></table>
 </div>
-<a name="to_eui64"></a>
+<a name="oui"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">to_eui64</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">oui</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.to_eui64">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.oui">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Returns the value of this EUI object as a new EUI address initialised 
-  as a 64-bit EUI.</p>
-  <p>So if this address represents an EUI-48 address it converts the value 
-  of this address to EUI-64 as per the standard.</p>
-  <p>If this class is already and EUI-64 address, it just returns a new 
-  object that is numerically equivalent to itself.</p>
+  
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The OUI (Organisationally Unique Identifier) for this EUI.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ei"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ei</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.ei">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The EI (Extension Identifier) for this EUI.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="eui64"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">eui64</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.eui64">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The value of this EUI object as a new 64-bit EUI object.
+          <ul>
+            <li>
+              If this object represents an EUI-48 it is converted to EUI-64
+              as per the standard.
+            </li>
+            <li>
+              If this object is already and EUI-64, it just returns a new, 
+              numerically equivalent object is returned instead.
+            </li>
+          </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ipv6_link_local"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ipv6_link_local</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.ipv6_link_local">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An IPv6 <a href="netaddr.address.IP-class.html" 
+          class="link">IP</a> object initialised using the value of this <a
+          href="netaddr.address.EUI-class.html" class="link">EUI</a>.
+          <ul>
+            <li>
+              <b>See RFC 4921 for details</b>.
+            </li>
+          </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -314,7 +399,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

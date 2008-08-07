@@ -7,7 +7,61 @@
 """
 network address manipulation, done Pythonically
 """
-from netaddr.address import Addr, IP, EUI, AddrRange, CIDR, Wildcard, nrange
+__version__ = '0.4'
 
-from netaddr.strategy import BIG_ENDIAN_PLATFORM, AT_LINK, AT_EUI64, AT_INET, \
-    AT_INET6, AT_UNSPEC, ST_EUI48, ST_EUI64, ST_IPV4, ST_IPV6
+import struct as _struct
+
+#-----------------------------------------------------------------------------
+#  Constants.
+#-----------------------------------------------------------------------------
+
+#: True if platform is natively big endian, False otherwise.
+BIG_ENDIAN_PLATFORM = _struct.pack('=h', 1) == _struct.pack('>h', 1)
+
+AT_UNSPEC = 0x0     #: unspecified address type constant.
+AT_INET   = 0x4     #: IPv4 address type constant.
+AT_INET6  = 0x6     #: IPv6 address type constant.
+AT_LINK   = 0x30    #: MAC/EUI-48 address type constant.
+AT_EUI64  = 0x40    #: EUI-64 address type constant.
+
+#: Address type to address description lookup dictionary.
+AT_DESCR = {
+    AT_UNSPEC : 'unspecified',
+    AT_LINK   : 'MAC',
+    AT_EUI64  : 'EUI-64',
+    AT_INET   : 'IPv4',
+    AT_INET6  : 'IPv6',
+}
+
+#-----------------------------------------------------------------------------
+#   Custom exceptions.
+#-----------------------------------------------------------------------------
+
+class AddrFormatError(Exception):
+    """
+    Network address format not recognised.
+    """
+    pass
+
+class AddrConversionError(Exception):
+    """
+    Conversion between address types or notations failed.
+    """
+    pass
+
+#-----------------------------------------------------------------------------
+#   Public interface and exports.
+#-----------------------------------------------------------------------------
+
+from netaddr.address import Addr, AddrRange, nrange, AddrFormatError, \
+                            AddrConversionError, IP, CIDR, Wildcard, EUI
+
+from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
+
+__all__ = [
+    'Addr', 'AddrRange', 'nrange',                  # generic functionality
+    'AddrFormatError', 'AddrConversionError',       # custom exceptions
+    'IP', 'CIDR', 'Wildcard', 'EUI',                # general purpose classes
+    'ST_IPV4', 'ST_IPV6', 'ST_EUI48', 'ST_EUI64',   # shared strategy objects
+    'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',   # type constants
+]

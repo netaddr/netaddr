@@ -12,10 +12,10 @@ import sys
 
 #   Run all unit tests.
 
-path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../netaddr'))
+path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, path)
 
-from strategy import BIG_ENDIAN_PLATFORM
+from netaddr import BIG_ENDIAN_PLATFORM
 
 #   What is our endianness?
 print 'Is this platform natively big-endian?',

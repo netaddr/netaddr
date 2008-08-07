@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.strategy-module.html">Module&nbsp;strategy</a> ::
+        <a href="netaddr.strategy-module.html" onclick="show_private();">Module&nbsp;strategy</a> ::
         Class&nbsp;EUI48Strategy
       </span>
     </td>
@@ -90,7 +90,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.EUI48Strategy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      x.__init__(...) initializes x; see x.__class__.__doc__ for signature</td>
+      Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.__init__">source&nbsp;code</a></span>
             
@@ -108,7 +108,9 @@
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.EUI48Strategy-class.html#valid_str" class="summary-sig-name">valid_str</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns True if MAC address string is valid, False otherwise.</td>
+      Returns:
+      <code>True</code> if MAC address string is valid, <code>False</code> 
+      otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.valid_str">source&nbsp;code</a></span>
             
@@ -126,7 +128,8 @@
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.EUI48Strategy-class.html#str_to_words" class="summary-sig-name">str_to_words</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns an integer word sequence that is equivalent in value to MAC 
+      Returns:
+      An integer word sequence that is equivalent in value to the network 
       address in string form.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.str_to_words">source&nbsp;code</a></span>
@@ -148,8 +151,9 @@
         <span class="summary-sig-arg">delimiter</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">word_fmt</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">to_upper</span>=<span class="summary-sig-default">True</span>)</span><br />
-      Returns a MAC address in string form that is equivalent to value 
-      represented by a network byte order integer.</td>
+      Returns:
+      A MAC address in string form that is equivalent to value represented 
+      by a network byte order integer.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.int_to_str">source&nbsp;code</a></span>
             
@@ -162,6 +166,7 @@
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a></code></b>:
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#__repr__">__repr__</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_int">bits_to_int</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_str">bits_to_str</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_words">bits_to_words</a></code>,
@@ -185,7 +190,6 @@
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
       <code>__setattr__</code>,
       <code>__str__</code>
       </p>
@@ -232,12 +236,10 @@
     </td>
   </tr></table>
   
-  <p>x.__init__(...) initializes x; see x.__class__.__doc__ for 
-  signature</p>
+  <p>Constructor.</p>
   <dl class="fields">
     <dt>Overrides:
         object.__init__
-        <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
 </td></tr></table>
@@ -257,8 +259,15 @@
     </td>
   </tr></table>
   
-  <p>Returns True if MAC address string is valid, False otherwise.</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - An EUI-48 or MAC address in string form.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if MAC address string is valid, 
+          <code>False</code> otherwise.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#valid_str">AddrStrategy.valid_str</a>
     </dt>
@@ -280,9 +289,17 @@
     </td>
   </tr></table>
   
-  <p>Returns an integer word sequence that is equivalent in value to MAC 
-  address in string form.</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - An EUI-48 or MAC address in string form.
+          <p>Returns an integer word sequence that is equivalent in value 
+          to MAC address in string form.</p></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>An integer word sequence that is equivalent in value to the 
+          network address in string form.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#str_to_words">AddrStrategy.str_to_words</a>
     </dt>
@@ -307,13 +324,19 @@
     </td>
   </tr></table>
   
-  <p>Returns a MAC address in string form that is equivalent to value 
-  represented by a network byte order integer.  The output is configurable 
-  :-</p>
-  <p>delimiter - (optional) the delimiter used between words in address</p>
-  <p>word_fmt - (optional) the string format used for each word in 
-  address</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+        <li><strong class="pname"><code>delimiter</code></strong> - (optional) A delimiter string override to be used instead of the 
+          default between words in string value returned.</li>
+        <li><strong class="pname"><code>word_fmt</code></strong> - (optional) A Python format string override used to format each 
+          word of address instead of the default.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A MAC address in string form that is equivalent to value 
+          represented by a network byte order integer.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#int_to_str">AddrStrategy.int_to_str</a>
     </dt>
@@ -352,7 +375,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

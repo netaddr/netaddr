@@ -4,6 +4,10 @@ include LICENSE
 include MANIFEST
 include README
 include setup.py
+include netaddr/__init__.py
+include netaddr/address.py
+include netaddr/strategy.py
+include tests/ut_address.py
+include tests/ut_strategy.py
+include tests/ut_run_all.py
 recursive-include docs *.html *.css *.js *.png
-recursive-include netaddr *.py
-recursive-include tests *.py

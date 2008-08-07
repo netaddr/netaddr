@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.address-module.html">Module&nbsp;address</a> ::
+        <a href="netaddr.address-module.html" onclick="show_private();">Module&nbsp;address</a> ::
         Class&nbsp;Wildcard
       </span>
     </td>
@@ -69,26 +69,54 @@ object --+
 </pre>
 
 <hr />
-<p>Represents a block of contiguous IPv4 network addresses defined using 
-  a wildcard/glob style syntax.</p>
+<p>A block of contiguous IPv4 network addresses defined using a wildcard 
+  style syntax.</p>
   <p>Individual octets can be represented using the following shortcuts 
-  :-</p>
-  <p>1) The asterisk '*' octet.</p>
-  <p>This represents the values 0 through 255.</p>
-  <p>2) The hyphenated octet 'x-y'</p>
-  <p>This represents a range of values between x and y.</p>
-  <p>x must always be greater than y, therefore :-</p>
-  <p>values of x are 0 through 254 values of y are 1 through 255</p>
-  <p>NB - only one hyphenated octet per wildcard is allowed.</p>
-  <p>Example wildcards :-</p>
-  <p>'192.168.0.1'       #   a single address '192.168.0.0-31'    #   32 
-  addresses '192.168.0.*'       #   256 addresses '192.168.0-1.*'     #   
-  512 addresses '192.168-169.*.*'   #   131,072 addresses '*.*.*.*'
-  #   the whole IPv4 address space</p>
-  <p>Aside: Wildcard ranges are not directly equivalent to CIDR ranges as 
-  they can represent address ranges that do not conform to bit mask 
-  boundaries. All CIDR ranges can be represented as wilcard ranges but the 
-  reverse isn't always true.</p>
+  :</p>
+  <ol start="1">
+    <li>
+      <code>*</code> - the asterisk octet (represents values 0 through 255)
+    </li>
+    <li>
+      <code>'x-y'</code> - the hyphenated octet (represents values x 
+      through y)
+    </li>
+  </ol>
+  <p>A few basic rules also apply :</p>
+  <ol start="1">
+    <li>
+      x must always be greater than y, therefore :
+      <ul>
+        <li>
+          x can only be 0 through 254
+        </li>
+        <li>
+          y can only be 1 through 255
+        </li>
+      </ul>
+    </li>
+    <li>
+      only one hyphenated octet per wildcard is allowed
+    </li>
+    <li>
+      only asterisks are permitted after a hyphenated octet
+    </li>
+  </ol>
+  <p>Example wildcards :</p>
+<pre class="literalblock">
+   '192.168.0.1'       #   a single address
+   '192.168.0.0-31'    #   32 addresses
+   '192.168.0.*'       #   256 addresses
+   '192.168.0-1.*'     #   512 addresses
+   '192.168-169.*.*'   #   131,072 addresses
+   '*.*.*.*'           #   the whole IPv4 address space
+</pre>
+  <h1 class="heading">Aside</h1>
+    <p><i>Wildcard ranges are not directly equivalent to CIDR ranges as 
+    they can represent address ranges that do not fall on strict bit mask 
+    boundaries.</i></p>
+    <p><i>All CIDR ranges can be represented as wildcard ranges but the 
+    reverse isn't always true.</i></p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -123,11 +151,12 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="is_wildcard"></a><span class="summary-sig-name">is_wildcard</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">wildcard</span>)</span><br />
-      True if wildcard address is valid, False otherwise.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.Wildcard-class.html#cidr" class="summary-sig-name">cidr</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A valid <a href="netaddr.address.CIDR-class.html" 
+      class="link">CIDR</a> object for this wildcard.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.is_wildcard">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.cidr">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -152,6 +181,25 @@ object --+
       
     </td>
   </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.Wildcard-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      An executable Python statement that can recreate an object with an 
+      equivalent state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.__repr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.AddrRange-class.html">AddrRange</a></code></b>:
@@ -165,6 +213,7 @@ object --+
       <code><a href="netaddr.address.AddrRange-class.html#__len__">__len__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__lt__">__lt__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__ne__">__ne__</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#__setattr__">__setattr__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#first">first</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#last">last</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#size">size</a></code>
@@ -175,9 +224,7 @@ object --+
       <code>__hash__</code>,
       <code>__new__</code>,
       <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>
+      <code>__reduce_ex__</code>
       </p>
     </td>
   </tr>
@@ -225,14 +272,44 @@ object --+
   </tr></table>
   
   <p>Constructor.</p>
-  <p>wildcard - a valid wildcard address (only IPv4 is supported).</p>
-  <p>klass - (optional) class used to create each return object. Default: 
-  IP objects. See nrange() documentations for additional details on 
-  options.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>wildcard</code></strong> - a valid IPv4 wildcard address</li>
+        <li><strong class="pname"><code>klass</code></strong> - (optional) class used to create each return object. Default: <a 
+          href="netaddr.address.IP-class.html" class="link">IP</a> objects.
+          See <a href="netaddr.address-module.html#nrange" 
+          class="link">nrange()</a> documentations for additional details 
+          on options.</li>
+    </ul></dd>
     <dt>Overrides:
         object.__init__
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="cidr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">cidr</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.cidr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A valid <a href="netaddr.address.CIDR-class.html" 
+          class="link">CIDR</a> object for this wildcard. If conversion 
+          fails an <a href="netaddr.AddrConversionError-class.html" 
+          class="link">AddrConversionError</a> is raised as not all 
+          wildcards ranges are valid CIDR ranges.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -256,6 +333,32 @@ object --+
     <dt>Overrides:
         object.__str__
         <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__repr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.__repr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>repr(x)</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An executable Python statement that can recreate an object with 
+          an equivalent state.</dd>
+    <dt>Overrides:
+        object.__repr__
     </dt>
   </dl>
 </td></tr></table>
@@ -292,7 +395,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.strategy-module.html">Module&nbsp;strategy</a> ::
+        <a href="netaddr.strategy-module.html" onclick="show_private();">Module&nbsp;strategy</a> ::
         Class&nbsp;IPv6Strategy
       </span>
     </td>
@@ -70,12 +70,11 @@
 
 <hr />
 <p>Implements the operations that can be performed on an Internet 
-  Protocol version 6 network address.</p>
-  <p>Supports all address formats detailed in RFC 4291.</p>
+  Protocol version 6 network address in accordance with RFC 4291.</p>
   <p>NB - This class would benefit greatly from access to 
-  inet_pton/inet_ntop() function calls in Python's socket module. Sadly, it
-  isn't available so we'll have to put up with the pure-Python 
-  implementation here for now.</p>
+  inet_pton/inet_ntop() function calls in Python's socket module. Sadly, 
+  they aren't available so we'll have to put up with the pure-Python 
+  implementation here (for now at least).</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -92,7 +91,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      x.__init__(...) initializes x; see x.__class__.__doc__ for signature</td>
+      Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.__init__">source&nbsp;code</a></span>
             
@@ -110,8 +109,9 @@
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#valid_str" class="summary-sig-name">valid_str</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns True if IPv6 network address string is valid, False 
-      otherwise.</td>
+      Returns:
+      <code>True</code> if IPv6 network address string is valid, 
+      <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.valid_str">source&nbsp;code</a></span>
             
@@ -129,8 +129,8 @@
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#str_to_int" class="summary-sig-name">str_to_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns the equivalent network byte order integer for a given IP 
-      version 6 address.</td>
+      Returns:
+      The equivalent network byte order integer for a given IPv6 address.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.str_to_int">source&nbsp;code</a></span>
             
@@ -150,8 +150,9 @@
         <span class="summary-sig-arg">int_val</span>,
         <span class="summary-sig-arg">compact</span>=<span class="summary-sig-default">True</span>,
         <span class="summary-sig-arg">word_fmt</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Returns the IP version 6 string form equal to the network byte order 
-      integer value provided.</td>
+      Returns:
+      The IPv6 string form equal to the network byte order integer value 
+      provided.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_str">source&nbsp;code</a></span>
             
@@ -167,10 +168,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="int_to_arpa"></a><span class="summary-sig-name">int_to_arpa</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#int_to_arpa" class="summary-sig-name">int_to_arpa</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">int_val</span>)</span><br />
-      Returns the reverse DNS lookup for an IPv6 address in network byte 
-      order integer form.</td>
+      Returns:
+      The reverse DNS lookup for an IPv6 address in network byte order 
+      integer form.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_arpa">source&nbsp;code</a></span>
             
@@ -183,6 +185,7 @@
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a></code></b>:
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#__repr__">__repr__</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_int">bits_to_int</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_str">bits_to_str</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_words">bits_to_words</a></code>,
@@ -206,7 +209,6 @@
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
       <code>__setattr__</code>,
       <code>__str__</code>
       </p>
@@ -253,12 +255,10 @@
     </td>
   </tr></table>
   
-  <p>x.__init__(...) initializes x; see x.__class__.__doc__ for 
-  signature</p>
+  <p>Constructor.</p>
   <dl class="fields">
     <dt>Overrides:
         object.__init__
-        <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
 </td></tr></table>
@@ -278,9 +278,15 @@
     </td>
   </tr></table>
   
-  <p>Returns True if IPv6 network address string is valid, False 
-  otherwise.</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - An IPv6 address in string form.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if IPv6 network address string is valid, 
+          <code>False</code> otherwise.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#valid_str">AddrStrategy.valid_str</a>
     </dt>
@@ -302,10 +308,15 @@
     </td>
   </tr></table>
   
-  <p>Returns the equivalent network byte order integer for a given IP 
-  version 6 address.</p>
-  <p>e.g. '::1' -&gt; 1 (loopback)</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - An IPv6 address in string form.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>The equivalent network byte order integer for a given IPv6 
+          address.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#str_to_int">AddrStrategy.str_to_int</a>
     </dt>
@@ -329,14 +340,51 @@
     </td>
   </tr></table>
   
-  <p>Returns the IP version 6 string form equal to the network byte order 
-  integer value provided. The output is configurable :-</p>
-  <p>compact - (optional) if True, use '::' to represent the first adjacent
-  group of words with a value of zero. (default: True).</p>
+  
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+        <li><strong class="pname"><code>compact</code></strong> - (optional) A boolean flag indicating if compact formatting should
+          be used. If True, this method uses the '::' string to represent 
+          the first adjacent group of words with a value of zero. Default: 
+          True</li>
+        <li><strong class="pname"><code>word_fmt</code></strong> - (optional) The Python format string used to override formatting 
+          for each word.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>The IPv6 string form equal to the network byte order integer 
+          value provided.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#int_to_str">AddrStrategy.int_to_str</a>
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="int_to_arpa"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_arpa</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">int_val</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_arpa">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>The reverse DNS lookup for an IPv6 address in network byte order 
+          integer form.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -372,7 +420,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

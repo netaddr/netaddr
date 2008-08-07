@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.address-module.html">Module&nbsp;address</a> ::
+        <a href="netaddr.address-module.html" onclick="show_private();">Module&nbsp;address</a> ::
         Class&nbsp;IP
       </span>
     </td>
@@ -69,8 +69,18 @@ object --+
 </pre>
 
 <hr />
-<p>A class whose objects represent Internet Protocol network addresses 
-  that can be either IPv4 or IPv6.</p>
+<p>A class whose objects represent Internet Protocol network addresses. 
+  Both IPv4 and IPv6 are fully supported and include an optional subnet bit
+  mask prefix, for example :</p>
+<pre class="literalblock">
+   192.168.0.1/24
+   fe80::20f:1fff:fe12:e733/64
+</pre>
+  <p>This class <b>does not make a requirement to omit non-zero bits to the
+  right of the subnet prefix</b> when it is applied to the address.</p>
+  <p>See the <a href="netaddr.address.CIDR-class.html" 
+  class="link">CIDR()</a> class if you require <b>*strict*</b> subnet 
+  prefix checking.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -105,9 +115,28 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="is_netmask"></a><span class="summary-sig-name">is_netmask</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns True if this addr is a mask that would return a host id, 
-      False otherwise.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#setvalue" class="summary-sig-name">setvalue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">addr</span>)</span><br />
+      Sets the value of this address.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.setvalue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_netmask" class="summary-sig-name">is_netmask</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this addr is a mask that would return a host id,
+      <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_netmask">source&nbsp;code</a></span>
             
@@ -123,8 +152,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="prefixlen"></a><span class="summary-sig-name">prefixlen</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the number of bits set to 1 if this address is a netmask, 
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#prefixlen" class="summary-sig-name">prefixlen</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The number of bits set to one in this address if it is a netmask, 
       zero otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.prefixlen">source&nbsp;code</a></span>
@@ -141,8 +171,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="reverse_dns"></a><span class="summary-sig-name">reverse_dns</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the reverse DNS lookup string for this IP address.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#reverse_dns" class="summary-sig-name">reverse_dns</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The reverse DNS lookup string for this IP address.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.reverse_dns">source&nbsp;code</a></span>
             
@@ -158,11 +189,86 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="is_hostmask"></a><span class="summary-sig-name">is_hostmask</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns True if this address is a mask that would return a network 
-      id, False otherwise.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_hostmask" class="summary-sig-name">is_hostmask</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this address is a mask that would return a host 
+      id, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_hostmask">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#cidr" class="summary-sig-name">cidr</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A valid <a href="netaddr.address.CIDR-class.html" 
+      class="link">CIDR</a> object for this IP address.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.cidr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#masklen" class="summary-sig-name">masklen</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The subnet prefix of this IP address.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.masklen">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The common string representation for this IP address.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.__str__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      An executable Python statement that can recreate an object with an 
+      equivalent state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.__repr__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -187,9 +293,8 @@ object --+
       <code><a href="netaddr.address.Addr-class.html#__long__">__long__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__lt__">__lt__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__setitem__">__setitem__</a></code>,
-      <code><a href="netaddr.address.Addr-class.html#__str__">__str__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>,
-      <code><a href="netaddr.address.Addr-class.html#setvalue">setvalue</a></code>
+      <code><a href="netaddr.address.Addr-class.html#family">family</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -198,7 +303,6 @@ object --+
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
       <code>__setattr__</code>
       </p>
     </td>
@@ -247,13 +351,236 @@ object --+
   </tr></table>
   
   <p>Constructor.</p>
-  <p>addr - the string form of a IPv4 or IPv6 address, or a network byte 
-  order int/long value.</p>
-  <p>addr_type - (optional) the IP address type (AT_INET or AT_INET6). If 
-  addr is an int or long, this argument becomes mandatory.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - an IPv4 or IPv6 address string with an optional subnet prefix or 
+          a network byte order integer.</li>
+        <li><strong class="pname"><code>addr_type</code></strong> - (optional) the IP address type (<code>AT_INET</code> or 
+          <code>AT_INET6</code>). If <code class="link">addr</code> is an 
+          integer, this argument is mandatory.</li>
+    </ul></dd>
     <dt>Overrides:
         object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setvalue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setvalue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">addr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.setvalue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the value of this address.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - the string form of an IP address, or a network byte order 
+          int/long value within the supported range for the address type.
+          <ul>
+            <li>
+              Raises a <code>TypeError</code> if addr is of an unsupported 
+              type.
+            </li>
+            <li>
+              Raises an <code>OverflowError</code> if addr is an integer 
+              outside the bounds for this address type.
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="netaddr.address.Addr-class.html#setvalue">Addr.setvalue</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_netmask"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_netmask</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_netmask">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this addr is a mask that would return a host
+          id, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="prefixlen"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">prefixlen</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.prefixlen">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The number of bits set to one in this address if it is a netmask,
+          zero otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="reverse_dns"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">reverse_dns</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.reverse_dns">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The reverse DNS lookup string for this IP address.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_hostmask"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_hostmask</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_hostmask">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this address is a mask that would return a 
+          host id, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="cidr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">cidr</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.cidr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A valid <a href="netaddr.address.CIDR-class.html" 
+          class="link">CIDR</a> object for this IP address.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="masklen"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">masklen</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.masklen">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The subnet prefix of this IP address.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__str__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__str__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Informal representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.__str__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>str(x)</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The common string representation for this IP address.</dd>
+    <dt>Overrides:
+        object.__str__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__repr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.__repr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>repr(x)</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An executable Python statement that can recreate an object with 
+          an equivalent state.</dd>
+    <dt>Overrides:
+        object.__repr__
     </dt>
   </dl>
 </td></tr></table>
@@ -290,7 +617,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

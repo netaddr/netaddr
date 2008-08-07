@@ -60,7 +60,11 @@
 <h1 class="epydoc">Package netaddr</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr-pysrc.html">source&nbsp;code</a></span></p>
 <p>network address manipulation, done Pythonically</p>
 
-<!-- ==================== SUBMODULES ==================== -->
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        0.4
+      </p>
+</div><!-- ==================== SUBMODULES ==================== -->
 <a name="section-Submodules"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
@@ -70,14 +74,335 @@
 </tr>
   <tr><td class="summary">
   <ul class="nomargin">
-    <li> <strong class="uidlink"><a href="netaddr.address-module.html">netaddr.address</a></strong>: <em class="summary">classes and functions representing supported network addresses and 
-        associated aggregation options.</em>    </li>
-    <li> <strong class="uidlink"><a href="netaddr.strategy-module.html">netaddr.strategy</a></strong>: <em class="summary">classes that implement the behaviour of each network address type, 
-        constants used to identify them and shared strategy instances used 
-        by address objects.</em>    </li>
+    <li class="private"> <strong class="uidlink"><a href="netaddr.address-module.html" onclick="show_private();">netaddr.address</a></strong>: <em class="summary">network addresses and associated aggregates (CIDR, Wilcard, etc).</em>    </li>
+    <li class="private"> <strong class="uidlink"><a href="netaddr.strategy-module.html" onclick="show_private();">netaddr.strategy</a></strong>: <em class="summary">network address type logic, constants used to identify them and 
+        shared strategy objects.</em>    </li>
   </ul></td></tr>
 </table>
 
+<br />
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.Addr-class.html" class="summary-name">Addr</a><br />
+      The base class containing common functionality for all subclasses 
+        representing various network address types.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.AddrRange-class.html" class="summary-name">AddrRange</a><br />
+      A block of contiguous network addresses bounded by an arbitrary 
+        start and stop address.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.AddrFormatError-class.html" class="summary-name">AddrFormatError</a><br />
+      Network address format not recognised.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.AddrConversionError-class.html" class="summary-name">AddrConversionError</a><br />
+      Conversion between address types or notations failed.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.IP-class.html" class="summary-name">IP</a><br />
+      A class whose objects represent Internet Protocol network 
+        addresses.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.CIDR-class.html" class="summary-name">CIDR</a><br />
+      A block of contiguous IPv4 or IPv6 network addresses defined by a 
+        base network address and a bitmask prefix or subnet mask address 
+        indicating the size/extent of the subnet.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.Wildcard-class.html" class="summary-name">Wildcard</a><br />
+      A block of contiguous IPv4 network addresses defined using a 
+        wildcard style syntax.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.EUI-class.html" class="summary-name">EUI</a><br />
+      EUI objects represent IEEE Extended Unique Identifiers.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr-module.html#nrange" class="summary-sig-name">nrange</a>(<span class="summary-sig-arg">start</span>,
+        <span class="summary-sig-arg">stop</span>,
+        <span class="summary-sig-arg">step</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">klass</span>=<span class="summary-sig-default">None</span>)</span><br />
+      A generator producing sequences of network addresses based on start 
+      and stop values, in intervals of step.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#nrange">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="AT_INET"></a><span class="summary-name">AT_INET</span> = <code title="4">4</code><br />
+      IPv4 address type constant.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="AT_INET6"></a><span class="summary-name">AT_INET6</span> = <code title="6">6</code><br />
+      IPv6 address type constant.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="AT_LINK"></a><span class="summary-name">AT_LINK</span> = <code title="48">48</code><br />
+      MAC/EUI-48 address type constant.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="AT_EUI64"></a><span class="summary-name">AT_EUI64</span> = <code title="64">64</code><br />
+      EUI-64 address type constant.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr-module.html#ST_IPV4" class="summary-name">ST_IPV4</a> = <code title="netaddr.address.IPv4Strategy(32, 8, '.', 4, False, False)">netaddr.address.IPv4Strategy(32, 8, '.', 4, False, F<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr-module.html#ST_IPV6" class="summary-name">ST_IPV6</a> = <code title="netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)">netaddr.address.IPv6Strategy(128, 16, ':', 6, True, <code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr-module.html#ST_EUI48" class="summary-name">ST_EUI48</a> = <code title="netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)">netaddr.address.EUI48Strategy(48, 8, '-', 48, True,<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr-module.html#ST_EUI64" class="summary-name">ST_EUI64</a> = <code title="netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)">netaddr.address.AddrStrategy(64, 8, '-', 64, True, <code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="nrange"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">nrange</span>(<span class="sig-arg">start</span>,
+        <span class="sig-arg">stop</span>,
+        <span class="sig-arg">step</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">klass</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#nrange">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A generator producing sequences of network addresses based on start 
+  and stop values, in intervals of step.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>start</code></strong> - first network address as string or instance of <a 
+          href="netaddr.address.Addr-class.html" class="link">Addr</a> 
+          (sub)class.</li>
+        <li><strong class="pname"><code>stop</code></strong> - last network address as string or instance of <a 
+          href="netaddr.address.Addr-class.html" class="link">Addr</a> 
+          (sub)class.</li>
+        <li><strong class="pname"><code>step</code></strong> - (optional) size of step between addresses in range. Default is 1.</li>
+        <li><strong class="pname"><code>klass</code></strong> - (optional) the class used to create objects returned. Default: <a
+          href="netaddr.address.Addr-class.html" class="link">Addr</a> 
+          class.
+          <ul>
+            <li>
+              <code>str</code> returns string representation of network 
+              address
+            </li>
+            <li>
+              <code>int</code>, <code>long</code> and <code>hex</code> 
+              return expected values
+            </li>
+            <li>
+              <a href="netaddr.address.Addr-class.html" 
+              class="link">Addr</a> (sub)class or duck type* return objects
+              of that class. If you use your own duck class, make sure you 
+              handle both arguments <code>(addr_value, addr_type)</code> 
+              passed to the constructor.
+            </li>
+          </ul></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables Details</span></td>
+</tr>
+</table>
+<a name="ST_IPV4"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ST_IPV4</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+netaddr.address.IPv4Strategy(32, 8, '.', 4, False, False)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ST_IPV6"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ST_IPV6</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ST_EUI48"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ST_EUI48</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ST_EUI64"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ST_EUI64</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -110,7 +435,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

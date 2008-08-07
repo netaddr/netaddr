@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.address-module.html">Module&nbsp;address</a> ::
+        <a href="netaddr.address-module.html" onclick="show_private();">Module&nbsp;address</a> ::
         Class&nbsp;Addr
       </span>
     </td>
@@ -73,12 +73,15 @@ object --+
 </dd></dl>
 
 <hr />
-<p>A class whose objects represent network addresses of different types 
-  based on arguments passed to the constructor.</p>
-  <p>The address type can either be auto-detected from the string form of 
-  the address or specified explicitly via the second argument.</p>
-  <p>The behaviour of this class varies depending on the type of address 
-  that it represents.</p>
+<p>The base class containing common functionality for all subclasses 
+  representing various network address types.</p>
+  <p>It is a fully functioning class (as opposed to a virtual class) with a
+  heuristic constructor that detects the type of address via the first 
+  argument if it is a string and sets itself up accordingly. If the first 
+  argument is an integer, then a constant must be provided via the second 
+  argument indicating the address type explicitly.</p>
+  <p>Objects of this class behave differently dependent upon the type of 
+  address they represent.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -132,8 +135,8 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__int__" class="summary-sig-name">__int__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the value of this address as an network byte order int, if 
-      possible.</td>
+      Returns:
+      The value of this address as an network byte order integer.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__int__">source&nbsp;code</a></span>
             
@@ -150,7 +153,8 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__long__" class="summary-sig-name">__long__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the value of this address as a network byte order long int.</td>
+      Returns:
+      The value of this address as an network byte order integer.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__long__">source&nbsp;code</a></span>
             
@@ -167,7 +171,8 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the string representation for this address.</td>
+      Returns:
+      The common string representation for this address type.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__str__">source&nbsp;code</a></span>
             
@@ -183,9 +188,28 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="bits"></a><span class="summary-sig-name">bits</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return a human-readable binary digit string representation of this 
-      address.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      An executable Python statement that can recreate an object with an 
+      equivalent state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__repr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#bits" class="summary-sig-name">bits</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A human-readable binary digit string for this address type.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.bits">source&nbsp;code</a></span>
             
@@ -201,8 +225,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__len__"></a><span class="summary-sig-name">__len__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the size of this address (in bits).</td>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__len__" class="summary-sig-name">__len__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The size of this address (in bits).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__len__">source&nbsp;code</a></span>
             
@@ -218,8 +243,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__iter__"></a><span class="summary-sig-name">__iter__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Provide an iterator over words (based on word_size) in this address.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__iter__" class="summary-sig-name">__iter__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      An iterator over individual words in this address.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__iter__">source&nbsp;code</a></span>
             
@@ -237,7 +263,8 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__getitem__" class="summary-sig-name">__getitem__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">index</span>)</span><br />
-      Return the integer value of the word indicated by index.</td>
+      Returns:
+      The integer value of the word indicated by index.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__getitem__">source&nbsp;code</a></span>
             
@@ -256,7 +283,7 @@ object --+
           <td><span class="summary-sig"><a name="__setitem__"></a><span class="summary-sig-name">__setitem__</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">index</span>,
         <span class="summary-sig-arg">value</span>)</span><br />
-      Set the value of the word of this address indicated by index.</td>
+      Sets the value of the word of this address indicated by index.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__setitem__">source&nbsp;code</a></span>
             
@@ -272,9 +299,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__hex__"></a><span class="summary-sig-name">__hex__</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the value of this address as a network byte order hexadecimal
-      string.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__hex__" class="summary-sig-name">__hex__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The value of this address as a network byte order hexadecimal number.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__hex__">source&nbsp;code</a></span>
             
@@ -291,8 +318,8 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__iadd__" class="summary-sig-name">__iadd__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">increment</span>)</span><br />
-      Increment the value of this network address by the specified value.</td>
+        <span class="summary-sig-arg">i</span>)</span><br />
+      Increments network address by specified value.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__iadd__">source&nbsp;code</a></span>
             
@@ -309,8 +336,8 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__isub__" class="summary-sig-name">__isub__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">decrement</span>)</span><br />
-      Decrement the value of this network address by specified value.</td>
+        <span class="summary-sig-arg">i</span>)</span><br />
+      Decrements network address by specified value.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__isub__">source&nbsp;code</a></span>
             
@@ -326,10 +353,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__eq__"></a><span class="summary-sig-name">__eq__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__eq__" class="summary-sig-name">__eq__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has the same numerical value as
-      another, False otherwise.</td>
+      Returns:
+      <code>True</code> if this network address instance has the same 
+      numerical value as another, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__eq__">source&nbsp;code</a></span>
             
@@ -345,10 +373,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__lt__"></a><span class="summary-sig-name">__lt__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__lt__" class="summary-sig-name">__lt__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a lower numerical value 
-      than another, False otherwise.</td>
+      Returns:
+      <code>True</code> if this network address instance has a lower 
+      numerical value than another, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__lt__">source&nbsp;code</a></span>
             
@@ -364,10 +393,12 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__le__"></a><span class="summary-sig-name">__le__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__le__" class="summary-sig-name">__le__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a lower or equivalent 
-      numerical value than another, False otherwise.</td>
+      Returns:
+      <code>True</code> if this network address instance has a lower or 
+      equivalent numerical value than another, <code>False</code> 
+      otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__le__">source&nbsp;code</a></span>
             
@@ -383,10 +414,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__gt__"></a><span class="summary-sig-name">__gt__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__gt__" class="summary-sig-name">__gt__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a higher numerical value 
-      than another, False otherwise.</td>
+      Returns:
+      <code>True</code> if this network address instance has a higher 
+      numerical value than another, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__gt__">source&nbsp;code</a></span>
             
@@ -402,12 +434,32 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__ge__"></a><span class="summary-sig-name">__ge__</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__ge__" class="summary-sig-name">__ge__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
-      True if this network address instance has a higher or equivalent 
-      numerical value than another, False otherwise.</td>
+      Returns:
+      <code>True</code> if this network address instance has a higher or 
+      equivalent numerical value than another, <code>False</code> 
+      otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__ge__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#family" class="summary-sig-name">family</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The integer constant identifying this object's address type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.family">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -424,7 +476,6 @@ object --+
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
       <code>__setattr__</code>
       </p>
     </td>
@@ -473,11 +524,14 @@ object --+
   </tr></table>
   
   <p>Constructor.</p>
-  <p>addr - the string form of a network address, or a network byte order 
-  int/long value within the supported range for the address type.</p>
-  <p>addr_type - (optional) the network address type. If addr is an int or 
-  long, this argument becomes mandatory.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - the string form of a network address, or a network byte order 
+          integer within the supported range for the address type.</li>
+        <li><strong class="pname"><code>addr_type</code></strong> - (optional) the network address type. If addr is an integer, this 
+          argument becomes mandatory.</li>
+    </ul></dd>
     <dt>Overrides:
         object.__init__
     </dt>
@@ -500,12 +554,22 @@ object --+
   </tr></table>
   
   <p>Sets the value of this address.</p>
-  <p>addr - the string form of a network address, or a network byte order 
-  int/long value within the supported range for the address type.</p>
-  <p>Raises a TypeError if addr is of an unsupported type.</p>
-  <p>Raises an OverflowError if addr is an int/long value that is is out of
-  bounds for the address type this instance represents.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - the string form of a network address, or a network byte order 
+          integer value within the supported range for the address type.
+          <ul>
+            <li>
+              Raises a <code>TypeError</code> if addr is of an unsupported 
+              type.
+            </li>
+            <li>
+              Raises an <code>OverflowError</code> if addr is an integer 
+              outside the bounds for this address type.
+            </li>
+          </ul></li>
+    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -523,11 +587,10 @@ object --+
     </td>
   </tr></table>
   
-  <p>Returns the value of this address as an network byte order int, if 
-  possible.</p>
-  <p>If the value of int is greater than 2 ** 31 - 1, a long is returned 
-  instead of an int (standard Python behaviour).</p>
+  
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The value of this address as an network byte order integer.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -545,11 +608,10 @@ object --+
     </td>
   </tr></table>
   
-  <p>Returns the value of this address as a network byte order long 
-  int.</p>
-  <p>If the value of int is less than 2 ** 31 - 1, an int is returned 
-  instead of a long (standard Python behaviour).</p>
+  
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The value of this address as an network byte order integer.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -568,12 +630,103 @@ object --+
     </td>
   </tr></table>
   
-  <p>Return the string representation for this address. Format varies 
-  dependent on address type.</p>
+  <p>str(x)</p>
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The common string representation for this address type.</dd>
     <dt>Overrides:
         object.__str__
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__repr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__repr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>repr(x)</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An executable Python statement that can recreate an object with 
+          an equivalent state.</dd>
+    <dt>Overrides:
+        object.__repr__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="bits"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bits</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.bits">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A human-readable binary digit string for this address type.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__len__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__len__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Length operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__len__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The size of this address (in bits).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__iter__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__iter__</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__iter__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An iterator over individual words in this address.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -593,10 +746,34 @@ object --+
     </td>
   </tr></table>
   
-  <p>Return the integer value of the word indicated by index. Raises an 
-  IndexError exception if index is wrong size for address type</p>
-  <p>Full slicing support is also available.</p>
+  
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The integer value of the word indicated by index. Raises an 
+          <code>IndexError</code> if index is wrong size for address type. 
+          Full slicing is also supported.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__hex__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__hex__</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__hex__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The value of this address as a network byte order hexadecimal 
+          number.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -608,17 +785,16 @@ object --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__iadd__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">increment</span>)</span>
+        <span class="sig-arg">i</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__iadd__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Increment the value of this network address by the specified 
-  value.</p>
-  <p>If the result exceeds maximum value for the address type, it rolls 
-  around the minimum boundary value.</p>
+  <p>Increments network address by specified value.</p>
+  <p>If the result exceeds address type maximum, it rolls around the 
+  minimum boundary.</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
@@ -631,17 +807,160 @@ object --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__isub__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">decrement</span>)</span>
+        <span class="sig-arg">i</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__isub__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Decrement the value of this network address by specified value.</p>
-  <p>If the result is lower than the address type mininum value it rolls 
-  around the maximum boundary value.</p>
+  <p>Decrements network address by specified value.</p>
+  <p>If the result exceeds address type minimum, it rolls around the 
+  maximum boundary.</p>
   <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__eq__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__eq__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Equality operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__eq__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this network address instance has the same 
+          numerical value as another, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__lt__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__lt__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Less-than operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__lt__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this network address instance has a lower 
+          numerical value than another, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__le__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__le__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Less-than-or-equals operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__le__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this network address instance has a lower or
+          equivalent numerical value than another, <code>False</code> 
+          otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__gt__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__gt__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Greater-than operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__gt__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this network address instance has a higher 
+          numerical value than another, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__ge__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__ge__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Greater-than-or-equals operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__ge__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this network address instance has a higher 
+          or equivalent numerical value than another, <code>False</code> 
+          otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="family"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">family</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.family">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The integer constant identifying this object's address type.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -677,7 +996,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Jul 13 00:16:36 2008
+    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
