@@ -12,7 +12,7 @@ import socket as _socket
 import struct as _struct
 
 from netaddr import BIG_ENDIAN_PLATFORM, AT_UNSPEC, AT_INET, AT_INET6, \
-                    AT_LINK, AT_EUI64, AT_DESCR
+                    AT_LINK, AT_EUI64, AT_NAMES
 
 #-----------------------------------------------------------------------------
 def _BYTES_TO_BITS():
@@ -63,9 +63,9 @@ class AddrStrategy(object):
             self.word_base = 10
 
         try:
-            self.name = AT_DESCR[addr_type]
+            self.name = AT_NAMES[addr_type]
         except KeyError:
-            self.name = AT_DESCR[AT_UNSPEC]
+            self.name = AT_NAMES[AT_UNSPEC]
 
     def __repr__(self):
         """

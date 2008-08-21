@@ -8,9 +8,24 @@
 network addresses and associated aggregates (CIDR, Wilcard, etc).
 """
 import math as _math
-from netaddr import AddrFormatError, AddrConversionError
-from netaddr.strategy import AT_UNSPEC, AT_LINK, AT_INET, AT_INET6, \
-                             AT_EUI64, ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
+import socket as _socket
+
+
+from netaddr import AddrFormatError, AddrConversionError, AT_UNSPEC, \
+    AT_INET, AT_INET6, AT_LINK,  AT_EUI64
+
+from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64, \
+    AddrStrategy
+
+#   *** To be added to netaddr.__init__.py ***
+AT_STRATEGIES = {
+    #   Address Type : Strategy Object.
+    AT_UNSPEC   : None,
+    AT_INET     : ST_IPV4,
+    AT_INET6    : ST_IPV6,
+    AT_LINK     : ST_EUI48,
+    AT_EUI64    : ST_EUI64,
+}
 
 #-----------------------------------------------------------------------------
 class Addr(object):
@@ -27,6 +42,10 @@ class Addr(object):
     Objects of this class behave differently dependent upon the type of address
     they represent.
     """
+    #   Class properties.
+    STRATEGIES = (ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64)
+    ADDR_TYPES = (AT_INET, AT_INET6, AT_LINK, AT_EUI64)
+
     def __init__(self, addr, addr_type=AT_UNSPEC):
         """
         Constructor.
@@ -37,82 +56,110 @@ class Addr(object):
         @param addr_type: (optional) the network address type. If addr is an
             integer, this argument becomes mandatory.
         """
-        if not isinstance(addr, (str, unicode, int, long)):
-            raise TypeError("addr must be an network address string or a " \
-                "positive integer!")
+        #   NB - These should only be are accessed via property() methods.
+        self._strategy = None
+        self._value = None
+        self._addr_type = None
 
-        if isinstance(addr, (int, long)) and addr_type is None:
-            raise ValueError("addr_type must be provided with int/long " \
-                "address values!")
+        self.addr_type = addr_type
+        self.value = addr
 
-        self.value = None
-        self.strategy = None
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   START - managed attributes.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-        if addr_type is AT_UNSPEC:
-            #   Auto-detect address type.
-            for strategy in (ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64):
-                if strategy.valid_str(addr):
+    def _get_addr_type(self):
+        return self._addr_type
+
+    def _set_addr_type(self, val):
+        if val == AT_UNSPEC:
+            pass
+        else:
+            #   Validate addr_type and keep in sync with strategy.
+            if val not in self.__class__.ADDR_TYPES:
+                raise ValueError('addr_type %r is invalid for objects of ' \
+                    'the %s() class!' % (val, self.__class__.__name__))
+            self._strategy = AT_STRATEGIES[val]
+
+        self._addr_type = val
+
+    def _get_value(self):
+        return self._value
+
+    def _set_value(self, val):
+        #   Select a strategy object for this address.
+        if self._addr_type == AT_UNSPEC:
+            for strategy in self.__class__.STRATEGIES:
+                if strategy.valid_str(val):
                     self.strategy = strategy
                     break
-        elif addr_type == AT_INET:
-            self.strategy = ST_IPV4
-        elif addr_type == AT_INET6:
-            self.strategy = ST_IPV6
-        elif addr_type == AT_LINK:
-            self.strategy = ST_EUI48
-        elif addr_type == AT_EUI64:
-            self.strategy = ST_EUI64
 
-        if self.strategy is None:
-            #   Whoops - we fell through and didn't match anything!
-            raise AddrFormatError("%r is not a recognised address format!" \
-                % addr)
+        #   Make sure we picked up a strategy object.
+        if self._strategy is None:
+            raise AddrFormatError('%r is not a recognised address ' \
+                'format!' % val)
 
-        if addr is None:
-            addr = 0
+        #   Calculate and validate the value for this address.
+        if isinstance(val, (str, unicode)):
+            val = self._strategy.str_to_int(val)
+        elif isinstance(val, (int, long)):
+            if not self._strategy.valid_int(val):
+                raise OverflowError('value %r cannot be represented ' \
+                    'in %d bit(s)!' % (val, self._strategy.width))
+        self._value = val
 
-        self.addr_type = self.strategy.addr_type
-        self.setvalue(addr)
+    def _get_strategy(self):
+        return self._strategy
 
-    #TODO: replace this method with __setattr__() instead.
-    def setvalue(self, addr):
+    def _set_strategy(self, val):
+        #   Validate strategy and keep in sync with addr_type.
+        if not issubclass(val.__class__, AddrStrategy):
+            raise TypeError('%r is not an object of (sub)class of ' \
+                'AddrStrategy!' % val)
+        self._addr_type = val.addr_type
+
+        self._strategy = val
+
+    #   Initialise accessors and tidy the namespace.
+    value = property(_get_value, _set_value, None,
         """
-        Sets the value of this address.
+        The value of this address object (a network byte order integer).
+        """)
+    del _get_value, _set_value
 
-        @param addr: the string form of a network address, or a network byte
-        order integer value within the supported range for the address type.
-            - Raises a C{TypeError} if addr is of an unsupported type.
-            - Raises an C{OverflowError} if addr is an integer outside the
-            bounds for this address type.
+    addr_type = property(_get_addr_type, _set_addr_type, None,
         """
-        if isinstance(addr, (str, unicode)):
-            self.value = self.strategy.str_to_int(addr)
-        elif isinstance(addr, (int, long)):
-            if self.strategy.valid_int(addr):
-                self.value = addr
-            else:
-                raise OverflowError('%r cannot be represented in %r bits!' \
-                    % (addr, self.strategy.width))
-        else:
-            raise TypeError('%r is an unsupported type!')
+        An integer value indicating the specific type of this address object.
+        """)
+    del _get_addr_type, _set_addr_type
+
+    strategy = property(_get_strategy, _set_strategy, None,
+        """
+        An instance of AddrStrategy (sub)class.
+        """)
+    del _get_strategy, _set_strategy
+
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   END - managed attributes.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     def __int__(self):
         """
         @return: The value of this address as an network byte order integer.
         """
-        return self.value
+        return self._value
 
     def __long__(self):
         """
         @return: The value of this address as an network byte order integer.
         """
-        return self.value
+        return self._value
 
     def __str__(self):
         """
         @return: The common string representation for this address type.
         """
-        return self.strategy.int_to_str(self.value)
+        return self._strategy.int_to_str(self._value)
 
     def __repr__(self):
         """
@@ -125,19 +172,19 @@ class Addr(object):
         """
         @return: A human-readable binary digit string for this address type.
         """
-        return self.strategy.int_to_bits(self.value)
+        return self._strategy.int_to_bits(self._value)
 
     def __len__(self):
         """
         @return: The size of this address (in bits).
         """
-        return self.strategy.width
+        return self._strategy.width
 
     def __iter__(self):
         """
         @return: An iterator over individual words in this address.
         """
-        return iter(self.strategy.int_to_words(self.value))
+        return iter(self._strategy.int_to_words(self._value))
 
     def __getitem__(self, index):
         """
@@ -147,17 +194,16 @@ class Addr(object):
         """
         if isinstance(index, (int, long)):
             #   Indexing, including negative indexing goodness.
-            word_count = self.strategy.word_count
+            word_count = self._strategy.word_count
             if not (-word_count) <= index <= (word_count - 1):
                 raise IndexError('index out range for address type!')
-            return self.strategy.int_to_words(self.value)[index]
+            return self._strategy.int_to_words(self._value)[index]
         elif isinstance(index, slice):
             #   Slicing baby!
-            words = self.strategy.int_to_words(self.value)
+            words = self._strategy.int_to_words(self._value)
             return [words[i] for i in range(*index.indices(len(words)))]
         else:
             raise TypeError('unsupported type %r!' % index)
-
 
     def __setitem__(self, index, value):
         """
@@ -170,26 +216,26 @@ class Addr(object):
         if not isinstance(index, (int, long)):
             raise TypeError('index not an integer!')
 
-        if not 0 <= index <= (self.strategy.word_count - 1):
+        if not 0 <= index <= (self._strategy.word_count - 1):
             raise IndexError('index %d outside address type boundary!' % index)
 
         if not isinstance(value, (int, long)):
             raise TypeError('value not an integer!')
 
-        if not 0 <= value <= (2 ** self.strategy.word_size - 1):
+        if not 0 <= value <= (2 ** self._strategy.word_size - 1):
             raise IndexError('value %d outside word size maximum of %d bits!'
-                % (value, self.strategy.word_size))
+                % (value, self._strategy.word_size))
 
-        words = list(self.strategy.int_to_words(self.value))
+        words = list(self._strategy.int_to_words(self._value))
         words[index] = value
-        self.setvalue(self.strategy.words_to_int(words))
+        self.value = self._strategy.words_to_int(words)
 
     def __hex__(self):
         """
         @return: The value of this address as a network byte order hexadecimal
         number.
         """
-        return hex(self.value).rstrip('L').lower()
+        return hex(self._value).rstrip('L').lower()
 
     def __iadd__(self, i):
         """
@@ -199,11 +245,11 @@ class Addr(object):
         minimum boundary.
         """
         try:
-            new_value = self.value + i
-            if new_value > self.strategy.max_int:
-                self.value = new_value - (self.strategy.max_int + 1)
+            new_value = self._value + i
+            if new_value > self._strategy.max_int:
+                self._value = new_value - (self._strategy.max_int + 1)
             else:
-                self.value = new_value
+                self._value = new_value
         except TypeError:
             raise TypeError('Increment value must be an integer!')
         return self
@@ -216,9 +262,9 @@ class Addr(object):
         maximum boundary.
         """
         try:
-            new_value = self.value - i
-            if new_value < self.strategy.min_int:
-                self.value = new_value + (self.strategy.max_int + 1)
+            new_value = self._value - i
+            if new_value < self._strategy.min_int:
+                self.value = new_value + (self._strategy.max_int + 1)
             else:
                 self.value = new_value
         except TypeError:
@@ -230,7 +276,16 @@ class Addr(object):
         @return: C{True} if this network address instance has the same
             numerical value as another, C{False} otherwise.
         """
-        if int(self) == int(other):
+        if (self._addr_type, self._value) == (other._addr_type, other._value):
+            return True
+        return False
+
+    def __ne__(self, other):
+        """
+        @return: C{True} if this network address instance does not have the
+            same numerical value as another, C{False} otherwise.
+        """
+        if (self._addr_type, self._value) != (other._addr_type, other._value):
             return True
         return False
 
@@ -239,7 +294,7 @@ class Addr(object):
         @return: C{True} if this network address instance has a lower
             numerical value than another, C{False} otherwise.
         """
-        if int(self) < int(other):
+        if (self._addr_type, self._value) < (other._addr_type, other._value):
             return True
         return False
 
@@ -248,7 +303,7 @@ class Addr(object):
         @return: C{True} if this network address instance has a lower or
             equivalent numerical value than another, C{False} otherwise.
         """
-        if int(self) <= int(other):
+        if (self._addr_type, self._value) <= (other._addr_type, other._value):
             return True
         return False
 
@@ -257,7 +312,7 @@ class Addr(object):
         @return: C{True} if this network address instance has a higher
             numerical value than another, C{False} otherwise.
         """
-        if int(self) > int(other):
+        if (self._addr_type, self._value) > (other._addr_type, other._value):
             return True
         return False
 
@@ -266,15 +321,9 @@ class Addr(object):
         @return: C{True} if this network address instance has a higher or
             equivalent numerical value than another, C{False} otherwise.
         """
-        if int(self) >= int(other):
+        if (self._addr_type, self._value) >= (other._addr_type, other._value):
             return True
         return False
-
-    def family(self):
-        """
-        @return: The integer constant identifying this object's address type.
-        """
-        return self.strategy.addr_type
 
 #-----------------------------------------------------------------------------
 class EUI(Addr):
@@ -283,6 +332,10 @@ class EUI(Addr):
     flexible, supporting EUI-48, EUI-64 and all MAC (Media Access Control)
     address flavours.
     """
+    #   Class properties.
+    STRATEGIES = (ST_EUI48, ST_EUI64)
+    ADDR_TYPES = (AT_LINK, AT_EUI64)
+
     def __init__(self, addr, addr_type=AT_UNSPEC):
         """
         Constructor.
@@ -293,38 +346,7 @@ class EUI(Addr):
         @param addr_type: (optional) the specific EUI address type (C{AT_LINK}
         or C{AT_EUI64}). If addr is an integer, this argument is mandatory.
         """
-        if not isinstance(addr, (str, unicode, int, long)):
-            raise TypeError("addr must be an EUI/MAC network address " \
-                "string or a positive integer!")
-
-        if isinstance(addr, (int, long)) and addr_type is None:
-            raise ValueError("addr_type must be provided with integer " \
-                "address values!")
-
-        self.value = None
-        self.strategy = None
-
-        if addr_type is AT_UNSPEC:
-            #   Auto-detect address type.
-            for strategy in (ST_EUI48, ST_EUI64):
-                if strategy.valid_str(addr):
-                    self.strategy = strategy
-                    break
-        elif addr_type == AT_LINK:
-            self.strategy = ST_EUI48
-        elif addr_type == AT_EUI64:
-            self.strategy = ST_EUI64
-
-        if self.strategy is None:
-            #   Whoops - we fell through and didn't match anything!
-            raise AddrFormatError("%r is not a recognised EUI or MAC " \
-                "address format!" % addr)
-
-        if addr is None:
-            addr = 0
-
-        self.addr_type = self.strategy.addr_type
-        self.setvalue(addr)
+        super(EUI, self).__init__(addr, addr_type)
 
     def oui(self):
         """
@@ -349,7 +371,7 @@ class EUI(Addr):
             - If this object is already and EUI-64, it just returns a new,
             numerically equivalent object is returned instead.
         """
-        if self.addr_type == AT_LINK:
+        if self._addr_type == AT_LINK:
             eui64_words = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
                      ["%02x" % i for i in self[3:6]]
 
@@ -368,7 +390,7 @@ class EUI(Addr):
         #   Add 2 to the first octet of this EUI address (temporarily).
         self[0] += 2
 
-        if self.addr_type == AT_LINK:
+        if self._addr_type == AT_LINK:
             #   Modify MAC to make it an EUI-64.
             suffix = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
                      ["%02x" % i for i in self[3:6]]
@@ -385,7 +407,6 @@ class EUI(Addr):
         addr = prefix + eui64
         return IP(addr)
 
-
 #-----------------------------------------------------------------------------
 class IP(Addr):
     """
@@ -401,6 +422,10 @@ class IP(Addr):
 
     See the L{CIDR()} class if you require B{*strict*} subnet prefix checking.
     """
+    #   Class properties.
+    STRATEGIES = (ST_IPV4, ST_IPV6)
+    ADDR_TYPES = (AT_INET, AT_INET6)
+
     def __init__(self, addr, addr_type=AT_UNSPEC):
         """
         Constructor.
@@ -411,75 +436,62 @@ class IP(Addr):
         @param addr_type: (optional) the IP address type (C{AT_INET} or
         C{AT_INET6}). If L{addr} is an integer, this argument is mandatory.
         """
-        if not isinstance(addr, (str, unicode, int, long)):
-            raise TypeError("addr must be an network address string or a " \
-                "positive integer!")
+        #   NB - This should only be are accessed via property() methods.
+        self._prefixlen = None
 
-        if isinstance(addr, (int, long)) and addr_type is AT_UNSPEC:
-            raise ValueError("addr_type must be provided with int/long " \
-                "address values!")
-
-        self.value = None
-        self.strategy = None
-        self.prefix = None
-
-        if addr_type == AT_UNSPEC:
-            pass
-        elif addr_type == AT_INET:
-            self.strategy = ST_IPV4
-        elif addr_type == AT_INET6:
-            self.strategy = ST_IPV6
-        else:
-            raise ValueError('%r is an unsupported address type!')
-
-        if addr is None:
-            addr = 0
-
-        self.setvalue(addr)
-
-    #TODO: replace this method with __setattr__() instead.
-    def setvalue(self, addr):
-        """
-        Sets the value of this address.
-
-        @param addr: the string form of an IP address, or a network byte order
-            int/long value within the supported range for the address type.
-                - Raises a C{TypeError} if addr is of an unsupported type.
-                - Raises an C{OverflowError} if addr is an integer outside the
-                bounds for this address type.
-        """
-        if isinstance(addr, (str, unicode)):
-            #   String address.
+        prefixlen = None
+        #   Check for prefix in address and split it out.
+        try:
             if '/' in addr:
-                (addr, masklen) = addr.split('/', 1)
-                self.prefix = int(masklen)
+                (addr, prefixlen) = addr.split('/', 1)
+        except TypeError:
+            #   addr is an int - let it pass through.
+            pass
 
-            #   Auto-detect address type.
-            for strategy in (ST_IPV4, ST_IPV6):
-                if strategy.valid_str(addr):
-                    self.strategy = strategy
-                    break
+        #   Call superclass constructor before processing subnet prefix to
+        #   assign the strategyn object.
+        super(IP, self).__init__(addr, addr_type)
 
-            if self.strategy is None:
-                raise AddrFormatError('%r is not a valid IPv4/IPv6 address!' \
-                    % addr)
-
-            self.addr_type = self.strategy.addr_type
-            self.value = self.strategy.str_to_int(addr)
-
-        elif isinstance(addr, (int, long)):
-            if self.strategy.valid_int(addr):
-                self.addr_type = self.strategy.addr_type
-                self.value = addr
-            else:
-                raise OverflowError('%r cannot be represented in %r bits!' \
-                    % (addr, self.strategy.width))
+        #   Set the subnet prefix.
+        if prefixlen is None:
+            self._prefixlen = self._strategy.width
         else:
-            raise TypeError('%r is an unsupported type!')
+            self.prefixlen = prefixlen
 
-        #   Set default prefix.
-        if self.prefix == None:
-            self.prefix = self.strategy.width
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   START - managed attributes.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+    def _get_prefixlen(self):
+        return self._prefixlen
+
+    def _set_prefixlen(self, val):
+        try:
+            #   Basic integer subnet prefix.
+            prefixlen = int(val)
+        except ValueError:
+            #   Convert possible subnet mask to integer subnet prefix.
+            ip = IP(val)
+            if self._addr_type != ip.addr_type:
+                raise ValueError('address and netmask type mismatch!')
+            if not ip.is_netmask():
+                raise ValueError('%s is not a valid netmask!' % ip)
+            prefixlen = ip.netmask_bits()
+
+        #   Validate subnet prefix.
+        if not 0 <= prefixlen <= self._strategy.width:
+            raise ValueError('%d is an invalid CIDR prefix for %s!' \
+                % (prefixlen, AT_NAMES[self._addr_type]))
+
+        self._prefixlen = prefixlen
+
+    prefixlen = property(_get_prefixlen, _set_prefixlen, None,
+        """The CIDR subnet prefix for this IP address.""")
+    del _get_prefixlen, _set_prefixlen
+
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   END - managed attributes.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     def is_netmask(self):
         """
@@ -488,7 +500,7 @@ class IP(Addr):
         """
         #   There is probably a better way to do this.
         #   Change at will, just don't break the unit tests :-)
-        bits = self.strategy.int_to_bits(self.value).replace('.', '')
+        bits = self._strategy.int_to_bits(self._value).replace('.', '')
 
         if bits[0] != '1':
             #   Fail fast, if possible.
@@ -506,20 +518,21 @@ class IP(Addr):
 
         return True
 
-    def prefixlen(self):
+    def netmask_bits(self):
         """
         @return: The number of bits set to one in this address if it is a
-        netmask, zero otherwise.
+        valid netmask, otherwise the width (in bits) for the given address
+        type is returned instead.
         """
         if not self.is_netmask():
-            return self.strategy.width
+            return self._strategy.width
 
-        bits = self.strategy.int_to_bits(self.value)
+        bits = self._strategy.int_to_bits(self._value)
         translate_str = ''.join([chr(_i) for _i in range(256)])
         mask_bits = bits.translate(translate_str, '.0')
         mask_length = len(mask_bits)
 
-        if not 1 <= mask_length <= self.strategy.width:
+        if not 1 <= mask_length <= self._strategy.width:
             raise ValueError('Unexpected mask length %d for address type!' \
                 % mask_length)
 
@@ -538,7 +551,7 @@ class IP(Addr):
         """
         #   There is probably a better way to do this.
         #   Change at will, just don't break the unit tests :-)
-        bits = self.strategy.int_to_bits(self.value).replace('.', '')
+        bits = self._strategy.int_to_bits(self._value).replace('.', '')
 
         if bits[0] != '0':
             #   Fail fast, if possible.
@@ -556,34 +569,83 @@ class IP(Addr):
 
         return True
 
+    def hostname(self):
+        """
+        @return: Returns the FQDN for this IP address via a DNS query
+            using gethostbyaddr() Python's socket module.
+        """
+        return _socket.gethostbyaddr(str(self))[0]
+
     def cidr(self):
         """
         @return: A valid L{CIDR} object for this IP address.
         """
-        hostmask = (1 << (self.strategy.width - self.prefix)) - 1
-        start = (self.value | hostmask) - hostmask
-        network = self.strategy.int_to_str(start)
-        return CIDR("%s/%s" % (network, self.prefix))
+        hostmask = (1 << (self._strategy.width - self._prefixlen)) - 1
+        start = (self._value | hostmask) - hostmask
+        network = self._strategy.int_to_str(start)
+        return CIDR("%s/%d" % (network, self._prefixlen))
 
-    def masklen(self):
+    def ipv4(self):
         """
-        @return: The subnet prefix of this IP address.
+        @return: A new L{IP} object numerically equivalent this address.
+            - If its address type is IPv4.
+            - If object's address type is IPv6 and its value is mappable to
+            IPv4, a new IPv4 L{IP} object is returned instead.
+            - Raises an L{AddrConversionError} if IPv6 address is not mappable
+            to IPv4.
         """
-        return int(self.prefix)
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def ipv6(self):
+        """
+        @return: A new L{IP} object numerically equivalent this address.
+            - If object's address type is IPv6.
+            - If object's address type is IPv4 a new IPv6 L{IP} object, as a
+            IPv4 mapped address is returned instead. Uses the preferred IPv4
+            embedded in IPv6 form - C{::ffff:x.x.x.x} ('mapped' address) over
+            the (now deprecated) form - C{::x.x.x.x} ('compatible' address).
+            B{See RFC 4921 for details}.
+        """
+        raise NotImplementedError('TODO. Not yet implemented!')
+
+    def is_unicast(self):
+        """
+        @return: C{True} if this address is unicast, C{False} otherwise.
+        """
+        if self.is_multicast():
+            return False
+        return True
+
+    def is_multicast(self):
+        """
+        @return: C{True} if this address is multicast, C{False} otherwise.
+        """
+        if self._addr_type == AT_INET:
+            if 0xe0000000 <= self._value <= 0xefffffff:
+                return True
+        elif  self._addr_type == AT_INET6:
+            if 0xff000000000000000000000000000000 <= self._value <= \
+               0xffffffffffffffffffffffffffffffff:
+                return True
+        return False
 
     def __str__(self):
         """
         @return: The common string representation for this IP address.
         """
-        return self.strategy.int_to_str(self.value)
+        return self._strategy.int_to_str(self._value)
 
     def __repr__(self):
         """
         @return: An executable Python statement that can recreate an object
             with an equivalent state.
         """
+        if self.prefixlen == self._strategy.width:
+            return "netaddr.address.%s('%s')" % (self.__class__.__name__,
+                str(self))
+
         return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
-            str(self), self.prefix)
+            str(self), self.prefixlen)
 
 #-----------------------------------------------------------------------------
 def nrange(start, stop, step=1, klass=None):
@@ -639,10 +701,16 @@ def nrange(start, stop, step=1, klass=None):
     negative_step = False
     addr_type = start.addr_type
 
+    #   We don't need objects from here onwards. Basic integer values will do
+    #   just fine.
+    start_klass = start.__class__
+    start = int(start)
+    stop = int(stop)
+
     if step < 0:
         negative_step = True
 
-    index = int(start) - step
+    index = start - step
 
     #   Set default klass value.
     if klass is None:
@@ -653,37 +721,36 @@ def nrange(start, stop, step=1, klass=None):
         while True:
             index += step
             if negative_step:
-                if not index >= int(stop):
+                if not index >= stop:
                     return
             else:
-                if not index <= int(stop):
+                if not index <= stop:
                     return
             yield klass(index)
-
     elif klass in (str, unicode):
         #   Yield address string values.
         while True:
             index += step
             if negative_step:
-                if not index >= int(stop):
+                if not index >= stop:
                     return
             else:
-                if not index <= int(stop):
+                if not index <= stop:
                     return
-
-            yield str(start.__class__(index, addr_type))
+            yield str(start_klass(index, addr_type))
     else:
         #   Yield network address objects.
         while True:
             index += step
             if negative_step:
-                if not index >= int(stop):
+                if not index >= stop:
                     return
             else:
-                if not index <= int(stop):
+                if not index <= stop:
                     return
 
             yield klass(index, addr_type)
+
 
 #-----------------------------------------------------------------------------
 class AddrRange(object):
@@ -694,6 +761,13 @@ class AddrRange(object):
 
     The only network address aggregate supporting all network address types.
     Most AddrRange subclasses only support a subset of address types.
+
+
+    Sortability
+    -----------
+    A sequence of address ranges sort first by address type then by magnitude.
+    So for a list containing ranges of all currently supported address types,
+    IPv4 ranges come first, then IPv6, EUI-48 and lastly EUI-64.
     """
     def __init__(self, start_addr, stop_addr, klass=None):
         """
@@ -707,90 +781,124 @@ class AddrRange(object):
             Default: L{Addr()} objects. See L{nrange()} documentations for
             additional details on options.
         """
-        #   Set start address.
-        if not issubclass(start_addr.__class__, Addr):
-            if isinstance(start_addr, (str, unicode)):
-                self.start_addr = Addr(start_addr)
+        #   NB - These should only be are accessed via property() methods.
+        self._first = 0
+        self._last = 0
+        self._strategy = None
+        self._addr_type = None
+        self._klass = None
+
+        self.first = start_addr
+        self.last = stop_addr
+        self.klass = klass
+
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   START of accessor setup.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+    def _get_first(self):
+        return self.data_flavour(self._first)
+
+    def _set_first(self, val):
+        if not issubclass(val.__class__, Addr):
+            if isinstance(val, (str, unicode)):
+                addr = Addr(val)
+                self._first = int(addr)
+                self.strategy = addr.strategy
             else:
-                raise TypeError('start_addr is not recognised address in ' \
-                    'string format or an that is a (sub)class of Addr!')
+                raise TypeError('%r is not recognised string format ' \
+                    'address or a (sub)class of Addr!' % val)
         else:
-            self.start_addr = start_addr
+            self._first = int(val)
+            self.strategy = val.strategy
 
-            #   Make klass the same as start_addr object.
-            if klass is None:
-                klass = start_addr.__class__
+    def _get_last(self):
+        return self.data_flavour(self._last)
 
-        #   Assign default klass.
-        if klass is None:
-            self.klass = Addr
-        else:
-            self.klass = klass
-
-        #   Set stop address.
-        if not issubclass(stop_addr.__class__, Addr):
-            if isinstance(stop_addr, (str, unicode)):
-                self.stop_addr = Addr(stop_addr)
+    def _set_last(self, val):
+        if not issubclass(val.__class__, Addr):
+            if isinstance(val, (str, unicode)):
+                self._last = int(Addr(val))
             else:
-                raise TypeError('stop_addr is not recognised address in ' \
-                    'string format or an that is a (sub)class of Addr!')
+                raise TypeError('%r is not recognised string format ' \
+                    'address or a (sub)class of Addr!' % val)
         else:
-            self.stop_addr = stop_addr
+            self._last = int(val)
 
-        if self.start_addr.addr_type != self.stop_addr.addr_type:
-            raise TypeError('start_addr and stop_addr are not the same ' \
-                'address type!')
+            if self.strategy is not None:
+                if self._addr_type != val.addr_type:
+                    raise TypeError('start and stop address types are different!')
 
-        self.addr_type = self.start_addr.addr_type
+        if self._last < self._first:
+            raise IndexError('start address is greater than stop address!')
 
-        if self.stop_addr < self.start_addr:
-            raise IndexError('stop_addr must be greater than start_addr!')
+    def _get_strategy(self):
+        return self._strategy
 
-    def __setattr__(self, name, value):
-        """
-        Police assignments to various class attributes to ensure nothing gets
-        broken accidentally.
-        """
-        if name == 'klass':
-            if isinstance(value, type):
-                if value in (str, int, long, unicode):
-                    pass
-                elif issubclass(value, Addr):
-                    pass
-                else:
-                    raise TypeError("unsupported type %r for klass!" % value)
-            elif value is hex:
-                #   hex() is a BIF, not a type.
+    def _set_strategy(self, val):
+        if not issubclass(val.__class__, AddrStrategy):
+            raise ValueError('%r is not AddrStrategy (sub)class!' % val)
+
+        if val.max_int < self._last:
+            raise ValueError('Present range boundary values exceed ' \
+                'maximum values for address type %s!' \
+                    % AT_NAMES[val.addr_type])
+
+        self._strategy = val
+        self._addr_type = self._strategy.addr_type
+
+    def _get_addr_type(self):
+        return self._strategy.addr_type
+
+    def _get_klass(self):
+        return self._klass
+
+    def _set_klass(self, val):
+        if isinstance(val, type):
+            if val in (str, int, long, unicode):
+                pass
+            elif issubclass(val, Addr):
                 pass
             else:
-                raise ValueError("unsupported value %r for klass!" % value)
-
-        self.__dict__[name] = value
-
-    def _retval(self, addr):
-        """
-        Protected method. B{*** Not intended for public use ***}
-        """
-        #   Decides on the flavour of a value to be return based on klass
-        #   property.
-        if self.klass in (str, unicode):
-            return str(addr)
-        elif self.klass in (int, long, hex):
-            return self.klass(int(addr))
+                raise TypeError("%r is an unsupported type!" % val)
+        elif val is hex:
+            #   hex() is a BIF, not a type, so do a separate check for it.
+            pass
+        elif val is None:
+            #   Default class in None is specified.
+            val = Addr
         else:
-            return self.klass(int(addr), self.addr_type)
+            raise ValueError("%r is not a supported type, BIF or class!" % val)
 
-    def first(self):
-        """
-        @return: The lower boundary network address of this range.
-        """
-        return self._retval(self.start_addr)
+        self._klass = val
 
-    def last(self):
-        """
-        @return: The upper boundary network address of this range.
-        """
-        return self._retval(self.stop_addr)
+    #   Initialise accessors and tidy up the namespace at the same time.
+
+    first = property(_get_first, _set_first, None, """
+        The lower boundary network address of this range.""")
+    del _get_first, _set_first
+
+    last = property(_get_last, _set_last, None, """
+        The upper boundary network address of this range.""")
+    del _get_last, _set_last
+
+    strategy = property(_get_strategy, _set_strategy, None, """
+        An instance of AddrStrategy (sub)class.""")
+    del _get_strategy, _set_strategy
+
+    addr_type = property(_get_addr_type, None, None, """
+        A read-only integer indentifying the address type of this range.""")
+    del _get_addr_type
+
+    klass = property(_get_klass, _set_klass, None, """
+        A type, BIF or class used to create each object returned by an
+        instance of this class including first and last properties when they
+        are accessed.""")
+    del _get_klass, _set_klass
+
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   END of accessor setup.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     def __len__(self):
         """
@@ -812,7 +920,21 @@ class AddrRange(object):
             - Use this method in preference to L{__len__()} when size of
             ranges exceeds C{2^31} addresses.
         """
-        return int(self.stop_addr) - int(self.start_addr) + 1
+        return self._last - self._first + 1
+
+    def data_flavour(self, int_addr):
+        """
+        @param int_addr: an network address as a network byte order integer.
+
+        @return: a network address in whatever 'flavour' is required based on
+        the value of the klass property.
+        """
+        if self.klass in (str, unicode):
+            return self._strategy.int_to_str(int_addr)
+        elif self.klass in (int, long, hex):
+            return self.klass(int_addr)
+        else:
+            return self.klass(int_addr, self._addr_type)
 
     def __getitem__(self, index):
         """
@@ -822,25 +944,18 @@ class AddrRange(object):
             Wrapping a raw slice with C{list()} or C{tuple()} may be required
             dependent on context.
         """
+
         if isinstance(index, (int, long)):
             if (- self.size()) <= index < 0:
                 #   negative index.
-                addr_type = self.stop_addr.addr_type
-                index_addr = Addr(int(self.stop_addr), addr_type)
-                index_addr += (index + 1)
-                return self._retval(index_addr)
+                return self.data_flavour(self._last + index + 1)
             elif 0 <= index <= (self.size() - 1):
                 #   Positive index or zero index.
-                addr_type = self.start_addr.addr_type
-                index_addr = Addr(int(self.start_addr), addr_type)
-                index_addr += index
-                return self._retval(index_addr)
+                return self.data_flavour(self._first + index)
             else:
                 raise IndexError('index out range for address range size!')
         elif isinstance(index, slice):
             #   slices
-            addr_type = self.start_addr.addr_type
-            int_start_addr = int(self.start_addr)
             #FIXME: IPv6 breaks the .indices() method on the slice object
             #   spectacularly. We'll have to work out the start, stop and
             #   step ourselves :-(
@@ -850,9 +965,9 @@ class AddrRange(object):
             #   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
             (start, stop, step) = index.indices(self.size())
 
-            return nrange(Addr(int_start_addr + start, addr_type),
-                          Addr(int_start_addr + stop - step, addr_type),
-                          step, klass=self.klass)
+            start_addr = Addr(self._first + start, self._addr_type)
+            end_addr = Addr(self._first + stop - step, self._addr_type)
+            return nrange(start_addr, end_addr, step, klass=self.klass)
         else:
             raise TypeError('unsupported type %r!' % index)
 
@@ -861,7 +976,9 @@ class AddrRange(object):
         @return: An iterator object providing access to all network addresses
             within this range.
         """
-        return nrange(self.start_addr, self.stop_addr, klass=self.klass)
+        start_addr = Addr(self._first, self._addr_type)
+        end_addr = Addr(self._last, self._addr_type)
+        return nrange(start_addr, end_addr, klass=self.klass)
 
     def __contains__(self, addr):
         """
@@ -873,19 +990,20 @@ class AddrRange(object):
         """
         if isinstance(addr, (str, unicode)):
             #   string address or address range.
-            if self.start_addr <= Addr(addr) <= self.stop_addr:
-                return True
+            c_addr = Addr(addr)
+            if c_addr._addr_type == self._addr_type:
+                if self._first <= int(c_addr) <= self._last:
+                    return True
         elif issubclass(addr.__class__, Addr):
             #   Single value check.
-            if self.start_addr <= addr <= self.stop_addr:
+            if self._first <= int(addr) <= self._last:
                 return True
         elif issubclass(addr.__class__, AddrRange):
             #   Range value check.
-            if (addr.start_addr >= self.start_addr) \
-                and (addr.stop_addr <= self.stop_addr):
+            if (addr._first >= self._first) and (addr._last <= self._last):
                 return True
         else:
-            raise TypeError('%r is an unsupported class or type!' % addr)
+            raise TypeError('%r is an unsupported type or class!' % addr)
 
         return False
 
@@ -893,15 +1011,12 @@ class AddrRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the boundary of this range is the same as other,
-            C{False} otherwise.
+        @return: C{True} if the boundaries of this range are the same as
+            other, C{False} otherwise.
         """
-        if self.start_addr.addr_type != other.start_addr.addr_type:
-            raise TypeError('comparison failure due to type mismatch!')
-
-        if int(self.start_addr) == int(other.start_addr):
-            if int(self.stop_addr) == int(other.stop_addr):
-                return True
+        if (self._addr_type, self._first, self._last) == \
+           (other._addr_type, other._first, other._last):
+            return True
 
         return False
 
@@ -909,13 +1024,11 @@ class AddrRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the boundary of this range is not the same as
+        @return: C{True} if the boundaries of this range are not the same as
             other, C{False} otherwise.
         """
-        if self.start_addr.addr_type != other.start_addr.addr_type:
-            raise TypeError('comparison failure due to type mismatch!')
-
-        if int(self.start_addr) != int(other.start_addr):
+        if (self._addr_type, self._first, self._last) != \
+           (other._addr_type, other._first, other._last):
             return True
 
         return False
@@ -924,13 +1037,11 @@ class AddrRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the lower boundary of this range is less than
-            other, C{False} otherwise.
+        @return: C{True} if the boundaries of this range are less than other,
+            C{False} otherwise.
         """
-        if self.start_addr.addr_type != other.start_addr.addr_type:
-            raise TypeError('comparison failure due to type mismatch!')
-
-        if int(self.start_addr) < int(other.start_addr):
+        if (self._addr_type, self._first, self._last) < \
+           (other._addr_type, other._first, other._last):
             return True
 
         return False
@@ -939,13 +1050,11 @@ class AddrRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the lower boundary of this range is less or equal
-            to other, C{False} otherwise.
+        @return: C{True} if the boundaries of this range are less or equal to
+            other, C{False} otherwise.
         """
-        if self.start_addr.addr_type != other.start_addr.addr_type:
-            raise TypeError('comparison failure due to type mismatch!')
-
-        if int(self.start_addr) <= int(other.start_addr):
+        if (self._addr_type, self._first, self._last) <= \
+           (other._addr_type, other._first, other._last):
             return True
 
         return False
@@ -954,13 +1063,11 @@ class AddrRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the lower boundary of this range is greater than
+        @return: C{True} if the boundaries of this range are greater than
             other, C{False} otherwise.
         """
-        if self.start_addr.addr_type != other.start_addr.addr_type:
-            raise TypeError('comparison failure due to type mismatch!')
-
-        if int(self.start_addr) > int(other.start_addr):
+        if (self._addr_type, self._first, self._last) > \
+           (other._addr_type, other._first, other._last):
             return True
 
         return False
@@ -969,19 +1076,18 @@ class AddrRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the lower boundary of this range is greater or
-            equal to other, C{False} otherwise.
+        @return: C{True} if the boundaries of this range are greater or equal
+            to other, C{False} otherwise.
         """
-        if self.start_addr.addr_type != other.start_addr.addr_type:
-            raise TypeError('comparison failure due to type mismatch!')
-
-        if int(self.start_addr) >= int(other.start_addr):
+        if (self._addr_type, self._first, self._last) >= \
+           (other._addr_type, other._first, other._last):
             return True
 
         return False
 
     def __str__(self):
-        return "%s-%s" % (self.start_addr, self.stop_addr)
+        return "%s;%s" % (self._strategy.int_to_str(self._first),
+                          self._strategy.int_to_str(self._last))
 
     def __repr__(self):
         """
@@ -989,7 +1095,8 @@ class AddrRange(object):
             with an equivalent state.
         """
         return "netaddr.address.%s(%r, %r)" % (self.__class__.__name__,
-            str(self.start_addr), str(self.stop_addr))
+            self._strategy.int_to_str(self._first),
+            self._strategy.int_to_str(self._last))
 
 #-----------------------------------------------------------------------------
 def abbrev_to_cidr(addr):
@@ -1031,8 +1138,10 @@ def abbrev_to_cidr(addr):
         elif 192 <= octet <= 223:
             #   Class C
             prefix = 24
-        elif 224 <= octet <= 239:
+        elif octet == 224:
             #   Class D (multicast)
+            prefix = 4
+        elif 225 <= octet <= 239:
             prefix = 8
         return prefix
 
@@ -1138,91 +1247,113 @@ class CIDR(AddrRange):
             192.168.0   ==  192.168.0.0/24
             192.168/16  ==  192.168.0.0/16
     """
-    def __init__(self, addr_mask, klass=IP):
+    def __init__(self, cidr, klass=IP):
         """
         Constructor.
 
-        @param addr_mask: a valid IPv4/IPv6 CIDR address or abbreviated
+        @param cidr: a valid IPv4/IPv6 CIDR address or abbreviated
             IPv4 network address
 
         @param klass: (optional) type, BIF or class used to create each
             object returned. Default: L{IP} class. See L{nrange()}
             documentations for additional details on options.
         """
-        verbose_addr_mask = abbrev_to_cidr(addr_mask)
-        if verbose_addr_mask is not None:
-            addr_mask = verbose_addr_mask
+        #   NB - This should only be are accessed via property() methods.
+        self._prefixlen = None
+        self._netmask = None
+        self._hostmask = None
 
-        tokens = addr_mask.split('/')
+        #   Keep a copy of original argument for later reference.
+        cidr_arg = cidr
 
-        if len(tokens) != 2:
-            raise AddrFormatError('%r is not a recognised CIDR ' \
-                'format!' % addr_mask)
+        #   Replace an abbreviation with a verbose CIDR.
+        verbose_cidr = abbrev_to_cidr(cidr)
+        if verbose_cidr is not None:
+            cidr = verbose_cidr
 
-        addr = IP(tokens[0])
-
+        #   Check for prefix in address and split it out.
         try:
-            #   Try int value.
-            prefixlen = int(tokens[1])
+            (network, mask) = cidr.split('/', 1)
         except ValueError:
-            #   Try subnet mask.
-            mask = IP(tokens[1])
-            if not mask.is_netmask():
-                raise AddrFormatError('%r does not contain a valid ' \
-                    'subnet mask!'  % addr_mask)
-            prefixlen = mask.prefixlen()
-            if mask.addr_type != addr.addr_type:
-                raise AddrFormatError('Address and netmask types do ' \
-                    'not match!')
+            raise AddrFormatError('%r is not a recognised CIDR!' % cidr_arg)
 
-        if not 0 <= prefixlen <= addr.strategy.width:
-            raise IndexError('CIDR prefix out of bounds for %s addresses!' \
-                % addr.strategy.name)
+        #   Check first addr.
+        first_addr = IP(network)
+        self._strategy = first_addr.strategy
 
-        self.mask_len = prefixlen
-        width = addr.strategy.width
-        self.addr_type = addr.strategy.addr_type
+        #   Check and normalise the CIDR prefix.
+        self.prefixlen = mask
 
-        int_hostmask = (1 << (width - self.mask_len)) - 1
-        int_stop = int(addr) | int_hostmask
-        int_start = int_stop - int_hostmask
-        int_netmask = addr.strategy.max_int ^ int_hostmask
+        hostmask_int = (1 << (first_addr.strategy.width - self.prefixlen)) - 1
+        netmask_int = first_addr.strategy.max_int ^ hostmask_int
 
-        start_addr = IP(int_start, self.addr_type)
-        stop_addr = IP(int_stop, self.addr_type)
+        last_int = first_addr.value | hostmask_int
+        first_int = last_int - hostmask_int
 
-        super(self.__class__, self).__init__(start_addr, stop_addr,
-              klass=klass)
+        self._netmask = netmask_int
+        self._hostmask = hostmask_int
 
-        self.netmask_addr = IP(int_netmask, self.addr_type)
-        self.hostmask_addr = IP(int_hostmask, self.addr_type)
+        last_addr = IP(last_int, self.addr_type)
 
         #   Make cidr() stricter than inet() ...
-        host = (int(addr) | int_netmask) - int_netmask
+        host = (int(first_addr) | netmask_int) - netmask_int
         if host != 0:
-            raise ValueError('non-zero bits to the right of netmask! ' \
-                'Try %s instead.' % str(self))
+            raise ValueError('Address %s has non-zero bits to the right of netmask! Try base address %s matches CIDR prefix /%s.' % (first_addr, self._strategy.int_to_str(first_int), self.prefixlen))
+
+        super(CIDR, self).__init__(first_addr, last_addr, klass=klass)
+
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   START of accessor setup.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+    def _get_prefixlen(self):
+        return self._prefixlen
+
+    def _set_prefixlen(self, val):
+        try:
+            #   Basic integer subnet prefix.
+            prefixlen = int(val)
+        except ValueError:
+            #   Convert possible subnet mask to integer subnet prefix.
+            ip = IP(val)
+
+            if self.addr_type != ip.addr_type:
+                raise ValueError('address and netmask type mismatch!')
+
+            if not ip.is_netmask():
+                raise ValueError('%s is not a valid netmask!' % ip)
+
+            prefixlen = ip.netmask_bits()
+
+        #   Validate subnet prefix.
+        if not 0 <= prefixlen <= self._strategy.width:
+            raise ValueError('%d is an invalid CIDR prefix for %s!' \
+                % (prefixlen, AT_NAMES[self.addr_type]))
+
+        self._prefixlen = prefixlen
+
+    prefixlen = property(_get_prefixlen, _set_prefixlen, None,
+        """The size of mask (in bits) for this CIDR range.""")
+    del _get_prefixlen, _set_prefixlen
+
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    #   END of accessor setup.
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     def netmask(self):
         """
         @return: The subnet mask address of this CIDR range.
         """
-        return self._retval(self.netmask_addr)
+        return self.data_flavour(self._netmask)
 
     def hostmask(self):
         """
         @return: The host mask address of this CIDR range.
         """
-        return self._retval(self.hostmask_addr)
-
-    def prefixlen(self):
-        """
-        @return: Size of mask (in bits) of this CIDR range.
-        """
-        return self.mask_len
+        return self.data_flavour(self._hostmask)
 
     def __str__(self):
-        return "%s/%s" % (self.start_addr, self.mask_len)
+        return "%s/%s" % (self._strategy.int_to_str(self._first), self.prefixlen)
 
     def __repr__(self):
         """
@@ -1230,7 +1361,7 @@ class CIDR(AddrRange):
             with an equivalent state.
         """
         return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
-            str(self.start_addr), self.mask_len)
+            str(self._first), self.prefixlen)
 
     def wildcard(self):
         """
@@ -1239,11 +1370,12 @@ class CIDR(AddrRange):
             returned, in all other cases a L{Wildcard} object is returned.
             - Only supports IPv4 CIDR addresses.
         """
-        t1 = tuple(self.start_addr)
-        t2 = tuple(self.stop_addr)
+        t1 = self._strategy.int_to_words(self._first)
+        t2 = self._strategy.int_to_words(self._last)
 
         if self.addr_type != AT_INET:
-            raise AddrConversionError('IPv6 CIDR addresses are invalid!')
+            raise AddrConversionError('wildcards only suitable for IPv4 ' \
+                'ranges!')
 
         tokens = []
 
@@ -1393,15 +1525,13 @@ class Wildcard(AddrRange):
                 t1 += [octet]
                 t2 += [octet]
 
-        start_addr = IP('.'.join(t1))
-        stop_addr = IP('.'.join(t2))
+        first = IP('.'.join(t1))
+        last = IP('.'.join(t2))
 
-        if start_addr.addr_type != AT_INET:
-            raise AddrFormatError('%s is an invalid IPv4 wildcard!' \
-                % start_addr)
+        if first.addr_type != AT_INET:
+            raise AddrFormatError('Wildcard syntax only supports IPv4!')
 
-        super(self.__class__, self).__init__(start_addr, stop_addr,
-              klass=klass)
+        super(self.__class__, self).__init__(first, last, klass=klass)
 
     def cidr(self):
         """
@@ -1419,14 +1549,14 @@ class Wildcard(AddrRange):
 
         #   The check below is only valid up to around 2^53 after which
         #   rounding on +1 or -1 starts to bite and would cause this logic to
-        #   fail. Fine for our purposes here as we only envisage going up to
-        #   2^32, for now at least.
+        #   fail. Fine for our purposes here as we only envisage supporting
+        #   values up to 2^32 (IPv4), for now at least.
         if mantissa != 0.5:
             raise AddrConversionError('%s cannot be represented with CIDR' \
                 % str(self))
 
         prefix = 32 - int(exponent - 1)
-        network = str(self.start_addr)
+        network = self._strategy.int_to_str(self._first)
         try:
             cidr = CIDR("%s/%d" % (network, prefix))
         except:
@@ -1439,8 +1569,8 @@ class Wildcard(AddrRange):
         return cidr
 
     def __str__(self):
-        t1 = tuple(self.start_addr)
-        t2 = tuple(self.stop_addr)
+        t1 = self._strategy.int_to_words(self._first)
+        t2 = self._strategy.int_to_words(self._last)
 
         tokens = []
 
@@ -1462,11 +1592,9 @@ class Wildcard(AddrRange):
                         tokens.append('%s-%s' % (t1[i], t2[i]))
                         seen_hyphen = True
                     else:
-                        #FIXME: police properties with __setattr__ instead...
                         raise AddrFormatError('only one hyphenated octet ' \
                             ' per wildcard allowed!')
                 else:
-                    #FIXME: police properties with __setattr__ instead...
                     raise AddrFormatError('asterisks not permitted before ' \
                         'hyphenated octets!')
 
@@ -1479,5 +1607,6 @@ class Wildcard(AddrRange):
         """
         return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
 
+#-----------------------------------------------------------------------------
 if __name__ == '__main__':
     pass

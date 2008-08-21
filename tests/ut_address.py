@@ -43,10 +43,35 @@ class Test_Addr_IPv4(unittest.TestCase):
         self.octet_min = (0, 0, 0, 0)
         self.octet_max = (255, 255, 255, 255)
 
-    def testSetValue(self):
-        ip_addr = Addr('0.0.0.0')
-        ip_addr.setvalue(0xc0a80001)
-        self.failUnless(str(ip_addr) == '192.168.0.1')
+    def testAssignments(self):
+        """
+        Checks a list of addresses expected to be valid.
+        """
+        addr = Addr('0.0.0.0')
+        self.failUnless(addr.value == 0)
+        self.failUnless(addr.addr_type == AT_INET)
+        self.failUnless(addr.strategy == ST_IPV4)
+
+        #   Test addr_type assignment.
+        addr.addr_type = AT_INET6
+        self.failUnless(addr.addr_type == AT_INET6)
+        self.failUnless(addr.strategy == ST_IPV6)
+
+        #   Test strategy assignment.
+        addr.strategy = ST_EUI48
+        self.failUnless(addr.addr_type == AT_LINK)
+        self.failUnless(addr.strategy == ST_EUI48)
+
+        addr.strategy = ST_EUI64
+        self.failUnless(addr.addr_type == AT_EUI64)
+        self.failUnless(addr.strategy == ST_EUI64)
+
+        #   Test value assignment.
+        addr.addr_type = AT_INET
+        addr.value = '192.168.0.1'
+        self.failUnless(addr.value == 3232235521)
+        self.failUnless(addr.addr_type == AT_INET)
+        self.failUnless(addr.strategy == ST_IPV4)
 
     def testBasics(self):
         self.failUnless(len(self.ip_addr) == self.size)
@@ -124,6 +149,23 @@ class Test_Addr_IPv4(unittest.TestCase):
         ip_addr_other -= 1
         self.failUnless(int(ip_addr_other) == self.int_max)
 
+    def testExceptionRaising(self):
+        """
+        Check that exception are being raised for unexpected intput.
+        """
+        invalid_addrs = (
+            [],
+            {},
+            '',
+            None,
+            5.2,
+            -1,
+            'abc.def.ghi.jkl',
+            '::z'
+        )
+
+        for addr in invalid_addrs:
+            self.failUnlessRaises(AddrFormatError, Addr, addr)
 
 #-----------------------------------------------------------------------------
 class Test_IP(unittest.TestCase):
@@ -139,6 +181,35 @@ class Test_IP(unittest.TestCase):
         self.hex_value = '0xc0a80001'
         self.bit_value = '11000000.10101000.00000000.00000001'
 
+    def testAssignmentsIPv4(self):
+        """
+        Checks assignments to managed attributes.
+        """
+        ip = IP('192.168.0.1')
+        self.failUnless(ip.value == 3232235521)
+        self.failUnless(ip.addr_type == AT_INET)
+        self.failUnless(ip.strategy == ST_IPV4)
+        self.failUnless(ip.prefixlen == 32)
+
+        #   Prefix /32 for IPv4 addresses should be implicit.
+        self.failUnless(repr(ip) == "netaddr.address.IP('192.168.0.1')")
+        ip.prefixlen = 24
+        self.failUnless(repr(ip) == "netaddr.address.IP('192.168.0.1/24')")
+
+    def testAssignmentsIPv6(self):
+        """
+        Checks assignments to managed attributes.
+        """
+        ip = IP('fe80::4472:4b4a:616d')
+        self.failUnless(ip.value == 338288524927261089654018972099027820909)
+        self.failUnless(ip.addr_type == AT_INET6)
+        self.failUnless(ip.strategy == ST_IPV6)
+        self.failUnless(ip.prefixlen == 128)
+
+        #   Prefix /128 for IPv6 addresses should be implicit.
+        self.failUnless(repr(ip) == "netaddr.address.IP('fe80::4472:4b4a:616d')")
+        ip.prefixlen = 64
+        self.failUnless(repr(ip) == "netaddr.address.IP('fe80::4472:4b4a:616d/64')")
 
     def testNetmask(self):
         addr = IP('192.168.1.100')
@@ -213,11 +284,10 @@ class Test_Addr_IPv6(unittest.TestCase):
         self.words_max = (65535, 65535, 65535, 65535, 65535, 65535,
                           65535, 65535)
 
-    def testSetValue(self):
+    def testAssignment(self):
         ip_addr = Addr(0, AT_INET6)
-        ip_addr.setvalue(0xffffc0a80001)
+        ip_addr.value = 0xffffc0a80001
         self.failUnless(str(ip_addr) == '::ffff:c0a8:1')
-
 
     def testCompaction(self):
         ipv6_compactions = {
@@ -503,6 +573,31 @@ class Test_Xrange_Generators(unittest.TestCase):
         self.failUnless(saved_list == expected_list)
 
 #-----------------------------------------------------------------------------
+class Test_AddrRange(unittest.TestCase):
+
+    def testBasic(self):
+        """
+        Address ranges now sort as expected based on magnitude.
+        """
+        ranges = (
+            AddrRange(Addr('0-0-0-0-0-0-0-0'), Addr('0-0-0-0-0-0-0-0')),
+            AddrRange(Addr('::'), Addr('::')),
+            AddrRange(Addr('0-0-0-0-0-0'), Addr('0-0-0-0-0-0')),
+            AddrRange(Addr('0.0.0.0'), Addr('255.255.255.255')),
+            AddrRange(Addr('0.0.0.0'), Addr('0.0.0.0')),
+        )
+
+        expected = [
+            '0.0.0.0;0.0.0.0',
+            '0.0.0.0;255.255.255.255',
+            '::;::',
+            '00-00-00-00-00-00;00-00-00-00-00-00',
+            '00-00-00-00-00-00-00-00;00-00-00-00-00-00-00-00',
+        ]
+
+        self.failUnless([str(r) for r in sorted(ranges)] == expected)
+
+#-----------------------------------------------------------------------------
 class Test_CIDR(unittest.TestCase):
     """
     Tests for the CIDR aggregate class.
@@ -553,8 +648,8 @@ class Test_CIDR(unittest.TestCase):
         c1 = CIDR('192.168.0.0/23', klass=str)
 
         #   Handy methods.
-        self.failUnless(c1.first() == '192.168.0.0')
-        self.failUnless(c1.last() == '192.168.1.255')
+        self.failUnless(c1.first == '192.168.0.0')
+        self.failUnless(c1.last == '192.168.1.255')
 
         #   As above with indices.
         self.failUnless(c1[0] == '192.168.0.0')
@@ -611,9 +706,11 @@ class Test_CIDR(unittest.TestCase):
             (191, '191.0.0.0/16'),
             (192, '192.0.0.0/24'),    #   Class C
             (223, '223.0.0.0/24'),
-            (224, '224.0.0.0/8'),     #   Class D (multicast)
+            (224, '224.0.0.0/4'),     #   Class D (multicast)
+            (225, '225.0.0.0/8'),
             (239, '239.0.0.0/8'),
             (240, '240.0.0.0/32'),    #   Class E (reserved)
+            (254, '254.0.0.0/32'),
             (255, '255.0.0.0/32'),
             (256, None),
             #   String values.
@@ -625,9 +722,11 @@ class Test_CIDR(unittest.TestCase):
             ('191', '191.0.0.0/16'),
             ('192', '192.0.0.0/24'),    #   Class C
             ('223', '223.0.0.0/24'),
-            ('224', '224.0.0.0/8'),     #   Class D (multicast)
+            ('224', '224.0.0.0/4'),     #   Class D (multicast)
+            ('225', '225.0.0.0/8'),
             ('239', '239.0.0.0/8'),
             ('240', '240.0.0.0/32'),    #   Class E (reserved)
+            ('254', '254.0.0.0/32'),
             ('255', '255.0.0.0/32'),
             ('256', None),
             ('128/8',       '128.0.0.0/8'),
