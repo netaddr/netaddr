@@ -13,24 +13,25 @@ setup(
     url             = 'http://code.google.com/p/netaddr/',
     packages        = ['netaddr'],
     license         = 'BSD License',
-    long_description = """
-a library providing Pythonic manipulation, validation and classification of
+    long_description = """a library providing Pythonic manipulation, validation and classification of
 common networking address notations, including :-
 
-- IPv4
-- IPv6
-- CIDR (Classless Inter-Domain Routing)
-- IEEE EUI-48, EUI-64 and MAC (Media Access Control)
+* IPv4
+* IPv6
+* CIDR (Classless Inter-Domain Routing)
+* IEEE EUI-48, EUI-64 and MAC (Media Access Control)
 
-Each object representing an individual address or address ranges behaves as
-you would expect when treated like standard Python types.
+Each object represents an individual address or address range and behaves as you
+would expect when treated like standard Python types. For example :-
 
 If you call list() on a CIDR object, it provides an iterator yielding IP
-addresses. Calling len() returns the number of addresses found within the
-range. Indexing and/or slicing returns the addresses you'd expect. int() and
-hex() return the numerical value of an address in network byte order in the
-respective formats.
-""",
+addresses.
+
+Calling len() returns the number of addresses found within the range.
+
+Indexing and/or slicing returns the addresses you'd expect. int() and hex()
+return the numerical value of an address in network byte order in the respective
+formats.""",
     platforms = 'OS Independent',
     classifiers = [
         'Development Status :: 4 - Beta',
