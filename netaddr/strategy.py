@@ -11,6 +11,15 @@ strategy objects.
 import socket as _socket
 import struct as _struct
 
+USE_IPV4_OPT=True   #: Use IPv4 optimised strategy class? Default: True
+
+try:
+    #   The following call erroneous raises errors on various Python
+    #   implementations.
+    _socket.inet_aton('255.255.255.255')
+except:
+    USE_IPV4_OPT=False
+
 from netaddr import BIG_ENDIAN_PLATFORM, AT_UNSPEC, AT_INET, AT_INET6, \
                     AT_LINK, AT_EUI64, AT_NAMES
 
@@ -130,12 +139,12 @@ class AddrStrategy(object):
             represented by network address in readable binary form.
         """
         if not self.valid_bits(bits):
-            raise Exception('%r is not a valid readable binary form string' \
-            ' for address type!' % bits)
+            raise ValueError('%r is not a valid binary form string for ' \
+                'address type!' % bits)
 
         word_bits = bits.split(self.delimiter)
         if len(word_bits) != self.word_count:
-            raise Exception('invalid number of words found in binary form ' \
+            raise ValueError('invalid number of words within binary form ' \
                 'string for address type!' % bits)
 
         return tuple([int(i, 2) for i in word_bits])
@@ -197,8 +206,8 @@ class AddrStrategy(object):
             represented by a network byte order integer.
         """
         if not self.valid_int(int_val):
-            raise Exception('%r is not a valid int/long value supported ' \
-                'by this address type!' % int_val)
+            raise ValueError('%r is not a valid integer value for this ' \
+                'address type!' % int_val)
 
         words = []
         for i in range(self.word_count):
@@ -229,8 +238,8 @@ class AddrStrategy(object):
 
         try:
             for token in tokens:
-                int_val = int(token, self.word_base)
-                if not self.min_word <= int_val <= self.max_word:
+                if not self.min_word <= int(token, self.word_base) <= \
+                       self.max_word:
                     return False
         except TypeError:
             return False
@@ -266,7 +275,7 @@ class AddrStrategy(object):
             network address in string form.
         """
         if not self.valid_str(addr):
-            raise Exception('%r is not a recognised string representation' \
+            raise ValueError('%r is not a recognised string representation' \
                 ' of this address type!' % addr)
 
         words = addr.split(self.delimiter)
@@ -305,7 +314,7 @@ class AddrStrategy(object):
             represented by word sequence.
         """
         if not self.valid_words(words):
-            raise Exception('%r is not a valid word list!' % words)
+            raise ValueError('%r is not a valid word list!' % words)
 
         #   tuples have no reverse() method and reversed() is only available
         #   in Python 2.4. Ugly but necessary.
@@ -329,7 +338,7 @@ class AddrStrategy(object):
             represented by word sequence.
         """
         if not self.valid_words(words):
-            raise Exception('%r is not a valid word list!' % words)
+            raise ValueError('%r is not a valid word list!' % words)
 
         tokens = [self.word_fmt % i for i in words]
         addr = self.delimiter.join(tokens)
@@ -343,7 +352,7 @@ class AddrStrategy(object):
             to value represented by word sequence.
         """
         if not self.valid_words(words):
-            raise Exception('%r is not a valid word list!' % words)
+            raise ValueError('%r is not a valid word list!' % words)
 
         bit_words = []
         for word in words:
@@ -391,71 +400,24 @@ class AddrStrategy(object):
         return "\n".join(tokens)
 
 #-----------------------------------------------------------------------------
-class IPv4Strategy(AddrStrategy):
+class IPv4StrategyStd(AddrStrategy):
     """
-    An optimised L{AddrStrategy} for IPv4 addresses.
+    A 'safe' L{AddrStrategy} for IPv4 addresses. Unlike L{IPv4StrategyOpt}.
 
-    It uses C{pack()} and C{unpack()} from the C{struct} module along with the
-    C{inet_ntoa()} and C{inet_aton()} functions from the C{socket} module.
-    This makes it approx. 2.5 times faster than a standard L{AddrStrategy}
-    configured for IPv4.
+    It contains all methods related to IPv4 addresses that the optimised
+    version has, without the reliance on the socket or struct modules. There
+    are several cases where the use of this class are preferable when either
+    the modules mentioned do not exist on certain Python implementations or
+    contain bugs like the infamous inet_aton('255.255.255.254') bug.
 
-    However, keep in mind that these modules might not be available everywhere
-    that Python itself is. Runtimes such as Google App Engine gut the
-    C{socket} module. C{struct} is also limited to processing 32-bit integers
-    which is fine for IPv4 but isn't suitable for IPv6.
+    All methods shared between the optimised class and this one should be
+    defined here.
     """
     def __init__(self):
         """Constructor."""
-        super(self.__class__, self).__init__(width=32, word_size=8,
-            word_fmt='%d', delimiter='.', addr_type=AT_INET, hex_words=False)
-
-    def str_to_int(self, addr):
-        """
-        @param addr: An IPv4 dotted decimal address in string form.
-
-        @return: A network byte order integer that is equivalent to value
-            represented by the IPv4 dotted decimal address string.
-        """
-        if not self.valid_str(addr):
-            raise Exception('%r is not a valid IPv4 dotted decimal' \
-                ' address string.!' % addr)
-        return _struct.unpack('>I', _socket.inet_aton(addr))[0]
-
-    def int_to_str(self, int_val):
-        """
-        @param int_val: A network byte order integer.
-
-        @return: An IPv4 dotted decimal address string that is equivalent to
-            value represented by a 32 bit integer in network byte order.
-        """
-        if not self.valid_int(int_val):
-            raise Exception('%r is not a valid 32-bit int or long!' % int_val)
-        return _socket.inet_ntoa(_struct.pack('>I', int_val))
-
-    def int_to_words(self, int_val):
-        """
-        @param int_val: A network byte order integer.
-
-        @return: An integer word (octet) sequence that is equivalent to value
-            represented by network byte order integer.
-        """
-        if not self.valid_int(int_val):
-            raise Exception('%r is not a valid int/long value supported ' \
-                'by this address type!' % int_val)
-        return _struct.unpack('4B', _struct.pack('>I', int_val))
-
-    def words_to_int(self, octets):
-        """
-        @param octets: A list or tuple containing integer octets.
-
-        @return: A network byte order integer that is equivalent to value
-            represented by word (octet) sequence.
-        """
-        if not self.valid_words(octets):
-            raise Exception('%r is not a valid octet list for an IPv4 ' \
-                'address!' % octets)
-        return _struct.unpack('>I', _struct.pack('4B', *octets))[0]
+        super(IPv4StrategyStd, self).__init__(width=32, word_size=8,
+              word_fmt='%d', delimiter='.', addr_type=AT_INET,
+              hex_words=False)
 
     def int_to_arpa(self, int_val):
         """
@@ -468,6 +430,72 @@ class IPv4Strategy(AddrStrategy):
         words.reverse()
         words.extend(['in-addr', 'arpa'])
         return '.'.join(words)
+
+#-----------------------------------------------------------------------------
+class IPv4StrategyOpt(IPv4StrategyStd):
+    """
+    An optimised L{AddrStrategy} for IPv4 addresses.
+
+    It uses C{pack()} and C{unpack()} from the C{struct} module along with the
+    C{inet_ntoa()} and C{inet_aton()} from the C{socket} module great improve
+    the speed of certain operations (approx. 2.5 times faster than a standard
+    L{AddrStrategy} configured for IPv4).
+
+    However, keep in mind that these modules might not be available everywhere
+    that Python itself is. Runtimes such as Google App Engine gut the
+    C{socket} module. C{struct} is also limited to processing 32-bit integers
+    which is fine for IPv4 but isn't suitable for IPv6.
+    """
+    def __init__(self):
+        """Constructor."""
+        super(IPv4StrategyOpt, self).__init__()
+
+    def str_to_int(self, addr):
+        """
+        @param addr: An IPv4 dotted decimal address in string form.
+
+        @return: A network byte order integer that is equivalent to value
+            represented by the IPv4 dotted decimal address string.
+        """
+        if not self.valid_str(addr):
+            raise ValueError('%r is not a valid IPv4 dotted decimal' \
+                ' address string.!' % addr)
+        return _struct.unpack('>I', _socket.inet_aton(addr))[0]
+
+    def int_to_str(self, int_val):
+        """
+        @param int_val: A network byte order integer.
+
+        @return: An IPv4 dotted decimal address string that is equivalent to
+            value represented by a 32 bit integer in network byte order.
+        """
+        if not self.valid_int(int_val):
+            raise ValueError('%r is not a valid 32-bit integer!' % int_val)
+        return _socket.inet_ntoa(_struct.pack('>I', int_val))
+
+    def int_to_words(self, int_val):
+        """
+        @param int_val: A network byte order integer.
+
+        @return: An integer word (octet) sequence that is equivalent to value
+            represented by network byte order integer.
+        """
+        if not self.valid_int(int_val):
+            raise ValueError('%r is not a valid integer value supported ' \
+                'by this address type!' % int_val)
+        return _struct.unpack('4B', _struct.pack('>I', int_val))
+
+    def words_to_int(self, octets):
+        """
+        @param octets: A list or tuple containing integer octets.
+
+        @return: A network byte order integer that is equivalent to value
+            represented by word (octet) sequence.
+        """
+        if not self.valid_words(octets):
+            raise ValueError('%r is not a valid octet list for an IPv4 ' \
+                'address!' % octets)
+        return _struct.unpack('>I', _struct.pack('4B', *octets))[0]
 
 #-----------------------------------------------------------------------------
 class IPv6Strategy(AddrStrategy):
@@ -583,7 +611,7 @@ class IPv6Strategy(AddrStrategy):
             address.
         """
         if not self.valid_str(addr):
-            raise Exception("'%s' is an invalid IPv6 address!" % addr)
+            raise ValueError("'%s' is an invalid IPv6 address!" % addr)
 
         values = []
 
@@ -673,7 +701,7 @@ class IPv6Strategy(AddrStrategy):
             the_word_fmt = word_fmt
 
         if not self.valid_int(int_val):
-            raise Exception('%r is not a valid int/long value supported ' \
+            raise ValueError('%r is not a valid integer value supported ' \
                 'by this address type!' % int_val)
 
         tokens = []
@@ -790,7 +818,7 @@ class EUI48Strategy(AddrStrategy):
         address in string form.
         """
         if not self.valid_str(addr):
-            raise Exception('%r is not a recognised string representation' \
+            raise ValueError('%r is not a recognised string representation' \
                 ' of this address type!' % addr)
 
         if ':' in addr:
@@ -854,20 +882,19 @@ class EUI48Strategy(AddrStrategy):
 #   Shared strategy objects for supported address types.
 #-----------------------------------------------------------------------------
 
-#-----------------------------
-#   Optimised strategy objects
-#-----------------------------
-
 #: A shared strategy object supporting all operations on IPv4 addresses.
-ST_IPV4  = IPv4Strategy()
+ST_IPV4 = None
+#   Use the right strategy class dependent upon Python implementation (work-
+#   around for various Python bugs).
+if USE_IPV4_OPT is True:
+    ST_IPV4 = IPv4StrategyOpt()
+else:
+    ST_IPV4 = IPv4StrategyStd()
+
 #: A shared strategy object supporting all operations on IPv6 addresses.
 ST_IPV6  = IPv6Strategy()
-#: A shared strategy object supporting all operations on EUI-48 & MAC addresses.
+#: A shared strategy object supporting all operations on EUI-48/MAC addresses.
 ST_EUI48 = EUI48Strategy()
-
-#----------------------------
-#   Standard strategy objects
-#----------------------------
 
 #: A shared strategy object supporting all operations on EUI-64 addresses.
 ST_EUI64 = AddrStrategy(addr_type=AT_EUI64, width=64, word_size=8,
