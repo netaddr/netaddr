@@ -225,12 +225,58 @@ class Test_AddrStrategy_Cisco_MAC(unittest.TestCase):
         self.failUnless(strategy.words_to_str(list(t)) == s)
 
 #-----------------------------------------------------------------------------
-class Test_IPv4Strategy(unittest.TestCase):
+class Test_IPv4StrategyStd(unittest.TestCase):
     """
     Test IP version 4 address support using the optimised subclass of AddrStrategy - MUCH FASTER!
     """
     def testExpectedValues(self):
-        strategy = IPv4Strategy()
+        strategy = IPv4StrategyStd()
+
+        b = '11000000.10101000.00000000.00000001'
+        i = 3232235521
+        t = (192, 168, 0, 1)
+        s = '192.168.0.1'
+
+        #DEBUG: print 'expected bits :', b
+        #DEBUG: print 'expected int  :', i
+        #DEBUG: print 'expected words:', t
+        #DEBUG: print 'expected str  :', s
+
+        #   bits to x
+        self.failUnless(strategy.bits_to_int(b) == i)
+        self.failUnless(strategy.bits_to_str(b) == s)
+        self.failUnless(strategy.bits_to_words(b) == t)
+
+        #   int to x
+        self.failUnless(strategy.int_to_bits(i) == b)
+        self.failUnless(strategy.int_to_str(i) == s)
+        self.failUnless(strategy.int_to_words(i) == t)
+
+        #   str to x
+        self.failUnless(strategy.str_to_bits(s) == b)
+        self.failUnless(strategy.str_to_int(s) == i)
+        self.failUnless(strategy.str_to_words(s) == t)
+
+        #   words to x
+        self.failUnless(strategy.words_to_bits(t) == b)
+        self.failUnless(strategy.words_to_int(t) == i)
+        self.failUnless(strategy.words_to_str(t) == s)
+
+        self.failUnless(strategy.words_to_bits(list(t)) == b)
+        self.failUnless(strategy.words_to_int(list(t)) == i)
+        self.failUnless(strategy.words_to_str(list(t)) == s)
+
+#-----------------------------------------------------------------------------
+class Test_IPv4StrategyOpt(unittest.TestCase):
+    """
+    Test IP version 4 address support using the optimised subclass of AddrStrategy - MUCH FASTER!
+    """
+    def testExpectedValues(self):
+        #   Skip this test if optimisations will cause failures.
+        if not USE_IPV4_OPT:
+            return
+
+        strategy = IPv4StrategyOpt()
 
         b = '11000000.10101000.00000000.00000001'
         i = 3232235521
