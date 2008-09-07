@@ -459,7 +459,7 @@ class IPv4StrategyOpt(IPv4StrategyStd):
         """
         if not self.valid_str(addr):
             raise ValueError('%r is not a valid IPv4 dotted decimal' \
-                ' address string.!' % addr)
+                ' address string!' % addr)
         return _struct.unpack('>I', _socket.inet_aton(addr))[0]
 
     def int_to_str(self, int_val):
