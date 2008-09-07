@@ -10,7 +10,6 @@ network addresses and associated aggregates (CIDR, Wilcard, etc).
 import math as _math
 import socket as _socket
 
-
 from netaddr import AddrFormatError, AddrConversionError, AT_UNSPEC, \
     AT_INET, AT_INET6, AT_LINK,  AT_EUI64
 
@@ -125,19 +124,16 @@ class Addr(object):
         """
         The value of this address object (a network byte order integer).
         """)
-    del _get_value, _set_value
 
     addr_type = property(_get_addr_type, _set_addr_type, None,
         """
         An integer value indicating the specific type of this address object.
         """)
-    del _get_addr_type, _set_addr_type
 
     strategy = property(_get_strategy, _set_strategy, None,
         """
         An instance of AddrStrategy (sub)class.
         """)
-    del _get_strategy, _set_strategy
 
     #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     #   END - managed attributes.
@@ -483,11 +479,15 @@ class IP(Addr):
             raise ValueError('%d is an invalid CIDR prefix for %s!' \
                 % (prefixlen, AT_NAMES[self._addr_type]))
 
+        #   Make sure we aren't a subnet mask trying to set a prefix!
+        if self.is_netmask() and self.addr_type == AT_INET \
+           and prefixlen != 32:
+            raise ValueError('IPv4 netmasks must have a prefix of /32!')
+
         self._prefixlen = prefixlen
 
     prefixlen = property(_get_prefixlen, _set_prefixlen, None,
         """The CIDR subnet prefix for this IP address.""")
-    del _get_prefixlen, _set_prefixlen
 
     #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     #   END - managed attributes.
@@ -876,25 +876,20 @@ class AddrRange(object):
 
     first = property(_get_first, _set_first, None, """
         The lower boundary network address of this range.""")
-    del _get_first, _set_first
 
     last = property(_get_last, _set_last, None, """
         The upper boundary network address of this range.""")
-    del _get_last, _set_last
 
     strategy = property(_get_strategy, _set_strategy, None, """
         An instance of AddrStrategy (sub)class.""")
-    del _get_strategy, _set_strategy
 
     addr_type = property(_get_addr_type, None, None, """
         A read-only integer indentifying the address type of this range.""")
-    del _get_addr_type
 
     klass = property(_get_klass, _set_klass, None, """
         A type, BIF or class used to create each object returned by an
         instance of this class including first and last properties when they
         are accessed.""")
-    del _get_klass, _set_klass
 
     #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     #   END of accessor setup.
@@ -1271,7 +1266,7 @@ class CIDR(AddrRange):
         if verbose_cidr is not None:
             cidr = verbose_cidr
 
-        #   Check for prefix in address and split it out.
+        #   Check for prefix in address and extract it.
         try:
             (network, mask) = cidr.split('/', 1)
         except ValueError:
@@ -1298,7 +1293,9 @@ class CIDR(AddrRange):
         #   Make cidr() stricter than inet() ...
         host = (int(first_addr) | netmask_int) - netmask_int
         if host != 0:
-            raise ValueError('Address %s has non-zero bits to the right of netmask! Try base address %s matches CIDR prefix /%s.' % (first_addr, self._strategy.int_to_str(first_int), self.prefixlen))
+            raise ValueError('%s contains non-zero bits right of the %d-bit' \
+                ' mask! Did you mean %s instead?' % (first_addr,
+                self._prefixlen, self._strategy.int_to_str(first_int)))
 
         super(CIDR, self).__init__(first_addr, last_addr, klass=klass)
 
@@ -1334,7 +1331,6 @@ class CIDR(AddrRange):
 
     prefixlen = property(_get_prefixlen, _set_prefixlen, None,
         """The size of mask (in bits) for this CIDR range.""")
-    del _get_prefixlen, _set_prefixlen
 
     #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     #   END of accessor setup.
@@ -1353,7 +1349,7 @@ class CIDR(AddrRange):
         return self.data_flavour(self._hostmask)
 
     def __str__(self):
-        return "%s/%s" % (self._strategy.int_to_str(self._first), self.prefixlen)
+        return "%s/%s" % (self._strategy.int_to_str(self._first), self._prefixlen)
 
     def __repr__(self):
         """
@@ -1361,7 +1357,7 @@ class CIDR(AddrRange):
             with an equivalent state.
         """
         return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
-            str(self._first), self.prefixlen)
+            self._strategy.int_to_str(self._first), self._prefixlen)
 
     def wildcard(self):
         """
@@ -1606,6 +1602,24 @@ class Wildcard(AddrRange):
             with an equivalent state.
         """
         return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
+
+#-----------------------------------------------------------------------------
+#   Tidy up namespace in classes using managed attributes.
+#-----------------------------------------------------------------------------
+
+del Addr._get_value, Addr._set_value
+del Addr._get_addr_type, Addr._set_addr_type
+del Addr._get_strategy, Addr._set_strategy
+
+del IP._get_prefixlen, IP._set_prefixlen
+
+del AddrRange._get_first, AddrRange._set_first
+del AddrRange._get_last, AddrRange._set_last
+del AddrRange._get_strategy, AddrRange._set_strategy
+del AddrRange._get_addr_type
+del AddrRange._get_klass, AddrRange._set_klass
+
+del CIDR._get_prefixlen, CIDR._set_prefixlen
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
