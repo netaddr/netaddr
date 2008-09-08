@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+22#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008, David P. D. Moss. All rights reserved.
 #
@@ -956,7 +956,7 @@ class AddrRange(object):
                 return True
         elif issubclass(addr.__class__, AddrRange):
             #   Range value check.
-            if (addr.first >= self.first) and (addr.last <= self.last):
+            if addr.first >= self.first and addr.last <= self.last:
                 return True
         else:
             raise TypeError('%r is an unsupported type or class!' % addr)
@@ -1202,7 +1202,10 @@ class CIDR(AddrRange):
                 return None
 
             if prefix is None:
-                prefix = classful_prefix(tokens[0])
+                try:
+                    prefix = classful_prefix(tokens[0])
+                except ValueError:
+                    return None
 
             return "%s%s/%s" % (start, '.'.join(tokens), prefix)
 
@@ -1235,6 +1238,9 @@ class CIDR(AddrRange):
         if verbose_cidr is not None:
             cidr = verbose_cidr
 
+        if not isinstance(cidr, str):
+            raise TypeError('%r is not a valid CIDR!' % cidr)
+
         #   Check for prefix in address and extract it.
         try:
             (network, mask) = cidr.split('/', 1)
@@ -1261,6 +1267,71 @@ class CIDR(AddrRange):
                 self.prefixlen, strategy.int_to_str(int(last) - hostmask)))
 
         super(CIDR, self).__init__(first, last, klass)
+
+    def __sub__(self, other):
+        """
+        Subtract another CIDR from this one.
+
+        @param other: a CIDR object that is greater than or equal to C{self}.
+
+        @return: A list of CIDR objects than remain after subtracting C{other}
+            from C{self}.
+        """
+        cidrs = []
+
+        new_prefixlen = self.prefixlen + 1
+        i_lower = self.first
+        i_upper = self.first + (2 ** (self.strategy.width - new_prefixlen))
+
+        lower = CIDR('%s/%d' % (self.strategy.int_to_str(i_lower),
+            new_prefixlen))
+        upper = CIDR('%s/%d' % (self.strategy.int_to_str(i_upper),
+            new_prefixlen))
+
+        while other.prefixlen >= new_prefixlen:
+            if other in lower:
+                matched = i_lower
+                unmatched = i_upper
+            elif other in upper:
+                matched = i_upper
+                unmatched = i_lower
+
+            cidr = CIDR('%s/%d' % (self.strategy.int_to_str(unmatched),
+                new_prefixlen))
+
+            cidrs.append(cidr)
+
+            new_prefixlen += 1
+
+            if new_prefixlen > self.strategy.width:
+                break
+
+            i_lower = matched
+            i_upper = matched + (2 ** (self.strategy.width - new_prefixlen))
+
+            lower = CIDR('%s/%d' % (self.strategy.int_to_str(i_lower),
+                new_prefixlen))
+            upper = CIDR('%s/%d' % (self.strategy.int_to_str(i_upper),
+                new_prefixlen))
+
+        cidrs.sort()
+
+        #   Return string based CIDR address values at user's request.
+        if self.klass is str:
+            return [str(cidr) for cidr in cidrs]
+
+        return cidrs
+
+    def __add__(self, other):
+        """
+        Add another CIDR to this one.
+
+        @param other: a CIDR object that is of equal size to C{self}.
+
+        @return: A new CIDR object that is double the size of C{self}.
+        """
+        #   Undecided about whether or not to implement this yet.
+        raise NotImplementedError('TODO')
 
     def netmask(self):
         """

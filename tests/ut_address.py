@@ -151,20 +151,9 @@ class Test_Addr_IPv4(unittest.TestCase):
 
     def testExceptionRaising(self):
         """
-        Check that exception are being raised for unexpected intput.
+        Check that exception are being raised for unexpected input.
         """
-        invalid_addrs = (
-            [],
-            {},
-            '',
-            None,
-            5.2,
-            -1,
-            'abc.def.ghi.jkl',
-            '::z'
-        )
-
-        for addr in invalid_addrs:
+        for addr in ([], {}, '', None, 5.2, -1, 'abc.def.ghi.jkl', '::z'):
             self.failUnlessRaises(AddrFormatError, Addr, addr)
 
 #-----------------------------------------------------------------------------
@@ -221,6 +210,28 @@ class Test_IP(unittest.TestCase):
         #   Apply subnet mask
         network_id = Addr(int(addr) & int(netmask), AT_INET)
         self.failUnless(str(network_id) == '192.168.0.0')
+
+    def testPrefixlenAssignments(self):
+        self.failUnlessRaises(ValueError, IP, '0.0.0.0/-1')
+        self.failUnlessRaises(ValueError, IP, '0.0.0.0/33')
+        self.failUnlessRaises(ValueError, IP, '::/-1')
+        self.failUnlessRaises(ValueError, IP, '::/129')
+
+    def test_init_negatively(self):
+        #   No arguments passed to constructor.
+        self.failUnlessRaises(TypeError, IP)
+
+        #   Various bad types for address values.
+        for bad_addr in ('', None, [], {}, 4.2):
+            self.failUnlessRaises(AddrFormatError, IP, bad_addr)
+
+        #   Various bad types for addr_type values.
+        for bad_addr_type in ('', None, [], {}, 4.2):
+            self.failUnlessRaises(ValueError, IP, '0.0.0.0', bad_addr_type)
+
+        #   Wrong explicit address type for a valid address.
+        self.failUnlessRaises(Exception, IP, '0.0.0.0', 6)
+        self.failUnlessRaises(Exception, IP, '::', 4)
 
 #-----------------------------------------------------------------------------
 class Test_EUI(unittest.TestCase):
@@ -330,10 +341,17 @@ class Test_Addr_IPv6(unittest.TestCase):
 
         self.failIf(ST_IPV6.valid_str('2001:db8:31::5900::1'))
 
+    def testExceptions(self):
+        for cidr in (None, [], {}):
+            self.failUnlessRaises(TypeError, CIDR, cidr)
+
+        for cidr in ('', 'foo'):
+            self.failUnlessRaises(AddrFormatError, CIDR, cidr)
+
     def testBasics(self):
         self.failUnless(len(self.ip_addr) == self.size)
-#        self.failUnless(self.ip_addr[0] == self.words[0])
-#        self.failUnless(tuple(self.ip_addr) == self.words)
+        self.failUnless(self.ip_addr[0] == self.words[0])
+        self.failUnless(tuple(self.ip_addr) == self.words)
         self.failUnless(int(self.ip_addr) == self.int_value)
         self.failUnless(long(self.ip_addr) == self.int_value)
         self.failUnless(hex(self.ip_addr) == self.hex_value)
@@ -388,28 +406,28 @@ class Test_Addr_IPv6(unittest.TestCase):
 
 
     def testSubnetPrefix_RFC4291(self):
-        #TODO - do I support subnet prefixes via the IP() interface???
-        #       The following should all be equivalent if so ...
-        #TODO: ip1 = IP('2001:0DB8:0000:CD30:0000:0000:0000:0000/60')
-        #TODO: ip2 = IP('2001:0DB8::CD30:0:0:0:0/60')
-        #TODO: ip3 = IP('2001:0DB8:0:CD30::/60')
-        #TODO: ip4 = IP('2001:0DB8:0:CD3/60')
-        #TODO: ip5 = IP('2001:0DB8::CD30/60')
-        #TODO: ip6 = IP('2001:0DB8::CD3/60')
+        ip1 = IP('2001:0DB8:0000:CD30:0000:0000:0000:0000/60')
+        ip2 = IP('2001:0DB8::CD30:0:0:0:0/60')
+        ip3 = IP('2001:0DB8:0:CD30::/60')
+        #FIXME: ip4 = IP('2001:0DB8:0:CD3/60')
+        ip5 = IP('2001:0DB8::CD30/60')
+        ip6 = IP('2001:0DB8::CD3/60')
 
         r1 = CIDR('2001:0DB8:0000:CD30:0000:0000:0000:0000/60')
-        #DEBUG: print r1
-
         r2 = CIDR('2001:0DB8:0:CD30::/60')
-        #DEBUG: print r2
-
         r3 = IP('2001:0DB8::CD3/60')
-        #DEBUG: print r3
 
         self.failUnless(r1 == r2)
         #FIXME - this is an interesting case and we aren't handling it
         #        according to RFC4291 at the moment.
         #FIXME: self.failUnless(r1 == r3)
+
+    def testPrefixlenAssignments(self):
+        self.failUnlessRaises(ValueError, CIDR, '192.168.0.0/192.168.0.0')
+        self.failUnlessRaises(ValueError, CIDR, '0.0.0.0/-1')
+        self.failUnlessRaises(ValueError, CIDR, '0.0.0.0/33')
+        self.failUnlessRaises(ValueError, CIDR, '::/-1')
+        self.failUnlessRaises(ValueError, CIDR, '::/129')
 
 #-----------------------------------------------------------------------------
 class TestEUI48Strategy(unittest.TestCase):
@@ -648,8 +666,8 @@ class Test_CIDR(unittest.TestCase):
         c1 = CIDR('192.168.0.0/23', klass=str)
 
         #   Handy methods.
-        self.failUnless(c1.first == '192.168.0.0')
-        self.failUnless(c1.last == '192.168.1.255')
+        self.failUnless(c1.first == 3232235520)
+        self.failUnless(c1.last == 3232236031)
 
         #   As above with indices.
         self.failUnless(c1[0] == '192.168.0.0')
@@ -750,7 +768,7 @@ class Test_CIDR(unittest.TestCase):
         )
 
         for (abbrev, expected) in abbreviations:
-            result = abbrev_to_cidr(abbrev)
+            result = CIDR.abbrev_to_verbose(abbrev)
             self.failUnless(result == expected, "expected %r, result %r" \
                 % (expected, result))
             if result is not None:
@@ -839,12 +857,8 @@ class Test_Wildcard(unittest.TestCase):
         """
         Test valid wildcards that cannot be converted to CIDR.
         """
-        #TODO: make this test work with failUnlessRaises() ...
         w1 = Wildcard('10.0.0.5-6')
-        try:
-            w1.cidr()   #   This should raise an exception.
-        except AddrConversionError:
-            pass
+        self.failUnlessRaises(AddrConversionError, w1.cidr)
 
 #-----------------------------------------------------------------------------
 class Test_IP_DNS(unittest.TestCase):
