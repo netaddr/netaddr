@@ -1,4 +1,4 @@
-22#!/usr/bin/env python
+#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008, David P. D. Moss. All rights reserved.
 #
