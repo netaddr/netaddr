@@ -230,6 +230,13 @@ class Addr(object):
         self.addr_type = addr_type
         self.value = addr
 
+    def __hash__(self):
+        """
+        @return: The hash of this address. Allows it to be used in sets and
+            as a key in dictionaries.
+        """
+        return hash((self.value, self.addr_type))
+
     def __int__(self):
         """
         @return: The value of this address as an network byte order integer.
@@ -363,8 +370,12 @@ class Addr(object):
         @return: C{True} if this network address instance has the same
             numerical value as another, C{False} otherwise.
         """
-        if (self.addr_type, self.value) == (other.addr_type, other.value):
-            return True
+        try:
+            if (self.addr_type, self.value) == (other.addr_type, other.value):
+                return True
+        except AttributeError:
+            pass
+
         return False
 
     def __ne__(self, other):
@@ -372,8 +383,12 @@ class Addr(object):
         @return: C{True} if this network address instance does not have the
             same numerical value as another, C{False} otherwise.
         """
-        if (self.addr_type, self.value) != (other.addr_type, other.value):
-            return True
+        try:
+            if (self.addr_type, self.value) != (other.addr_type, other.value):
+                return True
+        except AttributeError:
+            pass
+
         return False
 
     def __lt__(self, other):
@@ -381,8 +396,12 @@ class Addr(object):
         @return: C{True} if this network address instance has a lower
             numerical value than another, C{False} otherwise.
         """
-        if (self.addr_type, self.value) < (other.addr_type, other.value):
-            return True
+        try:
+            if (self.addr_type, self.value) < (other.addr_type, other.value):
+                return True
+        except AttributeError:
+            pass
+
         return False
 
     def __le__(self, other):
@@ -390,8 +409,12 @@ class Addr(object):
         @return: C{True} if this network address instance has a lower or
             equivalent numerical value than another, C{False} otherwise.
         """
-        if (self.addr_type, self.value) <= (other.addr_type, other.value):
-            return True
+        try:
+            if (self.addr_type, self.value) <= (other.addr_type, other.value):
+                return True
+        except AttributeError:
+            pass
+
         return False
 
     def __gt__(self, other):
@@ -399,8 +422,12 @@ class Addr(object):
         @return: C{True} if this network address instance has a higher
             numerical value than another, C{False} otherwise.
         """
-        if (self.addr_type, self.value) > (other.addr_type, other.value):
-            return True
+        try:
+            if (self.addr_type, self.value) > (other.addr_type, other.value):
+                return True
+        except AttributeError:
+            pass
+
         return False
 
     def __ge__(self, other):
@@ -408,8 +435,12 @@ class Addr(object):
         @return: C{True} if this network address instance has a higher or
             equivalent numerical value than another, C{False} otherwise.
         """
-        if (self.addr_type, self.value) >= (other.addr_type, other.value):
-            return True
+        try:
+            if (self.addr_type, self.value) >= (other.addr_type, other.value):
+                return True
+        except AttributeError:
+            pass
+
         return False
 
 #-----------------------------------------------------------------------------
@@ -501,19 +532,23 @@ class EUI(Addr):
 class IP(Addr):
     """
     A class whose objects represent Internet Protocol network addresses. Both
-    IPv4 and IPv6 are fully supported and include an optional subnet bit mask
-    prefix, for example ::
+    IPv4 and IPv6 are fully supported and also permit the inclusion of bitmask
+    prefix or subnet mask address indicating the size/extent of the subnet,
+    for example ::
+
+        IPv4
 
         192.168.0.1/24
+        192.168.0.1/255.255.255.0
+
+        IPv6
+
         fe80::20f:1fff:fe12:e733/64
-
-    This class B{does not make a requirement to omit non-zero bits to the
-    right of the subnet prefix} when it is applied to the address.
-
-    See the L{CIDR()} class if you require B{*strict*} subnet prefix checking.
     """
     STRATEGIES = (ST_IPV4, ST_IPV6)
     ADDR_TYPES = (AT_UNSPEC, AT_INET, AT_INET6)
+    TRANSLATE_STR = ''.join([chr(i) for i in range(256)])
+    del i
 
     #   Descriptor registrations.
     strategy = StrategyDescriptor(STRATEGIES)
@@ -576,16 +611,15 @@ class IP(Addr):
 
     def netmask_bits(self):
         """
-        @return: The number of bits set to one in this address if it is a
-        valid netmask, otherwise the width (in bits) for the given address
-        type is returned instead.
+        @return: If this address is a valid netmask, the number of non-zero
+        bits are returned, otherwise it returns the width (in bits) for the
+        given address type (IPv4: 32, IPv6: 128).
         """
         if not self.is_netmask():
             return self.strategy.width
 
         bits = self.strategy.int_to_bits(self.value)
-        translate_str = ''.join([chr(_i) for _i in range(256)])
-        mask_bits = bits.translate(translate_str, '.0')
+        mask_bits = bits.translate(IP.TRANSLATE_STR, ':.0')
         mask_length = len(mask_bits)
 
         if not 1 <= mask_length <= self.strategy.width:
@@ -817,9 +851,9 @@ class AddrRange(object):
     stop address. There is no requirement that they fall on strict bit mask
     boundaries, unlike L{CIDR} addresses.
 
-    The only network address aggregate supporting all network address types.
-    Most AddrRange subclasses only support a subset of address types.
-
+    This is the only network address aggregate supporting all network address
+    types. Most AddrRange subclasses usually only support a subset of address
+    types.
 
     Sortability
     -----------
@@ -855,6 +889,13 @@ class AddrRange(object):
         if self.last < self.first:
             raise IndexError('start address is greater than stop address!')
         self.klass = klass
+
+    def __hash__(self):
+        """
+        @return: The hash of this address range. Allow them to be used in sets
+            and as keys in dictionaries.
+        """
+        return hash((self.first, self.last, self.addr_type))
 
     def __len__(self):
         """
@@ -970,9 +1011,12 @@ class AddrRange(object):
         @return: C{True} if the boundaries of this range are the same as
             other, C{False} otherwise.
         """
-        if (self.addr_type, self.first, self.last) == \
-           (other.addr_type, other.first, other.last):
-            return True
+        try:
+            if (self.addr_type, self.first, self.last) == \
+               (other.addr_type, other.first, other.last):
+                return True
+        except AttributeError:
+            pass
 
         return False
 
@@ -983,9 +1027,12 @@ class AddrRange(object):
         @return: C{True} if the boundaries of this range are not the same as
             other, C{False} otherwise.
         """
-        if (self.addr_type, self.first, self.last) != \
-           (other.addr_type, other.first, other.last):
-            return True
+        try:
+            if (self.addr_type, self.first, self.last) != \
+               (other.addr_type, other.first, other.last):
+                return True
+        except AttributeError:
+            pass
 
         return False
 
@@ -996,9 +1043,12 @@ class AddrRange(object):
         @return: C{True} if the boundaries of this range are less than other,
             C{False} otherwise.
         """
-        if (self.addr_type, self.first, self.last) < \
-           (other.addr_type, other.first, other.last):
-            return True
+        try:
+            if (self.addr_type, self.first, self.last) < \
+               (other.addr_type, other.first, other.last):
+                return True
+        except AttributeError:
+            pass
 
         return False
 
@@ -1009,9 +1059,12 @@ class AddrRange(object):
         @return: C{True} if the boundaries of this range are less or equal to
             other, C{False} otherwise.
         """
-        if (self.addr_type, self.first, self.last) <= \
-           (other.addr_type, other.first, other.last):
-            return True
+        try:
+            if (self.addr_type, self.first, self.last) <= \
+               (other.addr_type, other.first, other.last):
+                return True
+        except AttributeError:
+            pass
 
         return False
 
@@ -1022,9 +1075,12 @@ class AddrRange(object):
         @return: C{True} if the boundaries of this range are greater than
             other, C{False} otherwise.
         """
-        if (self.addr_type, self.first, self.last) > \
-           (other.addr_type, other.first, other.last):
-            return True
+        try:
+            if (self.addr_type, self.first, self.last) > \
+               (other.addr_type, other.first, other.last):
+                return True
+        except AttributeError:
+            pass
 
         return False
 
@@ -1035,11 +1091,55 @@ class AddrRange(object):
         @return: C{True} if the boundaries of this range are greater or equal
             to other, C{False} otherwise.
         """
-        if (self.addr_type, self.first, self.last) >= \
-           (other.addr_type, other.first, other.last):
-            return True
+        try:
+            if (self.addr_type, self.first, self.last) >= \
+               (other.addr_type, other.first, other.last):
+                return True
+        except AttributeError:
+            pass
 
         return False
+
+    def __iadd__(self, i):
+        """
+        Increments start and end addresses of this range by the current size.
+
+        If the result exceeds address type range for the address type an
+        IndexError is raised.
+        """
+        try:
+            new_first = self.first + (self.size() * i)
+            new_last = self.last + (self.size() * i)
+        except TypeError:
+            raise TypeError('Increment value must be an integer!')
+
+        if new_last > self.strategy.max_int:
+            raise IndexError('Invalid increment is outside address boundary!')
+
+        self.first = new_first
+        self.last = new_last
+
+        return self
+
+    def __isub__(self, i):
+        """
+        Decrements start and end addresses of this range by the current size.
+
+        If the result less than zero an IndexError is raised.
+        """
+        try:
+            new_first = self.first - (self.size() * i)
+            new_last = self.last - (self.size() * i)
+        except TypeError:
+            raise TypeError('Decrement value must be an integer!')
+
+        if new_last < self.strategy.min_int:
+            raise IndexError('Invalid decrement is outside address boundary!')
+
+        self.first = new_first
+        self.last = new_last
+
+        return self
 
     def __str__(self):
         return "%s;%s" % (self.strategy.int_to_str(self.first),
@@ -1061,22 +1161,32 @@ class CIDR(AddrRange):
     network address and a bitmask prefix or subnet mask address indicating the
     size/extent of the subnet.
 
-    This class B{does not accept any non zero bits to be set right of the
-    bitmask} (unlike the L{IP} class which is less strict). Doing so raises an
-    L{AddrFormatError} exception.
+    By default, this class does not allow any non-zero bits to be set right
+    of the bitmask when it is applied to the supplied base address. Doing so
+    raises an L{AddrFormatError} exception. However, it is now configurable
+    and will allow a less strict base address if you ask for one. Be aware
+    though that the bitmask will be applied to the base address and and
+    trailing non-zero bits removed losing the original address. It will *not*
+    be preserved!
+
+    Contrast this behaviour with the L{IP} class which is less strict and has
+    a cidr() method for returning CIDR objects without any loss of
+    information.
 
     Examples of supported formats :-
 
         1. CIDR address format - C{<address>/<mask_length>}::
 
             192.168.0.0/16
+            fe80::/64
 
         2. Address and subnet mask combo ::
 
             192.168.0.0/255.255.0.0 == 192.168.0.0/16
+            fe80::/ffff:ffff:ffff:ffff::  == fe80::/64
 
-        3. Partial or abbreviated formats. Prefixes may be omitted and in this
-        case old classful default prefixes apply ::
+        3. Partial or abbreviated formats (IPv4 only). Prefixes may be omitted
+           and in this case older class-based default prefixes apply ::
 
             10          ==  10.0.0.0/8
             10.0        ==  10.0.0.0/8
@@ -1109,7 +1219,7 @@ class CIDR(AddrRange):
         Uses the old-style classful IP address rules to decide on a default
         subnet prefix if one is not explicitly provided.
 
-        Only supports IPv4 and IPv4 mapped IPv6 addresses.
+        Only supports IPv4 addresses.
 
         Examples ::
 
@@ -1118,8 +1228,6 @@ class CIDR(AddrRange):
             128                 - 128.0.0.0/16
             128/8               - 128.0.0.0/8
             192.168             - 192.168.0.0/16
-            ::192.168           - ::192.168.0.0/128
-            ::ffff:192.168/120  - ::ffff:192.168.0.0/120
 
         @return: A verbose CIDR from an abbreviated CIDR or old-style classful
         network address, C{None} if format provided was not recognised or
@@ -1189,6 +1297,14 @@ class CIDR(AddrRange):
             if '/' in part_addr:
                 (part_addr, prefix) = part_addr.split('/', 1)
 
+            #   Check prefix for validity.
+            if prefix is not None:
+                try:
+                    if not 0 <= int(prefix) <= 32:
+                        return None
+                except ValueError:
+                    return None
+
             if '.' in part_addr:
                 tokens = part_addr.split('.')
             else:
@@ -1219,7 +1335,7 @@ class CIDR(AddrRange):
 
     abbrev_to_verbose = staticmethod(abbrev_to_verbose)
 
-    def __init__(self, cidr, klass=IP):
+    def __init__(self, cidr, klass=IP, strict_bitmask=True):
         """
         Constructor.
 
@@ -1229,9 +1345,12 @@ class CIDR(AddrRange):
         @param klass: (optional) type, BIF or class used to create each
             object returned. Default: L{IP} class. See L{nrange()}
             documentations for additional details on options.
+
+        @param strict_bitmask: (optional) performs a test to ensure
+            there are no non-zero bits to the right of the subnet mask or
+            prefix when it is applied to the base address. (default: True)
         """
-        #   Keep a copy of original argument for later reference.
-        cidr_arg = cidr
+        cidr_arg = cidr     #   Keep a copy of original argument.
 
         #   Replace an abbreviation with a verbose CIDR.
         verbose_cidr = CIDR.abbrev_to_verbose(cidr)
@@ -1259,12 +1378,17 @@ class CIDR(AddrRange):
 
         last = IP(first.value | hostmask, addr_type)
 
-        #   Make cidr() stricter than inet() ...
-        host = (first.value | netmask) - netmask
-        if host != 0:
-            raise ValueError('%s contains non-zero bits right of the %d-bit' \
-                ' mask! Did you mean %s instead?' % (first,
-                self.prefixlen, strategy.int_to_str(int(last) - hostmask)))
+        if strict_bitmask:
+            #   Enable on strict CIDR checking.
+            host = (first.value | netmask) - netmask
+            if host != 0:
+                raise ValueError('%s contains non-zero bits right of the ' \
+                    '%d-bit mask! Did you mean %s instead?' \
+                        % (first, self.prefixlen,
+                           strategy.int_to_str(int(last) - hostmask)))
+        else:
+            #   Loose CIDR checking.
+            first.value = strategy.int_to_str(int(last) - hostmask)
 
         super(CIDR, self).__init__(first, last, klass)
 
@@ -1278,6 +1402,10 @@ class CIDR(AddrRange):
             from C{self}.
         """
         cidrs = []
+
+        if self.prefixlen == self.strategy.width:
+            #   Fail fast. Nothing to do in this case.
+            return cidrs
 
         new_prefixlen = self.prefixlen + 1
         i_lower = self.first
@@ -1324,7 +1452,8 @@ class CIDR(AddrRange):
 
     def __add__(self, other):
         """
-        Add another CIDR to this one.
+        Add another CIDR to this one, but only if it is adjacent and of
+        equitable size.
 
         @param other: a CIDR object that is of equal size to C{self}.
 
@@ -1442,8 +1571,8 @@ class Wildcard(AddrRange):
         can represent address ranges that do not fall on strict bit mask
         boundaries.}
 
-        I{All CIDR ranges can be represented as wildcard ranges but the reverse
-        isn't always true.}
+        I{All CIDR ranges can always be represented as wildcard ranges but the
+        reverse isn't true in every case.}
     """
     STRATEGIES = (ST_IPV4, ST_IPV6)
     ADDR_TYPES = (AT_UNSPEC, AT_INET, AT_INET6)

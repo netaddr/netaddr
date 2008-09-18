@@ -7,7 +7,7 @@
 """
 network address manipulation, done Pythonically
 """
-__version__ = '0.4'
+__version__ = '0.5'
 
 import struct as _struct
 

@@ -428,7 +428,7 @@ class IPv4StrategyStd(AddrStrategy):
         """
         words = ["%d" % i for i in self.int_to_words(int_val)]
         words.reverse()
-        words.extend(['in-addr', 'arpa'])
+        words.extend(['in-addr', 'arpa', ''])
         return '.'.join(words)
 
 #-----------------------------------------------------------------------------
@@ -754,7 +754,7 @@ class IPv6Strategy(AddrStrategy):
         tokens = list(addr.replace(':', ''))
         tokens.reverse()
         #   We won't support ip6.int here - see RFC 3152 for details.
-        tokens = tokens + ['ip6', 'arpa']
+        tokens = tokens + ['ip6', 'arpa', '']
         return '.'.join(tokens)
 
 #-----------------------------------------------------------------------------

@@ -625,6 +625,17 @@ class Test_CIDR(unittest.TestCase):
         cidr2 = CIDR('192.168.0.0/23')
         self.failUnless(cidr1 == cidr2)
 
+    def test_CIDR_Loose_Validation(self):
+        c = CIDR('192.168.1.65/255.255.254.0', strict_bitmask=False)
+        c.klass=str
+        self.failUnless(str(c) == '192.168.0.0/23')
+        self.failUnless(c[0] == '192.168.0.0')
+        self.failUnless(c[-1] == '192.168.1.255')
+
+    def test_CIDR_Strict_Validation(self):
+        self.failUnlessRaises(ValueError, CIDR, '192.168.1.65/255.255.254.0')
+        self.failUnlessRaises(ValueError, CIDR, '192.168.1.65/23')
+
     def test_IPv4_Slicing(self):
         expected = [
             ['10.0.0.0/28', '10.0.0.1', '10.0.0.14', 16],
@@ -755,7 +766,7 @@ class Test_CIDR(unittest.TestCase):
 #FIXME:     ('192.168/8',   '192.168.0.0/8'), # Invalid with strict checking!
             ('0.0.0.0',     '0.0.0.0/8'),
             ('::/128',      None),            #   Does not support IPv6.
-            ('::10/128',    None),            #   Hmmm... ambiguous IPv6.
+            ('::10/128',    None),            #   Hmmm... IPv6 proper, not IPv4 mapped.
             ('::/128',      None),            #   Does not support IPv6.
 #FIXME:            ('::192.168',   '::192.168.0.0/128'),
 #FIXME:            ('::192.168',   '::192.168.0.0/128'),
@@ -794,6 +805,89 @@ class Test_CIDR(unittest.TestCase):
             self.failUnless(w1.size() == size)
             self.failUnless(c1 == c2)           #   Test __eq__()
             self.failUnless(str(c1) == str(c2)) #   Test __str__() values too.
+
+    def test_cidr_increments(self):
+        expected = [
+            '192.168.0.0/28',
+            '192.168.0.16/28',
+            '192.168.0.32/28',
+            '192.168.0.48/28',
+            '192.168.0.64/28',
+            '192.168.0.80/28',
+            '192.168.0.96/28',
+            '192.168.0.112/28',
+            '192.168.0.128/28',
+            '192.168.0.144/28',
+            '192.168.0.160/28',
+            '192.168.0.176/28',
+            '192.168.0.192/28',
+            '192.168.0.208/28',
+            '192.168.0.224/28',
+            '192.168.0.240/28',
+        ]
+
+        actual = []
+        c = CIDR('192.168.0.0/28')
+        for i in range(16):
+            actual.append(str(c))
+            c += 1
+
+        self.failUnless(expected == actual)
+
+    def test_cidr_subtraction(self):
+        """
+        Subtraction between CIDRs.
+        """
+        r0 = CIDR('192.168.0.1/32') - CIDR('192.168.0.1/32')
+        self.failUnless(r0 == [])
+
+        r1 = CIDR('192.168.0.0/31', klass=str) - CIDR('192.168.0.1/32')
+        self.failUnless(r1 == ['192.168.0.0/32'])
+
+        r2 = CIDR('192.168.0.0/24', klass=str) - CIDR('192.168.0.128/25')
+        self.failUnless(r2 == ['192.168.0.0/25'])
+
+        r3 = CIDR('192.168.0.0/24', klass=str) - CIDR('192.168.0.128/27')
+        self.failUnless(r3 == ['192.168.0.0/25', '192.168.0.160/27', '192.168.0.192/26'])
+
+        #   Subtracting a larger range from a smaller one results in an empty
+        #   list (rather than a negative CIDR - which would be rather odd)!
+        r4 = CIDR('192.168.0.1/32') - CIDR('192.168.0.0/24')
+        self.failUnless(r4 == [])
+
+    def test_CIDR_IP_comparisons(self):
+        """
+        IPs and CIDRs do not compare favourably (directly), regardless of the
+        logical operation being performed.
+        """
+        #   Logically similar, but fundamentally different at a Python and
+        #   netaddr level.
+        ip = IP('192.168.0.1')
+        cidr = CIDR('192.168.0.1/32')
+
+        #   Direct object to object comparisons will always fail.
+        self.failIf(ip == cidr)
+        self.failIf(ip != cidr)
+        self.failIf(ip > cidr)
+        self.failIf(ip >= cidr)
+        self.failIf(ip < cidr)
+        self.failIf(ip <= cidr)
+
+        #   Compare with CIDR object lower boundary.
+        self.failUnless(ip == cidr[0])
+        self.failUnless(ip >= cidr[0])
+        self.failIf(ip != cidr[0])
+        self.failIf(ip > cidr[0])
+        self.failIf(ip < cidr[0])
+        self.failUnless(ip <= cidr[0])
+
+        #   Compare with CIDR object upper boundary.
+        self.failUnless(ip == cidr[-1])
+        self.failUnless(ip >= cidr[-1])
+        self.failIf(ip != cidr[-1])
+        self.failIf(ip > cidr[-1])
+        self.failIf(ip < cidr[-1])
+        self.failUnless(ip <= cidr[-1])
 
 #-----------------------------------------------------------------------------
 class Test_Wildcard(unittest.TestCase):
@@ -860,16 +954,91 @@ class Test_Wildcard(unittest.TestCase):
         w1 = Wildcard('10.0.0.5-6')
         self.failUnlessRaises(AddrConversionError, w1.cidr)
 
+    def test_Wildcard_CIDR_comparisons(self):
+        """
+        Basically CIDRs and Wildcards are subclassed from the same parent so
+        should compare favourably.
+        """
+        cidr1 = CIDR('192.168.0.0/24')
+        cidr2 = CIDR('192.168.1.0/24')
+        wc1 = Wildcard('192.168.0.*')
+
+        #   Positives.
+        self.failUnless(cidr1 == wc1)
+        self.failUnless(cidr1 >= wc1)
+        self.failUnless(cidr1 <= wc1)
+        self.failUnless(cidr2 > wc1)
+        self.failUnless(wc1 < cidr2)
+
+        #   Negatives.
+        self.failIf(cidr1 != wc1)
+        self.failIf(cidr1 > wc1)
+        self.failIf(cidr1 < wc1)
+        self.failIf(cidr2 <= wc1)
+        self.failIf(cidr2 < wc1)
+        self.failIf(wc1 >= cidr2)
+        self.failIf(wc1 > cidr2)
+
+    def test_Wildcard_IP_comparisons(self):
+        """
+        IPs and Wildcards current do not compare favourably, regardless of the
+        operation.
+        """
+        #   Logically similar, but fundamentally different at a Python and
+        #   netaddr level.
+        ip = IP('192.168.0.1')
+        wc = Wildcard('192.168.0.1')
+
+        #   Direct object to object comparisons will always fail.
+        self.failIf(ip == wc)
+        self.failIf(ip != wc)
+        self.failIf(ip > wc)
+        self.failIf(ip >= wc)
+        self.failIf(ip < wc)
+        self.failIf(ip <= wc)
+
+        #   Compare with Wildcard object lower boundary.
+        self.failUnless(ip == wc[0])
+        self.failUnless(ip >= wc[0])
+        self.failUnless(ip <= wc[0])
+        self.failIf(ip != wc[0])
+        self.failIf(ip > wc[0])
+        self.failIf(ip < wc[0])
+
+        #   Compare with Wildcard object upper boundary.
+        self.failUnless(ip == wc[-1])
+        self.failUnless(ip >= wc[-1])
+        self.failUnless(ip <= wc[-1])
+        self.failIf(ip != wc[-1])
+        self.failIf(ip > wc[-1])
+        self.failIf(ip < wc[-1])
+
+    def test_wildcard_increments(self):
+        expected = [
+            '192.168.0.*',
+            '192.168.1.*',
+            '192.168.2.*',
+            '192.168.3.*',
+        ]
+
+        actual = []
+        wc = Wildcard('192.168.0.*')
+        for i in range(4):
+            actual.append(str(wc))
+            wc += 1
+
+        self.failUnless(expected == actual)
+
 #-----------------------------------------------------------------------------
 class Test_IP_DNS(unittest.TestCase):
     def testReverseLookup_IPv4(self):
-        expected = '1.0.168.192.in-addr.arpa'
+        expected = '1.0.168.192.in-addr.arpa.'
         ip = IP('192.168.0.1')
         self.failUnless(expected == ip.reverse_dns())
 
     def testReverseLookup_IPv6(self):
         expected = '1.0.1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.3.d.c.0.0.0.0.8.b.d.0.1.0.0.2' \
-        '.ip6.arpa'
+        '.ip6.arpa.'
         ip = IP('2001:0DB8::CD30:0:0:0:101')
         self.failUnless(expected == ip.reverse_dns())
 
