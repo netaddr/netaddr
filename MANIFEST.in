@@ -1,7 +1,8 @@
+include AUTHORS
+include CHANGELOG
 include GLOSSARY
 include INSTALL
 include LICENSE
-include MANIFEST
 include README
 include setup.py
 include netaddr/__init__.py
