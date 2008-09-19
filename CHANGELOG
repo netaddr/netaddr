@@ -1,32 +1,171 @@
+
+Release: 0.5
+Date: 19th Sep 2008
+
+Major changes since 0.4.x
+-------------------------
+
+General changes
+---------------
+
+* access to all important object attributes in all netaddr classes now takes
+  place via custom Python descriptor protocol classes. This has greatly 
+  simplified internal class logic and made external attributes changes much
+  safer and less error prone. It has also made aggregate classes such as CIDR
+  and Wildcard effectively read-write rather than read-only which they have 
+  been up until this release.
+
+* ammended the way sort order is calculated for Addr and AddrRange (sub)class
+  instances so that the address type is taken into account as well as as the 
+  numerical value of the address or address range. The ascending sort order 
+  is IPv4, IPv6, EUI-48 and EUI-64. Sequences of AddrRange (sub)class 
+  instances now sort correctly! 
+  
+* comparisons between instances of Addr and AddrRange (sub)classes now return 
+  False, rather than raising an AttributeError. 
+  
+* added checks and workaround code for Python runtime environments that suffer
+  from the infamous socket module inet_aton('255.255.255.255') bug. This was
+  discovered recently in Python 2.4.x on PowerPC under MacOS X. The fix also
+  applies in cases where the socket module is not available (e.g. on Google
+  App Engine).
+
+* all general Exception raising in the strategy module has now been replaced 
+  with more specific exceptions, mainly ValueError (these were unintentionally
+  missed out of the 0.4 release).
+
+* implemented __hash__() operations for the Addr and AddrStrategy classes. This 
+  allows you to use IP, CIDR and Wildcard objects as keys in dictionaries and
+  as elements in sets. Please note - this is currently an experimental feature
+  which may change in future releases.
+
+* added __ne__() operation to Addr and AddrRange classes.
+
+* obeying the 'Law of Demeter', the address type of Addr and AddrRange 
+  (sub)class instances can be accessed using the property directly :-
+  
+  	obj.addr_type  # 0.5 onwards
+  	
+  rather than having to go via the strategy object :- 
+  
+  	obj.strategy.addr_type	# 0.4 and earlier
+
+* renamed the AT_DESCR lookup dictionary to AT_NAMES. Removed invalid and 
+  duplicated imports from all modules.
+
+Addr class changes
+------------------
+
+* removed the setvalue() method from the Addr class and replaced all uses of 
+  __setattr__() replaced by custom descriptors throughout.
+
+IP class changes
+----------------
+
+* removed the ambiguity with masklen and prefixlen attributes in the IP class.
+  prefixlen now denotes the number of bits that define the netmask for an IP
+  address. The new method netmask_bits() returns the number of non-zero bits 
+  in an IP object if the is_netmask() method returns True. A prefixlen value
+  other than /32 for an address where is_netmask() returns True is invalid 
+  and will raise a ValueError exception.
+
+* removed the family() method from the IP class. It duplicates information
+  now provided by the prefixlen property.
+
+* IP class has several new methods. is_multicast() and is_unicast() quickly 
+  tell you what category of IP address you have and while ipv4() and ipv6() 
+  act as IPv4 <-> IPv6 conversions or copy constructors depending on context.
+  
+* reverse DNS lookup entries now contain a trailing, top-level period (.)
+  character appended to them.
+  
+* added the hostname() method to IP instances which performs a reverse DNS
+
+* the IP class __str__() method now omits the subnet prefix is now implicit 
+  for IPv4 addresses that are /32 and IPv6 addresses that are /128. Subnet
+  prefix is maintained in return value for all other values.
+
+AddrRange class changes
+-----------------------
+
+* the AddrRange class no longer stores instances of Addr (sub)classes for the 
+  first and last address in the range. The instance variables self.start_addr
+  and self.stop_addr have been renamed to self.first and self.last and the 
+  methods obj.first() and obj.last() have been removed.
+  
+  Instead, self.first and self.last contain integer values and a reference 
+  to a strategy object is stored. Doing this is a lot more useful and cleaner 
+  for implementing internal logic.
+  
+  To get Addr (sub)class objects (or strings, hex etc when manipulating the
+  the klass property) use the index values obj[0] and obj[-1] as a substitute
+  for obj.first() and obj.last() respectively.
+    
+* AddrRange (sub)class instances now define the increment, __iadd__(), and 
+  decrement, __isub__(), operators. This allows you to 'slide' CIDRs and 
+  Wildcards upwards and downwards based on their block sizes.
+
+* the _retval() method has now been renamed data_flavour() - yes, the UK 
+  spelling ;-) You shouldn't really care much about this as it mostly for 
+  internal use. I gave it a decent name as I didn't see any real need to hide
+  the functionality if users wanted it.
+
+CIDR class changes
+------------------
+
+* the strictness of the CIDR class constructor in relation to non-zero bits
+  once the prefix bitmask has been applied can be disabled use the optional
+  argument strict_bitmask=False. It is True (strictness enabled) by default.
+
+* fixed a bug in abbreviated CIDR conversion. Subnet prefix for multicast 
+  address 224.0.0.0 is now /4 instead of /8.
+
+* the CIDR class now supports subtraction between two CIDR objects, returning
+  a list of the remainder. Please note that the bigger of the two CIDR objects
+  must be on the left hand side of the the expression, otherwise an empty list
+  is return. Sorry, you are not allowed to create negative CIDRs ;-)
+
+* the function abbrev_to_cidr() has been renamed to and turned into the static 
+  method CIDR.abbrev_to_verbose(). No major changes to the logic have been
+  made.
+  
+Wildcard class changes
+----------------------
+
+* the Wildcard class now defines a static method Wildcard.is_valid() that 
+  allows you to perform validity tests on wildcard strings without fully 
+  instantiation a Wildcard object.
+
 ------------------------------------------------------------------------------
+
 Release: 0.4
 Date: 7th Aug 2008
 
 Major changes since 0.3.x
 -------------------------
 
-- all general Exception raising has been replaced with more specific 
+* all general Exception raising has been replaced with more specific 
   exceptions such as TypeError and ValueError and with the addition of two 
   custom exception classes, AddrFormatError and AddrConversionError.
 
-- The IP class now accepts a subnet prefix. It is *NOT* strict about non-zero
+* the IP class now accepts a subnet prefix. It is *NOT* strict about non-zero
   bits to the right of implied subnet mask, unlike the CIDR class (see below).
 
-- The CIDR class is now completely strict about non-zero bits to the right of 
+* The CIDR class is now completely strict about non-zero bits to the right of 
   the implied subnet netmask and raises a ValueError if they exist, with a 
   handy hint as to the correct CIDR to be used based on the supplied subnet 
   prefix.
 
-- The CIDR class now also supports abbreviated CIDR ranges and uses older
+* the CIDR class now also supports abbreviated CIDR ranges and uses older
   classful network address rules to decided on a subnet prefix if one is not
   explicitly provided. Supported forms now include 10, 10/8 and 192.168/16.
   Currently only supports these options for IPv4 CIDR address ranges.
 
-- __repr__() methods have been defined for all classes in the netaddr module 
+* __repr__() methods have been defined for all classes in the netaddr module 
   producing executable Python statements that can be used to re-create the
   state of any object.
 
-- CIDR and Wildcard classes now have methods that support conversions between 
+* CIDR and Wildcard classes now have methods that support conversions between 
   these two aggregate types :-
   	
   	* CIDR -> Wildcard
@@ -35,23 +174,23 @@ Major changes since 0.3.x
 Housekeeping Changes
 --------------------
 
-- massive docstring review and tidy up with the inclusino of epydoc specific 
+* massive docstring review and tidy up with the inclusino of epydoc specific 
   syntax to spruce up auto-generated API documentation.
 
-- Thorough review of code using pylint.
+* thorough review of code using pylint.
 
-- netaddr module now has the special __version__ variable defined which is 
+* netaddr module now has the special __version__ variable defined which is 
   also referenced by setup.py.
 
-- Some minor changes to setup.py and MANIFEST.in.
+* some minor changes to setup.py and MANIFEST.in.
 
-- constants and custom Exception classes have been moved to __init__.py from
+* constants and custom Exception classes have been moved to __init__.py from
   strategy.py
   
-- An import * friendly __all__ has been defined for the netaddr namespace
+* an import * friendly __all__ has been defined for the netaddr namespace
   which should remove the need to delve too much into the address and strategy
   submodules.
   
-- fixed a number of line-ending issues in several files.
+* fixed a number of line-ending issues in several files.
 
 ------------------------------------------------------------------------------
