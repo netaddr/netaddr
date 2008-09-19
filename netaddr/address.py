@@ -66,9 +66,6 @@ class AddrValueDescriptor(object):
         Descriptor constructor.
 
         @param name: the name of attribute which will be assigned the value.
-
-        @param flavoured: (default: False) choose whether or not to call the
-        data_flavour() method for return values.
         """
         self.name = name
 
@@ -873,8 +870,6 @@ class AddrRange(object):
     types. Most AddrRange subclasses usually only support a subset of address
     types.
 
-    Sortability
-    -----------
     A sequence of address ranges sort first by address type then by magnitude.
     So for a list containing ranges of all currently supported address types,
     IPv4 ranges come first, then IPv6, EUI-48 and lastly EUI-64.
