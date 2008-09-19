@@ -684,7 +684,19 @@ class IP(Addr):
             - Raises an L{AddrConversionError} if IPv6 address is not mappable
             to IPv4.
         """
-        raise NotImplementedError('TODO. Not yet implemented!')
+        ip_addr = None
+        if self.addr_type == AT_INET:
+            ip_addr = IP(self.value, AT_INET)
+        elif self.addr_type == AT_INET6:
+            words = self.strategy.int_to_words(self.value)
+            if words[0:6] == (0,0,0,0,0,0):
+                ip_addr = IP(self.value, AT_INET)
+            elif words[0:6] == (0,0,0,0,0,65535):
+                ip_addr = IP(self.value - 0xffff00000000, AT_INET)
+            else:
+                raise AddrConversionError('IPv6 address %s too large for ' \
+                    'conversion to IPv4!' % self)
+        return ip_addr
 
     def ipv6(self):
         """
@@ -696,7 +708,13 @@ class IP(Addr):
             the (now deprecated) form - C{::x.x.x.x} ('compatible' address).
             B{See RFC 4921 for details}.
         """
-        raise NotImplementedError('TODO. Not yet implemented!')
+        ip_addr = None
+        if self.addr_type == AT_INET6:
+            ip_addr = IP(self.value, AT_INET6)
+        elif self.addr_type == AT_INET:
+            ip_addr = IP(self.value, AT_INET6)
+            ip_addr[5] = 0xffff
+        return ip_addr
 
     def is_unicast(self):
         """
@@ -1450,17 +1468,17 @@ class CIDR(AddrRange):
 
         return cidrs
 
-    def __add__(self, other):
-        """
-        Add another CIDR to this one, but only if it is adjacent and of
-        equitable size.
-
-        @param other: a CIDR object that is of equal size to C{self}.
-
-        @return: A new CIDR object that is double the size of C{self}.
-        """
-        #   Undecided about whether or not to implement this yet.
-        raise NotImplementedError('TODO')
+#TODO    def __add__(self, other):
+#TODO        """
+#TODO        Add another CIDR to this one, but only if it is adjacent and of
+#TODO        equitable size.
+#TODO
+#TODO        @param other: a CIDR object that is of equal size to C{self}.
+#TODO
+#TODO        @return: A new CIDR object that is double the size of C{self}.
+#TODO        """
+#TODO        #   Undecided about how to implement this.
+#TODO        raise NotImplementedError('TODO')
 
     def netmask(self):
         """
