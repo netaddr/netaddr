@@ -116,11 +116,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#setvalue" class="summary-sig-name">setvalue</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Sets the value of this address.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__hash__" class="summary-sig-name">__hash__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      The hash of this address.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.setvalue">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__hash__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -373,6 +373,26 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__ne__" class="summary-sig-name">__ne__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Returns:
+      <code>True</code> if this network address instance does not have the 
+      same numerical value as another, <code>False</code> otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__ne__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__lt__" class="summary-sig-name">__lt__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
       Returns:
@@ -449,35 +469,63 @@ object --+
       
     </td>
   </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#family" class="summary-sig-name">family</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns:
-      The integer constant identifying this object's address type.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.family">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__getattribute__</code>,
-      <code>__hash__</code>,
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
       <code>__setattr__</code>
       </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.Addr-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False),
+ netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True),
+ netaddr.address.AddrStrategy(64, 8, '-', 64, True, True))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, F<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ADDR_TYPES"></a><span class="summary-name">ADDR_TYPES</span> = <code title="(0, 4, 6, 48, 64)"><code class="variable-group">(</code>0<code class="variable-op">, </code>4<code class="variable-op">, </code>6<code class="variable-op">, </code>48<code class="variable-op">, </code>64<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="value"></a><span class="summary-name">value</span> = <code title="AddrValueDescriptor('value')">AddrValueDescriptor('value')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="strategy"></a><span class="summary-name">strategy</span> = <code title="StrategyDescriptor(STRATEGIES)">StrategyDescriptor(STRATEGIES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="addr_type"></a><span class="summary-name">addr_type</span> = <code title="AddrTypeDescriptor(ADDR_TYPES)">AddrTypeDescriptor(ADDR_TYPES)</code>
     </td>
   </tr>
 </table>
@@ -538,38 +586,29 @@ object --+
   </dl>
 </td></tr></table>
 </div>
-<a name="setvalue"></a>
+<a name="__hash__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setvalue</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">addr</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__hash__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Hashing function)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.setvalue">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__hash__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Sets the value of this address.</p>
+  <p>hash(x)</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - the string form of a network address, or a network byte order 
-          integer value within the supported range for the address type.
-          <ul>
-            <li>
-              Raises a <code>TypeError</code> if addr is of an unsupported 
-              type.
-            </li>
-            <li>
-              Raises an <code>OverflowError</code> if addr is an integer 
-              outside the bounds for this address type.
-            </li>
-          </ul></li>
-    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>The hash of this address. Allows it to be used in sets and as a 
+          key in dictionaries.</dd>
+    <dt>Overrides:
+        object.__hash__
+    </dt>
   </dl>
 </td></tr></table>
 </div>
@@ -845,6 +884,30 @@ object --+
   </dl>
 </td></tr></table>
 </div>
+<a name="__ne__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__ne__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__ne__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this network address instance does not have 
+          the same numerical value as another, <code>False</code> 
+          otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
 <a name="__lt__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -943,24 +1006,34 @@ object --+
   </dl>
 </td></tr></table>
 </div>
-<a name="family"></a>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variable Details</span></td>
+</tr>
+</table>
+<a name="STRATEGIES"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">family</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.family">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
+  <h3 class="epydoc">STRATEGIES</h3>
   
   <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>The integer constant identifying this object's address type.</dd>
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-op">,</code>
+ netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)<code class="variable-op">,</code>
+ netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)<code class="variable-group">)</code>
+</pre></td></tr></table>
+</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -996,7 +1069,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
+    Generated by Epydoc 3.0.1 on Sat Sep 20 01:00:27 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

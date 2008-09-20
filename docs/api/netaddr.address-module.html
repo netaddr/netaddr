@@ -59,7 +59,8 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module address</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.address-pysrc.html">source&nbsp;code</a></span></p>
-<p>network addresses and associated aggregates (CIDR, Wilcard, etc).</p>
+<p>network address classes (IP, EUI) and associated aggregate classes 
+  (CIDR, Wilcard, etc).</p>
 
 <!-- ==================== CLASSES ==================== -->
 <a name="section-Classes"></a>
@@ -69,6 +70,53 @@
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Classes</span></td>
 </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.AddrTypeDescriptor-class.html" class="summary-name">AddrTypeDescriptor</a><br />
+      A descriptor that checks addr_type property assignments for 
+        validity and also keeps the strategy property in sync with any 
+        changes made.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.AddrValueDescriptor-class.html" class="summary-name">AddrValueDescriptor</a><br />
+      A descriptor that checks assignments to the named parameter passed 
+        to the constructor.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.StrategyDescriptor-class.html" class="summary-name">StrategyDescriptor</a><br />
+      A descriptor that checks strategy property assignments for validity
+        and also keeps the addr_type property in sync with any changes 
+        made.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.PrefixLenDescriptor-class.html" class="summary-name">PrefixLenDescriptor</a><br />
+      A descriptor that checks prefixlen property assignments for 
+        validity based on address type.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.KlassDescriptor-class.html" class="summary-name">KlassDescriptor</a><br />
+      A descriptor that checks klass (data flavour) property assignments 
+        for validity.
+    </td>
+  </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -153,24 +201,25 @@
       
     </td>
   </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables</span></td>
+</tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address-module.html#abbrev_to_cidr" class="summary-sig-name">abbrev_to_cidr</a>(<span class="summary-sig-arg">addr</span>)</span><br />
-      Returns:
-      A verbose CIDR from an abbreviated CIDR or old-style classful network
-      address, <code>None</code> if format provided was not recognised or 
-      supported.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#abbrev_to_cidr">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
+        <a href="netaddr.address-module.html#AT_STRATEGIES" class="summary-name">AT_STRATEGIES</a> = <code title="{0: None,
+ 4: netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
+ 6: netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False),
+ 48: netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True),
+ 64: netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)}"><code class="variable-group">{</code>0<code class="variable-op">: </code>None<code class="variable-op">, </code>4<code class="variable-op">: </code>netaddr.address.IPv4StrategyOpt(3<code class="variable-ellipsis">...</code></code><br />
+      Address type to strategy object lookup dict.
     </td>
   </tr>
 </table>
@@ -236,43 +285,35 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="abbrev_to_cidr"></a>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables Details</span></td>
+</tr>
+</table>
+<a name="AT_STRATEGIES"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">abbrev_to_cidr</span>(<span class="sig-arg">addr</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#abbrev_to_cidr">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
+  <h3 class="epydoc">AT_STRATEGIES</h3>
+  <p>Address type to strategy object lookup dict.</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - an abbreviated CIDR network address.
-          <p>Uses the old-style classful IP address rules to decide on a 
-          default subnet prefix if one is not explicitly provided.</p>
-          <p>Only supports IPv4 and IPv4 mapped IPv6 addresses.</p>
-          <p>Examples :</p>
-<pre class="literalblock">
-   10                  - 10.0.0.0/8
-   10/16               - 10.0.0.0/16
-   128                 - 128.0.0.0/16
-   128/8               - 128.0.0.0/8
-   192.168             - 192.168.0.0/16
-   ::192.168           - ::192.168.0.0/128
-   ::ffff:192.168/120  - ::ffff:192.168.0.0/120
-</pre></li>
-    </ul></dd>
-    <dt>Returns:</dt>
-        <dd>A verbose CIDR from an abbreviated CIDR or old-style classful 
-          network address, <code>None</code> if format provided was not 
-          recognised or supported.</dd>
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code>0<code class="variable-op">: </code>None<code class="variable-op">,</code>
+ 4<code class="variable-op">: </code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
+ 6<code class="variable-op">: </code>netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-op">,</code>
+ 48<code class="variable-op">: </code>netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)<code class="variable-op">,</code>
+ 64<code class="variable-op">: </code>netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -308,7 +349,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
+    Generated by Epydoc 3.0.1 on Sat Sep 20 01:00:27 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -115,8 +115,8 @@ object --+
     <p><i>Wildcard ranges are not directly equivalent to CIDR ranges as 
     they can represent address ranges that do not fall on strict bit mask 
     boundaries.</i></p>
-    <p><i>All CIDR ranges can be represented as wildcard ranges but the 
-    reverse isn't always true.</i></p>
+    <p><i>All CIDR ranges can always be represented as wildcard ranges but 
+    the reverse isn't true in every case.</i></p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -208,23 +208,103 @@ object --+
       <code><a href="netaddr.address.AddrRange-class.html#__ge__">__ge__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__getitem__">__getitem__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__gt__">__gt__</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#__hash__">__hash__</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#__iadd__">__iadd__</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#__isub__">__isub__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__iter__">__iter__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__le__">__le__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__len__">__len__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__lt__">__lt__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__ne__">__ne__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__setattr__">__setattr__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#first">first</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#last">last</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#data_flavour">data_flavour</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#size">size</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__getattribute__</code>,
-      <code>__hash__</code>,
       <code>__new__</code>,
       <code>__reduce__</code>,
-      <code>__reduce_ex__</code>
+      <code>__reduce_ex__</code>,
+      <code>__setattr__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Static Methods</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.Wildcard-class.html#is_valid" class="summary-sig-name">is_valid</a>(<span class="summary-sig-arg">wildcard</span>)</span><br />
+      A static method that validates wildcard address ranges.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.is_valid">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.Wildcard-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, F<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ADDR_TYPES"></a><span class="summary-name">ADDR_TYPES</span> = <code title="(0, 4, 6)"><code class="variable-group">(</code>0<code class="variable-op">, </code>4<code class="variable-op">, </code>6<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="strategy"></a><span class="summary-name">strategy</span> = <code title="StrategyDescriptor(STRATEGIES)">StrategyDescriptor(STRATEGIES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="addr_type"></a><span class="summary-name">addr_type</span> = <code title="AddrTypeDescriptor(ADDR_TYPES)">AddrTypeDescriptor(ADDR_TYPES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="klass"></a><span class="summary-name">klass</span> = <code title="KlassDescriptor(IP)">KlassDescriptor(IP)</code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.AddrRange-class.html">AddrRange</a></code></b>:
+      <code><a href="netaddr.address.AddrRange-class.html#first">first</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#last">last</a></code>
       </p>
     </td>
   </tr>
@@ -254,6 +334,32 @@ object --+
     <span class="table-header">Method Details</span></td>
 </tr>
 </table>
+<a name="is_valid"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_valid</span>(<span class="sig-arg">wildcard</span>)</span>
+    <br /><em class="fname">Static Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.is_valid">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A static method that validates wildcard address ranges.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>wildcard</code></strong> - an IPv4 wildcard address.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>True if wildcard address is valid, False otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
 <a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -364,6 +470,35 @@ object --+
 </td></tr></table>
 </div>
 <br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variable Details</span></td>
+</tr>
+</table>
+<a name="STRATEGIES"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">STRATEGIES</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-group">)</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -395,7 +530,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
+    Generated by Epydoc 3.0.1 on Sat Sep 20 01:00:28 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

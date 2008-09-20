@@ -72,11 +72,18 @@ object --+
 <p>A block of contiguous IPv4 or IPv6 network addresses defined by a base
   network address and a bitmask prefix or subnet mask address indicating 
   the size/extent of the subnet.</p>
-  <p>This class <b>does not accept any non zero bits to be set right of the
-  bitmask</b> (unlike the <a href="netaddr.address.IP-class.html" 
-  class="link">IP</a> class which is less strict). Doing so raises an <a 
-  href="netaddr.AddrFormatError-class.html" 
-  class="link">AddrFormatError</a> exception.</p>
+  <p>By default, this class does not allow any non-zero bits to be set 
+  right of the bitmask when it is applied to the supplied base address. 
+  Doing so raises an <a href="netaddr.AddrFormatError-class.html" 
+  class="link">AddrFormatError</a> exception. However, it is now 
+  configurable and will allow a less strict base address if you ask for 
+  one. Be aware though that the bitmask will be applied to the base address
+  and and trailing non-zero bits removed losing the original address. It 
+  will *not* be preserved!</p>
+  <p>Contrast this behaviour with the <a 
+  href="netaddr.address.IP-class.html" class="link">IP</a> class which is 
+  less strict and has a cidr() method for returning CIDR objects without 
+  any loss of information.</p>
   <p>Examples of supported formats :-</p>
   <ol start="1">
     <li>
@@ -84,29 +91,31 @@ object --+
       <code>&lt;address&gt;/&lt;mask_length&gt;</code>:
 <pre class="literalblock">
    192.168.0.0/16
+   fe80::/64
 </pre>
     </li>
     <li>
       Address and subnet mask combo :
 <pre class="literalblock">
    192.168.0.0/255.255.0.0 == 192.168.0.0/16
+   fe80::/ffff:ffff:ffff:ffff::  == fe80::/64
 </pre>
     </li>
     <li>
-      Partial or abbreviated formats. Prefixes may be omitted and in this 
-      case old classful default prefixes apply :
+      Partial or abbreviated formats (IPv4 only). Prefixes may be omitted 
+      and in this case older class-based default prefixes apply :
 <pre class="literalblock">
-   10          ==  10.0.0.0/8
-   10.0        ==  10.0.0.0/8
-   10/8        ==  10.0.0.0/8
+10          ==  10.0.0.0/8
+10.0        ==  10.0.0.0/8
+10/8        ==  10.0.0.0/8
 
-   128         ==  128.0.0.0/16
-   128.0       ==  128.0.0.0/16
-   128/16      ==  128.0.0.0/16
+128         ==  128.0.0.0/16
+128.0       ==  128.0.0.0/16
+128/16      ==  128.0.0.0/16
 
-   192         ==  10.0.0.0/24
-   192.168.0   ==  192.168.0.0/24
-   192.168/16  ==  192.168.0.0/16
+192         ==  10.0.0.0/24
+192.168.0   ==  192.168.0.0/24
+192.168/16  ==  192.168.0.0/16
 </pre>
     </li>
   </ol>
@@ -126,11 +135,30 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.CIDR-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr_mask</span>,
-        <span class="summary-sig-arg">klass</span>=<span class="summary-sig-default">&lt;class 'netaddr.address.IP'&gt;</span>)</span><br />
+        <span class="summary-sig-arg">cidr</span>,
+        <span class="summary-sig-arg">klass</span>=<span class="summary-sig-default">&lt;class 'netaddr.address.IP'&gt;</span>,
+        <span class="summary-sig-arg">strict_bitmask</span>=<span class="summary-sig-default">True</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.CIDR-class.html#__sub__" class="summary-sig-name">__sub__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Subtract another CIDR from this one.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.__sub__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -167,24 +195,6 @@ object --+
       The host mask address of this CIDR range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.hostmask">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.CIDR-class.html#prefixlen" class="summary-sig-name">prefixlen</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns:
-      Size of mask (in bits) of this CIDR range.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.prefixlen">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -255,23 +265,111 @@ object --+
       <code><a href="netaddr.address.AddrRange-class.html#__ge__">__ge__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__getitem__">__getitem__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__gt__">__gt__</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#__hash__">__hash__</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#__iadd__">__iadd__</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#__isub__">__isub__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__iter__">__iter__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__le__">__le__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__len__">__len__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__lt__">__lt__</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#__ne__">__ne__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__setattr__">__setattr__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#first">first</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#last">last</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#data_flavour">data_flavour</a></code>,
       <code><a href="netaddr.address.AddrRange-class.html#size">size</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__getattribute__</code>,
-      <code>__hash__</code>,
       <code>__new__</code>,
       <code>__reduce__</code>,
-      <code>__reduce_ex__</code>
+      <code>__reduce_ex__</code>,
+      <code>__setattr__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Static Methods</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.CIDR-class.html#abbrev_to_verbose" class="summary-sig-name">abbrev_to_verbose</a>(<span class="summary-sig-arg">abbrev_cidr</span>)</span><br />
+      A statis method that converts abbreviated CIDR addresses into their 
+      verbose form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.abbrev_to_verbose">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.CIDR-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, F<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ADDR_TYPES"></a><span class="summary-name">ADDR_TYPES</span> = <code title="(0, 4, 6)"><code class="variable-group">(</code>0<code class="variable-op">, </code>4<code class="variable-op">, </code>6<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="strategy"></a><span class="summary-name">strategy</span> = <code title="StrategyDescriptor(STRATEGIES)">StrategyDescriptor(STRATEGIES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="addr_type"></a><span class="summary-name">addr_type</span> = <code title="AddrTypeDescriptor(ADDR_TYPES)">AddrTypeDescriptor(ADDR_TYPES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="prefixlen"></a><span class="summary-name">prefixlen</span> = <code title="PrefixLenDescriptor()">PrefixLenDescriptor()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="klass"></a><span class="summary-name">klass</span> = <code title="KlassDescriptor(IP)">KlassDescriptor(IP)</code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.AddrRange-class.html">AddrRange</a></code></b>:
+      <code><a href="netaddr.address.AddrRange-class.html#first">first</a></code>,
+      <code><a href="netaddr.address.AddrRange-class.html#last">last</a></code>
       </p>
     </td>
   </tr>
@@ -301,6 +399,46 @@ object --+
     <span class="table-header">Method Details</span></td>
 </tr>
 </table>
+<a name="abbrev_to_verbose"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">abbrev_to_verbose</span>(<span class="sig-arg">abbrev_cidr</span>)</span>
+    <br /><em class="fname">Static Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.abbrev_to_verbose">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A statis method that converts abbreviated CIDR addresses into their 
+  verbose form.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>abbrev_cidr</code></strong> - an abbreviated CIDR network address.
+          <p>Uses the old-style classful IP address rules to decide on a 
+          default subnet prefix if one is not explicitly provided.</p>
+          <p>Only supports IPv4 addresses.</p>
+          <p>Examples :</p>
+<pre class="literalblock">
+   10                  - 10.0.0.0/8
+   10/16               - 10.0.0.0/16
+   128                 - 128.0.0.0/16
+   128/8               - 128.0.0.0/8
+   192.168             - 192.168.0.0/16
+</pre></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A verbose CIDR from an abbreviated CIDR or old-style classful 
+          network address, <code>None</code> if format provided was not 
+          recognised or supported.</dd>
+  </dl>
+</td></tr></table>
+</div>
 <a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -309,8 +447,9 @@ object --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">addr_mask</span>,
-        <span class="sig-arg">klass</span>=<span class="sig-default">&lt;class 'netaddr.address.IP'&gt;</span>)</span>
+        <span class="sig-arg">cidr</span>,
+        <span class="sig-arg">klass</span>=<span class="sig-default">&lt;class 'netaddr.address.IP'&gt;</span>,
+        <span class="sig-arg">strict_bitmask</span>=<span class="sig-default">True</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -322,18 +461,49 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr_mask</code></strong> - a valid IPv4/IPv6 CIDR address or abbreviated IPv4 network 
-          address</li>
+        <li><strong class="pname"><code>cidr</code></strong> - a valid IPv4/IPv6 CIDR address or abbreviated IPv4 network 
+          address.</li>
         <li><strong class="pname"><code>klass</code></strong> - (optional) type, BIF or class used to create each object 
           returned. Default: <a href="netaddr.address.IP-class.html" 
           class="link">IP</a> class. See <a 
           href="netaddr.address-module.html#nrange" 
           class="link">nrange()</a> documentations for additional details 
           on options.</li>
+        <li><strong class="pname"><code>strict_bitmask</code></strong> - (optional) performs a test to ensure there are no non-zero bits 
+          to the right of the subnet mask or prefix when it is applied to 
+          the base address. (default: True)</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__sub__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__sub__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Subtraction operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.__sub__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Subtract another CIDR from this one.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>other</code></strong> - a CIDR object that is greater than or equal to <code>self</code>.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A list of CIDR objects than remain after subtracting 
+          <code>other</code> from <code>self</code>.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -376,27 +546,6 @@ object --+
   <dl class="fields">
     <dt>Returns:</dt>
         <dd>The host mask address of this CIDR range.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="prefixlen"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">prefixlen</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#CIDR.prefixlen">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>Size of mask (in bits) of this CIDR range.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -484,6 +633,35 @@ object --+
 </td></tr></table>
 </div>
 <br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variable Details</span></td>
+</tr>
+</table>
+<a name="STRATEGIES"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">STRATEGIES</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-group">)</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -515,7 +693,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
+    Generated by Epydoc 3.0.1 on Sat Sep 20 01:00:28 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

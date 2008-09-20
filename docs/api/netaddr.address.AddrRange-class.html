@@ -77,9 +77,13 @@ object --+
   and stop address. There is no requirement that they fall on strict bit 
   mask boundaries, unlike <a href="netaddr.address.CIDR-class.html" 
   class="link">CIDR</a> addresses.</p>
-  <p>The only network address aggregate supporting all network address 
-  types. Most AddrRange subclasses only support a subset of address 
-  types.</p>
+  <p>This is the only network address aggregate supporting all network 
+  address types. Most AddrRange subclasses usually only support a subset of
+  address types.</p>
+  <p>A sequence of address ranges sort first by address type then by 
+  magnitude. So for a list containing ranges of all currently supported 
+  address types, IPv4 ranges come first, then IPv6, EUI-48 and lastly 
+  EUI-64.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -96,9 +100,9 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">start_addr</span>,
-        <span class="summary-sig-arg">stop_addr</span>,
-        <span class="summary-sig-arg">klass</span>=<span class="summary-sig-default">None</span>)</span><br />
+        <span class="summary-sig-arg">first</span>,
+        <span class="summary-sig-arg">last</span>,
+        <span class="summary-sig-arg">klass</span>=<span class="summary-sig-default">&lt;class 'netaddr.address.Addr'&gt;</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__init__">source&nbsp;code</a></span>
@@ -115,49 +119,11 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__setattr__" class="summary-sig-name">__setattr__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">name</span>,
-        <span class="summary-sig-arg">value</span>)</span><br />
-      Police assignments to various class attributes to ensure nothing gets
-      broken accidentally.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__setattr__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#first" class="summary-sig-name">first</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__hash__" class="summary-sig-name">__hash__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      The lower boundary network address of this range.</td>
+      The hash of this address range.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.first">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#last" class="summary-sig-name">last</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns:
-      The upper boundary network address of this range.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.last">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__hash__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -194,6 +160,26 @@ object --+
       The total number of network addresses in this range.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.size">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#data_flavour" class="summary-sig-name">data_flavour</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">int_addr</span>)</span><br />
+      Returns:
+      a network address in whatever 'flavour' is required based on the 
+      value of the klass property.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.data_flavour">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -269,8 +255,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__eq__" class="summary-sig-name">__eq__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
       Returns:
-      <code>True</code> if the boundary of this range is the same as other,
-      <code>False</code> otherwise.</td>
+      <code>True</code> if the boundaries of this range are the same as 
+      other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__eq__">source&nbsp;code</a></span>
             
@@ -289,7 +275,7 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__ne__" class="summary-sig-name">__ne__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
       Returns:
-      <code>True</code> if the boundary of this range is not the same as 
+      <code>True</code> if the boundaries of this range are not the same as
       other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__ne__">source&nbsp;code</a></span>
@@ -309,7 +295,7 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__lt__" class="summary-sig-name">__lt__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
       Returns:
-      <code>True</code> if the lower boundary of this range is less than 
+      <code>True</code> if the boundaries of this range are less than 
       other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__lt__">source&nbsp;code</a></span>
@@ -329,8 +315,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__le__" class="summary-sig-name">__le__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
       Returns:
-      <code>True</code> if the lower boundary of this range is less or 
-      equal to other, <code>False</code> otherwise.</td>
+      <code>True</code> if the boundaries of this range are less or equal 
+      to other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__le__">source&nbsp;code</a></span>
             
@@ -349,7 +335,7 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__gt__" class="summary-sig-name">__gt__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
       Returns:
-      <code>True</code> if the lower boundary of this range is greater than
+      <code>True</code> if the boundaries of this range are greater than 
       other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__gt__">source&nbsp;code</a></span>
@@ -369,10 +355,46 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__ge__" class="summary-sig-name">__ge__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">other</span>)</span><br />
       Returns:
-      <code>True</code> if the lower boundary of this range is greater or 
+      <code>True</code> if the boundaries of this range are greater or 
       equal to other, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__ge__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__iadd__" class="summary-sig-name">__iadd__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">i</span>)</span><br />
+      Increments start and end addresses of this range by the current size.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__iadd__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.AddrRange-class.html#__isub__" class="summary-sig-name">__isub__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">i</span>)</span><br />
+      Decrements start and end addresses of this range by the current size.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__isub__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -421,11 +443,72 @@ object --+
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__getattribute__</code>,
-      <code>__hash__</code>,
       <code>__new__</code>,
       <code>__reduce__</code>,
-      <code>__reduce_ex__</code>
+      <code>__reduce_ex__</code>,
+      <code>__setattr__</code>
       </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.AddrRange-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False),
+ netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True),
+ netaddr.address.AddrStrategy(64, 8, '-', 64, True, True))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, F<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ADDR_TYPES"></a><span class="summary-name">ADDR_TYPES</span> = <code title="(0, 4, 6, 48, 64)"><code class="variable-group">(</code>0<code class="variable-op">, </code>4<code class="variable-op">, </code>6<code class="variable-op">, </code>48<code class="variable-op">, </code>64<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="strategy"></a><span class="summary-name">strategy</span> = <code title="StrategyDescriptor(STRATEGIES)">StrategyDescriptor(STRATEGIES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="addr_type"></a><span class="summary-name">addr_type</span> = <code title="AddrTypeDescriptor(ADDR_TYPES)">AddrTypeDescriptor(ADDR_TYPES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="first"></a><span class="summary-name">first</span> = <code title="AddrValueDescriptor('first')">AddrValueDescriptor('first')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="last"></a><span class="summary-name">last</span> = <code title="AddrValueDescriptor('last')">AddrValueDescriptor('last')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="klass"></a><span class="summary-name">klass</span> = <code title="KlassDescriptor(Addr)">KlassDescriptor(Addr)</code>
     </td>
   </tr>
 </table>
@@ -462,9 +545,9 @@ object --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">start_addr</span>,
-        <span class="sig-arg">stop_addr</span>,
-        <span class="sig-arg">klass</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">first</span>,
+        <span class="sig-arg">last</span>,
+        <span class="sig-arg">klass</span>=<span class="sig-default">&lt;class 'netaddr.address.Addr'&gt;</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -476,8 +559,8 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>start_addr</code></strong> - start address for this network address range.</li>
-        <li><strong class="pname"><code>stop_addr</code></strong> - stop address for this network address range.</li>
+        <li><strong class="pname"><code>first</code></strong> - start address for this network address range.</li>
+        <li><strong class="pname"><code>last</code></strong> - stop address for this network address range.</li>
         <li><strong class="pname"><code>klass</code></strong> - (optional) class used to create each object returned. Default: <a
           href="netaddr.address.Addr-class.html" class="link">Addr()</a> 
           objects. See <a href="netaddr.address-module.html#nrange" 
@@ -490,70 +573,29 @@ object --+
   </dl>
 </td></tr></table>
 </div>
-<a name="__setattr__"></a>
+<a name="__hash__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__setattr__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">name</span>,
-        <span class="sig-arg">value</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__hash__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Hashing function)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__setattr__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__hash__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Police assignments to various class attributes to ensure nothing gets 
-  broken accidentally.</p>
+  <p>hash(x)</p>
   <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The hash of this address range. Allow them to be used in sets and
+          as keys in dictionaries.</dd>
     <dt>Overrides:
-        object.__setattr__
+        object.__hash__
     </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="first"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">first</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.first">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>The lower boundary network address of this range.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="last"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">last</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.last">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>The upper boundary network address of this range.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -614,6 +656,33 @@ object --+
               <code>2^31</code> addresses.
             </li>
           </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="data_flavour"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">data_flavour</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">int_addr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.data_flavour">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>int_addr</code></strong> - an network address as a network byte order integer.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>a network address in whatever 'flavour' is required based on the 
+          value of the klass property.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -718,7 +787,7 @@ object --+
         <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if the boundary of this range is the same as 
+        <dd><code>True</code> if the boundaries of this range are the same as
           other, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
@@ -745,8 +814,8 @@ object --+
         <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if the boundary of this range is not the same 
-          as other, <code>False</code> otherwise.</dd>
+        <dd><code>True</code> if the boundaries of this range are not the 
+          same as other, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -773,8 +842,8 @@ object --+
         <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if the lower boundary of this range is less 
-          than other, <code>False</code> otherwise.</dd>
+        <dd><code>True</code> if the boundaries of this range are less than 
+          other, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -801,7 +870,7 @@ object --+
         <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if the lower boundary of this range is less or 
+        <dd><code>True</code> if the boundaries of this range are less or 
           equal to other, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
@@ -829,7 +898,7 @@ object --+
         <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if the lower boundary of this range is greater 
+        <dd><code>True</code> if the boundaries of this range are greater 
           than other, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
@@ -857,8 +926,53 @@ object --+
         <li><strong class="pname"><code>other</code></strong> - an address object of the same address type as <code>self</code>.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if the lower boundary of this range is greater 
-          or equal to other, <code>False</code> otherwise.</dd>
+        <dd><code>True</code> if the boundaries of this range are greater or 
+          equal to other, <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__iadd__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__iadd__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">i</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__iadd__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Increments start and end addresses of this range by the current 
+  size.</p>
+  <p>If the result exceeds address type range for the address type an 
+  IndexError is raised.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__isub__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__isub__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">i</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#AddrRange.__isub__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Decrements start and end addresses of this range by the current 
+  size.</p>
+  <p>If the result less than zero an IndexError is raised.</p>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
@@ -913,6 +1027,37 @@ object --+
 </td></tr></table>
 </div>
 <br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variable Details</span></td>
+</tr>
+</table>
+<a name="STRATEGIES"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">STRATEGIES</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-op">,</code>
+ netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)<code class="variable-op">,</code>
+ netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)<code class="variable-group">)</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -944,7 +1089,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
+    Generated by Epydoc 3.0.1 on Sat Sep 20 01:00:27 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

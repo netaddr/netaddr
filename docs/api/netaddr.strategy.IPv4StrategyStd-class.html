@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>netaddr.strategy.EUI48Strategy</title>
+  <title>netaddr.strategy.IPv4StrategyStd</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -44,7 +44,7 @@
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
         <a href="netaddr.strategy-module.html" onclick="show_private();">Module&nbsp;strategy</a> ::
-        Class&nbsp;EUI48Strategy
+        Class&nbsp;IPv4StrategyStd
       </span>
     </td>
     <td>
@@ -52,28 +52,40 @@
         <!-- hide/show private -->
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="netaddr.strategy.EUI48Strategy-class.html"
+            >]&nbsp;|&nbsp;<a href="netaddr.strategy.IPv4StrategyStd-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class EUI48Strategy</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class IPv4StrategyStd</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyStd">source&nbsp;code</a></span></p>
 <pre class="base-tree">
   object --+    
            |    
 <a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a> --+
                |
-              <strong class="uidshort">EUI48Strategy</strong>
+              <strong class="uidshort">IPv4StrategyStd</strong>
 </pre>
 
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="netaddr.strategy.IPv4StrategyOpt-class.html">IPv4StrategyOpt</a></li>  </ul>
+</dd></dl>
+
 <hr />
-<p>Implements the operations that can be performed on an IEEE 48-bit EUI 
-  (Extended Unique Identifer). For all intents and purposes here, a MAC 
-  address.</p>
-  <p>Supports most common MAC address formats including Cisco's string 
-  format.</p>
+<p>A 'safe' <a href="netaddr.strategy.AddrStrategy-class.html" 
+  class="link">AddrStrategy</a> for IPv4 addresses. Unlike <a 
+  href="netaddr.strategy.IPv4StrategyOpt-class.html" 
+  class="link">IPv4StrategyOpt</a>.</p>
+  <p>It contains all methods related to IPv4 addresses that the optimised 
+  version has, without the reliance on the socket or struct modules. There 
+  are several cases where the use of this class are preferable when either 
+  the modules mentioned do not exist on certain Python implementations or 
+  contain bugs like the infamous inet_aton('255.255.255.254') bug.</p>
+  <p>All methods shared between the optimised class and this one should be 
+  defined here.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -89,10 +101,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.EUI48Strategy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4StrategyStd-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyStd.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -106,56 +118,13 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.EUI48Strategy-class.html#valid_str" class="summary-sig-name">valid_str</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4StrategyStd-class.html#int_to_arpa" class="summary-sig-name">int_to_arpa</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">int_val</span>)</span><br />
       Returns:
-      <code>True</code> if MAC address string is valid, <code>False</code> 
-      otherwise.</td>
+      The reverse DNS lookup for an IPv4 address in network byte order 
+      integer form.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.valid_str">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.EUI48Strategy-class.html#str_to_words" class="summary-sig-name">str_to_words</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Returns:
-      An integer word sequence that is equivalent in value to the network 
-      address in string form.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.str_to_words">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.EUI48Strategy-class.html#int_to_str" class="summary-sig-name">int_to_str</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>,
-        <span class="summary-sig-arg">delimiter</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">word_fmt</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">to_upper</span>=<span class="summary-sig-default">True</span>)</span><br />
-      Returns:
-      A MAC address in string form that is equivalent to value represented 
-      by a network byte order integer.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.int_to_str">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyStd.int_to_arpa">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -172,11 +141,14 @@
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_words">bits_to_words</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#description">description</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#int_to_bits">int_to_bits</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#int_to_str">int_to_str</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#int_to_words">int_to_words</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#str_to_bits">str_to_bits</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#str_to_int">str_to_int</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#str_to_words">str_to_words</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_bits">valid_bits</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_int">valid_int</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_str">valid_str</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_words">valid_words</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#word_to_bits">word_to_bits</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#words_to_bits">words_to_bits</a></code>,
@@ -232,7 +204,7 @@
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyStd.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -244,83 +216,18 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="valid_str"></a>
+<a name="int_to_arpa"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">valid_str</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">addr</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_arpa</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">int_val</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.valid_str">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - An EUI-48 or MAC address in string form.</li>
-    </ul></dd>
-    <dt>Returns:</dt>
-        <dd><code>True</code> if MAC address string is valid, 
-          <code>False</code> otherwise.</dd>
-    <dt>Overrides:
-        <a href="netaddr.strategy.AddrStrategy-class.html#valid_str">AddrStrategy.valid_str</a>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="str_to_words"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">str_to_words</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">addr</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.str_to_words">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - An EUI-48 or MAC address in string form.
-          <p>Returns an integer word sequence that is equivalent in value 
-          to MAC address in string form.</p></li>
-    </ul></dd>
-    <dt>Returns:</dt>
-        <dd>An integer word sequence that is equivalent in value to the 
-          network address in string form.</dd>
-    <dt>Overrides:
-        <a href="netaddr.strategy.AddrStrategy-class.html#str_to_words">AddrStrategy.str_to_words</a>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="int_to_str"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_str</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">int_val</span>,
-        <span class="sig-arg">delimiter</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">word_fmt</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">to_upper</span>=<span class="sig-default">True</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#EUI48Strategy.int_to_str">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyStd.int_to_arpa">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -329,17 +236,10 @@
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
-        <li><strong class="pname"><code>delimiter</code></strong> - (optional) A delimiter string override to be used instead of the 
-          default between words in string value returned.</li>
-        <li><strong class="pname"><code>word_fmt</code></strong> - (optional) A Python format string override used to format each 
-          word of address instead of the default.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>A MAC address in string form that is equivalent to value 
-          represented by a network byte order integer.</dd>
-    <dt>Overrides:
-        <a href="netaddr.strategy.AddrStrategy-class.html#int_to_str">AddrStrategy.int_to_str</a>
-    </dt>
+        <dd>The reverse DNS lookup for an IPv4 address in network byte order 
+          integer form.</dd>
   </dl>
 </td></tr></table>
 </div>

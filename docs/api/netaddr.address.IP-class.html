@@ -70,17 +70,19 @@ object --+
 
 <hr />
 <p>A class whose objects represent Internet Protocol network addresses. 
-  Both IPv4 and IPv6 are fully supported and include an optional subnet bit
-  mask prefix, for example :</p>
+  Both IPv4 and IPv6 are fully supported and also permit the inclusion of 
+  bitmask prefix or subnet mask address indicating the size/extent of the 
+  subnet, for example :</p>
 <pre class="literalblock">
+   IPv4
+
    192.168.0.1/24
+   192.168.0.1/255.255.255.0
+
+   IPv6
+
    fe80::20f:1fff:fe12:e733/64
 </pre>
-  <p>This class <b>does not make a requirement to omit non-zero bits to the
-  right of the subnet prefix</b> when it is applied to the address.</p>
-  <p>See the <a href="netaddr.address.CIDR-class.html" 
-  class="link">CIDR()</a> class if you require <b>*strict*</b> subnet 
-  prefix checking.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -115,24 +117,6 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#setvalue" class="summary-sig-name">setvalue</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">addr</span>)</span><br />
-      Sets the value of this address.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.setvalue">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_netmask" class="summary-sig-name">is_netmask</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
       <code>True</code> if this addr is a mask that would return a host id,
@@ -152,12 +136,13 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#prefixlen" class="summary-sig-name">prefixlen</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#netmask_bits" class="summary-sig-name">netmask_bits</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      The number of bits set to one in this address if it is a netmask, 
-      zero otherwise.</td>
+      If this address is a valid netmask, the number of non-zero bits are 
+      returned, otherwise it returns the width (in bits) for the given 
+      address type (IPv4: 32, IPv6: 128).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.prefixlen">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.netmask_bits">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -208,6 +193,25 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#hostname" class="summary-sig-name">hostname</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      Returns the FQDN for this IP address via a DNS query using 
+      gethostbyaddr() Python's socket module.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.hostname">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#cidr" class="summary-sig-name">cidr</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
       A valid <a href="netaddr.address.CIDR-class.html" 
@@ -227,11 +231,69 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#masklen" class="summary-sig-name">masklen</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#ipv4" class="summary-sig-name">ipv4</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      The subnet prefix of this IP address.</td>
+      A new <a href="netaddr.address.IP-class.html" class="link">IP</a> 
+      object numerically equivalent this address.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.masklen">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.ipv4">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#ipv6" class="summary-sig-name">ipv6</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A new <a href="netaddr.address.IP-class.html" class="link">IP</a> 
+      object numerically equivalent this address.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.ipv6">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_unicast" class="summary-sig-name">is_unicast</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this address is unicast, <code>False</code> 
+      otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_unicast">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_multicast" class="summary-sig-name">is_multicast</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this address is multicast, <code>False</code> 
+      otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_multicast">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -283,6 +345,7 @@ object --+
       <code><a href="netaddr.address.Addr-class.html#__ge__">__ge__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__getitem__">__getitem__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__gt__">__gt__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__hash__">__hash__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__hex__">__hex__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__iadd__">__iadd__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__int__">__int__</a></code>,
@@ -292,18 +355,84 @@ object --+
       <code><a href="netaddr.address.Addr-class.html#__len__">__len__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__long__">__long__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__lt__">__lt__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__ne__">__ne__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__setitem__">__setitem__</a></code>,
-      <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>,
-      <code><a href="netaddr.address.Addr-class.html#family">family</a></code>
+      <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__getattribute__</code>,
-      <code>__hash__</code>,
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
       <code>__setattr__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.IP-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, F<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ADDR_TYPES"></a><span class="summary-name">ADDR_TYPES</span> = <code title="(0, 4, 6)"><code class="variable-group">(</code>0<code class="variable-op">, </code>4<code class="variable-op">, </code>6<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.IP-class.html#TRANSLATE_STR" class="summary-name">TRANSLATE_STR</a> = <code title="'''\x00\x01\x02\x03\x04\x05\x06\x07\x08\t
+\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\
+\x1d\x1e\x1f !&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWX\
+YZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7f\x80\x81\x82\x83\x84\x85\x8\
+6\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\\
+x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa\
+9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\\
+xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
+..."><code class="variable-quote">'</code><code class="variable-string">\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="strategy"></a><span class="summary-name">strategy</span> = <code title="StrategyDescriptor(STRATEGIES)">StrategyDescriptor(STRATEGIES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="addr_type"></a><span class="summary-name">addr_type</span> = <code title="AddrTypeDescriptor(ADDR_TYPES)">AddrTypeDescriptor(ADDR_TYPES)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="prefixlen"></a><span class="summary-name">prefixlen</span> = <code title="PrefixLenDescriptor()">PrefixLenDescriptor()</code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.Addr-class.html">Addr</a></code></b>:
+      <code><a href="netaddr.address.Addr-class.html#value">value</a></code>
       </p>
     </td>
   </tr>
@@ -366,44 +495,6 @@ object --+
   </dl>
 </td></tr></table>
 </div>
-<a name="setvalue"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setvalue</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">addr</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.setvalue">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the value of this address.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - the string form of an IP address, or a network byte order 
-          int/long value within the supported range for the address type.
-          <ul>
-            <li>
-              Raises a <code>TypeError</code> if addr is of an unsupported 
-              type.
-            </li>
-            <li>
-              Raises an <code>OverflowError</code> if addr is an integer 
-              outside the bounds for this address type.
-            </li>
-          </ul></li>
-    </ul></dd>
-    <dt>Overrides:
-        <a href="netaddr.address.Addr-class.html#setvalue">Addr.setvalue</a>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
 <a name="is_netmask"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -426,25 +517,26 @@ object --+
   </dl>
 </td></tr></table>
 </div>
-<a name="prefixlen"></a>
+<a name="netmask_bits"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">prefixlen</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">netmask_bits</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.prefixlen">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.netmask_bits">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>The number of bits set to one in this address if it is a netmask,
-          zero otherwise.</dd>
+        <dd>If this address is a valid netmask, the number of non-zero bits 
+          are returned, otherwise it returns the width (in bits) for the 
+          given address type (IPv4: 32, IPv6: 128).</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -491,6 +583,28 @@ object --+
   </dl>
 </td></tr></table>
 </div>
+<a name="hostname"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hostname</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.hostname">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Returns the FQDN for this IP address via a DNS query using 
+          gethostbyaddr() Python's socket module.</dd>
+  </dl>
+</td></tr></table>
+</div>
 <a name="cidr"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -513,24 +627,120 @@ object --+
   </dl>
 </td></tr></table>
 </div>
-<a name="masklen"></a>
+<a name="ipv4"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">masklen</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ipv4</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.masklen">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.ipv4">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>The subnet prefix of this IP address.</dd>
+        <dd>A new <a href="netaddr.address.IP-class.html" class="link">IP</a>
+          object numerically equivalent this address.
+          <ul>
+            <li>
+              If its address type is IPv4.
+            </li>
+            <li>
+              If object's address type is IPv6 and its value is mappable to
+              IPv4, a new IPv4 <a href="netaddr.address.IP-class.html" 
+              class="link">IP</a> object is returned instead.
+            </li>
+            <li>
+              Raises an <a href="netaddr.AddrConversionError-class.html" 
+              class="link">AddrConversionError</a> if IPv6 address is not 
+              mappable to IPv4.
+            </li>
+          </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ipv6"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ipv6</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.ipv6">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A new <a href="netaddr.address.IP-class.html" class="link">IP</a>
+          object numerically equivalent this address.
+          <ul>
+            <li>
+              If object's address type is IPv6.
+            </li>
+            <li>
+              If object's address type is IPv4 a new IPv6 <a 
+              href="netaddr.address.IP-class.html" class="link">IP</a> 
+              object, as a IPv4 mapped address is returned instead. Uses 
+              the preferred IPv4 embedded in IPv6 form - 
+              <code>::ffff:x.x.x.x</code> ('mapped' address) over the (now 
+              deprecated) form - <code>::x.x.x.x</code> ('compatible' 
+              address). <b>See RFC 4921 for details</b>.
+            </li>
+          </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_unicast"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_unicast</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_unicast">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this address is unicast, <code>False</code> 
+          otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_multicast"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_multicast</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_multicast">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this address is multicast, 
+          <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -586,6 +796,61 @@ object --+
 </td></tr></table>
 </div>
 <br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variable Details</span></td>
+</tr>
+</table>
+<a name="STRATEGIES"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">STRATEGIES</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-group">)</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="TRANSLATE_STR"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">TRANSLATE_STR</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'''</code><code class="variable-string">\x00\x01\x02\x03\x04\x05\x06\x07\x08\t</code>
+<code class="variable-string">\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">\x1d\x1e\x1f !&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWX</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">YZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7f\x80\x81\x82\x83\x84\x85\x8</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">6\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -617,7 +882,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Aug  7 22:21:37 2008
+    Generated by Epydoc 3.0.1 on Sat Sep 20 01:00:28 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
