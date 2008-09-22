@@ -1,4 +1,18 @@
 
+Release: 0.5.1
+Date: 23rd Sep 2008
+
+Bug fixes for 0.5 - release 1
+-----------------------------
+
+* CIDR constructor was throwing a TypeError for valid unicode string addresses
+  which worked in previous releases. Fixed and covered with a unit test case.
+  
+* The methods CIDR.netmask() and CIDR.hostmask() contained code errors that
+  were causing them to fail. Problem fixed and covered with unit test case.
+
+------------------------------------------------------------------------------
+
 Release: 0.5
 Date: 19th Sep 2008
 

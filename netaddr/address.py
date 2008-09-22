@@ -1370,7 +1370,7 @@ class CIDR(AddrRange):
         if verbose_cidr is not None:
             cidr = verbose_cidr
 
-        if not isinstance(cidr, str):
+        if not isinstance(cidr, (str, unicode)):
             raise TypeError('%r is not a valid CIDR!' % cidr)
 
         #   Check for prefix in address and extract it.
@@ -1479,15 +1479,15 @@ class CIDR(AddrRange):
         """
         @return: The subnet mask address of this CIDR range.
         """
-        hostmask = (1 << (strategy.width - self.prefixlen)) - 1
-        netmask = strategy.max_int ^ hostmask
+        hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
+        netmask = self.strategy.max_int ^ hostmask
         return self.data_flavour(netmask)
 
     def hostmask(self):
         """
         @return: The host mask address of this CIDR range.
         """
-        hostmask = (1 << (strategy.width - self.prefixlen)) - 1
+        hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
         return self.data_flavour(hostmask)
 
     def __str__(self):

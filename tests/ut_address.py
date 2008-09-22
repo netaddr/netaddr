@@ -357,6 +357,9 @@ class Test_Addr_IPv6(unittest.TestCase):
         self.failUnless(hex(self.ip_addr) == self.hex_value)
         self.failUnless(self.ip_addr.bits() == self.bit_value)
 
+        #   Test unicode in the CIDR constructor.
+        self.failUnless(CIDR(u'192.168.0.0/24') == CIDR('192.168.0.0/24'))
+
     def testBoundaries(self):
         self.failUnless(int(self.ip_addr_min) == self.int_min)
         self.failUnless(int(self.ip_addr_max) == self.int_max)
@@ -657,7 +660,7 @@ class Test_CIDR(unittest.TestCase):
         ]
 
         supernet = CIDR('10.0.0.0/24')
-        subnets = list(addr for addr in supernet)[::16]
+        subnets = list([addr for addr in supernet])[::16]
 
         for i, subnet_addr in enumerate(subnets):
             subnet = CIDR("%s/28" % subnet_addr)
@@ -888,6 +891,11 @@ class Test_CIDR(unittest.TestCase):
         self.failIf(ip > cidr[-1])
         self.failIf(ip < cidr[-1])
         self.failUnless(ip <= cidr[-1])
+
+    def test_netmask(self):
+        c1 = CIDR('192.168.0.0/24', klass=str)
+        self.failUnless(c1.netmask() == '255.255.255.0')
+        self.failUnless(c1.hostmask() == '0.0.0.255')
 
 #-----------------------------------------------------------------------------
 class Test_Wildcard(unittest.TestCase):
