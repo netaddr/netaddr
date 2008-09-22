@@ -2336,7 +2336,7 @@ netaddr.address.Wildcard.cidr" class="py-name" href="#" onclick="return doclink(
 netaddr.address.Wildcard.cidr" class="py-name" href="#" onclick="return doclink('link-521', 'cidr', 'link-517');">cidr</a></tt> <tt class="py-op">=</tt> <tt class="py-name">verbose_cidr</tt> </tt>
 <a name="L1372"></a><tt class="py-lineno">1372</tt>  <tt class="py-line"> </tt>
 <a name="L1373"></a><tt class="py-lineno">1373</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-522" class="py-name"><a title="netaddr.address.IP.cidr
-netaddr.address.Wildcard.cidr" class="py-name" href="#" onclick="return doclink('link-522', 'cidr', 'link-517');">cidr</a></tt><tt class="py-op">,</tt> <tt class="py-name">str</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+netaddr.address.Wildcard.cidr" class="py-name" href="#" onclick="return doclink('link-522', 'cidr', 'link-517');">cidr</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">,</tt> <tt class="py-name">unicode</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 <a name="L1374"></a><tt class="py-lineno">1374</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">TypeError</tt><tt class="py-op">(</tt><tt class="py-string">'%r is not a valid CIDR!'</tt> <tt class="py-op">%</tt> <tt id="link-523" class="py-name"><a title="netaddr.address.IP.cidr
 netaddr.address.Wildcard.cidr" class="py-name" href="#" onclick="return doclink('link-523', 'cidr', 'link-517');">cidr</a></tt><tt class="py-op">)</tt> </tt>
 <a name="L1375"></a><tt class="py-lineno">1375</tt>  <tt class="py-line"> </tt>
@@ -2619,7 +2619,7 @@ netaddr.address.Wildcard.cidr" class="py-name" href="#" onclick="return doclink(
 </div><div id="CIDR.netmask-collapsed" style="display:none;" pad="++++" indent="++++++++"></div><div id="CIDR.netmask-expanded"><a name="L1479"></a><tt class="py-lineno">1479</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
 <a name="L1480"></a><tt class="py-lineno">1480</tt>  <tt class="py-line"><tt class="py-docstring">        @return: The subnet mask address of this CIDR range.</tt> </tt>
 <a name="L1481"></a><tt class="py-lineno">1481</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L1482"></a><tt class="py-lineno">1482</tt>  <tt class="py-line">        <tt id="link-600" class="py-name"><a title="netaddr.address.CIDR.hostmask" class="py-name" href="#" onclick="return doclink('link-600', 'hostmask', 'link-276');">hostmask</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">1</tt> <tt class="py-op">&lt;&lt;</tt> <tt class="py-op">(</tt><tt id="link-601" class="py-name"><a title="netaddr.address.Addr.strategy
+<a name="L1482"></a><tt class="py-lineno">1482</tt>  <tt class="py-line">        <tt id="link-600" class="py-name"><a title="netaddr.address.CIDR.hostmask" class="py-name" href="#" onclick="return doclink('link-600', 'hostmask', 'link-276');">hostmask</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">1</tt> <tt class="py-op">&lt;&lt;</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-601" class="py-name"><a title="netaddr.address.Addr.strategy
 netaddr.address.AddrRange.strategy
 netaddr.address.CIDR.strategy
 netaddr.address.EUI.strategy
@@ -2627,7 +2627,7 @@ netaddr.address.IP.strategy
 netaddr.address.Wildcard.strategy
 netaddr.strategy" class="py-name" href="#" onclick="return doclink('link-601', 'strategy', 'link-10');">strategy</a></tt><tt class="py-op">.</tt><tt class="py-name">width</tt> <tt class="py-op">-</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-602" class="py-name"><a title="netaddr.address.CIDR.prefixlen
 netaddr.address.IP.prefixlen" class="py-name" href="#" onclick="return doclink('link-602', 'prefixlen', 'link-69');">prefixlen</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt> </tt>
-<a name="L1483"></a><tt class="py-lineno">1483</tt>  <tt class="py-line">        <tt id="link-603" class="py-name"><a title="netaddr.address.CIDR.netmask" class="py-name" href="#" onclick="return doclink('link-603', 'netmask', 'link-541');">netmask</a></tt> <tt class="py-op">=</tt> <tt id="link-604" class="py-name"><a title="netaddr.address.Addr.strategy
+<a name="L1483"></a><tt class="py-lineno">1483</tt>  <tt class="py-line">        <tt id="link-603" class="py-name"><a title="netaddr.address.CIDR.netmask" class="py-name" href="#" onclick="return doclink('link-603', 'netmask', 'link-541');">netmask</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-604" class="py-name"><a title="netaddr.address.Addr.strategy
 netaddr.address.AddrRange.strategy
 netaddr.address.CIDR.strategy
 netaddr.address.EUI.strategy
@@ -2640,7 +2640,7 @@ netaddr.strategy" class="py-name" href="#" onclick="return doclink('link-604', '
 </div><div id="CIDR.hostmask-collapsed" style="display:none;" pad="++++" indent="++++++++"></div><div id="CIDR.hostmask-expanded"><a name="L1487"></a><tt class="py-lineno">1487</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
 <a name="L1488"></a><tt class="py-lineno">1488</tt>  <tt class="py-line"><tt class="py-docstring">        @return: The host mask address of this CIDR range.</tt> </tt>
 <a name="L1489"></a><tt class="py-lineno">1489</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L1490"></a><tt class="py-lineno">1490</tt>  <tt class="py-line">        <tt id="link-608" class="py-name"><a title="netaddr.address.CIDR.hostmask" class="py-name" href="#" onclick="return doclink('link-608', 'hostmask', 'link-276');">hostmask</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">1</tt> <tt class="py-op">&lt;&lt;</tt> <tt class="py-op">(</tt><tt id="link-609" class="py-name"><a title="netaddr.address.Addr.strategy
+<a name="L1490"></a><tt class="py-lineno">1490</tt>  <tt class="py-line">        <tt id="link-608" class="py-name"><a title="netaddr.address.CIDR.hostmask" class="py-name" href="#" onclick="return doclink('link-608', 'hostmask', 'link-276');">hostmask</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">1</tt> <tt class="py-op">&lt;&lt;</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-609" class="py-name"><a title="netaddr.address.Addr.strategy
 netaddr.address.AddrRange.strategy
 netaddr.address.CIDR.strategy
 netaddr.address.EUI.strategy
@@ -3081,7 +3081,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat Sep 20 01:00:29 2008
+    Generated by Epydoc 3.0.1 on Tue Sep 23 00:42:17 2008
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
