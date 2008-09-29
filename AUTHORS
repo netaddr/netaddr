@@ -1,24 +1,26 @@
 netaddr for Python is a project released under the BSD license to the 
-community in early 2008.
+community in early 2008 by :-
+
+	David P. D. Moss <drkjam@gmail.com>.
 
 It is great to see something that started out as merely "itch scratching"
 turn into a useful library used by so many others out there.
 
-A big THANK YOU for all your support that makes this so worthwhile!
+A very special thanks go out to :-
 
-Author and maintainer :-
+	James William Pye <jwp@gmail.com>
+	Duncan McGreggor <duncan.mcgreggor@gmail.com> 
 
-	David P. D. Moss <drkjam@gmail.com>
+whose early adoption, encouragement, suggestions and support have helped spur 
+on refinements to some early rough edges and helped to make netaddr a much 
+better and more user-friendly library.
 
-RPM .spec file (and Fedora repository setup) :-
+RPM .spec file and Fedora repository setup :-
 
 	John Eckersberg <john.eckersberg@gmail.com>
 
-Very special thanks to :-
+Raising bugs and submitting patches :-
 
-	James William Pye <jwp@gmail.com>
-	Duncan McGreggor <duncan.mcgreggor@gmail.com>
+	Sebastien Douche <sdouche@gmail.com>
 
-Your encouragement, suggestions and support is *GREATLY APPRECIATED* and 
-without which this project would be much the poorer!
-
+A big THANK YOU for all your support that makes this so worthwhile!

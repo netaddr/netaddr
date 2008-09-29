@@ -200,6 +200,10 @@ class Test_IP(unittest.TestCase):
         ip.prefixlen = 64
         self.failUnless(repr(ip) == "netaddr.address.IP('fe80::4472:4b4a:616d/64')")
 
+        #   Check IPv4 mapped IPv6.
+        self.failUnless(hex(IP('::ffff:10.11.12.13')) == '0xffff0a0b0c0d')
+        self.failUnless(hex(IP('::10.11.12.13')) == hex(IP('10.11.12.13')))
+
     def testNetmask(self):
         addr = IP('192.168.1.100')
         self.failIf(addr.is_netmask())
@@ -896,6 +900,39 @@ class Test_CIDR(unittest.TestCase):
         c1 = CIDR('192.168.0.0/24', klass=str)
         self.failUnless(c1.netmask() == '255.255.255.0')
         self.failUnless(c1.hostmask() == '0.0.0.255')
+
+    def test_prefixlen_changes(self):
+        cidr = CIDR('192.168.0.0/16', klass=str)
+
+        self.failUnless(str(cidr) == '192.168.0.0/16')
+        self.failUnless(cidr.prefixlen == 16)
+        self.failUnless(cidr[0] == '192.168.0.0')
+        self.failUnless(cidr[-1] == '192.168.255.255')
+        self.failUnless(len(cidr) == 65536)
+
+        cidr.prefixlen += 16
+
+        self.failUnless(str(cidr) == '192.168.0.0/32')
+        self.failUnless(cidr.prefixlen == 32)
+        self.failUnless(cidr[0] == '192.168.0.0')
+        self.failUnless(cidr[-1] == '192.168.0.0')
+        self.failUnless(len(cidr) == 1)
+
+        cidr.prefixlen -= 31
+
+        self.failUnless(str(cidr) == '128.0.0.0/1')
+        self.failUnless(cidr.prefixlen == 1)
+        self.failUnless(cidr[0] == '128.0.0.0')
+        self.failUnless(cidr[-1] == '255.255.255.255')
+        self.failUnless(cidr.size() == 2147483648)
+
+        cidr.prefixlen = 0
+
+        self.failUnless(str(cidr) == '0.0.0.0/0')
+        self.failUnless(cidr.prefixlen == 0)
+        self.failUnless(cidr[0] == '0.0.0.0')
+        self.failUnless(cidr[-1] == '255.255.255.255')
+        self.failUnless(cidr.size() == 4294967296)
 
 #-----------------------------------------------------------------------------
 class Test_Wildcard(unittest.TestCase):

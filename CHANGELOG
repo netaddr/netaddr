@@ -1,4 +1,22 @@
 
+Release: 0.5.2
+Date: 29th Sep 2008
+
+Bug fixes for 0.5 - release 2
+-----------------------------
+
+* Fixed Issue 15 in bug tracker. Bad validation and conversion of IPv4 
+  mapped IPv6 address values in IPv6Strategy class. Covered with unit
+  test cases.
+   
+* Updated PrefixLenDescriptor() class so that modifications to the property
+  CIDR.prefixlen also update CIDR.first and CIDR.last keeping them in sync.
+  Covered by unit test cases.
+
+* IP.hostname() method returns None when DNS lookup fails.
+
+------------------------------------------------------------------------------
+
 Release: 0.5.1
 Date: 23rd Sep 2008
 

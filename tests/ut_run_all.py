@@ -28,6 +28,9 @@ else:
     print 'Error: Endianness not recognised - Danger, Will Robinson!'
     sys.exit(1)
 
+#   Fixes ugly unit test output.
+sys.stdout.flush()
+
 import ut_address
 import ut_strategy
 

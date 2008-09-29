@@ -548,9 +548,9 @@ class IPv6Strategy(AddrStrategy):
                     ipv4_words = ST_IPV4.int_to_words(ipv4_int)
                     l_suffix.pop()
                     l_suffix.append(
-                        ''.join(["%x" % i for i in ipv4_words[0:2]]))
+                        ''.join(["%.2x" % i for i in ipv4_words[0:2]]))
                     l_suffix.append(
-                        ''.join(["%x" % i for i in ipv4_words[2:]]))
+                        ''.join(["%.2x" % i for i in ipv4_words[2:4]]))
 
             token_count = len(l_prefix) + len(l_suffix)
 
@@ -584,9 +584,9 @@ class IPv6Strategy(AddrStrategy):
                         ipv4_words = ST_IPV4.int_to_words(ipv4_int)
                         tokens.pop()
                         tokens.append(
-                            ''.join(["%x" % i for i in ipv4_words[0:2]]))
+                            ''.join(["%.2x" % i for i in ipv4_words[0:2]]))
                         tokens.append(
-                            ''.join(["%x" % i for i in ipv4_words[2:]]))
+                            ''.join(["%.2x" % i for i in ipv4_words[2:4]]))
                 else:
                     #   IPv6 verbose mode.
                     if len(tokens) != self.word_count:
@@ -645,9 +645,9 @@ class IPv6Strategy(AddrStrategy):
                     ipv4_words = ST_IPV4.int_to_words(ipv4_int)
                     l_suffix.pop()
                     l_suffix.append(
-                        ''.join(["%x" % i for i in ipv4_words[0:2]]))
+                        ''.join(["%.2x" % i for i in ipv4_words[0:2]]))
                     l_suffix.append(
-                        ''.join(["%x" % i for i in ipv4_words[2:]]))
+                        ''.join(["%.2x" % i for i in ipv4_words[2:4]]))
 
             gap_size = 8 - ( len(l_prefix) + len(l_suffix) )
 
@@ -664,8 +664,8 @@ class IPv6Strategy(AddrStrategy):
                     ipv4_int = ST_IPV4.str_to_int(ipv4_str)
                     ipv4_words = ST_IPV4.int_to_words(ipv4_int)
                     tokens.pop()
-                    tokens.append(''.join(["%x" % i for i in ipv4_words[0:2]]))
-                    tokens.append(''.join(["%x" % i for i in ipv4_words[2:]]))
+                    tokens.append(''.join(["%.2x" % i for i in ipv4_words[0:2]]))
+                    tokens.append(''.join(["%.2x" % i for i in ipv4_words[2:4]]))
 
                 values = ["%04x" % int(i, 16) for i in tokens]
             else:

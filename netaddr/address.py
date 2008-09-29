@@ -127,6 +127,15 @@ class PrefixLenDescriptor(object):
     on address type. Also accepts subnet masks which can easily be converted
     to the equivalent prefixlen integer.
     """
+    def __init__(self, class_id=None):
+        """
+        Constructor.
+
+        @param class_id: (optional) the name of the class that uses this
+            descriptor.
+        """
+        self.class_id = class_id
+
     def __set__(self, instance, value):
         try:
             #   Basic integer subnet prefix.
@@ -152,6 +161,14 @@ class PrefixLenDescriptor(object):
                 raise ValueError('IPv4 netmasks must have a prefix of /32!')
 
         instance.__dict__['prefixlen'] = prefixlen
+
+        #   Don't run this on a CIDR that is initialising itself.
+        if self.class_id == 'CIDR' and 'first' in instance.__dict__:
+            first = instance.__dict__['first']
+            strategy = instance.__dict__['strategy']
+            hostmask = (1 << (strategy.width - prefixlen)) - 1
+            instance.__dict__['first'] = (first | hostmask) - hostmask
+            instance.__dict__['last'] = first | hostmask
 
 #-----------------------------------------------------------------------------
 class KlassDescriptor(object):
@@ -661,7 +678,10 @@ class IP(Addr):
         @return: Returns the FQDN for this IP address via a DNS query
             using gethostbyaddr() Python's socket module.
         """
-        return _socket.gethostbyaddr(str(self))[0]
+        try:
+            return _socket.gethostbyaddr(str(self))[0]
+        except:
+            return
 
     def cidr(self):
         """
@@ -1219,7 +1239,7 @@ class CIDR(AddrRange):
     #   Descriptor registrations.
     strategy = StrategyDescriptor(STRATEGIES)
     addr_type = AddrTypeDescriptor(ADDR_TYPES)
-    prefixlen = PrefixLenDescriptor()
+    prefixlen = PrefixLenDescriptor('CIDR')
     klass = KlassDescriptor(IP)
 
     def abbrev_to_verbose(abbrev_cidr):

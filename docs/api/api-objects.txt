@@ -186,6 +186,7 @@ netaddr.address.KlassDescriptor.__set__	netaddr.address.KlassDescriptor-class.ht
 netaddr.address.KlassDescriptor.__init__	netaddr.address.KlassDescriptor-class.html#__init__
 netaddr.address.PrefixLenDescriptor	netaddr.address.PrefixLenDescriptor-class.html
 netaddr.address.PrefixLenDescriptor.__set__	netaddr.address.PrefixLenDescriptor-class.html#__set__
+netaddr.address.PrefixLenDescriptor.__init__	netaddr.address.PrefixLenDescriptor-class.html#__init__
 netaddr.address.StrategyDescriptor	netaddr.address.StrategyDescriptor-class.html
 netaddr.address.StrategyDescriptor.__set__	netaddr.address.StrategyDescriptor-class.html#__set__
 netaddr.address.StrategyDescriptor.__init__	netaddr.address.StrategyDescriptor-class.html#__init__
