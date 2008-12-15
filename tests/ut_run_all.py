@@ -33,11 +33,12 @@ sys.stdout.flush()
 
 import ut_address
 import ut_strategy
+import ut_use_cases
 
 loader = unittest.TestLoader()
 unit_test_suite = unittest.TestSuite()
 
-unit_test_modules = (ut_address, ut_strategy)
+unit_test_modules = (ut_address, ut_strategy, ut_use_cases)
 
 for ut_module in unit_test_modules:
     for test_case in loader.loadTestsFromModule(ut_module):

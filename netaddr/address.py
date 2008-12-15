@@ -26,6 +26,64 @@ AT_STRATEGIES = {
     AT_EUI64    : ST_EUI64,
 }
 
+#: Topic based dictionary Lookup for information provided by this module.
+EXT_LOOKUP = {
+    'IPv4' : {},
+    'IPv6' : {},
+    'multicast' : {},
+    'OUI' : {},
+}
+
+#-----------------------------------------------------------------------------
+def mac_info(mac_addr):
+    """
+    Returns informational data specific to this IP address.
+    """
+    info = {}
+
+    #TODO: Check object type of mac_addr.
+
+    #TODO: See if shelve object is available, default to parsing whole file
+    #TODO: if not.
+
+    #TODO: Multiple records.
+
+    try:
+        info['OUI'] = EXT_LOOKUP['OUI'][mac_addr.oui()]
+    except KeyError:
+        info['OUI'] = None
+
+    #TODO include IAB data lookups.
+
+    return info
+
+#-----------------------------------------------------------------------------
+def ip_info(ip_addr):
+    """
+    Returns informational data specific to this IP address.
+    """
+    info = {}
+
+    if ip_addr.addr_type == AT_INET:
+        for cidr, record in EXT_LOOKUP['IPv4'].items():
+            if ip_addr in cidr:
+                info.setdefault('IPv4', [])
+                info['IPv4'].append(record)
+
+        if ip_addr.is_multicast():
+            for iprange, record in EXT_LOOKUP['multicast'].items():
+                if ip_addr in iprange:
+                    info.setdefault('Multicast', [])
+                    info['Multicast'].append(record)
+
+    elif ip_addr.addr_type == AT_INET6:
+        for cidr, record in EXT_LOOKUP['IPv6'].items():
+            if ip_addr in cidr:
+                info.setdefault('IPv6', [])
+                info['IPv6'].append(record)
+
+    return info
+
 #-----------------------------------------------------------------------------
 #   Descriptor protocol classes.
 #-----------------------------------------------------------------------------
@@ -84,7 +142,7 @@ class AddrValueDescriptor(object):
 
             #   Make sure we picked up a strategy object.
             if instance.strategy is None:
-                raise AddrFormatError('%r is not a recognised address ' \
+                raise AddrFormatError('%r is not a supported address ' \
                     'format!' % value)
 
             if isinstance(value, (str, unicode)):
@@ -542,6 +600,18 @@ class EUI(Addr):
         addr = prefix + eui64
         return IP(addr)
 
+    def info(self):
+        """
+        @return: A record dict containing IEEE registration details for this
+            EUI (MAC-48) if available, None otherwise.
+        """
+        #   This import is placed here for efficiency. If you don't call this
+        #   method, you don't take the import lag. Also gets around a nasty
+        #   module dependency issue. Two birds, one stone ...
+        info = mac_info(self)
+#        del info['OUI']['id']  # Internal ID is not required externally.
+        return info
+
 #-----------------------------------------------------------------------------
 class IP(Addr):
     """
@@ -746,13 +816,22 @@ class IP(Addr):
         @return: C{True} if this address is multicast, C{False} otherwise.
         """
         if self.addr_type == AT_INET:
-            if 0xe0000000 <= self.value <= 0xefffffff:
+            if 0 <= self.value <= (2 ** 32 - 1):
                 return True
         elif  self.addr_type == AT_INET6:
-            if 0xff000000000000000000000000000000 <= self.value <= \
-               0xffffffffffffffffffffffffffffffff:
+            if 0 <= self.value <= (2 ** 128 - 1):
                 return True
         return False
+
+    def info(self):
+        """
+        @return: A record dict containing IANA registration details for this
+            IP address if available, None otherwise.
+        """
+        #   This import is placed here for efficiency. If you don't call this
+        #   method, you don't take the import lag. Also gets around a nasty
+        #   module dependency issue. Two birds, one stone ...
+        return ip_info(self)
 
     def __str__(self):
         """
@@ -1188,7 +1267,183 @@ class AddrRange(object):
             self.strategy.int_to_str(self.last))
 
 #-----------------------------------------------------------------------------
-class CIDR(AddrRange):
+class IPRange(AddrRange):
+    """
+    A block of contiguous IP addresses bounded by an arbitrary start and stop
+    address. There is no requirement that they fall on strict bit mask
+    boundaries, unlike L{CIDR} addresses.
+
+    A sequence of IPRange objects sort by IPv4 first, followed by IPv6.
+        """
+    STRATEGIES = (ST_IPV4, ST_IPV6)
+    ADDR_TYPES = (AT_UNSPEC, AT_INET, AT_INET6)
+
+    #   Descriptor registrations.
+    strategy = StrategyDescriptor(STRATEGIES)
+    addr_type = AddrTypeDescriptor(ADDR_TYPES)
+    first = AddrValueDescriptor('first')
+    last = AddrValueDescriptor('last')
+    klass = KlassDescriptor(IP)
+
+    def __init__(self, first, last, klass=IP):
+        """
+        Constructor.
+
+        @param first: start address for this IP address range.
+
+        @param last: stop address for this IP address range.
+
+        @param klass: (optional) class used to create each object returned.
+            Default: L{IP()} objects. See L{nrange()} documentations for
+            additional details on options.
+        """
+        super(IPRange, self).__init__(first, last, klass)
+
+    def iprange(self):
+        """
+        @return: A valid L{IPRange} object for this address range.
+        """
+        iprange = IPRange(self.strategy.int_to_str(self.first),
+                          self.strategy.int_to_str(self.last))
+        if self.klass == str:
+            return str(iprange)
+        return cidr
+
+    def cidr(self):
+        """
+        @return: A valid L{CIDR} object for this address range. If conversion
+            fails an L{AddrConversionError} is raised as not all wildcards
+            ranges are valid CIDR ranges.
+        """
+        raise RuntimeError('TODO')
+
+    def wildcard(self):
+        """
+        @return: A L{Wildcard} object equivalent to this CIDR.
+            - If CIDR was initialised with C{klass=str} a wildcard string is
+            returned, in all other cases a L{Wildcard} object is returned.
+            - Only supports IPv4 CIDR addresses.
+        """
+        t1 = self.strategy.int_to_words(self.first)
+        t2 = self.strategy.int_to_words(self.last)
+
+        if self.addr_type != AT_INET:
+            raise AddrConversionError('wildcards only suitable for IPv4 ' \
+                'ranges!')
+
+        tokens = []
+
+        seen_hyphen = False
+        seen_asterisk = False
+
+        for i in range(4):
+            if t1[i] == t2[i]:
+                #   A normal octet.
+                tokens.append(str(t1[i]))
+            elif (t1[i] == 0) and (t2[i] == 255):
+                #   An asterisk octet.
+                tokens.append('*')
+                seen_asterisk = True
+            else:
+                #   Create a hyphenated octet - only one allowed per wildcard.
+                if not seen_asterisk:
+                    if not seen_hyphen:
+                        tokens.append('%s-%s' % (t1[i], t2[i]))
+                        seen_hyphen = True
+                    else:
+                        raise SyntaxError('only one hyphenated octet per ' \
+                            'wildcard permitted!')
+                else:
+                    raise SyntaxError("* chars aren't permitted before ' \
+                        'hyphenated octets!")
+
+        wildcard = '.'.join(tokens)
+
+        if self.klass == str:
+            return wildcard
+
+        return Wildcard(wildcard)
+
+    def issubnet(self, other):
+        """
+        @return: True if other's boundary is equal to or within this range.
+            False otherwise.
+        """
+        if not isinstance(other, IPRange):
+            raise TypeError('Invalid type!')
+
+        if self.addr_type != other.addr_type:
+            raise TypeError('Ranges must be the same address type!')
+
+        if self.first >= other.first and self.last <= other.last:
+            return True
+
+        return False
+
+    def issupernet(self, other):
+        """
+        @return: True if other's boundary is equal to or contains this range.
+            False otherwise.
+        """
+        if not isinstance(other, IPRange):
+            raise TypeError('Invalid type!')
+
+        if self.addr_type != other.addr_type:
+            raise TypeError('Ranges must be the same address type!')
+
+        if self.first <= other.first and self.last >= other.last:
+            return True
+
+        return False
+
+    def adjacent(self, other):
+        """
+        @return: True if other's boundary touches the boundary of this
+            address range, False otherwise.
+        """
+        if not isinstance(other, IPRange):
+            raise TypeError('Invalid type!')
+
+        if self.addr_type != other.addr_type:
+            raise TypeError('Ranges must be the same address type!')
+
+        #   Left hand side of this address range.
+        if self.first == (other.last + 1):
+            return True
+
+        #   Right hand side of this address range.
+        if self.last == (other.first - 1):
+            return True
+
+        return False
+
+    def overlaps(self, other):
+        """
+        @return: True if other's boundary crosses the boundary of this address
+            range, False otherwise.
+        """
+        if not isinstance(other, IPRange):
+            raise TypeError('Invalid type!')
+
+        if self.addr_type != other.addr_type:
+            raise TypeError('Ranges must be the same address type!')
+
+        #   Left hand side of this address range.
+        if self.first <= other.last <= self.last:
+            return True
+
+        #   Right hand side of this address range.
+        if self.first <= other.first <= self.last:
+            return True
+
+        return False
+
+    def __str__(self):
+        return "('%s', '%s')" % (self.strategy.int_to_str(self.first),
+                                 self.strategy.int_to_str(self.last))
+
+#-----------------------------------------------------------------------------
+class CIDR(IPRange):
     """
     A block of contiguous IPv4 or IPv6 network addresses defined by a base
     network address and a bitmask prefix or subnet mask address indicating the
@@ -1366,7 +1621,79 @@ class CIDR(AddrRange):
         #   Not a recognisable format.
         return None
 
+    def supernet(addrs):
+        """
+        Accepts a sequence of IP addresses and/or CIDRs, Wildcards and
+        IPRanges returning a single CIDR that is large enough to span the
+        lowest and highest addresses in the sequence.
+        """
+        if not isinstance(addrs, (list, tuple)):
+            raise TypeError('argument must be a sequence type (list/tuple)!')
+
+        if not len(addrs) > 0:
+            raise TypeError('sequence must contain 1 or more elements!')
+
+        #   Detect type of string address or address range and create the
+        #   equivalent instance.
+        for i, addr in enumerate(addrs):
+            if isinstance(addr, (str, unicode)):
+                try:
+                    obj = IP(addr)
+                    addrs[i] = obj
+                    continue
+                except:
+                    pass
+                try:
+                    obj = CIDR(addr)
+                    addrs[i] = obj
+                    continue
+                except:
+                    pass
+                try:
+                    obj = Wildcard(addr)
+                    addrs[i] = obj
+                    continue
+                except:
+                    pass
+
+        addr_type = addrs[0].addr_type
+        strategy = AT_STRATEGIES[addr_type]
+
+        ip1 = IP(strategy.max_int, addr_type)
+        ip2 = IP(strategy.min_int, addr_type)
+
+        #   Discover the lowest and highest address range boundaries.
+        for addr in addrs:
+            if isinstance(addr, (CIDR, Wildcard)):
+                if addr.addr_type != addr_type:
+                    raise TypeError('Sequence cannot contain multiple ' \
+                        'address types!')
+                if addr.first < ip1.value:
+                    ip1.value = addr.first
+                if addr.last > ip2.value:
+                    ip2.value = addr.last
+            elif isinstance(addr, IP):
+                if addr.addr_type != addr_type:
+                    raise TypeError('Sequence cannot contain multiple ' \
+                        'address types!')
+                if addr.value < ip1.value:
+                    ip1.value = addr.value
+                if addr.value > ip2.value:
+                    ip2.value = addr.value
+            else:
+                raise TypeError('element %r is not a supported type!' % addr)
+
+        #   Compute CIDR to span the extent of the list provided.
+        cidr = ip1.cidr()
+        while cidr.prefixlen > 0:
+            if ip2 in cidr:
+                break
+            cidr.prefixlen -= 1
+
+        return cidr
+
     abbrev_to_verbose = staticmethod(abbrev_to_verbose)
+    supernet = staticmethod(supernet)
 
     def __init__(self, cidr, klass=IP, strict_bitmask=True):
         """
@@ -1483,17 +1810,19 @@ class CIDR(AddrRange):
 
         return cidrs
 
-#TODO    def __add__(self, other):
-#TODO        """
-#TODO        Add another CIDR to this one, but only if it is adjacent and of
-#TODO        equitable size.
-#TODO
-#TODO        @param other: a CIDR object that is of equal size to C{self}.
-#TODO
-#TODO        @return: A new CIDR object that is double the size of C{self}.
-#TODO        """
-#TODO        #   Undecided about how to implement this.
-#TODO        raise NotImplementedError('TODO')
+    def __add__(self, other):
+        """
+        Add another CIDR to this one returning a 'supernet' that will contain
+        both addresses.
+
+        @param other: a CIDR object.
+
+        @return: A new (potentially larger) CIDR object.
+        """
+        cidr = CIDR.supernet([self, other])
+        if self.klass is str:
+            return str(cidr)
+        return cidr
 
     def netmask(self):
         """
@@ -1521,55 +1850,8 @@ class CIDR(AddrRange):
         return "netaddr.address.%s('%s/%d')" % (self.__class__.__name__,
             self.strategy.int_to_str(self.first), self.prefixlen)
 
-    def wildcard(self):
-        """
-        @return: A L{Wildcard} object equivalent to this CIDR.
-            - If CIDR was initialised with C{klass=str} a wildcard string is
-            returned, in all other cases a L{Wildcard} object is returned.
-            - Only supports IPv4 CIDR addresses.
-        """
-        t1 = self.strategy.int_to_words(self.first)
-        t2 = self.strategy.int_to_words(self.last)
-
-        if self.addr_type != AT_INET:
-            raise AddrConversionError('wildcards only suitable for IPv4 ' \
-                'ranges!')
-
-        tokens = []
-
-        seen_hyphen = False
-        seen_asterisk = False
-
-        for i in range(4):
-            if t1[i] == t2[i]:
-                #   A normal octet.
-                tokens.append(str(t1[i]))
-            elif (t1[i] == 0) and (t2[i] == 255):
-                #   An asterisk octet.
-                tokens.append('*')
-                seen_asterisk = True
-            else:
-                #   Create a hyphenated octet - only one allowed per wildcard.
-                if not seen_asterisk:
-                    if not seen_hyphen:
-                        tokens.append('%s-%s' % (t1[i], t2[i]))
-                        seen_hyphen = True
-                    else:
-                        raise SyntaxError('only one hyphenated octet per ' \
-                            'wildcard permitted!')
-                else:
-                    raise SyntaxError("* chars aren't permitted before ' \
-                        'hyphenated octets!")
-
-        wildcard = '.'.join(tokens)
-
-        if self.klass == str:
-            return wildcard
-
-        return Wildcard(wildcard)
-
 #-----------------------------------------------------------------------------
-class Wildcard(AddrRange):
+class Wildcard(IPRange):
     """
     A block of contiguous IPv4 network addresses defined using a wildcard
     style syntax.
@@ -1607,8 +1889,8 @@ class Wildcard(AddrRange):
         I{All CIDR ranges can always be represented as wildcard ranges but the
         reverse isn't true in every case.}
     """
-    STRATEGIES = (ST_IPV4, ST_IPV6)
-    ADDR_TYPES = (AT_UNSPEC, AT_INET, AT_INET6)
+    STRATEGIES = (ST_IPV4,)
+    ADDR_TYPES = (AT_UNSPEC, AT_INET)
 
     #   Descriptor registrations.
     strategy = StrategyDescriptor(STRATEGIES)
@@ -1694,10 +1976,34 @@ class Wildcard(AddrRange):
 
         first = '.'.join(t1)
         last = '.'.join(t2)
-        super(self.__class__, self).__init__(first, last, klass=klass)
+        super(Wildcard, self).__init__(first, last, klass=klass)
 
         if self.addr_type != AT_INET:
             raise AddrFormatError('Wildcard syntax only supports IPv4!')
+
+    def __add__(self, other):
+        """
+        Add another Wildcard, CIDR or IP to this Wildcard object.
+
+        @param other: a Wildcard, CIDR or IP object that is either adjacent to
+            or intersects with this address.
+
+        @return: A new (most likely larger) Wildcard object. Raises an
+            Exception if other is not adjacent or intersects with this
+            Wildcard object.
+        """
+        raise NotImplementedError('TODO')
+
+    def __sub__(self, other):
+        """
+        Subtract a Wildcard, CIDR or IP from this Wildcard object.
+
+        @param other: a Wildcard, CIDR or IP object.
+
+        @return: A list of either one or two Wildcard objects remaining after
+        subtracting C{other} from C{self}.
+        """
+        raise NotImplementedError('TODO')
 
     def cidr(self):
         """
@@ -1705,6 +2011,8 @@ class Wildcard(AddrRange):
             an L{AddrConversionError} is raised as not all wildcards ranges are
             valid CIDR ranges.
         """
+        #FIXME: This method should be removed and replace with a more generic
+        #FIXME: version defined in superclass IPRange().
         size = self.size()
 
         if size & (size - 1) != 0:
@@ -1773,6 +2081,224 @@ class Wildcard(AddrRange):
         """
         return "netaddr.address.%s(%r)" % (self.__class__.__name__, str(self))
 
+
+#-----------------------------------------------------------------------------
+class IPRangeSet(set):
+    """
+    A customised Python set class that deals with IP addresses and CIDRs. Any
+    object passed in that is not a CIDR will be converted into one.
+
+    """
+    def __init__(self, cidrs):
+        """
+        Constructor.
+
+        @param cidrs: A list of CIDR objects used to pre-populate the set.
+            Individual CIDR object can be added and removed after
+            instantiation with the usual set methods, add() and remove().
+
+        """
+        for cidr in cidrs:
+            if isinstance(cidr, IP):
+                self.add(cidr.cidr())
+            if isinstance(cidr, str):
+                try:
+                    self.add(CIDR(cidr))
+                except:
+                    pass
+                try:
+                    ip = IP(cidr)
+                    self.add(ip.cidr())
+                except:
+                    pass
+                try:
+                    wildcard = Wildcard(cidr)
+                    try:
+                        self.add(wildcard.cidr())
+                    except:
+                        self.add(wildcard)
+                except:
+                    pass
+            else:
+                self.add(cidr)
+
+    def __contains__(self, other):
+        """
+        @return: True if C{other} CIDR object matches any of the members in
+            this CIDRSet, False otherwise.
+
+        """
+        for cidr in self:
+            if other in cidr:
+                return True
+
+    def any_match(self, other):
+        """
+        @param other: An IP or CIDR object.
+
+        @return: The first CIDR object that matches the C{other} CIDR object
+            from any of the members in this CIDRSet, None otherwise.
+
+        """
+        for cidr in self:
+            if other in cidr:
+                return cidr
+
+    def all_matches(self, other):
+        """
+        @param other: An IP or CIDR object.
+
+        @return: All CIDR objects matching the C{other} CIDR object from this
+        CIDRSet, an empty list otherwise.
+        """
+        cidrs = []
+        for cidr in self:
+            if other in cidr:
+                cidrs.append(cidr)
+        return cidrs
+
+    def min_match(self, other):
+        """
+        @param other: An IP or CIDR object.
+
+        @return: The smallest CIDR matching the C{other} CIDR object from this
+        CIDRSet, None otherwise.
+        """
+        cidrs = self.all_matches(other)
+        cidrs.sort()
+        return cidrs[0]
+
+
+    def max_match(self, other):
+        """
+        @param other: An IP or CIDR object.
+
+        @return: The largest CIDR matching the C{other} CIDR object from this
+        CIDRSet, None otherwise.
+
+        """
+        cidrs = self.all_matches(other)
+        cidrs.sort()
+        return cidrs[-1]
+
+#-----------------------------------------------------------------------------
+def read_caches():
+    """
+    Read from caches and update module variables with information retrieved.
+    """
+    from external import ShelveReader, IANA_IPV4_PATH, IANA_IPV6_PATH, \
+        IANA_MULTICAST_PATH, IEEE_OUI_PATH
+
+    #   Populate IPv4 lookup.
+    ipv4 = ShelveReader(IANA_IPV4_PATH)
+    for prefix, data in ipv4.db.items():
+        cidr = CIDR(prefix)
+        EXT_LOOKUP['IPv4'][cidr] = data
+
+    #   Populate IPv6 lookup.
+    ipv6 = ShelveReader(IANA_IPV6_PATH)
+    for prefix, data in ipv6.db.items():
+        cidr = CIDR(prefix)
+        EXT_LOOKUP['IPv6'][cidr] = data
+
+    #   Populate IPv4 multicast lookup.
+    mcast = ShelveReader(IANA_MULTICAST_PATH)
+    for ip_lookup, data in mcast.db.items():
+        iprange = None
+        if '-' in ip_lookup:
+            (first, last) = ip_lookup.split('-')
+            iprange = IPRange(first, last)
+        else:
+            iprange = IPRange(ip_lookup, ip_lookup)
+        EXT_LOOKUP['multicast'][iprange] = data
+
+    #   Populate OUI lookup.
+    EXT_LOOKUP['OUI'] = ShelveReader(IEEE_OUI_PATH)
+
+#   On module import, read shelve data and populate module level lookups.
+read_caches()
+
+#-----------------------------------------------------------------------------
+def cidr_set():
+    c1 = IPRangeSet([
+        CIDR('192.168.0.0/28'),
+        CIDR('192.168.0.32/28'),
+    ])
+    c2 = IPRangeSet([
+        CIDR('192.168.0.0/28'),
+        CIDR('192.168.0.0/24'),
+        IP('192.168.0.5'),
+        CIDR('192.168.0.16/28'),
+        CIDR('192.168.0.32/28'),
+    ])
+
+    c3 = IPRangeSet([
+        '156.48.168.0-79',
+        '156.48.168.88-175',
+        '156.48.168.184-255',
+        '156.48.169.*',
+        '156.48.172.0-175',
+        '156.48.172.192-255',
+        '156.48.173.*',
+        '156.48.152.0-143',
+        '156.48.152.152-207',
+        '156.48.152.224-227',
+        '156.48.152.232-255',
+        '156.48.153.0-31',
+        '156.48.153.40-79',
+        '156.48.153.112-255',
+        '156.48.154.0-207',
+        '156.48.154.224-255',
+        '156.48.155.0-79',
+        '156.48.155.96-127',
+        '156.48.46.0-63',
+        '156.48.46.128-191',
+        '156.48.48.0-63',
+        '156.48.48.128-191',
+        '156.48.252.0-63',
+        '156.48.49.*',
+        '156.48.206.0-111',
+        '156.48.206.128-255',
+        '156.48.163.*',
+        '156.48.170.16-255',
+        '156.48.171.*',
+        '10.226.226.0-127',
+        '10.226.228.0-127',
+    ])
+
+    print c1.issubset(c2)
+    print c2.issuperset(c1)
+    print c1.intersection(c2)
+    print c1.union(c2)
+#    print "%r" % c2.any_match(IP('192.168.0.1'))
+#    print c2.all_matches(CIDR('192.168.0.5/32'))
+
+    for cidr in sorted(c3):
+        print "%r" % cidr
+
+    for i in c1:
+        print i
+
+#-----------------------------------------------------------------------------
+def add_sub_wildcard():
+    wc = Wildcard('192.168.0.15-250')
+    print wc
+    print wc - Wildcard('192.168.0.235-240')
+
+#-----------------------------------------------------------------------------
+def cidr_addition_and_supernet():
+    l = ['::', '::255.255.255.255']
+    print l
+    c = CIDR.supernet(l)
+    print c, c[0], c[-1], c.size()
+
+    print "%r" % (CIDR('192.168.0.0/24', klass=str) + CIDR('192.168.255.0/24'))
+
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
+    #cidr_set()
+    #add_sub_wildcard()
+    #cidr_addition_and_supernet()
+
+    #print Wildcard('192.168.0.32-63').overlaps(Wildcard('192.168.0.33-35'))
     pass

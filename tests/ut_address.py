@@ -841,6 +841,22 @@ class Test_CIDR(unittest.TestCase):
 
         self.failUnless(expected == actual)
 
+    def test_cidr_addition(self):
+        """
+        Addition between CIDRs.
+        """
+        r0 = CIDR('192.168.0.1/32') + CIDR('192.168.0.1/32')
+        self.failUnless(r0 == CIDR('192.168.0.1/32'))
+
+        r1 = CIDR('192.168.0.0/24', klass=str) + CIDR('192.168.1.0/24')
+        self.failUnless(r1 == '192.168.0.0/23')
+
+        r2 = CIDR('::/128', klass=str) + CIDR('::255.255.255.255/128')
+        self.failUnless(r2 == '::/96')
+
+        r3 = CIDR('192.168.0.0/24', klass=str) + CIDR('192.168.255.0/24')
+        self.failUnless(r3 == '192.168.0.0/16')
+
     def test_cidr_subtraction(self):
         """
         Subtraction between CIDRs.
@@ -933,6 +949,57 @@ class Test_CIDR(unittest.TestCase):
         self.failUnless(cidr[0] == '0.0.0.0')
         self.failUnless(cidr[-1] == '255.255.255.255')
         self.failUnless(cidr.size() == 4294967296)
+
+    def test_supernet(self):
+        expected = (
+            (['192.168.0.0', '192.168.0.0'], '192.168.0.0/32'),
+            (['192.168.0.0', '192.168.0.1'], '192.168.0.0/31'),
+            (['192.168.0.1', '192.168.0.0'], '192.168.0.0/31'),
+            (['192.168.0.0/24', '192.168.1.0/24'], '192.168.0.0/23'),
+            (['192.168.3.1/24', '192.168.0.1/24', '192.168.1.1/24'], '192.168.0.0/22'),
+            (['192.168.0.*', '192.168.1.0/24'], '192.168.0.0/23'),
+            (['192.168.1-2.*', '192.168.3.0/24'], '192.168.0.0/22'),
+            (['*.*.*.*', '192.168.0.0/24'], '0.0.0.0/0'),
+            (['::', '::255.255.255.255'], '::/96'),
+        )
+
+        for comparison in expected:
+            (arg, result) = comparison
+            cidr = str(CIDR.supernet(arg))
+            self.failUnless(cidr == result, "Bad Assertion: %r == %r" \
+                % (cidr, result))
+
+    def test_supernet_failure_mode(self):
+        #   Mixing address types is not allowed!
+        self.failUnlessRaises(TypeError, CIDR.supernet, ['::ffff:192.168.0.0/24', '192.168.1.0/24', ])
+
+    def test_supernet_membership(self):
+        self.failUnless(CIDR('192.168.0.0/24').issupernet(CIDR('192.168.0.0/24')))
+        self.failUnless(CIDR('192.168.0.0/23').issupernet(CIDR('192.168.0.0/24')))
+        self.failIf(CIDR('192.168.0.0/25').issupernet(CIDR('192.168.0.0/24')))
+
+        #   Mix it up with Wildcard and CIDR.
+        self.failUnless(CIDR('192.168.0.0/24').issupernet(Wildcard('192.168.0.*')))
+        self.failUnless(Wildcard('192.168.0-1.*').issupernet(CIDR('192.168.0.0/24')))
+        self.failUnless(Wildcard('192.168.0-1.*').issupernet(Wildcard('192.168.0.*')))
+        self.failIf(CIDR('192.168.0.0/25').issupernet(CIDR('192.168.0.0/24')))
+        self.failIf(Wildcard('192.168.0.0-127').issupernet(CIDR('192.168.0.0/24')))
+
+    def test_subnet_membership(self):
+        self.failUnless(CIDR('192.168.0.0/24').issubnet(CIDR('192.168.0.0/24')))
+        self.failUnless(CIDR('192.168.0.0/25').issubnet(CIDR('192.168.0.0/24')))
+        self.failIf(CIDR('192.168.0.0/23').issubnet(CIDR('192.168.0.0/24')))
+
+    def test_overlaps(self):
+        #   A useful property of CIDRs is that they cannot overlap!
+        pass
+
+    def test_adjacency(self):
+        self.failUnless(CIDR('192.168.0.0/24').adjacent(CIDR('192.168.1.0/24')))
+        self.failUnless(CIDR('192.168.1.0/24').adjacent(CIDR('192.168.0.0/24')))
+        self.failIf(CIDR('192.168.0.0/24').adjacent(CIDR('192.168.2.0/24')))
+        self.failIf(CIDR('192.168.2.0/24').adjacent(CIDR('192.168.0.0/24')))
+
 
 #-----------------------------------------------------------------------------
 class Test_Wildcard(unittest.TestCase):
@@ -1073,6 +1140,16 @@ class Test_Wildcard(unittest.TestCase):
             wc += 1
 
         self.failUnless(expected == actual)
+
+    def test_overlaps(self):
+        self.failUnless(Wildcard('192.168.0.0-31').overlaps(Wildcard('192.168.0.16-63')))
+        self.failIf(Wildcard('192.168.0.0-7').overlaps(Wildcard('192.168.0.16-23')))
+
+    def test_adjacency(self):
+        self.failUnless(Wildcard('192.168.0.*').adjacent(Wildcard('192.168.1.*')))
+        self.failUnless(Wildcard('192.168.1.*').adjacent(Wildcard('192.168.0.*')))
+        self.failIf(Wildcard('192.168.0.*').adjacent(Wildcard('192.168.2.*')))
+        self.failIf(Wildcard('192.168.2.*').adjacent(Wildcard('192.168.0.*')))
 
 #-----------------------------------------------------------------------------
 class Test_IP_DNS(unittest.TestCase):

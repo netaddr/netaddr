@@ -897,7 +897,7 @@ ST_IPV6  = IPv6Strategy()
 ST_EUI48 = EUI48Strategy()
 
 #: A shared strategy object supporting all operations on EUI-64 addresses.
-ST_EUI64 = AddrStrategy(addr_type=AT_EUI64, width=64, word_size=8,
+ST_EUI64 = AddrStrategy(addr_type=AT_EUI64, width=64, word_size=8, \
                          word_fmt='%02x', delimiter='-', to_upper=True)
 
 #-----------------------------------------------------------------------------

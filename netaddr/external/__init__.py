@@ -5,23 +5,22 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-classes and functions providing access to data from various external sources
-that is publicly available but often not easy for humans to parse by hand!
+classes and functions providing access to public data from the IEEE and IANA.
 
 Information processed here is made available via various methods on objects of
 supported network address types such as IP() and EUI(). See netaddr.address
 module documentation for more details.
 
 References
-----------
+==========
 
 1)  Internet Assigned Numbers Authority (IANA)
 
-    http://www.iana.org/
+http://www.iana.org/
 
 2) Institute of Electrical and Electronics Engineers (IEEE)
 
-    http://www.ieee.org/
+http://www.ieee.org/
 """
 
 import os as _os
@@ -30,8 +29,6 @@ import sys as _sys
 import re as _re
 import pprint as _pprint
 import shelve as _shelve
-
-from netaddr import CIDR, IPRange, AT_INET, AT_INET6
 
 #-----------------------------------------------------------------------------
 #   Constants.
@@ -43,20 +40,17 @@ SRC_PATH = _path.join(_path.dirname(__file__), 'src')
 #: Path where shelve persistence files are created and stored.
 CACHE_PATH = _path.join(_path.dirname(__file__), 'cache')
 
-#: Lookup for IANA IPv4 address space information.
-IPV4_ADDR_SPACE = {}
+#: Path to IANA IPv4 persistence data.
+IANA_IPV4_PATH = _path.join(CACHE_PATH, r'iana-ipv4-space.shlv')
 
-#: Lookup for IANA IPv6 address space information.
-IPV6_ADDR_SPACE = {}
+#: Path to IANA IPv6 persistence data.
+IANA_IPV6_PATH = _path.join(CACHE_PATH, r'iana-ipv6-space.shlv')
 
-#: Lookup for IANA IPv4 multicast information.
-IPV4_MULTICAST = {}
+#: Path to IANA IPv4 multicast persistence data.
+IANA_MULTICAST_PATH = _path.join(CACHE_PATH, r'iana-ipv4-mcast.shlv')
 
-#: Lookup for IEEE OUI information.
-OUI_REGISTRY = {}
-
-#: Lookup for IEEE IAB information.
-IAB_REGISTRY = {}
+#: Path to OUI registry persistence data.
+IEEE_OUI_PATH = _path.join(CACHE_PATH, r'ieee-oui.shlv')
 
 #-----------------------------------------------------------------------------
 class Subscriber(object):
@@ -461,7 +455,7 @@ class IABParser(Parser):
     A Parser that knows how to process an IAB (Individual Address Block)
     Registration Information file found here :-
 
-        http://standards.ieee.org/regauth/oui/iab.txt
+    http://standards.ieee.org/regauth/oui/iab.txt
     """
     #TODO
     pass
@@ -547,7 +541,13 @@ class ShelveReader(Subscriber):
         """
         self.fname = fname
         self.closed = True
-        self.db = _shelve.open(self.fname, 'r')     #   Read mode.
+
+        try:
+            self.db = _shelve.open(self.fname, 'r')     #   Read mode.
+        except Exception, e:
+            print 'Error: failed to open file %s' % self.fname
+            raise e
+
         self.closed = False
 
     def __del__(self):
@@ -582,114 +582,57 @@ def update_caches():
 
     oui = OUIParser(open(_path.join(SRC_PATH, r'oui.txt')))
     #DEBUG: oui.attach(FileWriter())
-    oui.attach(ShelveArchiver(_path.join(CACHE_PATH, r'ieee-oui.shlv'),
-        'prefix'))
+    oui.attach(ShelveArchiver(IEEE_OUI_PATH, 'prefix'))
     oui.parse()
 
     ipv4 = IPv4Parser(open(_path.join(SRC_PATH, r'ipv4-address-space')))
     #DEBUG: ipv4.attach(FileWriter())
-    ipv4.attach(ShelveArchiver(_path.join(CACHE_PATH, r'iana-ipv4-space.shlv'),
-        'prefix'))
+    ipv4.attach(ShelveArchiver(IANA_IPV4_PATH, 'prefix'))
     ipv4.parse()
 
     ipv6 = IPv6Parser(open(_path.join(SRC_PATH, r'ipv6-address-space')))
     #DEBUG: ipv6.attach(FileWriter())
-    ipv6.attach(ShelveArchiver(_path.join(CACHE_PATH, r'iana-ipv6-space.shlv'),
-        'prefix'))
+    ipv6.attach(ShelveArchiver(IANA_IPV6_PATH, 'prefix'))
     ipv6.parse()
 
     mc = MulticastParser(open(_path.join(SRC_PATH, r'multicast-addresses')))
     #DEBUG: mc.attach(FileWriter())
-    mc.attach(ShelveArchiver(_path.join(CACHE_PATH, r'iana-ipv4-mcast.shlv'),
-        'address'))
+    mc.attach(ShelveArchiver(IANA_MULTICAST_PATH, 'address'))
     mc.parse()
 
     print 'cache update completed'
 
 #-----------------------------------------------------------------------------
-def read_caches():
-    """
-    Read from caches and update module variables with information retrieved.
-    """
-    global IPV4_ADDR_SPACE
-    global IPV6_ADDR_SPACE
-    global IPV4_MULTICAST
-    global OUI_REGISTRY
-
-    ipv4 = ShelveReader(_path.join(CACHE_PATH, r'iana-ipv4-space.shlv'))
-    ipv6 = ShelveReader(_path.join(CACHE_PATH, r'iana-ipv6-space.shlv'))
-    mcast = ShelveReader(_path.join(CACHE_PATH, r'iana-ipv4-mcast.shlv'))
-
-    #   Populate IPv4 lookup.
-    for prefix, data in ipv4.db.items():
-        cidr = CIDR(prefix)
-        IPV4_ADDR_SPACE[cidr] = data
-
-    #   Populate IPv6 lookup.
-    for prefix, data in ipv6.db.items():
-        cidr = CIDR(prefix)
-        IPV6_ADDR_SPACE[cidr] = data
-
-    #   Populate IPv4 multicast lookup.
-    for ip_lookup, data in mcast.db.items():
-        iprange = None
-        if '-' in ip_lookup:
-            (first, last) = ip_lookup.split('-')
-            iprange = IPRange(first, last)
-        else:
-            iprange = IPRange(ip_lookup, ip_lookup)
-        IPV4_MULTICAST[iprange] = data
-
-    #   Populate OUI lookup.
-    OUI_REGISTRY = ShelveReader(_path.join(CACHE_PATH, r'ieee-oui.shlv'))
-
-#-----------------------------------------------------------------------------
-def mac_info(mac_addr):
-    """
-    Returns informational data specific to this IP address.
-    """
-    info = {}
-
-    #TODO: Check object type of mac_addr.
-
-    #TODO: See if shelve object is available, default to parsing whole file
-    #TODO: if not.
-
-    #TODO: Multiple records.
-
-    info['OUI'] = OUI_REGISTRY[mac_addr.oui()]
-
-    #TODO include IAB data lookups.
-
-    return info
-
-#-----------------------------------------------------------------------------
-def ip_info(ip_addr):
-    """
-    Returns informational data specific to this IP address.
-    """
-    info = {}
-
-    if ip_addr.addr_type == AT_INET:
-        for cidr, record in IPV4_ADDR_SPACE.items():
-            if ip_addr in cidr:
-                info.setdefault('IPv4', [])
-                info['IPv4'].append(record)
-
-        if ip_addr.is_multicast():
-            for iprange, record in IPV4_MULTICAST.items():
-                if ip_addr in iprange:
-                    info.setdefault('Multicast', [])
-                    info['Multicast'].append(record)
-
-    elif ip_addr.addr_type == AT_INET6:
-        for cidr, record in IPV6_ADDR_SPACE.items():
-            if ip_addr in cidr:
-                info.setdefault('IPv6', [])
-                info['IPv6'].append(record)
-
-    return info
-
+#def read_caches():
+#    """
+#    Read from caches and update module variables with information retrieved.
+#    """
+#    #   Populate IPv4 lookup.
+#    ipv4 = ShelveReader(IANA_IPV4_PATH)
+#    for prefix, data in ipv4.db.items():
+#        cidr = CIDR(prefix)
+#        EXT_LOOKUP['IPv4'][cidr] = data
+#
+#    #   Populate IPv6 lookup.
+#    ipv6 = ShelveReader(IANA_IPV6_PATH)
+#    for prefix, data in ipv6.db.items():
+#        cidr = CIDR(prefix)
+#        EXT_LOOKUP['IPv6'][cidr] = data
+#
+#    #   Populate IPv4 multicast lookup.
+#    mcast = ShelveReader(IANA_MULTICAST_PATH)
+#    for ip_lookup, data in mcast.db.items():
+#        iprange = None
+#        if '-' in ip_lookup:
+#            (first, last) = ip_lookup.split('-')
+#            iprange = IPRange(first, last)
+#        else:
+#            iprange = IPRange(ip_lookup, ip_lookup)
+#        EXT_LOOKUP['multicast'][iprange] = data
+#
+#    #   Populate OUI lookup.
+#    EXT_LOOKUP['OUI'] = ShelveReader(IEEE_OUI_PATH)
+#
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
     #   Only create and/or update shelve data when this file is run not when
@@ -697,4 +640,4 @@ if __name__ == '__main__':
     update_caches()
 
 #   On module import, read shelve data and populate module level lookups.
-read_caches()
+#read_caches()

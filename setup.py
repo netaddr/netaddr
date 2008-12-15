@@ -1,65 +1,51 @@
 #!/usr/bin/env python
+"""
+An Python setup file for distutils (see setup_egg.py) for setuptools support.
 
-from distutils.core import setup
-import netaddr
+To install this release :-
 
-setup(
-    name            = 'netaddr',
-    version         = netaddr.__version__,
-    description     = 'Pythonic manipulation of IPv4, IPv6, CIDR, EUI and MAC network addresses',
-    download_url    = 'http://code.google.com/p/netaddr/downloads/list',
-    author          = 'David P. D. Moss',
-    author_email    = 'drkjam@gmail.com',
-    url             = 'http://code.google.com/p/netaddr/',
-    packages        = ['netaddr'],
-    license         = 'BSD License',
-    long_description = """a library providing Pythonic manipulation, validation and classification of
-common networking address notations, including :-
+>>> python setup.py install
 
-* IPv4
-* IPv6
-* CIDR (Classless Inter-Domain Routing)
-* IEEE EUI-48, EUI-64 and MAC (Media Access Control)
+"""
+import os
+import sys
 
-Each object represents an individual address or address range and behaves as you
-would expect when treated like standard Python types. For example :-
+try:
+  from setuptools import setup
+except ImportError:
+  from distutils.core import setup
 
-If you call list() on a CIDR object, it provides an iterator yielding IP
-addresses.
+if os.path.exists('MANIFEST'):
+    os.remove('MANIFEST')
 
-Calling len() returns the number of addresses found within the range.
+import release
 
-Indexing and/or slicing returns the addresses you'd expect. int() and hex()
-return the numerical value of an address in network byte order in the respective
-formats.""",
-    platforms = 'OS Independent',
-    classifiers = [
-        'Development Status :: 4 - Beta',
-        'Environment :: Console',
-        'Environment :: Plugins',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Education',
-        'Intended Audience :: Information Technology',
-        'Intended Audience :: Science/Research',
-        'Intended Audience :: System Administrators',
-        'Intended Audience :: Telecommunications Industry',
-        'License :: OSI Approved :: BSD License',
-        'Natural Language :: English',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Education :: Testing',
-        'Topic :: Home Automation',
-        'Topic :: Internet',
-        'Topic :: Internet :: Log Analysis',
-        'Topic :: Internet :: Name Service (DNS)',
-        'Topic :: Software Development',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: System :: Networking',
-        'Topic :: System :: Networking :: Firewalls',
-        'Topic :: System :: Networking :: Monitoring',
-        'Topic :: System :: Operating System',
-        'Topic :: System :: Shells',
-        'Topic :: System :: Systems Administration',
-        'Topic :: Utilities',
-    ],
-)
+#-----------------------------------------------------------------------------
+def main():
+    if sys.version_info[:2] < (2, 3):
+        print "netaddr requires Python version 2.3 or later."
+        sys.exit(1)
+
+    if sys.argv[-1] == 'setup.py':
+        print "To install, run 'python setup.py install'"
+        print
+
+    setup(
+        name             = release.name,
+        version          = release.version,
+        description      = release.description,
+        keywords         = release.keywords,
+        download_url     = release.download_url,
+        author           = release.author,
+        author_email     = release.author_email,
+        url              = release.url,
+        packages         = release.packages,
+        license          = release.license,
+        long_description = release.long_description,
+        platforms        = release.platforms,
+        classifiers      = release.classifiers,
+    )
+
+#-----------------------------------------------------------------------------
+if __name__ == "__main__":
+    main()
