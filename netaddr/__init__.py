@@ -9,8 +9,6 @@ network address manipulation, done Pythonically
 """
 __version__ = '0.6'
 
-import os as _os
-import os.path as _path
 import struct as _struct
 
 #-----------------------------------------------------------------------------
@@ -56,7 +54,8 @@ class AddrConversionError(Exception):
 #   Submodule imports.
 #-----------------------------------------------------------------------------
 
-from netaddr.address import nrange, IP, IPRange, CIDR, Wildcard, EUI
+from netaddr.address import nrange, IP, IPRange, IPRangeSet, CIDR, \
+    Wildcard, EUI
 
 from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 
@@ -64,9 +63,18 @@ from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 #   Public interface.
 #-----------------------------------------------------------------------------
 __all__ = [
-    'nrange',                                       # generic functionality
-    'AddrFormatError', 'AddrConversionError',       # custom exceptions
-    'IP', 'IPRange', 'CIDR', 'Wildcard', 'EUI',     # general purpose classes
-    'ST_IPV4', 'ST_IPV6', 'ST_EUI48', 'ST_EUI64',   # shared strategy objects
-    'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',   # type constants
+     # type constants
+    'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',
+
+    # module specific exceptions
+    'AddrFormatError', 'AddrConversionError',
+
+    # shared strategy objects
+    'ST_IPV4', 'ST_IPV6', 'ST_EUI48', 'ST_EUI64',
+
+    # main interface classes
+    'EUI', 'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'Wildcard',
+
+    #   functions
+    'nrange',
 ]

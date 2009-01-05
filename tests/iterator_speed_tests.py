@@ -96,15 +96,17 @@ IPy - IPv6
 FAILED! No output produced ...
     """
     t1 = time.time()
-    for ip in CIDR('::/112'):
+    #for ip in CIDR('::/112'):
+    for ip in CIDR('0.0.0.0/12'):
         i = int(ip)
         if i & (i - 1) == 0:
             delta = time.time() - t1
-            print "%-15s %s %.2f sec(s)" % (ip, ip.bits(), delta)
+#            print "%-15s %s %.2f sec(s)" % (ip, ip.bits(), delta)
+            print "%-15s %s %.2f sec(s)" % (ip, 'n/a', delta)
             t1 = time.time()
 
 if __name__ == '__main__':
-    import pycallgraph
-    pycallgraph.start_trace()
+#    import pycallgraph
+#    pycallgraph.start_trace()
     cidr_iterator_speed_test()
-    pycallgraph.make_dot_graph('callgraph_IPv6.png')
+#    pycallgraph.make_dot_graph('callgraph_IPv6.png')

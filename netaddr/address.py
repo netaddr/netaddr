@@ -816,7 +816,7 @@ class IP(Addr):
         @return: C{True} if this address is multicast, C{False} otherwise.
         """
         if self.addr_type == AT_INET:
-            if 0 <= self.value <= (2 ** 32 - 1):
+            if 0xe0000000 <= self.value <= 0xefffffff:
                 return True
         elif  self.addr_type == AT_INET6:
             if 0 <= self.value <= (2 ** 128 - 1):
@@ -1066,12 +1066,12 @@ class AddrRange(object):
         elif isinstance(index, slice):
             #   slices
             #FIXME: IPv6 breaks the .indices() method on the slice object
-            #   spectacularly. We'll have to work out the start, stop and
-            #   step ourselves :-(
+            #FIXME: spectacularly. We'll have to work out the start, stop and
+            #FIXME: step ourselves :-(
             #
-            #   see PySlice_GetIndicesEx function in Python SVN repository for
-            #   implementation details :-
-            #   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
+            #FIXME: see PySlice_GetIndicesEx function in Python SVN
+            #FIXME: repository for implementation details :-
+            #FIXME:   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
             (start, stop, step) = index.indices(self.size())
 
             start_addr = Addr(self.first + start, self.addr_type)
@@ -1303,11 +1303,11 @@ class IPRange(AddrRange):
         """
         @return: A valid L{IPRange} object for this address range.
         """
-        iprange = IPRange(self.strategy.int_to_str(self.first),
+        ip_range = IPRange(self.strategy.int_to_str(self.first),
                           self.strategy.int_to_str(self.last))
         if self.klass == str:
-            return str(iprange)
-        return cidr
+            return str(ip_range)
+        return ip_range
 
     def cidr(self):
         """
@@ -1401,19 +1401,30 @@ class IPRange(AddrRange):
         @return: True if other's boundary touches the boundary of this
             address range, False otherwise.
         """
-        if not isinstance(other, IPRange):
-            raise TypeError('Invalid type!')
+        if not hasattr(other, 'addr_type'):
+            raise TypeError('unsupport type: %r!')
 
         if self.addr_type != other.addr_type:
-            raise TypeError('Ranges must be the same address type!')
+            raise TypeError('addresses must be of the same type!')
 
-        #   Left hand side of this address range.
-        if self.first == (other.last + 1):
-            return True
+        if isinstance(other, IPRange):
+            #   Left hand side of this address range.
+            if self.first == (other.last + 1):
+                return True
 
-        #   Right hand side of this address range.
-        if self.last == (other.first - 1):
-            return True
+            #   Right hand side of this address range.
+            if self.last == (other.first - 1):
+                return True
+        elif isinstance(other, IP):
+            #   Left hand side of this address range.
+            if self.first == (other.value + 1):
+                return True
+
+            #   Right hand side of this address range.
+            if self.last == (other.value - 1):
+                return True
+        else:
+            raise TypeError('unexpected error for argument: %r!')
 
         return False
 
@@ -1621,21 +1632,25 @@ class CIDR(IPRange):
         #   Not a recognisable format.
         return None
 
-    def supernet(addrs):
+    def span(addrs, klass=None):
         """
         Accepts a sequence of IP addresses and/or CIDRs, Wildcards and
         IPRanges returning a single CIDR that is large enough to span the
         lowest and highest addresses in the sequence.
-        """
-        if not isinstance(addrs, (list, tuple)):
-            raise TypeError('argument must be a sequence type (list/tuple)!')
 
-        if not len(addrs) > 0:
-            raise TypeError('sequence must contain 1 or more elements!')
+        @addrs - a list or tuple of IP, CIDR, Wildcard or IPRange objects.
+
+        @return: a single CIDR object spanning all addresses.
+        """
+        if not hasattr(addrs, '__iter__'):
+            raise TypeError('expected address sequence is not iterable!')
+
+        if not len(addrs) > 1:
+            raise ValueError('sequence must contain 2 or more elements!')
 
         #   Detect type of string address or address range and create the
         #   equivalent instance.
-        for i, addr in enumerate(addrs):
+        for (i, addr) in enumerate(addrs):
             if isinstance(addr, (str, unicode)):
                 try:
                     obj = IP(addr)
@@ -1656,44 +1671,88 @@ class CIDR(IPRange):
                 except:
                     pass
 
-        addr_type = addrs[0].addr_type
-        strategy = AT_STRATEGIES[addr_type]
+        addrs.sort()
 
-        ip1 = IP(strategy.max_int, addr_type)
-        ip2 = IP(strategy.min_int, addr_type)
+        lowest = addrs[0]
+        highest = addrs[-1]
 
-        #   Discover the lowest and highest address range boundaries.
-        for addr in addrs:
-            if isinstance(addr, (CIDR, Wildcard)):
-                if addr.addr_type != addr_type:
-                    raise TypeError('Sequence cannot contain multiple ' \
-                        'address types!')
-                if addr.first < ip1.value:
-                    ip1.value = addr.first
-                if addr.last > ip2.value:
-                    ip2.value = addr.last
-            elif isinstance(addr, IP):
-                if addr.addr_type != addr_type:
-                    raise TypeError('Sequence cannot contain multiple ' \
-                        'address types!')
-                if addr.value < ip1.value:
-                    ip1.value = addr.value
-                if addr.value > ip2.value:
-                    ip2.value = addr.value
-            else:
-                raise TypeError('element %r is not a supported type!' % addr)
+        if isinstance(lowest, IPRange):
+            lowest = lowest[0]
 
-        #   Compute CIDR to span the extent of the list provided.
-        cidr = ip1.cidr()
+        if isinstance(highest, IPRange):
+            highest = highest[-1]
+
+        if lowest.addr_type != highest.addr_type:
+            raise TypeError('address types are not the same!')
+
+        cidr = highest.cidr()
+        cidr.klass=str
+
         while cidr.prefixlen > 0:
-            if ip2 in cidr:
+            if highest in cidr and lowest not in cidr:
+                cidr.prefixlen -= 1
+            else:
                 break
-            cidr.prefixlen -= 1
 
         return cidr
 
+    def summarize(addrs, klass=None):
+        """
+        Accepts a sequence of IP addresses and/or CIDRs returning a summarized
+        sequence of merged CIDRs where possible. This method doesn't create
+        any CIDR that are inclusive of any addresses other than those found
+        in the original sequence provided.
+
+        @addrs - a list or tuple of IP and/or CIDR objects.
+
+        @klass - format for return sequence. default: None - CIDR objects.
+            Valid options are str or unicode Python type objects.
+
+        @return: a possibly smaller list of CIDRs covering sequence passed in.
+        """
+        summarized_cidrs = []
+
+        if not hasattr(addrs, '__iter__'):
+            raise TypeError('expected address sequence is not iterable!')
+
+        new_cidr = None
+        for i, addr in enumerate(sorted(addrs)):
+            if isinstance(addr, CIDR):
+                cidr = addr
+            elif isinstance(addr, IP):
+                cidr = addr.cidr()
+            elif isinstance(addr, (str, unicode)):
+                try:
+                    cidr = IP(addr).cidr()
+                except AddrFormatError:
+                    raise ValueError('%r is not supported!' % addr)
+            else:
+                raise TypeError('unexpected type %r found in sequence!' % addr)
+
+            if new_cidr is None:
+                new_cidr = cidr
+            else:
+                if new_cidr.adjacent(cidr) and new_cidr.size() == cidr.size():
+                    new_cidr = new_cidr + cidr
+                else:
+                    if klass is not None:
+                        print new_cidr
+                        summarized_cidrs.append(klass(new_cidr))
+                    else:
+                        summarized_cidrs.append(new_cidr)
+                    new_cidr = cidr
+
+        if klass is not None:
+            print new_cidr
+            summarized_cidrs.append(klass(new_cidr))
+        else:
+            summarized_cidrs.append(new_cidr)
+
+        return summarized_cidrs
+
     abbrev_to_verbose = staticmethod(abbrev_to_verbose)
-    supernet = staticmethod(supernet)
+    span = staticmethod(span)
+    summarize = staticmethod(summarize)
 
     def __init__(self, cidr, klass=IP, strict_bitmask=True):
         """
@@ -1812,14 +1871,14 @@ class CIDR(IPRange):
 
     def __add__(self, other):
         """
-        Add another CIDR to this one returning a 'supernet' that will contain
-        both addresses.
+        Add another CIDR to this one returning a CIDR supernet that will
+        contain both in the smallest possible sized range.
 
         @param other: a CIDR object.
 
         @return: A new (potentially larger) CIDR object.
         """
-        cidr = CIDR.supernet([self, other])
+        cidr = CIDR.span([self, other])
         if self.klass is str:
             return str(cidr)
         return cidr
@@ -1838,6 +1897,55 @@ class CIDR(IPRange):
         """
         hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
         return self.data_flavour(hostmask)
+
+    def subnet(self, prefixlen, count=None, klass=None):
+        """
+        Return an iterator of CIDR subnets based on the current CIDR.
+
+        @param prefixlen: a CIDR prefix.
+
+        @param count: number of consecutive CIDRs to be returned.
+
+        @param klass: callable to use on returned values (str, unicode).
+            (default: None - this returns CIDR objects)
+
+        @return: A new (potentially larger) CIDR object.
+        """
+        if not 0 <= self.prefixlen <= self.strategy.width:
+            raise ValueError('prefixlen %d out of bounds for address type!' \
+                % prefixlen)
+
+        if not self.prefixlen < prefixlen:
+            raise ValueError('prefixlen should be greater than current CIDR!')
+
+        #   Calculate number of subnets to be returned.
+        width = self.strategy.width
+        max_count = 2 ** (width - self.prefixlen) / 2 ** (width - prefixlen)
+
+        if count is None:
+            count = max_count
+
+        if 1 < count < max_count:
+            raise ValueError('count not within current CIDR boundaries!')
+
+        base_address = self.strategy.int_to_str(self.first)
+
+        if klass is None:
+            #   Create new CIDR instances for each subnet.
+            for i in xrange(count):
+                cidr = CIDR('%s/%d' % (base_address, prefixlen))
+                cidr.first += cidr.size() * i
+                cidr.prefixlen = prefixlen
+                yield cidr
+        elif klass in (str, unicode):
+            #   Keep the same CIDR and just modify it.
+            cidr = CIDR('%s/%d' % (base_address, prefixlen))
+            for i in xrange(count):
+                cidr.first += cidr.size() * i
+                cidr.prefixlen = prefixlen
+                yield klass(cidr)
+        else:
+            raise TypeError('invalid klass type %r' % klass)
 
     def __str__(self):
         return "%s/%s" % (self.strategy.int_to_str(self.first), self.prefixlen)
@@ -2217,88 +2325,3 @@ def read_caches():
 
 #   On module import, read shelve data and populate module level lookups.
 read_caches()
-
-#-----------------------------------------------------------------------------
-def cidr_set():
-    c1 = IPRangeSet([
-        CIDR('192.168.0.0/28'),
-        CIDR('192.168.0.32/28'),
-    ])
-    c2 = IPRangeSet([
-        CIDR('192.168.0.0/28'),
-        CIDR('192.168.0.0/24'),
-        IP('192.168.0.5'),
-        CIDR('192.168.0.16/28'),
-        CIDR('192.168.0.32/28'),
-    ])
-
-    c3 = IPRangeSet([
-        '10.0.168.0-79',
-        '10.0.168.88-175',
-        '10.0.168.184-255',
-        '10.0.169.*',
-        '10.0.172.0-175',
-        '10.0.172.192-255',
-        '10.0.173.*',
-        '10.0.152.0-143',
-        '10.0.152.152-207',
-        '10.0.152.224-227',
-        '10.0.152.232-255',
-        '10.0.153.0-31',
-        '10.0.153.40-79',
-        '10.0.153.112-255',
-        '10.0.154.0-207',
-        '10.0.154.224-255',
-        '10.0.155.0-79',
-        '10.0.155.96-127',
-        '10.0.46.0-63',
-        '10.0.46.128-191',
-        '10.0.48.0-63',
-        '10.0.48.128-191',
-        '10.0.252.0-63',
-        '10.0.49.*',
-        '10.0.206.0-111',
-        '10.0.206.128-255',
-        '10.0.163.*',
-        '10.0.170.16-255',
-        '10.0.171.*',
-        '10.0.226.0-127',
-        '10.0.228.0-127',
-    ])
-
-    print c1.issubset(c2)
-    print c2.issuperset(c1)
-    print c1.intersection(c2)
-    print c1.union(c2)
-#    print "%r" % c2.any_match(IP('10.0.0.1'))
-#    print c2.all_matches(CIDR('10.0.0.5/32'))
-
-    for cidr in sorted(c3):
-        print "%r" % cidr
-
-    for i in c1:
-        print i
-
-#-----------------------------------------------------------------------------
-def add_sub_wildcard():
-    wc = Wildcard('192.168.0.15-250')
-    print wc
-    print wc - Wildcard('192.168.0.235-240')
-
-#-----------------------------------------------------------------------------
-def cidr_addition_and_supernet():
-    l = ['::', '::255.255.255.255']
-    print l
-    c = CIDR.supernet(l)
-    print c, c[0], c[-1], c.size()
-
-    print "%r" % (CIDR('192.168.0.0/24', klass=str) + CIDR('192.168.255.0/24'))
-
-#-----------------------------------------------------------------------------
-if __name__ == '__main__':
-    #cidr_set()
-    #add_sub_wildcard()
-    #cidr_addition_and_supernet()
-
-    #print Wildcard('192.168.0.32-63').overlaps(Wildcard('192.168.0.33-35'))
-    pass

@@ -287,12 +287,12 @@ class AddrStrategy(object):
 
     def valid_words(self, words):
         """
-        @param words: A list or tuple containing integer word values.
+        @param words: A sequence containing integer word values.
 
         @return: C{True} if word sequence is valid for this address type,
             C{False} otherwise.
         """
-        if not isinstance(words, (list, tuple)):
+        if not hasattr(words, '__iter__'):
             return False
 
         if len(words) != self.word_count:
@@ -712,36 +712,99 @@ class IPv6Strategy(AddrStrategy):
 
         tokens.reverse()
 
-        #   This can probably be optimised.
         if compact == True:
+            #   Ahhhh... this finally works properly and is way more efficient.
             new_tokens = []
-            compact_start = False
-            compact_end = False
-            for token in tokens:
-                if token == '0':
-                    if compact_start == False and compact_end == False:
-                        new_tokens += ['']
-                        compact_start = True
-                    elif compact_start == True and compact_end == False:
-                        pass
-                    else:
-                        new_tokens += ['0']
-                else:
-                    if compact_start == True:
-                        compact_end = True
-                    new_tokens += [token]
 
-            #   Post loop fixups.
-            if len(new_tokens) == 1 and new_tokens[0] == '':
-                new_tokens += ['', '']
-            elif new_tokens[-1] == '':
-                new_tokens += ['']
-            elif new_tokens[0] == '':
-                new_tokens.insert(0, '')
+            positions = []
+            within_run = False
+            start_index = None
+            num_tokens = 0
+
+            #   Discover all runs of zeros.
+            for idx, token in enumerate(tokens):
+                if token == '0':
+                    within_run = True
+                    if start_index is None:
+                        start_index = idx
+                    num_tokens += 1
+                else:
+                    if num_tokens != 0:
+                        positions.append((num_tokens, start_index))
+                    within_run = False
+                    start_index = None
+                    num_tokens = 0
+
+                new_tokens.append(token)
+
+            #   Store any position not saved before loop exit.
+            if num_tokens != 0:
+                positions.append((num_tokens, start_index))
+
+            #   Replace longest run with an empty string.
+            if len(positions) != 0:
+                (length, start_idx) = sorted(positions)[-1]
+                new_tokens = new_tokens[0:start_idx] + [''] + \
+                             new_tokens[start_idx+length:]
+
+                #   Add start and end blanks so join creates '::'.
+                if new_tokens[0] == '':
+                    new_tokens.insert(0, '')
+
+                if new_tokens[-1] == '':
+                    new_tokens.append('')
 
             tokens = new_tokens
 
         return ':'.join(tokens)
+
+    def bits_to_str(self, bits, compact=True, word_fmt=None):
+        """
+        @param bits: An IPv6 address in readable binary form.
+
+        @return: A network address in string form that is equivalent to value
+            represented by network address in readable binary form.
+        """
+        int_val = self.bits_to_int(bits)
+        return self.int_to_str(int_val, compact, word_fmt)
+
+    def str_to_bits(self, addr):
+        """
+        @param addr: A IPv6 address in string form.
+
+        @return: A IPv6 address in readable binary form that is equivalent
+            to value represented by network address in string form.
+        """
+        int_val = self.str_to_int(addr)
+        return self.int_to_bits(int_val)
+
+    def str_to_words(self, addr):
+        """
+        @param addr: A IPv6 address in string form.
+
+        @return: An integer word sequence that is equivalent in value to the
+            IPv6 address in string form.
+        """
+        if not self.valid_str(addr):
+            raise ValueError('%r is not a recognised string representation' \
+                ' of this address type!' % addr)
+
+        int_val = self.str_to_int(addr)
+        return self.int_to_words(int_val)
+
+    def words_to_str(self, words, compact=True, word_fmt=None):
+        """
+        @param words: A list or tuple containing an IPv6 address as integer
+            word values.
+
+        @return: An IPv6 address in string form that is equivalent to value
+            represented by word sequence.
+        """
+        if not self.valid_words(words):
+            raise ValueError('%r is not a valid word list!' % words)
+
+        int_val = self.words_to_int(words)
+        return self.int_to_str(int_val, compact, word_fmt)
 
     def int_to_arpa(self, int_val):
         """
@@ -761,15 +824,17 @@ class IPv6Strategy(AddrStrategy):
 class EUI48Strategy(AddrStrategy):
     """
     Implements the operations that can be performed on an IEEE 48-bit EUI
-    (Extended Unique Identifer). For all intents and purposes here, a MAC
+    (Extended Unique Identifer) a.k.a. a MAC (Media Access Control) layer 2
     address.
 
-    Supports most common MAC address formats including Cisco's string format.
+    Supports all common and uncommon MAC string formats including Cisco's
+    "triple hextet" format.
     """
-    def __init__(self):
+    def __init__(self, word_fmt='%02x', delimiter='-', to_upper=True):
         """Constructor."""
         super(self.__class__, self).__init__(addr_type=AT_LINK, width=48,
-              word_size=8, word_fmt='%02x', delimiter='-', to_upper=True)
+              word_size=8, word_fmt=word_fmt, delimiter=delimiter,
+              to_upper=to_upper)
 
     def valid_str(self, addr):
         """
@@ -814,8 +879,8 @@ class EUI48Strategy(AddrStrategy):
         """
         @param addr: An EUI-48 or MAC address in string form.
 
-        Returns an integer word sequence that is equivalent in value to MAC
-        address in string form.
+        @return: An integer word sequence that is equivalent in value to MAC
+            address in string form.
         """
         if not self.valid_str(addr):
             raise ValueError('%r is not a recognised string representation' \
@@ -843,19 +908,41 @@ class EUI48Strategy(AddrStrategy):
                 words.extend(octets)
             return tuple(words)
 
+    def bits_to_str(self, bits, delimiter=None, word_fmt=None, to_upper=True):
+        """
+        @param bits: An EUI-48 or MAC address in readable binary form.
+
+        @param delimiter: (optional) The delimiter string to be used between
+            words in string address.
+
+        @param word_fmt: (optional) A Python format string used to format
+            each word of address.
+
+        @param to_upper: (optional) If True, converts hex alphabetical
+            characters to uppercase, lowercase if False.
+
+        @return: An EUI-48 or MAC address in string form that is equivalent to
+            value represented by network address in readable binary form.
+        """
+        int_val = self.bits_to_int(bits)
+        return self.int_to_str(int_val, delimiter, word_fmt, to_upper)
+
     def int_to_str(self, int_val, delimiter=None, word_fmt=None,
                    to_upper=True):
         """
         @param int_val: A network byte order integer.
 
-        @param delimiter: (optional) A delimiter string override to be used
-            instead of the default between words in string value returned.
+        @param delimiter: (optional) The delimiter string to be used between
+            words in string address.
 
-        @param word_fmt: (optional) A Python format string override used to
-            format each word of address instead of the default.
+        @param word_fmt: (optional) A Python format string used to format
+            each word of address.
+
+        @param to_upper: (optional) If True, converts hex alphabetical
+            characters to uppercase, lowercase if False.
 
         @return: A MAC address in string form that is equivalent to value
-        represented by a network byte order integer.
+            represented by a network byte order integer.
         """
         the_delimiter = self.delimiter
         if delimiter is not None:
@@ -877,6 +964,26 @@ class EUI48Strategy(AddrStrategy):
             return addr.upper()
 
         return addr
+
+    def words_to_str(self, words, delimiter=None, word_fmt=None,
+                     to_upper=True):
+        """
+        @param words: A list or tuple containing integer word values.
+
+        @param delimiter: (optional) The delimiter string to be used between
+            words in string address.
+
+        @param word_fmt: (optional) A Python format string used to format
+            each word of address.
+
+        @param to_upper: (optional) If True, converts hex alphabetical
+            characters to uppercase, lowercase if False.
+
+        @return: A network address in string form that is equivalent to value
+            represented by word sequence.
+        """
+        int_val = self.words_to_int(words)
+        return self.int_to_str(int_val, delimiter, word_fmt, to_upper)
 
 #-----------------------------------------------------------------------------
 #   Shared strategy objects for supported address types.
