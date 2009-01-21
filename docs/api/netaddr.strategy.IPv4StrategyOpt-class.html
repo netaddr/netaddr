@@ -116,6 +116,26 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4StrategyOpt-class.html#valid_str" class="summary-sig-name">valid_str</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">addr</span>)</span><br />
+      Returns:
+      <code>True</code> if network address in string form is valid for this
+      address type, <code>False</code> otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyOpt.valid_str">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.IPv4StrategyOpt-class.html#str_to_int" class="summary-sig-name">str_to_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
       Returns:
@@ -157,7 +177,9 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.IPv4StrategyOpt-class.html#int_to_words" class="summary-sig-name">int_to_words</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>)</span><br />
+        <span class="summary-sig-arg">int_val</span>,
+        <span class="summary-sig-arg">num_words</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">word_size</span>=<span class="summary-sig-default">None</span>)</span><br />
       Returns:
       An integer word (octet) sequence that is equivalent to value 
       represented by network byte order integer.</td>
@@ -198,19 +220,13 @@
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a></code></b>:
       <code><a href="netaddr.strategy.AddrStrategy-class.html#__repr__">__repr__</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_int">bits_to_int</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_str">bits_to_str</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_words">bits_to_words</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#description">description</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#int_to_bin">int_to_bin</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#int_to_bits">int_to_bits</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#str_to_bits">str_to_bits</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#str_to_words">str_to_words</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#int_to_packed">int_to_packed</a></code>,
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#packed_to_int">packed_to_int</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_bits">valid_bits</a></code>,
       <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_int">valid_int</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_str">valid_str</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_words">valid_words</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#word_to_bits">word_to_bits</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#words_to_bits">words_to_bits</a></code>,
-      <code><a href="netaddr.strategy.AddrStrategy-class.html#words_to_str">words_to_str</a></code>
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#valid_words">valid_words</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -221,6 +237,22 @@
       <code>__reduce_ex__</code>,
       <code>__setattr__</code>,
       <code>__str__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Class Variables</span></td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a></code></b>:
+      <code><a href="netaddr.strategy.AddrStrategy-class.html#STRUCT_FORMATS">STRUCT_FORMATS</a></code>
       </p>
     </td>
   </tr>
@@ -267,8 +299,49 @@
   
   <p>Constructor.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>width</code></strong> - size of address in bits. (e.g. 32 - IPv4, 48 - MAC, 128 - IPv6)</li>
+        <li><strong class="pname"><code>word_size</code></strong> - size of each word. (e.g. 8 - octets, 16 - hextets)</li>
+        <li><strong class="pname"><code>word_sep</code></strong> - separator between each word. (e.g. '.' - IPv4, ':' - IPv6, '-' - 
+          EUI-48)</li>
+        <li><strong class="pname"><code>word_fmt</code></strong> - format string for each word. (Default: '%x')</li>
+        <li><strong class="pname"><code>addr_type</code></strong> - address type. (Default: AT_UNSPEC)</li>
+        <li><strong class="pname"><code>word_base</code></strong> - number base used to convert each word using int(). (Default: 16)</li>
+        <li><strong class="pname"><code>uppercase</code></strong> - uppercase address. (Default: False)</li>
+    </ul></dd>
     <dt>Overrides:
         object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="valid_str"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">valid_str</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">addr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyOpt.valid_str">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>addr</code></strong> - An IP address in presentation (string) format.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if network address in string form is valid for 
+          this address type, <code>False</code> otherwise.</dd>
+    <dt>Overrides:
+        <a href="netaddr.strategy.AddrStrategy-class.html#valid_str">AddrStrategy.valid_str</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -341,7 +414,9 @@
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_words</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">int_val</span>)</span>
+        <span class="sig-arg">int_val</span>,
+        <span class="sig-arg">num_words</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">word_size</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4StrategyOpt.int_to_words">source&nbsp;code</a></span>&nbsp;
@@ -353,6 +428,8 @@
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+        <li><strong class="pname"><code>num_words</code></strong> - (unused) *** interface compatibility only ***</li>
+        <li><strong class="pname"><code>word_size</code></strong> - (unused) *** interface compatibility only ***</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>An integer word (octet) sequence that is equivalent to value 
@@ -425,7 +502,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:24 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

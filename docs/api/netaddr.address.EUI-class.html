@@ -69,9 +69,9 @@ object --+
 </pre>
 
 <hr />
-<p>EUI objects represent IEEE Extended Unique Identifiers. Input parsing 
-  is flexible, supporting EUI-48, EUI-64 and all MAC (Media Access Control)
-  address flavours.</p>
+<p>Represents an IEEE EUI (Extended Unique Identifier) indentifier.</p>
+  <p>Input parser is flexible, supporting EUI-48 (including the many Media 
+  Access Control variants) and EUI-64.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -106,7 +106,8 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#oui" class="summary-sig-name">oui</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#oui" class="summary-sig-name">oui</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fmt</span>=<span class="summary-sig-default">&lt;class 'netaddr.eui.OUI'&gt;</span>)</span><br />
       Returns:
       The OUI (Organisationally Unique Identifier) for this EUI.</td>
           <td align="right" valign="top">
@@ -126,9 +127,47 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#ei" class="summary-sig-name">ei</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      The EI (Extension Identifier) for this EUI.</td>
+      The EI (Extension Identifier) for this EUI</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.ei">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#isiab" class="summary-sig-name">isiab</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      True if this EUI is an IAB address, False otherwise</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.isiab">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#iab" class="summary-sig-name">iab</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fmt</span>=<span class="summary-sig-default">&lt;class 'netaddr.eui.IAB'&gt;</span>)</span><br />
+      Returns:
+      If isiab() is True, the IAB (Individual Address Block) is returned, 
+      None otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.iab">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -162,11 +201,31 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#ipv6_link_local" class="summary-sig-name">ipv6_link_local</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      An IPv6 <a href="netaddr.address.IP-class.html" class="link">IP</a> 
-      object initialised using the value of this <a 
-      href="netaddr.address.EUI-class.html" class="link">EUI</a>.</td>
+      new link local IPv6 <a href="netaddr.address.IP-class.html" 
+      class="link">IP</a> object based on this <a 
+      href="netaddr.address.EUI-class.html" class="link">EUI</a> using 
+      technique described in RFC 4291.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.ipv6_link_local">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.EUI-class.html#info" class="summary-sig-name">info</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A record dict containing IEEE registration details for this EUI 
+      (MAC-48) if available, None otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#EUI.info">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -177,6 +236,8 @@ object --+
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.Addr-class.html">Addr</a></code></b>:
+      <code><a href="netaddr.address.Addr-class.html#__add__">__add__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__and__">__and__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__eq__">__eq__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__ge__">__ge__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__getitem__">__getitem__</a></code>,
@@ -185,17 +246,25 @@ object --+
       <code><a href="netaddr.address.Addr-class.html#__hex__">__hex__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__iadd__">__iadd__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__int__">__int__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__invert__">__invert__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__isub__">__isub__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__iter__">__iter__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__le__">__le__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__len__">__len__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__long__">__long__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__lshift__">__lshift__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__lt__">__lt__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__ne__">__ne__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__or__">__or__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__repr__">__repr__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__rshift__">__rshift__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__setitem__">__setitem__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__str__">__str__</a></code>,
-      <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>
+      <code><a href="netaddr.address.Addr-class.html#__sub__">__sub__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__xor__">__xor__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#bin">bin</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#packed">packed</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -220,8 +289,8 @@ object --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.address.EUI-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True),
- netaddr.address.AddrStrategy(64, 8, '-', 64, True, True))"><code class="variable-group">(</code>netaddr.address.EUI48Strategy(48, 8, '-', 48, Tr<code class="variable-ellipsis">...</code></code>
+        <a href="netaddr.address.EUI-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.EUI48Strategy(48, 8, '-', 48, 16, True),
+ netaddr.address.AddrStrategy(64, 8, '-', 64, 16, True))"><code class="variable-group">(</code>netaddr.address.EUI48Strategy(48, 8, '-', 48, 16<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -299,7 +368,8 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - an EUI/MAC address string or a network byte order integer.</li>
+        <li><strong class="pname"><code>addr</code></strong> - an EUI-48 (MAC) or EUI-64 address string or a network byte order 
+          integer.</li>
         <li><strong class="pname"><code>addr_type</code></strong> - (optional) the specific EUI address type (<code>AT_LINK</code> or
           <code>AT_EUI64</code>). If addr is an integer, this argument is 
           mandatory.</li>
@@ -317,7 +387,8 @@ object --+
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">oui</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">oui</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fmt</span>=<span class="sig-default">&lt;class 'netaddr.eui.OUI'&gt;</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.oui">source&nbsp;code</a></span>&nbsp;
@@ -326,6 +397,12 @@ object --+
   
   
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fmt</code></strong> - callable used on return values. Default: <a 
+          href="netaddr.eui.OUI-class.html" class="link">OUI</a> object. 
+          Also Supports str(), unicode(), int() and long().</li>
+    </ul></dd>
     <dt>Returns:</dt>
         <dd>The OUI (Organisationally Unique Identifier) for this EUI.</dd>
   </dl>
@@ -348,7 +425,57 @@ object --+
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>The EI (Extension Identifier) for this EUI.</dd>
+        <dd>The EI (Extension Identifier) for this EUI</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isiab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isiab</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.isiab">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>True if this EUI is an IAB address, False otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="iab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">iab</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fmt</span>=<span class="sig-default">&lt;class 'netaddr.eui.IAB'&gt;</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.iab">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fmt</code></strong> - callable used on return values. Default: <a 
+          href="netaddr.eui.IAB-class.html" class="link">IAB</a> object. 
+          Also Supports str(), unicode(), int() and long().</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>If isiab() is True, the IAB (Individual Address Block) is 
+          returned, None otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -400,14 +527,34 @@ object --+
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>An IPv6 <a href="netaddr.address.IP-class.html" 
-          class="link">IP</a> object initialised using the value of this <a
-          href="netaddr.address.EUI-class.html" class="link">EUI</a>.
-          <ul>
-            <li>
-              <b>See RFC 4921 for details</b>.
-            </li>
-          </ul></dd>
+        <dd>new link local IPv6 <a href="netaddr.address.IP-class.html" 
+          class="link">IP</a> object based on this <a 
+          href="netaddr.address.EUI-class.html" class="link">EUI</a> using 
+          technique described in RFC 4291. <b>Please Note:</b> this 
+          technique poses security risks in certain scenarios. Please read 
+          RFC 4941 for details. Reference: RFCs 4291 and 4941.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="info"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">info</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#EUI.info">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A record dict containing IEEE registration details for this EUI 
+          (MAC-48) if available, None otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -433,8 +580,8 @@ object --+
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">(</code>netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)<code class="variable-op">,</code>
- netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)<code class="variable-group">)</code>
+<code class="variable-group">(</code>netaddr.address.EUI48Strategy(48, 8, '-', 48, 16, True)<code class="variable-op">,</code>
+ netaddr.address.AddrStrategy(64, 8, '-', 64, 16, True)<code class="variable-group">)</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -472,7 +619,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:24 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

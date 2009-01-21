@@ -6,13 +6,19 @@
 #-----------------------------------------------------------------------------
 """
 Consolidated set of unit tests for the netaddr module.
+
+Uses TEST-NET references throughout, as described in RFC 3330.
+
+References :-
+- RFC3330 Special-Use IPv4 Addresses
 """
 from unittest import TestCase, TestLoader, TestSuite, TextTestRunner
 import os as _os
 import sys as _sys
+import platform as _platform
 
-path = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), '..'))
-_sys.path.insert(0, path)
+PATH = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), '..'))
+_sys.path.insert(0, PATH)
 
 from netaddr import *
 import netaddr.strategy
@@ -39,7 +45,7 @@ class LibraryConstantTests(TestCase):
 
 #-----------------------------------------------------------------------------
 class AddrStrategyTests(TestCase):
-    """Tests on AddrStrategy class objects with various configurations"""
+    """Tests on AddrStrategy() objects with various configurations"""
 
     def testInterfaceWithIPv4(self):
         """AddrStrategy() - interface tests (IPv4 specific)"""
@@ -47,37 +53,33 @@ class AddrStrategyTests(TestCase):
             width=32,
             word_size=8,
             word_fmt='%d',
-            delimiter='.',
-            hex_words=False)
+            word_sep='.',
+            word_base=10)
 
-        b = '11000000.10101000.00000000.00000001'
-        i = 3232235521
-        t = (192, 168, 0, 1)
-        s = '192.168.0.1'
+        b = '11000000.00000000.00000010.00000001'
+        i = 3221225985
+        t = (192, 0, 2, 1)
+        s = '192.0.2.1'
+        p = '\xc0\x00\x02\x01'
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-        self.assertEqual(strategy.bits_to_str(b), s)
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
         self.assertEqual(strategy.int_to_str(i), s)
         self.assertEqual(strategy.int_to_words(i), t)
+        self.assertEqual(strategy.int_to_packed(i), p)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
-
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
+
+        #   packed string to x
+        self.assertEqual(strategy.packed_to_int(p), i)
 
     def testInterfaceWithIPv6(self):
         """AddrStrategy() - interface tests (IPv6 specific)"""
@@ -90,7 +92,7 @@ class AddrStrategyTests(TestCase):
             width=128,
             word_size=16,
             word_fmt='%x',
-            delimiter=':')
+            word_sep=':')
 
         b = '0000000000000000:0000000000000000:0000000000000000:' \
             '0000000000000000:0000000000000000:0000000000000000:' \
@@ -98,11 +100,13 @@ class AddrStrategyTests(TestCase):
         i = 4294967294
         t = (0, 0, 0, 0, 0, 0, 0xffff, 0xfffe)
         s = '0:0:0:0:0:0:ffff:fffe'
+        p = '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xfe'
+
+        self.assertEqual(strategy.int_to_packed(i), p)
+
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-        self.assertEqual(strategy.bits_to_str(b), s)
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
@@ -110,18 +114,14 @@ class AddrStrategyTests(TestCase):
         self.assertEqual(strategy.int_to_words(i), t)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
-
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
+
+        #   packed string to x
+        self.assertEqual(strategy.packed_to_int(p), i)
 
     def testInterfaceWithBasicMAC(self):
         """AddrStrategy() - interface tests (Unix MAC address format)"""
@@ -129,36 +129,32 @@ class AddrStrategyTests(TestCase):
             width=48,
             word_size=8,
             word_fmt='%02x',
-            delimiter=':')
+            word_sep=':')
 
         b = '00000000:00001111:00011111:00010010:11100111:00110011'
         i = 64945841971
         t = (0x0, 0x0f, 0x1f, 0x12, 0xe7, 0x33)
         s = '00:0f:1f:12:e7:33'
+        p = '\x00\x0f\x1f\x12\xe7\x33'
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-        self.assertEqual(strategy.bits_to_str(b), s)
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
         self.assertEqual(strategy.int_to_str(i), s)
         self.assertEqual(strategy.int_to_words(i), t)
+        self.assertEqual(strategy.int_to_packed(i), p)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
-
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
+
+        #   packed string to x
+        self.assertEqual(strategy.packed_to_int(p), i)
 
     def testInterfaceWithCiscoMAC(self):
         """AddrStrategy() - interface tests (Cisco address format)"""
@@ -166,73 +162,66 @@ class AddrStrategyTests(TestCase):
             width=48,
             word_size=16,
             word_fmt='%04x',
-            delimiter='.')
+            word_sep='.')
 
         b = '0000000000001111.0001111100010010.1110011100110011'
         i = 64945841971
         t = (0xf, 0x1f12, 0xe733)
         s = '000f.1f12.e733'
+        p = '\x00\x0f\x1f\x12\xe7\x33'
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-        self.assertEqual(strategy.bits_to_str(b), s)
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
         self.assertEqual(strategy.int_to_str(i), s)
         self.assertEqual(strategy.int_to_words(i), t)
+        self.assertEqual(strategy.int_to_packed(i), p)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
-
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
+
+        #   packed string to x
+        self.assertEqual(strategy.packed_to_int(p), i)
 
 #-----------------------------------------------------------------------------
 class IPv4StrategyTests(TestCase):
-    """Tests on IPv4Strategy class and subclass objects"""
+    """Tests on IPv4Strategy() class and subclass objects"""
 
     def testInterfaceStandard(self):
         """IPv4StrategyStd() - interface tests (non-optimised)"""
         strategy = netaddr.strategy.IPv4StrategyStd()
 
-        b = '11000000.10101000.00000000.00000001'
-        i = 3232235521
-        t = (192, 168, 0, 1)
-        s = '192.168.0.1'
+        b = '11000000.00000000.00000010.00000001'
+        i = 3221225985
+        t = (192, 0, 2, 1)
+        s = '192.0.2.1'
+        p = '\xc0\x00\x02\x01'
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-        self.assertEqual(strategy.bits_to_str(b), s)
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
         self.assertEqual(strategy.int_to_str(i), s)
         self.assertEqual(strategy.int_to_words(i), t)
+        self.assertEqual(strategy.int_to_packed(i), p)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
 
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
+
+        #   packed string to x
+        self.assertEqual(strategy.packed_to_int(p), i)
 
     def testInterfaceOptimised(self):
         """IPv4StrategyOpt() - interface tests (optimised)"""
@@ -242,34 +231,30 @@ class IPv4StrategyTests(TestCase):
 
         strategy = netaddr.strategy.IPv4StrategyOpt()
 
-        b = '11000000.10101000.00000000.00000001'
-        i = 3232235521
-        t = (192, 168, 0, 1)
-        s = '192.168.0.1'
+        b = '11000000.00000000.00000010.00000001'
+        i = 3221225985
+        t = (192, 0, 2, 1)
+        s = '192.0.2.1'
+        p = '\xc0\x00\x02\x01'
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-        self.assertEqual(strategy.bits_to_str(b), s)
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
         self.assertEqual(strategy.int_to_str(i), s)
         self.assertEqual(strategy.int_to_words(i), t)
+        self.assertEqual(strategy.int_to_packed(i), p)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
-
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
+
+        #   packed string to x
+        self.assertEqual(strategy.packed_to_int(p), i)
 
 #-----------------------------------------------------------------------------
 class IPv6StrategyTests(TestCase):
@@ -285,32 +270,26 @@ class IPv6StrategyTests(TestCase):
         i = 42540766411282592856903984951992014763
         t = (8193, 3512, 0, 0, 0, 0, 5160, 22443)
         s = '2001:db8::1428:57ab'
+        p = '\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x14\x28\x57\xab'
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-
-        self.assertEqual(strategy.bits_to_str(b), s)
-
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
         self.assertEqual(strategy.int_to_str(i), s)
         self.assertEqual(strategy.int_to_words(i), t)
+        self.assertEqual(strategy.int_to_packed(i), p)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
-
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
+
+        #   packed string to x
+        self.assertEqual(strategy.packed_to_int(p), i)
 
         #   IPv6 address variants that are all equivalent.
         ipv6_addr_equals = (
@@ -346,10 +325,10 @@ class IPv6StrategyTests(TestCase):
             '::',                       #   the unspecified addresses
 
             #   IPv4 compatible forms.
-            '::192.168.0.1',
-            '::ffff:192.168.0.1',
-            '0:0:0:0:0:0:192.168.0.1',
-            '0:0:0:0:0:FFFF:192.168.0.1',
+            '::192.0.2.1',
+            '::ffff:192.0.2.1',
+            '0:0:0:0:0:0:192.0.2.1',
+            '0:0:0:0:0:FFFF:192.0.2.1',
             '0:0:0:0:0:0:13.1.68.3',
             '0:0:0:0:0:FFFF:129.144.52.38',
             '::13.1.68.3',
@@ -378,7 +357,7 @@ class IPv6StrategyTests(TestCase):
             True,
             False,
             #   Almost but not quite valid.
-#FIXME:            '::fffe:192.168.0.1',
+#FIXME:            '::fffe:192.0.2.1',
         )
 
         strategy = netaddr.strategy.IPv6Strategy()
@@ -445,8 +424,6 @@ class EUI48StrategyTests(TestCase):
 
         #   bits to x
         self.assertEqual(strategy.bits_to_int(b), i)
-        self.assertEqual(strategy.bits_to_str(b), s)
-        self.assertEqual(strategy.bits_to_words(b), t)
 
         #   int to x
         self.assertEqual(strategy.int_to_bits(i), b)
@@ -454,31 +431,24 @@ class EUI48StrategyTests(TestCase):
         self.assertEqual(strategy.int_to_words(i), t)
 
         #   str to x
-        self.assertEqual(strategy.str_to_bits(s), b)
         self.assertEqual(strategy.str_to_int(s), i)
-        self.assertEqual(strategy.str_to_words(s), t)
 
         #   words to x
-        self.assertEqual(strategy.words_to_bits(t), b)
         self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_str(t), s)
-
-        self.assertEqual(strategy.words_to_bits(list(t)), b)
         self.assertEqual(strategy.words_to_int(list(t)), i)
-        self.assertEqual(strategy.words_to_str(list(t)), s)
 
     def testStrategyConfigSettings(self):
         """EUI48Strategy() - interface configuration tests"""
         eui48 = '00-C0-29-C2-52-FF'
         eui48_int = 825334321919
 
-        unix_mac = netaddr.strategy.EUI48Strategy(delimiter=':',
-            word_fmt='%x', to_upper=False)
+        unix_mac = netaddr.strategy.EUI48Strategy(word_sep=':', word_fmt='%x')
 
-        self.assertEqual(unix_mac.int_to_str(eui48_int), '0:c0:29:c2:52:ff')
-        unix_mac.delimiter = '-'
-        self.assertEqual(unix_mac.int_to_str(eui48_int), '0-c0-29-c2-52-ff')
-        unix_mac.to_upper = True
+        self.assertEqual(
+            unix_mac.int_to_str(eui48_int).lower(), '0:c0:29:c2:52:ff')
+        unix_mac.word_sep = '-'
+        self.assertEqual(
+            unix_mac.int_to_str(eui48_int).lower(), '0-c0-29-c2-52-ff')
         unix_mac.word_fmt = '%02x'
         self.assertEqual(unix_mac.int_to_str(eui48_int), '00-C0-29-C2-52-FF')
 
@@ -507,53 +477,46 @@ class PublicStrategyObjectTests(TestCase):
         """ST_* objects interface check - properties"""
         expected_properties = (
             'addr_type',
-            'delimiter',
-            'hex_words',
             'max_int',
             'max_word',
-            'min_int',
-            'min_word',
             'name',
-            'to_upper',
+            'num_words',
+            'uppercase',
             'width',
             'word_base',
-            'word_count',
             'word_fmt',
+            'word_sep',
             'word_size',
         )
 
         for strategy in self.strategies:
             for attribute in expected_properties:
-                self.assertTrue(hasattr(strategy, attribute))
+                self.assertTrue(hasattr(strategy, attribute),
+                    '%r missing' % attribute)
                 self.assertFalse(callable(eval('strategy.%s' % attribute)))
-
 
     def testMethods(self):
         """ST_* objects interface check - methods"""
         expected_methods = (
             'bits_to_int',
-            'bits_to_str',
-            'bits_to_words',
-            'description',
+            #   'int_to_arpa',  #ST_IP* only.
+            'int_to_bin',
             'int_to_bits',
+            'int_to_packed',
             'int_to_str',
             'int_to_words',
-            'str_to_bits',
+            'packed_to_int',
             'str_to_int',
-            'str_to_words',
             'valid_bits',
             'valid_int',
             'valid_str',
             'valid_words',
-            'word_to_bits',
-            'words_to_bits',
             'words_to_int',
-            'words_to_str',
         )
 
         for strategy in self.strategies:
             for attribute in expected_methods:
-                self.assertTrue(hasattr(strategy, attribute))
+                self.assertTrue(hasattr(strategy, attribute), '%r' % attribute)
                 self.assertTrue(callable(eval('strategy.%s' % attribute)))
 
     def testIPInteface(self):
@@ -567,7 +530,7 @@ class AddrTests(TestCase):
 
     def testExceptionRaising(self):
         """Addr() - invalid constructor argument tests"""
-        for addr in ([], {}, '', None, 5.2, -1, 'abc.def.ghi.jkl', '::z'):
+        for addr in ([], {}, None, 5.2, -1, 'abc.def.ghi.jkl', '::z'):
             self.assertRaises(AddrFormatError, netaddr.address.Addr, addr)
 
     def testAssignments(self):
@@ -593,8 +556,8 @@ class AddrTests(TestCase):
 
         #   Test value assignment.
         addr.addr_type = AT_INET
-        addr.value = '192.168.0.1'
-        self.assertEqual(addr.value, 3232235521)
+        addr.value = '192.0.2.1'
+        self.assertEqual(addr.value, 3221225985)
         self.assertEqual(addr.addr_type, AT_INET)
         self.assertEqual(addr.strategy, ST_IPV4)
 
@@ -605,11 +568,11 @@ class AddrTests(TestCase):
     def testRepresentationsIPv4(self):
         """Addr() - address representation tests (IPv4)"""
         width = 32
-        addr = netaddr.address.Addr('192.168.0.1')
-        octets = (192, 168, 0, 1)
-        int_val = 3232235521
-        hex_val = '0xc0a80001'
-        bin_val = '11000000.10101000.00000000.00000001'
+        addr = netaddr.address.Addr('192.0.2.1')
+        octets = (192, 0, 2, 1)
+        int_val = 3221225985
+        hex_val = '0xc0000201'
+        bit_repr = '11000000.00000000.00000010.00000001'
 
         self.assertEqual(len(addr), width)
         self.assertEqual(addr[0], octets[0])
@@ -617,7 +580,7 @@ class AddrTests(TestCase):
         self.assertEqual(int(addr), int_val)
         self.assertEqual(long(addr), int_val)
         self.assertEqual(hex(addr), hex_val)
-        self.assertEqual(addr.bits(), bin_val)
+        self.assertEqual(addr.bits(), bit_repr)
 
     def testBoundariesIPv4(self):
         """Addr() - boundary tests (IPv4)"""
@@ -626,16 +589,16 @@ class AddrTests(TestCase):
         min_val_int = 0
         max_val_int = 4294967295
         max_val_hex = '0xffffffff'
-        min_val_bin = '.'.join(['0'*8 for i in range(4)])
-        max_val_bin = '.'.join(['1'*8 for i in range(4)])
+        min_bit_repr = '.'.join(['0'*8 for i in range(4)])
+        max_bit_repr = '.'.join(['1'*8 for i in range(4)])
         min_val_octets = (0, 0, 0, 0)
         max_val_octets = (255, 255, 255, 255)
 
         self.assertEqual(int(addr_min), min_val_int)
         self.assertEqual(int(addr_max), max_val_int)
         self.assertEqual(hex(addr_max), max_val_hex)
-        self.assertEqual(addr_min.bits(), min_val_bin)
-        self.assertEqual(addr_max.bits(), max_val_bin)
+        self.assertEqual(addr_min.bits(), min_bit_repr)
+        self.assertEqual(addr_max.bits(), max_bit_repr)
 
         #   Addr indexing tests - addr[x].
         self.assertEqual(tuple(addr_min), min_val_octets)
@@ -645,18 +608,18 @@ class AddrTests(TestCase):
 
     def testIterationIPv4(self):
         """Addr() - iteration tests (IPv4)"""
-        addr = netaddr.address.Addr('192.168.0.1')
-        hex_bytes = ['0xc0', '0xa8', '0x0', '0x1']
+        addr = netaddr.address.Addr('192.0.2.1')
+        hex_bytes = ['0xc0', '0x0', '0x2', '0x1']
         self.assertEqual([hex(i) for i in addr], hex_bytes)
 
     def testIndexingAndSlicingIPv4(self):
         """Addr() - indexing and slicing tests (IPv4)"""
-        addr = netaddr.address.Addr('192.168.0.1')
+        addr = netaddr.address.Addr('192.0.2.1')
 
         # using __getitem__()
         self.assertEqual(addr[0], 192)
-        self.assertEqual(addr[1], 168)
-        self.assertEqual(addr[2], 0)
+        self.assertEqual(addr[1], 0)
+        self.assertEqual(addr[2], 2)
         self.assertEqual(addr[3], 1)
 
         addr[3] = 2                     # using __setitem__()
@@ -664,9 +627,9 @@ class AddrTests(TestCase):
         self.assertEqual(addr[-4], 192) # negative index
 
         #   Slicing, oh yeah!
-        self.assertEqual(addr[0:2], [192, 168])          # basic slice
-        self.assertEqual(addr[0:4:2], [192, 0])          # slice with step
-        self.assertEqual(addr[-1::-1], [2, 0, 168, 192]) # negative index
+        self.assertEqual(addr[0:2], [192, 0])          # basic slice
+        self.assertEqual(addr[0:4:2], [192, 2])          # slice with step
+        self.assertEqual(addr[-1::-1], [2, 2, 0, 192]) # negative index
 
     def testBooleanAlgebraIPv4(self):
         """Addr() - boolean operator tests (IPv4)"""
@@ -688,8 +651,8 @@ class AddrTests(TestCase):
         addr += 1
         self.assertEqual(int(addr), 1)
         #   Increment it all the way up to the value of a 'real' address.
-        addr += 3232235520
-        self.assertEqual(str(addr), str(netaddr.address.Addr('192.168.0.1')))
+        addr += 3221225984
+        self.assertEqual(str(addr), str(netaddr.address.Addr('192.0.2.1')))
 
         #   Roll around boundaries.
         addr = netaddr.address.Addr('255.255.255.255')
@@ -710,6 +673,7 @@ class AddrTests(TestCase):
 
     def testIPv6AddressCompression(self):
         """Addr() - test IPv6 '::' compression algorithm"""
+        #   Checked against socket.inet_ntop() on Linux (not available on Windows)
         self.assertEqual(str(netaddr.address.Addr('0:0:0:0:0:0:0:0')), '::')
         self.assertEqual(str(netaddr.address.Addr('0:0:0:0:0:0:0:A')), '::a')
         self.assertEqual(str(netaddr.address.Addr('A:0:0:0:0:0:0:0')), 'a::')
@@ -717,21 +681,15 @@ class AddrTests(TestCase):
         self.assertEqual(str(netaddr.address.Addr('A:0:0:0:0:0:0:A')), 'a::a')
         self.assertEqual(str(netaddr.address.Addr('0:A:0:0:0:0:0:A')), '0:a::a')
         self.assertEqual(str(netaddr.address.Addr('A:0:A:0:0:0:0:A')), 'a:0:a::a')
-        self.assertEqual(str(netaddr.address.Addr('0:0:0:A:0:0:0:A')), '0:0:0:a::a')
+        self.assertEqual(str(netaddr.address.Addr('0:0:0:A:0:0:0:A')), '::a:0:0:0:a')
         self.assertEqual(str(netaddr.address.Addr('0:0:0:0:A:0:0:A')), '::a:0:0:a')
         self.assertEqual(str(netaddr.address.Addr('A:0:0:0:0:A:0:A')), 'a::a:0:a')
-        self.assertEqual(str(netaddr.address.Addr('A:0:0:A:0:0:A:0')), 'a:0:0:a::a:0')
-        self.assertEqual(str(netaddr.address.Addr('A:0:A:0:A:0:A:0')), 'a:0:a:0:a:0:a::')
-        self.assertEqual(str(netaddr.address.Addr('0:A:0:A:0:A:0:A')), '0:a:0:a:0:a::a')
-        self.assertEqual(str(netaddr.address.Addr('0:0:0:0:0:0:0:1')), '::1')
-        self.assertEqual(str(netaddr.address.Addr('1:0:0:0:0:0:0:1')), '1::1')
-        self.assertEqual(str(netaddr.address.Addr('0:1:0:0:0:0:0:1')), '0:1::1')
-        self.assertEqual(str(netaddr.address.Addr('1:0:1:0:0:0:0:1')), '1:0:1::1')
-        self.assertEqual(str(netaddr.address.Addr('0:0:0:1:0:0:0:1')), '0:0:0:1::1')
-        self.assertEqual(str(netaddr.address.Addr('0:0:0:0:1:0:0:1')), '::1:0:0:1')
-        self.assertEqual(str(netaddr.address.Addr('1:0:0:0:0:1:0:1')), '1::1:0:1')
+        self.assertEqual(str(netaddr.address.Addr('A:0:0:A:0:0:A:0')), 'a::a:0:0:a:0')
+        self.assertEqual(str(netaddr.address.Addr('A:0:A:0:A:0:A:0')), 'a:0:a:0:a:0:a:0')
+        self.assertEqual(str(netaddr.address.Addr('0:A:0:A:0:A:0:A')), '0:a:0:a:0:a:0:a')
         self.assertEqual(str(netaddr.address.Addr('1080:0:0:0:8:800:200C:417A')), '1080::8:800:200c:417a')
         self.assertEqual(str(netaddr.address.Addr('FEDC:BA98:7654:3210:FEDC:BA98:7654:3210')), 'fedc:ba98:7654:3210:fedc:ba98:7654:3210')
+
 
     def testValidityIPv6(self):
         """Addr() - basic validity tests (IPv6)"""
@@ -756,9 +714,9 @@ class AddrTests(TestCase):
         int_val = 281473913978881
         hex_val = '0xffffc0a80001'
         words = (0, 0, 0, 0, 0, 65535, 49320, 1)
-        bin_val = '0000000000000000:0000000000000000:0000000000000000:' \
-                  '0000000000000000:0000000000000000:1111111111111111:' \
-                  '1100000010101000:0000000000000001'
+        bit_repr = '0000000000000000:0000000000000000:0000000000000000:' \
+                   '0000000000000000:0000000000000000:1111111111111111:' \
+                   '1100000010101000:0000000000000001'
 
         self.assertEqual(len(addr), width)
         self.assertEqual(addr[0], words[0])
@@ -766,7 +724,7 @@ class AddrTests(TestCase):
         self.assertEqual(int(addr), int_val)
         self.assertEqual(long(addr), int_val)
         self.assertEqual(hex(addr), hex_val)
-        self.assertEqual(addr.bits(), bin_val)
+        self.assertEqual(addr.bits(), bit_repr)
 
     def testBoundariesIPv6(self):
         """Addr() - boundary tests (IPv6)"""
@@ -775,16 +733,16 @@ class AddrTests(TestCase):
         min_val_int = 0
         max_val_int = 340282366920938463463374607431768211455
         max_val_hex = '0xffffffffffffffffffffffffffffffff'
-        min_val_bin = ':'.join(['0'*16 for i in range(8)])
-        max_val_bin = ':'.join(['1'*16 for i in range(8)])
+        min_bit_repr = ':'.join(['0'*16 for i in range(8)])
+        max_bit_repr = ':'.join(['1'*16 for i in range(8)])
         min_val_words = (0, 0, 0, 0, 0, 0, 0, 0)
         max_val_words = (65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535)
 
         self.assertEqual(int(addr_min), min_val_int)
         self.assertEqual(int(addr_max), max_val_int)
         self.assertEqual(hex(addr_max), max_val_hex)
-        self.assertEqual(addr_min.bits(), min_val_bin)
-        self.assertEqual(addr_max.bits(), max_val_bin)
+        self.assertEqual(addr_min.bits(), min_bit_repr)
+        self.assertEqual(addr_max.bits(), max_bit_repr)
         #   Addr indexing tests - addr[x].
         self.assertEqual(tuple(addr_min), min_val_words)
         self.assertEqual(tuple(addr_max), max_val_words)
@@ -841,13 +799,13 @@ class AddrTests(TestCase):
         addr = netaddr.address.Addr('00-14-C2-C7-DA-D5')
         int_val = 89167223509
         hex_val = '0x14c2c7dad5'
-        bin_val = '00000000-00010100-11000010-11000111-11011010-11010101'
+        bit_repr = '00000000-00010100-11000010-11000111-11011010-11010101'
 
         self.assertEqual(len(addr), width)
         self.assertEqual(int(addr), int_val)
         self.assertEqual(long(addr), int_val)
         self.assertEqual(hex(addr), hex_val)
-        self.assertEqual(addr.bits(), bin_val)
+        self.assertEqual(addr.bits(), bit_repr)
 
     def testBoundariesEUI(self):
         """Addr() - boundary tests (EUI)"""
@@ -856,53 +814,18 @@ class AddrTests(TestCase):
         min_val_int = 0
         max_val_int = 281474976710655
         max_val_hex = '0xffffffffffff'
-        min_val_bin = '-'.join(['0'*8 for i in range(6)])
-        max_val_bin = '-'.join(['1'*8 for i in range(6)])
+        min_bit_repr = '-'.join(['0'*8 for i in range(6)])
+        max_bit_repr = '-'.join(['1'*8 for i in range(6)])
 
         self.assertEqual(int(addr_min), min_val_int)
         self.assertEqual(int(addr_max), max_val_int)
         self.assertEqual(hex(addr_max), max_val_hex)
-        self.assertEqual(addr_min.bits(), min_val_bin)
-        self.assertEqual(addr_max.bits(), max_val_bin)
-
-#-----------------------------------------------------------------------------
-class AddrRangeTests(TestCase):
-    """Tests on EUI() class objects"""
-
-    def testSortability(self):
-        """AddrRange() - sortability tests"""
-        #   Address ranges now sort as expected based on magnitude.
-        ranges = (
-            netaddr.address.AddrRange(
-                netaddr.address.Addr('0-0-0-0-0-0-0-0'),
-                netaddr.address.Addr('0-0-0-0-0-0-0-0')),
-            netaddr.address.AddrRange(
-                netaddr.address.Addr('::'),
-                netaddr.address.Addr('::')),
-            netaddr.address.AddrRange(
-                netaddr.address.Addr('0-0-0-0-0-0'),
-                netaddr.address.Addr('0-0-0-0-0-0')),
-            netaddr.address.AddrRange(
-                netaddr.address.Addr('0.0.0.0'),
-                netaddr.address.Addr('255.255.255.255')),
-            netaddr.address.AddrRange(
-                netaddr.address.Addr('0.0.0.0'),
-                netaddr.address.Addr('0.0.0.0')),
-        )
-
-        expected = [
-            '0.0.0.0;0.0.0.0',
-            '0.0.0.0;255.255.255.255',
-            '::;::',
-            '00-00-00-00-00-00;00-00-00-00-00-00',
-            '00-00-00-00-00-00-00-00;00-00-00-00-00-00-00-00',
-        ]
-
-        self.assertEqual([str(r) for r in sorted(ranges)], expected)
+        self.assertEqual(addr_min.bits(), min_bit_repr)
+        self.assertEqual(addr_max.bits(), max_bit_repr)
 
 #-----------------------------------------------------------------------------
 class EUITests(TestCase):
-    """Tests on EUI() class objects"""
+    """Tests on EUI() objects"""
 
     def testProperties(self):
         """EUI() - class interface check (properties)"""
@@ -925,8 +848,10 @@ class EUITests(TestCase):
             'bits',
             'ei',
             'eui64',
+            'iab',
             'info',
             'ipv6_link_local',
+            'isiab',
             'oui',
         )
 
@@ -938,7 +863,7 @@ class EUITests(TestCase):
         """EUI() basic tests (MAC, EUI-48)"""
         mac = EUI('00:C0:29:C2:52:FF')
         self.assertEqual(str(mac), '00-C0-29-C2-52-FF')
-        self.assertEqual(mac.oui(), '00-C0-29')
+        self.assertEqual(mac.oui(str), '00-C0-29')
         self.assertEqual(mac.ei(), 'C2-52-FF')
         self.assertEqual(mac.eui64(), EUI('00-C0-29-FF-FE-C2-52-FF'))
 
@@ -946,7 +871,7 @@ class EUITests(TestCase):
         """EUI() basic tests (EUI-64)"""
         eui64 = EUI('00-C0-29-FF-FE-C2-52-FF')
         self.assertEqual(str(eui64), '00-C0-29-FF-FE-C2-52-FF')
-        self.assertEqual(eui64.oui(), '00-C0-29')
+        self.assertEqual(eui64.oui(str), '00-C0-29')
         self.assertEqual(eui64.ei(), 'FF-FE-C2-52-FF')
         self.assertEqual(eui64.eui64(), EUI('00-C0-29-FF-FE-C2-52-FF'))
 
@@ -964,6 +889,112 @@ class EUITests(TestCase):
         self.assertEqual(str(ip2), expected)
         self.assertEqual(ip2, IP(expected))
 
+    def testOUIFormatting(self):
+        """EUI() OUI format tests"""
+        mac = EUI('aa:bb:cc:dd:ee:ff')
+        self.assertFalse(mac.isiab())
+        self.assertEqual(mac.oui(str), 'AA-BB-CC')
+        self.assertEqual(mac.iab(str), None)
+        self.assertEqual(mac.ei(), 'DD-EE-FF')
+        self.assertEqual(mac.oui(int), 0xaabbcc)
+        self.assertEqual(mac.iab(int), None)
+
+    def testIAB(self):
+        """EUI() IAB tests"""
+        lower_eui = EUI('00-50-C2-05-C0-00')
+        upper_eui = EUI('00-50-C2-05-CF-FF')
+
+        self.assertTrue(lower_eui.isiab())
+        self.assertEqual(lower_eui.oui(str), '00-50-C2')
+        self.assertEqual(lower_eui.iab(str), '00-50-C2-05-C0-00')
+        self.assertEqual(lower_eui.ei(), '05-C0-00')
+        self.assertEqual(lower_eui.oui(int), 0x0050c2)
+        self.assertEqual(lower_eui.iab(int), 0x0050c205c)
+
+        self.assertTrue(upper_eui.isiab())
+        self.assertEqual(upper_eui.oui(str), '00-50-C2')
+        self.assertEqual(upper_eui.iab(str), '00-50-C2-05-C0-00')
+        self.assertEqual(upper_eui.ei(), '05-CF-FF')
+        self.assertEqual(upper_eui.oui(int), 0x0050c2)
+        self.assertEqual(upper_eui.iab(int), 0x0050c205c)
+
+    def testMultipleMACFormats(self):
+        """EUI() multi-format MAC constructor tests"""
+        eui = EUI('00-90-96-AF-CC-39')
+        self.assertEqual(eui, EUI('0-90-96-AF-CC-39'))
+        self.assertEqual(eui, EUI('00-90-96-af-cc-39'))
+        self.assertEqual(eui, EUI('00:90:96:AF:CC:39'))
+        self.assertEqual(eui, EUI('00:90:96:af:cc:39'))
+        self.assertEqual(eui, EUI('0090-96AF-CC39'))
+        self.assertEqual(eui, EUI('0090:96af:cc39'))
+        self.assertEqual(eui, EUI('009096-AFCC39'))
+        self.assertEqual(eui, EUI('009096:AFCC39'))
+        self.assertEqual(eui, EUI('009096AFCC39'))
+        self.assertEqual(eui, EUI('009096afcc39'))
+
+        self.assertEqual(EUI('01-00-00-00-00-00'), EUI('010000000000'))
+        self.assertEqual(EUI('01-00-00-00-00-00'), EUI('10000000000'))
+
+        self.assertEqual(EUI('01-00-00-01-00-00'), EUI('010000:010000'))
+        self.assertEqual(EUI('01-00-00-01-00-00'), EUI('10000:10000'))
+
+#-----------------------------------------------------------------------------
+class OUITests(TestCase):
+    """Tests on OUI() objects"""
+
+    def testProperties(self):
+        """OUI() - class interface check (properties)"""
+        expected_properties = (
+            #   None of interest (yet).
+        )
+
+        for attribute in expected_properties:
+            self.assertTrue(hasattr(OUI, attribute))
+            self.assertFalse(callable(eval('OUI.%s' % attribute)))
+
+
+    def testMethods(self):
+        """OUI() - class interface check (methods)"""
+        expected_methods = (
+            'address',
+            'org',
+            'org_count',
+            'organisation',
+            'registration',
+        )
+
+        for attribute in expected_methods:
+            self.assertTrue(hasattr(OUI, attribute))
+            self.assertTrue(callable(eval('OUI.%s' % attribute)))
+
+#-----------------------------------------------------------------------------
+class IABTests(TestCase):
+    """Tests on IAB() objects"""
+
+    def testProperties(self):
+        """IAB() - class interface check (properties)"""
+        expected_properties = (
+            #   None of interest (yet).
+        )
+
+        for attribute in expected_properties:
+            self.assertTrue(hasattr(IAB, attribute))
+            self.assertFalse(callable(eval('IAB.%s' % attribute)))
+
+
+    def testMethods(self):
+        """IAB() - class interface check (methods)"""
+        expected_methods = (
+            'address',
+            'org',
+            'organisation',
+            'registration',
+            'split_iab_mac',
+        )
+
+        for attribute in expected_methods:
+            self.assertTrue(hasattr(IAB, attribute))
+            self.assertTrue(callable(eval('IAB.%s' % attribute)))
 
 #-----------------------------------------------------------------------------
 class IPTests(TestCase):
@@ -974,7 +1005,7 @@ class IPTests(TestCase):
         expected_properties = (
             'ADDR_TYPES',
             'STRATEGIES',
-            'TRANSLATE_STR',
+            'TRANSLATE_STR',    #   This must go in 0.7!
             'addr_type',
             'prefixlen',
             'strategy',
@@ -985,7 +1016,6 @@ class IPTests(TestCase):
             self.assertTrue(hasattr(IP, attribute))
             self.assertFalse(callable(eval('IP.%s' % attribute)))
 
-
     def testMethods(self):
         """IP() - class interface check (methods)"""
         expected_methods = (
@@ -993,19 +1023,49 @@ class IPTests(TestCase):
             'cidr',
             'hostname',
             'info',
+            'iprange',
             'ipv4',
             'ipv6',
             'is_hostmask',
+            'is_ipv4_compat',
+            'is_ipv4_mapped',
+            'is_link_local',
+            'is_loopback',
             'is_multicast',
             'is_netmask',
+            'is_private',
+            'is_reserved',
             'is_unicast',
             'netmask_bits',
             'reverse_dns',
+            'wildcard',
         )
 
         for attribute in expected_methods:
             self.assertTrue(hasattr(IP, attribute))
             self.assertTrue(callable(eval('IP.%s' % attribute)))
+
+    def testEdgeCases(self):
+        """IP() - edge case string tests"""
+        #   Turns out IPv4 has representation (string) formats that are both
+        #   interesting and esoteric. We shall support them for completeness
+        #   using socket.inet_aton where it is available.
+
+        #   Mixture of hex and integer octet values...
+        self.assertTrue(str(IP('127.1')), '127.0.0.1')
+        self.assertTrue(str(IP('0x7f.1')), '127.0.0.1')
+        self.assertTrue(str(IP('0x7f.0.0.1')), '127.0.0.1')
+        self.assertTrue(str(IP('0x7f.0x0.0x0.0x1')), '127.0.0.1')
+
+        #   Host count based addressing (network byte order integer as a
+        #   string value.
+        self.assertTrue(str(IP('127')), '0.0.0.127')
+        self.assertTrue(str(IP('127')), '0.0.0.127')
+
+        if _platform.system() != 'Windows':
+            #   We are on Windows that has a notorious bug. We aren't even
+            #   going to attempt to test it.
+            self.assertTrue(str(IP(str(0xffffffff))), '255.255.255.255')
 
     def testRFC4291WithIP(self):
         """IP() - RFC 4291 tests"""
@@ -1022,16 +1082,16 @@ class IPTests(TestCase):
 
     def testAssignmentsIPv4(self):
         """IP() - managed attribute assignment tests (IPv4)"""
-        ip = IP('192.168.0.1')
-        self.assertEqual(ip.value, 3232235521)
+        ip = IP('192.0.2.1')
+        self.assertEqual(ip.value, 3221225985)
         self.assertEqual(ip.addr_type, AT_INET)
         self.assertEqual(ip.strategy, ST_IPV4)
         self.assertEqual(ip.prefixlen, 32)
 
         #   Prefix /32 for IPv4 addresses should be implicit.
-        self.assertEqual(repr(ip), "netaddr.address.IP('192.168.0.1')")
+        self.assertEqual(repr(ip), "IP('192.0.2.1')")
         ip.prefixlen = 24
-        self.assertEqual(repr(ip), "netaddr.address.IP('192.168.0.1/24')")
+        self.assertEqual(repr(ip), "IP('192.0.2.1/24')")
 
         self.assertRaises(ValueError, IP, '0.0.0.0/-1')
         self.assertRaises(ValueError, IP, '0.0.0.0/33')
@@ -1045,9 +1105,9 @@ class IPTests(TestCase):
         self.assertEqual(ip.prefixlen, 128)
 
         #   Prefix /128 for IPv6 addresses should be implicit.
-        self.assertEqual(repr(ip), "netaddr.address.IP('fe80::4472:4b4a:616d')")
+        self.assertEqual(repr(ip), "IP('fe80::4472:4b4a:616d')")
         ip.prefixlen = 64
-        self.assertEqual(repr(ip), "netaddr.address.IP('fe80::4472:4b4a:616d/64')")
+        self.assertEqual(repr(ip), "IP('fe80::4472:4b4a:616d/64')")
 
         #   Check IPv4 mapped IPv6.
         self.assertEqual(hex(IP('::ffff:10.11.12.13')), '0xffff0a0b0c0d')
@@ -1058,7 +1118,7 @@ class IPTests(TestCase):
 
     def testNetmaskIPv4(self):
         """IP() - netmask tests (IPv4)"""
-        addr = IP('192.168.1.100')
+        addr = IP('192.0.2.1')
         self.assertFalse(addr.is_netmask())
 
         netmask = IP('255.255.254.0')
@@ -1066,7 +1126,100 @@ class IPTests(TestCase):
 
         #   Apply subnet mask
         network_id = IP(int(addr) & int(netmask), AT_INET)
-        self.assertEqual(str(network_id), '192.168.0.0')
+        self.assertEqual(str(network_id), '192.0.2.0')
+
+    def testNetmaskAndPrefixlenIPv4(self):
+        """IP() - netmask and CIDR prefix tests (IPv4)"""
+        calculated = []
+
+        #   Generate a bunch of addresses and see which ones are netmasks.
+        for ip in nrange('255.255.255.255', '255.255.255.0',-1, fmt=IP):
+            if ip.is_netmask():
+                calculated.append((str(ip), ip.netmask_bits()))
+
+        expected = [
+            ('255.255.255.255', 32),
+            ('255.255.255.254', 31),
+            ('255.255.255.252', 30),
+            ('255.255.255.248', 29),
+            ('255.255.255.240', 28),
+            ('255.255.255.224', 27),
+            ('255.255.255.192', 26),
+            ('255.255.255.128', 25),
+            ('255.255.255.0', 24),
+        ]
+
+        self.assertEqual(calculated, expected)
+
+    def testHostmaskIPv4(self):
+        """IP() - hostmask tests (IPv4)"""
+        calculated = []
+
+        #   Generate a bunch of addresses and see which ones are hostmasks.
+        for ip in nrange('0.0.0.0', '0.0.0.255', fmt=IP):
+            if ip.is_hostmask():
+                calculated.append(str(ip))
+
+        expected = [
+            '0.0.0.0',
+            '0.0.0.1',
+            '0.0.0.3',
+            '0.0.0.7',
+            '0.0.0.15',
+            '0.0.0.31',
+            '0.0.0.63',
+            '0.0.0.127',
+            '0.0.0.255',
+        ]
+
+        self.assertEqual(calculated, expected)
+
+    def testNetmaskAndPrefixlenIPv6(self):
+        """IP() - netmask and CIDR prefix tests (IPv6)"""
+        calculated = []
+
+        #   Generate a bunch of addresses and see which ones are netmasks.
+        for ip in nrange('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',
+                         'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ff00',-1, fmt=IP):
+            if ip.is_netmask():
+                calculated.append((str(ip), ip.netmask_bits()))
+
+        expected = [
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff', 128),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe', 127),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffc', 126),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:fff8', 125),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:fff0', 124),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffe0', 123),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffc0', 122),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ff80', 121),
+            ('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ff00', 120),
+        ]
+
+        self.assertEqual(calculated, expected)
+
+    def testHostmaskIPv6(self):
+        """IP() - hostmask tests (IPv6)"""
+        calculated = []
+
+        #   Generate a bunch of addresses and see which ones are hostmasks.
+        for ip in nrange('::', '::ff', fmt=IP):
+            if ip.is_hostmask():
+                calculated.append(str(ip))
+
+        expected = [
+            '::',
+            '::1',
+            '::3',
+            '::7',
+            '::f',
+            '::1f',
+            '::3f',
+            '::7f',
+            '::ff',
+        ]
+
+        self.assertEqual(calculated, expected)
 
     def testConstructorExceptions(self):
         """IP() - constructor Exception tests"""
@@ -1075,7 +1228,7 @@ class IPTests(TestCase):
         self.assertRaises(TypeError, IP)
 
         #   Various bad types for address values.
-        for bad_addr in ('', None, [], {}, 4.2):
+        for bad_addr in (None, [], {}, 4.2):
             self.assertRaises(AddrFormatError, IP, bad_addr)
 
         #   Various bad types for addr_type values.
@@ -1088,8 +1241,8 @@ class IPTests(TestCase):
 
     def testReverseLookupIPv4(self):
         """IP() - reverse DNS lookup test (IPv4)"""
-        expected = '1.0.168.192.in-addr.arpa.'
-        ip = IP('192.168.0.1')
+        expected = '1.2.0.192.in-addr.arpa.'
+        ip = IP('192.0.2.1')
         self.assertEqual(expected, ip.reverse_dns())
 
     def testReverseLookupIPv6(self):
@@ -1098,6 +1251,18 @@ class IPTests(TestCase):
         '.ip6.arpa.'
         ip = IP('2001:0DB8::CD30:0:0:0:101')
         self.assertEqual(expected, ip.reverse_dns())
+
+    def testMembership(self):
+        """IP() - address class tests (IPv6)"""
+        self.assertTrue(IP('::ffff:192.0.2.1').is_ipv4_mapped())
+        self.assertFalse(IP('::192.0.2.1').is_ipv4_mapped())
+        self.assertFalse(IP('192.0.2.1').is_ipv4_mapped())
+
+        self.assertTrue(IP('::192.0.2.1').is_ipv4_compat())
+        self.assertFalse(IP('::ffff:192.0.2.1').is_ipv4_compat())
+        self.assertFalse(IP('192.0.2.1').is_ipv4_compat())
+
+        self.assertFalse(IP('::').is_ipv4_mapped())
 
 #-----------------------------------------------------------------------------
 class IPRangeTests(TestCase):
@@ -1110,7 +1275,7 @@ class IPRangeTests(TestCase):
             'STRATEGIES',
             'addr_type',
             'first',
-            'klass',
+            'fmt',
             'last',
             'strategy',
         )
@@ -1124,8 +1289,8 @@ class IPRangeTests(TestCase):
         """IPRange() - class interface check (methods)"""
         expected_methods = (
             'adjacent',
-            'cidr',
-            'data_flavour',
+            'cidrs',
+            'format',
             'iprange',
             'issubnet',
             'issupernet',
@@ -1138,9 +1303,78 @@ class IPRangeTests(TestCase):
             self.assertTrue(hasattr(IPRange, attribute))
             self.assertTrue(callable(eval('IPRange.%s' % attribute)))
 
+    def testSortability(self):
+        """IPRange() - sortability tests"""
+        #   Address ranges now sort as expected based on magnitude.
+        ranges = (
+            IPRange(IP('::'), IP('::')),
+            IPRange(IP('0.0.0.0'), IP('255.255.255.255')),
+            IPRange(IP('::'), IP('::FFFF')),
+            IPRange(IP('0.0.0.0'), IP('0.0.0.0')),
+        )
+
+        expected = [
+            '0.0.0.0-0.0.0.0',
+            '0.0.0.0-255.255.255.255',
+            '::-::',
+            '::-::ffff',
+        ]
+
+        self.assertEqual([str(r) for r in sorted(ranges)], expected)
+
+    def testIPRangeToMultipleCIDRConversion(self):
+        """IPRange() - IPRange -> multiple CIDRs coversion tests"""
+        #   IPv4 worst case scenario!
+        self.assertEqual(IPRange('0.0.0.1', '255.255.255.254').cidrs(),
+            [CIDR('0.0.0.1/32'), CIDR('0.0.0.2/31'), CIDR('0.0.0.4/30'),
+            CIDR('0.0.0.8/29'), CIDR('0.0.0.16/28'), CIDR('0.0.0.32/27'),
+            CIDR('0.0.0.64/26'), CIDR('0.0.0.128/25'), CIDR('0.0.1.0/24'),
+            CIDR('0.0.2.0/23'), CIDR('0.0.4.0/22'), CIDR('0.0.8.0/21'),
+            CIDR('0.0.16.0/20'), CIDR('0.0.32.0/19'), CIDR('0.0.64.0/18'),
+            CIDR('0.0.128.0/17'), CIDR('0.1.0.0/16'), CIDR('0.2.0.0/15'),
+            CIDR('0.4.0.0/14'), CIDR('0.8.0.0/13'), CIDR('0.16.0.0/12'),
+            CIDR('0.32.0.0/11'), CIDR('0.64.0.0/10'), CIDR('0.128.0.0/9'),
+            CIDR('1.0.0.0/8'), CIDR('2.0.0.0/7'), CIDR('4.0.0.0/6'),
+            CIDR('8.0.0.0/5'), CIDR('16.0.0.0/4'), CIDR('32.0.0.0/3'),
+            CIDR('64.0.0.0/2'), CIDR('128.0.0.0/2'), CIDR('192.0.0.0/3'),
+            CIDR('224.0.0.0/4'), CIDR('240.0.0.0/5'), CIDR('248.0.0.0/6'),
+            CIDR('252.0.0.0/7'), CIDR('254.0.0.0/8'), CIDR('255.0.0.0/9'),
+            CIDR('255.128.0.0/10'), CIDR('255.192.0.0/11'),
+            CIDR('255.224.0.0/12'), CIDR('255.240.0.0/13'),
+            CIDR('255.248.0.0/14'), CIDR('255.252.0.0/15'),
+            CIDR('255.254.0.0/16'), CIDR('255.255.0.0/17'),
+            CIDR('255.255.128.0/18'), CIDR('255.255.192.0/19'),
+            CIDR('255.255.224.0/20'), CIDR('255.255.240.0/21'),
+            CIDR('255.255.248.0/22'), CIDR('255.255.252.0/23'),
+            CIDR('255.255.254.0/24'), CIDR('255.255.255.0/25'),
+            CIDR('255.255.255.128/26'), CIDR('255.255.255.192/27'),
+            CIDR('255.255.255.224/28'), CIDR('255.255.255.240/29'),
+            CIDR('255.255.255.248/30'), CIDR('255.255.255.252/31'),
+            CIDR('255.255.255.254/32')])
+
+        #   IPv4 compatible IPv6 test of worst case scenario.
+        self.assertEqual(IPRange('::1', '::255.255.255.254', fmt=str).cidrs(),
+            ['::1/128', '::2/127', '::4/126', '::8/125', '::10/124',
+            '::20/123', '::40/122', '::80/121', '::100/120', '::200/119',
+            '::400/118', '::800/117', '::1000/116', '::2000/115',
+            '::4000/114', '::8000/113', '::1:0/112', '::2:0/111', '::4:0/110',
+            '::8:0/109', '::10:0/108', '::20:0/107', '::40:0/106',
+            '::80:0/105', '::100:0/104', '::200:0/103', '::400:0/102',
+            '::800:0/101', '::1000:0/100', '::2000:0/99', '::4000:0/98',
+            '::8000:0/98', '::c000:0/99', '::e000:0/100', '::f000:0/101',
+            '::f800:0/102', '::fc00:0/103', '::fe00:0/104', '::ff00:0/105',
+            '::ff80:0/106', '::ffc0:0/107', '::ffe0:0/108', '::fff0:0/109',
+            '::fff8:0/110', '::fffc:0/111', '::fffe:0/112', '::ffff:0/113',
+            '::ffff:8000/114', '::ffff:c000/115', '::ffff:e000/116',
+            '::ffff:f000/117', '::ffff:f800/118', '::ffff:fc00/119',
+            '::ffff:fe00/120', '::ffff:ff00/121', '::ffff:ff80/122',
+            '::ffff:ffc0/123', '::ffff:ffe0/124', '::ffff:fff0/125',
+            '::ffff:fff8/126', '::ffff:fffc/127', '::ffff:fffe/128'])
+
+
 #-----------------------------------------------------------------------------
 class CIDRTests(TestCase):
-    """Tests on CIDR() class objects"""
+    """Tests on CIDR() objects"""
 
     def testProperties(self):
         """CIDR() - class interface check (properties)"""
@@ -1148,9 +1382,13 @@ class CIDRTests(TestCase):
             'ADDR_TYPES',
             'STRATEGIES',
             'addr_type',
+            'broadcast',
             'first',
-            'klass',
+            'fmt',
+            'hostmask',
             'last',
+            'netmask',
+            'network',
             'prefixlen',
             'strategy',
         )
@@ -1165,17 +1403,16 @@ class CIDRTests(TestCase):
         expected_methods = (
             'abbrev_to_verbose',
             'adjacent',
-            'cidr',
-            'data_flavour',
-            'hostmask',
+            'cidrs',
+            'format',
             'iprange',
             'issubnet',
             'issupernet',
-            'netmask',
             'overlaps',
-            'summarize',
+#TO_0.7:            'summarize',
             'size',
             'span',
+            'subnet',
             'wildcard',
         )
 
@@ -1198,45 +1435,45 @@ class CIDRTests(TestCase):
 
     def testEquality(self):
         """CIDR() - equality tests (__eq__)"""
-        cidr1 = CIDR('192.168.0.0/255.255.254.0')
-        cidr2 = CIDR('192.168.0.0/23')
+        cidr1 = CIDR('192.0.2.0/255.255.254.0')
+        cidr2 = CIDR('192.0.2.0/23')
         self.assertEqual(cidr1, cidr2)
 
     def testNonStrictConstructorValidation(self):
         """CIDR() - less restrictive __init__() bitmask/netmask tests"""
-        c = CIDR('192.168.1.65/255.255.254.0', strict_bitmask=False)
-        c.klass=str
-        self.assertEqual(str(c), '192.168.0.0/23')
-        self.assertEqual(c[0], '192.168.0.0')
-        self.assertEqual(c[-1], '192.168.1.255')
+        c = CIDR('192.0.2.65/255.255.254.0', strict=False)
+        c.fmt=str
+        self.assertEqual(str(c), '192.0.2.0/23')
+        self.assertEqual(c[0], '192.0.2.0')
+        self.assertEqual(c[-1], '192.0.3.255')
 
     def testStandardConstructorValidation(self):
         """CIDR() - standard __init__() bitmask/netmask tests"""
-        self.assertRaises(ValueError, CIDR, '192.168.1.65/255.255.254.0')
-        self.assertRaises(ValueError, CIDR, '192.168.1.65/23')
+        self.assertRaises(ValueError, CIDR, '192.0.2.65/255.255.254.0')
+        self.assertRaises(ValueError, CIDR, '192.0.2.65/23')
 
     def testSlicingIPv4(self):
         """CIDR() - slicing tests (IPv4)"""
         expected = [
-            ['10.0.0.0/28', '10.0.0.1', '10.0.0.14', 16],
-            ['10.0.0.16/28', '10.0.0.17', '10.0.0.30', 16],
-            ['10.0.0.32/28', '10.0.0.33', '10.0.0.46', 16],
-            ['10.0.0.48/28', '10.0.0.49', '10.0.0.62', 16],
-            ['10.0.0.64/28', '10.0.0.65', '10.0.0.78', 16],
-            ['10.0.0.80/28', '10.0.0.81', '10.0.0.94', 16],
-            ['10.0.0.96/28', '10.0.0.97', '10.0.0.110', 16],
-            ['10.0.0.112/28', '10.0.0.113', '10.0.0.126', 16],
-            ['10.0.0.128/28', '10.0.0.129', '10.0.0.142', 16],
-            ['10.0.0.144/28', '10.0.0.145', '10.0.0.158', 16],
-            ['10.0.0.160/28', '10.0.0.161', '10.0.0.174', 16],
-            ['10.0.0.176/28', '10.0.0.177', '10.0.0.190', 16],
-            ['10.0.0.192/28', '10.0.0.193', '10.0.0.206', 16],
-            ['10.0.0.208/28', '10.0.0.209', '10.0.0.222', 16],
-            ['10.0.0.224/28', '10.0.0.225', '10.0.0.238', 16],
-            ['10.0.0.240/28', '10.0.0.241', '10.0.0.254', 16],
+            ['192.0.2.0/28', '192.0.2.1', '192.0.2.14', 16],
+            ['192.0.2.16/28', '192.0.2.17', '192.0.2.30', 16],
+            ['192.0.2.32/28', '192.0.2.33', '192.0.2.46', 16],
+            ['192.0.2.48/28', '192.0.2.49', '192.0.2.62', 16],
+            ['192.0.2.64/28', '192.0.2.65', '192.0.2.78', 16],
+            ['192.0.2.80/28', '192.0.2.81', '192.0.2.94', 16],
+            ['192.0.2.96/28', '192.0.2.97', '192.0.2.110', 16],
+            ['192.0.2.112/28', '192.0.2.113', '192.0.2.126', 16],
+            ['192.0.2.128/28', '192.0.2.129', '192.0.2.142', 16],
+            ['192.0.2.144/28', '192.0.2.145', '192.0.2.158', 16],
+            ['192.0.2.160/28', '192.0.2.161', '192.0.2.174', 16],
+            ['192.0.2.176/28', '192.0.2.177', '192.0.2.190', 16],
+            ['192.0.2.192/28', '192.0.2.193', '192.0.2.206', 16],
+            ['192.0.2.208/28', '192.0.2.209', '192.0.2.222', 16],
+            ['192.0.2.224/28', '192.0.2.225', '192.0.2.238', 16],
+            ['192.0.2.240/28', '192.0.2.241', '192.0.2.254', 16],
         ]
 
-        supernet = CIDR('10.0.0.0/24')
+        supernet = CIDR('192.0.2.0/24')
         subnets = list([addr for addr in supernet])[::16]
 
         for i, subnet_addr in enumerate(subnets):
@@ -1249,24 +1486,24 @@ class CIDRTests(TestCase):
     def testIndexingAndSlicingIPv4(self):
         """CIDR() - indexing and slicing tests (IPv4)"""
         #   IPv4
-        cidr = CIDR('192.168.0.0/23', klass=str)
+        cidr = CIDR('192.0.2.0/23', fmt=str)
 
         #   Handy methods.
-        self.assertEqual(cidr.first, 3232235520)
-        self.assertEqual(cidr.last, 3232236031)
+        self.assertEqual(cidr.first, 3221225984)
+        self.assertEqual(cidr.last, 3221226495)
 
         #   As above with indices.
-        self.assertEqual(cidr[0], '192.168.0.0')
-        self.assertEqual(cidr[-1], '192.168.1.255')
+        self.assertEqual(cidr[0], '192.0.2.0')
+        self.assertEqual(cidr[-1], '192.0.3.255')
 
-        expected_list = [ '192.168.0.0', '192.168.0.128', '192.168.1.0',
-                          '192.168.1.128' ]
+        expected_list = [ '192.0.2.0', '192.0.2.128', '192.0.3.0',
+                          '192.0.3.128' ]
 
         self.assertEqual(list(cidr[::128]), expected_list)
 
 #FIXME:    def testIndexingAndSlicingIPv6(self):
 #FIXME:        """CIDR() - indexing and slicing tests (IPv6)"""
-#FIXME:        cidr = CIDR('fe80::/10', klass=str)
+#FIXME:        cidr = CIDR('fe80::/10', fmt=str)
 #FIXME:        self.assertEqual(cidr[0], 'fe80::')
 #FIXME:        self.assertEqual(cidr[-1], 'febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff')
 #FIXME:        self.assertEqual(cidr.size(), 332306998946228968225951765070086144)
@@ -1283,17 +1520,17 @@ class CIDRTests(TestCase):
 
     def testMembership(self):
         """CIDR() - membership (__contains__) tests (IPv4/IPv6)"""
-        self.assertTrue('192.168.0.1' in CIDR('192.168.0.0/24'))
-        self.assertTrue('192.168.0.255' in CIDR('192.168.0.0/24'))
-        self.assertTrue(CIDR('192.168.0.0/24') in CIDR('192.168.0.0/23'))
-        self.assertTrue(CIDR('192.168.0.0/24') in CIDR('192.168.0.0/24'))
+        self.assertTrue('192.0.2.1' in CIDR('192.0.2.0/24'))
+        self.assertTrue('192.0.2.255' in CIDR('192.0.2.0/24'))
+        self.assertTrue(CIDR('192.0.2.0/24') in CIDR('192.0.2.0/23'))
+        self.assertTrue(CIDR('192.0.2.0/24') in CIDR('192.0.2.0/24'))
         self.assertTrue('ffff::1' in CIDR('ffff::/127'))
-        self.assertFalse(CIDR('192.168.0.0/23') in CIDR('192.168.0.0/24'))
+        self.assertFalse(CIDR('192.0.2.0/23') in CIDR('192.0.2.0/24'))
 
     def testEquality(self):
         """CIDR() - equality (__eq__) tests (IPv4/IPv6)"""
-        c1 = CIDR('192.168.0.0/24')
-        c2 = CIDR('192.168.0.0/24')
+        c1 = CIDR('192.0.2.0/24')
+        c2 = CIDR('192.0.2.0/24')
         self.assertTrue(c1 == c2)
         self.assertTrue(c1 is not c2)
         self.assertFalse(c1 != c2)
@@ -1371,7 +1608,7 @@ class CIDRTests(TestCase):
         """CIDR() - CIDR -> Wildcard conversion tests (IPv4 only)"""
         expected = (
             ('10.0.0.1/32', '10.0.0.1', 1),
-            ('192.168.0.0/24', '192.168.0.*', 256),
+            ('192.0.2.0/24', '192.0.2.*', 256),
             ('172.16.0.0/12', '172.16-31.*.*', 1048576),
             ('0.0.0.0/0', '*.*.*.*', 4294967296),
         )
@@ -1379,7 +1616,7 @@ class CIDRTests(TestCase):
         for cidr, wildcard, size in expected:
             c1 = CIDR(cidr)
             w1 = c1.wildcard()
-            c2 = w1.cidr()
+            c2 = w1.cidrs()[0]
             self.assertEqual(c1.size(), size)
             self.assertEqual(str(c1), cidr)
             self.assertEqual(str(w1), wildcard)
@@ -1390,26 +1627,26 @@ class CIDRTests(TestCase):
     def testCIDRIncrements(self):
         """CIDR() - address range increment tests (IPv4)"""
         expected = [
-            '192.168.0.0/28',
-            '192.168.0.16/28',
-            '192.168.0.32/28',
-            '192.168.0.48/28',
-            '192.168.0.64/28',
-            '192.168.0.80/28',
-            '192.168.0.96/28',
-            '192.168.0.112/28',
-            '192.168.0.128/28',
-            '192.168.0.144/28',
-            '192.168.0.160/28',
-            '192.168.0.176/28',
-            '192.168.0.192/28',
-            '192.168.0.208/28',
-            '192.168.0.224/28',
-            '192.168.0.240/28',
+            '192.0.2.0/28',
+            '192.0.2.16/28',
+            '192.0.2.32/28',
+            '192.0.2.48/28',
+            '192.0.2.64/28',
+            '192.0.2.80/28',
+            '192.0.2.96/28',
+            '192.0.2.112/28',
+            '192.0.2.128/28',
+            '192.0.2.144/28',
+            '192.0.2.160/28',
+            '192.0.2.176/28',
+            '192.0.2.192/28',
+            '192.0.2.208/28',
+            '192.0.2.224/28',
+            '192.0.2.240/28',
         ]
 
         actual = []
-        c = CIDR('192.168.0.0/28')
+        c = CIDR('192.0.2.0/28')
         for i in range(16):
             actual.append(str(c))
             c += 1
@@ -1418,35 +1655,35 @@ class CIDRTests(TestCase):
 
     def testCIDRAddition(self):
         """CIDR() - addition tests (IPv4 + IPv6)"""
-        result0 = CIDR('192.168.0.1/32') + CIDR('192.168.0.1/32')
-        self.assertEqual(result0, CIDR('192.168.0.1/32'))
+        result0 = CIDR('192.0.2.1/32') + CIDR('192.0.2.1/32')
+        self.assertEqual(result0, CIDR('192.0.2.1/32'))
 
-        result1 = CIDR('192.168.0.0/24', klass=str) + CIDR('192.168.1.0/24')
-        self.assertEqual(result1, '192.168.0.0/23')
+        result1 = CIDR('192.0.2.0/24', fmt=str) + CIDR('192.0.3.0/24')
+        self.assertEqual(result1, '192.0.2.0/23')
 
-        result2 = CIDR('::/128', klass=str) + CIDR('::255.255.255.255/128')
+        result2 = CIDR('::/128', fmt=str) + CIDR('::255.255.255.255/128')
         self.assertEqual(result2, '::/96')
 
-        result3 = CIDR('192.168.0.0/24', klass=str) + CIDR('192.168.255.0/24')
+        result3 = CIDR('192.168.0.0/24', fmt=str) + CIDR('192.168.255.0/24')
         self.assertEqual(result3, '192.168.0.0/16')
 
     def testCIDRSubtraction(self):
         """CIDR() - subtraction tests (IPv4 + IPv6)"""
-        result0 = CIDR('192.168.0.1/32') - CIDR('192.168.0.1/32')
+        result0 = CIDR('192.0.2.1/32') - CIDR('192.0.2.1/32')
         self.assertEqual(result0, [])
 
-        result1 = CIDR('192.168.0.0/31', klass=str) - CIDR('192.168.0.1/32')
-        self.assertEqual(result1, ['192.168.0.0/32'])
+        result1 = CIDR('192.0.2.0/31', fmt=str) - CIDR('192.0.2.1/32')
+        self.assertEqual(result1, ['192.0.2.0/32'])
 
-        result2 = CIDR('192.168.0.0/24', klass=str) - CIDR('192.168.0.128/25')
-        self.assertEqual(result2, ['192.168.0.0/25'])
+        result2 = CIDR('192.0.2.0/24', fmt=str) - CIDR('192.0.2.128/25')
+        self.assertEqual(result2, ['192.0.2.0/25'])
 
-        result3 = CIDR('192.168.0.0/24', klass=str) - CIDR('192.168.0.128/27')
-        self.assertEqual(result3, ['192.168.0.0/25', '192.168.0.160/27', '192.168.0.192/26'])
+        result3 = CIDR('192.0.2.0/24', fmt=str) - CIDR('192.0.2.128/27')
+        self.assertEqual(result3, ['192.0.2.0/25', '192.0.2.160/27', '192.0.2.192/26'])
 
         #   Subtracting a larger range from a smaller one results in an empty
         #   list (rather than a negative CIDR - which would be rather odd)!
-        result4 = CIDR('192.168.0.1/32') - CIDR('192.168.0.0/24')
+        result4 = CIDR('192.0.2.1/32') - CIDR('192.0.2.0/24')
         self.assertEqual(result4, [])
 
     def testCIDRToIPEquality(self):
@@ -1456,8 +1693,8 @@ class CIDRTests(TestCase):
         #
         #   Logically similar, but fundamentally different on a Python and
         #   netaddr level.
-        ip = IP('192.168.0.1')
-        cidr = CIDR('192.168.0.1/32')
+        ip = IP('192.0.2.1')
+        cidr = CIDR('192.0.2.1/32')
 
         #   Direct object to object comparisons will always fail.
         self.assertFalse(ip == cidr)
@@ -1483,27 +1720,50 @@ class CIDRTests(TestCase):
         self.assertFalse(ip < cidr[-1])
         self.assertTrue(ip <= cidr[-1])
 
-    def testNetmask(self):
-        """CIDR() - netmask tests"""
-        c1 = CIDR('192.168.0.0/24', klass=str)
-        self.assertEqual(c1.netmask(), '255.255.255.0')
-        self.assertEqual(c1.hostmask(), '0.0.0.255')
+    def testMasks(self):
+        """CIDR() - netmask and hostmask method tests"""
+        c1 = CIDR('192.0.2.0/24', fmt=str)
+        self.assertEqual(c1.netmask, '255.255.255.0')
+        self.assertEqual(c1.hostmask, '0.0.0.255')
+        c1.prefixlen = 23
+        self.assertEqual(c1.netmask, '255.255.254.0')
+        self.assertEqual(c1.hostmask, '0.0.1.255')
+
+    def testConstructorWithHostmaskACLPrefix(self):
+        """CIDR() - ACL (hostmask) prefixlen constructor option tests"""
+        c1 = CIDR('192.0.2.0/0.0.0.255', fmt=str)
+        self.assertEqual(c1.netmask, '255.255.255.0')
+        self.assertEqual(c1.hostmask, '0.0.0.255')
+        self.assertEqual(c1.network, '192.0.2.0')
+        self.assertEqual(c1.broadcast, '192.0.2.255')
+        self.assertEqual(c1[0], '192.0.2.0')
+        self.assertEqual(c1[-1], '192.0.2.255')
+
+    def testConstructorWithNetmaskPrefix(self):
+        """CIDR() - netmask prefixlen constructor option tests"""
+        c1 = CIDR('192.0.2.0/255.255.255.0', fmt=str)
+        self.assertEqual(c1.netmask, '255.255.255.0')
+        self.assertEqual(c1.hostmask, '0.0.0.255')
+        self.assertEqual(c1.network, '192.0.2.0')
+        self.assertEqual(c1.broadcast, '192.0.2.255')
+        self.assertEqual(c1[0], '192.0.2.0')
+        self.assertEqual(c1[-1], '192.0.2.255')
 
     def testPrefixlenAssignment(self):
         """CIDR() - prefixlen assignment tests"""
 
         #   Invalid without turning off strict bitmask checking.
-        self.assertRaises(ValueError, CIDR, '192.168.0.1/24')
+        self.assertRaises(ValueError, CIDR, '192.0.2.1/24')
 
-        c1 = CIDR('192.168.0.1/24', strict_bitmask=False)
-        c1.klass = str
+        c1 = CIDR('192.0.2.1/24', strict=False)
+        c1.fmt = str
 
-        self.assertEqual(c1[0], '192.168.0.0')
-        self.assertEqual(c1[-1], '192.168.0.255')
+        self.assertEqual(c1[0], '192.0.2.0')
+        self.assertEqual(c1[-1], '192.0.2.255')
 
         c1.prefixlen = 23
 
-        self.assertEqual(c1[-1], '192.168.1.255')
+        self.assertEqual(c1[-1], '192.0.3.255')
         try:
             c1.prefixlen = 33 #   Bad assignment that should fail!
         except ValueError:
@@ -1511,10 +1771,10 @@ class CIDRTests(TestCase):
         except:
             self.fail('expected ValueError was not raised!')
 
-        self.assertEqual(c1[-1], '192.168.1.255')
+        self.assertEqual(c1[-1], '192.0.3.255')
         self.assertEqual(c1.prefixlen, 23)
 
-        c2 = CIDR('192.168.0.0/16', klass=str)
+        c2 = CIDR('192.168.0.0/16', fmt=str)
 
         self.assertEqual(str(c2), '192.168.0.0/16')
         self.assertEqual(c2.prefixlen, 16)
@@ -1549,7 +1809,7 @@ class CIDRTests(TestCase):
     def testExceptions(self):
         """CIDR() - Exception generation tests"""
 
-        self.assertRaises(ValueError, CIDR, '192.168.0.0/192.168.0.0')
+        self.assertRaises(ValueError, CIDR, '192.0.2.0/192.0.2.0')
         self.assertRaises(ValueError, CIDR, '0.0.0.0/-1')
         self.assertRaises(ValueError, CIDR, '0.0.0.0/33')
         self.assertRaises(ValueError, CIDR, '::/-1')
@@ -1563,21 +1823,21 @@ class CIDRTests(TestCase):
 
     def testUnicodeStrings(self):
         """CIDR() - unicode string tests"""
-        self.assertEqual(CIDR(u'192.168.0.0/24'), CIDR('192.168.0.0/24'))
+        self.assertEqual(CIDR(u'192.0.2.0/24'), CIDR('192.0.2.0/24'))
 
     def testSupernetSpanning(self):
         """CIDR() - spanning supernet functionality tests (IPv4 / IPv6)"""
         expected = (
-            (['192.168.0.0', '192.168.0.0'], '192.168.0.0/32'),
-            (['192.168.0.0', '192.168.0.1'], '192.168.0.0/31'),
-            (['192.168.0.1', '192.168.0.0'], '192.168.0.0/31'),
-            (['192.168.0.0/24', '192.168.1.0/24'], '192.168.0.0/23'),
+            (['192.0.2.0', '192.0.2.0'], '192.0.2.0/32'),
+            (['192.0.2.0', '192.0.2.1'], '192.0.2.0/31'),
+            (['192.0.2.1', '192.0.2.0'], '192.0.2.0/31'),
+            (['192.0.2.0/24', '192.0.3.0/24'], '192.0.2.0/23'),
+            (['192.0.2.*', '192.0.3.0/24'], '192.0.2.0/23'),
+            (['*.*.*.*', '192.0.2.0/24'], '0.0.0.0/0'),
             (['192.168.3.1/24', '192.168.0.1/24', '192.168.1.1/24'], '192.168.0.0/22'),
-            (['192.168.0.*', '192.168.1.0/24'], '192.168.0.0/23'),
             (['192.168.1-2.*', '192.168.3.0/24'], '192.168.0.0/22'),
-            (['*.*.*.*', '192.168.0.0/24'], '0.0.0.0/0'),
             (['::', '::255.255.255.255'], '::/96'),
-            (['192.168.5.27', '192.168.5.28'], '192.168.5.24/29')   #   Yes, this is correct.
+            (['192.0.2.27', '192.0.2.28'], '192.0.2.24/29')   #   Yes, this is correct.
         )
 
         for comparison in expected:
@@ -1588,26 +1848,26 @@ class CIDRTests(TestCase):
     def testSupernetSpanningFailureModes(self):
         """CIDR() - spanning supernet failure mode tests (IPv4)"""
         #   Mixing address types is not allowed!
-        self.assertRaises(TypeError, CIDR.span, ['::ffff:192.168.0.0/24', '192.168.1.0/24', ])
+        self.assertRaises(TypeError, CIDR.span, ['::ffff:192.0.2.0/24', '192.0.3.0/24', ])
 
     def testSupernetMembership(self):
         """CIDR() - supernet membership tests (IPv4)"""
-        self.assertTrue(CIDR('192.168.0.0/24').issupernet(CIDR('192.168.0.0/24')))
-        self.assertTrue(CIDR('192.168.0.0/23').issupernet(CIDR('192.168.0.0/24')))
-        self.assertFalse(CIDR('192.168.0.0/25').issupernet(CIDR('192.168.0.0/24')))
+        self.assertTrue(CIDR('192.0.2.0/24').issupernet(CIDR('192.0.2.0/24')))
+        self.assertTrue(CIDR('192.0.2.0/23').issupernet(CIDR('192.0.2.0/24')))
+        self.assertFalse(CIDR('192.0.2.0/25').issupernet(CIDR('192.0.2.0/24')))
 
         #   Mix it up with Wildcard and CIDR.
-        self.assertTrue(CIDR('192.168.0.0/24').issupernet(Wildcard('192.168.0.*')))
-        self.assertTrue(Wildcard('192.168.0-1.*').issupernet(CIDR('192.168.0.0/24')))
-        self.assertTrue(Wildcard('192.168.0-1.*').issupernet(Wildcard('192.168.0.*')))
-        self.assertFalse(CIDR('192.168.0.0/25').issupernet(CIDR('192.168.0.0/24')))
-        self.assertFalse(Wildcard('192.168.0.0-127').issupernet(CIDR('192.168.0.0/24')))
+        self.assertTrue(CIDR('192.0.2.0/24').issupernet(Wildcard('192.0.2.*')))
+        self.assertTrue(Wildcard('192.0.2-3.*').issupernet(CIDR('192.0.2.0/24')))
+        self.assertTrue(Wildcard('192.0.2-3.*').issupernet(Wildcard('192.0.2.*')))
+        self.assertFalse(CIDR('192.0.2.0/25').issupernet(CIDR('192.0.2.0/24')))
+        self.assertFalse(Wildcard('192.0.2.0-127').issupernet(CIDR('192.0.2.0/24')))
 
     def testSubnetMembership(self):
         """CIDR() - subnet membership tests (IPv4)"""
-        self.assertTrue(CIDR('192.168.0.0/24').issubnet(CIDR('192.168.0.0/24')))
-        self.assertTrue(CIDR('192.168.0.0/25').issubnet(CIDR('192.168.0.0/24')))
-        self.assertFalse(CIDR('192.168.0.0/23').issubnet(CIDR('192.168.0.0/24')))
+        self.assertTrue(CIDR('192.0.2.0/24').issubnet(CIDR('192.0.2.0/24')))
+        self.assertTrue(CIDR('192.0.2.0/25').issubnet(CIDR('192.0.2.0/24')))
+        self.assertFalse(CIDR('192.0.2.0/23').issubnet(CIDR('192.0.2.0/24')))
 
     def testOverlaps(self):
         """CIDR() - overlapping CIDR() object tests (IPv4)"""
@@ -1616,16 +1876,36 @@ class CIDRTests(TestCase):
         pass
 
     def testAdjacency(self):
-        """CIDR() - adjancent CIDR() object tests (IPv4)"""
-        self.assertTrue(CIDR('192.168.0.0/24').adjacent(CIDR('192.168.1.0/24')))
-        self.assertTrue(CIDR('192.168.1.0/24').adjacent(CIDR('192.168.0.0/24')))
-        self.assertFalse(CIDR('192.168.0.0/24').adjacent(CIDR('192.168.2.0/24')))
-        self.assertFalse(CIDR('192.168.2.0/24').adjacent(CIDR('192.168.0.0/24')))
+        """CIDR() - adjacent CIDR() object tests (IPv4)"""
+        self.assertTrue(CIDR('192.0.2.0/24').adjacent(CIDR('192.0.3.0/24')))
+        self.assertTrue(CIDR('192.0.3.0/24').adjacent(CIDR('192.0.2.0/24')))
+        self.assertFalse(CIDR('192.0.2.0/24').adjacent(CIDR('192.0.4.0/24')))
+        self.assertFalse(CIDR('192.0.4.0/24').adjacent(CIDR('192.0.2.0/24')))
 
+    def testSubnetsIPv4(self):
+        """CIDR() - subnet iterator tests (IPv4)"""
+        expected = [
+            ('192.0.2.0/31', ('192.0.2.0', '192.0.2.1')),
+            ('192.0.2.2/31', ('192.0.2.2', '192.0.2.3')),
+            ('192.0.2.4/31', ('192.0.2.4', '192.0.2.5')),
+            ('192.0.2.6/31', ('192.0.2.6', '192.0.2.7')),
+            ('192.0.2.8/31', ('192.0.2.8', '192.0.2.9')),
+            ('192.0.2.10/31', ('192.0.2.10', '192.0.2.11')),
+            ('192.0.2.12/31', ('192.0.2.12', '192.0.2.13')),
+            ('192.0.2.14/31', ('192.0.2.14', '192.0.2.15'))
+        ]
+
+        calculated = []
+        cidr = CIDR('192.0.2.0/28')
+        for subnet in cidr.subnet(prefixlen=31):
+            subnet.fmt=str
+            calculated.append((str(subnet), tuple(subnet)))
+
+        self.assertEquals(expected, calculated)
 
 #-----------------------------------------------------------------------------
 class WildcardTests(TestCase):
-    """Tests on Wildcard() class objects"""
+    """Tests on Wildcard() objects"""
 
     def testProperties(self):
         """Wildcard() - class interface check (properties)"""
@@ -1635,7 +1915,7 @@ class WildcardTests(TestCase):
             'addr_type',
             'first',
             'last',
-            'klass',
+            'fmt',
             'strategy',
         )
 
@@ -1648,8 +1928,8 @@ class WildcardTests(TestCase):
         """Wildcard() - class interface check (methods)"""
         expected_methods = (
             'adjacent',
-            'cidr',
-            'data_flavour',
+            'cidrs',
+            'format',
             'iprange',
             'is_valid',
             'issubnet',
@@ -1666,13 +1946,13 @@ class WildcardTests(TestCase):
     def testWildcardPositiveValidity(self):
         """Wildcard() - positive validity tests"""
         valid_wildcards = (
-            ('192.168.0.1', 1),
+            ('192.0.2.1', 1),
             ('0.0.0.0', 1),
             ('255.255.255.255', 1),
-            ('192.168.0.0-31', 32),
-            ('192.168.0.*', 256),
-            ('192.168.0-1.*', 512),
-            ('192.168-169.*.*', 131072),
+            ('192.0.2.0-31', 32),
+            ('192.0.2.*', 256),
+            ('192.0.1-2.*', 512),
+            ('192.0-1.*.*', 131072),
             ('*.*.*.*', 4294967296),
         )
 
@@ -1689,7 +1969,7 @@ class WildcardTests(TestCase):
             '*',
             '192-193.*',
             '192-193.0-1.*.*',
-            '192.168.*.0',
+            '192.0.*.0',
             'a.b.c.*',
             [],
             None,
@@ -1703,14 +1983,14 @@ class WildcardTests(TestCase):
         """Wildcard() - Wildcard -> CIDR coversion tests"""
         expected = (
             ('10.0.0.1', '10.0.0.1/32', 1),
-            ('192.168.0.*', '192.168.0.0/24', 256),
+            ('192.0.2.*', '192.0.2.0/24', 256),
             ('172.16-31.*.*', '172.16.0.0/12', 1048576),
             ('*.*.*.*', '0.0.0.0/0', 4294967296),
         )
 
         for wildcard, cidr, size in expected:
             w1 = Wildcard(wildcard)
-            c1 = w1.cidr()
+            c1 = w1.cidrs()[0]
             w2 = c1.wildcard()
             self.assertEqual(w1.size(), size)
             self.assertEqual(str(w1), wildcard)
@@ -1719,18 +1999,35 @@ class WildcardTests(TestCase):
             self.assertEqual(w1, w2)           #   Test __eq__()
             self.assertEqual(str(w1), str(w2)) #   Test __str__() values too.
 
-    def testWilcardWithNonCIDREquivalents(self):
-        """Wildcard() - no CIDR equivalent tests"""
-        w1 = Wildcard('10.0.0.5-6')
-        self.assertRaises(AddrConversionError, w1.cidr)
+    def testWildcardToMultipleCIDRConversion(self):
+        """Wildcard() - Wildcard -> multiple CIDRs coversion tests"""
+        #   Example from RFC3171 - IANA IPv4 Multicast Guidelines :-
+        #   IANA reserved address space
+        self.assertEqual(Wildcard('225-231.*.*.*').cidrs(),
+            [CIDR('225.0.0.0/8'), CIDR('226.0.0.0/7'), CIDR('228.0.0.0/6')])
+
+        self.assertEqual(Wildcard('225-231.*.*.*', fmt=str).cidrs(),
+            ['225.0.0.0/8', '226.0.0.0/7', '228.0.0.0/6'])
+
+        self.assertEqual(Wildcard('234-238.*.*.*').cidrs(),
+            [CIDR('234.0.0.0/7'), CIDR('236.0.0.0/7'), CIDR('238.0.0.0/8')])
+
+        self.assertEqual(Wildcard('234-238.*.*.*', fmt=str).cidrs(),
+            ['234.0.0.0/7', '236.0.0.0/7', '238.0.0.0/8'])
+
+        self.assertEqual(Wildcard('192.0.2.5-6').cidrs(),
+            [CIDR('192.0.2.5/32'), CIDR('192.0.2.6/32')])
+
+        self.assertEqual(Wildcard('192.0.2.5-6', fmt=str).cidrs(),
+            ['192.0.2.5/32', '192.0.2.6/32'])
 
     def testWildcardToCIDRComparisons(self):
         """Wildcard() - comparison against CIDR() object tests"""
         #   Basically CIDRs and Wildcards are subclassed from the same parent
         #   class so should compare favourably.
-        cidr1 = CIDR('192.168.0.0/24')
-        cidr2 = CIDR('192.168.1.0/24')
-        wc1 = Wildcard('192.168.0.*')
+        cidr1 = CIDR('192.0.2.0/24')
+        cidr2 = CIDR('192.0.3.0/24')
+        wc1 = Wildcard('192.0.2.*')
 
         #   Positives.
         self.assertTrue(cidr1 == wc1)
@@ -1755,8 +2052,8 @@ class WildcardTests(TestCase):
         #
         #   Logically similar, but fundamentally different at a Python and
         #   netaddr level.
-        ip = IP('192.168.0.1')
-        wc = Wildcard('192.168.0.1')
+        ip = IP('192.0.2.1')
+        wc = Wildcard('192.0.2.1')
 
         #   Direct object to object comparisons will always fail.
         self.assertFalse(ip == wc)
@@ -1785,14 +2082,14 @@ class WildcardTests(TestCase):
     def testWildcardIncrements(self):
         """Wildcard() - address range increment tests"""
         expected = [
-            '192.168.0.*',
-            '192.168.1.*',
-            '192.168.2.*',
-            '192.168.3.*',
+            '192.0.0.*',
+            '192.0.1.*',
+            '192.0.2.*',
+            '192.0.3.*',
         ]
 
         actual = []
-        wc = Wildcard('192.168.0.*')
+        wc = Wildcard('192.0.0.*')
         for i in range(4):
             actual.append(str(wc))
             wc += 1
@@ -1801,35 +2098,35 @@ class WildcardTests(TestCase):
 
     def testOverlaps(self):
         """Wildcard() - overlapping Wildcard() object tests"""
-        self.assertTrue(Wildcard('192.168.0.0-31').overlaps(Wildcard('192.168.0.16-63')))
-        self.assertFalse(Wildcard('192.168.0.0-7').overlaps(Wildcard('192.168.0.16-23')))
+        self.assertTrue(Wildcard('192.0.2.0-31').overlaps(Wildcard('192.0.2.16-63')))
+        self.assertFalse(Wildcard('192.0.2.0-7').overlaps(Wildcard('192.0.2.16-23')))
 
     def testAdjacency(self):
-        """Wildcard() - adjancent Wildcard() object tests"""
-        self.assertTrue(Wildcard('192.168.0.*').adjacent(Wildcard('192.168.1.*')))
-        self.assertTrue(Wildcard('192.168.1.*').adjacent(Wildcard('192.168.0.*')))
-        self.assertFalse(Wildcard('192.168.0.*').adjacent(Wildcard('192.168.2.*')))
-        self.assertFalse(Wildcard('192.168.2.*').adjacent(Wildcard('192.168.0.*')))
+        """Wildcard() - adjacent Wildcard() object tests"""
+        self.assertTrue(Wildcard('192.0.2.*').adjacent(Wildcard('192.0.3.*')))
+        self.assertTrue(Wildcard('192.0.3.*').adjacent(Wildcard('192.0.2.*')))
+        self.assertFalse(Wildcard('192.0.2.*').adjacent(Wildcard('192.0.4.*')))
+        self.assertFalse(Wildcard('192.0.4.*').adjacent(Wildcard('192.0.2.*')))
 
 #-----------------------------------------------------------------------------
 class nrangeTests(TestCase):
     """Tests on the nrange() function"""
-    def testAddrObjectIteration(self):
-        """nrange() - yield Addr() object test (IPv4)"""
+    def testIPObjectIteration(self):
+        """nrange() - iterator yielding IP() object test (IPv4)"""
         expected = [
-            '192.168.0.0',
-            '192.168.0.4',
-            '192.168.0.8',
-            '192.168.0.12',
-            '192.168.0.16',
-            '192.168.0.20',
-            '192.168.0.24',
-            '192.168.0.28',
-            '192.168.0.32',
+            '192.0.2.0',
+            '192.0.2.4',
+            '192.0.2.8',
+            '192.0.2.12',
+            '192.0.2.16',
+            '192.0.2.20',
+            '192.0.2.24',
+            '192.0.2.28',
+            '192.0.2.32',
         ]
 
-        start_addr = netaddr.address.Addr('192.168.0.0')
-        stop_addr = netaddr.address.Addr('192.168.0.32')
+        start_addr = IP('192.0.2.0')
+        stop_addr = IP('192.0.2.32')
         for i, addr in enumerate(nrange(start_addr, stop_addr, 4)):
             self.assertEqual(str(addr), expected[i])
 
@@ -1840,7 +2137,7 @@ class nrangeTests(TestCase):
 
         saved_list = []
         #   IPv6 addresses auto-detected, as int.
-        for addr in nrange('::', '::10', 4, klass=expected_type):
+        for addr in nrange('::', '::10', 4, fmt=expected_type):
             self.assertEqual(type(addr), expected_type)
             saved_list.append(addr)
 
@@ -1853,7 +2150,7 @@ class nrangeTests(TestCase):
 
         saved_list = []
         #   IPv6 addresses auto-detected, negative step as int.
-        for addr in nrange('::10', '::', -4, klass=expected_type):
+        for addr in nrange('::10', '::', -4, fmt=expected_type):
             self.assertEqual(type(addr), expected_type)
             saved_list.append(addr)
 
@@ -1872,7 +2169,7 @@ class nrangeTests(TestCase):
         saved_list = []
         #   IPv6 addresses auto-detected multicast addresses,
         #   negative step as hex values.
-        for addr in nrange('ff00::10', 'ff00::', -4, klass=hex):
+        for addr in nrange('ff00::10', 'ff00::', -4, fmt=hex):
             self.assertEqual(type(addr), str)
             saved_list.append(addr.lower().rstrip('l'))
 
@@ -1881,16 +2178,16 @@ class nrangeTests(TestCase):
     def testIPObjectIteration(self):
         """nrange() - yield IP() object test (IPv4)"""
         expected_list = [
-            '192.168.0.0',
-            '192.168.0.128',
-            '192.168.1.0',
-            '192.168.1.128',
+            '192.0.2.0',
+            '192.0.2.128',
+            '192.0.3.0',
+            '192.0.3.128',
         ]
 
         saved_list = []
         #   IP class used to initialise generator with IPv4 addresses and a
         #   step of 128 addresses,
-        for addr in nrange(IP('192.168.0.0'), IP('192.168.1.255'), 128):
+        for addr in nrange(IP('192.0.2.0'), IP('192.0.3.255'), 128):
             self.assertTrue(isinstance(addr, IP))
             #   Save addresses as string values for comparison.
             saved_list.append(str(addr))

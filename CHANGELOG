@@ -1,3 +1,194 @@
+Release: 0.6
+Date: 20th Jan 2009
+
+Major changes since 0.5.x
+-------------------------
+
+* Namespace changes
+
+  3 new sub namespaces have been added :-
+
+  - netaddr.eui
+  
+  Currently contains IEEE OUI and IAB classes and lookup code.
+  
+  - netaddr.ip
+
+  Currently contains IANA IPv4, IPv6 and IPv4 multicast lookup code.
+
+  - netaddr.core
+
+  Currently contains only a couple of classes that are shared between code in 
+  netaddr.eui and netaddr.ip.
+
+  Please Note: This change is part of a two stage internal restructuring of
+  netaddr. In future releases, layer-2 MAC/EUI functionality will be separated
+  from and layer-3 IP, CIDR and Wildcard functionality. All shared code will 
+  be moved to netaddr.core. When the migration is complete (expected in 0.7)
+  the netaddr.address and netaddr.strategy namespaces will be removed. Please
+  endeavour to access everything you need via the top-level netaddr namespace
+  from this release onwards. See netaddr.__all__ for details of constants, 
+  objects, classes and functions intended for the public interface.
+
+* Addition of IEEE and IANA informational lookups
+
+  - the IP() and EUI() classes now have an additional info() method through 
+    which contextual information about your addresses can be accessed. This
+    data is published by IANA and the IEEE respectively and sourced directly 
+    from text files bundled with netaddr that are available for download
+    publically online. Details are available in the docstring of the relevant
+    parsing classes. Subsequent netaddr releases will endeavour to keep 
+    up-to-date with any updates to these files.
+    
+  - the EUI() class has been updated with the addition of the OUI() and IAB()
+    classes. They provide object based access to returned via the EUI.info()
+    method. Please see API docs included with netaddr for details.
+    
+  - added new NotRegisteredError exception that is raised when an EUI doesn't
+    match any currently registration entries in the IEEE registry files.
+
+* Addr() class removed from the public interface
+
+  - This class is only ever meant to be used internally and its usage may soon
+    be deprecated in favour converting it into an abstract base class in 
+    future releases.
+	
+* Deletion of AddrRange() class
+
+  - replaced with the more specific IPRange() class. AddrRange() wasn't
+    very useful in practice. Too much time has been spent explaining its 
+    theoretical merits over its actual practicality for every day use.
+
+* Addition of new IPRange() class
+
+  - the new base class for CIDR() and Wildcard().
+
+  - a 'killer feature' of this new class are the new methods iprange(),
+    cidrs() and wildcard() which allow you to use and switch between all 
+    3 formats easily. IPRange('x', 'y').cidrs() is particularly useful
+    returning all the intervening CIDRs between 2 arbitrary IP addresses.
+
+  - IPRange() is a great place to expose several new methods available to
+    sub classes. They are issupernet(), issubnet(), adjacent() and overlaps().
+
+  - previous method called data_flavour() has been renamed (again) to a more
+    suitable format().
+
+* IP() class updates
+  
+  - is_netmask() and is_hostmask() methods have been optimised and are now 
+    both approximately 4 times faster than previously!
+
+  - added wildcard() and iprange() methods that return pre-initialised
+    objects of those classes based on the current netmask / subnet prefix.
+
+  - copy constructor methods ipv4() and ipv6() now preserve the value of the
+    prefixlen property now also support IPv6 options for returning IPv4-mapped
+    or IPv4-compatible IPv6 addresses.
+
+  - added new methods is_loopback(), is_private(), is_link_local(), 
+    is_ipv4_mapped() and is_ipv4_compat() which are all self explanatory.
+    
+  - added a bin() method which provides an IP address in the same format 
+    as the standard Python bin() builtin type ('0bxxx') now available in 
+    Python 2.6.x and higher.
+    
+  - added a packed() method which provides an IP address in packed binary 
+    string format, suitable for passing directly to Python socket calls.
+    
+* nrange() generator function updates
+
+  - by default this now returns IP() objects instead of Addr() objects.
+
+* CIDR() class updates
+
+  - the 'strict_bitmask' option in the CIDR class constructor has been had a
+    name change and is now just 'strict' (less typing).
+
+  - support for Cisco ACL-style (hostmask) prefixes. Also available to the 
+    IP() class. They are converted to their netmask equivalents before being 
+    applied to the base address.
+
+  - added a new subnet() generator method that returns iterators to subnet 
+    CIDRs found within the current CIDR object's boundaries e.g. a /24 CIDR
+    can provide address with subnet prefixes between a /25 and /32.
+
+  - added a new span() method which takes a list of IP, IPRange, CIDR and/or 
+    Wildcards returning a single CIDR that 'spans' the lowest and highest 
+    boundary addresses. An important property of this class is that only a 
+    single CIDR is returned and that it (potentially) overlaps the start and
+    end addresses. The most important aspect of this method is that it 
+    identifies the left-most set of bits that are common to all supplied 
+    addresses. It is the plumbing that makes a lot of other features function
+    correctly.
+
+  - although IPv6 doesn't support the concept of a broadcast address, after 
+    some pondering I've decide to add network() and broadcast() methods to the
+    CIDR class. It is an interface quirk that users expect so it has been 
+    added for ease of use.
+    
+  - the methods network(), broadcast(), hostmask() and netmask() have been 
+    wrapped in property() builtin calls to make them appear as read-only
+    properties.
+
+* Many more MAC and IPv4 string address representation are now supported
+
+  - Improvements to both EUI and IP classes. They now accept many more valid
+    address formats than previously. Thanks for all the bugs tickets raised.
+
+* __repr__() method behaviour change
+
+  - Using repr() now assume that you have performed a 'from netaddr import *'
+    before you execute them. They no longer specify the originating namespace
+    of objects which is a bit unnecessary and a lot to read on-screen.They 
+    will also be moving around within the namespace shortly anyway so its
+    best not to think of them as being anywhere other than directly below
+    netaddr itself.
+
+* 'klass' property renamed to 'fmt' (format)
+
+  - now referred to as the 'format callable' property. An unfortunately but
+    necessary change. 'klass' was a bad initial name choice as it most often
+    doesn't even reference a class object also supporting references to Python
+    types, builtin functions and user defined callables.
+
+* Complete re-work and consolidation of unit tests.
+
+  - now over 100 tests covering all aspects of the API and library
+    functionality.
+  - Moved all tests into a single file. Lots of additional tests have been
+    added along with interface checks to ensure netaddr's always presents
+    a predictable set of properties and methods across releases.
+
+* Nascent support for Python eggs and setuptools.
+
+  - Help is need to test this as it is not something I use personally.
+
+Significant bug fixes
+---------------------
+
+* Finally fixed the IPv6 string address compression algorithm so that it 
+  is now compliant with the socket modules inet_ntop() and inet_pton() calls.
+  (not available on all platforms).
+
+EXPERIMENTAL FEATURES
+---------------------
+
+* added bitwise operators to the IP class
+
+  - does what it says on the tin. Does not effect that value of the IP object
+    itself but rather, returns a new IP after the operation has been applied.
+
+* IPRangeSet() class added (EXPERIMENTAL).
+
+  - the intention with this class is to allows you to create collections of
+    unique IP(), IPRange(), CIDR() and Wildcard() objects. It provides 
+    iteration over IPs in the collection as well as several membership based
+    operations such as any_match() all_matches(), min_match() and max_match().
+  - lots more work to do here. Please raise bugs and feature requests against
+    this as you find them. Improvements to this are coming in 0.7.
+
+------------------------------------------------------------------------------
 
 Release: 0.5.2
 Date: 29th Sep 2008

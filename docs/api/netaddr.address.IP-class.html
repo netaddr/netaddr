@@ -69,20 +69,49 @@ object --+
 </pre>
 
 <hr />
-<p>A class whose objects represent Internet Protocol network addresses. 
-  Both IPv4 and IPv6 are fully supported and also permit the inclusion of 
-  bitmask prefix or subnet mask address indicating the size/extent of the 
-  subnet, for example :</p>
+<p>Represents <b>individual</b> IPv4 and IPv6 addresses.</p>
+  <p><b>Please Note:</b> this class is intended to provide low-level 
+  functionality to individual IP addresses such as octet/hextet access, 
+  integer/hex/binary conversions, etc. If you are coming from other 
+  libraries you may expect to find much higher level networking operations 
+  here. While the inclusion of a bitmask prefix or netmask to indicate 
+  subnet membership is permitted by the class constructor they are provided
+  only as a convenience to the user.</p>
+  <p>All higher level subnet and network operations can be found in objects
+  of classes <a href="netaddr.address.CIDR-class.html" 
+  class="link">CIDR</a>, <a href="netaddr.address.IPRange-class.html" 
+  class="link">IPRange</a> and <a 
+  href="netaddr.address.Wildcard-class.html" class="link">Wildcard</a>. 
+  There are handy helper methods here, (<code>.cidr()</code>, 
+  <code>.iprange()</code> and <code>.wildcard()</code>) that return 
+  pre-initialised objects of those classes without you having to call them 
+  explicitly.</p>
+  <p>Example usage :</p>
 <pre class="literalblock">
-   IPv4
+   &gt;&gt;&gt; ip = IP('10.0.0.1')
+   &gt;&gt;&gt; list(ip) == [10, 0, 0, 1]
+   True
+   &gt;&gt;&gt; ip += 1
+   &gt;&gt;&gt; str(ip) == '10.0.0.2'
+   True
 
-   192.168.0.1/24
-   192.168.0.1/255.255.255.0
+   &gt;&gt;&gt; IP('10.0.0.0/28').iprange()
+   IPRange('10.0.0.0', '10.0.0.15')
 
-   IPv6
+   &gt;&gt;&gt; IP('10.0.0.64/24').cidr()
+   CIDR('10.0.0.0/24')
 
-   fe80::20f:1fff:fe12:e733/64
+   &gt;&gt;&gt; IP('192.168.0.1/255.255.253.0').wildcard()
+   Wildcard('192.168.0-1.*')
+
+   &gt;&gt;&gt; ipv6 = IP('fe80::20f:1fff:fe12:e733')
+   &gt;&gt;&gt; ipv6[0:4]
+   [65152, 0, 0, 0]
+
+   &gt;&gt;&gt; IP('fe80::20f:1fff:fe12:e733/64').cidr()
+   CIDR('fe80::/64')
 </pre>
+  <p>See those classes for details on the functionality they provide.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -139,8 +168,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#netmask_bits" class="summary-sig-name">netmask_bits</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
       If this address is a valid netmask, the number of non-zero bits are 
-      returned, otherwise it returns the width (in bits) for the given 
-      address type (IPv4: 32, IPv6: 128).</td>
+      returned, otherwise it returns the width in bits for based on the 
+      version, 32 for IPv4 and 128 for IPv6.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.netmask_bits">source&nbsp;code</a></span>
             
@@ -158,7 +187,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#reverse_dns" class="summary-sig-name">reverse_dns</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      The reverse DNS lookup string for this IP address.</td>
+      The reverse DNS lookup string for this IP address</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.reverse_dns">source&nbsp;code</a></span>
             
@@ -214,8 +243,8 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#cidr" class="summary-sig-name">cidr</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      A valid <a href="netaddr.address.CIDR-class.html" 
-      class="link">CIDR</a> object for this IP address.</td>
+      A <a href="netaddr.address.CIDR-class.html" class="link">CIDR</a> 
+      object based on this IP address</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.cidr">source&nbsp;code</a></span>
             
@@ -231,10 +260,48 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#wildcard" class="summary-sig-name">wildcard</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A <a href="netaddr.address.Wildcard-class.html" 
+      class="link">Wildcard</a> object based on this IP address</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.wildcard">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#iprange" class="summary-sig-name">iprange</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A <a href="netaddr.address.CIDR-class.html" class="link">CIDR</a> 
+      object based on this IP address</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.iprange">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#ipv4" class="summary-sig-name">ipv4</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      A new <a href="netaddr.address.IP-class.html" class="link">IP</a> 
-      object numerically equivalent this address.</td>
+      A new version 4 <a href="netaddr.address.IP-class.html" 
+      class="link">IP</a> object numerically equivalent this address.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.ipv4">source&nbsp;code</a></span>
             
@@ -250,10 +317,10 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#ipv6" class="summary-sig-name">ipv6</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns:
-      A new <a href="netaddr.address.IP-class.html" class="link">IP</a> 
-      object numerically equivalent this address.</td>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#ipv6" class="summary-sig-name">ipv6</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ipv4_compatible</span>=<span class="summary-sig-default">False</span>)</span><br />
+      <b>Please Note:</b> the IPv4-Mapped IPv6 address format is now 
+      considered deprecated.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.ipv6">source&nbsp;code</a></span>
             
@@ -271,8 +338,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_unicast" class="summary-sig-name">is_unicast</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      <code>True</code> if this address is unicast, <code>False</code> 
-      otherwise.</td>
+      <code>True</code> if this IP is unicast, <code>False</code> otherwise</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_unicast">source&nbsp;code</a></span>
             
@@ -288,10 +354,29 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_loopback" class="summary-sig-name">is_loopback</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this IP is loopback address (not for network 
+      transmission), <code>False</code> otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_loopback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_multicast" class="summary-sig-name">is_multicast</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      <code>True</code> if this address is multicast, <code>False</code> 
-      otherwise.</td>
+      <code>True</code> if this IP is multicast, <code>False</code> 
+      otherwise</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_multicast">source&nbsp;code</a></span>
             
@@ -307,9 +392,122 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_private" class="summary-sig-name">is_private</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this IP is for internal/private use only (i.e.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_private">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_link_local" class="summary-sig-name">is_link_local</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this IP is link-local address <code>False</code>
+      otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_link_local">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_reserved" class="summary-sig-name">is_reserved</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this IP is in IANA reserved range, 
+      <code>False</code> otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_reserved">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_ipv4_mapped" class="summary-sig-name">is_ipv4_mapped</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this IP is IPv4-compatible IPv6 address, 
+      <code>False</code> otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_ipv4_mapped">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#is_ipv4_compat" class="summary-sig-name">is_ipv4_compat</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      <code>True</code> if this IP is IPv4-mapped IPv6 address, 
+      <code>False</code> otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_ipv4_compat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#info" class="summary-sig-name">info</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      A record dict containing IANA registration details for this IP 
+      address if available, None otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#IP.info">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      The common string representation for this IP address.</td>
+      common string representation for this IP address</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.__str__">source&nbsp;code</a></span>
             
@@ -327,8 +525,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.IP-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      An executable Python statement that can recreate an object with an 
-      equivalent state.</td>
+      executable Python string to recreate equivalent object.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#IP.__repr__">source&nbsp;code</a></span>
             
@@ -341,6 +538,8 @@ object --+
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.Addr-class.html">Addr</a></code></b>:
+      <code><a href="netaddr.address.Addr-class.html#__add__">__add__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__and__">__and__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__eq__">__eq__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__ge__">__ge__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__getitem__">__getitem__</a></code>,
@@ -349,15 +548,23 @@ object --+
       <code><a href="netaddr.address.Addr-class.html#__hex__">__hex__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__iadd__">__iadd__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__int__">__int__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__invert__">__invert__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__isub__">__isub__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__iter__">__iter__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__le__">__le__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__len__">__len__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__long__">__long__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__lshift__">__lshift__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__lt__">__lt__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__ne__">__ne__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__or__">__or__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__rshift__">__rshift__</a></code>,
       <code><a href="netaddr.address.Addr-class.html#__setitem__">__setitem__</a></code>,
-      <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>
+      <code><a href="netaddr.address.Addr-class.html#__sub__">__sub__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#__xor__">__xor__</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#bin">bin</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#bits">bits</a></code>,
+      <code><a href="netaddr.address.Addr-class.html#packed">packed</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -382,8 +589,8 @@ object --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.address.IP-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
- netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, F<code class="variable-ellipsis">...</code></code>
+        <a href="netaddr.address.IP-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False),
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, 16, False))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 1<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -427,6 +634,13 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="prefixlen"></a><span class="summary-name">prefixlen</span> = <code title="PrefixLenDescriptor()">PrefixLenDescriptor()</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_"></a><span class="summary-name">_</span> = <code title="255">255</code>
     </td>
   </tr>
   <tr>
@@ -535,8 +749,8 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   <dl class="fields">
     <dt>Returns:</dt>
         <dd>If this address is a valid netmask, the number of non-zero bits 
-          are returned, otherwise it returns the width (in bits) for the 
-          given address type (IPv4: 32, IPv6: 128).</dd>
+          are returned, otherwise it returns the width in bits for based on
+          the version, 32 for IPv4 and 128 for IPv6.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -557,7 +771,7 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>The reverse DNS lookup string for this IP address.</dd>
+        <dd>The reverse DNS lookup string for this IP address</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -622,8 +836,52 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>A valid <a href="netaddr.address.CIDR-class.html" 
-          class="link">CIDR</a> object for this IP address.</dd>
+        <dd>A <a href="netaddr.address.CIDR-class.html" class="link">CIDR</a>
+          object based on this IP address</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="wildcard"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">wildcard</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.wildcard">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A <a href="netaddr.address.Wildcard-class.html" 
+          class="link">Wildcard</a> object based on this IP address</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="iprange"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">iprange</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.iprange">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A <a href="netaddr.address.CIDR-class.html" class="link">CIDR</a>
+          object based on this IP address</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -644,23 +902,15 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>A new <a href="netaddr.address.IP-class.html" class="link">IP</a>
-          object numerically equivalent this address.
-          <ul>
-            <li>
-              If its address type is IPv4.
-            </li>
-            <li>
-              If object's address type is IPv6 and its value is mappable to
-              IPv4, a new IPv4 <a href="netaddr.address.IP-class.html" 
-              class="link">IP</a> object is returned instead.
-            </li>
-            <li>
-              Raises an <a href="netaddr.AddrConversionError-class.html" 
-              class="link">AddrConversionError</a> if IPv6 address is not 
-              mappable to IPv4.
-            </li>
-          </ul></dd>
+        <dd>A new version 4 <a href="netaddr.address.IP-class.html" 
+          class="link">IP</a> object numerically equivalent this address. 
+          If this object is already IPv4 then a copy is returned. If this 
+          object is IPv6 and its value is compatible with IPv4, a new IPv4 
+          <a href="netaddr.address.IP-class.html" class="link">IP</a> 
+          object is returned.
+          <p>Raises an <a href="netaddr.AddrConversionError-class.html" 
+          class="link">AddrConversionError</a> is IPv6 address cannot be 
+          converted.</p></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -671,32 +921,30 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">ipv6</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ipv6</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ipv4_compatible</span>=<span class="sig-default">False</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.ipv6">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  
+  <p><b>Please Note:</b> the IPv4-Mapped IPv6 address format is now 
+  considered deprecated. Reference: RFC 4291</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ipv4_compatible</code></strong> - If <code>True</code> returns an IPv4-Mapped address 
+          (::ffff:x.x.x.x), an IPv4-Compatible (::x.x.x.x) address 
+          otherwise. Default: False (IPv4-Mapped).</li>
+    </ul></dd>
     <dt>Returns:</dt>
         <dd>A new <a href="netaddr.address.IP-class.html" class="link">IP</a>
-          object numerically equivalent this address.
-          <ul>
-            <li>
-              If object's address type is IPv6.
-            </li>
-            <li>
-              If object's address type is IPv4 a new IPv6 <a 
-              href="netaddr.address.IP-class.html" class="link">IP</a> 
-              object, as a IPv4 mapped address is returned instead. Uses 
-              the preferred IPv4 embedded in IPv6 form - 
-              <code>::ffff:x.x.x.x</code> ('mapped' address) over the (now 
-              deprecated) form - <code>::x.x.x.x</code> ('compatible' 
-              address). <b>See RFC 4921 for details</b>.
-            </li>
-          </ul></dd>
+          version 6 object that is numerically equivalent this address. If 
+          this object is already IPv6 then a copy of this object is 
+          returned. If this object is IPv4, a new version 6 <a 
+          href="netaddr.address.IP-class.html" class="link">IP</a> object 
+          is returned.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -717,8 +965,31 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd><code>True</code> if this address is unicast, <code>False</code> 
-          otherwise.</dd>
+        <dd><code>True</code> if this IP is unicast, <code>False</code> 
+          otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_loopback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_loopback</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_loopback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this IP is loopback address (not for network
+          transmission), <code>False</code> otherwise. References: RFC 3330
+          and 4291.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -739,8 +1010,141 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd><code>True</code> if this address is multicast, 
+        <dd><code>True</code> if this IP is multicast, <code>False</code> 
+          otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_private"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_private</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_private">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this IP is for internal/private use only 
+          (i.e. non-public), <code>False</code> otherwise. Reference: RFCs 
+          1918, 3330, 4193, 3879 and 2365.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_link_local"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_link_local</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_link_local">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this IP is link-local address 
+          <code>False</code> otherwise. Reference: RFCs 3927 and 4291.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_reserved"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_reserved</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_reserved">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this IP is in IANA reserved range, 
+          <code>False</code> otherwise. Reference: RFCs 3330 and 3171.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_ipv4_mapped"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_ipv4_mapped</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_ipv4_mapped">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this IP is IPv4-compatible IPv6 address, 
           <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_ipv4_compat"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_ipv4_compat</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.is_ipv4_compat">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if this IP is IPv4-mapped IPv6 address, 
+          <code>False</code> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="info"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">info</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#IP.info">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A record dict containing IANA registration details for this IP 
+          address if available, None otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -762,7 +1166,7 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   <p>str(x)</p>
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>The common string representation for this IP address.</dd>
+        <dd>common string representation for this IP address</dd>
     <dt>Overrides:
         object.__str__
     </dt>
@@ -787,8 +1191,7 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   <p>repr(x)</p>
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>An executable Python statement that can recreate an object with 
-          an equivalent state.</dd>
+        <dd>executable Python string to recreate equivalent object.</dd>
     <dt>Overrides:
         object.__repr__
     </dt>
@@ -817,8 +1220,8 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
- netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-group">)</code>
+<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False)<code class="variable-op">,</code>
+ netaddr.address.IPv6Strategy(128, 16, ':', 6, 16, False)<code class="variable-group">)</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -882,7 +1285,7 @@ xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xc\
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:24 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

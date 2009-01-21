@@ -63,14 +63,14 @@
 <pre class="base-tree">
 object --+    
          |    
- <a href="netaddr.address.AddrRange-class.html">AddrRange</a> --+
+   <a href="netaddr.address.IPRange-class.html">IPRange</a> --+
              |
             <strong class="uidshort">Wildcard</strong>
 </pre>
 
 <hr />
-<p>A block of contiguous IPv4 network addresses defined using a wildcard 
-  style syntax.</p>
+<p>Represents blocks of IPv4 addresses using a wildcard or glob style 
+  syntax.</p>
   <p>Individual octets can be represented using the following shortcuts 
   :</p>
   <ol start="1">
@@ -112,11 +112,14 @@ object --+
    '*.*.*.*'           #   the whole IPv4 address space
 </pre>
   <h1 class="heading">Aside</h1>
-    <p><i>Wildcard ranges are not directly equivalent to CIDR ranges as 
+    <p><i>Wildcard ranges are not directly equivalent to CIDR blocks as 
     they can represent address ranges that do not fall on strict bit mask 
-    boundaries.</i></p>
-    <p><i>All CIDR ranges can always be represented as wildcard ranges but 
-    the reverse isn't true in every case.</i></p>
+    boundaries. They are very suitable in configuration files being more 
+    obvious and readable than their CIDR equivalents, especially for admins
+    and users without much networking knowledge or experience.</i></p>
+    <p><i>All CIDR blocks can always be represented as wildcard ranges but 
+    the reverse is not true. Wildcards are almost but not quite as flexible
+    as IPRange objects.</i></p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -134,29 +137,10 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Wildcard-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">wildcard</span>,
-        <span class="summary-sig-arg">klass</span>=<span class="summary-sig-default">&lt;class 'netaddr.address.IP'&gt;</span>)</span><br />
+        <span class="summary-sig-arg">fmt</span>=<span class="summary-sig-default">&lt;class 'netaddr.address.IP'&gt;</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.__init__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Wildcard-class.html#cidr" class="summary-sig-name">cidr</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns:
-      A valid <a href="netaddr.address.CIDR-class.html" 
-      class="link">CIDR</a> object for this wildcard.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.cidr">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -189,8 +173,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Wildcard-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      An executable Python statement that can recreate an object with an 
-      equivalent state.</td>
+      executable Python string to recreate equivalent object.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.__repr__">source&nbsp;code</a></span>
             
@@ -202,22 +185,29 @@ object --+
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.AddrRange-class.html">AddrRange</a></code></b>:
-      <code><a href="netaddr.address.AddrRange-class.html#__contains__">__contains__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__eq__">__eq__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__ge__">__ge__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__getitem__">__getitem__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__gt__">__gt__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__hash__">__hash__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__iadd__">__iadd__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__isub__">__isub__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__iter__">__iter__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__le__">__le__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__len__">__len__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__lt__">__lt__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#__ne__">__ne__</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#data_flavour">data_flavour</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#size">size</a></code>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.IPRange-class.html">IPRange</a></code></b>:
+      <code><a href="netaddr.address.IPRange-class.html#__contains__">__contains__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__eq__">__eq__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__ge__">__ge__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__getitem__">__getitem__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__gt__">__gt__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__hash__">__hash__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__iadd__">__iadd__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__isub__">__isub__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__iter__">__iter__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__le__">__le__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__len__">__len__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__lt__">__lt__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#__ne__">__ne__</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#adjacent">adjacent</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#cidrs">cidrs</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#format">format</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#iprange">iprange</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#issubnet">issubnet</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#issupernet">issupernet</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#overlaps">overlaps</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#size">size</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#wildcard">wildcard</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -268,15 +258,14 @@ object --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.address.Wildcard-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
- netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, F<code class="variable-ellipsis">...</code></code>
+        <a href="netaddr.address.Wildcard-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False))"><code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 1<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="ADDR_TYPES"></a><span class="summary-name">ADDR_TYPES</span> = <code title="(0, 4, 6)"><code class="variable-group">(</code>0<code class="variable-op">, </code>4<code class="variable-op">, </code>6<code class="variable-group">)</code></code>
+        <a name="ADDR_TYPES"></a><span class="summary-name">ADDR_TYPES</span> = <code title="(0, 4)"><code class="variable-group">(</code>0<code class="variable-op">, </code>4<code class="variable-group">)</code></code>
     </td>
   </tr>
 <tr>
@@ -297,14 +286,14 @@ object --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="klass"></a><span class="summary-name">klass</span> = <code title="KlassDescriptor(IP)">KlassDescriptor(IP)</code>
+        <a name="fmt"></a><span class="summary-name">fmt</span> = <code title="FormatDescriptor(IP)">FormatDescriptor(IP)</code>
     </td>
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.AddrRange-class.html">AddrRange</a></code></b>:
-      <code><a href="netaddr.address.AddrRange-class.html#first">first</a></code>,
-      <code><a href="netaddr.address.AddrRange-class.html#last">last</a></code>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="netaddr.address.IPRange-class.html">IPRange</a></code></b>:
+      <code><a href="netaddr.address.IPRange-class.html#first">first</a></code>,
+      <code><a href="netaddr.address.IPRange-class.html#last">last</a></code>
       </p>
     </td>
   </tr>
@@ -369,7 +358,7 @@ object --+
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">wildcard</span>,
-        <span class="sig-arg">klass</span>=<span class="sig-default">&lt;class 'netaddr.address.IP'&gt;</span>)</span>
+        <span class="sig-arg">fmt</span>=<span class="sig-default">&lt;class 'netaddr.address.IP'&gt;</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -382,40 +371,15 @@ object --+
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>wildcard</code></strong> - a valid IPv4 wildcard address</li>
-        <li><strong class="pname"><code>klass</code></strong> - (optional) class used to create each return object. Default: <a 
+        <li><strong class="pname"><code>fmt</code></strong> - (optional) callable used on return values. Default: <a 
           href="netaddr.address.IP-class.html" class="link">IP</a> objects.
           See <a href="netaddr.address-module.html#nrange" 
-          class="link">nrange()</a> documentations for additional details 
-          on options.</li>
+          class="link">nrange()</a> documentations for more details on the 
+          various options..</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
     </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="cidr"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">cidr</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#Wildcard.cidr">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>A valid <a href="netaddr.address.CIDR-class.html" 
-          class="link">CIDR</a> object for this wildcard. If conversion 
-          fails an <a href="netaddr.AddrConversionError-class.html" 
-          class="link">AddrConversionError</a> is raised as not all 
-          wildcards ranges are valid CIDR ranges.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -461,8 +425,7 @@ object --+
   <p>repr(x)</p>
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>An executable Python statement that can recreate an object with 
-          an equivalent state.</dd>
+        <dd>executable Python string to recreate equivalent object.</dd>
     <dt>Overrides:
         object.__repr__
     </dt>
@@ -491,8 +454,7 @@ object --+
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
- netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-group">)</code>
+<code class="variable-group">(</code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False)<code class="variable-group">)</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -530,7 +492,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:24 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

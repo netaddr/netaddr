@@ -66,36 +66,19 @@
         representing various network address types.</em>
     <ul>
     <li> <strong class="uidlink"><a href="netaddr.address.EUI-class.html">netaddr.address.EUI</a></strong>:
-      <em class="summary">EUI objects represent IEEE Extended Unique Identifiers.</em>
+      <em class="summary">Represents an IEEE EUI (Extended Unique Identifier) indentifier.</em>
     </li>
     <li> <strong class="uidlink"><a href="netaddr.address.IP-class.html">netaddr.address.IP</a></strong>:
-      <em class="summary">A class whose objects represent Internet Protocol network 
-        addresses.</em>
-    </li>
-    </ul>
-    </li>
-    <li> <strong class="uidlink"><a href="netaddr.address.AddrRange-class.html">netaddr.address.AddrRange</a></strong>:
-      <em class="summary">A block of contiguous network addresses bounded by an arbitrary 
-        start and stop address.</em>
-    <ul>
-    <li> <strong class="uidlink"><a href="netaddr.address.CIDR-class.html">netaddr.address.CIDR</a></strong>:
-      <em class="summary">A block of contiguous IPv4 or IPv6 network addresses defined by a 
-        base network address and a bitmask prefix or subnet mask address 
-        indicating the size/extent of the subnet.</em>
-    </li>
-    <li> <strong class="uidlink"><a href="netaddr.address.Wildcard-class.html">netaddr.address.Wildcard</a></strong>:
-      <em class="summary">A block of contiguous IPv4 network addresses defined using a 
-        wildcard style syntax.</em>
+      <em class="summary">Represents <b>individual</b> IPv4 and IPv6 addresses.</em>
     </li>
     </ul>
     </li>
     <li> <strong class="uidlink"><a href="netaddr.strategy.AddrStrategy-class.html">netaddr.strategy.AddrStrategy</a></strong>:
-      <em class="summary">Very basic support for all common operations performed on each 
-        network type.</em>
+      <em class="summary">Basic support for common operations performed on each address type</em>
     <ul>
     <li> <strong class="uidlink"><a href="netaddr.strategy.EUI48Strategy-class.html">netaddr.strategy.EUI48Strategy</a></strong>:
       <em class="summary">Implements the operations that can be performed on an IEEE 48-bit 
-        EUI (Extended Unique Identifer).</em>
+        EUI (Extended Unique Identifer) a.k.a.</em>
     </li>
     <li> <strong class="uidlink"><a href="netaddr.strategy.IPv4StrategyStd-class.html">netaddr.strategy.IPv4StrategyStd</a></strong>:
       <em class="summary">A 'safe' <a href="netaddr.strategy.AddrStrategy-class.html" 
@@ -129,27 +112,114 @@
       <em class="summary">Common base class for all non-exit exceptions.</em>
     <ul>
     <li> <strong class="uidlink"><a href="netaddr.AddrConversionError-class.html">netaddr.AddrConversionError</a></strong>:
-      <em class="summary">Conversion between address types or notations failed.</em>
+      <em class="summary">An Exception indicating a failure to convert between address types 
+        or notations.</em>
     </li>
     <li> <strong class="uidlink"><a href="netaddr.AddrFormatError-class.html">netaddr.AddrFormatError</a></strong>:
-      <em class="summary">Network address format not recognised.</em>
+      <em class="summary">An Exception indicating that a network address format is not 
+        recognised.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.eui.NotRegisteredError-class.html">netaddr.eui.NotRegisteredError</a></strong>:
+      <em class="summary">An Exception indicating that an OUI or IAB was not found in the 
+        IEEE Registry.</em>
     </li>
     </ul>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="netaddr.address.KlassDescriptor-class.html">netaddr.address.KlassDescriptor</a></strong>:
-      <em class="summary">A descriptor that checks klass (data flavour) property assignments 
-        for validity.</em>
+    <li> <strong class="uidlink"><a href="netaddr.address.FormatDescriptor-class.html">netaddr.address.FormatDescriptor</a></strong>:
+      <em class="summary">A descriptor that checks formatter property assignments for 
+        validity.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.eui.IAB-class.html">netaddr.eui.IAB</a></strong>:
+      <em class="summary">Represents an individual IEEE IAB (Individual Address Block) 
+        identifier.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.address.IPRange-class.html">netaddr.address.IPRange</a></strong>:
+      <em class="summary">Represents arbitrary contiguous blocks of IPv4 and IPv6 addresses 
+        using only a lower and upper bound IP address.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.address.CIDR-class.html">netaddr.address.CIDR</a></strong>:
+      <em class="summary">Represents blocks of IPv4 and IPv6 addresses using CIDR (Classless 
+        Inter-Domain Routing) notation.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.address.Wildcard-class.html">netaddr.address.Wildcard</a></strong>:
+      <em class="summary">Represents blocks of IPv4 addresses using a wildcard or glob style 
+        syntax.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.eui.OUI-class.html">netaddr.eui.OUI</a></strong>:
+      <em class="summary">Represents an individual IEEE OUI (Organisationally Unique 
+        Identifier) identifier.</em>
     </li>
     <li> <strong class="uidlink"><a href="netaddr.address.PrefixLenDescriptor-class.html">netaddr.address.PrefixLenDescriptor</a></strong>:
       <em class="summary">A descriptor that checks prefixlen property assignments for 
         validity based on address type.</em>
     </li>
+    <li> <strong class="uidlink"><a href="netaddr.core.Publisher-class.html">netaddr.core.Publisher</a></strong>:
+      <em class="summary">A 'push' publisher that maintains a list of Subscriber objects 
+        notifying them of state changes when its subclasses encounter 
+        events of interest.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.eui.IABIndexParser-class.html">netaddr.eui.IABIndexParser</a></strong>:
+      <em class="summary">A parser that processes IAB (Individual Address Block) registration
+        file data published by the IEEE.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.ip.LineRecordParser-class.html">netaddr.ip.LineRecordParser</a></strong>:
+      <em class="summary">A configurable Parser that understands how to parse line based 
+        records.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.ip.IPv4Parser-class.html">netaddr.ip.IPv4Parser</a></strong>:
+      <em class="summary">A LineRecordParser that understands how to parse and retrieve data 
+        records from the IANA IPv4 address space file.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.ip.IPv6Parser-class.html">netaddr.ip.IPv6Parser</a></strong>:
+      <em class="summary">A LineRecordParser that understands how to parse and retrieve data 
+        records from the IANA IPv6 address space file.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.ip.MulticastParser-class.html">netaddr.ip.MulticastParser</a></strong>:
+      <em class="summary">A LineParser that knows how to process the IANA IPv4 multicast 
+        address allocation file.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.eui.OUIIndexParser-class.html">netaddr.eui.OUIIndexParser</a></strong>:
+      <em class="summary">A parser that processes OUI (Organisationally Unique Identifier) 
+        registration file data published by the IEEE.</em>
+    </li>
+    </ul>
+    </li>
     <li> <strong class="uidlink"><a href="netaddr.address.StrategyDescriptor-class.html">netaddr.address.StrategyDescriptor</a></strong>:
       <em class="summary">A descriptor that checks strategy property assignments for validity
         and also keeps the addr_type property in sync with any changes 
         made.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.core.Subscriber-class.html">netaddr.core.Subscriber</a></strong>:
+      <em class="summary">Abstract class defining interface expected by a Publisher that 
+        concrete subclass instances register with to receive updates from.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.ip.DictUpdater-class.html">netaddr.ip.DictUpdater</a></strong>:
+      <em class="summary">Concrete Subscriber that inserts records received from a Publisher 
+        into a dictionary.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.eui.FileIndexer-class.html">netaddr.eui.FileIndexer</a></strong>:
+      <em class="summary">Stores index data found by a parser in a CSV file</em>
+    </li>
+    <li> <strong class="uidlink"><a href="netaddr.core.PrettyPrinter-class.html">netaddr.core.PrettyPrinter</a></strong>:
+      <em class="summary">Concrete Subscriber that uses the pprint module to format all data 
+        from updates received writing them to any file-like object.</em>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink">set</strong>:
+      <em class="summary">set(iterable) --&gt; set object</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="netaddr.address.IPRangeSet-class.html">netaddr.address.IPRangeSet</a></strong>:
+      <em class="summary"><b>*EXPERIMENTAL*</b> A customised Python set class that deals with
+        collections of IPRange class and subclass instances.</em>
+    </li>
+    </ul>
     </li>
     </ul>
     </li>
@@ -185,7 +255,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:23 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

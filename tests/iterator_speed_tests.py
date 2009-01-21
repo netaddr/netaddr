@@ -106,7 +106,7 @@ FAILED! No output produced ...
             t1 = time.time()
 
 if __name__ == '__main__':
-#    import pycallgraph
-#    pycallgraph.start_trace()
+    import pycallgraph
+    pycallgraph.start_trace()
     cidr_iterator_speed_test()
-#    pycallgraph.make_dot_graph('callgraph_IPv6.png')
+    pycallgraph.make_dot_graph('callgraph_IPv4.png')

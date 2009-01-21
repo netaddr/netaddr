@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>netaddr.address.KlassDescriptor</title>
+  <title>netaddr.ip.DictUpdater</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,8 +43,8 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.address-module.html" onclick="show_private();">Module&nbsp;address</a> ::
-        Class&nbsp;KlassDescriptor
+        <a href="netaddr.ip-module.html">Package&nbsp;ip</a> ::
+        Class&nbsp;DictUpdater
       </span>
     </td>
     <td>
@@ -52,23 +52,25 @@
         <!-- hide/show private -->
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="netaddr.address.KlassDescriptor-class.html"
+            >]&nbsp;|&nbsp;<a href="netaddr.ip.DictUpdater-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class KlassDescriptor</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.address-pysrc.html#KlassDescriptor">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class DictUpdater</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-object --+
-         |
-        <strong class="uidshort">KlassDescriptor</strong>
+     object --+    
+              |    
+<a href="netaddr.core.Subscriber-class.html">core.Subscriber</a> --+
+                  |
+                 <strong class="uidshort">DictUpdater</strong>
 </pre>
 
 <hr />
-<p>A descriptor that checks klass (data flavour) property assignments for
-  validity.</p>
+<p>Concrete Subscriber that inserts records received from a Publisher 
+  into a dictionary.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -84,11 +86,13 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.KlassDescriptor-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">default_klass</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.ip.DictUpdater-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dct</span>,
+        <span class="summary-sig-arg">topic</span>,
+        <span class="summary-sig-arg">unique_key</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#KlassDescriptor.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -102,11 +106,12 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__set__"></a><span class="summary-sig-name">__set__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">instance</span>,
-        <span class="summary-sig-arg">value</span>)</span></td>
+          <td><span class="summary-sig"><a href="netaddr.ip.DictUpdater-class.html#update" class="summary-sig-name">update</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      Callback function used by Publisher to notify this Subscriber about 
+      an update.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.address-pysrc.html#KlassDescriptor.__set__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.update">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -163,22 +168,48 @@ object --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">default_klass</span>)</span>
+        <span class="sig-arg">dct</span>,
+        <span class="sig-arg">topic</span>,
+        <span class="sig-arg">unique_key</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.address-pysrc.html#KlassDescriptor.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <p>Constructor.</p>
+  <p>dct - lookup dict or dict like object to insert records into.</p>
+  <p>topic - high-level category name of data to be processed.</p>
+  <p>unique_key - key name in data dict that uniquely identifies it.</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>default_klass</code></strong> - the default class to use if klass property is set to None.</li>
-    </ul></dd>
     <dt>Overrides:
         object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="update"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">update</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.update">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Callback function used by Publisher to notify this Subscriber about an
+  update. Stores topic based information into dictionary passed to 
+  constructor.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="netaddr.core.Subscriber-class.html#update">core.Subscriber.update</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -215,7 +246,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:24 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

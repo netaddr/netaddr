@@ -59,8 +59,8 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module strategy</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.strategy-pysrc.html">source&nbsp;code</a></span></p>
-<p>network address type logic, constants used to identify them and shared
-  strategy objects.</p>
+<p>network address conversion logic, constants and shared strategy 
+  objects.</p>
 
 <!-- ==================== CLASSES ==================== -->
 <a name="section-Classes"></a>
@@ -75,8 +75,7 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="netaddr.strategy.AddrStrategy-class.html" class="summary-name">AddrStrategy</a><br />
-      Very basic support for all common operations performed on each 
-        network type.
+      Basic support for common operations performed on each address type
     </td>
   </tr>
 <tr>
@@ -112,7 +111,7 @@
     </td><td class="summary">
         <a href="netaddr.strategy.EUI48Strategy-class.html" class="summary-name">EUI48Strategy</a><br />
       Implements the operations that can be performed on an IEEE 48-bit 
-        EUI (Extended Unique Identifer).
+        EUI (Extended Unique Identifer) a.k.a.
     </td>
   </tr>
 </table>
@@ -129,14 +128,14 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="USE_IPV4_OPT"></a><span class="summary-name">USE_IPV4_OPT</span> = <code title="True">True</code><br />
-      Use IPv4 optimised strategy class? Default: True
+      Use optimised IPv4 strategy? Default: True
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.strategy-module.html#ST_IPV4" class="summary-name">ST_IPV4</a> = <code title="netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)">netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False<code class="variable-ellipsis">...</code></code><br />
+        <a href="netaddr.strategy-module.html#ST_IPV4" class="summary-name">ST_IPV4</a> = <code title="netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False)">netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, F<code class="variable-ellipsis">...</code></code><br />
       A shared strategy object supporting all operations on IPv4 addresses.
     </td>
   </tr>
@@ -144,7 +143,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.strategy-module.html#ST_IPV6" class="summary-name">ST_IPV6</a> = <code title="netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)">netaddr.address.IPv6Strategy(128, 16, ':', 6, True, <code class="variable-ellipsis">...</code></code><br />
+        <a href="netaddr.strategy-module.html#ST_IPV6" class="summary-name">ST_IPV6</a> = <code title="netaddr.address.IPv6Strategy(128, 16, ':', 6, 16, False)">netaddr.address.IPv6Strategy(128, 16, ':', 6, 16, Fa<code class="variable-ellipsis">...</code></code><br />
       A shared strategy object supporting all operations on IPv6 addresses.
     </td>
   </tr>
@@ -152,7 +151,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.strategy-module.html#ST_EUI48" class="summary-name">ST_EUI48</a> = <code title="netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)">netaddr.address.EUI48Strategy(48, 8, '-', 48, True,<code class="variable-ellipsis">...</code></code><br />
+        <a href="netaddr.strategy-module.html#ST_EUI48" class="summary-name">ST_EUI48</a> = <code title="netaddr.address.EUI48Strategy(48, 8, '-', 48, 16, True)">netaddr.address.EUI48Strategy(48, 8, '-', 48, 16, T<code class="variable-ellipsis">...</code></code><br />
       A shared strategy object supporting all operations on EUI-48/MAC 
       addresses.
     </td>
@@ -161,7 +160,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.strategy-module.html#ST_EUI64" class="summary-name">ST_EUI64</a> = <code title="netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)">netaddr.address.AddrStrategy(64, 8, '-', 64, True, <code class="variable-ellipsis">...</code></code><br />
+        <a name="ST_EUI64"></a><span class="summary-name">ST_EUI64</span> = <code title="netaddr.address.AddrStrategy(64, 8, '-', 64, 16, True)">netaddr.address.AddrStrategy(64, 8, '-', 64, 16, True)</code><br />
       A shared strategy object supporting all operations on EUI-64 
       addresses.
     </td>
@@ -189,7 +188,7 @@
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)
+netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False)
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -208,7 +207,7 @@ netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)
+netaddr.address.IPv6Strategy(128, 16, ':', 6, 16, False)
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -227,26 +226,7 @@ netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="ST_EUI64"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">ST_EUI64</h3>
-  <p>A shared strategy object supporting all operations on EUI-64 
-  addresses.</p>
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)
+netaddr.address.EUI48Strategy(48, 8, '-', 48, 16, True)
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -284,7 +264,7 @@ netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:23 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

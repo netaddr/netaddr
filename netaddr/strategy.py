@@ -5,23 +5,22 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-network address type logic, constants used to identify them and shared
-strategy objects.
+network address conversion logic, constants and shared strategy objects.
 """
 import socket as _socket
 import struct as _struct
+import re as _re
 
-USE_IPV4_OPT=True   #: Use IPv4 optimised strategy class? Default: True
+USE_IPV4_OPT=True   #: Use optimised IPv4 strategy? Default: True
 
 try:
-    #   The following call erroneous raises errors on various Python
-    #   implementations.
+    #   Detects a common bug in various Python implementations.
     _socket.inet_aton('255.255.255.255')
 except:
     USE_IPV4_OPT=False
 
 from netaddr import BIG_ENDIAN_PLATFORM, AT_UNSPEC, AT_INET, AT_INET6, \
-                    AT_LINK, AT_EUI64, AT_NAMES
+                    AT_LINK, AT_EUI64, AT_NAMES, AddrFormatError
 
 #-----------------------------------------------------------------------------
 def _BYTES_TO_BITS():
@@ -43,33 +42,52 @@ _BYTES_TO_BITS = _BYTES_TO_BITS()
 
 #-----------------------------------------------------------------------------
 class AddrStrategy(object):
-    """
-    Very basic support for all common operations performed on each network
-    type.
+    """Basic support for common operations performed on each address type"""
 
-    There are usually subclasses for each address type that over-ride methods
-    implemented here to optimise their performance and add additional
-    features.
-    """
-    def __init__(self, width, word_size, delimiter, word_fmt='%x',
-                 addr_type=AT_UNSPEC, hex_words=True, to_upper=False):
+    #: Lookup table for struct module format strings.
+    STRUCT_FORMATS = {
+         8 : 'B',   # unsigned char
+        16 : 'H',   # unsigned short
+        32 : 'I',   # unsigned int
+    }
+
+    def __init__(self, width, word_size, word_sep, word_fmt='%x',
+                 addr_type=AT_UNSPEC, word_base=16, uppercase=False):
+        """
+        Constructor.
+
+        @param width: size of address in bits.
+            (e.g. 32 - IPv4, 48 - MAC, 128 - IPv6)
+
+        @param word_size: size of each word.
+            (e.g. 8 - octets, 16 - hextets)
+
+        @param word_sep: separator between each word.
+            (e.g. '.' - IPv4, ':' - IPv6, '-' - EUI-48)
+
+        @param word_fmt: format string for each word.
+            (Default: '%x')
+
+        @param addr_type: address type.
+            (Default: AT_UNSPEC)
+
+        @param word_base: number base used to convert each word using int().
+            (Default: 16)
+
+        @param uppercase: uppercase address.
+            (Default: False)
+        """
 
         self.width = width
-        self.min_int = 0
         self.max_int = 2 ** width - 1
         self.word_size = word_size
-        self.word_count = width / word_size
-        self.min_word = 0
+        self.num_words = width / word_size
         self.max_word = 2 ** word_size - 1
-        self.delimiter = delimiter
+        self.word_sep = word_sep
         self.word_fmt  = word_fmt
-        self.hex_words = hex_words
-        self.word_base = 16
+        self.word_base = word_base
         self.addr_type = addr_type
-        self.to_upper = to_upper
-
-        if self.hex_words is False:
-            self.word_base = 10
+        self.uppercase = uppercase
 
         try:
             self.name = AT_NAMES[addr_type]
@@ -77,13 +95,10 @@ class AddrStrategy(object):
             self.name = AT_NAMES[AT_UNSPEC]
 
     def __repr__(self):
-        """
-        @return: An executable Python statement that can recreate an object
-            with an equivalent state.
-        """
+        """@return: executable Python string to recreate equivalent object"""
         return "netaddr.address.%s(%r, %r, %r, %r, %r, %r)" % \
             (self.__class__.__name__, self.width, self.word_size,
-            self.delimiter, self.addr_type, self.hex_words, self.to_upper)
+            self.word_sep, self.addr_type, self.word_base, self.uppercase)
 
     #-------------------------------------------------------------------------
     #   Binary methods.
@@ -99,13 +114,13 @@ class AddrStrategy(object):
         if not isinstance(bits, (str, unicode)):
             return False
 
-        bits = bits.replace(self.delimiter, '')
+        bits = bits.replace(self.word_sep, '')
 
         if len(bits) != self.width:
             return False
 
         try:
-            if self.min_int <= int(bits, 2) <= self.max_int:
+            if 0 <= int(bits, 2) <= self.max_int:
                 return True
         except ValueError:
             return False
@@ -118,36 +133,18 @@ class AddrStrategy(object):
         @return: A network byte order integer that is equivalent to value
             represented by network address in readable binary form.
         """
-        words = self.bits_to_words(bits)
-        return self.words_to_int(words)
-
-    def bits_to_str(self, bits):
-        """
-        @param bits: A network address in readable binary form.
-
-        @return: A network address in string form that is equivalent to value
-            represented by network address in readable binary form.
-        """
-        words = self.bits_to_words(bits)
-        return self.words_to_str(words)
-
-    def bits_to_words(self, bits):
-        """
-        @param bits: A network address in readable binary form.
-
-        @return: An integer word sequence that is equivalent to value
-            represented by network address in readable binary form.
-        """
         if not self.valid_bits(bits):
             raise ValueError('%r is not a valid binary form string for ' \
                 'address type!' % bits)
 
-        word_bits = bits.split(self.delimiter)
-        if len(word_bits) != self.word_count:
+        word_bits = bits.split(self.word_sep)
+        if len(word_bits) != self.num_words:
             raise ValueError('invalid number of words within binary form ' \
                 'string for address type!' % bits)
 
-        return tuple([int(i, 2) for i in word_bits])
+        words = tuple([int(i, 2) for i in word_bits])
+
+        return self.words_to_int(words)
 
     #-------------------------------------------------------------------------
     #   Integer methods.
@@ -163,10 +160,7 @@ class AddrStrategy(object):
         if not isinstance(int_val, (int, long)):
             return False
 
-        if self.min_int <= int_val <= self.max_int:
-            return True
-
-        return False
+        return 0 <= int_val <= self.max_int
 
     def int_to_str(self, int_val):
         """
@@ -177,9 +171,9 @@ class AddrStrategy(object):
         """
         words = self.int_to_words(int_val)
         tokens = [self.word_fmt % i for i in words]
-        addr = self.delimiter.join(tokens)
+        addr = self.word_sep.join(tokens)
 
-        if self.to_upper is True:
+        if self.uppercase is True:
             return addr.upper()
 
         return addr
@@ -192,31 +186,118 @@ class AddrStrategy(object):
             to value represented by a network byte order integer.
         """
         bit_words = []
+
         for word in self.int_to_words(int_val):
-            bits = self.word_to_bits(word)
+            bits = []
+            while word:
+                bits.append(_BYTES_TO_BITS[word&255])
+                word >>= 8
+            bits.reverse()
+            bit_str = ''.join(bits) or '0'*self.word_size
+            bits = ('0'*self.word_size+bit_str)[-self.word_size:]
             bit_words.append(bits)
 
-        return self.delimiter.join(bit_words)
+        return self.word_sep.join(bit_words)
 
-    def int_to_words(self, int_val):
+    def int_to_bin(self, int_val):
         """
         @param int_val: A network byte order integer.
 
-        @return: An integer word sequence that is equivalent to value
-            represented by a network byte order integer.
+        @return: A network address in standard binary representation format
+            that is equivalent to integer address value. Essentially a back
+            port of the bin() builtin in Python 2.6.x and higher.
+        """
+        bit_words = []
+
+        for word in self.int_to_words(int_val):
+            bits = []
+            while word:
+                bits.append(_BYTES_TO_BITS[word&255])
+                word >>= 8
+            bits.reverse()
+            bit_str = ''.join(bits) or '0'*self.word_size
+            bits = ('0'*self.word_size+bit_str)[-self.word_size:]
+            bit_words.append(bits)
+
+        return '0b' + ''.join(bit_words)
+
+    def int_to_words(self, int_val, num_words=None, word_size=None):
+        """
+        @param int_val: A network byte order integer to be split.
+
+        @param num_words: (optional) number of words expected in return value
+            tuple. Uses address type default if not specified.
+
+        @param word_size: (optional) size/width of individual words (in bits).
+             Uses address type default if not specified.
         """
         if not self.valid_int(int_val):
-            raise ValueError('%r is not a valid integer value for this ' \
-                'address type!' % int_val)
+            raise IndexError('integer %r is out of bounds!' % hex(int_val))
+
+        #   Set defaults for optional args.
+        if num_words is None:
+            num_words = self.num_words
+        if word_size is None:
+            word_size = self.word_size
+
+        max_word_size = 2 ** word_size - 1
 
         words = []
-        for i in range(self.word_count):
-            word = int_val & (2 ** self.word_size - 1)
+        for _ in range(num_words):
+            word = int_val & max_word_size
             words.append(int(word))
-            int_val >>= self.word_size
-
+            int_val >>= word_size
         words.reverse()
+
         return tuple(words)
+
+    def int_to_packed(self, int_val):
+        """
+        @param int_val: the integer to be packed.
+
+        @return: a packed string that is equivalent to value represented by a
+        network byte order integer.
+        """
+
+        words = self.int_to_words(int_val, self.num_words, self.word_size)
+
+        try:
+            fmt = '>%d%s' % (self.num_words, AddrStrategy.STRUCT_FORMATS[
+                self.word_size])
+        except KeyError:
+            raise ValueError('unsupported word size: %d!' % self.word_size)
+
+        return _struct.pack(fmt, *words)
+
+
+    #-------------------------------------------------------------------------
+    #   Packed string methods.
+    #-------------------------------------------------------------------------
+
+    def packed_to_int(self, packed_int):
+        """
+        @param packed_int: a packed string containing an unsigned integer.
+            Network byte order is assumed.
+
+        @return: A network byte order integer that is equivalent to value
+            of network address represented by packed binary string.
+        """
+        try:
+            fmt = '>%d%s' % (self.num_words, AddrStrategy.STRUCT_FORMATS[
+                self.word_size])
+        except KeyError:
+            raise ValueError('unsupported word size: %d!' % self.word_size)
+
+        words = list(_struct.unpack(fmt, packed_int))
+        words.reverse()
+
+        int_val = 0
+        for i, num in enumerate(words):
+            word = num
+            word = word << self.word_size * i
+            int_val = int_val | word
+
+        return int_val
 
     #-------------------------------------------------------------------------
     #   String methods.
@@ -232,13 +313,13 @@ class AddrStrategy(object):
         if not isinstance(addr, (str, unicode)):
             return False
 
-        tokens = addr.split(self.delimiter)
-        if len(tokens) != self.word_count:
+        tokens = addr.split(self.word_sep)
+        if len(tokens) != self.num_words:
             return False
 
         try:
             for token in tokens:
-                if not self.min_word <= int(token, self.word_base) <= \
+                if not 0 <= int(token, self.word_base) <= \
                        self.max_word:
                     return False
         except TypeError:
@@ -254,32 +335,14 @@ class AddrStrategy(object):
         @return: A network byte order integer that is equivalent to value
             represented by network address in string form.
         """
-        words = self.str_to_words(addr)
-        return self.words_to_int(words)
-
-    def str_to_bits(self, addr):
-        """
-        @param addr: A network address in string form.
-
-        @return: A network address in readable binary form that is equivalent
-            to value represented by network address in string form.
-        """
-        words = self.str_to_words(addr)
-        return self.words_to_bits(words)
-
-    def str_to_words(self, addr):
-        """
-        @param addr: A network address in string form.
-
-        @return: An integer word sequence that is equivalent in value to the
-            network address in string form.
-        """
         if not self.valid_str(addr):
             raise ValueError('%r is not a recognised string representation' \
                 ' of this address type!' % addr)
 
-        words = addr.split(self.delimiter)
-        return tuple([ int(word, self.word_base) for word in words ])
+        tokens = addr.split(self.word_sep)
+        words = [ int(token, self.word_base) for token in tokens ]
+
+        return self.words_to_int(words)
 
     #-------------------------------------------------------------------------
     #   Word list methods.
@@ -295,14 +358,14 @@ class AddrStrategy(object):
         if not hasattr(words, '__iter__'):
             return False
 
-        if len(words) != self.word_count:
+        if len(words) != self.num_words:
             return False
 
         for i in words:
             if not isinstance(i, (int, long)):
                 return False
 
-            if not self.min_word <= i <= self.max_word:
+            if not 0 <= i <= self.max_word:
                 return False
         return True
 
@@ -330,75 +393,6 @@ class AddrStrategy(object):
 
         return int_val
 
-    def words_to_str(self, words):
-        """
-        @param words: A list or tuple containing integer word values.
-
-        @return: A network address in string form that is equivalent to value
-            represented by word sequence.
-        """
-        if not self.valid_words(words):
-            raise ValueError('%r is not a valid word list!' % words)
-
-        tokens = [self.word_fmt % i for i in words]
-        addr = self.delimiter.join(tokens)
-        return addr
-
-    def words_to_bits(self, words):
-        """
-        @param words: A list or tuple containing integer word values.
-
-        @return: A network address in readable binary form that is equivalent
-            to value represented by word sequence.
-        """
-        if not self.valid_words(words):
-            raise ValueError('%r is not a valid word list!' % words)
-
-        bit_words = []
-        for word in words:
-            bits = self.word_to_bits(word)
-            bit_words.append(bits)
-
-        return self.delimiter.join(bit_words)
-
-    #-------------------------------------------------------------------------
-    #   Other methods.
-    #-------------------------------------------------------------------------
-
-    def word_to_bits(self, int_val):
-        """
-        @param int_val: An individual integer word value.
-
-        @return: An integer word value for this address type in a fixed width
-            readable binary form.
-        """
-        bits = []
-
-        while int_val:
-            bits.append(_BYTES_TO_BITS[int_val&255])
-            int_val >>= 8
-
-        bits.reverse()
-        bit_str = ''.join(bits) or '0'*self.word_size
-        return ('0'*self.word_size+bit_str)[-self.word_size:]
-
-    def description(self):
-        """
-        @return: String detailing setup of this L{AddrStrategy} instance.
-            Useful for debugging.
-        """
-        tokens = []
-        for k in sorted(self.__dict__):
-            v = self.__dict__[k]
-            if isinstance(v, bool):
-                tokens.append("%s: %r" % (k, v))
-            elif isinstance(v, (int, long)):
-                tokens.append(
-                    "%s: %r (%s)" % (k, v, hex(v).rstrip('L').lower()))
-            else:
-                tokens.append("%s: %r" % (k, v))
-        return "\n".join(tokens)
-
 #-----------------------------------------------------------------------------
 class IPv4StrategyStd(AddrStrategy):
     """
@@ -416,8 +410,7 @@ class IPv4StrategyStd(AddrStrategy):
     def __init__(self):
         """Constructor."""
         super(IPv4StrategyStd, self).__init__(width=32, word_size=8,
-              word_fmt='%d', delimiter='.', addr_type=AT_INET,
-              hex_words=False)
+              word_fmt='%d', word_sep='.', addr_type=AT_INET, word_base=10)
 
     def int_to_arpa(self, int_val):
         """
@@ -450,6 +443,26 @@ class IPv4StrategyOpt(IPv4StrategyStd):
         """Constructor."""
         super(IPv4StrategyOpt, self).__init__()
 
+    def valid_str(self, addr):
+        """
+        @param addr: An IP address in presentation (string) format.
+
+        @return: C{True} if network address in string form is valid for this
+            address type, C{False} otherwise.
+        """
+        try:
+            #   This call handles a lot of older IPv4 address formats that
+            #   it would be a lot of work to implement (many edge cases).
+            #   Please Note: only this optimised strategy class will have
+            #   the ability to parse these less common formats for the
+            #   moment.
+            _socket.inet_aton(addr)
+        except _socket.error:
+            return False
+        except TypeError:
+            return False
+        return True
+
     def str_to_int(self, addr):
         """
         @param addr: An IPv4 dotted decimal address in string form.
@@ -458,8 +471,8 @@ class IPv4StrategyOpt(IPv4StrategyStd):
             represented by the IPv4 dotted decimal address string.
         """
         if not self.valid_str(addr):
-            raise ValueError('%r is not a valid IPv4 dotted decimal' \
-                ' address string!' % addr)
+            raise ValueError('%r is not a valid IPv4 address string!' \
+                % addr)
         return _struct.unpack('>I', _socket.inet_aton(addr))[0]
 
     def int_to_str(self, int_val):
@@ -473,9 +486,13 @@ class IPv4StrategyOpt(IPv4StrategyStd):
             raise ValueError('%r is not a valid 32-bit integer!' % int_val)
         return _socket.inet_ntoa(_struct.pack('>I', int_val))
 
-    def int_to_words(self, int_val):
+    def int_to_words(self, int_val, num_words=None, word_size=None):
         """
         @param int_val: A network byte order integer.
+
+        @param num_words: (unused) *** interface compatibility only ***
+
+        @param word_size: (unused) *** interface compatibility only ***
 
         @return: An integer word (octet) sequence that is equivalent to value
             represented by network byte order integer.
@@ -511,7 +528,7 @@ class IPv6Strategy(AddrStrategy):
     def __init__(self):
         """Constructor."""
         super(self.__class__, self).__init__(addr_type=AT_INET6,
-            width=128, word_size=16, word_fmt='%x', delimiter=':')
+            width=128, word_size=16, word_fmt='%x', word_sep=':')
 
     def valid_str(self, addr):
         """
@@ -554,13 +571,13 @@ class IPv6Strategy(AddrStrategy):
 
             token_count = len(l_prefix) + len(l_suffix)
 
-            if not 0 <= token_count <= self.word_count - 1:
+            if not 0 <= token_count <= self.num_words - 1:
                 return False
 
             try:
                 for token in l_prefix + l_suffix:
                     word = int(token, 16)
-                    if not self.min_word <= word <= self.max_word:
+                    if not 0 <= word <= self.max_word:
                         return False
             except ValueError:
                 return False
@@ -576,7 +593,7 @@ class IPv6Strategy(AddrStrategy):
                     if ipv6_prefix[-1].lower() not in ('0', 'ffff'):
                         return False
                     #   IPv6 verbose IPv4 compatibility mode.
-                    if len(tokens) != (self.word_count - 1):
+                    if len(tokens) != (self.num_words - 1):
                         return False
                     ipv4_str = tokens[-1]
                     if ST_IPV4.valid_str(ipv4_str):
@@ -589,12 +606,12 @@ class IPv6Strategy(AddrStrategy):
                             ''.join(["%.2x" % i for i in ipv4_words[2:4]]))
                 else:
                     #   IPv6 verbose mode.
-                    if len(tokens) != self.word_count:
+                    if len(tokens) != self.num_words:
                         return False
                 try:
                     for token in tokens:
                         word = int(token, 16)
-                        if not self.min_word <= word <= self.max_word:
+                        if not 0 <= word <= self.max_word:
                             return False
                 except ValueError:
                     return False
@@ -696,24 +713,23 @@ class IPv6Strategy(AddrStrategy):
         if not compact:
             return super(self.__class__, self).int_to_str(int_val)
 
-        the_word_fmt = self.word_fmt
+        _word_fmt = self.word_fmt
         if word_fmt is not None:
-            the_word_fmt = word_fmt
+            _word_fmt = word_fmt
 
         if not self.valid_int(int_val):
             raise ValueError('%r is not a valid integer value supported ' \
                 'by this address type!' % int_val)
 
         tokens = []
-        for i in range(self.word_count):
+        for i in range(self.num_words):
             word = int_val & (2 ** self.word_size - 1)
-            tokens += [the_word_fmt % word]
+            tokens += [_word_fmt % word]
             int_val >>= self.word_size
 
         tokens.reverse()
 
         if compact == True:
-            #   Ahhhh... this finally works properly and is way more efficient.
             new_tokens = []
 
             positions = []
@@ -729,7 +745,7 @@ class IPv6Strategy(AddrStrategy):
                         start_index = idx
                     num_tokens += 1
                 else:
-                    if num_tokens != 0:
+                    if num_tokens > 1:
                         positions.append((num_tokens, start_index))
                     within_run = False
                     start_index = None
@@ -738,12 +754,19 @@ class IPv6Strategy(AddrStrategy):
                 new_tokens.append(token)
 
             #   Store any position not saved before loop exit.
-            if num_tokens != 0:
+            if num_tokens > 1:
                 positions.append((num_tokens, start_index))
 
-            #   Replace longest run with an empty string.
+            #   Replace first longest run with an empty string.
             if len(positions) != 0:
-                (length, start_idx) = sorted(positions)[-1]
+                #   Locate longest, left-most run of zeros.
+                positions.sort(lambda x, y: cmp(x[1], y[1]))
+                best_position = positions[0]
+                for position in positions:
+                    if position[0] > best_position[0]:
+                        best_position = position
+                #   Replace chosen zero run.
+                (length, start_idx) = best_position
                 new_tokens = new_tokens[0:start_idx] + [''] + \
                              new_tokens[start_idx+length:]
 
@@ -756,55 +779,7 @@ class IPv6Strategy(AddrStrategy):
 
             tokens = new_tokens
 
-        return ':'.join(tokens)
-
-    def bits_to_str(self, bits, compact=True, word_fmt=None):
-        """
-        @param bits: An IPv6 address in readable binary form.
-
-        @return: A network address in string form that is equivalent to value
-            represented by network address in readable binary form.
-        """
-        int_val = self.bits_to_int(bits)
-        return self.int_to_str(int_val, compact, word_fmt)
-
-    def str_to_bits(self, addr):
-        """
-        @param addr: A IPv6 address in string form.
-
-        @return: A IPv6 address in readable binary form that is equivalent
-            to value represented by network address in string form.
-        """
-        int_val = self.str_to_int(addr)
-        return self.int_to_bits(int_val)
-
-    def str_to_words(self, addr):
-        """
-        @param addr: A IPv6 address in string form.
-
-        @return: An integer word sequence that is equivalent in value to the
-            IPv6 address in string form.
-        """
-        if not self.valid_str(addr):
-            raise ValueError('%r is not a recognised string representation' \
-                ' of this address type!' % addr)
-
-        int_val = self.str_to_int(addr)
-        return self.int_to_words(int_val)
-
-    def words_to_str(self, words, compact=True, word_fmt=None):
-        """
-        @param words: A list or tuple containing an IPv6 address as integer
-            word values.
-
-        @return: An IPv6 address in string form that is equivalent to value
-            represented by word sequence.
-        """
-        if not self.valid_words(words):
-            raise ValueError('%r is not a valid word list!' % words)
-
-        int_val = self.words_to_int(words)
-        return self.int_to_str(int_val, compact, word_fmt)
+        return self.word_sep.join(tokens)
 
     def int_to_arpa(self, int_val):
         """
@@ -827,14 +802,48 @@ class EUI48Strategy(AddrStrategy):
     (Extended Unique Identifer) a.k.a. a MAC (Media Access Control) layer 2
     address.
 
-    Supports all common and uncommon MAC string formats including Cisco's
-    "triple hextet" format.
+    Supports all common (and some less common MAC string formats including
+    Cisco's 'triple hextet' format and also bare MACs that contain no
+    delimiters.
     """
-    def __init__(self, word_fmt='%02x', delimiter='-', to_upper=True):
-        """Constructor."""
+    #   Regular expression to match the numerous different MAC formats.
+    RE_MAC_FORMATS = (
+        #   2 bytes x 6 (UNIX, Windows, EUI-48)
+        '^' + ':'.join(['([0-9A-F]{1,2})'] * 6) + '$',
+        '^' + '-'.join(['([0-9A-F]{1,2})'] * 6) + '$',
+
+        #   4 bytes x 3 (Cisco)
+        '^' + ':'.join(['([0-9A-F]{1,4})'] * 3) + '$',
+        '^' + '-'.join(['([0-9A-F]{1,4})'] * 3) + '$',
+
+        #   6 bytes x 2 (PostgreSQL)
+        '^' + '-'.join(['([0-9A-F]{5,6})'] * 2) + '$',
+        '^' + ':'.join(['([0-9A-F]{5,6})'] * 2) + '$',
+
+        #   12 bytes (bare, no delimiters)
+        '^(' + ''.join(['[0-9A-F]'] * 12) + ')$',
+        '^(' + ''.join(['[0-9A-F]'] * 11) + ')$',
+    )
+    #   For efficiency, replace each string regexp with its compiled
+    #   equivalent.
+    RE_MAC_FORMATS = [_re.compile(_, _re.IGNORECASE) for _ in RE_MAC_FORMATS]
+
+    def __init__(self, word_fmt='%02x', word_sep='-', uppercase=True):
+        """
+        Constructor.
+
+        @param word_sep: separator between each word.
+            (Default: '-')
+
+        @param word_fmt: format string for each hextet.
+            (Default: '%02x')
+
+        @param uppercase: return uppercase MAC/EUI-48 addresses.
+            (Default: True)
+        """
         super(self.__class__, self).__init__(addr_type=AT_LINK, width=48,
-              word_size=8, word_fmt=word_fmt, delimiter=delimiter,
-              to_upper=to_upper)
+              word_size=8, word_fmt=word_fmt, word_sep=word_sep,
+              uppercase=uppercase)
 
     def valid_str(self, addr):
         """
@@ -845,145 +854,83 @@ class EUI48Strategy(AddrStrategy):
         if not isinstance(addr, (str, unicode)):
             return False
 
-        try:
-            if '.' in addr:
-                #   Cisco style.
-                words = [int("0x%s" % i, 0)  for i in addr.split('.')]
-                if len(words) != 3:
-                    return False
-                for i in words:
-                    if not (0 <= i <= 0xffff):
-                        return False
-            else:
-                if '-' in addr:
-                    #   Windows style.
-                    words = [int("0x%s" % i, 0)  for i in addr.split('-')]
-                elif ':' in addr:
-                    #   UNIX style.
-                    words = [int("0x%s" % i, 0)  for i in addr.split(':')]
-                else:
-                    return False
-                if len(words) != 6:
-                    return False
-                for i in words:
-                    if not (0 <= i <= 0xff):
-                        return False
-        except TypeError:
-            return False
-        except ValueError:
-            return False
+        for regexp in EUI48Strategy.RE_MAC_FORMATS:
+            match_result = regexp.findall(addr)
+            if len(match_result) != 0:
+                return True
+        return False
 
-        return True
-
-    def str_to_words(self, addr):
+    def str_to_int(self, addr):
         """
         @param addr: An EUI-48 or MAC address in string form.
 
-        @return: An integer word sequence that is equivalent in value to MAC
-            address in string form.
+        @return: A network byte order integer that is equivalent to value
+            represented by EUI-48/MAC string address.
         """
-        if not self.valid_str(addr):
-            raise ValueError('%r is not a recognised string representation' \
-                ' of this address type!' % addr)
+        words = []
+        if isinstance(addr, (str, unicode)):
+            found_match = False
+            for regexp in EUI48Strategy.RE_MAC_FORMATS:
+                match_result = regexp.findall(addr)
+                if len(match_result) != 0:
+                    found_match = True
+                    if isinstance(match_result[0], tuple):
+                        words = match_result[0]
+                    else:
+                        words = (match_result[0],)
+                    break
+            if not found_match:
+                raise AddrFormatError('%r is not a supported MAC format!' \
+                    % addr)
+        else:
+            raise TypeError('%r is not str() or unicode()!' % addr)
 
-        if ':' in addr:
-            #   UNIX style.
-            words = addr.split(':')
-            return tuple([ int(word, self.word_base) for word in words ])
-        elif '-' in addr:
-            #   Windows style.
-            words = addr.split('-')
-            return tuple([ int(word, self.word_base) for word in words ])
-        elif '.' in addr:
-            #   Cisco style.
-            words = []
-            for num in addr.split('.'):
-                octets = []
-                int_val = int(num, 16)
-                for i in range(2):
-                    word = int_val & 0xff
-                    octets.append(int(word))
-                    int_val >>= 8
-                octets.reverse()
-                words.extend(octets)
-            return tuple(words)
+        int_val = None
 
-    def bits_to_str(self, bits, delimiter=None, word_fmt=None, to_upper=True):
-        """
-        @param bits: An EUI-48 or MAC address in readable binary form.
+        if len(words) == 6:
+            #   2 bytes x 6 (UNIX, Windows, EUI-48)
+            int_val = int(''.join(['%02x' % int(w, 16) for w in words]), 16)
+        elif len(words) == 3:
+            #   4 bytes x 3 (Cisco)
+            int_val = int(''.join(['%04x' % int(w, 16) for w in words]), 16)
+        elif len(words) == 2:
+            #   6 bytes x 2 (PostgreSQL)
+            int_val = int(''.join(['%06x' % int(w, 16) for w in words]), 16)
+        elif len(words) == 1:
+            #   12 bytes (bare, no delimiters)
+            int_val = int('%012x' % int(words[0], 16), 16)
+        else:
+            raise AddrFormatError('unexpected word count in MAC address %r!' \
+                % addr)
 
-        @param delimiter: (optional) The delimiter string to be used between
-            words in string address.
+        return int_val
 
-        @param word_fmt: (optional) A Python format string used to format
-            each word of address.
-
-        @param to_upper: (optional) If True, converts hex alphabetical
-            characters to uppercase, lowercase if False.
-
-        @return: An EUI-48 or MAC address in string form that is equivalent to
-            value represented by network address in readable binary form.
-        """
-        int_val = self.bits_to_int(bits)
-        return self.int_to_str(int_val, delimiter, word_fmt, to_upper)
-
-    def int_to_str(self, int_val, delimiter=None, word_fmt=None,
-                   to_upper=True):
+    def int_to_str(self, int_val, word_sep=None, word_fmt=None):
         """
         @param int_val: A network byte order integer.
 
-        @param delimiter: (optional) The delimiter string to be used between
-            words in string address.
+        @param word_sep: (optional) The separator used between words in an
+            address string.
 
         @param word_fmt: (optional) A Python format string used to format
             each word of address.
-
-        @param to_upper: (optional) If True, converts hex alphabetical
-            characters to uppercase, lowercase if False.
 
         @return: A MAC address in string form that is equivalent to value
             represented by a network byte order integer.
         """
-        the_delimiter = self.delimiter
-        if delimiter is not None:
-            the_delimiter = delimiter
+        _word_sep = self.word_sep
+        if word_sep is not None:
+            _word_sep = word_sep
 
-        the_word_fmt = self.word_fmt
+        _word_fmt = self.word_fmt
         if word_fmt is not None:
-            the_word_fmt = word_fmt
-
-        the_to_upper = self.to_upper
-        if to_upper is not True:
-            the_to_upper = to_upper
+            _word_fmt = word_fmt
 
         words = self.int_to_words(int_val)
-        tokens = [the_word_fmt % i for i in words]
-        addr = the_delimiter.join(tokens)
+        tokens = [_word_fmt % i for i in words]
+        addr = _word_sep.join(tokens)
 
-        if the_to_upper is True:
-            return addr.upper()
-
-        return addr
-
-    def words_to_str(self, words, delimiter=None, word_fmt=None,
-                     to_upper=True):
-        """
-        @param words: A list or tuple containing integer word values.
-
-        @param delimiter: (optional) The delimiter string to be used between
-            words in string address.
-
-        @param word_fmt: (optional) A Python format string used to format
-            each word of address.
-
-        @param to_upper: (optional) If True, converts hex alphabetical
-            characters to uppercase, lowercase if False.
-
-        @return: A network address in string form that is equivalent to value
-            represented by word sequence.
-        """
-        int_val = self.words_to_int(words)
-        return self.int_to_str(int_val, delimiter, word_fmt, to_upper)
+        return addr.upper()
 
 #-----------------------------------------------------------------------------
 #   Shared strategy objects for supported address types.
@@ -1005,7 +952,7 @@ ST_EUI48 = EUI48Strategy()
 
 #: A shared strategy object supporting all operations on EUI-64 addresses.
 ST_EUI64 = AddrStrategy(addr_type=AT_EUI64, width=64, word_size=8, \
-                         word_fmt='%02x', delimiter='-', to_upper=True)
+                         word_fmt='%02x', word_sep='-', uppercase=True)
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':

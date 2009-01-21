@@ -40,13 +40,14 @@ AT_NAMES = {
 
 class AddrFormatError(Exception):
     """
-    Network address format not recognised.
+    An Exception indicating that a network address format is not recognised.
     """
     pass
 
 class AddrConversionError(Exception):
     """
-    Conversion between address types or notations failed.
+    An Exception indicating a failure to convert between address types or
+    notations.
     """
     pass
 
@@ -56,6 +57,8 @@ class AddrConversionError(Exception):
 
 from netaddr.address import nrange, IP, IPRange, IPRangeSet, CIDR, \
     Wildcard, EUI
+
+from netaddr.eui import OUI, IAB, NotRegisteredError
 
 from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 
@@ -67,13 +70,14 @@ __all__ = [
     'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',
 
     # module specific exceptions
-    'AddrFormatError', 'AddrConversionError',
+    'AddrFormatError', 'AddrConversionError', 'NotRegisteredError',
 
     # shared strategy objects
     'ST_IPV4', 'ST_IPV6', 'ST_EUI48', 'ST_EUI64',
 
     # main interface classes
-    'EUI', 'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'Wildcard',
+    'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'Wildcard',
+    'EUI', 'OUI', 'IAB',
 
     #   functions
     'nrange',

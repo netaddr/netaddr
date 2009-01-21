@@ -1,4 +1,3 @@
-
 INTRODUCTION
 ============
 
@@ -7,11 +6,9 @@ netaddr is a network address manipulation library written in pure Python.
 It supports the Pythonic manipulation of several common network address
 notations and standards, including :-
 
-- IP version 4
-- IP version 6
+- Internet Protocols version 4 and version 6 addressing
 - CIDR (Classless Inter-Domain Routing)
-- IEEE EUI-48 and EUI-64
-- MAC (Media Access Control)
+- IEEE MAC (Media Access Control), EUI-48 and EUI-64 identifiers
 
 There are many different types of addressing found within the various levels
 of a networking stack.
@@ -24,12 +21,6 @@ layer 3 (network layer) address, the differences in how they are manipulated
 by code in a library are minimal. A significant overlap exists in the number 
 and type of operations that are perform on each one.
 
-ASIDE: I was a tad surprised that Python is not better served already in this 
-area of endeavour. Perhaps Python isn't as popular with system administrators 
-as Perl and Ruby are. These other two languages are currently streets ahead of
-Python when it comes to support in this problem domain. Hopefully netaddr will
-be a new start towards redressing the balance, however minimally. Hopefully we
-can show them a thing or two about how it's done!
 
 LICENSE
 -------
@@ -38,16 +29,18 @@ This software is release under the BSD license.
 
 See the LICENSE file for full text and copyright notice.
 
+
 DEPENDENCIES
 ------------
 
-requires Python 2.3 or higher. It does not run under Python 3.x
+requires Python 2.3 or higher. It does not currently run on Python 3.x.
 
 
 INSTALLATION
 ------------
 
 See the INSTALL file for details.
+
 
 DOCUMENTATION
 -------------
@@ -82,6 +75,7 @@ CHANGES
 
 Please see the CHANGELOG for details.
 
+
 UNIT TESTS
 ----------
 
@@ -114,6 +108,91 @@ I'm quite happy that it'll work but there isn't any point in vouching for someth
 that I am not able to test all the time. If any unit tests do fail and you are 
 running this library on a natively big-endian platform please make an extra effort 
 to file bug reports.
+
+References
+----------
+
+The following is a list of all the main all external references have guided 
+netaddr's implementation and add to its functionality.
+
+IPv4 RFCs
+
+	RFC 1918 - Address Allocation for Private Internets
+		http://www.ietf.org/html/rfc1918
+
+	RFC 3330 - Special-Use IPv4 Addresses
+		http://www.ietf.org/html/rfc3330
+
+	RFC 3927 - Dynamic Configuration of IPv4 Link-Local Addresses
+		http://www.ietf.org/html/rfc3927
+
+Multicast (IPv4) RFCs
+
+	RFC 2365 - Administratively Scoped IP Multicast
+		http://www.ietf.org/html/rfc2365
+
+	RFC 3171 - IANA IPv4 Multicast Guidelines
+		http://www.ietf.org/rfc/rfc3171
+
+	RFC 3927 - Dynamic Configuration of IPv4 Link-Local Addresses
+		http://www.ietf.org/html/rfc3927
+
+IPv6 RFCs
+
+	RFC 3330 - Special-Use IPv4 Addresses
+		http://www.ietf.org/html/rfc3330
+
+	RFC 4291 - IPv6 Addressing Architecture
+		http://www.ietf.org/rfc/rfc4291
+
+	RFC 3306 - Unicast-Prefix-based IPv6 Multicast
+		http://www.ietf.org/rfc/rfc3306
+
+	RFC 3956 - The RP Address in IPv6 Multicast Address
+		http://www.ietf.org/rfc/rfc3956
+
+	RFC 3879 - Deprecating Site Local Addresses
+		http://www.ietf.org/rfc/rfc3879
+
+	RFC 4193 - Unique Local IPv6 Unicast Addresses
+		http://www.ietf.org/rfc/rfc4193
+
+	RFC 4941 - Privacy Extensions for Stateless Address
+		http://www.ietf.org/rfc/rfc4941
+
+CIDR RFCs
+
+	RFC 1338 - Supernetting: an Address Assignment and Aggregation Strategy
+		http://www.ietf.org/rfc/rfc1338
+
+	RFC 4632 - Classless Inter-domain Routing (CIDR): The Internet Address 
+			   Assignment and Aggregation Plan
+		http://www.ietf.org/rfc/rfc4632
+
+IANA online resources
+
+	IANA Protocol Registry
+		http://www.iana.org/protocols/
+
+	IPv4 Address Space
+		http://www.iana.org/assignments/ipv4-address-space
+
+	IPv6 Address Space
+		http://www.iana.org/assignments/ipv6-address-space
+
+	Multicast Registrations
+		http://www.iana.org/assignments/multicast-addresses
+
+IEEE online resources
+
+	IEEE Organisation Registry
+		http://standards.ieee.org/regauth/oui/index.shtml
+
+	OUI (Organisationally Unique Identifier) Registrations
+		http://standards.ieee.org/regauth/oui/oui.txt
+
+	IAB (Individual Address Block) Registrations
+		http://standards.ieee.org/regauth/oui/iab.txt
 
 AUTHORS
 -------

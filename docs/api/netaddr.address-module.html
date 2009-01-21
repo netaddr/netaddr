@@ -60,7 +60,7 @@
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module address</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.address-pysrc.html">source&nbsp;code</a></span></p>
 <p>network address classes (IP, EUI) and associated aggregate classes 
-  (CIDR, Wilcard, etc).</p>
+  (CIDR, Wildcard and IPRange).</p>
 
 <!-- ==================== CLASSES ==================== -->
 <a name="section-Classes"></a>
@@ -112,9 +112,9 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.address.KlassDescriptor-class.html" class="summary-name">KlassDescriptor</a><br />
-      A descriptor that checks klass (data flavour) property assignments 
-        for validity.
+        <a href="netaddr.address.FormatDescriptor-class.html" class="summary-name">FormatDescriptor</a><br />
+      A descriptor that checks formatter property assignments for 
+        validity.
     </td>
   </tr>
 <tr>
@@ -131,7 +131,7 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="netaddr.address.EUI-class.html" class="summary-name">EUI</a><br />
-      EUI objects represent IEEE Extended Unique Identifiers.
+      Represents an IEEE EUI (Extended Unique Identifier) indentifier.
     </td>
   </tr>
 <tr>
@@ -139,17 +139,16 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="netaddr.address.IP-class.html" class="summary-name">IP</a><br />
-      A class whose objects represent Internet Protocol network 
-        addresses.
+      Represents <b>individual</b> IPv4 and IPv6 addresses.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.address.AddrRange-class.html" class="summary-name">AddrRange</a><br />
-      A block of contiguous network addresses bounded by an arbitrary 
-        start and stop address.
+        <a href="netaddr.address.IPRange-class.html" class="summary-name">IPRange</a><br />
+      Represents arbitrary contiguous blocks of IPv4 and IPv6 addresses 
+        using only a lower and upper bound IP address.
     </td>
   </tr>
 <tr>
@@ -157,9 +156,8 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="netaddr.address.CIDR-class.html" class="summary-name">CIDR</a><br />
-      A block of contiguous IPv4 or IPv6 network addresses defined by a 
-        base network address and a bitmask prefix or subnet mask address 
-        indicating the size/extent of the subnet.
+      Represents blocks of IPv4 and IPv6 addresses using CIDR (Classless 
+        Inter-Domain Routing) notation.
     </td>
   </tr>
 <tr>
@@ -167,8 +165,17 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="netaddr.address.Wildcard-class.html" class="summary-name">Wildcard</a><br />
-      A block of contiguous IPv4 network addresses defined using a 
-        wildcard style syntax.
+      Represents blocks of IPv4 addresses using a wildcard or glob style 
+        syntax.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.address.IPRangeSet-class.html" class="summary-name">IPRangeSet</a><br />
+      <b>*EXPERIMENTAL*</b> A customised Python set class that deals with
+        collections of IPRange class and subclass instances.
     </td>
   </tr>
 </table>
@@ -189,9 +196,10 @@
           <td><span class="summary-sig"><a href="netaddr.address-module.html#nrange" class="summary-sig-name">nrange</a>(<span class="summary-sig-arg">start</span>,
         <span class="summary-sig-arg">stop</span>,
         <span class="summary-sig-arg">step</span>=<span class="summary-sig-default">1</span>,
-        <span class="summary-sig-arg">klass</span>=<span class="summary-sig-default">None</span>)</span><br />
-      A generator producing sequences of network addresses based on start 
-      and stop values, in intervals of step.</td>
+        <span class="summary-sig-arg">fmt</span>=<span class="summary-sig-default">None</span>)</span><br />
+      An xrange work alike generator that produces sequences of IP 
+      addresses based on start and stop addresses, in intervals of step 
+      size.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#nrange">source&nbsp;code</a></span>
             
@@ -215,10 +223,10 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="netaddr.address-module.html#AT_STRATEGIES" class="summary-name">AT_STRATEGIES</a> = <code title="{0: None,
- 4: netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False),
- 6: netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False),
- 48: netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True),
- 64: netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)}"><code class="variable-group">{</code>0<code class="variable-op">: </code>None<code class="variable-op">, </code>4<code class="variable-op">: </code>netaddr.address.IPv4StrategyOpt(3<code class="variable-ellipsis">...</code></code><br />
+ 4: netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False),
+ 6: netaddr.address.IPv6Strategy(128, 16, ':', 6, 16, False),
+ 48: netaddr.address.EUI48Strategy(48, 8, '-', 48, 16, True),
+ 64: netaddr.address.AddrStrategy(64, 8, '-', 64, 16, True)}"><code class="variable-group">{</code>0<code class="variable-op">: </code>None<code class="variable-op">, </code>4<code class="variable-op">: </code>netaddr.address.IPv4StrategyOpt(3<code class="variable-ellipsis">...</code></code><br />
       Address type to strategy object lookup dict.
     </td>
   </tr>
@@ -242,43 +250,42 @@
   <h3 class="epydoc"><span class="sig"><span class="sig-name">nrange</span>(<span class="sig-arg">start</span>,
         <span class="sig-arg">stop</span>,
         <span class="sig-arg">step</span>=<span class="sig-default">1</span>,
-        <span class="sig-arg">klass</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">fmt</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.address-pysrc.html#nrange">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>A generator producing sequences of network addresses based on start 
-  and stop values, in intervals of step.</p>
+  <p>An xrange work alike generator that produces sequences of IP addresses
+  based on start and stop addresses, in intervals of step size.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>start</code></strong> - first network address as string or instance of <a 
-          href="netaddr.address.Addr-class.html" class="link">Addr</a> 
-          (sub)class.</li>
-        <li><strong class="pname"><code>stop</code></strong> - last network address as string or instance of <a 
-          href="netaddr.address.Addr-class.html" class="link">Addr</a> 
-          (sub)class.</li>
-        <li><strong class="pname"><code>step</code></strong> - (optional) size of step between addresses in range. Default is 1.</li>
-        <li><strong class="pname"><code>klass</code></strong> - (optional) the class used to create objects returned. Default: <a
-          href="netaddr.address.Addr-class.html" class="link">Addr</a> 
-          class.
+        <li><strong class="pname"><code>start</code></strong> - first IP address string or <a 
+          href="netaddr.address.IP-class.html" class="link">IP</a> object 
+          in range.</li>
+        <li><strong class="pname"><code>stop</code></strong> - last IP address string or <a href="netaddr.address.IP-class.html"
+          class="link">IP</a> object in range</li>
+        <li><strong class="pname"><code>step</code></strong> - (optional) size of step between address in range. (Default: 1)</li>
+        <li><strong class="pname"><code>fmt</code></strong> - (optional) callable used on addresses returned. (Default: None - 
+          <a href="netaddr.address.IP-class.html" class="link">IP</a> 
+          objects). Supported options :-
           <ul>
             <li>
-              <code>str</code> returns string representation of network 
-              address
+              <code>str</code> - IP address strings
             </li>
             <li>
-              <code>int</code>, <code>long</code> and <code>hex</code> 
-              return expected values
+              <code>int</code>, <code>long</code> - IP address integer 
+              (network byte order)
             </li>
             <li>
-              <a href="netaddr.address.Addr-class.html" 
-              class="link">Addr</a> (sub)class or duck type* return objects
-              of that class. If you use your own duck class, make sure you 
-              handle both arguments <code>(addr_value, addr_type)</code> 
-              passed to the constructor.
+              <code>hex</code> - IP address as a hexadecimal number
+            </li>
+            <li>
+              <a href="netaddr.address.IP-class.html" class="link">IP</a> 
+              class/subclass or callable that accepts 
+              <code>addr_value</code> and <code>addr_type</code> arguments.
             </li>
           </ul></li>
     </ul></dd>
@@ -308,10 +315,10 @@
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 <code class="variable-group">{</code>0<code class="variable-op">: </code>None<code class="variable-op">,</code>
- 4<code class="variable-op">: </code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, False, False)<code class="variable-op">,</code>
- 6<code class="variable-op">: </code>netaddr.address.IPv6Strategy(128, 16, ':', 6, True, False)<code class="variable-op">,</code>
- 48<code class="variable-op">: </code>netaddr.address.EUI48Strategy(48, 8, '-', 48, True, True)<code class="variable-op">,</code>
- 64<code class="variable-op">: </code>netaddr.address.AddrStrategy(64, 8, '-', 64, True, True)<code class="variable-group">}</code>
+ 4<code class="variable-op">: </code>netaddr.address.IPv4StrategyOpt(32, 8, '.', 4, 10, False)<code class="variable-op">,</code>
+ 6<code class="variable-op">: </code>netaddr.address.IPv6Strategy(128, 16, ':', 6, 16, False)<code class="variable-op">,</code>
+ 48<code class="variable-op">: </code>netaddr.address.EUI48Strategy(48, 8, '-', 48, 16, True)<code class="variable-op">,</code>
+ 64<code class="variable-op">: </code>netaddr.address.AddrStrategy(64, 8, '-', 64, 16, True)<code class="variable-group">}</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -349,7 +356,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Sep 29 23:23:23 2008
+    Generated by Epydoc 3.0.1 on Wed Jan 21 01:00:23 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

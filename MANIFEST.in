@@ -5,10 +5,16 @@ include tests/ut_*.py
 include netaddr/__init__.py
 include netaddr/address.py
 include netaddr/strategy.py
+include netaddr/core.py
 
-include netaddr/external/__init__.py
-include netaddr/external/cache/*.shlv
-include netaddr/external/src/*
+include netaddr/eui/__init__.py
+include netaddr/eui/*.txt
+include netaddr/eui/*.idx
+
+include netaddr/ip/__init__.py
+include netaddr/ip/multicast-addresses
+include netaddr/ip/ipv6-address-space
+include netaddr/ip/ipv4-address-space
 
 include AUTHORS
 include CHANGELOG
@@ -16,7 +22,11 @@ include GLOSSARY
 include INSTALL
 include LICENSE
 include README
+include python-netaddr.spec
 include setup.py
+include release.py
+include setup.cfg
+include setup_egg.py
 
 global-exclude *.pyc
 global-exclude *.svn*
