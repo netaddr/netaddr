@@ -21,8 +21,21 @@ url = 'http://code.google.com/p/netaddr/'
 
 packages = [
     'netaddr',
-    'netaddr.external',
+    'netaddr.ip',
+    'netaddr.eui',
 ]
+
+package_data = {
+    'netaddr.ip': [
+        'ipv4-address-space',
+        'ipv6-address-space',
+        'multicast-addresses'
+    ],
+    'netaddr.eui': [
+        '*.txt',
+        '*.idx'
+    ],
+}
 
 license = 'BSD License',
 
@@ -33,17 +46,11 @@ common networking address notations, including :-
 * IPv4
 * IPv6
 * CIDR (Classless Inter-Domain Routing)
-* IEEE EUI-48, EUI-64 and MAC (Media Access Control)
+* IEEE MAC (Media Access Control)/EUI-48 and EUI-64
 
-Each object represents an individual address or address range and behaves as you would expect when treated like standard Python types.
+For examples see the project wiki :-
 
-For example :-
-
-If you call list() on a CIDR object, it provides an iterator yielding IP addresses.
-
-Calling len() returns the number of addresses found within the range.
-
-Indexing and/or slicing returns the addresses you'd expect. int() and hex() return the numerical value of an address in network byte order in the respective formats.
+    http://code.google.com/p/netaddr/wiki/NetAddrExamples
 """
 
 platforms = 'OS Independent'

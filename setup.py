@@ -40,6 +40,7 @@ def main():
         author_email     = release.author_email,
         url              = release.url,
         packages         = release.packages,
+        package_data     = release.package_data,
         license          = release.license,
         long_description = release.long_description,
         platforms        = release.platforms,
