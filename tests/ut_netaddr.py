@@ -1408,6 +1408,7 @@ class CIDRTests(TestCase):
             'iprange',
             'issubnet',
             'issupernet',
+            'iter_host_addrs',
             'overlaps',
 #TO_0.7:            'summarize',
             'size',

@@ -96,9 +96,9 @@ class AddrStrategy(object):
 
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object"""
-        return "netaddr.address.%s(%r, %r, %r, %r, %r, %r)" % \
-            (self.__class__.__name__, self.width, self.word_size,
-            self.word_sep, self.addr_type, self.word_base, self.uppercase)
+        return "%s(%r, %r, %r, %r, %r, %r)" %  (self.__class__.__name__,
+            self.width, self.word_size, self.word_sep, self.addr_type,
+            self.word_base, self.uppercase)
 
     #-------------------------------------------------------------------------
     #   Binary methods.
@@ -845,6 +845,22 @@ class EUI48Strategy(AddrStrategy):
               word_size=8, word_fmt=word_fmt, word_sep=word_sep,
               uppercase=uppercase)
 
+    def reset(self):
+        """
+        Resets the internal state of this strategy to safe default values.
+        """
+        #   These are the settings for EUI-48 specific formatting.
+        self.width = 48
+        self.max_int = 2 ** self.width - 1
+        self.word_size = 8
+        self.num_words = self.width / self.word_size
+        self.max_word = 2 ** self.word_size - 1
+        self.word_sep = '-'
+        self.word_fmt  = '%02x'
+        self.word_base = 16
+        self.addr_type = AT_LINK
+        self.uppercase = True
+
     def valid_str(self, addr):
         """
         @param addr: An EUI-48 or MAC address in string form.
@@ -930,7 +946,10 @@ class EUI48Strategy(AddrStrategy):
         tokens = [_word_fmt % i for i in words]
         addr = _word_sep.join(tokens)
 
-        return addr.upper()
+        if self.uppercase:
+            return addr.upper()
+        else:
+            return addr.lower()
 
 #-----------------------------------------------------------------------------
 #   Shared strategy objects for supported address types.

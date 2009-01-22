@@ -40,8 +40,7 @@ package_data = {
 license = 'BSD License',
 
 long_description = """
-a library providing Pythonic manipulation, validation and classification of
-common networking address notations, including :-
+a library providing Pythonic manipulation, validation and classification of common networking address notations, including :-
 
 * IPv4
 * IPv6
@@ -51,6 +50,10 @@ common networking address notations, including :-
 For examples see the project wiki :-
 
     http://code.google.com/p/netaddr/wiki/NetAddrExamples
+
+Full API documentation is available on PyPI here :-
+
+    http://packages.python.org/netaddr/
 """
 
 platforms = 'OS Independent'

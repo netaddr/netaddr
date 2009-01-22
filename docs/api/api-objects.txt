@@ -94,7 +94,7 @@ netaddr.address.CIDR.prefixlen	netaddr.address.CIDR-class.html#prefixlen
 netaddr.address.IPRange.__lt__	netaddr.address.IPRange-class.html#__lt__
 netaddr.address.IPRange.iprange	netaddr.address.IPRange-class.html#iprange
 netaddr.address.CIDR.__init__	netaddr.address.CIDR-class.html#__init__
-netaddr.address.IPRange.size	netaddr.address.IPRange-class.html#size
+netaddr.address.CIDR.STRATEGIES	netaddr.address.CIDR-class.html#STRATEGIES
 netaddr.address.CIDR.subnet	netaddr.address.CIDR-class.html#subnet
 netaddr.address.CIDR.span	netaddr.address.CIDR-class.html#span
 netaddr.address.CIDR.network	netaddr.address.CIDR-class.html#network
@@ -103,6 +103,7 @@ netaddr.address.IPRange.issupernet	netaddr.address.IPRange-class.html#issupernet
 netaddr.address.CIDR.fmt	netaddr.address.CIDR-class.html#fmt
 netaddr.address.CIDR.strategy	netaddr.address.CIDR-class.html#strategy
 netaddr.address.IPRange.adjacent	netaddr.address.IPRange-class.html#adjacent
+netaddr.address.IPRange.size	netaddr.address.IPRange-class.html#size
 netaddr.address.CIDR.addr_type	netaddr.address.CIDR-class.html#addr_type
 netaddr.address.IPRange.__len__	netaddr.address.IPRange-class.html#__len__
 netaddr.address.IPRange.overlaps	netaddr.address.IPRange-class.html#overlaps
@@ -112,7 +113,7 @@ netaddr.address.IPRange.format	netaddr.address.IPRange-class.html#format
 netaddr.address.CIDR.broadcast	netaddr.address.CIDR-class.html#broadcast
 netaddr.address.CIDR.netmask	netaddr.address.CIDR-class.html#netmask
 netaddr.address.CIDR.__add__	netaddr.address.CIDR-class.html#__add__
-netaddr.address.CIDR.__sub__	netaddr.address.CIDR-class.html#__sub__
+netaddr.address.CIDR.iter_host_addrs	netaddr.address.CIDR-class.html#iter_host_addrs
 netaddr.address.IPRange.__eq__	netaddr.address.IPRange-class.html#__eq__
 netaddr.address.CIDR.abbrev_to_verbose	netaddr.address.CIDR-class.html#abbrev_to_verbose
 netaddr.address.IPRange.last	netaddr.address.IPRange-class.html#last
@@ -124,7 +125,7 @@ netaddr.address.CIDR.__repr__	netaddr.address.CIDR-class.html#__repr__
 netaddr.address.IPRange.wildcard	netaddr.address.IPRange-class.html#wildcard
 netaddr.address.IPRange.issubnet	netaddr.address.IPRange-class.html#issubnet
 netaddr.address.IPRange.__hash__	netaddr.address.IPRange-class.html#__hash__
-netaddr.address.CIDR.STRATEGIES	netaddr.address.CIDR-class.html#STRATEGIES
+netaddr.address.CIDR.__sub__	netaddr.address.CIDR-class.html#__sub__
 netaddr.address.IPRange.__ge__	netaddr.address.IPRange-class.html#__ge__
 netaddr.address.IPRange.first	netaddr.address.IPRange-class.html#first
 netaddr.address.EUI	netaddr.address.EUI-class.html
@@ -423,6 +424,7 @@ netaddr.strategy.EUI48Strategy.int_to_str	netaddr.strategy.EUI48Strategy-class.h
 netaddr.strategy.EUI48Strategy.valid_str	netaddr.strategy.EUI48Strategy-class.html#valid_str
 netaddr.strategy.AddrStrategy.bits_to_int	netaddr.strategy.AddrStrategy-class.html#bits_to_int
 netaddr.strategy.EUI48Strategy._	netaddr.strategy.EUI48Strategy-class.html#_
+netaddr.strategy.EUI48Strategy.reset	netaddr.strategy.EUI48Strategy-class.html#reset
 netaddr.strategy.EUI48Strategy.str_to_int	netaddr.strategy.EUI48Strategy-class.html#str_to_int
 netaddr.strategy.AddrStrategy.words_to_int	netaddr.strategy.AddrStrategy-class.html#words_to_int
 netaddr.strategy.AddrStrategy.valid_words	netaddr.strategy.AddrStrategy-class.html#valid_words

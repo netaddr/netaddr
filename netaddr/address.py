@@ -790,7 +790,7 @@ class IP(Addr):
             #TODO:   Replace these with bit shifts.
             elif words[0:6] == (0, 0, 0, 0, 0, 0xffff):
                 ip_addr = IP(self.value - 0xffff00000000, AT_INET)
-                ip_addr.prefixlen = self.prefixlen + 96
+                ip_addr.prefixlen = self.prefixlen - 96
             else:
                 raise AddrConversionError('IPv6 address %s not suitable for' \
                     'IPv4 conversion!' % self)
@@ -886,6 +886,15 @@ class IP(Addr):
             #   Use of wildcards here much more concise than CIDR...
             for cidr in (CIDR('240/4'), CIDR('234/7'), CIDR('236/7'),
                          Wildcard('225-231.*.*.*'), Wildcard('234-238.*.*.*')):
+                if self in cidr:
+                    return True
+        if self.addr_type == AT_INET6:
+            for cidr in (CIDR('ff00::/12'),CIDR('::/8'), CIDR('0100::/8'),
+                         CIDR('0200::/7'), CIDR('0400::/6'), CIDR('0800::/5'),
+                         CIDR('1000::/4'), CIDR('4000::/3'), CIDR('6000::/3'),
+                         CIDR('8000::/3'), CIDR('A000::/3'), CIDR('C000::/3'),
+                         CIDR('E000::/4'), CIDR('F000::/5'), CIDR('F800::/6'),
+                         CIDR('FE00::/9')):
                 if self in cidr:
                     return True
         return False
@@ -1454,8 +1463,11 @@ class IPRange(object):
         @return: True if other's boundary is equal to or within this range.
             False otherwise.
         """
-        if not isinstance(other, IPRange):
-            raise TypeError('Invalid type!')
+        if isinstance(other, (str, unicode)):
+            other = CIDR(other)
+
+        if not hasattr(other, 'addr_type'):
+            raise TypeError('%r is an unsupported argument type!' % other)
 
         if self.addr_type != other.addr_type:
             raise TypeError('Ranges must be the same address type!')
@@ -1467,8 +1479,11 @@ class IPRange(object):
         @return: True if other's boundary is equal to or contains this range.
             False otherwise.
         """
-        if not isinstance(other, IPRange):
-            raise TypeError('Invalid type!')
+        if isinstance(other, (str, unicode)):
+            other = CIDR(other)
+
+        if not hasattr(other, 'addr_type'):
+            raise TypeError('%r is an unsupported argument type!' % other)
 
         if self.addr_type != other.addr_type:
             raise TypeError('Ranges must be the same address type!')
@@ -1480,8 +1495,11 @@ class IPRange(object):
         @return: True if other's boundary touches the boundary of this
             address range, False otherwise.
         """
+        if isinstance(other, (str, unicode)):
+            other = CIDR(other)
+
         if not hasattr(other, 'addr_type'):
-            raise TypeError('unsupport type: %r!')
+            raise TypeError('%r is an unsupported argument type!' % other)
 
         if self.addr_type != other.addr_type:
             raise TypeError('addresses must be of the same type!')
@@ -1512,8 +1530,11 @@ class IPRange(object):
         @return: True if other's boundary crosses the boundary of this address
             range, False otherwise.
         """
-        if not isinstance(other, IPRange):
-            raise TypeError('Invalid type!')
+        if isinstance(other, (str, unicode)):
+            other = CIDR(other)
+
+        if not hasattr(other, 'addr_type'):
+            raise TypeError('%r is an unsupported argument type!' % other)
 
         if self.addr_type != other.addr_type:
             raise TypeError('Ranges must be the same address type!')
@@ -1984,6 +2005,31 @@ class CIDR(IPRange):
     broadcast = property(broadcast)
     netmask = property(netmask)
     hostmask = property(hostmask)
+
+    def iter_host_addrs(self):
+        """
+        @return: An iterator object providing access to all valid host IP
+            addresses within the specified CIDR block.
+            - with IPv4 the network and broadcast addresses are always
+            excluded. Any smaller than 4 hosts yields an emtpy list.
+            - with IPv6 only the unspecified address '::' is excluded from
+            the yielded list.
+        """
+        if self.addr_type == AT_INET:
+            #   IPv4
+            if self.size() >= 4:
+                return nrange( IP(self.first+1, self.addr_type),
+                    IP(self.last-1, self.addr_type), fmt=self.fmt)
+            else:
+                return iter([])
+        elif self.addr_type == AT_INET6:
+            #   IPv6
+            if self.first == 0:
+                #   Don't return '::'.
+                return nrange(IP(self.first+1, self.addr_type),
+                    IP(self.last, self.addr_type), fmt=self.fmt)
+            else:
+                return iter(self)
 
     def subnet(self, prefixlen, count=None, fmt=None):
         """
