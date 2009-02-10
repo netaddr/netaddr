@@ -23,7 +23,7 @@ USE_IPV6_OPT=True   #: Use optimised IPv6 strategy? Default: True
 
 try:
     #   Detect and use inet_pton and inet_ntop where possible.
-    from _socket import inet_pton
+    from _socket import inet_pton, AF_INET6
 except ImportError:
     USE_IPV6_OPT=False
 
