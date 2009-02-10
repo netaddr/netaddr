@@ -19,6 +19,14 @@ try:
 except:
     USE_IPV4_OPT=False
 
+USE_IPV6_OPT=True   #: Use optimised IPv6 strategy? Default: True
+
+try:
+    #   Detect and use inet_pton and inet_ntop where possible.
+    from _socket import inet_pton
+except ImportError:
+    USE_IPV6_OPT=False
+
 from netaddr import BIG_ENDIAN_PLATFORM, AT_UNSPEC, AT_INET, AT_INET6, \
                     AT_LINK, AT_EUI64, AT_NAMES, AddrFormatError
 
@@ -137,14 +145,7 @@ class AddrStrategy(object):
             raise ValueError('%r is not a valid binary form string for ' \
                 'address type!' % bits)
 
-        word_bits = bits.split(self.word_sep)
-        if len(word_bits) != self.num_words:
-            raise ValueError('invalid number of words within binary form ' \
-                'string for address type!' % bits)
-
-        words = tuple([int(i, 2) for i in word_bits])
-
-        return self.words_to_int(words)
+        return int(bits.replace(self.word_sep, ''), 2)
 
     #-------------------------------------------------------------------------
     #   Integer methods.
@@ -178,9 +179,12 @@ class AddrStrategy(object):
 
         return addr
 
-    def int_to_bits(self, int_val):
+    def int_to_bits(self, int_val, word_sep=None):
         """
         @param int_val: A network byte order integer.
+
+        @param word_sep: (optional) the separator to insert between words.
+            Default: None - use default separator for address type.
 
         @return: A network address in readable binary form that is equivalent
             to value represented by a network byte order integer.
@@ -197,6 +201,13 @@ class AddrStrategy(object):
             bits = ('0'*self.word_size+bit_str)[-self.word_size:]
             bit_words.append(bits)
 
+        if word_sep is not None:
+            #   Custom separator.
+            if not hasattr(word_sep, 'join'):
+                raise ValueError('Word separator must be a string!')
+            return word_sep.join(bit_words)
+
+        #   Default separator.
         return self.word_sep.join(bit_words)
 
     def int_to_bin(self, int_val):
@@ -396,16 +407,15 @@ class AddrStrategy(object):
 #-----------------------------------------------------------------------------
 class IPv4StrategyStd(AddrStrategy):
     """
-    A 'safe' L{AddrStrategy} for IPv4 addresses. Unlike L{IPv4StrategyOpt}.
+    A 'safe' L{AddrStrategy} for IPv4 addressing (unlike L{IPv4StrategyOpt} on
+    some platforms). It contains all the same methods as the optimised class
+    without relying on the presence of the socket or struct modules.
 
-    It contains all methods related to IPv4 addresses that the optimised
-    version has, without the reliance on the socket or struct modules. There
-    are several cases where the use of this class are preferable when either
-    the modules mentioned do not exist on certain Python implementations or
-    contain bugs like the infamous inet_aton('255.255.255.254') bug.
-
-    All methods shared between the optimised class and this one should be
-    defined here.
+    There are several cases where the use of this non-optimised class are
+    preferable. On some Python runtimes the modules may not be available or
+    fully functional and on certain platforms (Windows and some Mac OS) the
+    socket module exhibits odd behaviour such as the infamous inet_aton() bug
+    which doesn't seem to like the perfectly valid IP '255.255.255.255'.
     """
     def __init__(self):
         """Constructor."""
@@ -427,17 +437,16 @@ class IPv4StrategyStd(AddrStrategy):
 #-----------------------------------------------------------------------------
 class IPv4StrategyOpt(IPv4StrategyStd):
     """
-    An optimised L{AddrStrategy} for IPv4 addresses.
+    An optimised L{AddrStrategy} for IPv4 addressing.
 
-    It uses C{pack()} and C{unpack()} from the C{struct} module along with the
-    C{inet_ntoa()} and C{inet_aton()} from the C{socket} module great improve
-    the speed of certain operations (approx. 2.5 times faster than a standard
-    L{AddrStrategy} configured for IPv4).
+    It uses C{struct.pack} and C{struct.unpack} along with C{socket.inet_ntoa}
+    and C{socket.inet_aton} which greatly improves the speed of its validation
+    and conversion routines (approx. 2.5x faster than the L{IPv4StrategyStd})
+    class.
 
-    However, keep in mind that these modules might not be available everywhere
-    that Python itself is. Runtimes such as Google App Engine gut the
-    C{socket} module. C{struct} is also limited to processing 32-bit integers
-    which is fine for IPv4 but isn't suitable for IPv6.
+    Keep in mind that the socket module may not be available everywhere. Some
+    Python runtimes such as Google App Engine remove most of the functionality
+    from this module.
     """
     def __init__(self):
         """Constructor."""
@@ -450,6 +459,9 @@ class IPv4StrategyOpt(IPv4StrategyStd):
         @return: C{True} if network address in string form is valid for this
             address type, C{False} otherwise.
         """
+        if addr == '':
+            raise AddrFormatError('Empty strings are not supported!')
+
         try:
             #   This call handles a lot of older IPv4 address formats that
             #   it would be a lot of work to implement (many edge cases).
@@ -470,10 +482,13 @@ class IPv4StrategyOpt(IPv4StrategyStd):
         @return: A network byte order integer that is equivalent to value
             represented by the IPv4 dotted decimal address string.
         """
-        if not self.valid_str(addr):
-            raise ValueError('%r is not a valid IPv4 address string!' \
+        if addr == '':
+            raise AddrFormatError('Empty strings are not supported!')
+        try:
+            return _struct.unpack('>I', _socket.inet_aton(addr))[0]
+        except Exception, e:
+            raise AddrFormatError('%r is not a valid IPv4 address string!' \
                 % addr)
-        return _struct.unpack('>I', _socket.inet_aton(addr))[0]
 
     def int_to_str(self, int_val):
         """
@@ -482,9 +497,11 @@ class IPv4StrategyOpt(IPv4StrategyStd):
         @return: An IPv4 dotted decimal address string that is equivalent to
             value represented by a 32 bit integer in network byte order.
         """
-        if not self.valid_int(int_val):
-            raise ValueError('%r is not a valid 32-bit integer!' % int_val)
-        return _socket.inet_ntoa(_struct.pack('>I', int_val))
+        try:
+            return _socket.inet_ntoa(_struct.pack('>I', int_val))
+        except Exception, e:
+            raise ValueError('%r is not a valid 32-bit unsigned integer!' \
+                % int_val)
 
     def int_to_words(self, int_val, num_words=None, word_size=None):
         """
@@ -515,19 +532,18 @@ class IPv4StrategyOpt(IPv4StrategyStd):
         return _struct.unpack('>I', _struct.pack('4B', *octets))[0]
 
 #-----------------------------------------------------------------------------
-class IPv6Strategy(AddrStrategy):
+class IPv6StrategyStd(AddrStrategy):
     """
-    Implements the operations that can be performed on an Internet Protocol
-    version 6 network address in accordance with RFC 4291.
+    A 'safe' L{AddrStrategy} for IPv6 addressing (unlike L{IPv6StrategyOpt} on
+    some platforms). It contains all the same methods as the optimised class
+    without relying on the presence of the socket or struct modules.
 
-    NB - This class would benefit greatly from access to inet_pton/inet_ntop()
-    function calls in Python's socket module. Sadly, they aren't available so
-    we'll have to put up with the pure-Python implementation here (for now at
-    least).
+    Implements the operations that can be performed on an IPv6 network address
+    in accordance with RFC 4291.
     """
     def __init__(self):
         """Constructor."""
-        super(self.__class__, self).__init__(addr_type=AT_INET6,
+        super(IPv6StrategyStd, self).__init__(addr_type=AT_INET6,
             width=128, word_size=16, word_fmt='%x', word_sep=':')
 
     def valid_str(self, addr):
@@ -703,18 +719,15 @@ class IPv6Strategy(AddrStrategy):
             of zero. Default: True
 
         @param word_fmt: (optional) The Python format string used to override
-            formatting for each word.
+            formatting for each word. Only applies when compact is False.
 
         @return: The IPv6 string form equal to the network byte order integer
         value provided.
         """
         #   Use basic parent class implementation if compact string form is
         #   not required.
-        if not compact:
-            return super(self.__class__, self).int_to_str(int_val)
-
         _word_fmt = self.word_fmt
-        if word_fmt is not None:
+        if word_fmt is not None and not compact:
             _word_fmt = word_fmt
 
         if not self.valid_int(int_val):
@@ -729,7 +742,7 @@ class IPv6Strategy(AddrStrategy):
 
         tokens.reverse()
 
-        if compact == True:
+        if compact:
             new_tokens = []
 
             positions = []
@@ -778,6 +791,9 @@ class IPv6Strategy(AddrStrategy):
                     new_tokens.append('')
 
             tokens = new_tokens
+        else:
+            tokens = [_word_fmt % int(token, 16) for token in tokens]
+
 
         return self.word_sep.join(tokens)
 
@@ -788,12 +804,136 @@ class IPv6Strategy(AddrStrategy):
         @return: The reverse DNS lookup for an IPv6 address in network byte
             order integer form.
         """
-        addr = self.int_to_str(int_val, word_fmt='%04x')
+        addr = self.int_to_str(int_val, compact=False, word_fmt='%04x')
         tokens = list(addr.replace(':', ''))
         tokens.reverse()
         #   We won't support ip6.int here - see RFC 3152 for details.
         tokens = tokens + ['ip6', 'arpa', '']
         return '.'.join(tokens)
+
+#-----------------------------------------------------------------------------
+class IPv6StrategyOpt(IPv6StrategyStd):
+    """
+    An optimised L{AddrStrategy} for IPv6 addressing.
+
+    It uses C{struct.pack} and C{struct.unpack} along with C{socket.inet_ntop}
+    and C{socket.inet_pton} which greatly improves the speed of its validation
+    and conversion routines (approx. SETME faster than the L{IPv6StrategyStd})
+    class.
+
+    Keep in mind that the socket module doesn't have inet_ntop/pton on all
+    platforms. In addition, some Python runtimes such as Google App Engine
+    remove most of the functionality from this module.
+    """
+    def __init__(self):
+        """Constructor."""
+        super(IPv6StrategyOpt, self).__init__()
+
+    def valid_str(self, addr):
+        """
+        @param addr: An IPv6 address in string form.
+
+        @return: C{True} if IPv6 network address string is valid, C{False}
+            otherwise.
+        """
+        if addr == '':
+            raise AddrFormatError('Empty strings are not supported!')
+
+        try:
+            _socket.inet_pton(_socket.AF_INET6, addr)
+        except _socket.error:
+            return False
+        except TypeError:
+            return False
+        return True
+
+    def str_to_int(self, addr):
+        """
+        @param addr: An IPv6 address in string form.
+
+        @return: The equivalent network byte order integer for a given IPv6
+            address.
+        """
+        if addr == '':
+            raise AddrFormatError('Empty strings are not supported!')
+        try:
+            packed_int = _socket.inet_pton(_socket.AF_INET6, addr)
+            return self.packed_to_int(packed_int)
+        except Exception, e:
+            raise AddrFormatError('%r is not a valid IPv6 address string!' \
+                % addr)
+
+    def int_to_str(self, int_val, compact=True, word_fmt=None):
+        """
+        @param int_val: A network byte order integer.
+
+        @param compact: (optional) A boolean flag indicating if compact
+            formatting should be used. If True, this method uses the '::'
+            string to represent the first adjacent group of words with a value
+            of zero. Default: True
+
+        @param word_fmt: (optional) The Python format string used to override
+            formatting for each word. Only applies when compact is False.
+
+        @return: The IPv6 string form equal to the network byte order integer
+        value provided.
+        """
+        try:
+            packed_int = self.int_to_packed(int_val)
+            return _socket.inet_ntop(_socket.AF_INET6, packed_int)
+        except Exception, e:
+            raise ValueError('%r is not a valid 128-bit unsigned integer!' \
+                % int_val)
+
+    def int_to_packed(self, int_val):
+        """
+        @param int_val: the integer to be packed.
+
+        @return: a packed string that is equivalent to value represented by a
+        network byte order integer.
+        """
+        #   Here we've over-ridden the normal values to get the fastest
+        #   possible conversion speeds. Still quite slow versus IPv4 speed ups.
+        num_words = 4
+        word_size = 32
+
+        words = self.int_to_words(int_val, num_words, word_size)
+
+        try:
+            fmt = '>%d%s'% (num_words, AddrStrategy.STRUCT_FORMATS[word_size])
+        except KeyError:
+            raise ValueError('unsupported word size: %d!' % word_size)
+
+        return _struct.pack(fmt, *words)
+
+    def packed_to_int(self, packed_int):
+        """
+        @param packed_int: a packed string containing an unsigned integer.
+            Network byte order is assumed.
+
+        @return: A network byte order integer that is equivalent to value
+            of network address represented by packed binary string.
+        """
+        #   Here we've over-ridden the normal values to get the fastest
+        #   conversion speeds. Still quite slow versus IPv4 speed ups.
+        num_words = 4
+        word_size = 32
+
+        try:
+            fmt = '>%d%s'% (num_words, AddrStrategy.STRUCT_FORMATS[word_size])
+        except KeyError:
+            raise ValueError('unsupported word size: %d!' % word_size)
+
+        words = list(_struct.unpack(fmt, packed_int))
+        words.reverse()
+
+        int_val = 0
+        for i, num in enumerate(words):
+            word = num
+            word = word << word_size * i
+            int_val = int_val | word
+
+        return int_val
 
 #-----------------------------------------------------------------------------
 class EUI48Strategy(AddrStrategy):
@@ -959,13 +1099,20 @@ class EUI48Strategy(AddrStrategy):
 ST_IPV4 = None
 #   Use the right strategy class dependent upon Python implementation (work-
 #   around for various Python bugs).
-if USE_IPV4_OPT is True:
+if USE_IPV4_OPT:
     ST_IPV4 = IPv4StrategyOpt()
 else:
     ST_IPV4 = IPv4StrategyStd()
 
+
 #: A shared strategy object supporting all operations on IPv6 addresses.
-ST_IPV6  = IPv6Strategy()
+ST_IPV6 = None
+
+if USE_IPV6_OPT:
+    ST_IPV6 = IPv6StrategyOpt()
+else:
+    ST_IPV6 = IPv6StrategyStd()
+
 #: A shared strategy object supporting all operations on EUI-48/MAC addresses.
 ST_EUI48 = EUI48Strategy()
 

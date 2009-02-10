@@ -7,7 +7,7 @@
 """
 network address manipulation, done Pythonically
 """
-__version__ = '0.6'
+__version__ = '0.7'
 
 import struct as _struct
 
@@ -56,7 +56,7 @@ class AddrConversionError(Exception):
 #-----------------------------------------------------------------------------
 
 from netaddr.address import nrange, IP, IPRange, IPRangeSet, CIDR, \
-    Wildcard, EUI
+    IPGlob, EUI
 
 from netaddr.eui import OUI, IAB, NotRegisteredError
 
@@ -67,7 +67,7 @@ from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 #-----------------------------------------------------------------------------
 __all__ = [
      # type constants
-    'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',
+    'AT_UNSPEC', 'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',
 
     # module specific exceptions
     'AddrFormatError', 'AddrConversionError', 'NotRegisteredError',
@@ -76,7 +76,7 @@ __all__ = [
     'ST_IPV4', 'ST_IPV6', 'ST_EUI48', 'ST_EUI64',
 
     # main interface classes
-    'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'Wildcard',
+    'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'IPGlob',
     'EUI', 'OUI', 'IAB',
 
     #   functions

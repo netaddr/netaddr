@@ -6,10 +6,11 @@
 #-----------------------------------------------------------------------------
 """
 network address classes (IP, EUI) and associated aggregate classes (CIDR,
-Wildcard and IPRange).
+IPGlob and IPRange).
 """
 import math as _math
 import socket as _socket
+import re as _re
 
 from netaddr import AddrFormatError, AddrConversionError, AT_UNSPEC, \
     AT_INET, AT_INET6, AT_LINK, AT_EUI64, AT_NAMES
@@ -164,7 +165,7 @@ class PrefixLenDescriptor(object):
         #   Make sure instance is not a subnet mask trying to set a prefix!
         if isinstance(instance, IP):
             if instance.is_netmask() and instance.addr_type == AT_INET \
-               and prefixlen != 32:
+               and prefixlen != 32 and instance.value != 0:
                 raise ValueError('IPv4 netmasks must have a prefix of /32!')
 
         instance.__dict__['prefixlen'] = prefixlen
@@ -259,9 +260,13 @@ class Addr(object):
         """@return: executable Python string to recreate equivalent object"""
         return "%s(%r)" % (self.__class__.__name__, str(self))
 
-    def bits(self):
-        """@return: human-readable binary digit string of this address"""
-        return self.strategy.int_to_bits(self.value)
+    def bits(self, word_sep=None):
+        """
+        @param word_sep: (optional) the separator to insert between words.
+            Default: None - use default separator for address type.
+
+        @return: human-readable binary digit string of this address"""
+        return self.strategy.int_to_bits(self.value, word_sep)
 
     def packed(self):
         """@return: binary packed string of this address"""
@@ -628,8 +633,8 @@ class IP(Addr):
     the class constructor they are provided only as a convenience to the user.
 
     All higher level subnet and network operations can be found in objects of
-    classes L{CIDR}, L{IPRange} and L{Wildcard}. There are handy helper methods
-    here, (C{.cidr()}, C{.iprange()} and C{.wildcard()}) that return pre-initialised
+    classes L{CIDR}, L{IPRange} and L{IPGlob}. There are handy helper methods
+    here, (C{.cidr()}, C{.iprange()} and C{.ipglob()}) that return pre-initialised
     objects of those classes without you having to call them explicitly.
 
     Example usage ::
@@ -647,8 +652,8 @@ class IP(Addr):
         >>> IP('10.0.0.64/24').cidr()
         CIDR('10.0.0.0/24')
 
-        >>> IP('192.168.0.1/255.255.253.0').wildcard()
-        Wildcard('192.168.0-1.*')
+        >>> IP('192.168.0.1/255.255.253.0').ipglob()
+        IPGlob('192.168.0-1.*')
 
         >>> ipv6 = IP('fe80::20f:1fff:fe12:e733')
         >>> ipv6[0:4]
@@ -746,18 +751,25 @@ class IP(Addr):
         except:
             return
 
-    def cidr(self):
-        """@return: A L{CIDR} object based on this IP address"""
+    def cidr(self, strict=True):
+        """
+        @param strict: (optional) If True and non-zero bits are found to the
+            right of the subnet mask/prefix a ValueError is raised. If False,
+            CIDR returned has these bits automatically truncated.
+            (default: True)
+
+        @return: A L{CIDR} object based on this IP address
+        """
         hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
         start = (self.value | hostmask) - hostmask
         network = self.strategy.int_to_str(start)
-        return CIDR("%s/%d" % (network, self.prefixlen))
+        return CIDR("%s/%d" % (network, self.prefixlen), strict=strict)
 
-    def wildcard(self):
-        """@return: A L{Wildcard} object based on this IP address"""
+    def ipglob(self):
+        """@return: A L{IPGlob} object based on this IP address"""
         if self.addr_type == AT_INET6:
-            raise AddrConversionError('wildcards not support by IPv6!')
-        return self.iprange().wildcard()
+            raise AddrConversionError('ipglobs not support by IPv6!')
+        return self.iprange().ipglob()
 
     def iprange(self):
         """@return: A L{CIDR} object based on this IP address"""
@@ -883,9 +895,9 @@ class IP(Addr):
             otherwise. Reference: RFCs 3330 and 3171.
         """
         if self.addr_type == AT_INET:
-            #   Use of wildcards here much more concise than CIDR...
+            #   Use of ipglobs here much more concise than CIDR...
             for cidr in (CIDR('240/4'), CIDR('234/7'), CIDR('236/7'),
-                         Wildcard('225-231.*.*.*'), Wildcard('234-238.*.*.*')):
+                         IPGlob('225-231.*.*.*'), IPGlob('234-238.*.*.*')):
                 if self in cidr:
                     return True
         if self.addr_type == AT_INET6:
@@ -1045,7 +1057,7 @@ class IPRange(object):
     only a lower and upper bound IP address.
 
     It is the base class for more specialised block types such as L{CIDR()}
-    and L{Wildcard()}. There is no requirement that the boundary IP addresses
+    and L{IPGlob()}. There is no requirement that the boundary IP addresses
     fall on strict bitmask boundaries.
 
     The sort order for sequence of mixed version L{IPRange} objects is IPv4
@@ -1410,11 +1422,11 @@ class IPRange(object):
 
         return cidr_list
 
-    def wildcard(self):
+    def ipglob(self):
         """
-        @return: A L{Wildcard} object equivalent to this CIDR.
-            - If CIDR was initialised with C{fmt=str}, a wildcard string
-              is returned, in all other cases a L{Wildcard} object is
+        @return: A L{IPGlob} object equivalent to this CIDR.
+            - If CIDR was initialised with C{fmt=str}, a ipglob string
+              is returned, in all other cases a L{IPGlob} object is
               returned.
             - Only supports IPv4 CIDR addresses.
         """
@@ -1422,7 +1434,7 @@ class IPRange(object):
         t2 = self.strategy.int_to_words(self.last)
 
         if self.addr_type != AT_INET:
-            raise AddrConversionError('wildcards only suitable for IPv4 ' \
+            raise AddrConversionError('ipglobs only suitable for IPv4 ' \
                 'ranges!')
 
         tokens = []
@@ -1439,24 +1451,24 @@ class IPRange(object):
                 tokens.append('*')
                 seen_asterisk = True
             else:
-                #   Create a hyphenated octet - only one allowed per wildcard.
+                #   Create a hyphenated octet - only one allowed per ipglob.
                 if not seen_asterisk:
                     if not seen_hyphen:
                         tokens.append('%s-%s' % (t1[i], t2[i]))
                         seen_hyphen = True
                     else:
                         raise SyntaxError('only one hyphenated octet per ' \
-                            'wildcard permitted!')
+                            'ipglob permitted!')
                 else:
                     raise SyntaxError("* chars aren't permitted before ' \
                         'hyphenated octets!")
 
-        wildcard = '.'.join(tokens)
+        ipglob = '.'.join(tokens)
 
         if self.fmt == str:
-            return wildcard
+            return ipglob
 
-        return Wildcard(wildcard)
+        return IPGlob(ipglob)
 
     def issubnet(self, other):
         """
@@ -1558,6 +1570,68 @@ class IPRange(object):
         return "%s(%r, %r)" % (self.__class__.__name__,
             self.strategy.int_to_str(self.first),
             self.strategy.int_to_str(self.last))
+
+#-----------------------------------------------------------------------------
+def cidr_to_bits(cidr):
+    """
+    @cidr: a CIDR object or CIDR string value (acceptable by CIDR class
+        constructor).
+
+    @return a tuple containing CIDR in binary string format and addr_type.
+    """
+    if not hasattr(cidr, 'network'):
+        cidr = CIDR(cidr, strict=False)
+
+    bits = cidr.network.bits(word_sep='')
+    return (bits[0:cidr.prefixlen], cidr.addr_type)
+
+#-----------------------------------------------------------------------------
+def bits_to_cidr(bits, addr_type=AT_UNSPEC, fmt=None):
+    """
+    @bits: a CIDR in binary string format.
+
+    @addr_type: (optional) CIDR address type (IP version).
+        (Default: AT_UNSPEC - auto-select) If not specified AT_INET (IPv4) is
+        assumed if length of binary string is <= /32. If binary string
+        is > /32 and <= /128 AT_INET6 (IPv6) is assumed. Useful when you have
+        IPv6 addresses with a prefixlen of /32 or less.
+
+    @fmt: (optional) callable invoked on return CIDR.
+        (Default: None - CIDR object). Also accepts str() and unicode().
+
+    @return a CIDR object or string (determined by fmt).
+    """
+    if _re.match('^[01]+$', bits) is None:
+        raise ValueError('%r is an invalid bit string!' % bits)
+
+    num_bits = len(bits)
+    strategy = None
+    if addr_type == AT_UNSPEC:
+        if 0 <= num_bits <= 32:
+            strategy = ST_IPV4
+        elif 33 < num_bits <= 128:
+            strategy = ST_IPV6
+        else:
+            raise ValueError('Invalid number of bits: %s!' % bits)
+    elif addr_type == AT_INET:
+        strategy = ST_IPV4
+    elif addr_type == AT_INET6:
+        strategy = ST_IPV6
+    else:
+        raise ValueError('strategy auto-select failure for %r!' % bits)
+
+    if bits == '':
+        return CIDR('%s/0' % strategy.int_to_str(0))
+
+    cidr = None
+    bits = bits + '0' * (strategy.width - num_bits)
+    ip = strategy.int_to_str(strategy.bits_to_int(bits))
+    cidr = CIDR('%s/%d' % (ip, num_bits))
+
+    if fmt is not None:
+        return fmt(cidr)
+
+    return cidr
 
 #-----------------------------------------------------------------------------
 class CIDR(IPRange):
@@ -1700,10 +1774,25 @@ class CIDR(IPRange):
         tokens = []
         prefix = None
 
+    #FIXME:    #   Check for IPv4 mapped IPv6 addresses.
         if isinstance(abbrev_cidr, (str, unicode)):
+        ################
             #   Don't support IPv6 for now...
             if ':' in abbrev_cidr:
                 return None
+        ################
+    #FIXME:        if abbrev_cidr.startswith('::ffff:'):
+    #FIXME:            abbrev_cidr = abbrev_cidr.replace('::ffff:', '')
+    #FIXME:            start = '::ffff:'
+    #FIXME:            if '/' not in abbrev_cidr:
+    #FIXME:                prefix = 128
+    #FIXME:        elif abbrev_cidr.startswith('::'):
+    #FIXME:            abbrev_cidr = abbrev_cidr.replace('::', '')
+    #FIXME:            start = '::'
+    #FIXME:            if '/' not in abbrev_cidr:
+    #FIXME:                prefix = 128
+        ################
+
         try:
             #   Single octet partial integer or string address.
             i = int(abbrev_cidr)
@@ -1761,11 +1850,11 @@ class CIDR(IPRange):
     def span(addrs, fmt=None):
         """
         Static method that accepts a sequence of IP addresses and/or CIDRs,
-        Wildcards and IPRanges returning a single CIDR that is large enough
+        IPGlobs and IPRanges returning a single CIDR that is large enough
         to span the lowest and highest IP addresses in the sequence (with
         a possible overlap on either end).
 
-        @param addrs: a sequence of IP, CIDR, Wildcard or IPRange objects
+        @param addrs: a sequence of IP, CIDR, IPGlob or IPRange objects
             and/or their string representations.
 
         @param fmt: (optional) callable used on return values.
@@ -1803,7 +1892,7 @@ class CIDR(IPRange):
                 except:
                     pass
                 try:
-                    obj = Wildcard(addr)
+                    obj = IPGlob(addr)
                     addrs[i] = obj
                     continue
                 except:
@@ -1839,8 +1928,93 @@ class CIDR(IPRange):
 
         return cidr
 
+    def summarize(cidrs, fmt=None):
+        """
+        Static method that accepts a sequence of IP addresses and/or CIDRs
+        returning a summarized sequence of merged CIDRs where possible. This
+        method doesn't create any CIDR that are inclusive of any addresses
+        other than those found in the original sequence provided.
+
+        @param addrs: a list or tuple of IP and/or CIDR objects.
+
+        @param fmt: callable used on return values.
+            (Default: None - L{CIDR} objects). str() and unicode() supported.
+
+        @return: a possibly smaller list of CIDRs covering sequence passed in.
+        """
+
+        #   Start off using set as we'll remove any duplicates at the start.
+        ipv4_bit_cidrs = set()
+        ipv6_bit_cidrs = set()
+
+        #   Convert CIDRs into bit strings separating IPv4 from IPv6 (required).
+        for cidr in cidrs:
+            (bits, addr_type) = cidr_to_bits(cidr)
+            if addr_type == AT_INET:
+                ipv4_bit_cidrs.add(bits)
+            elif addr_type == AT_INET6:
+                ipv6_bit_cidrs.add(bits)
+            else:
+                raise ValueError('Unknown address type found!')
+
+        #   Merge binary CIDRs into their smallest equivalents.
+        def _reduce_bit_cidrs(cidrs):
+            new_cidrs = []
+
+            cidrs.sort()    # Support for Python 2.3.
+
+            #   Multiple passes are required to obtain precise results.
+            while 1:
+                finished = True
+                while len(cidrs) > 0:
+                    if len(new_cidrs) == 0:
+                        new_cidrs.append(cidrs.pop(0))
+                    if len(cidrs) == 0:
+                        break
+                    #   lhs and rhs are same size and adjacent.
+                    (new_cidr, subs) = _re.subn(r'^([01]+)0 \1[1]$', r'\1',
+                        '%s %s' % (new_cidrs[-1], cidrs[0]))
+                    if subs:
+                        #   merge lhs with rhs.
+                        new_cidrs[-1] = new_cidr
+                        cidrs.pop(0)
+                        finished = False
+                    else:
+                        #   lhs contains rhs.
+                        (new_cidr, subs) = _re.subn(r'^([01]+) \1[10]+$', r'\1',
+                            '%s %s' % (new_cidrs[-1], cidrs[0]))
+                        if subs:
+                            #   keep lhs, discard rhs.
+                            new_cidrs[-1] = new_cidr
+                            cidrs.pop(0)
+                            finished = False
+                        else:
+                            #   no matches - accept rhs.
+                            new_cidrs.append(cidrs.pop(0))
+                if finished:
+                    break
+                else:
+                    #   still seeing matches, reset.
+                    cidrs = new_cidrs
+                    new_cidrs = []
+
+            return new_cidrs
+
+        new_cidrs = []
+
+        #   Reduce and format IPv4 CIDRs.
+        for bit_cidr in _reduce_bit_cidrs(list(ipv4_bit_cidrs)):
+            new_cidrs.append(bits_to_cidr(bit_cidr, fmt=fmt))
+
+        #   Reduce and format IPv6 CIDRs.
+        for bit_cidr in _reduce_bit_cidrs(list(ipv6_bit_cidrs)):
+            new_cidrs.append(bits_to_cidr(bit_cidr, fmt=fmt))
+
+        return new_cidrs
+
     abbrev_to_verbose = staticmethod(abbrev_to_verbose)
     span = staticmethod(span)
+    summarize = staticmethod(summarize)
 
     def __init__(self, cidr, fmt=IP, strict=True):
         """
@@ -1853,9 +2027,10 @@ class CIDR(IPRange):
             Default: L{IP} class. See L{nrange()} documentations for
             more details on the various options.
 
-        @param strict: (optional) performs a test to ensure there are no
-            non-zero bits to the right of the subnet mask or prefix when it is
-            applied to the base address. (default: True)
+        @param strict: (optional) If True and non-zero bits are found to the
+            right of the subnet mask/prefix a ValueError is raised. If False,
+            CIDR returned has these bits automatically truncated.
+            (default: True)
         """
         cidr_arg = cidr     #   Keep a copy of original argument.
 
@@ -1871,14 +2046,19 @@ class CIDR(IPRange):
         try:
             (network, mask) = cidr.split('/', 1)
         except ValueError:
-            raise AddrFormatError('CIDR objects %r require a subnet prefix!' \
-                % cidr_arg)
+            network = cidr
+            mask = None
 
         #FIXME: Are IP objects for first and last really necessary?
         #FIXME: Should surely just be integer values.
         first = IP(network)
         self.strategy = first.strategy
-        self.prefixlen = mask
+
+        if mask is None:
+            #   If no mask is specified, assume maximum CIDR prefix.
+            self.__dict__['prefixlen'] = first.strategy.width
+        else:
+            self.prefixlen = mask
 
         strategy = first.strategy
         addr_type = strategy.addr_type
@@ -1981,10 +2161,9 @@ class CIDR(IPRange):
     def broadcast(self):
         """
         B{Please Note:} although IPv6 doesn't actually recognise the concept of
-        a 'broadcast' address as the last address in a subnet (as in IPv4) so
-        many other libraries do this that it isn't worth trying to resist.
-        This issue raises so many user queries that it is easier to dispense
-        with the theory and be pragmatic instead.
+        broadcast addresses per se (as in IPv4), so many other libraries do
+        this that it isn't worth trying to resist the trend just for the sake
+        of making a theoretical point.
 
         @return: The broadcast (last) address in this CIDR block.
         """
@@ -2001,6 +2180,37 @@ class CIDR(IPRange):
         hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
         return self.format(hostmask)
 
+    def previous(self, step=1):
+        """
+        @param step: the number of CIDRs between this CIDR and the expected
+        one. Default: 1 - the preceding CIDR.
+
+        @return: The immediate (adjacent) predecessor of this CIDR.
+        """
+        cidr_copy = CIDR('%s/%d' % (self.strategy.int_to_str(self.first),
+            self.prefixlen))
+        cidr_copy -= step
+        #   Respect formatting.
+        if self.fmt in (str, unicode):
+            return self.fmt(cidr_copy)
+        return cidr_copy
+
+    def next(self, step=1):
+        """
+        @param step: the number of CIDRs between this CIDR and the expected
+        one. Default: 1 - the succeeding CIDR.
+
+        @return: The immediate (adjacent) successor of this CIDR.
+        """
+        cidr_copy = CIDR('%s/%d' % (self.strategy.int_to_str(self.first),
+            self.prefixlen))
+        cidr_copy += step
+        #   Respect formatting.
+        if self.fmt in (str, unicode):
+            return self.fmt(cidr_copy)
+        return cidr_copy
+
+    #   Python 2.3 compatible.
     network = property(network)
     broadcast = property(broadcast)
     netmask = property(netmask)
@@ -2010,10 +2220,10 @@ class CIDR(IPRange):
         """
         @return: An iterator object providing access to all valid host IP
             addresses within the specified CIDR block.
-            - with IPv4 the network and broadcast addresses are always
-            excluded. Any smaller than 4 hosts yields an emtpy list.
-            - with IPv6 only the unspecified address '::' is excluded from
-            the yielded list.
+                - with IPv4 the network and broadcast addresses are always
+                excluded. Any smaller than 4 hosts yields an emtpy list.
+                - with IPv6 only the unspecified address '::' is excluded from
+                the yielded list.
         """
         if self.addr_type == AT_INET:
             #   IPv4
@@ -2030,6 +2240,35 @@ class CIDR(IPRange):
                     IP(self.last, self.addr_type), fmt=self.fmt)
             else:
                 return iter(self)
+
+    def supernet(self, prefixlen=0, fmt=None):
+        """
+        Provides a list of supernet CIDRs for the current CIDR between the size
+        of the current prefix and (if specified) the end CIDR prefix.
+
+        @param prefixlen: (optional) a CIDR prefix for the maximum supernet.
+            Default: 0 - returns all possible supernets.
+
+        @param fmt: callable used on return values.
+            Default: None - L{CIDR} objects. str() and unicode() supported.
+
+        @return: an tuple containing CIDR supernets that contain this one.
+        """
+        if not 0 <= prefixlen <= self.strategy.width:
+            raise ValueError('prefixlen %r invalid for IP version!' \
+                % prefixlen)
+
+        #   Use a copy of self as we'll be editing it.
+        cidr = self.cidrs()[0]
+        cidr.fmt = fmt
+
+        supernets = []
+        while cidr.prefixlen > prefixlen:
+            cidr.prefixlen -= 1
+            supernets.append(cidr.cidrs()[0])
+
+        supernets.reverse()     #   Python 2.3 support.
+        return supernets
 
     def subnet(self, prefixlen, count=None, fmt=None):
         """
@@ -2060,10 +2299,14 @@ class CIDR(IPRange):
         if count is None:
             count = max_count
 
-        if 1 < count < max_count:
+        if not 1 <= count <= max_count:
             raise ValueError('count not within current CIDR boundaries!')
 
         base_address = self.strategy.int_to_str(self.first)
+
+        #   Respect self.fmt value if one wasn't passed to the method.
+        if fmt is None and self.fmt in (str, unicode):
+            fmt = self.fmt
 
         if fmt is None:
             #   Create new CIDR instances for each subnet returned.
@@ -2074,8 +2317,8 @@ class CIDR(IPRange):
                 yield cidr
         elif fmt in (str, unicode):
             #   Keep the same CIDR and just modify it.
-            cidr = CIDR('%s/%d' % (base_address, prefixlen))
             for i in xrange(count):
+                cidr = CIDR('%s/%d' % (base_address, prefixlen))
                 cidr.first += cidr.size() * i
                 cidr.prefixlen = prefixlen
                 yield fmt(cidr)
@@ -2105,9 +2348,9 @@ class CIDR(IPRange):
             self.strategy.int_to_str(self.first), self.prefixlen)
 
 #-----------------------------------------------------------------------------
-class Wildcard(IPRange):
+class IPGlob(IPRange):
     """
-    Represents blocks of IPv4 addresses using a wildcard or glob style syntax.
+    Represents blocks of IPv4 addresses using a ipglob or glob style syntax.
 
     Individual octets can be represented using the following shortcuts :
 
@@ -2121,10 +2364,10 @@ class Wildcard(IPRange):
             - x can only be 0 through 254
             - y can only be 1 through 255
 
-        2. only one hyphenated octet per wildcard is allowed
+        2. only one hyphenated octet per ipglob is allowed
         3. only asterisks are permitted after a hyphenated octet
 
-    Example wildcards ::
+    Example ipglobs ::
 
         '192.168.0.1'       #   a single address
         '192.168.0.0-31'    #   32 addresses
@@ -2135,14 +2378,14 @@ class Wildcard(IPRange):
 
     Aside
     =====
-        I{Wildcard ranges are not directly equivalent to CIDR blocks as they
+        I{IPGlob ranges are not directly equivalent to CIDR blocks as they
         can represent address ranges that do not fall on strict bit mask
         boundaries. They are very suitable in configuration files being more
         obvious and readable than their CIDR equivalents, especially for admins
         and users without much networking knowledge or experience.}
 
-        I{All CIDR blocks can always be represented as wildcard ranges but the
-        reverse is not true. Wildcards are almost but not quite as flexible
+        I{All CIDR blocks can always be represented as ipglob ranges but the
+        reverse is not true. IPGlobs are almost but not quite as flexible
         as IPRange objects.}
     """
     STRATEGIES = (ST_IPV4,)
@@ -2153,22 +2396,22 @@ class Wildcard(IPRange):
     addr_type = AddrTypeDescriptor(ADDR_TYPES)
     fmt = FormatDescriptor(IP)
 
-    def is_valid(wildcard):
+    def is_valid(ipglob):
         """
-        A static method that validates wildcard address ranges.
+        A static method that validates ipglob address ranges.
 
-        @param wildcard: an IPv4 wildcard address.
+        @param ipglob: an IPv4 ipglob address.
 
-        @return: True if wildcard address is valid, False otherwise.
+        @return: True if ipglob address is valid, False otherwise.
         """
-        #TODO: Add support for abbreviated wildcards
+        #TODO: Add support for abbreviated ipglobs
         #TODO: e.g. 192.168.*.* == 192.168.*
         #TODO:      *.*.*.*     == *
-        #TODO: Add strict flag to enable verbose wildcard checking.
+        #TODO: Add strict flag to enable verbose ipglob checking.
         seen_hyphen = False
         seen_asterisk = False
         try:
-            octets = wildcard.split('.')
+            octets = ipglob.split('.')
             if len(octets) != 4:
                 return False
             for o in octets:
@@ -2203,23 +2446,23 @@ class Wildcard(IPRange):
 
     is_valid = staticmethod(is_valid)
 
-    def __init__(self, wildcard, fmt=IP):
+    def __init__(self, ipglob, fmt=IP):
         """
         Constructor.
 
-        @param wildcard: a valid IPv4 wildcard address
+        @param ipglob: a valid IPv4 ipglob address
 
         @param fmt: (optional) callable used on return values.
             Default: L{IP} objects. See L{nrange()} documentations for
             more details on the various options..
         """
-        if not Wildcard.is_valid(wildcard):
-            raise AddrFormatError('%r is not a recognised wildcard address!' \
-                % wildcard)
+        if not IPGlob.is_valid(ipglob):
+            raise AddrFormatError('%r is not a recognised ipglob address!' \
+                % ipglob)
         t1 = []
         t2 = []
 
-        for octet in wildcard.split('.'):
+        for octet in ipglob.split('.'):
             if '-' in octet:
                 oct_tokens = octet.split('-')
                 t1 += [oct_tokens[0]]
@@ -2233,10 +2476,34 @@ class Wildcard(IPRange):
 
         first = '.'.join(t1)
         last = '.'.join(t2)
-        super(Wildcard, self).__init__(first, last, fmt=fmt)
+        super(IPGlob, self).__init__(first, last, fmt=fmt)
 
         if self.addr_type != AT_INET:
-            raise AddrFormatError('Wildcard syntax only supports IPv4!')
+            raise AddrFormatError('IPGlob syntax only supports IPv4!')
+
+    def __add__(self, other):
+        """
+        Add another IPGlob, CIDR or IP to this IPGlob object.
+
+        @param other: a IPGlob, CIDR or IP object that is either adjacent to
+            or intersects with this address.
+
+        @return: A new (most likely larger) IPGlob object. Raises an
+            Exception if other is not adjacent or intersects with this
+            IPGlob object.
+        """
+        raise NotImplementedError('TODO')
+
+    def __sub__(self, other):
+        """
+        Subtract a IPGlob, CIDR or IP from this IPGlob object.
+
+        @param other: a IPGlob, CIDR or IP object.
+
+        @return: A list of either one or two IPGlob objects remaining after
+        subtracting C{other} from C{self}.
+        """
+        raise NotImplementedError('TODO')
 
     def __str__(self):
         t1 = self.strategy.int_to_words(self.first)
@@ -2256,14 +2523,14 @@ class Wildcard(IPRange):
                 tokens.append('*')
                 seen_asterisk = True
             else:
-                #   Create a hyphenated octet - only one allowed per wildcard.
+                #   Create a hyphenated octet - only one allowed per ipglob.
                 if not seen_asterisk:
                     if not seen_hyphen:
                         tokens.append('%s-%s' % (t1[i], t2[i]))
                         seen_hyphen = True
                     else:
                         raise AddrFormatError('only one hyphenated octet ' \
-                            ' per wildcard allowed!')
+                            ' per ipglob allowed!')
                 else:
                     raise AddrFormatError('asterisks not permitted before ' \
                         'hyphenated octets!')
@@ -2304,11 +2571,11 @@ class IPRangeSet(set):
                 except:
                     pass
                 try:
-                    wildcard = Wildcard(addr)
+                    ipglob = IPGlob(addr)
                     try:
-                        self.add(wildcard.cidr())
+                        self.add(ipglob.cidr())
                     except:
-                        self.add(wildcard)
+                        self.add(ipglob)
                 except:
                     pass
             else:
@@ -2370,3 +2637,22 @@ class IPRangeSet(set):
         addrs = self.all_matches(other)
         addrs.sort()
         return addrs[-1]
+
+    def __repr__(self):
+        raise NotImplementedError('TODO')
+
+    def __str__(self):
+        raise NotImplementedError('TODO')
+
+#-----------------------------------------------------------------------------
+def flatten_ip_addrs(iterable):
+    """
+    Given an iterator which may contain several IP iterators, flatten all into
+    a single IP iterator.
+    """
+    for i in iterable:
+        if not hasattr(i, 'value') and hasattr(i, '__iter__'):
+            for j in flatten_ip_addrs(i):
+                yield j
+        else:
+            yield i
