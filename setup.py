@@ -10,10 +10,7 @@ To install this release :-
 import os
 import sys
 
-try:
-  from setuptools import setup
-except ImportError:
-  from distutils.core import setup
+from distutils.core import setup
 
 if os.path.exists('MANIFEST'):
     os.remove('MANIFEST')

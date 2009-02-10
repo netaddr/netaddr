@@ -5,5 +5,7 @@
 cd $(dirname $0)
 rm docs/api/*
 #   epydoc is required below - http://epydoc.sourceforge.net/
-epydoc --html --output ./docs/api/ --name netaddr --no-private netaddr
+epydoc --config=docs/epydoc.cfg
 python setup.py sdist --no-defaults --formats=gztar,zip --dist-dir=../builds/
+#   egg setup
+python setup_egg.py bdist_egg --dist-dir=../builds/

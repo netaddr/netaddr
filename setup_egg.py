@@ -5,16 +5,10 @@ An Python setup file specifically supporting setuptools.
 To create a Python egg :-
 
 >>> python setup_egg.py bdist_egg
-
-To run unit tests :-
-
->>> python setup_egg.py nosetests
-
 """
 import sys
 
 from setuptools import setup, find_packages
-#from setup import *
 
 import release
 
@@ -40,12 +34,7 @@ def main():
         platforms        = release.platforms,
         url              = release.url,
         version          = release.version,
-
-#        data_files       = data,
-#        install_requires=['setuptools'],
-#        test_suite       = 'nose.collector',
-#        tests_require    = ['nose >= 0.10.1','netaddr-nose-plugin>=0.1'] ,
-        zip_safe = True,
+        zip_safe         = False,   #   Package should always be extracted.
     )
 
 #-----------------------------------------------------------------------------
