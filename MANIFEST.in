@@ -18,6 +18,7 @@ include netaddr/ip/ipv4-address-space
 
 include AUTHORS
 include CHANGELOG
+include COPYRIGHT
 include GLOSSARY
 include INSTALL
 include LICENSE

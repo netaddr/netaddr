@@ -1,3 +1,37 @@
+Release: 0.6.1
+Date: xth Mar 2008
+
+Major changes since 0.6
+-----------------------
+
+* Minimum Python version required is now 2.4.x changed from 2.3.x.
+
+* TODO
+
+Significant bug fixes
+---------------------
+
+* FIXED Issue 23 - http://code.google.com/p/netaddr/issues/detail?id=23
+
+	- Improve IPv6 IPv4 mapped/compatible address formatting
+
+* FIXED Issue 24 - http://code.google.com/p/netaddr/issues/detail?id=24
+
+	- bug in CIDR.subnet() when using the fmt argument
+
+* FIXED Issue 29 - http://code.google.com/p/netaddr/issues/detail?id=29
+
+	- CIDR.subnet method's count argument isn't working as documented
+
+* FIXED Issue 30 - http://code.google.com/p/netaddr/issues/detail?id=30
+
+	- not compatible with Python 2.3
+
+* FIXED Issue 31 - http://code.google.com/p/netaddr/issues/detail?id=31
+
+	- byte order in documentation confusing or wrong
+
+------------------------------------------------------------------------------
 Release: 0.6
 Date: 20th Jan 2009
 

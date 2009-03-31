@@ -2,27 +2,44 @@
 INSTALLATION
 ============
 
-This library is currently available in 3 flavours :-
+netaddr is available in various packaged and non-packaged forms :-
 
-- direct checkout from source code repository
-- source release packages (tarball and zip file)
-- binary install packages (Windows only)
+- source code repository access
+- source release packages (tarball and zip formats)
+- Python eggs
+- Windows install packages
 
-Source Code Repository Access
------------------------------
+Linux distribution specific :-
 
-Project URL: http://code.google.com/p/netaddr/source/checkout
+- Ubuntu and Debian (.deb packages)
+- Fedora yum (.rpm packages)
 
-Details for checking out code are available on the page.
+Please see these Linux projects for availability and installation details.
+
+
+Locating the software
+---------------------
+
+netaddr is available directly from the public subversion source code 
+repository.
+
+Details on how to check out the source code can be found here :-
+
+	http://code.google.com/p/netaddr/source/checkout
+
+Official milestone releases can be found here :-
+
+	http://pypi.python.org/pypi/netaddr
+
 
 Source Release Packages
 -----------------------
 
-Extract the release tarball or zip file or download the latest release from
-the source code repository. Windows binary install packages are also 
-available.
+Download the latest release tarball/zip file and extract them to a temporary
+location or check out the source from the code hosting site into a local
+working copy directory.
 
-Once you've extracted the files you have several choices :-
+You now have several choices :-
 
 - Automated Install
 
@@ -30,23 +47,55 @@ Once you've extracted the files you have several choices :-
 
 		python setup.py install
 
-	This automatically installs the required files to the lib/site-packages
-	directory of the Python distribution you used to run the setup script.
+	This automatically places the required files in the lib/site-packages
+	directory of the Python version you used to run the setup script.
 
 - Manual Install
 
-	Manually copy the netaddr folder to the lib/site-packages directory of 
-	your Python distribution.
+	Manually copy the netaddr folder and its contents to the lib/site-packages
+	directory of your Python version.
 
 - Soft Linking
 
 	Add the path of the netaddr folder under the root directory where you 
-	extracted the source release tarball or zip file to your PYTHONPATH 
-	environment variable.
+	extracted or checked out the source files to your PYTHONPATH environment
+	variable. Alternatively, you can create a netaddr.pth file in your 
+	lib/site-packages directory containing the path to the netaddr folder 
+	where the source files are located.
 
-Binary Install Packages - Windows
----------------------------------
 
-On Windows, it is usually more convenient to use the binary install packages 
-but you may want to download a source zip file as well if you want access to 
-the API documentation and unit tests.
+Python Eggs
+-----------
+
+Download the latest easy_install script if you don't already have it and
+run the following command :-
+
+	easy_install netaddr
+
+This will go to the Python Package Index and automatically find the 
+appropriate version of netaddr for your Python setup.
+
+
+Windows Install Packages
+------------------------
+
+On Windows, it is usually more convenient to use the binary install packages. 
+Please note that you may want to download a source zip file as well if you
+want local access to the API documentation and unit tests as these are not
+distributed along with the code in the Windows install packages.
+
+Security Tip
+------------
+
+Please Note - while efforts are made to ensure that the Windows executables 
+produced are virus free, they cannot be guaranteed to always be 100% free of 
+possible nasties. You are installing executable code and do so solely at your
+own risk! If you are either a) paranoid or b) properly and correctly security
+conscious, either run your own virus checking software against any executables
+before running it or alternatively just download the .zip file and install 
+using Python itself which will fully mitigate any potential problems.
+
+And finally ...
+
+Always be sure you verify your downloads against the checksums on the code 
+hosting site's download page!
