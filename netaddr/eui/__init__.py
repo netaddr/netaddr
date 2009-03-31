@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ class OUI(object):
         """
         Constructor
 
-        @param oui: an OUI string C{XX-XX-XX} or a network byte order integer.
+        @param oui: an OUI string C{XX-XX-XX} or an unsigned integer.
             Also accepts and parses full MAC/EUI-48 address strings (but not
             MAC/EUI-48 integers)!
         """
@@ -315,7 +315,10 @@ class OUI(object):
         return self.value
 
     def __hex__(self):
-        """@return: network byte order hexadecimal string of this OUI"""
+        """
+        @return: hexadecimal string representation of this OUI (in network byte
+        order).
+        """
         return hex(self.value).rstrip('L').lower()
 
     def __str__(self):
@@ -326,8 +329,7 @@ class OUI(object):
             word = int_val & 0xff
             words.append('%02x' % word)
             int_val >>= 8
-        words.reverse()
-        return '-'.join(words).upper()
+        return '-'.join(reversed(words)).upper()
 
     def registration(self):
         """@return: registration details for this IAB"""
@@ -346,7 +348,7 @@ class IAB(object):
     """
     def split_iab_mac(eui_int, strict=False):
         """
-        @param eui_int: a MAC IAB integer value in network byte order.
+        @param eui_int: a MAC IAB as an unsigned integer.
 
         @param strict: If True, raises a ValueError if the last 12 bits of
             IAB MAC/EUI-48 address are non-zero, ignores them otherwise.
@@ -374,9 +376,9 @@ class IAB(object):
         """
         Constructor
 
-        @param iab: an IAB string C{00-50-C2-XX-X0-00} or a network byte order
-            integer. This address looks like an EUI-48 but it should not have
-            any non-zero bits in the last 3 bytes.
+        @param iab: an IAB string C{00-50-C2-XX-X0-00} or an unsigned integer.
+            This address looks like an EUI-48 but it should not have any
+            non-zero bits in the last 3 bytes.
 
         @param strict: If True, raises a ValueError if the last 12 bits of
             IAB MAC/EUI-48 address are non-zero, ignores them otherwise.
@@ -448,7 +450,10 @@ class IAB(object):
         return self.value
 
     def __hex__(self):
-        """@return: network byte order hexadecimal string of this IAB"""
+        """
+        @return: hexadecimal string representation of this IAB (in network
+            byte order)
+        """
         return hex(self.value).rstrip('L').lower()
 
     def __str__(self):
@@ -459,8 +464,7 @@ class IAB(object):
             word = int_val & 0xff
             words.append('%02x' % word)
             int_val >>= 8
-        words.reverse()
-        return '-'.join(words).upper()
+        return '-'.join(reversed(words)).upper()
 
     def registration(self):
         """@return: registration details for this IAB"""

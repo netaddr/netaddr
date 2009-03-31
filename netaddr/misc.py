@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -10,7 +10,7 @@ liable to change, move or be deleted with each release.
 """
 import pprint
 
-from netaddr import CIDR, Wildcard
+from netaddr import CIDR, IPGlob
 
 #-----------------------------------------------------------------------------
 def ipv4_cidr_prefixes():

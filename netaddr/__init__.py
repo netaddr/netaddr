@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
 network address manipulation, done Pythonically
 """
+import sys as _sys
+if _sys.version_info[0:2] < (2, 4):
+    raise RuntimeError('Python 2.4.x or higher is required!')
+
 __version__ = '0.7'
 
 import struct as _struct
@@ -56,7 +60,7 @@ class AddrConversionError(Exception):
 #-----------------------------------------------------------------------------
 
 from netaddr.address import nrange, IP, IPRange, IPRangeSet, CIDR, \
-    IPGlob, EUI
+    IPGlob, EUI, CIDRGroup
 
 from netaddr.eui import OUI, IAB, NotRegisteredError
 
@@ -76,7 +80,7 @@ __all__ = [
     'ST_IPV4', 'ST_IPV6', 'ST_EUI48', 'ST_EUI64',
 
     # main interface classes
-    'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'IPGlob',
+    'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'IPGlob', 'CIDRGroup',
     'EUI', 'OUI', 'IAB',
 
     #   functions

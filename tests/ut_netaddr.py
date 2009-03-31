@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -16,6 +16,7 @@ from unittest import TestCase, TestLoader, TestSuite, TextTestRunner
 import os as _os
 import sys as _sys
 import platform as _platform
+import random as _random
 
 PATH = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), '..'))
 _sys.path.insert(0, PATH)
@@ -193,9 +194,9 @@ class AddrStrategyTests(TestCase):
 class IPv4StrategyTests(TestCase):
     """Tests on IPv4Strategy() class and subclass objects"""
 
-    def testInterfaceStandard(self):
-        """IPv4StrategyStd() - interface tests (standard)"""
-        strategy = netaddr.strategy.IPv4StrategyStd()
+    def testInterface(self):
+        """IPv4Strategy() - interface tests"""
+        strategy = netaddr.strategy.IPv4Strategy()
 
         b = '11000000.00000000.00000010.00000001'
         i = 3221225985
@@ -218,39 +219,6 @@ class IPv4StrategyTests(TestCase):
         #   words to x
         self.assertEqual(strategy.words_to_int(t), i)
 
-        self.assertEqual(strategy.words_to_int(list(t)), i)
-
-        #   packed string to x
-        self.assertEqual(strategy.packed_to_int(p), i)
-
-    def testInterfaceOptimised(self):
-        """IPv4StrategyOpt() - interface tests (optimised)"""
-        #   Skip this test if optimisations will cause failures.
-        if not netaddr.strategy.USE_IPV4_OPT:
-            return
-
-        strategy = netaddr.strategy.IPv4StrategyOpt()
-
-        b = '11000000.00000000.00000010.00000001'
-        i = 3221225985
-        t = (192, 0, 2, 1)
-        s = '192.0.2.1'
-        p = '\xc0\x00\x02\x01'
-
-        #   bits to x
-        self.assertEqual(strategy.bits_to_int(b), i)
-
-        #   int to x
-        self.assertEqual(strategy.int_to_bits(i), b)
-        self.assertEqual(strategy.int_to_str(i), s)
-        self.assertEqual(strategy.int_to_words(i), t)
-        self.assertEqual(strategy.int_to_packed(i), p)
-
-        #   str to x
-        self.assertEqual(strategy.str_to_int(s), i)
-
-        #   words to x
-        self.assertEqual(strategy.words_to_int(t), i)
         self.assertEqual(strategy.words_to_int(list(t)), i)
 
         #   packed string to x
@@ -260,58 +228,9 @@ class IPv4StrategyTests(TestCase):
 class IPv6StrategyTests(TestCase):
     """Tests on IPv6Strategy() objects"""
 
-    def testInterfaceStandard(self):
-        """IPv6Strategy() - interface tests (standard)"""
-        strategy = netaddr.strategy.IPv6StrategyStd()
-
-        b = '0010000000000001:0000110110111000:0000000000000000:' \
-            '0000000000000000:0000000000000000:0000000000000000:' \
-            '0001010000101000:0101011110101011'
-        i = 42540766411282592856903984951992014763
-        t = (8193, 3512, 0, 0, 0, 0, 5160, 22443)
-        s = '2001:db8::1428:57ab'
-        p = '\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x14\x28\x57\xab'
-
-        #   bits to x
-        self.assertEqual(strategy.bits_to_int(b), i)
-
-        #   int to x
-        self.assertEqual(strategy.int_to_bits(i), b)
-        self.assertEqual(strategy.int_to_str(i), s)
-        self.assertEqual(strategy.int_to_words(i), t)
-        self.assertEqual(strategy.int_to_packed(i), p)
-
-        #   str to x
-        self.assertEqual(strategy.str_to_int(s), i)
-
-        #   words to x
-        self.assertEqual(strategy.words_to_int(t), i)
-        self.assertEqual(strategy.words_to_int(list(t)), i)
-
-        #   packed string to x
-        self.assertEqual(strategy.packed_to_int(p), i)
-
-        #   IPv6 address variants that are all equivalent.
-        ipv6_addr_equals = (
-            '2001:0db8:0000:0000:0000:0000:1428:57ab',
-            '2001:0db8:0000:0000:0000::1428:57ab',
-            '2001:0db8:0:0:0:0:1428:57ab',
-            '2001:0db8:0:0::1428:57ab',
-            '2001:0db8::1428:57ab',
-            #   Upper case.
-            '2001:0DB8:0000:0000:0000:0000:1428:57AB',
-            '2001:DB8::1428:57AB',
-        )
-
-        for ipv6_addr in ipv6_addr_equals:
-            self.assertEqual(strategy.str_to_int(ipv6_addr), i)
-
-    def testInterfaceOptimised(self):
-        """IPv6StrategyOpt() - interface tests (optimised)"""
-        if not netaddr.strategy.USE_IPV6_OPT:
-            return
-
-        strategy = netaddr.strategy.IPv6StrategyOpt()
+    def testInterface(self):
+        """IPv6Strategy() - interface tests"""
+        strategy = netaddr.strategy.IPv6Strategy()
 
         b = '0010000000000001:0000110110111000:0000000000000000:' \
             '0000000000000000:0000000000000000:0000000000000000:' \
@@ -458,6 +377,49 @@ class IPv6StrategyTests(TestCase):
         self.assertEqual(words, (65535, 65535, 0, 0, 0, 0, 65535, 65535))
         self.assertEqual(strategy.words_to_int(words), expected_int)
 
+    def testIntegerFormatting(self):
+        """IPv6Strategy() - IPv4 integer to string formatting"""
+        self.assertEqual(ST_IPV6.int_to_str(0xffff), '::ffff')
+        self.assertEqual(ST_IPV6.int_to_str(0xffffff), '::0.255.255.255')
+        self.assertEqual(ST_IPV6.int_to_str(0xffffffff),'::255.255.255.255')
+        self.assertEqual(ST_IPV6.int_to_str(0x1ffffffff),'::1:ffff:ffff')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffffffffffff), '::ffff:255.255.255.255')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xfffeffffffff), '::fffe:ffff:ffff')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffffffffffff), '::ffff:255.255.255.255')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xfffffffffff1), '::ffff:255.255.255.241')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xfffffffffffe), '::ffff:255.255.255.254')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffffffffff00), '::ffff:255.255.255.0')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffffffff0000), '::ffff:255.255.0.0')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffffff000000), '::ffff:255.0.0.0')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffff000000), '::ff:ff00:0')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffff00000000), '::ffff:0.0.0.0')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0x1ffff00000000), '::1:ffff:0:0')
+
+        self.assertEqual(
+            ST_IPV6.int_to_str(0xffff00000000), '::ffff:0.0.0.0')
+
 #-----------------------------------------------------------------------------
 class EUI48StrategyTests(TestCase):
     """Tests on EUI48Strategy() objects"""
@@ -498,7 +460,7 @@ class EUI48StrategyTests(TestCase):
         unix_mac.word_sep = '-'
         self.assertEqual(
             unix_mac.int_to_str(eui48_int).lower(), '0-c0-29-c2-52-ff')
-        unix_mac.word_fmt = '%02x'
+        unix_mac.word_fmt = '%.2X'
         self.assertEqual(unix_mac.int_to_str(eui48_int), '00-C0-29-C2-52-FF')
 
 #-----------------------------------------------------------------------------
@@ -517,23 +479,11 @@ class PublicStrategyObjectTests(TestCase):
         #   Are our strategy objects customised as expected?
         self.assertTrue(isinstance(ST_EUI48, netaddr.strategy.EUI48Strategy))
 
-        if netaddr.strategy.USE_IPV4_OPT:
-            self.assertTrue(
-                isinstance(ST_IPV4, netaddr.strategy.IPv4StrategyOpt))
-        else:
-            self.assertTrue(
-                isinstance(ST_IPV4, netaddr.strategy.IPv4StrategyStd))
+        self.assertTrue(
+            isinstance(ST_IPV4, netaddr.strategy.IPv4Strategy))
 
-        if netaddr.strategy.USE_IPV6_OPT:
-            self.assertTrue(
-                isinstance(ST_IPV6, netaddr.strategy.IPv6StrategyOpt))
-        else:
-            self.assertTrue(
-                isinstance(ST_IPV6, netaddr.strategy.IPv6StrategyStd))
-
-        #   The test below covers both standard and optimised IPv4 strategies
-        #   as the optimised one is a subclass of the standard one.
-        self.assertTrue(isinstance(ST_IPV4, netaddr.strategy.IPv4StrategyStd))
+        self.assertTrue(
+            isinstance(ST_IPV6, netaddr.strategy.IPv6Strategy))
 
     def testProperties(self):
         """ST_* objects interface check - properties"""
@@ -543,7 +493,6 @@ class PublicStrategyObjectTests(TestCase):
             'max_word',
             'name',
             'num_words',
-            'uppercase',
             'width',
             'word_base',
             'word_fmt',
@@ -731,7 +680,7 @@ class AddrTests(TestCase):
         """Addr() - assignment tests (IPv6)"""
         ip_addr = netaddr.address.Addr(0, AT_INET6)
         ip_addr.value = 0xffffc0a80001
-        self.assertEqual(str(ip_addr), '::ffff:c0a8:1')
+        self.assertEqual(str(ip_addr), '::ffff:192.168.0.1')
 
     def testIPv6AddressCompression(self):
         """Addr() - test IPv6 '::' compression algorithm"""
@@ -1119,8 +1068,7 @@ class IPTests(TestCase):
         self.assertTrue(str(IP('0x7f.0.0.1')), '127.0.0.1')
         self.assertTrue(str(IP('0x7f.0x0.0x0.0x1')), '127.0.0.1')
 
-        #   Host count based addressing (network byte order integer as a
-        #   string value.
+        #   Host count based addressing.
         self.assertTrue(str(IP('127')), '0.0.0.127')
         self.assertTrue(str(IP('127')), '0.0.0.127')
 
@@ -1149,6 +1097,7 @@ class IPTests(TestCase):
         self.assertEqual(ip.addr_type, AT_INET)
         self.assertEqual(ip.strategy, ST_IPV4)
         self.assertEqual(ip.prefixlen, 32)
+        self.assertEqual(IP('127.0.0.1').hostname(), 'localhost')
 
         #   Prefix /32 for IPv4 addresses should be implicit.
         self.assertEqual(repr(ip), "IP('192.0.2.1')")
@@ -1177,6 +1126,38 @@ class IPTests(TestCase):
 
         self.assertRaises(ValueError, IP, '::/-1')
         self.assertRaises(ValueError, IP, '::/129')
+
+    def testIPv4CompatibleIP6(self):
+        """IP() - IPv4 compatible IPv6 address conversions"""
+        expected = {
+            '::0.0.0.0' : '::',
+            '::0.0.1.0' : '::100',
+            '::0.0.1.1' : '::101',
+            '::0.0.255.255' : '::ffff',
+            '::0.1.0.0' : '::0.1.0.0',
+            '::0.1.255.255' : '::0.1.255.255',
+            '::255.255.255.255' : '::255.255.255.255',
+        }
+
+        for value, expected in expected.items():
+            self.assertEqual(str(IP(value)), expected)
+
+    def testIPv4MappedIP6(self):
+        """IP() - IPv4 mapped IPv6 address conversions"""
+        expected = {
+            '::ffff:0.1.0.0' : '::ffff:0.1.0.0',
+            '::ffff:0.0.0.0' : '::ffff:0.0.0.0',
+            '::ffff:255.255.255.255' : '::ffff:255.255.255.255',
+            '::ffff:0' : '::255.255.0.0',
+            '::ffff:ffff' : '::255.255.255.255',
+            '::ffff:ffff:ffff' : '::ffff:255.255.255.255',
+            '::ffff:ffff' : '::255.255.255.255',
+            '::ffff:ffff:ffff' : '::ffff:255.255.255.255',
+            '::ffff:0:0' : '::ffff:0.0.0.0',
+        }
+
+        for value, expected in expected.items():
+            self.assertEqual(str(IP(value)), expected)
 
     def testNetmaskIPv4(self):
         """IP() - netmask tests (IPv4)"""
@@ -1301,6 +1282,14 @@ class IPTests(TestCase):
         self.assertRaises(Exception, IP, '0.0.0.0', 6)
         self.assertRaises(Exception, IP, '::', 4)
 
+    def testFormattingIPv6(self):
+        """IP() - formatting options for IPv6"""
+        self.assertEqual(
+            ST_IPV6.int_to_str(0, compact=False, word_fmt='%04x'),
+            '0000:0000:0000:0000:0000:0000:0000:0000')
+        self.assertEqual(ST_IPV6.int_to_str(0, compact=True), '::')
+        self.assertEqual(ST_IPV6.int_to_arpa(0), '0.'*32 + 'ip6.arpa.')
+
     def testReverseLookupIPv4(self):
         """IP() - reverse DNS lookup test (IPv4)"""
         expected = '1.2.0.192.in-addr.arpa.'
@@ -1376,10 +1365,10 @@ class IPRangeTests(TestCase):
         )
 
         expected = [
-            '0.0.0.0-0.0.0.0',
             '0.0.0.0-255.255.255.255',
-            '::-::',
+            '0.0.0.0-0.0.0.0',
             '::-::ffff',
+            '::-::',
         ]
 
         self.assertEqual([str(r) for r in sorted(ranges)], expected)
@@ -1418,21 +1407,59 @@ class IPRangeTests(TestCase):
         self.assertEqual(IPRange('::1', '::255.255.255.254', fmt=str).cidrs(),
             ['::1/128', '::2/127', '::4/126', '::8/125', '::10/124',
             '::20/123', '::40/122', '::80/121', '::100/120', '::200/119',
-            '::400/118', '::800/117', '::1000/116', '::2000/115',
-            '::4000/114', '::8000/113', '::1:0/112', '::2:0/111', '::4:0/110',
-            '::8:0/109', '::10:0/108', '::20:0/107', '::40:0/106',
-            '::80:0/105', '::100:0/104', '::200:0/103', '::400:0/102',
-            '::800:0/101', '::1000:0/100', '::2000:0/99', '::4000:0/98',
-            '::8000:0/98', '::c000:0/99', '::e000:0/100', '::f000:0/101',
-            '::f800:0/102', '::fc00:0/103', '::fe00:0/104', '::ff00:0/105',
-            '::ff80:0/106', '::ffc0:0/107', '::ffe0:0/108', '::fff0:0/109',
-            '::fff8:0/110', '::fffc:0/111', '::fffe:0/112', '::ffff:0/113',
-            '::ffff:8000/114', '::ffff:c000/115', '::ffff:e000/116',
-            '::ffff:f000/117', '::ffff:f800/118', '::ffff:fc00/119',
-            '::ffff:fe00/120', '::ffff:ff00/121', '::ffff:ff80/122',
-            '::ffff:ffc0/123', '::ffff:ffe0/124', '::ffff:fff0/125',
-            '::ffff:fff8/126', '::ffff:fffc/127', '::ffff:fffe/128'])
+            '::400/118', '::800/117', '::1000/116', '::2000/115', '::4000/114',
+            '::8000/113', '::0.1.0.0/112', '::0.2.0.0/111', '::0.4.0.0/110',
+            '::0.8.0.0/109', '::0.16.0.0/108', '::0.32.0.0/107',
+            '::0.64.0.0/106', '::0.128.0.0/105', '::1.0.0.0/104',
+            '::2.0.0.0/103', '::4.0.0.0/102', '::8.0.0.0/101',
+            '::16.0.0.0/100', '::32.0.0.0/99', '::64.0.0.0/98',
+            '::128.0.0.0/98', '::192.0.0.0/99', '::224.0.0.0/100',
+            '::240.0.0.0/101', '::248.0.0.0/102', '::252.0.0.0/103',
+            '::254.0.0.0/104', '::255.0.0.0/105', '::255.128.0.0/106',
+            '::255.192.0.0/107', '::255.224.0.0/108', '::255.240.0.0/109',
+            '::255.248.0.0/110', '::255.252.0.0/111', '::255.254.0.0/112',
+            '::255.255.0.0/113', '::255.255.128.0/114', '::255.255.192.0/115',
+            '::255.255.224.0/116', '::255.255.240.0/117',
+            '::255.255.248.0/118', '::255.255.252.0/119',
+            '::255.255.254.0/120', '::255.255.255.0/121',
+            '::255.255.255.128/122', '::255.255.255.192/123',
+            '::255.255.255.224/124', '::255.255.255.240/125',
+            '::255.255.255.248/126', '::255.255.255.252/127',
+            '::255.255.255.254/128'])
 
+        #   IPv4 mapped IPv6 test of worst case scenario.
+        self.assertEqual(
+            IPRange('::ffff:1', '::ffff:255.255.255.254', fmt=str).cidrs(),
+            ['::255.255.0.1/128',  '::255.255.0.2/127',  '::255.255.0.4/126',
+            '::255.255.0.8/125',  '::255.255.0.16/124',  '::255.255.0.32/123',
+            '::255.255.0.64/122',  '::255.255.0.128/121',  '::255.255.1.0/120',
+            '::255.255.2.0/119',  '::255.255.4.0/118',  '::255.255.8.0/117',
+            '::255.255.16.0/116',  '::255.255.32.0/115',  '::255.255.64.0/114',
+            '::255.255.128.0/113',  '::1:0:0/96',  '::2:0:0/95',  '::4:0:0/94',
+            '::8:0:0/93',  '::10:0:0/92',  '::20:0:0/91',  '::40:0:0/90',
+            '::80:0:0/89',  '::100:0:0/88',  '::200:0:0/87',  '::400:0:0/86',
+            '::800:0:0/85',  '::1000:0:0/84',  '::2000:0:0/83',
+            '::4000:0:0/82',  '::8000:0:0/82',  '::c000:0:0/83',
+            '::e000:0:0/84',  '::f000:0:0/85',  '::f800:0:0/86',
+            '::fc00:0:0/87',  '::fe00:0:0/88',  '::ff00:0:0/89',
+            '::ff80:0:0/90',  '::ffc0:0:0/91',  '::ffe0:0:0/92',
+            '::fff0:0:0/93',  '::fff8:0:0/94',  '::fffc:0:0/95',
+            '::fffe:0:0/96',  '::ffff:0.0.0.0/97',  '::ffff:128.0.0.0/98',
+            '::ffff:192.0.0.0/99',  '::ffff:224.0.0.0/100',
+            '::ffff:240.0.0.0/101',  '::ffff:248.0.0.0/102',
+            '::ffff:252.0.0.0/103',  '::ffff:254.0.0.0/104',
+            '::ffff:255.0.0.0/105',  '::ffff:255.128.0.0/106',
+            '::ffff:255.192.0.0/107',  '::ffff:255.224.0.0/108',
+            '::ffff:255.240.0.0/109',  '::ffff:255.248.0.0/110',
+            '::ffff:255.252.0.0/111',  '::ffff:255.254.0.0/112',
+            '::ffff:255.255.0.0/113',  '::ffff:255.255.128.0/114',
+            '::ffff:255.255.192.0/115',  '::ffff:255.255.224.0/116',
+            '::ffff:255.255.240.0/117',  '::ffff:255.255.248.0/118',
+            '::ffff:255.255.252.0/119',  '::ffff:255.255.254.0/120',
+            '::ffff:255.255.255.0/121',  '::ffff:255.255.255.128/122',
+            '::ffff:255.255.255.192/123',  '::ffff:255.255.255.224/124',
+            '::ffff:255.255.255.240/125',  '::ffff:255.255.255.248/126',
+            '::ffff:255.255.255.252/127',  '::ffff:255.255.255.254/128'])
 
 #-----------------------------------------------------------------------------
 class CIDRTests(TestCase):
@@ -1474,7 +1501,8 @@ class CIDRTests(TestCase):
             'overlaps',
             'summarize',
             'size',
-            'span',
+            'span_addrs',
+            'span_size',
             'subnet',
             'ipglob',
         )
@@ -1646,13 +1674,19 @@ class CIDRTests(TestCase):
             ('128.0.0.0/8', '128.0.0.0/8'),
             ('128.0.0/8',   '128.0.0.0/8'),
             ('192.168',     '192.168.0.0/24'),
-            ('0.0.0.0',     '0.0.0.0/8'),
+            ('192.0.2',     '192.0.2.0/24'),
+            ('192.0.2.0',     '192.0.2.0/32'),
+            ('0.0.0.0',     '0.0.0.0/32'),
             ('::/128',      None),            #   Does not support IPv6.
             ('::10/128',    None),            #   Hmmm... IPv6 proper, not IPv4 mapped.
             ('::/128',      None),            #   Does not support IPv6.
-#FIXME:            ('::192.168',   '::192.168.0.0/128'),
-#FIXME:            ('::192.168',   '::192.168.0.0/128'),
-#FIXME:            ('::ffff:192.168/120', '::ffff:192.168.0.0/120'),
+#TODO:            ('::192.0.2',     '::192.0.2.0/128'),
+#TODO:            ('::192.0.2.0',     '::192.0.2.0/128'),
+#TODO:            ('::ffff:192.0.2',     '::ffff:192.0.2.0/128'),
+#TODO:            ('::ffff:192.0.2.0',     '::ffff:192.0.2.0/128'),
+#TODO:            ('::192.168',   '::192.168.0.0/128'),
+#TODO:            ('::192.168',   '::192.168.0.0/128'),
+#TODO:            ('::ffff:192.168/120', '::ffff:192.168.0.0/120'),
             ('0.0.0.0.0', None),
             ('', None),
             (None, None),
@@ -1905,13 +1939,13 @@ class CIDRTests(TestCase):
 
         for comparison in expected:
             (arg, result) = comparison
-            cidr = str(CIDR.span(arg))
+            cidr = str(CIDR.span_addrs(arg))
             self.assertEqual(cidr, result)
 
     def testSupernetSpanningFailureModes(self):
         """CIDR() - spanning supernet failure mode tests (IPv4)"""
         #   Mixing address types is not allowed!
-        self.assertRaises(TypeError, CIDR.span, ['::ffff:192.0.2.0/24', '192.0.3.0/24', ])
+        self.assertRaises(TypeError, CIDR.span_addrs, ['::ffff:192.0.2.0/24', '192.0.3.0/24', ])
 
     def testSupernetMembership(self):
         """CIDR() - supernet membership tests (IPv4)"""
@@ -2066,6 +2100,32 @@ class CIDRTests(TestCase):
         for actual, expected in summaries.items():
             calculated = CIDR.summarize(actual, fmt=str)
             self.assertEquals(expected, calculated)
+
+    def testSummarizeExtended(self):
+        """CIDR() - extended summarization tests (IPv4 and IPv6)"""
+        #   Start with a single /23 CIDR.
+        orig_cidr_ipv4 = CIDR('192.0.2.0/23')
+        orig_cidr_ipv6 = CIDR('::192.0.2.0/120')
+
+        #   Split it into /28 subnet CIDRs (mix CIDR objects and CIDR strings).
+        cidr_subnets = []
+        cidr_subnets.extend(list(orig_cidr_ipv4.subnet(28, fmt=str)))
+        cidr_subnets.extend(list(orig_cidr_ipv4.subnet(28)))
+        cidr_subnets.extend(list(orig_cidr_ipv6.subnet(124, fmt=str)))
+        cidr_subnets.extend(list(orig_cidr_ipv6.subnet(124)))
+
+        #   Add a couple of duplicates in to make sure summarization is working OK.
+        cidr_subnets.append('192.0.2.1/32')
+        cidr_subnets.append('192.0.2.128/25')
+        cidr_subnets.append('::192.0.2.92/128')
+
+        #   Randomize the order of subnets.
+        _random.shuffle(cidr_subnets)
+
+        #   Perform summarization operation.
+        new_cidr = CIDR.summarize(cidr_subnets)
+
+        self.assertEqual([orig_cidr_ipv4, orig_cidr_ipv6], new_cidr)
 
 #-----------------------------------------------------------------------------
 class IPGlobTests(TestCase):
