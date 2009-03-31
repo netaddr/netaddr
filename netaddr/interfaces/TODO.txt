@@ -1,0 +1,7 @@
+IPy interface for netaddr.
+
+- Implement logic for __init__(ipversion, make_net) parameters.
+
+- Implement logic to make self.WantPrefixLen and make_prefixlen=1|2|3 argument available on many methods work.
+
+- Implement logic to make self.NoPrefixForSingleIp work
