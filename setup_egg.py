@@ -14,8 +14,8 @@ import release
 
 #-----------------------------------------------------------------------------
 def main():
-    if sys.version_info[:2] < (2, 3):
-        print "netaddr requires Python version 2.3 or later."
+    if sys.version_info[:2] < (2, 4):
+        print "netaddr requires Python version 2.4.x or higher."
         sys.exit(1)
 
     setup(
