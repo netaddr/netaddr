@@ -1,0 +1,34 @@
+netaddr copyright notice
+------------------------
+
+Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+
+Released under the BSD license. See the LICENSE file for details.
+
+
+IANA (Internet Assigned Numbers Authority)
+------------------------------------------
+
+Use of data from IANA is subject to copyright and is provided with prior 
+written permission.
+
+IANA data files included with netaddr are not modified in any way but may be
+out of date. See README file and source code for URLs to latest copies of
+referenced files.
+
+netaddr is not sponsored nor endorsed by IANA.
+
+
+IEEE (Institution of Electrical Engineers)
+------------------------------------------
+
+Use of data from IEEE is subject to copyright. See the following URL for 
+details :-
+
+	http://www.ieee.org/web/publications/rights/legal.html
+
+IEEE data files included with netaddr are not modified in any way but may be 
+out of date. See README file and source code for URLs to latest copies of
+referenced files.
+
+netaddr is not sponsored nor endorsed by the IEEE.
