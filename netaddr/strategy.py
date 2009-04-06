@@ -9,6 +9,7 @@ network address conversion logic, constants and shared strategy objects.
 """
 import struct as _struct
 import re as _re
+from netaddr.util import BYTES_TO_BITS as _BYTES_TO_BITS
 
 #   Check whether we need to use fallback code or not.
 try:
@@ -37,24 +38,6 @@ except:
 
 from netaddr import BIG_ENDIAN_PLATFORM, AT_UNSPEC, AT_INET, AT_INET6, \
                     AT_LINK, AT_EUI64, AT_NAMES, AddrFormatError
-
-#-----------------------------------------------------------------------------
-def _BYTES_TO_BITS():
-    """
-    Generates a 256 element list of 8-bit binary digit strings. List index is
-    equivalent to the bit string value.
-    """
-    lookup = []
-    bits_per_byte = range(7, -1, -1)
-    for num in range(256):
-        bits = 8*[None]
-        for i in bits_per_byte:
-            bits[i] = '01'[num&1]
-            num >>= 1
-        lookup.append(''.join(bits))
-    return lookup
-
-_BYTES_TO_BITS = _BYTES_TO_BITS()
 
 #-----------------------------------------------------------------------------
 class AddrStrategy(object):
