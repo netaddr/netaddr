@@ -2760,6 +2760,7 @@ class CIDRGroup(object):
 
         """
         self._cidrs = []
+        self._dirty = False
         self.fmt = fmt
 
         if cidrs is not None:
@@ -2769,6 +2770,15 @@ class CIDRGroup(object):
             else:
                 raise ValueError('%r is not a CIDR or IP address iterable!' \
                     % cidrs)
+
+    def compact(self):
+        """
+        Compact/summarize internal list of IP addresses and CIDRs.
+
+        """
+        if self._dirty:
+            self._cidrs = CIDR.summarize(self._cidrs)
+            self._dirty = False
 
     def add(self, cidr):
         """
@@ -2785,7 +2795,7 @@ class CIDRGroup(object):
             cidr = CIDR(cidr, strict=False, expand_abbrev=False)
 
         self._cidrs.append(cidr)
-        self._cidrs = CIDR.summarize(self._cidrs)
+        self._dirty = True
 
     def remove(self, cidr):
         """
@@ -2802,6 +2812,7 @@ class CIDRGroup(object):
             cidr = CIDR(cidr, strict=False, expand_abbrev=False)
 
         self.add(cidr)
+        self.compact()
 
         remainder = None
         for i, c in enumerate(self._cidrs):
@@ -2813,7 +2824,6 @@ class CIDRGroup(object):
             del self._cidrs[i]
             if len(remainder) != 0:
                 self._cidrs.extend(remainder)
-                self._cidrs = CIDR.summarize(self._cidrs)
 
     def cidrs(self, fmt=None):
         """
@@ -2823,6 +2833,8 @@ class CIDRGroup(object):
             (Default: None - L{CIDR} objects) Also accepts str() and unicode().
 
         """
+        self.compact()
+
         if fmt is None:
             return self._cidrs
         return [fmt(c) for c in self._cidrs]
@@ -2834,6 +2846,8 @@ class CIDRGroup(object):
         @param other: a CIDR or IP address in object or string format.
 
         """
+        self.compact()
+
         if hasattr(other, 'value'):
             #   An IP object.
             other = other.cidr()
@@ -2857,8 +2871,8 @@ class CIDRGroup(object):
             (Default: None - L{IP} objects) Also accepts str() and unicode().
 
         """
-#TODO: Consider whether or not itertools.chain() is suitable for use here or
-#TODO: not.
+        self.compact()
+
         if iterable is None:
             iterable = self._cidrs
 
