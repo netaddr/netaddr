@@ -1,7 +1,7 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           python-netaddr
-Version:        0.4
+Version:        0.5.2
 Release:        1%{?dist}
 Summary:        Network address manipulation, done Pythonically
 
@@ -55,6 +55,15 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Oct 10 2008 John Eckersberg <jeckersb@redhat.com> - 0.5.2-1
+- New upstream version, bug fixes for 0.5.1
+
+* Tue Sep 23 2008 John Eckersberg <jeckersb@redhat.com> - 0.5.1-1
+- New upstream version, bug fixes for 0.5
+
+* Sun Sep 21 2008 John Eckersberg <jeckersb@redhat.com> - 0.5-1
+- New upstream version
+
 * Mon Aug 11 2008 John Eckersberg <jeckersb@redhat.com> - 0.4-1
 - Initial packaging for Fedora
 

@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -50,6 +50,8 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.strategy.AddrStrategy-class.html"
@@ -69,7 +71,7 @@ object --+
 <dl><dt>Known Subclasses:</dt>
 <dd>
       <ul class="subclass-list">
-<li><a href="netaddr.strategy.EUI48Strategy-class.html">EUI48Strategy</a></li><li>, <a href="netaddr.strategy.IPv4StrategyStd-class.html">IPv4StrategyStd</a></li><li>, <a href="netaddr.strategy.IPv6Strategy-class.html">IPv6Strategy</a></li>  </ul>
+<li><a href="netaddr.strategy.EUI48Strategy-class.html">EUI48Strategy</a></li><li>, <a href="netaddr.strategy.IPv4Strategy-class.html">IPv4Strategy</a></li><li>, <a href="netaddr.strategy.IPv6Strategy-class.html">IPv6Strategy</a></li>  </ul>
 </dd></dl>
 
 <hr />
@@ -80,8 +82,17 @@ object --+
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Instance Methods</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -95,8 +106,7 @@ object --+
         <span class="summary-sig-arg">word_sep</span>,
         <span class="summary-sig-arg">word_fmt</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">%x</code><code class="variable-quote">'</code></span>,
         <span class="summary-sig-arg">addr_type</span>=<span class="summary-sig-default">0</span>,
-        <span class="summary-sig-arg">word_base</span>=<span class="summary-sig-default">16</span>,
-        <span class="summary-sig-arg">uppercase</span>=<span class="summary-sig-default">False</span>)</span><br />
+        <span class="summary-sig-arg">word_base</span>=<span class="summary-sig-default">16</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.__init__">source&nbsp;code</a></span>
@@ -154,8 +164,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#bits_to_int" class="summary-sig-name">bits_to_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">bits</span>)</span><br />
       Returns:
-      A network byte order integer that is equivalent to value represented 
-      by network address in readable binary form.</td>
+      An unsigned integer that is equivalent to value represented by 
+      network address in readable binary form.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.bits_to_int">source&nbsp;code</a></span>
             
@@ -174,8 +184,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#valid_int" class="summary-sig-name">valid_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">int_val</span>)</span><br />
       Returns:
-      <code>True</code> if network byte order integer falls within the 
-      boundaries of this address type, <code>False</code> otherwise.</td>
+      <code>True</code> if integer falls within the boundaries of this 
+      address type, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.valid_int">source&nbsp;code</a></span>
             
@@ -195,7 +205,7 @@ object --+
         <span class="summary-sig-arg">int_val</span>)</span><br />
       Returns:
       A network address in string form that is equivalent to value 
-      represented by a network byte order integer.</td>
+      represented by an unsigned integer.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.int_to_str">source&nbsp;code</a></span>
             
@@ -212,10 +222,11 @@ object --+
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#int_to_bits" class="summary-sig-name">int_to_bits</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>)</span><br />
+        <span class="summary-sig-arg">int_val</span>,
+        <span class="summary-sig-arg">word_sep</span>=<span class="summary-sig-default">None</span>)</span><br />
       Returns:
       A network address in readable binary form that is equivalent to value
-      represented by a network byte order integer.</td>
+      represented by an unsigned integer.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.int_to_bits">source&nbsp;code</a></span>
             
@@ -273,8 +284,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#int_to_packed" class="summary-sig-name">int_to_packed</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">int_val</span>)</span><br />
       Returns:
-      a packed string that is equivalent to value represented by a network 
-      byte order integer.</td>
+      a packed string that is equivalent to value represented by an 
+      unsigned integer.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.int_to_packed">source&nbsp;code</a></span>
             
@@ -293,8 +304,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#packed_to_int" class="summary-sig-name">packed_to_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">packed_int</span>)</span><br />
       Returns:
-      A network byte order integer that is equivalent to value of network 
-      address represented by packed binary string.</td>
+      An unsigned integer equivalent to value of network address 
+      represented by packed binary string.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.packed_to_int">source&nbsp;code</a></span>
             
@@ -333,8 +344,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#str_to_int" class="summary-sig-name">str_to_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
       Returns:
-      A network byte order integer that is equivalent to value represented 
-      by network address in string form.</td>
+      An unsigned integer equivalent to value represented by network 
+      address in string form.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.str_to_int">source&nbsp;code</a></span>
             
@@ -373,8 +384,8 @@ object --+
           <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#words_to_int" class="summary-sig-name">words_to_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">words</span>)</span><br />
       Returns:
-      A network byte order integer that is equivalent to value represented 
-      by word sequence.</td>
+      An unsigned integer that is equivalent to value represented by word 
+      sequence.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.words_to_int">source&nbsp;code</a></span>
             
@@ -404,8 +415,17 @@ object --+
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variables</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -421,8 +441,17 @@ object --+
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Properties</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
   <tr>
     <td colspan="2" class="summary">
@@ -437,8 +466,17 @@ object --+
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Method Details</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 </table>
 <a name="__init__"></a>
@@ -454,8 +492,7 @@ object --+
         <span class="sig-arg">word_sep</span>,
         <span class="sig-arg">word_fmt</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">%x</code><code class="variable-quote">'</code></span>,
         <span class="sig-arg">addr_type</span>=<span class="sig-default">0</span>,
-        <span class="sig-arg">word_base</span>=<span class="sig-default">16</span>,
-        <span class="sig-arg">uppercase</span>=<span class="sig-default">False</span>)</span>
+        <span class="sig-arg">word_base</span>=<span class="sig-default">16</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -474,7 +511,6 @@ object --+
         <li><strong class="pname"><code>word_fmt</code></strong> - format string for each word. (Default: '%x')</li>
         <li><strong class="pname"><code>addr_type</code></strong> - address type. (Default: AT_UNSPEC)</li>
         <li><strong class="pname"><code>word_base</code></strong> - number base used to convert each word using int(). (Default: 16)</li>
-        <li><strong class="pname"><code>uppercase</code></strong> - uppercase address. (Default: False)</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -556,8 +592,8 @@ object --+
         <li><strong class="pname"><code>bits</code></strong> - A network address in readable binary form.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>A network byte order integer that is equivalent to value 
-          represented by network address in readable binary form.</dd>
+        <dd>An unsigned integer that is equivalent to value represented by 
+          network address in readable binary form.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -580,11 +616,11 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+        <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if network byte order integer falls within the 
-          boundaries of this address type, <code>False</code> otherwise.</dd>
+        <dd><code>True</code> if integer falls within the boundaries of this 
+          address type, <code>False</code> otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -607,11 +643,11 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+        <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>A network address in string form that is equivalent to value 
-          represented by a network byte order integer.</dd>
+          represented by an unsigned integer.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -623,7 +659,8 @@ object --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_bits</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">int_val</span>)</span>
+        <span class="sig-arg">int_val</span>,
+        <span class="sig-arg">word_sep</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.int_to_bits">source&nbsp;code</a></span>&nbsp;
@@ -634,11 +671,13 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+        <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer.</li>
+        <li><strong class="pname"><code>word_sep</code></strong> - (optional) the separator to insert between words. Default: None -
+          use default separator for address type.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>A network address in readable binary form that is equivalent to 
-          value represented by a network byte order integer.</dd>
+          value represented by an unsigned integer.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -661,7 +700,7 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer.</li>
+        <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>A network address in standard binary representation format that 
@@ -691,7 +730,7 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>int_val</code></strong> - A network byte order integer to be split.</li>
+        <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer to be divided up into words.</li>
         <li><strong class="pname"><code>num_words</code></strong> - (optional) number of words expected in return value tuple. Uses 
           address type default if not specified.</li>
         <li><strong class="pname"><code>word_size</code></strong> - (optional) size/width of individual words (in bits). Uses address
@@ -722,8 +761,8 @@ object --+
         <li><strong class="pname"><code>int_val</code></strong> - the integer to be packed.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>a packed string that is equivalent to value represented by a 
-          network byte order integer.</dd>
+        <dd>a packed string that is equivalent to value represented by an 
+          unsigned integer.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -746,12 +785,12 @@ object --+
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>packed_int</code></strong> - a packed string containing an unsigned integer. Network byte 
-          order is assumed.</li>
+        <li><strong class="pname"><code>packed_int</code></strong> - a packed string containing an unsigned integer. It is assumed 
+          that the string is packed in network byte order.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>A network byte order integer that is equivalent to value of 
-          network address represented by packed binary string.</dd>
+        <dd>An unsigned integer equivalent to value of network address 
+          represented by packed binary string.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -804,8 +843,8 @@ object --+
         <li><strong class="pname"><code>addr</code></strong> - A network address in string form.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>A network byte order integer that is equivalent to value 
-          represented by network address in string form.</dd>
+        <dd>An unsigned integer equivalent to value represented by network 
+          address in string form.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -858,8 +897,8 @@ object --+
         <li><strong class="pname"><code>words</code></strong> - A list or tuple containing integer word values.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>A network byte order integer that is equivalent to value 
-          represented by word sequence.</dd>
+        <dd>An unsigned integer that is equivalent to value represented by 
+          word sequence.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -888,14 +927,14 @@ object --+
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Jan 21 23:41:06 2009
+    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:02 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

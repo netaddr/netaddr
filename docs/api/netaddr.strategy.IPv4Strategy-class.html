@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>netaddr.strategy.IPv6Strategy</title>
+  <title>netaddr.strategy.IPv4Strategy</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -44,7 +44,7 @@
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
         <a href="netaddr.strategy-module.html" onclick="show_private();">Module&nbsp;strategy</a> ::
-        Class&nbsp;IPv6Strategy
+        Class&nbsp;IPv4Strategy
       </span>
     </td>
     <td>
@@ -54,27 +54,25 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="netaddr.strategy.IPv6Strategy-class.html"
+            >]&nbsp;|&nbsp;<a href="netaddr.strategy.IPv4Strategy-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class IPv6Strategy</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class IPv4Strategy</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy">source&nbsp;code</a></span></p>
 <pre class="base-tree">
   object --+    
            |    
 <a href="netaddr.strategy.AddrStrategy-class.html">AddrStrategy</a> --+
                |
-              <strong class="uidshort">IPv6Strategy</strong>
+              <strong class="uidshort">IPv4Strategy</strong>
 </pre>
 
 <hr />
 <p>An <a href="netaddr.strategy.AddrStrategy-class.html" 
-  class="link">AddrStrategy</a> for IPv6 address processing.</p>
-  <p>Implements the operations that can be performed on an IPv6 network 
-  address in accordance with RFC 4291.</p>
+  class="link">AddrStrategy</a> for IPv4 address processing.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -99,10 +97,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4Strategy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -116,13 +114,13 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#valid_str" class="summary-sig-name">valid_str</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4Strategy-class.html#valid_str" class="summary-sig-name">valid_str</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
       Returns:
-      <code>True</code> if IPv6 network address string is valid, 
-      <code>False</code> otherwise.</td>
+      <code>True</code> if network address in string form is valid for this
+      address type, <code>False</code> otherwise.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.valid_str">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.valid_str">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -136,12 +134,13 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#str_to_int" class="summary-sig-name">str_to_int</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4Strategy-class.html#str_to_int" class="summary-sig-name">str_to_int</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">addr</span>)</span><br />
       Returns:
-      The equivalent unsigned integer for a given IPv6 address.</td>
+      An unsigned integer that is equivalent to value represented by the 
+      IPv4 dotted decimal address string.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.str_to_int">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.str_to_int">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -155,14 +154,35 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#int_to_str" class="summary-sig-name">int_to_str</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4Strategy-class.html#int_to_str" class="summary-sig-name">int_to_str</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">int_val</span>)</span><br />
+      Returns:
+      An IPv4 dotted decimal address string that is equivalent to value 
+      represented by a 32 bit unsigned integer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.int_to_str">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4Strategy-class.html#int_to_words" class="summary-sig-name">int_to_words</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">int_val</span>,
-        <span class="summary-sig-arg">compact</span>=<span class="summary-sig-default">True</span>,
-        <span class="summary-sig-arg">word_fmt</span>=<span class="summary-sig-default">None</span>)</span><br />
+        <span class="summary-sig-arg">num_words</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">word_size</span>=<span class="summary-sig-default">None</span>)</span><br />
       Returns:
-      The IPv6 string form equal to the unsigned integer provided.</td>
+      An integer word (octet) sequence that is equivalent to value 
+      represented by an unsigned integer.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_str">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.int_to_words">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -176,53 +196,33 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#int_to_packed" class="summary-sig-name">int_to_packed</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4Strategy-class.html#words_to_int" class="summary-sig-name">words_to_int</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">octets</span>)</span><br />
+      Returns:
+      An unsigned integer that is equivalent to value represented by word 
+      (octet) sequence.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.words_to_int">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.strategy.IPv4Strategy-class.html#int_to_arpa" class="summary-sig-name">int_to_arpa</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">int_val</span>)</span><br />
       Returns:
-      a packed string that is equivalent to value represented by an 
-      unsigned integer (in network byte order).</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_packed">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#packed_to_int" class="summary-sig-name">packed_to_int</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">packed_int</span>)</span><br />
-      Returns:
-      An unsigned integer that is equivalent to value of network address 
-      represented by packed binary string.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.packed_to_int">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.IPv6Strategy-class.html#int_to_arpa" class="summary-sig-name">int_to_arpa</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>)</span><br />
-      Returns:
-      The reverse DNS lookup for an IPv6 address in network byte order 
+      The reverse DNS lookup for an IPv4 address in network byte order 
       integer form.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_arpa">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.int_to_arpa">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -332,12 +332,33 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#int_to_words" class="summary-sig-name">int_to_words</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">int_val</span>,
-        <span class="summary-sig-arg">num_words</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">word_size</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#int_to_packed" class="summary-sig-name">int_to_packed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">int_val</span>)</span><br />
+      Returns:
+      a packed string that is equivalent to value represented by an 
+      unsigned integer.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.int_to_words">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.int_to_packed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#packed_to_int" class="summary-sig-name">packed_to_int</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packed_int</span>)</span><br />
+      Returns:
+      An unsigned integer equivalent to value of network address 
+      represented by packed binary string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.packed_to_int">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -398,26 +419,6 @@
       <code>False</code> otherwise.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.valid_words">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="netaddr.strategy.AddrStrategy-class.html#words_to_int" class="summary-sig-name">words_to_int</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">words</span>)</span><br />
-      Returns:
-      An unsigned integer that is equivalent to value represented by word 
-      sequence.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.strategy-pysrc.html#AddrStrategy.words_to_int">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -509,7 +510,7 @@
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -542,7 +543,7 @@
         <span class="sig-arg">addr</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.valid_str">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.valid_str">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -550,11 +551,11 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - An IPv6 address in string form.</li>
+        <li><strong class="pname"><code>addr</code></strong> - An IP address in presentation (string) format.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><code>True</code> if IPv6 network address string is valid, 
-          <code>False</code> otherwise.</dd>
+        <dd><code>True</code> if network address in string form is valid for 
+          this address type, <code>False</code> otherwise.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#valid_str">AddrStrategy.valid_str</a>
     </dt>
@@ -572,7 +573,7 @@
         <span class="sig-arg">addr</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.str_to_int">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.str_to_int">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -580,10 +581,11 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>addr</code></strong> - An IPv6 address in string form.</li>
+        <li><strong class="pname"><code>addr</code></strong> - An IPv4 dotted decimal address in string form.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>The equivalent unsigned integer for a given IPv6 address.</dd>
+        <dd>An unsigned integer that is equivalent to value represented by 
+          the IPv4 dotted decimal address string.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#str_to_int">AddrStrategy.str_to_int</a>
     </dt>
@@ -598,12 +600,10 @@
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_str</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">int_val</span>,
-        <span class="sig-arg">compact</span>=<span class="sig-default">True</span>,
-        <span class="sig-arg">word_fmt</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">int_val</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_str">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.int_to_str">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -612,33 +612,30 @@
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer.</li>
-        <li><strong class="pname"><code>compact</code></strong> - (optional) A boolean flag indicating if compact formatting should
-          be used. If True, this method uses the '::' string to represent 
-          the first adjacent group of words with a value of zero. Default: 
-          True</li>
-        <li><strong class="pname"><code>word_fmt</code></strong> - (optional) The Python format string used to override formatting 
-          for each word. Only applies when compact is False.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>The IPv6 string form equal to the unsigned integer provided.</dd>
+        <dd>An IPv4 dotted decimal address string that is equivalent to value
+          represented by a 32 bit unsigned integer.</dd>
     <dt>Overrides:
         <a href="netaddr.strategy.AddrStrategy-class.html#int_to_str">AddrStrategy.int_to_str</a>
     </dt>
   </dl>
 </td></tr></table>
 </div>
-<a name="int_to_packed"></a>
+<a name="int_to_words"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_packed</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">int_val</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">int_to_words</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">int_val</span>,
+        <span class="sig-arg">num_words</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">word_size</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_packed">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.int_to_words">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -646,29 +643,31 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>int_val</code></strong> - the integer to be packed.</li>
+        <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer.</li>
+        <li><strong class="pname"><code>num_words</code></strong> - (unused) *** interface compatibility only ***</li>
+        <li><strong class="pname"><code>word_size</code></strong> - (unused) *** interface compatibility only ***</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>a packed string that is equivalent to value represented by an 
-          unsigned integer (in network byte order).</dd>
+        <dd>An integer word (octet) sequence that is equivalent to value 
+          represented by an unsigned integer.</dd>
     <dt>Overrides:
-        <a href="netaddr.strategy.AddrStrategy-class.html#int_to_packed">AddrStrategy.int_to_packed</a>
+        <a href="netaddr.strategy.AddrStrategy-class.html#int_to_words">AddrStrategy.int_to_words</a>
     </dt>
   </dl>
 </td></tr></table>
 </div>
-<a name="packed_to_int"></a>
+<a name="words_to_int"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">packed_to_int</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">packed_int</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">words_to_int</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">octets</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.packed_to_int">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.words_to_int">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -676,14 +675,13 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>packed_int</code></strong> - a packed string containing an unsigned integer. It is assumed 
-          that string is packed in network byte order.</li>
+        <li><strong class="pname"><code>octets</code></strong> - A list or tuple containing integer octets.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>An unsigned integer that is equivalent to value of network 
-          address represented by packed binary string.</dd>
+        <dd>An unsigned integer that is equivalent to value represented by 
+          word (octet) sequence.</dd>
     <dt>Overrides:
-        <a href="netaddr.strategy.AddrStrategy-class.html#packed_to_int">AddrStrategy.packed_to_int</a>
+        <a href="netaddr.strategy.AddrStrategy-class.html#words_to_int">AddrStrategy.words_to_int</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -699,7 +697,7 @@
         <span class="sig-arg">int_val</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv6Strategy.int_to_arpa">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.strategy-pysrc.html#IPv4Strategy.int_to_arpa">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -710,7 +708,7 @@
         <li><strong class="pname"><code>int_val</code></strong> - An unsigned integer.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>The reverse DNS lookup for an IPv6 address in network byte order 
+        <dd>The reverse DNS lookup for an IPv4 address in network byte order 
           integer form.</dd>
   </dl>
 </td></tr></table>

@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -50,6 +50,8 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.address.Addr-class.html"
@@ -88,8 +90,17 @@ object --+
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Instance Methods</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -136,7 +147,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__int__" class="summary-sig-name">__int__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      value of this address as a network byte order integer</td>
+      value of this address as an unsigned integer</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__int__">source&nbsp;code</a></span>
             
@@ -154,7 +165,7 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__long__" class="summary-sig-name">__long__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      value of this address as a network byte order integer</td>
+      value of this address as an unsigned integer</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__long__">source&nbsp;code</a></span>
             
@@ -206,7 +217,8 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#bits" class="summary-sig-name">bits</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#bits" class="summary-sig-name">bits</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">word_sep</span>=<span class="summary-sig-default">None</span>)</span><br />
       Returns:
       human-readable binary digit string of this address</td>
           <td align="right" valign="top">
@@ -337,7 +349,8 @@ object --+
         <tr>
           <td><span class="summary-sig"><a href="netaddr.address.Addr-class.html#__hex__" class="summary-sig-name">__hex__</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Returns:
-      network byte order hexadecimal string of this address</td>
+      hexadecimal string representation of this address (in network byte 
+      order).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="netaddr.address-pysrc.html#Addr.__hex__">source&nbsp;code</a></span>
             
@@ -673,17 +686,23 @@ object --+
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variables</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.address.Addr-class.html#STRATEGIES" class="summary-name">STRATEGIES</a> = <code title="(IPv4StrategyOpt(32, 8, '.', 4, 10, False),
- IPv6Strategy(128, 16, ':', 6, 16, False),
- EUI48Strategy(48, 8, '-', 48, 16, True),
- AddrStrategy(64, 8, '-', 64, 16, True))"><code class="variable-group">(</code>IPv4StrategyOpt(32, 8, '.', 4, 10, False)<code class="variable-op">, </code>IPv6S<code class="variable-ellipsis">...</code></code>
+        <a name="STRATEGIES"></a><span class="summary-name">STRATEGIES</span> = <code title="ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64">ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64</code>
     </td>
   </tr>
 <tr>
@@ -720,8 +739,17 @@ object --+
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Properties</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
   <tr>
     <td colspan="2" class="summary">
@@ -736,8 +764,17 @@ object --+
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Method Details</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 </table>
 <a name="__init__"></a>
@@ -814,7 +851,7 @@ object --+
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>value of this address as a network byte order integer</dd>
+        <dd>value of this address as an unsigned integer</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -835,7 +872,7 @@ object --+
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>value of this address as a network byte order integer</dd>
+        <dd>value of this address as an unsigned integer</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -896,7 +933,8 @@ object --+
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">bits</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bits</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">word_sep</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="netaddr.address-pysrc.html#Addr.bits">source&nbsp;code</a></span>&nbsp;
@@ -905,6 +943,11 @@ object --+
   
   
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>word_sep</code></strong> - (optional) the separator to insert between words. Default: None -
+          use default separator for address type.</li>
+    </ul></dd>
     <dt>Returns:</dt>
         <dd>human-readable binary digit string of this address</dd>
   </dl>
@@ -1040,7 +1083,8 @@ object --+
   
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>network byte order hexadecimal string of this address</dd>
+        <dd>hexadecimal string representation of this address (in network 
+          byte order).</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1453,37 +1497,6 @@ object --+
 </td></tr></table>
 </div>
 <br />
-<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
-<a name="section-ClassVariableDetails"></a>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variable Details</span></td>
-</tr>
-</table>
-<a name="STRATEGIES"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">STRATEGIES</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-<code class="variable-group">(</code>IPv4StrategyOpt(32, 8, '.', 4, 10, False)<code class="variable-op">,</code>
- IPv6Strategy(128, 16, ':', 6, 16, False)<code class="variable-op">,</code>
- EUI48Strategy(48, 8, '-', 48, 16, True)<code class="variable-op">,</code>
- AddrStrategy(64, 8, '-', 64, 16, True)<code class="variable-group">)</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -1508,14 +1521,14 @@ object --+
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Jan 21 23:41:06 2009
+    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:01 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

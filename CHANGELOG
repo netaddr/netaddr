@@ -1,3 +1,90 @@
+Release: 0.6.1
+Date: 6th Apr 2008
+
+Major changes since 0.6
+-----------------------
+
+* Added COPYRIGHT file with details and attribution for all 3rd party files
+  bundled with netaddr.
+
+* Minimum Python version required is now 2.4.x changed from 2.3.x.
+  
+  - Python 2.3 compatibility code in many sections of code have been removed.
+  
+  - the @property and @staticmethod decorators are now used throughout the 
+    code along with the reversed() and sorted() builtin iterators.
+    
+  - A specific version check has also been added that will raise RuntimeError
+    exceptions if you run netaddr on a Python interpreter version < 2.4.x.
+
+* Integer addresses passed to the IP() and EUI() constructors no longer 
+  require a mandatory second address type (AT_*) argument in most cases. This
+  is now only really required to disambiguate between IPv4/IPv6 addresses with
+  the same numerical value. The same behaviour applies to EUI-48/EUI-64 
+  identifiers. A small speed boost is achieved if the 2nd address type 
+  argument is explicitly provided.
+  
+* IPv6 addresses returned by EUI.ipv6_link_local() now always have a subnet
+  prefix of /64.
+
+* Default sort order of aggregate classes (IPRange, CIDR and Wildcard) has
+  been changed (again). They now sort initially by first address and then
+  by network block size from largest to smallest which feels more natural.
+
+* Fixed a bug in the CIDR.abbrev_to_verbose() static method where IPv4 
+  addresses with 4 octets (i.e. non-partial addresses) were being assigned
+  subnet prefixes using abbreviated rules. All complete IPv4 addresses should
+  always get a /32 prefix where it is not explicitly provided.
+
+* Abbreviated address expansion in the CIDR constructor is now optional and
+  can be controlled by a new 'expand_abbrev' boolean argument.
+
+* Added the new CIDR.summarize() static method which transforms lists of IP
+  addresses and CIDRs into their most compact forms. Great for trimming down
+  large ad hoc address lists!
+
+* Added the previous() and next() methods to the CIDR classes which return
+  the CIDR subnets either side of a given CIDR that are of the same size.
+  For the CIDR 192.0.2.0/24, previous will return 192.0.1.0/24 and next
+  will return 192.0.3.0/24. Also accepts and optional step size (default
+  is 1).
+  
+* Added the supernet() method to the CIDR class which returns a generator of
+  all the subnets that contain the current CIDR found by decrementing the
+  prefixlen value for each step until it reaches zero.
+
+* Changed the way the fallback code works when the socket module is missing
+  important constants and functions.
+
+* Removed the uppercase options from the Strategy constructors and internals
+  as this behaviour can be easily replicated using the word_fmt option 
+  instead and requires less code (word_fmt='%X').
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 23 - http://code.google.com/p/netaddr/issues/detail?id=23
+
+	- Improve IPv6 IPv4 mapped/compatible address formatting
+
+* FIXED Issue 24 - http://code.google.com/p/netaddr/issues/detail?id=24
+
+	- bug in CIDR.subnet() when using the fmt argument
+
+* FIXED Issue 29 - http://code.google.com/p/netaddr/issues/detail?id=29
+
+	- CIDR.subnet method's count argument isn't working as documented
+
+* FIXED Issue 30 - http://code.google.com/p/netaddr/issues/detail?id=30
+
+	- not compatible with Python 2.3
+
+* FIXED Issue 31 - http://code.google.com/p/netaddr/issues/detail?id=31
+
+	- byte order in documentation confusing or wrong
+
+------------------------------------------------------------------------------
+
 Release: 0.6
 Date: 20th Jan 2009
 

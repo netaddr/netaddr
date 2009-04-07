@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -49,6 +49,8 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.address-module.html"
@@ -67,8 +69,17 @@
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Classes</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -184,8 +195,17 @@
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Functions</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -209,24 +229,68 @@
       
     </td>
   </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address-module.html#cidr_to_bits" class="summary-sig-name">cidr_to_bits</a>(<span class="summary-sig-arg">cidr</span>)</span><br />
+      Returns:
+      a tuple containing CIDR in binary string format and addr_type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#cidr_to_bits">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="netaddr.address-module.html#bits_to_cidr" class="summary-sig-name">bits_to_cidr</a>(<span class="summary-sig-arg">bits</span>,
+        <span class="summary-sig-arg">addr_type</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">fmt</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns:
+      a CIDR object or string (determined by fmt).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="netaddr.address-pysrc.html#bits_to_cidr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
 </table>
 <!-- ==================== VARIABLES ==================== -->
 <a name="section-Variables"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Variables</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.address-module.html#AT_STRATEGIES" class="summary-name">AT_STRATEGIES</a> = <code title="{0: None,
- 4: IPv4StrategyOpt(32, 8, '.', 4, 10, False),
- 6: IPv6Strategy(128, 16, ':', 6, 16, False),
- 48: EUI48Strategy(48, 8, '-', 48, 16, True),
- 64: AddrStrategy(64, 8, '-', 64, 16, True)}"><code class="variable-group">{</code>0<code class="variable-op">: </code>None<code class="variable-op">, </code>4<code class="variable-op">: </code>IPv4StrategyOpt(32, 8, '.', 4, 10<code class="variable-ellipsis">...</code></code><br />
+        <a href="netaddr.address-module.html#AT_STRATEGIES" class="summary-name">AT_STRATEGIES</a> = <code title="{AT_UNSPEC: None, AT_INET: ST_IPV4, AT_INET6: ST_IPV6, AT_LINK: ST_EUI\
+48, AT_EUI64: ST_EUI64,}">{AT_UNSPEC: None, AT_INET: ST_IPV4, AT_INET6: <code class="variable-ellipsis">...</code></code><br />
       Address type to strategy object lookup dict.
     </td>
   </tr>
@@ -236,8 +300,17 @@
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Function Details</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 </table>
 <a name="nrange"></a>
@@ -273,11 +346,11 @@
           objects). Supported options :-
           <ul>
             <li>
-              <code>str</code> - IP address strings
+              <code>str</code> - IP address in string format
             </li>
             <li>
-              <code>int</code>, <code>long</code> - IP address integer 
-              (network byte order)
+              <code>int</code>, <code>long</code> - IP address as an 
+              unsigned integer
             </li>
             <li>
               <code>hex</code> - IP address as a hexadecimal number
@@ -292,14 +365,83 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="cidr_to_bits"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">cidr_to_bits</span>(<span class="sig-arg">cidr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#cidr_to_bits">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>cidr</code></strong> - a CIDR object or CIDR string value (acceptable by CIDR class 
+          constructor).</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>a tuple containing CIDR in binary string format and addr_type.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="bits_to_cidr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bits_to_cidr</span>(<span class="sig-arg">bits</span>,
+        <span class="sig-arg">addr_type</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">fmt</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="netaddr.address-pysrc.html#bits_to_cidr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>bits</code></strong> - a CIDR in binary string format.</li>
+        <li><strong class="pname"><code>addr_type</code></strong> - (optional) CIDR address type (IP version). (Default: AT_UNSPEC - 
+          auto-select) If not specified AT_INET (IPv4) is assumed if length
+          of binary string is &lt;= /32. If binary string is &gt; /32 and 
+          &lt;= /128 AT_INET6 (IPv6) is assumed. Useful when you have IPv6 
+          addresses with a prefixlen of /32 or less.</li>
+        <li><strong class="pname"><code>fmt</code></strong> - (optional) callable invoked on return CIDR. (Default: None - CIDR
+          object). Also accepts str() and unicode().</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>a CIDR object or string (determined by fmt).</dd>
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== VARIABLES DETAILS ==================== -->
 <a name="section-VariablesDetails"></a>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Variables Details</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 </table>
 <a name="AT_STRATEGIES"></a>
@@ -314,11 +456,8 @@
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code>0<code class="variable-op">: </code>None<code class="variable-op">,</code>
- 4<code class="variable-op">: </code>IPv4StrategyOpt(32, 8, '.', 4, 10, False)<code class="variable-op">,</code>
- 6<code class="variable-op">: </code>IPv6Strategy(128, 16, ':', 6, 16, False)<code class="variable-op">,</code>
- 48<code class="variable-op">: </code>EUI48Strategy(48, 8, '-', 48, 16, True)<code class="variable-op">,</code>
- 64<code class="variable-op">: </code>AddrStrategy(64, 8, '-', 64, 16, True)<code class="variable-group">}</code>
+{AT_UNSPEC: None, AT_INET: ST_IPV4, AT_INET6: ST_IPV6, AT_LINK: ST_EUI<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+48, AT_EUI64: ST_EUI64,}
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -349,14 +488,14 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Jan 21 23:41:05 2009
+    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:01 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

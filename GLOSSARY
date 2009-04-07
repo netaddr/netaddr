@@ -2,15 +2,14 @@
 GLOSSARY
 ========
 
-I thought this would be handy for those not familiar with some of the terms
-found in this library.
+A handy reference for unfamiliar with some of the terms used in this library.
 
 EUI - Extended Unique Identifier
 
 	A set of IEEE standards to represent unique addresses containing additional
-	organisational information. This module support EUI-48 and EUI-64 addresses
-	that are common used. The EUI-48 standard can be used to represent link 
-	layer addresses more commonly known as MAC (Media Access Control) addresses.
+	organisational information. This module provides supports for EUI-48 and 
+	EUI-64 addresses. The EUI-48 standard can be used to represent link layer
+	addresses more commonly known as MAC (Media Access Control) addresses.
 	
 	Further Reading
 	

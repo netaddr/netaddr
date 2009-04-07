@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>netaddr.ip.DictUpdater</title>
+  <title>netaddr.util</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,8 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="netaddr-module.html">Package&nbsp;netaddr</a> ::
-        <a href="netaddr.ip-module.html">Package&nbsp;ip</a> ::
-        Class&nbsp;DictUpdater
+        Module&nbsp;util
       </span>
     </td>
     <td>
@@ -54,37 +53,27 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="netaddr.ip.DictUpdater-class.html"
+            >]&nbsp;|&nbsp;<a href="netaddr.util-module.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class DictUpdater</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater">source&nbsp;code</a></span></p>
-<pre class="base-tree">
-     object --+    
-              |    
-<a href="netaddr.core.Subscriber-class.html">core.Subscriber</a> --+
-                  |
-                 <strong class="uidshort">DictUpdater</strong>
-</pre>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module util</h1><p class="nomargin-top"><span class="codelink"><a href="netaddr.util-pysrc.html">source&nbsp;code</a></span></p>
+<p>utility functions</p>
 
-<hr />
-<p>Concrete Subscriber that inserts records received from a Publisher 
-  into a dictionary.</p>
-
-<!-- ==================== INSTANCE METHODS ==================== -->
-<a name="section-InstanceMethods"></a>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="left"><span class="table-header">Functions</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-InstanceMethods"
+         ><span class="options">[<a href="#section-Functions"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
@@ -97,13 +86,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.ip.DictUpdater-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">dct</span>,
-        <span class="summary-sig-arg">topic</span>,
-        <span class="summary-sig-arg">unique_key</span>)</span><br />
-      Constructor.</td>
+          <td><span class="summary-sig"><a name="num_bits"></a><span class="summary-sig-name">num_bits</span>(<span class="summary-sig-arg">n</span>)</span><br />
+      Minimum number of bits needed to represent a given unsigned integer.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.util-pysrc.html#num_bits">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -117,12 +103,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="netaddr.ip.DictUpdater-class.html#update" class="summary-sig-name">update</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">data</span>)</span><br />
-      Callback function used by Publisher to notify this Subscriber about 
-      an update.</td>
+          <td><span class="summary-sig"><a href="netaddr.util-module.html#bytes_to_bits" class="summary-sig-name">bytes_to_bits</a>()</span><br />
+      Generates a 256 element list of 8-bit binary digit strings.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.update">source&nbsp;code</a></span>
+            <span class="codelink"><a href="netaddr.util-pysrc.html#bytes_to_bits">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -130,58 +114,51 @@
       
     </td>
   </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__delattr__</code>,
-      <code>__getattribute__</code>,
-      <code>__hash__</code>,
-      <code>__new__</code>,
-      <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>,
-      <code>__str__</code>
-      </p>
-    </td>
-  </tr>
 </table>
-<!-- ==================== PROPERTIES ==================== -->
-<a name="section-Properties"></a>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="left"><span class="table-header">Variables</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Properties"
+         ><span class="options">[<a href="#section-Variables"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
     </table>
   </td>
 </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__class__</code>
-      </p>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="netaddr.util-module.html#BYTES_TO_BITS" class="summary-name">BYTES_TO_BITS</a> = <code title="['00000000',
+ '00000001',
+ '00000010',
+ '00000011',
+ '00000100',
+ '00000101',
+ '00000110',
+ '00000111',
+..."><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">00000000</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">00000001</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">00000010</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">00000011</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 </table>
-<!-- ==================== METHOD DETAILS ==================== -->
-<a name="section-MethodDetails"></a>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="left"><span class="table-header">Function Details</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-MethodDetails"
+         ><span class="options">[<a href="#section-FunctionDetails"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
@@ -189,57 +166,68 @@
   </td>
 </tr>
 </table>
-<a name="__init__"></a>
+<a name="bytes_to_bits"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">dct</span>,
-        <span class="sig-arg">topic</span>,
-        <span class="sig-arg">unique_key</span>)</span>
-    <br /><em class="fname">(Constructor)</em>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bytes_to_bits</span>()</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="netaddr.util-pysrc.html#bytes_to_bits">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Constructor.</p>
-  <p>dct - lookup dict or dict like object to insert records into.</p>
-  <p>topic - high-level category name of data to be processed.</p>
-  <p>unique_key - key name in data dict that uniquely identifies it.</p>
+  <p>Generates a 256 element list of 8-bit binary digit strings. List index
+  is equivalent to the bit string value.</p>
   <dl class="fields">
-    <dt>Overrides:
-        object.__init__
-    </dt>
   </dl>
 </td></tr></table>
 </div>
-<a name="update"></a>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="BYTES_TO_BITS"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">update</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">data</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="netaddr.ip-pysrc.html#DictUpdater.update">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
+  <h3 class="epydoc">BYTES_TO_BITS</h3>
   
-  <p>Callback function used by Publisher to notify this Subscriber about an
-  update. Stores topic based information into dictionary passed to 
-  constructor.</p>
   <dl class="fields">
-    <dt>Overrides:
-        <a href="netaddr.core.Subscriber-class.html#update">core.Subscriber.update</a>
-    </dt>
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">00000000</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">00000001</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">00000010</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">00000011</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">00000100</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">00000101</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">00000110</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">00000111</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -275,7 +263,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:02 2009
+    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:01 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

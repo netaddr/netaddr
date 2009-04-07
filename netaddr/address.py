@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -10,6 +10,7 @@ Wildcard and IPRange).
 """
 import math as _math
 import socket as _socket
+import re as _re
 
 from netaddr import AddrFormatError, AddrConversionError, AT_UNSPEC, \
     AT_INET, AT_INET6, AT_LINK, AT_EUI64, AT_NAMES
@@ -18,6 +19,8 @@ from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64, \
     AddrStrategy
 
 from netaddr.eui import OUI, IAB
+
+from netaddr.util import num_bits
 
 #: Address type to strategy object lookup dict.
 AT_STRATEGIES = {
@@ -54,10 +57,12 @@ class AddrTypeDescriptor(object):
 class AddrValueDescriptor(object):
     """
     A descriptor that checks assignments to the named parameter passed to the
-    constructor. It accepts network addresses in either string format or as
-    network byte order integers. String based addresses are converted to their
-    integer equivalents before assignment to the named parameter. Also ensures
-    that addr_type and strategy are set correctly when parsing string based
+    constructor.
+
+    It accepts network addresses in either strings format or as unsigned
+    integers. String based addresses are converted to their integer
+    equivalents before assignment to the named parameter. Also ensures that
+    addr_type and strategy are set correctly when parsing string based
     addresses.
     """
     def __init__(self, name):
@@ -94,7 +99,7 @@ class AddrValueDescriptor(object):
                     raise OverflowError('value %r cannot be represented ' \
                         'in %d bit(s)!' % (value, instance.strategy.width))
             else:
-                raise TypeError('%r is an unsupported type!' % value)
+                raise AddrFormatError('%r is an unsupported type!' % value)
 
         instance.__dict__[self.name] = value
 
@@ -164,7 +169,7 @@ class PrefixLenDescriptor(object):
         #   Make sure instance is not a subnet mask trying to set a prefix!
         if isinstance(instance, IP):
             if instance.is_netmask() and instance.addr_type == AT_INET \
-               and prefixlen != 32:
+               and prefixlen != 32 and instance.value != 0:
                 raise ValueError('IPv4 netmasks must have a prefix of /32!')
 
         instance.__dict__['prefixlen'] = prefixlen
@@ -244,11 +249,11 @@ class Addr(object):
         return hash((self.value, self.addr_type))
 
     def __int__(self):
-        """@return: value of this address as a network byte order integer"""
+        """@return: value of this address as an unsigned integer"""
         return self.value
 
     def __long__(self):
-        """@return: value of this address as a network byte order integer"""
+        """@return: value of this address as an unsigned integer"""
         return self.value
 
     def __str__(self):
@@ -259,9 +264,13 @@ class Addr(object):
         """@return: executable Python string to recreate equivalent object"""
         return "%s(%r)" % (self.__class__.__name__, str(self))
 
-    def bits(self):
-        """@return: human-readable binary digit string of this address"""
-        return self.strategy.int_to_bits(self.value)
+    def bits(self, word_sep=None):
+        """
+        @param word_sep: (optional) the separator to insert between words.
+            Default: None - use default separator for address type.
+
+        @return: human-readable binary digit string of this address"""
+        return self.strategy.int_to_bits(self.value, word_sep)
 
     def packed(self):
         """@return: binary packed string of this address"""
@@ -326,7 +335,10 @@ class Addr(object):
         self.value = self.strategy.words_to_int(words)
 
     def __hex__(self):
-        """@return: network byte order hexadecimal string of this address"""
+        """
+        @return: hexadecimal string representation of this address (in network
+        byte order).
+        """
         return hex(self.value).rstrip('L').lower()
 
     def __iadd__(self, num):
@@ -440,6 +452,7 @@ class Addr(object):
             return (self.addr_type, self.value) >= (other.addr_type, other.value)
         except AttributeError:
             return False
+
     def __or__(self, other):
         """
         @param other: an integer or int-like object.
@@ -507,12 +520,21 @@ class EUI(Addr):
         """
         Constructor.
 
-        @param addr: an EUI-48 (MAC) or EUI-64 address string or a network
-        byte order integer.
+        @param addr: an EUI-48 (MAC) or EUI-64 address in string format or as
+            an unsigned integer.
 
         @param addr_type: (optional) the specific EUI address type (C{AT_LINK}
-        or C{AT_EUI64}). If addr is an integer, this argument is mandatory.
+            or C{AT_EUI64}).  This argument is used mainly to differentiate
+            EUI48 and EUI48 identifiers that may be numerically equivalent.
         """
+        #   Choose a sensible default when addr is an integer and addr_type is
+        #   not specified.
+        if addr_type == AT_UNSPEC:
+            if 0 <= addr <= 0xffffffffffff:
+                addr_type = AT_LINK
+            elif 0xffffffffffff < addr <= 0xffffffffffffffff:
+                addr_type = AT_EUI64
+
         super(EUI, self).__init__(addr, addr_type)
 
     def oui(self, fmt=OUI):
@@ -602,7 +624,7 @@ class EUI(Addr):
         self[0] -= 2
 
         eui64 = ':'.join(suffix)
-        addr = prefix + eui64
+        addr = prefix + eui64 + '/64'
         return IP(addr)
 
     def info(self):
@@ -661,7 +683,7 @@ class IP(Addr):
     """
     STRATEGIES = (ST_IPV4, ST_IPV6)
     ADDR_TYPES = (AT_UNSPEC, AT_INET, AT_INET6)
-    TRANSLATE_STR = ''.join([chr(_) for _ in range(256)])   #FIXME: replace this
+    TRANSLATE_STR = ''.join([chr(_) for _ in range(256)]) #FIXME: replace this
 
     #   Descriptor registrations.
     strategy = StrategyDescriptor(STRATEGIES)
@@ -673,10 +695,11 @@ class IP(Addr):
         Constructor.
 
         @param addr: an IPv4 or IPv6 address string with an optional subnet
-            prefix or a network byte order integer.
+            prefix or an unsigned integer.
 
         @param addr_type: (optional) the IP address type (C{AT_INET} or
-            C{AT_INET6}). If L{addr} is an integer, this argument is mandatory.
+            C{AT_INET6}). This argument is used mainly to differentiate IPv4
+            and IPv6 addresses that may be numerically equivalent.
         """
         prefixlen = None
         #   Check for prefix in address and split it out.
@@ -686,6 +709,14 @@ class IP(Addr):
         except TypeError:
             #   addr is an int - let it pass through.
             pass
+
+        #   Choose a sensible default when addr is an integer and addr_type is
+        #   not specified.
+        if addr_type == AT_UNSPEC:
+            if 0 <= addr <= 0xffffffff:
+                addr_type = AT_INET
+            elif 0xffffffff < addr <= 0xffffffffffffffffffffffffffffffff:
+                addr_type = AT_INET6
 
         #   Call superclass constructor before processing subnet prefix to
         #   assign the strategyn object.
@@ -746,12 +777,19 @@ class IP(Addr):
         except:
             return
 
-    def cidr(self):
-        """@return: A L{CIDR} object based on this IP address"""
+    def cidr(self, strict=True):
+        """
+        @param strict: (optional) If True and non-zero bits are found to the
+            right of the subnet mask/prefix a ValueError is raised. If False,
+            CIDR returned has these bits automatically truncated.
+            (default: True)
+
+        @return: A L{CIDR} object based on this IP address
+        """
         hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
         start = (self.value | hostmask) - hostmask
         network = self.strategy.int_to_str(start)
-        return CIDR("%s/%d" % (network, self.prefixlen))
+        return CIDR("%s/%d" % (network, self.prefixlen), strict=strict)
 
     def wildcard(self):
         """@return: A L{Wildcard} object based on this IP address"""
@@ -952,8 +990,8 @@ def nrange(start, stop, step=1, fmt=None):
 
     @param fmt: (optional) callable used on addresses returned.
         (Default: None - L{IP} objects). Supported options :-
-            - C{str} - IP address strings
-            - C{int}, C{long} - IP address integer (network byte order)
+            - C{str} - IP address in string format
+            - C{int}, C{long} - IP address as an unsigned integer
             - C{hex} - IP address as a hexadecimal number
             - L{IP} class/subclass or callable that accepts C{addr_value} and
                 C{addr_type} arguments.
@@ -1089,6 +1127,13 @@ class IPRange(object):
         """
         return hash((self.first, self.last, self.addr_type))
 
+    def tuple(self):
+        """
+        @return: A 3-element tuple (first, last, addr_type) which represent
+            the basic details of this IPRange object.
+        """
+        return self.first, self.last, self.addr_type
+
     def __len__(self):
         """
         @return: The total number of network addresses in this range.
@@ -1113,7 +1158,7 @@ class IPRange(object):
 
     def format(self, int_addr, fmt=None):
         """
-        @param int_addr: a network address integer (network byte order).
+        @param int_addr: a network address as an unsigned integer.
 
         @param fmt: (optional) a callable used on return values.
             Default: None. If set to None, this method uses the self.fmt
@@ -1211,7 +1256,7 @@ class IPRange(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.first, self.last) == \
+            return (self.addr_type,  self.first,  self.last) == \
                    (other.addr_type, other.first, other.last)
         except AttributeError:
             return False
@@ -1224,7 +1269,7 @@ class IPRange(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.first, self.last) != \
+            return (self.addr_type,  self.first,  self.last) != \
                    (other.addr_type, other.first, other.last)
         except AttributeError:
             return False
@@ -1237,8 +1282,14 @@ class IPRange(object):
             C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.first, self.last) < \
-                   (other.addr_type, other.first, other.last)
+            #   A sort key is essentially a CIDR prefixlen value.
+            #   Required as IPRange (and subclasses other than CIDR) do not
+            #   calculate it.
+            s_sortkey = self.strategy.width - num_bits(self.size())
+            o_sortkey = other.strategy.width - num_bits(other.size())
+
+            return (self.addr_type,  self.first,  s_sortkey) < \
+                   (other.addr_type, other.first, o_sortkey)
         except AttributeError:
             return False
 
@@ -1250,8 +1301,14 @@ class IPRange(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.first, self.last) <= \
-                   (other.addr_type, other.first, other.last)
+            #   A sort key is essentially a CIDR prefixlen value.
+            #   Required as IPRange (and subclasses other than CIDR) do not
+            #   calculate it.
+            s_sortkey = self.strategy.width - num_bits(self.size())
+            o_sortkey = other.strategy.width - num_bits(other.size())
+
+            return (self.addr_type,  self.first,  s_sortkey) <= \
+                   (other.addr_type, other.first, o_sortkey)
         except AttributeError:
             return False
 
@@ -1263,8 +1320,14 @@ class IPRange(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.first, self.last) > \
-                   (other.addr_type, other.first, other.last)
+            #   A sort key is essentially a CIDR prefixlen value.
+            #   Required as IPRange (and subclasses other than CIDR) do not
+            #   calculate it.
+            s_sortkey = self.strategy.width - num_bits(self.size())
+            o_sortkey = other.strategy.width - num_bits(other.size())
+
+            return (self.addr_type,  self.first,  s_sortkey) > \
+                   (other.addr_type, other.first, o_sortkey)
         except AttributeError:
             return False
 
@@ -1276,8 +1339,14 @@ class IPRange(object):
             to other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.first, self.last) >= \
-                   (other.addr_type, other.first, other.last)
+            #   A sort key is essentially a CIDR prefixlen value.
+            #   Required as IPRange (and subclasses other than CIDR) do not
+            #   calculate it.
+            s_sortkey = self.strategy.width - num_bits(self.size())
+            o_sortkey = other.strategy.width - num_bits(other.size())
+
+            return (self.addr_type,  self.first,  s_sortkey) >= \
+                   (other.addr_type, other.first, o_sortkey)
         except AttributeError:
             return False
 
@@ -1560,6 +1629,68 @@ class IPRange(object):
             self.strategy.int_to_str(self.last))
 
 #-----------------------------------------------------------------------------
+def cidr_to_bits(cidr):
+    """
+    @param cidr: a CIDR object or CIDR string value (acceptable by CIDR class
+        constructor).
+
+    @return: a tuple containing CIDR in binary string format and addr_type.
+    """
+    if not hasattr(cidr, 'network'):
+        cidr = CIDR(cidr, strict=False)
+
+    bits = cidr.network.bits(word_sep='')
+    return (bits[0:cidr.prefixlen], cidr.addr_type)
+
+#-----------------------------------------------------------------------------
+def bits_to_cidr(bits, addr_type=AT_UNSPEC, fmt=None):
+    """
+    @param bits: a CIDR in binary string format.
+
+    @param addr_type: (optional) CIDR address type (IP version).
+        (Default: AT_UNSPEC - auto-select) If not specified AT_INET (IPv4) is
+        assumed if length of binary string is <= /32. If binary string
+        is > /32 and <= /128 AT_INET6 (IPv6) is assumed. Useful when you have
+        IPv6 addresses with a prefixlen of /32 or less.
+
+    @param fmt: (optional) callable invoked on return CIDR.
+        (Default: None - CIDR object). Also accepts str() and unicode().
+
+    @return: a CIDR object or string (determined by fmt).
+    """
+    if _re.match('^[01]+$', bits) is None:
+        raise ValueError('%r is an invalid bit string!' % bits)
+
+    num_bits = len(bits)
+    strategy = None
+    if addr_type == AT_UNSPEC:
+        if 0 <= num_bits <= 32:
+            strategy = ST_IPV4
+        elif 33 < num_bits <= 128:
+            strategy = ST_IPV6
+        else:
+            raise ValueError('Invalid number of bits: %s!' % bits)
+    elif addr_type == AT_INET:
+        strategy = ST_IPV4
+    elif addr_type == AT_INET6:
+        strategy = ST_IPV6
+    else:
+        raise ValueError('strategy auto-select failure for %r!' % bits)
+
+    if bits == '':
+        return CIDR('%s/0' % strategy.int_to_str(0))
+
+    cidr = None
+    bits = bits + '0' * (strategy.width - num_bits)
+    ip = strategy.int_to_str(strategy.bits_to_int(bits))
+    cidr = CIDR('%s/%d' % (ip, num_bits))
+
+    if fmt is not None:
+        return fmt(cidr)
+
+    return cidr
+
+#-----------------------------------------------------------------------------
 class CIDR(IPRange):
     """
     Represents blocks of IPv4 and IPv6 addresses using CIDR (Classless
@@ -1654,6 +1785,7 @@ class CIDR(IPRange):
     prefixlen = PrefixLenDescriptor('CIDR')
     fmt = FormatDescriptor(IP)
 
+    @staticmethod
     def abbrev_to_verbose(abbrev_cidr):
         """
         A static method that converts abbreviated IPv4 CIDRs to their more
@@ -1735,9 +1867,13 @@ class CIDR(IPRange):
             else:
                 tokens = [part_addr]
 
-            if 1 <= len(tokens) <= 4:
+            if 1 <= len(tokens) < 4:
                 for i in range(4 - len(tokens)):
                     tokens.append('0')
+            elif len(tokens) == 4:
+                if prefix is None:
+                    #   Non-partial addresses without a prefix.
+                    prefix = 32
             else:
                 #   Not a recognisable format.
                 return None
@@ -1758,6 +1894,7 @@ class CIDR(IPRange):
         #   Not a recognisable format.
         return None
 
+    @staticmethod
     def span(addrs, fmt=None):
         """
         Static method that accepts a sequence of IP addresses and/or CIDRs,
@@ -1839,10 +1976,95 @@ class CIDR(IPRange):
 
         return cidr
 
-    abbrev_to_verbose = staticmethod(abbrev_to_verbose)
-    span = staticmethod(span)
+    @staticmethod
+    def summarize(cidrs, fmt=None):
+        """
+        Static method that accepts a sequence of IP addresses and/or CIDRs
+        returning a summarized sequence of merged CIDRs where possible. This
+        method doesn't create any CIDR that are inclusive of any addresses
+        other than those found in the original sequence provided.
 
-    def __init__(self, cidr, fmt=IP, strict=True):
+        @param cidrs: a list or tuple of IP and/or CIDR objects.
+
+        @param fmt: callable used on return values.
+            (Default: None - L{CIDR} objects). str() and unicode() supported.
+
+        @return: a possibly smaller list of CIDRs covering sequence passed in.
+        """
+        if not hasattr(cidrs, '__iter__'):
+            raise ValueError('A sequence or iterable is expected!')
+
+        #   Start off using set as we'll remove any duplicates at the start.
+        ipv4_bit_cidrs = set()
+        ipv6_bit_cidrs = set()
+
+        #   Convert CIDRs into bit strings separating IPv4 from IPv6
+        #   (required).
+        for cidr in cidrs:
+            (bits, addr_type) = cidr_to_bits(cidr)
+            if addr_type == AT_INET:
+                ipv4_bit_cidrs.add(bits)
+            elif addr_type == AT_INET6:
+                ipv6_bit_cidrs.add(bits)
+            else:
+                raise ValueError('Unknown address type found!')
+
+        #   Merge binary CIDRs into their smallest equivalents.
+        def _reduce_bit_cidrs(cidrs):
+            new_cidrs = []
+
+            cidrs.sort()
+
+            #   Multiple passes are required to obtain precise results.
+            while 1:
+                finished = True
+                while len(cidrs) > 0:
+                    if len(new_cidrs) == 0:
+                        new_cidrs.append(cidrs.pop(0))
+                    if len(cidrs) == 0:
+                        break
+                    #   lhs and rhs are same size and adjacent.
+                    (new_cidr, subs) = _re.subn(r'^([01]+)0 \1[1]$',
+                        r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
+                    if subs:
+                        #   merge lhs with rhs.
+                        new_cidrs[-1] = new_cidr
+                        cidrs.pop(0)
+                        finished = False
+                    else:
+                        #   lhs contains rhs.
+                        (new_cidr, subs) = _re.subn(r'^([01]+) \1[10]+$',
+                            r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
+                        if subs:
+                            #   keep lhs, discard rhs.
+                            new_cidrs[-1] = new_cidr
+                            cidrs.pop(0)
+                            finished = False
+                        else:
+                            #   no matches - accept rhs.
+                            new_cidrs.append(cidrs.pop(0))
+                if finished:
+                    break
+                else:
+                    #   still seeing matches, reset.
+                    cidrs = new_cidrs
+                    new_cidrs = []
+
+            return new_cidrs
+
+        new_cidrs = []
+
+        #   Reduce and format IPv4 CIDRs.
+        for bit_cidr in _reduce_bit_cidrs(list(ipv4_bit_cidrs)):
+            new_cidrs.append(bits_to_cidr(bit_cidr, fmt=fmt))
+
+        #   Reduce and format IPv6 CIDRs.
+        for bit_cidr in _reduce_bit_cidrs(list(ipv6_bit_cidrs)):
+            new_cidrs.append(bits_to_cidr(bit_cidr, fmt=fmt))
+
+        return new_cidrs
+
+    def __init__(self, cidr, fmt=IP, strict=True, expand_abbrev=True):
         """
         Constructor.
 
@@ -1853,16 +2075,23 @@ class CIDR(IPRange):
             Default: L{IP} class. See L{nrange()} documentations for
             more details on the various options.
 
-        @param strict: (optional) performs a test to ensure there are no
-            non-zero bits to the right of the subnet mask or prefix when it is
-            applied to the base address. (default: True)
+        @param strict: (optional) If True and non-zero bits are found to the
+            right of the subnet mask/prefix a ValueError is raised. If False,
+            CIDR returned has these bits automatically truncated.
+            (default: True)
+
+        @param expand_abbrev: (optional) If True, enables the abbreviated CIDR
+            expansion routine. If False, abbreviated CIDRs will be considered
+            invalid addresses, raising an AddrFormatError exception.
+            (default: True)
         """
         cidr_arg = cidr     #   Keep a copy of original argument.
 
-        #   Replace an abbreviation with a verbose CIDR.
-        verbose_cidr = CIDR.abbrev_to_verbose(cidr)
-        if verbose_cidr is not None:
-            cidr = verbose_cidr
+        if expand_abbrev:
+            #   Replace an abbreviation with a verbose CIDR.
+            verbose_cidr = CIDR.abbrev_to_verbose(cidr)
+            if verbose_cidr is not None:
+                cidr = verbose_cidr
 
         if not isinstance(cidr, (str, unicode)):
             raise TypeError('%r is not a valid CIDR!' % cidr)
@@ -1871,14 +2100,19 @@ class CIDR(IPRange):
         try:
             (network, mask) = cidr.split('/', 1)
         except ValueError:
-            raise AddrFormatError('CIDR objects %r require a subnet prefix!' \
-                % cidr_arg)
+            network = cidr
+            mask = None
 
         #FIXME: Are IP objects for first and last really necessary?
         #FIXME: Should surely just be integer values.
         first = IP(network)
         self.strategy = first.strategy
-        self.prefixlen = mask
+
+        if mask is None:
+            #   If no mask is specified, assume maximum CIDR prefix.
+            self.__dict__['prefixlen'] = first.strategy.width
+        else:
+            self.prefixlen = mask
 
         strategy = first.strategy
         addr_type = strategy.addr_type
@@ -1974,46 +2208,74 @@ class CIDR(IPRange):
             return str(cidr)
         return cidr
 
+    @property
     def network(self):
         """@return: The network (first) address in this CIDR block."""
         return self[0]
 
+    @property
     def broadcast(self):
         """
         B{Please Note:} although IPv6 doesn't actually recognise the concept of
-        a 'broadcast' address as the last address in a subnet (as in IPv4) so
-        many other libraries do this that it isn't worth trying to resist.
-        This issue raises so many user queries that it is easier to dispense
-        with the theory and be pragmatic instead.
+        broadcast addresses per se (as in IPv4), so many other libraries do
+        this that it isn't worth trying to resist the trend just for the sake
+        of making a theoretical point.
 
         @return: The broadcast (last) address in this CIDR block.
         """
         return self[-1]
 
+    @property
     def netmask(self):
         """@return: The subnet mask address of this CIDR block."""
         hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
         netmask = self.strategy.max_int ^ hostmask
         return self.format(netmask)
 
+    @property
     def hostmask(self):
         """@return: The host mask address of this CIDR block."""
         hostmask = (1 << (self.strategy.width - self.prefixlen)) - 1
         return self.format(hostmask)
 
-    network = property(network)
-    broadcast = property(broadcast)
-    netmask = property(netmask)
-    hostmask = property(hostmask)
+    def previous(self, step=1):
+        """
+        @param step: the number of CIDRs between this CIDR and the expected
+        one. Default: 1 - the preceding CIDR.
+
+        @return: The immediate (adjacent) predecessor of this CIDR.
+        """
+        cidr_copy = CIDR('%s/%d' % (self.strategy.int_to_str(self.first),
+            self.prefixlen))
+        cidr_copy -= step
+        #   Respect formatting.
+        if self.fmt in (str, unicode):
+            return self.fmt(cidr_copy)
+        return cidr_copy
+
+    def next(self, step=1):
+        """
+        @param step: the number of CIDRs between this CIDR and the expected
+        one. Default: 1 - the succeeding CIDR.
+
+        @return: The immediate (adjacent) successor of this CIDR.
+        """
+        cidr_copy = CIDR('%s/%d' % (self.strategy.int_to_str(self.first),
+            self.prefixlen))
+        cidr_copy += step
+        #   Respect formatting.
+        if self.fmt in (str, unicode):
+            return self.fmt(cidr_copy)
+        return cidr_copy
 
     def iter_host_addrs(self):
         """
         @return: An iterator object providing access to all valid host IP
             addresses within the specified CIDR block.
-            - with IPv4 the network and broadcast addresses are always
-            excluded. Any smaller than 4 hosts yields an emtpy list.
-            - with IPv6 only the unspecified address '::' is excluded from
-            the yielded list.
+                - with IPv4 the network and broadcast addresses are always
+                excluded. Any smaller than 4 hosts yields an emtpy list.
+                - with IPv6 only the unspecified address '::' is excluded from
+                the yielded list.
         """
         if self.addr_type == AT_INET:
             #   IPv4
@@ -2030,6 +2292,34 @@ class CIDR(IPRange):
                     IP(self.last, self.addr_type), fmt=self.fmt)
             else:
                 return iter(self)
+
+    def supernet(self, prefixlen=0, fmt=None):
+        """
+        Provides a list of supernet CIDRs for the current CIDR between the size
+        of the current prefix and (if specified) the end CIDR prefix.
+
+        @param prefixlen: (optional) a CIDR prefix for the maximum supernet.
+            Default: 0 - returns all possible supernets.
+
+        @param fmt: callable used on return values.
+            Default: None - L{CIDR} objects. str() and unicode() supported.
+
+        @return: an tuple containing CIDR supernets that contain this one.
+        """
+        if not 0 <= prefixlen <= self.strategy.width:
+            raise ValueError('prefixlen %r invalid for IP version!' \
+                % prefixlen)
+
+        #   Use a copy of self as we'll be editing it.
+        cidr = self.cidrs()[0]
+        cidr.fmt = fmt
+
+        supernets = []
+        while cidr.prefixlen > prefixlen:
+            cidr.prefixlen -= 1
+            supernets.append(cidr.cidrs()[0])
+
+        return list(reversed(supernets))
 
     def subnet(self, prefixlen, count=None, fmt=None):
         """
@@ -2060,10 +2350,14 @@ class CIDR(IPRange):
         if count is None:
             count = max_count
 
-        if 1 < count < max_count:
+        if not 1 <= count <= max_count:
             raise ValueError('count not within current CIDR boundaries!')
 
         base_address = self.strategy.int_to_str(self.first)
+
+        #   Respect self.fmt value if one wasn't passed to the method.
+        if fmt is None and self.fmt in (str, unicode):
+            fmt = self.fmt
 
         if fmt is None:
             #   Create new CIDR instances for each subnet returned.
@@ -2074,8 +2368,8 @@ class CIDR(IPRange):
                 yield cidr
         elif fmt in (str, unicode):
             #   Keep the same CIDR and just modify it.
-            cidr = CIDR('%s/%d' % (base_address, prefixlen))
             for i in xrange(count):
+                cidr = CIDR('%s/%d' % (base_address, prefixlen))
                 cidr.first += cidr.size() * i
                 cidr.prefixlen = prefixlen
                 yield fmt(cidr)
@@ -2358,7 +2652,6 @@ class IPRangeSet(set):
         addrs = self.all_matches(other)
         addrs.sort()
         return addrs[0]
-
 
     def max_match(self, other):
         """

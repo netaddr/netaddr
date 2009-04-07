@@ -10,10 +10,7 @@ To install this release :-
 import os
 import sys
 
-try:
-  from setuptools import setup
-except ImportError:
-  from distutils.core import setup
+from distutils.core import setup
 
 if os.path.exists('MANIFEST'):
     os.remove('MANIFEST')
@@ -22,8 +19,8 @@ import release
 
 #-----------------------------------------------------------------------------
 def main():
-    if sys.version_info[:2] < (2, 3):
-        print "netaddr requires Python version 2.3 or later."
+    if sys.version_info[:2] < (2, 4):
+        print "netaddr requires Python version 2.4.x or higher."
         sys.exit(1)
 
     if sys.argv[-1] == 'setup.py':

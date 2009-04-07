@@ -5,23 +5,17 @@ An Python setup file specifically supporting setuptools.
 To create a Python egg :-
 
 >>> python setup_egg.py bdist_egg
-
-To run unit tests :-
-
->>> python setup_egg.py nosetests
-
 """
 import sys
 
 from setuptools import setup, find_packages
-#from setup import *
 
 import release
 
 #-----------------------------------------------------------------------------
 def main():
-    if sys.version_info[:2] < (2, 3):
-        print "netaddr requires Python version 2.3 or later."
+    if sys.version_info[:2] < (2, 4):
+        print "netaddr requires Python version 2.4.x or higher."
         sys.exit(1)
 
     setup(
@@ -35,17 +29,12 @@ def main():
         long_description = release.long_description,
         name             = release.name,
         packages         = find_packages(),
+        package_data     = release.package_data,
+        include_package_data = True,
         platforms        = release.platforms,
         url              = release.url,
         version          = release.version,
-
-#        include_package_data = True,
-#        package_data     = package_data,
-#        data_files       = data,
-#        install_requires=['setuptools'],
-#        test_suite       = 'nose.collector',
-#        tests_require    = ['nose >= 0.10.1','netaddr-nose-plugin>=0.1'] ,
-        zip_safe = True,
+        zip_safe         = False,   #   Package should always be extracted.
     )
 
 #-----------------------------------------------------------------------------

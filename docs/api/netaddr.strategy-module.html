@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -49,6 +49,8 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="netaddr.strategy-module.html"
@@ -67,8 +69,17 @@
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Classes</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -82,18 +93,9 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="netaddr.strategy.IPv4StrategyStd-class.html" class="summary-name">IPv4StrategyStd</a><br />
-      A 'safe' <a href="netaddr.strategy.AddrStrategy-class.html" 
-        class="link">AddrStrategy</a> for IPv4 addresses.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="netaddr.strategy.IPv4StrategyOpt-class.html" class="summary-name">IPv4StrategyOpt</a><br />
-      An optimised <a href="netaddr.strategy.AddrStrategy-class.html" 
-        class="link">AddrStrategy</a> for IPv4 addresses.
+        <a href="netaddr.strategy.IPv4Strategy-class.html" class="summary-name">IPv4Strategy</a><br />
+      An <a href="netaddr.strategy.AddrStrategy-class.html" 
+        class="link">AddrStrategy</a> for IPv4 address processing.
     </td>
   </tr>
 <tr>
@@ -101,8 +103,8 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="netaddr.strategy.IPv6Strategy-class.html" class="summary-name">IPv6Strategy</a><br />
-      Implements the operations that can be performed on an Internet 
-        Protocol version 6 network address in accordance with RFC 4291.
+      An <a href="netaddr.strategy.AddrStrategy-class.html" 
+        class="link">AddrStrategy</a> for IPv6 address processing.
     </td>
   </tr>
 <tr>
@@ -120,22 +122,23 @@
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Variables</span></td>
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="USE_IPV4_OPT"></a><span class="summary-name">USE_IPV4_OPT</span> = <code title="True">True</code><br />
-      Use optimised IPv4 strategy? Default: True
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="ST_IPV4"></a><span class="summary-name">ST_IPV4</span> = <code title="IPv4StrategyOpt(32, 8, '.', 4, 10, False)">IPv4StrategyOpt(32, 8, '.', 4, 10, False)</code><br />
+        <a name="ST_IPV4"></a><span class="summary-name">ST_IPV4</span> = <code title="IPv4Strategy()">IPv4Strategy()</code><br />
       A shared strategy object supporting all operations on IPv4 addresses.
     </td>
   </tr>
@@ -143,7 +146,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="ST_IPV6"></a><span class="summary-name">ST_IPV6</span> = <code title="IPv6Strategy(128, 16, ':', 6, 16, False)">IPv6Strategy(128, 16, ':', 6, 16, False)</code><br />
+        <a name="ST_IPV6"></a><span class="summary-name">ST_IPV6</span> = <code title="IPv6Strategy()">IPv6Strategy()</code><br />
       A shared strategy object supporting all operations on IPv6 addresses.
     </td>
   </tr>
@@ -151,7 +154,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="ST_EUI48"></a><span class="summary-name">ST_EUI48</span> = <code title="EUI48Strategy(48, 8, '-', 48, 16, True)">EUI48Strategy(48, 8, '-', 48, 16, True)</code><br />
+        <a name="ST_EUI48"></a><span class="summary-name">ST_EUI48</span> = <code title="EUI48Strategy()">EUI48Strategy()</code><br />
       A shared strategy object supporting all operations on EUI-48/MAC 
       addresses.
     </td>
@@ -160,12 +163,52 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="ST_EUI64"></a><span class="summary-name">ST_EUI64</span> = <code title="AddrStrategy(64, 8, '-', 64, 16, True)">AddrStrategy(64, 8, '-', 64, 16, True)</code><br />
+        <a href="netaddr.strategy-module.html#ST_EUI64" class="summary-name">ST_EUI64</a> = <code title="AddrStrategy(addr_type= AT_EUI64, width= 64, word_size= 8, word_fmt= '\
+%.2X', word_sep= '-')">AddrStrategy(addr_type= AT_EUI64, width= 64, word_s<code class="variable-ellipsis">...</code></code><br />
       A shared strategy object supporting all operations on EUI-64 
       addresses.
     </td>
   </tr>
 </table>
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="ST_EUI64"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ST_EUI64</h3>
+  <p>A shared strategy object supporting all operations on EUI-64 
+  addresses.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+AddrStrategy(addr_type= AT_EUI64, width= 64, word_size= 8, word_fmt= '<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+%.2X', word_sep= '-')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -190,14 +233,14 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            >netaddr</th>
+            ><a class="navbar" target="_top" href="http://netaddr.googlecode.com/">Project Homepage</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Jan 21 23:41:06 2009
+    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:01 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

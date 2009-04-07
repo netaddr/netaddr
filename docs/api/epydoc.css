@@ -1,4 +1,10 @@
-
+/*
+ * ---------------------------------------------------------------------------
+ *  Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+ *
+ *  Released under the BSD license. See the LICENSE file for details.
+ * ---------------------------------------------------------------------------
+ */
 
 /* Epydoc CSS Stylesheet
  *
@@ -16,17 +22,18 @@
  *     either class='epydoc' or class='toc' (CSS styles for both
  *     defined below).
  */
-body                        { background: #ffffff; color: #000000; }
+body                        { background: #ffffff; color: #000000;
+                              font-family: sans-serif; font-size: 10pt }
 p                           { margin-top: 0.5em; margin-bottom: 0.5em; }
-a:link                      { color: #0000ff; }
-a:visited                   { color: #204080; }
+
+a 							{ text-decoration: none; color: #eb1400; }
+a:hover 					{ text-decoration: underline; color: #ad200e; }
+a:link                      { color: #eb1400; }
+a:visited                   { color: #eb1400; }
 dt                          { font-weight: bold; }
-h1                          { font-size: +140%; font-style: italic;
-                              font-weight: bold; }
-h2                          { font-size: +125%; font-style: italic;
-                              font-weight: bold; }
-h3                          { font-size: +110%; font-style: italic;
-                              font-weight: normal; }
+h1                          { font-size: +140%; font-weight: bold; }
+h2                          { font-size: +125%; font-weight: bold; }
+h3                          { font-size: +110%;  font-weight: normal; }
 code                        { font-size: 100%; }
 /* N.B.: class, not pseudoclass */
 a.link                      { font-family: monospace; }
@@ -48,13 +55,12 @@ h3.epydoc                   { font-size: +115%; font-weight: bold;
                               margin-top: 0.2em; }
 td h3.epydoc                { font-size: +115%; font-weight: bold;
                               margin-bottom: 0; }
-table.navbar                { background: #a0c0ff; color: #000000;
-                              border: 2px groove #c0d0d0; }
-table.navbar table          { color: #000000; }
-th.navbar-select            { background: #70b0ff;
-                              color: #000000; } 
+table.navbar                { background: #ef2200; color: #626262;
+                              border: solid 2px #000000; border-collapse: collapse;}
+table.navbar table          { color: #626262; padding: 0.5em }
+th.navbar-select            { background: #fff29c; color: #ef2200; border: solid 2px #000000;} 
 table.navbar a              { text-decoration: none; }  
-table.navbar a:link         { color: #0000ff; }
+table.navbar a:link         { color: #ffffff; }
 table.navbar a:visited      { color: #204080; }
 span.breadcrumbs            { font-size: 85%; font-weight: bold; }
 span.options                { font-size: 70%; }
@@ -69,16 +75,17 @@ td.footer                   { font-size: 85%; }
  *   - Summary tables that contain user-defined groups mark those
  *     groups using 'group header' rows.
  */
-td.table-header             { background: #70b0ff; color: #000000;
-                              border: 1px solid #608090; }
-td.table-header table       { color: #000000; }
-td.table-header table a:link      { color: #0000ff; }
-td.table-header table a:visited   { color: #204080; }
-span.table-header           { font-size: 120%; font-weight: bold; }
-th.group-header             { background: #c0e0f8; color: #000000;
+td.table-header             { background: #ef2200; color: #ffffff;
+                              border: solid 2px #000000; }
+td.table-header table       { color: #ffffff; }
+td.table-header table a:link      { color: #ffffff; }
+td.table-header table a:hover     { color: #ffffff;text-decoration: underline; }
+td.table-header table a:visited   { color: #ffffff; }
+span.table-header           { font-size: 120%; font-weight: bold; color: #ffffff;}
+th.group-header             { background: #fff197; color: #ef2200;
                               text-align: left; font-style: italic; 
                               font-size: 115%; 
-                              border: 1px solid #608090; }
+                              border: dotted 1px #626262; }
 
 /* Summary Tables (functions, variables, etc)
  *   - Each object is described by a single row of the table with
@@ -89,13 +96,13 @@ th.group-header             { background: #c0e0f8; color: #000000;
  *     defined above, under 'Table Headers'
  */
 table.summary               { border-collapse: collapse;
-                              background: #e8f0f8; color: #000000;
-                              border: 1px solid #608090;
+                              background: #fffcd8; color: #626262;
+                              border: dotted 1px #626262;
                               margin-bottom: 0.5em; }
-td.summary                  { border: 1px solid #608090; }
+td.summary                  { border: dotted 1px #626262; }
 code.summary-type           { font-size: 85%; }
-table.summary a:link        { color: #0000ff; }
-table.summary a:visited     { color: #204080; }
+table.summary a:link        { color: #626262; }
+table.summary a:visited     { color: #626262; }
 
 
 /* Details Tables (functions, variables, etc)
@@ -105,12 +112,12 @@ table.summary a:visited     { color: #204080; }
  *     is defined above, under 'Table Headers').
  */
 table.details               { border-collapse: collapse;
-                              background: #e8f0f8; color: #000000;
-                              border: 1px solid #608090;
+                              background: #fffcd8; color: #626262;
+                              border: dotted 1px #626262;
                               margin: .2em 0 0 0; }
-table.details table         { color: #000000; }
-table.details a:link        { color: #0000ff; }
-table.details a:visited     { color: #204080; }
+table.details table         { color: #626262; }
+table.details a:link        { color: #626262; }
+table.details a:visited     { color: #626262; }
 
 /* Fields */
 dl.fields                   { margin-left: 2em; margin-top: 1em;
@@ -129,17 +136,17 @@ div.fields p                { margin-bottom: 0.5em; }
  *     extracted from fields (namely, the bug index & todo index).
  */
 table.link-index            { border-collapse: collapse;
-                              background: #e8f0f8; color: #000000;
-                              border: 1px solid #608090; }
+                              background: #fffcd8; color: #626262;
+                              border: dotted 1px #626262; }
 td.link-index               { border-width: 0px; }
-table.link-index a:link     { color: #0000ff; }
-table.link-index a:visited  { color: #204080; }
+table.link-index a:link     { color: #626262; }
+table.link-index a:visited  { color: #626262; }
 span.index-where            { font-size: 70%; }
 table.metadata-index        { border-collapse: collapse;
-                              background: #e8f0f8; color: #000000;
-                              border: 1px solid #608090; 
+                              background: #fffcd8; color: #626262;
+                              border: dotted 1px #626262; 
                               margin: .2em 0 0 0; }
-td.metadata-index           { border-width: 1px; border-style: solid; }
+td.metadata-index           { border-width: dotted 1px #626262; }
 table.metadata-index a:link { color: #0000ff; }
 table.metadata-index a:visited  { color: #204080; }
 
@@ -148,9 +155,10 @@ table.metadata-index a:visited  { color: #204080; }
  *   - .summary-sig* is used for the signature in the summary 
  *     table, and when listing property accessor functions.
  * */
-.sig-name                   { color: #006080; }
-.sig-arg                    { color: #008060; }
-.sig-default                { color: #602000; }
+.sig                   { color: #4292D3; font-family: monospace; font-weight: bold;  font-size: 110%; }
+.sig-name                   { color: #4292D3;}
+.sig-arg                    { color: #4292D3;}
+.sig-default                { color: #4292D3;}
 .summary-sig                { font-family: monospace; }
 .summary-sig-name           { color: #006080; font-weight: bold; }
 table.summary a.summary-sig-name:link
@@ -189,8 +197,8 @@ table.summary
  *     the re* CSS classes.
  */
 pre.variable                { padding: .5em; margin: 0;
-                              background: #dce4ec; color: #000000;
-                              border: 1px solid #708890; }
+                              background: #ffffff; color: #626262;
+                              border: dotted 1px #626262; }
 .variable-linewrap          { color: #604000; font-weight: bold; }
 .variable-ellipsis          { color: #604000; font-weight: bold; }
 .variable-quote             { color: #604000; font-weight: bold; }
@@ -198,7 +206,7 @@ pre.variable                { padding: .5em; margin: 0;
 .variable-op                { color: #604000; font-weight: bold; }
 .variable-string            { color: #006030; }
 .variable-unknown           { color: #a00000; font-weight: bold; }
-.re                         { color: #000000; }
+.re                         { color: #626262; }
 .re-char                    { color: #006030; }
 .re-op                      { color: #600000; }
 .re-group                   { color: #003060; }
@@ -241,27 +249,27 @@ h2.toc                      { font-size: 100%; font-weight: bold;
  *     etc.)
  */
 pre.py-doctest              { padding: .5em; margin: 1em;
-                              background: #e8f0f8; color: #000000;
+                              background: #fffcd8; color: #626262;
                               border: 1px solid #708890; }
 table pre.py-doctest        { background: #dce4ec;
-                              color: #000000; }
-pre.py-src                  { border: 2px solid #000000; 
-                              background: #f0f0f0; color: #000000; }
-.py-line                    { border-left: 2px solid #000000; 
+                              color: #626262; }
+pre.py-src                  { border: 1px dotted #000000; 
+                              background: #ffffff; color: #000000; }
+.py-line                    { border-left: 1px dotted #626262; 
                               margin-left: .2em; padding-left: .4em; }
-.py-lineno                  { font-style: italic; font-size: 90%;
-                              padding-left: .5em; }
+.py-lineno                  { font-size: 90%;
+                              padding-left: .5em; color: #808080 }
 a.py-toggle                 { text-decoration: none; }
-div.py-highlight-hdr        { border-top: 2px solid #000000;
-                              border-bottom: 2px solid #000000;
-                              background: #d8e8e8; }
-div.py-highlight            { border-bottom: 2px solid #000000;
-                              background: #d0e0e0; }
+div.py-highlight-hdr        { border-top: 1px dotted #626262;
+                              border-bottom: 1px dotted #626262;
+                              background: #fff197; }
+div.py-highlight            { border-bottom: 1px dotted #626262;
+                              background: #fffcd8; }
 .py-prompt                  { color: #005050; font-weight: bold;}
 .py-more                    { color: #005050; font-weight: bold;}
-.py-string                  { color: #006030; }
-.py-comment                 { color: #003060; }
-.py-keyword                 { color: #600000; }
+.py-string                  { color: #808080; }
+.py-comment                 { color: #008000; background: #e1ffe1; }
+.py-keyword                 { color: #0000ff; font-weight: bold; }
 .py-output                  { color: #404040; }
 .py-name                    { color: #000050; }
 .py-name:link               { color: #000050 !important; }
@@ -271,7 +279,7 @@ div.py-highlight            { border-bottom: 2px solid #000000;
 .py-def-name                { color: #000060; font-weight: bold; }
 .py-base-class              { color: #000060; }
 .py-param                   { color: #000060; }
-.py-docstring               { color: #006030; }
+.py-docstring               { color: #008000; background: #e1ffe1 }
 .py-decorator               { color: #804020; }
 /* Use this if you don't want links to names underlined: */
 /*a.py-name                   { text-decoration: none; }*/
@@ -283,7 +291,7 @@ div.py-highlight            { border-bottom: 2px solid #000000;
  *     clickable).
  */
 img.graph-without-title     { border: none; }
-img.graph-with-title        { border: 1px solid #000000; }
+img.graph-with-title        { border: 1px solid #626262; }
 span.graph-title            { font-weight: bold; }
 span.graph-caption          { }
 
@@ -302,21 +310,21 @@ p.indent-wrapped-lines      { padding: 0 0 0 7em; text-indent: -7em;
 
 /* HTML Log */
 div.log-block               { padding: 0; margin: .5em 0 .5em 0;
-                              background: #e8f0f8; color: #000000;
-                              border: 1px solid #000000; }
+                              background: #fffcd8; color: #626262;
+                              border: 1px solid #626262; }
 div.log-error               { padding: .1em .3em .1em .3em; margin: 4px;
-                              background: #ffb0b0; color: #000000;
-                              border: 1px solid #000000; }
+                              background: #ffb0b0; color: #626262;
+                              border: 1px solid #626262; }
 div.log-warning             { padding: .1em .3em .1em .3em; margin: 4px;
-                              background: #ffffb0; color: #000000;
-                              border: 1px solid #000000; }
+                              background: #ffffb0; color: #626262;
+                              border: 1px solid #626262; }
 div.log-info               { padding: .1em .3em .1em .3em; margin: 4px;
-                              background: #b0ffb0; color: #000000;
-                              border: 1px solid #000000; }
-h2.log-hdr                  { background: #70b0ff; color: #000000;
+                              background: #b0ffb0; color: #626262;
+                              border: 1px solid #626262; }
+h2.log-hdr                  { background: #ef2200; color: #626262;
                               margin: 0; padding: 0em 0.5em 0em 0.5em;
-                              border-bottom: 1px solid #000000; font-size: 110%; }
+                              border-bottom: 1px solid #626262; font-size: 110%; }
 p.log                       { font-weight: bold; margin: .5em 0 .5em 0; }
-tr.opt-changed              { color: #000000; font-weight: bold; }
+tr.opt-changed              { color: #626262; font-weight: bold; }
 tr.opt-default              { color: #606060; }
 pre.log                     { margin: 0; padding: 0; padding-left: 1em; }

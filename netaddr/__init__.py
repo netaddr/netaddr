@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
 network address manipulation, done Pythonically
 """
-__version__ = '0.6'
+import sys as _sys
+if _sys.version_info[0:2] < (2, 4):
+    raise RuntimeError('Python 2.4.x or higher is required!')
+
+__version__ = '0.6.1'
 
 import struct as _struct
 
@@ -67,7 +71,7 @@ from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 #-----------------------------------------------------------------------------
 __all__ = [
      # type constants
-    'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',
+    'AT_UNSPEC', 'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',
 
     # module specific exceptions
     'AddrFormatError', 'AddrConversionError', 'NotRegisteredError',

@@ -1,26 +1,36 @@
-netaddr for Python is a project released under the BSD license to the 
-community in early 2008 by :-
+netaddr is a project that was released to the Python community under the
+BSD license in early 2008.
 
-	David P. D. Moss <drkjam@gmail.com>.
+Author and maintainer :-
 
-It is great to see something that started out as merely "itch scratching"
-turn into a useful library used by so many others out there.
+	David P. D. Moss <drkjam AT gmail DOT com>
 
-A very special thanks go out to :-
+A very special thanks go to the following for your encouragement, support
+and assistance :-
 
-	James William Pye <jwp@gmail.com>
-	Duncan McGreggor <duncan.mcgreggor@gmail.com> 
+	James William Pye <jwp AT gmail DOT com>
+	Duncan McGreggor <duncan DOT mcgreggor AT gmail DOT com> 
+	Sebastien Douche <sdouche AT gmail DOT com>
 
-whose early adoption, encouragement, suggestions and support have helped spur 
-on refinements to some early rough edges and helped to make netaddr a much 
-better and more user-friendly library.
+Linux distro package maintainers :-
 
-RPM .spec file and Fedora repository setup :-
+	Debian and Ubuntu
 
-	John Eckersberg <john.eckersberg@gmail.com>
+		Vincent Bernat <bernat AT debian DOT org>
 
-Raising bugs and submitting patches :-
+	Fedora
 
-	Sebastien Douche <sdouche@gmail.com>
+		John Eckersberg <john DOT eckersberg AT gmail DOT com>
 
-A big THANK YOU for all your support that makes this so worthwhile!
+Thanks go to everyone on the netaddr mailing list for helping to test 
+releases and suggest improvements. Thanks also to those who've raised
+tickets in the bug tracker and made comments on the code hosting site.
+
+Thanks also to for use of recipe 18.11 "Formatting Integers as Binary 
+Strings" from :-
+
+	Python Cookbook 2d ed.
+	by Alex Martelli, Anna Martelli Ravenscroft and David Ascher
+	(O'Reilly Media 2005) ISBN 0596-00797-3.
+
+And finally, thanks to Guido van Rossum for giving us Python.
