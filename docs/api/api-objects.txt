@@ -20,13 +20,14 @@ netaddr.address.num_bits	netaddr.util-module.html#num_bits
 netaddr.core	netaddr.core-module.html
 netaddr.eui	netaddr.eui-module.html
 netaddr.eui.create_ieee_indices	netaddr.eui-module.html#create_ieee_indices
+netaddr.eui.load_ieee_indices	netaddr.eui-module.html#load_ieee_indices
 netaddr.eui.IEEE_OUI_METADATA	netaddr.eui-module.html#IEEE_OUI_METADATA
 netaddr.eui.IEEE_IAB_REGISTRY	netaddr.eui-module.html#IEEE_IAB_REGISTRY
-netaddr.eui.IEEE_OUI_INDEX	netaddr.eui-module.html#IEEE_OUI_INDEX
 netaddr.eui.IEEE_OUI_REGISTRY	netaddr.eui-module.html#IEEE_OUI_REGISTRY
 netaddr.eui.IEEE_IAB_METADATA	netaddr.eui-module.html#IEEE_IAB_METADATA
 netaddr.eui.IEEE_IAB_INDEX	netaddr.eui-module.html#IEEE_IAB_INDEX
-netaddr.eui.load_ieee_indices	netaddr.eui-module.html#load_ieee_indices
+netaddr.eui.IEEE_OUI_INDEX	netaddr.eui-module.html#IEEE_OUI_INDEX
+netaddr.eui.get_latest_files	netaddr.eui-module.html#get_latest_files
 netaddr.fallback	netaddr.fallback-module.html
 netaddr.fallback.AF_INET6	netaddr.fallback-module.html#AF_INET6
 netaddr.fallback.AF_UNSPEC	netaddr.fallback-module.html#AF_UNSPEC
@@ -38,6 +39,7 @@ netaddr.fallback.inet_aton	netaddr.fallback-module.html#inet_aton
 netaddr.fallback._compact_ipv6_tokens	netaddr.fallback-module.html#_compact_ipv6_tokens
 netaddr.ip	netaddr.ip-module.html
 netaddr.ip.IANA_INFO	netaddr.ip-module.html#IANA_INFO
+netaddr.ip.get_latest_files	netaddr.ip-module.html#get_latest_files
 netaddr.ip.query	netaddr.ip-module.html#query
 netaddr.ip.load_iana_info	netaddr.ip-module.html#load_iana_info
 netaddr.misc	netaddr.misc-module.html

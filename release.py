@@ -41,8 +41,7 @@ license = 'BSD License',
 
 #   NB - keep this text around 74 characters wide so it is viewable
 #        in various fixed window sizes.
-long_description = """
-netaddr is a Python library for the representation and manipulation
+long_description = """netaddr is a Python library for the representation and manipulation
 of various common network address formats and notations.
 
 It takes the hassle out of fiddling with innumerable variations of

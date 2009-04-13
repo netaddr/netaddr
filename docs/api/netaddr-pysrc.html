@@ -73,7 +73,7 @@
 <a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">_sys</tt><tt class="py-op">.</tt><tt class="py-name">version_info</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">:</tt><tt class="py-number">2</tt><tt class="py-op">]</tt> <tt class="py-op">&lt;</tt> <tt class="py-op">(</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-number">4</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 <a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">    <tt class="py-keyword">raise</tt> <tt class="py-name">RuntimeError</tt><tt class="py-op">(</tt><tt class="py-string">'Python 2.4.x or higher is required!'</tt><tt class="py-op">)</tt> </tt>
 <a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">'0.6.1'</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">'0.6.2'</tt> </tt>
 <a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
 <a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">struct</tt> <tt class="py-keyword">as</tt> <tt class="py-name">_struct</tt> </tt>
 <a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
@@ -128,39 +128,41 @@ netaddr.eui.OUI.address" class="py-name" href="#" onclick="return doclink('link-
 <a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"> </tt>
 <a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-21" class="py-name"><a title="netaddr" class="py-name" href="#" onclick="return doclink('link-21', 'netaddr', 'link-12');">netaddr</a></tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Package netaddr.eui=netaddr.eui-module.html"><a title="netaddr.eui" class="py-name" href="#" onclick="return doclink('link-22', 'eui', 'link-22');">eui</a></tt> <tt class="py-keyword">import</tt> <tt id="link-23" class="py-name" targets="Class netaddr.eui.OUI=netaddr.eui.OUI-class.html"><a title="netaddr.eui.OUI" class="py-name" href="#" onclick="return doclink('link-23', 'OUI', 'link-23');">OUI</a></tt><tt class="py-op">,</tt> <tt id="link-24" class="py-name" targets="Class netaddr.eui.IAB=netaddr.eui.IAB-class.html"><a title="netaddr.eui.IAB" class="py-name" href="#" onclick="return doclink('link-24', 'IAB', 'link-24');">IAB</a></tt><tt class="py-op">,</tt> <tt id="link-25" class="py-name" targets="Class netaddr.eui.NotRegisteredError=netaddr.eui.NotRegisteredError-class.html"><a title="netaddr.eui.NotRegisteredError" class="py-name" href="#" onclick="return doclink('link-25', 'NotRegisteredError', 'link-25');">NotRegisteredError</a></tt> </tt>
 <a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line"> </tt>
-<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-26" class="py-name"><a title="netaddr" class="py-name" href="#" onclick="return doclink('link-26', 'netaddr', 'link-12');">netaddr</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name" targets="Variable netaddr.address.Addr.strategy=netaddr.address.Addr-class.html#strategy,Variable netaddr.address.CIDR.strategy=netaddr.address.CIDR-class.html#strategy,Variable netaddr.address.EUI.strategy=netaddr.address.EUI-class.html#strategy,Variable netaddr.address.IP.strategy=netaddr.address.IP-class.html#strategy,Variable netaddr.address.IPRange.strategy=netaddr.address.IPRange-class.html#strategy,Variable netaddr.address.Wildcard.strategy=netaddr.address.Wildcard-class.html#strategy,Module netaddr.strategy=netaddr.strategy-module.html"><a title="netaddr.address.Addr.strategy
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-26" class="py-name"><a title="netaddr" class="py-name" href="#" onclick="return doclink('link-26', 'netaddr', 'link-12');">netaddr</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name" targets="Package netaddr.ip=netaddr.ip-module.html"><a title="netaddr.ip" class="py-name" href="#" onclick="return doclink('link-27', 'ip', 'link-27');">ip</a></tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-28" class="py-name"><a title="netaddr" class="py-name" href="#" onclick="return doclink('link-28', 'netaddr', 'link-12');">netaddr</a></tt><tt class="py-op">.</tt><tt id="link-29" class="py-name" targets="Variable netaddr.address.Addr.strategy=netaddr.address.Addr-class.html#strategy,Variable netaddr.address.CIDR.strategy=netaddr.address.CIDR-class.html#strategy,Variable netaddr.address.EUI.strategy=netaddr.address.EUI-class.html#strategy,Variable netaddr.address.IP.strategy=netaddr.address.IP-class.html#strategy,Variable netaddr.address.IPRange.strategy=netaddr.address.IPRange-class.html#strategy,Variable netaddr.address.Wildcard.strategy=netaddr.address.Wildcard-class.html#strategy,Module netaddr.strategy=netaddr.strategy-module.html"><a title="netaddr.address.Addr.strategy
 netaddr.address.CIDR.strategy
 netaddr.address.EUI.strategy
 netaddr.address.IP.strategy
 netaddr.address.IPRange.strategy
 netaddr.address.Wildcard.strategy
-netaddr.strategy" class="py-name" href="#" onclick="return doclink('link-27', 'strategy', 'link-27');">strategy</a></tt> <tt class="py-keyword">import</tt> <tt id="link-28" class="py-name" targets="Variable netaddr.ST_IPV4=netaddr-module.html#ST_IPV4,Variable netaddr.strategy.ST_IPV4=netaddr.strategy-module.html#ST_IPV4"><a title="netaddr.ST_IPV4
-netaddr.strategy.ST_IPV4" class="py-name" href="#" onclick="return doclink('link-28', 'ST_IPV4', 'link-28');">ST_IPV4</a></tt><tt class="py-op">,</tt> <tt id="link-29" class="py-name" targets="Variable netaddr.ST_IPV6=netaddr-module.html#ST_IPV6,Variable netaddr.strategy.ST_IPV6=netaddr.strategy-module.html#ST_IPV6"><a title="netaddr.ST_IPV6
-netaddr.strategy.ST_IPV6" class="py-name" href="#" onclick="return doclink('link-29', 'ST_IPV6', 'link-29');">ST_IPV6</a></tt><tt class="py-op">,</tt> <tt id="link-30" class="py-name" targets="Variable netaddr.ST_EUI48=netaddr-module.html#ST_EUI48,Variable netaddr.strategy.ST_EUI48=netaddr.strategy-module.html#ST_EUI48"><a title="netaddr.ST_EUI48
-netaddr.strategy.ST_EUI48" class="py-name" href="#" onclick="return doclink('link-30', 'ST_EUI48', 'link-30');">ST_EUI48</a></tt><tt class="py-op">,</tt> <tt id="link-31" class="py-name" targets="Variable netaddr.ST_EUI64=netaddr-module.html#ST_EUI64,Variable netaddr.strategy.ST_EUI64=netaddr.strategy-module.html#ST_EUI64"><a title="netaddr.ST_EUI64
-netaddr.strategy.ST_EUI64" class="py-name" href="#" onclick="return doclink('link-31', 'ST_EUI64', 'link-31');">ST_EUI64</a></tt> </tt>
-<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"> </tt>
-<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-comment">#-----------------------------------------------------------------------------</tt> </tt>
-<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#   Public interface.</tt> </tt>
-<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#-----------------------------------------------------------------------------</tt> </tt>
-<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-name">__all__</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt> </tt>
-<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">     <tt class="py-comment"># type constants</tt> </tt>
-<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">    <tt class="py-string">'AT_UNSPEC'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_INET'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_INET6'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_LINK'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_EUI64'</tt><tt class="py-op">,</tt> </tt>
-<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"> </tt>
-<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">    <tt class="py-comment"># module specific exceptions</tt> </tt>
-<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line">    <tt class="py-string">'AddrFormatError'</tt><tt class="py-op">,</tt> <tt class="py-string">'AddrConversionError'</tt><tt class="py-op">,</tt> <tt class="py-string">'NotRegisteredError'</tt><tt class="py-op">,</tt> </tt>
-<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line"> </tt>
-<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">    <tt class="py-comment"># shared strategy objects</tt> </tt>
-<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">    <tt class="py-string">'ST_IPV4'</tt><tt class="py-op">,</tt> <tt class="py-string">'ST_IPV6'</tt><tt class="py-op">,</tt> <tt class="py-string">'ST_EUI48'</tt><tt class="py-op">,</tt> <tt class="py-string">'ST_EUI64'</tt><tt class="py-op">,</tt> </tt>
-<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"> </tt>
-<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">    <tt class="py-comment"># main interface classes</tt> </tt>
-<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line">    <tt class="py-string">'CIDR'</tt><tt class="py-op">,</tt> <tt class="py-string">'IP'</tt><tt class="py-op">,</tt> <tt class="py-string">'IPRange'</tt><tt class="py-op">,</tt> <tt class="py-string">'IPRangeSet'</tt><tt class="py-op">,</tt> <tt class="py-string">'Wildcard'</tt><tt class="py-op">,</tt> </tt>
-<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">    <tt class="py-string">'EUI'</tt><tt class="py-op">,</tt> <tt class="py-string">'OUI'</tt><tt class="py-op">,</tt> <tt class="py-string">'IAB'</tt><tt class="py-op">,</tt> </tt>
-<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line"> </tt>
-<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line">    <tt class="py-comment">#   functions</tt> </tt>
-<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line">    <tt class="py-string">'nrange'</tt><tt class="py-op">,</tt> </tt>
-<a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line"><tt class="py-op">]</tt> </tt>
-<a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+netaddr.strategy" class="py-name" href="#" onclick="return doclink('link-29', 'strategy', 'link-29');">strategy</a></tt> <tt class="py-keyword">import</tt> <tt id="link-30" class="py-name" targets="Variable netaddr.ST_IPV4=netaddr-module.html#ST_IPV4,Variable netaddr.strategy.ST_IPV4=netaddr.strategy-module.html#ST_IPV4"><a title="netaddr.ST_IPV4
+netaddr.strategy.ST_IPV4" class="py-name" href="#" onclick="return doclink('link-30', 'ST_IPV4', 'link-30');">ST_IPV4</a></tt><tt class="py-op">,</tt> <tt id="link-31" class="py-name" targets="Variable netaddr.ST_IPV6=netaddr-module.html#ST_IPV6,Variable netaddr.strategy.ST_IPV6=netaddr.strategy-module.html#ST_IPV6"><a title="netaddr.ST_IPV6
+netaddr.strategy.ST_IPV6" class="py-name" href="#" onclick="return doclink('link-31', 'ST_IPV6', 'link-31');">ST_IPV6</a></tt><tt class="py-op">,</tt> <tt id="link-32" class="py-name" targets="Variable netaddr.ST_EUI48=netaddr-module.html#ST_EUI48,Variable netaddr.strategy.ST_EUI48=netaddr.strategy-module.html#ST_EUI48"><a title="netaddr.ST_EUI48
+netaddr.strategy.ST_EUI48" class="py-name" href="#" onclick="return doclink('link-32', 'ST_EUI48', 'link-32');">ST_EUI48</a></tt><tt class="py-op">,</tt> <tt id="link-33" class="py-name" targets="Variable netaddr.ST_EUI64=netaddr-module.html#ST_EUI64,Variable netaddr.strategy.ST_EUI64=netaddr.strategy-module.html#ST_EUI64"><a title="netaddr.ST_EUI64
+netaddr.strategy.ST_EUI64" class="py-name" href="#" onclick="return doclink('link-33', 'ST_EUI64', 'link-33');">ST_EUI64</a></tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-comment">#-----------------------------------------------------------------------------</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#   Public interface.</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#-----------------------------------------------------------------------------</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-name">__all__</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">     <tt class="py-comment"># type constants</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">    <tt class="py-string">'AT_UNSPEC'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_INET'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_INET6'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_LINK'</tt><tt class="py-op">,</tt> <tt class="py-string">'AT_EUI64'</tt><tt class="py-op">,</tt> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">    <tt class="py-comment"># module specific exceptions</tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">    <tt class="py-string">'AddrFormatError'</tt><tt class="py-op">,</tt> <tt class="py-string">'AddrConversionError'</tt><tt class="py-op">,</tt> <tt class="py-string">'NotRegisteredError'</tt><tt class="py-op">,</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line"> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line">    <tt class="py-comment"># shared strategy objects</tt> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">    <tt class="py-string">'ST_IPV4'</tt><tt class="py-op">,</tt> <tt class="py-string">'ST_IPV6'</tt><tt class="py-op">,</tt> <tt class="py-string">'ST_EUI48'</tt><tt class="py-op">,</tt> <tt class="py-string">'ST_EUI64'</tt><tt class="py-op">,</tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line"> </tt>
+<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">    <tt class="py-comment"># main interface classes</tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line">    <tt class="py-string">'CIDR'</tt><tt class="py-op">,</tt> <tt class="py-string">'IP'</tt><tt class="py-op">,</tt> <tt class="py-string">'IPRange'</tt><tt class="py-op">,</tt> <tt class="py-string">'IPRangeSet'</tt><tt class="py-op">,</tt> <tt class="py-string">'Wildcard'</tt><tt class="py-op">,</tt> </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line">    <tt class="py-string">'EUI'</tt><tt class="py-op">,</tt> <tt class="py-string">'OUI'</tt><tt class="py-op">,</tt> <tt class="py-string">'IAB'</tt><tt class="py-op">,</tt> </tt>
+<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line"> </tt>
+<a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line">    <tt class="py-comment">#   functions</tt> </tt>
+<a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line">    <tt class="py-string">'nrange'</tt><tt class="py-op">,</tt> </tt>
+<a name="L90"></a><tt class="py-lineno">90</tt>  <tt class="py-line"><tt class="py-op">]</tt> </tt>
+<a name="L91"></a><tt class="py-lineno">91</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -198,7 +200,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:02 2009
+    Generated by Epydoc 3.0.1 on Mon Apr 13 15:14:43 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

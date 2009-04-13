@@ -1,3 +1,30 @@
+Release: 0.6.2
+Date: 13th Apr 2008
+
+Major changes since 0.6.1
+-------------------------
+
+* Refreshed IEEE and IANA data files with latest revisions from their 
+  respective URLs.
+
+  - IANA IPv4 Address Space Registry (last updated 2009-03-11)
+
+  - Internet Multicast Addresses (last updated 2009-03-17)
+
+  - IEEE OUI and IAB files (last updated 2009-04-13)
+
+* Added get_latest_files() functions to both the netaddr.eui and 
+  netaddr.ip modules to assist in automating release builds.
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 32 - http://code.google.com/p/netaddr/issues/detail?id=32
+
+	- Addr.__ne__ returns wrong answer
+
+------------------------------------------------------------------------------
+
 Release: 0.6.1
 Date: 6th Apr 2008
 

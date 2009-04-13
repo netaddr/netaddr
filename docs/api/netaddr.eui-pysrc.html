@@ -244,7 +244,7 @@ netaddr.strategy.IPv6Strategy.__init__" class="py-name" href="#" onclick="return
 <a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">    The file is available online here :-</tt> </tt>
 <a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"><tt class="py-docstring">    http://standards.ieee.org/regauth/iab/iab.txt</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"><tt class="py-docstring">    http://standards.ieee.org/regauth/oui/iab.txt</tt> </tt>
 <a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"><tt class="py-docstring">    Sample record::</tt> </tt>
 <a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
@@ -630,13 +630,36 @@ netaddr.strategy.EUI48Strategy._" class="py-name" href="#" onclick="return docli
 <a name="L499"></a><tt class="py-lineno">499</tt>  <tt class="py-line">        <tt id="link-115" class="py-name"><a title="netaddr.eui.IEEE_IAB_INDEX" class="py-name" href="#" onclick="return doclink('link-115', 'IEEE_IAB_INDEX', 'link-9');">IEEE_IAB_INDEX</a></tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">offset</tt><tt class="py-op">,</tt> <tt id="link-116" class="py-name"><a title="netaddr.address.IPRange.size" class="py-name" href="#" onclick="return doclink('link-116', 'size', 'link-12');">size</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
 </div><a name="L500"></a><tt class="py-lineno">500</tt>  <tt class="py-line"> </tt>
 <a name="L501"></a><tt class="py-lineno">501</tt>  <tt class="py-line"><tt class="py-comment">#-----------------------------------------------------------------------------</tt> </tt>
-<a name="L502"></a><tt class="py-lineno">502</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
-<a name="L503"></a><tt class="py-lineno">503</tt>  <tt class="py-line">    <tt class="py-comment">#   Generate indices when module is executed as a script.</tt> </tt>
-<a name="L504"></a><tt class="py-lineno">504</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt id="link-117" class="py-name" targets="Function netaddr.eui.create_ieee_indices()=netaddr.eui-module.html#create_ieee_indices"><a title="netaddr.eui.create_ieee_indices" class="py-name" href="#" onclick="return doclink('link-117', 'create_ieee_indices', 'link-117');">create_ieee_indices</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="get_latest_files"></a><div id="get_latest_files-def"><a name="L502"></a><tt class="py-lineno">502</tt> <a class="py-toggle" href="#" id="get_latest_files-toggle" onclick="return toggle('get_latest_files');">-</a><tt class="py-line"><tt class="py-comment"></tt><tt class="py-keyword">def</tt> <a class="py-def-name" href="netaddr.eui-module.html#get_latest_files">get_latest_files</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="get_latest_files-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="get_latest_files-expanded"><a name="L503"></a><tt class="py-lineno">503</tt>  <tt class="py-line">    <tt class="py-docstring">"""Download the latest files from the IEEE"""</tt> </tt>
+<a name="L504"></a><tt class="py-lineno">504</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt class="py-name">urllib2</tt> </tt>
 <a name="L505"></a><tt class="py-lineno">505</tt>  <tt class="py-line"> </tt>
-<a name="L506"></a><tt class="py-lineno">506</tt>  <tt class="py-line"><tt class="py-comment">#   On module load read indices in memory to enable lookups.</tt> </tt>
-<a name="L507"></a><tt class="py-lineno">507</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt id="link-118" class="py-name" targets="Function netaddr.eui.load_ieee_indices()=netaddr.eui-module.html#load_ieee_indices"><a title="netaddr.eui.load_ieee_indices" class="py-name" href="#" onclick="return doclink('link-118', 'load_ieee_indices', 'link-118');">load_ieee_indices</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L508"></a><tt class="py-lineno">508</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L506"></a><tt class="py-lineno">506</tt>  <tt class="py-line">    <tt class="py-name">urls</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt> </tt>
+<a name="L507"></a><tt class="py-lineno">507</tt>  <tt class="py-line">        <tt class="py-string">'http://standards.ieee.org/regauth/oui/oui.txt'</tt><tt class="py-op">,</tt> </tt>
+<a name="L508"></a><tt class="py-lineno">508</tt>  <tt class="py-line">        <tt class="py-string">'http://standards.ieee.org/regauth/oui/iab.txt'</tt><tt class="py-op">,</tt> </tt>
+<a name="L509"></a><tt class="py-lineno">509</tt>  <tt class="py-line">    <tt class="py-op">]</tt> </tt>
+<a name="L510"></a><tt class="py-lineno">510</tt>  <tt class="py-line"> </tt>
+<a name="L511"></a><tt class="py-lineno">511</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">url</tt> <tt class="py-keyword">in</tt> <tt class="py-name">urls</tt><tt class="py-op">:</tt> </tt>
+<a name="L512"></a><tt class="py-lineno">512</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'downloading latest copy of %s'</tt> <tt class="py-op">%</tt> <tt class="py-name">url</tt> </tt>
+<a name="L513"></a><tt class="py-lineno">513</tt>  <tt class="py-line">        <tt class="py-name">request</tt> <tt class="py-op">=</tt> <tt class="py-name">urllib2</tt><tt class="py-op">.</tt><tt class="py-name">Request</tt><tt class="py-op">(</tt><tt class="py-name">url</tt><tt class="py-op">)</tt> </tt>
+<a name="L514"></a><tt class="py-lineno">514</tt>  <tt class="py-line">        <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-name">urllib2</tt><tt class="py-op">.</tt><tt class="py-name">urlopen</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt> </tt>
+<a name="L515"></a><tt class="py-lineno">515</tt>  <tt class="py-line">        <tt class="py-name">save_path</tt> <tt class="py-op">=</tt> <tt class="py-name">_path</tt><tt class="py-op">.</tt><tt class="py-name">dirname</tt><tt class="py-op">(</tt><tt class="py-name">__file__</tt><tt class="py-op">)</tt> </tt>
+<a name="L516"></a><tt class="py-lineno">516</tt>  <tt class="py-line">        <tt class="py-name">filename</tt> <tt class="py-op">=</tt> <tt class="py-name">_path</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">save_path</tt><tt class="py-op">,</tt> <tt class="py-name">_os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt class="py-name">basename</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">geturl</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L517"></a><tt class="py-lineno">517</tt>  <tt class="py-line">        <tt class="py-name">fh</tt> <tt class="py-op">=</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">filename</tt><tt class="py-op">,</tt> <tt class="py-string">'wb'</tt><tt class="py-op">)</tt> </tt>
+<a name="L518"></a><tt class="py-lineno">518</tt>  <tt class="py-line">        <tt class="py-name">fh</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">read</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L519"></a><tt class="py-lineno">519</tt>  <tt class="py-line">        <tt class="py-name">fh</tt><tt class="py-op">.</tt><tt class="py-name">close</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L520"></a><tt class="py-lineno">520</tt>  <tt class="py-line"> </tt>
+<a name="L521"></a><tt class="py-lineno">521</tt>  <tt class="py-line"><tt class="py-comment">#-----------------------------------------------------------------------------</tt> </tt>
+<a name="L522"></a><tt class="py-lineno">522</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L523"></a><tt class="py-lineno">523</tt>  <tt class="py-line">    <tt class="py-comment">#   Generate indices when module is executed as a script.</tt> </tt>
+<a name="L524"></a><tt class="py-lineno">524</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt id="link-117" class="py-name" targets="Function netaddr.eui.get_latest_files()=netaddr.eui-module.html#get_latest_files,Function netaddr.ip.get_latest_files()=netaddr.ip-module.html#get_latest_files"><a title="netaddr.eui.get_latest_files
+netaddr.ip.get_latest_files" class="py-name" href="#" onclick="return doclink('link-117', 'get_latest_files', 'link-117');">get_latest_files</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L525"></a><tt class="py-lineno">525</tt>  <tt class="py-line">    <tt id="link-118" class="py-name" targets="Function netaddr.eui.create_ieee_indices()=netaddr.eui-module.html#create_ieee_indices"><a title="netaddr.eui.create_ieee_indices" class="py-name" href="#" onclick="return doclink('link-118', 'create_ieee_indices', 'link-118');">create_ieee_indices</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L526"></a><tt class="py-lineno">526</tt>  <tt class="py-line"> </tt>
+<a name="L527"></a><tt class="py-lineno">527</tt>  <tt class="py-line"> </tt>
+<a name="L528"></a><tt class="py-lineno">528</tt>  <tt class="py-line"><tt class="py-comment">#   On module load read indices in memory to enable lookups.</tt> </tt>
+<a name="L529"></a><tt class="py-lineno">529</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt id="link-119" class="py-name" targets="Function netaddr.eui.load_ieee_indices()=netaddr.eui-module.html#load_ieee_indices"><a title="netaddr.eui.load_ieee_indices" class="py-name" href="#" onclick="return doclink('link-119', 'load_ieee_indices', 'link-119');">load_ieee_indices</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L530"></a><tt class="py-lineno">530</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -674,7 +697,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Apr  7 21:17:02 2009
+    Generated by Epydoc 3.0.1 on Mon Apr 13 15:14:42 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
