@@ -154,7 +154,7 @@ class IABIndexParser(Publisher):
 
     The file is available online here :-
 
-    http://standards.ieee.org/regauth/iab/iab.txt
+    http://standards.ieee.org/regauth/oui/iab.txt
 
     Sample record::
 
@@ -499,9 +499,31 @@ def load_ieee_indices():
         IEEE_IAB_INDEX[key].append((offset, size))
 
 #-----------------------------------------------------------------------------
+def get_latest_files():
+    """Download the latest files from the IEEE"""
+    import urllib2
+
+    urls = [
+        'http://standards.ieee.org/regauth/oui/oui.txt',
+        'http://standards.ieee.org/regauth/oui/iab.txt',
+    ]
+
+    for url in urls:
+        print 'downloading latest copy of %s' % url
+        request = urllib2.Request(url)
+        response = urllib2.urlopen(request)
+        save_path = _path.dirname(__file__)
+        filename = _path.join(save_path, _os.path.basename(response.geturl()))
+        fh = open(filename, 'wb')
+        fh.write(response.read())
+        fh.close()
+
+#-----------------------------------------------------------------------------
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
+    get_latest_files()
     create_ieee_indices()
+
 
 #   On module load read indices in memory to enable lookups.
 load_ieee_indices()
