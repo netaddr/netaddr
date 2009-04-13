@@ -399,19 +399,21 @@ class Addr(object):
             C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) == (other.addr_type, other.value)
+            return (self.addr_type, self.value) == (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
     def __ne__(self, other):
         """
-        @return: C{True} if this address is not numerically the same other,
-            C{False} otherwise.
+        @return: C{False} if this address is numerically the same as the
+            other, C{True} otherwise.
         """
         try:
-            return (self.addr_type, self.value) != (other.addr_type, other.value)
+            return (self.addr_type, self.value) != (other.addr_type,
+                other.value)
         except AttributeError:
-            return False
+            return True
 
     def __lt__(self, other):
         """
@@ -419,7 +421,8 @@ class Addr(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) < (other.addr_type, other.value)
+            return (self.addr_type, self.value) < (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -429,7 +432,8 @@ class Addr(object):
             value to other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) <= (other.addr_type, other.value)
+            return (self.addr_type, self.value) <= (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -439,7 +443,8 @@ class Addr(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) > (other.addr_type, other.value)
+            return (self.addr_type, self.value) > (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -449,7 +454,8 @@ class Addr(object):
             value to other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) >= (other.addr_type, other.value)
+            return (self.addr_type, self.value) >= (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -521,11 +527,11 @@ class EUI(Addr):
         Constructor.
 
         @param addr: an EUI-48 (MAC) or EUI-64 address in string format or as
-        an unsigned integer.
+            an unsigned integer.
 
         @param addr_type: (optional) the specific EUI address type (C{AT_LINK}
-        or C{AT_EUI64}).  This argument is used mainly to differentiate EUI48
-            and EUI48 identifiers that may be numerically equivalent.
+            or C{AT_EUI64}).  This argument is used mainly to differentiate
+            EUI48 and EUI48 identifiers that may be numerically equivalent.
         """
         #   Choose a sensible default when addr is an integer and addr_type is
         #   not specified.
@@ -1204,7 +1210,7 @@ class IPRange(object):
             #
             #FIXME: see PySlice_GetIndicesEx function in Python SVN
             #FIXME: repository for implementation details :-
-            #FIXME:   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
+            #   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
             (start, stop, step) = index.indices(self.size())
 
             start_addr = IP(self.first + start, self.addr_type)
@@ -1266,14 +1272,14 @@ class IPRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the boundaries of this range are not the same as
-            other, C{False} otherwise.
+        @return: C{False} if the boundaries of this range are the same as
+            other, C{True} otherwise.
         """
         try:
             return (self.addr_type,  self.first,  self.last) != \
                    (other.addr_type, other.first, other.last)
         except AttributeError:
-            return False
+            return True
 
     def __lt__(self, other):
         """
@@ -1632,10 +1638,10 @@ class IPRange(object):
 #-----------------------------------------------------------------------------
 def cidr_to_bits(cidr):
     """
-    @cidr: a CIDR object or CIDR string value (acceptable by CIDR class
+    @param cidr: a CIDR object or CIDR string value (acceptable by CIDR class
         constructor).
 
-    @return a tuple containing CIDR in binary string format and addr_type.
+    @return: a tuple containing CIDR in binary string format and addr_type.
     """
     if not hasattr(cidr, 'network'):
         cidr = CIDR(cidr, strict=False)
@@ -1646,18 +1652,18 @@ def cidr_to_bits(cidr):
 #-----------------------------------------------------------------------------
 def bits_to_cidr(bits, addr_type=AT_UNSPEC, fmt=None):
     """
-    @bits: a CIDR in binary string format.
+    @param bits: a CIDR in binary string format.
 
-    @addr_type: (optional) CIDR address type (IP version).
+    @param addr_type: (optional) CIDR address type (IP version).
         (Default: AT_UNSPEC - auto-select) If not specified AT_INET (IPv4) is
         assumed if length of binary string is <= /32. If binary string
         is > /32 and <= /128 AT_INET6 (IPv6) is assumed. Useful when you have
         IPv6 addresses with a prefixlen of /32 or less.
 
-    @fmt: (optional) callable invoked on return CIDR.
+    @param fmt: (optional) callable invoked on return CIDR.
         (Default: None - CIDR object). Also accepts str() and unicode().
 
-    @return a CIDR object or string (determined by fmt).
+    @return: a CIDR object or string (determined by fmt).
     """
     if _re.match('^[01]+$', bits) is None:
         raise ValueError('%r is an invalid bit string!' % bits)

@@ -1,46 +1,36 @@
-netaddr is a project released under the BSD license to the Python community
-in early 2008 by :-
+netaddr is a project that was released to the Python community under the
+BSD license in early 2008.
+
+Author and maintainer :-
 
 	David P. D. Moss <drkjam AT gmail DOT com>
 
-It is great to see something that started out as merely "itch scratching"
-turning into a useful library used by so many others out there.
+A very special thanks go to the following for your encouragement, support
+and assistance :-
 
-A very special thanks go out to :-
+	James William Pye <jwp AT gmail DOT com>
+	Duncan McGreggor <duncan DOT mcgreggor AT gmail DOT com> 
+	Sebastien Douche <sdouche AT gmail DOT com>
 
-	- James William Pye <jwp AT gmail DOT com>
-	
-	- Duncan McGreggor <duncan DOT mcgreggor AT gmail DOT com> 
+Linux distro package maintainers :-
 
-whose early adoption, encouragement, suggestions and support have helped spur 
-on refinements to some early rough edges and helped to make netaddr a much 
-better and more user-friendly library.
+	Debian and Ubuntu
 
-A big thanks to Linux distro packagers/maintainers :-
+		Vincent Bernat <bernat AT debian DOT org>
 
-Fedora
+	Fedora
 
-	- John Eckersberg <john DOT eckersberg AT gmail DOT com>
+		John Eckersberg <john DOT eckersberg AT gmail DOT com>
 
-Debian and Ubuntu
+Thanks go to everyone on the netaddr mailing list for helping to test 
+releases and suggest improvements. Thanks also to those who've raised
+tickets in the bug tracker and made comments on the code hosting site.
 
-	- Vincent Bernat <bernat AT debian.org>
-
-Thanks also go to :-
-
-	- Sebastien Douche <sdouche AT gmail DOT com>
-
-	- Everyone on the netaddr mailing list for helping to test releases and
-	  suggest improvements.
-
-	- All those who've raised tickets in the issues tracker and made comments
-	  on the code hosting site.
-
-A note of attribution and thanks for recipe 18.11 "Formatting Integers as 
-Binary Strings" from :-
+Thanks also to for use of recipe 18.11 "Formatting Integers as Binary 
+Strings" from :-
 
 	Python Cookbook 2d ed.
 	by Alex Martelli, Anna Martelli Ravenscroft and David Ascher
 	(O'Reilly Media 2005) ISBN 0596-00797-3.
 
-And finally, to Guido van Rossum for giving us Python.
+And finally, thanks to Guido van Rossum for giving us Python.

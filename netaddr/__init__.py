@@ -64,6 +64,8 @@ from netaddr.address import nrange, IP, IPRange, IPRangeSet, CIDR, \
 
 from netaddr.eui import OUI, IAB, NotRegisteredError
 
+import netaddr.ip
+
 from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
 
 #-----------------------------------------------------------------------------

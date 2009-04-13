@@ -1,4 +1,4 @@
-recursive-include docs *.html *.css *.js *.png
+recursive-include docs/api *.html *.css *.js *.png
 
 include tests/ut_*.py
 
@@ -6,6 +6,8 @@ include netaddr/__init__.py
 include netaddr/address.py
 include netaddr/strategy.py
 include netaddr/core.py
+include netaddr/util.py
+include netaddr/fallback.py
 
 include netaddr/eui/__init__.py
 include netaddr/eui/*.txt

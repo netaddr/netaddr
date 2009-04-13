@@ -39,21 +39,39 @@ package_data = {
 
 license = 'BSD License',
 
+#   NB - keep this text around 74 characters wide so it is viewable
+#        in various fixed window sizes.
 long_description = """
-a library providing Pythonic manipulation, validation and classification of common networking address notations, including :-
+netaddr is a Python library for the representation and manipulation
+of various common network address formats and notations.
 
-* IPv4
-* IPv6
-* CIDR (Classless Inter-Domain Routing)
-* IEEE MAC (Media Access Control)/EUI-48 and EUI-64
+It takes the hassle out of fiddling with innumerable variations of
+network addresses, presenting a consistent, extensible, easy-to-use
+and above all Pythonic API.
+
+With it you can represent, validate, convert, categorize, iterate,
+generate, slice (and dice) :-
+
+* IP version 4
+* IP version 6
+* CIDR (Classless Inter-Domain Routing) both IPv4 and IPv6
+* MAC (Media Access Control) and IEEE EUI-48 and EUI-64
+* Support for arbitrary IP address ranges with CIDR interoperability
+* User friendly alternative IPv4 range syntax using netaddr's
+  glob-style Wildcard addresses
 
 For examples see the project wiki :-
 
     http://code.google.com/p/netaddr/wiki/NetAddrExamples
 
-Full API documentation is available on PyPI here :-
+API documentation (auto-generated with epydoc) :-
 
     http://packages.python.org/netaddr/
+
+For details on latest changes and updates in the current and previous
+releases see the CHANGELOG :-
+
+    http://code.google.com/p/netaddr/wiki/CHANGELOG
 """
 
 platforms = 'OS Independent'

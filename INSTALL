@@ -35,7 +35,7 @@ Official milestone releases can be found here :-
 Source Release Packages
 -----------------------
 
-Download the latest release tarball/zip file and extract them to a temporary
+Download the latest release tarball/zip file and extract it to a temporary
 location or check out the source from the code hosting site into a local
 working copy directory.
 
@@ -53,13 +53,13 @@ You now have several choices :-
 - Manual Install
 
 	Manually copy the netaddr folder and its contents to the lib/site-packages
-	directory of your Python version.
+	directory of your Python interpreter.
 
 - Soft Linking
 
-	Add the path of the netaddr folder under the root directory where you 
+	Add the path of the netaddr folder below the directory where you 
 	extracted or checked out the source files to your PYTHONPATH environment
-	variable. Alternatively, you can create a netaddr.pth file in your 
+	variable. Alternatively, create a netaddr.pth file in your 
 	lib/site-packages directory containing the path to the netaddr folder 
 	where the source files are located.
 
@@ -67,8 +67,13 @@ You now have several choices :-
 Python Eggs
 -----------
 
-Download the latest easy_install script if you don't already have it and
-run the following command :-
+This requires that you install setuptools which is beyond the scope of 
+this document. See the following URL for details :-
+
+	http://peak.telecommunity.com/DevCenter/setuptools
+
+Download and install the latest easy_install script and run the following
+command :-
 
 	easy_install netaddr
 
@@ -89,11 +94,12 @@ Security Tip
 
 Please Note - while efforts are made to ensure that the Windows executables 
 produced are virus free, they cannot be guaranteed to always be 100% free of 
-possible nasties. You are installing executable code and do so solely at your
-own risk! If you are either a) paranoid or b) properly and correctly security
-conscious, either run your own virus checking software against any executables
-before running it or alternatively just download the .zip file and install 
-using Python itself which will fully mitigate any potential problems.
+possible nasties. Use them solely at your own risk!
+
+If you are either a) paranoid or b) properly and correctly security conscious
+either run your own virus checking software against the setup executable
+before installing it or just download the .zip file and install netaddr using
+Python's setup.py script to fully mitigate any potential problems.
 
 And finally ...
 
