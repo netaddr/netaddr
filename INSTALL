@@ -57,7 +57,7 @@ You now have several choices :-
 
 - Soft Linking
 
-	Add the path of the netaddr folder belows the directory where you 
+	Add the path of the netaddr folder below the directory where you 
 	extracted or checked out the source files to your PYTHONPATH environment
 	variable. Alternatively, create a netaddr.pth file in your 
 	lib/site-packages directory containing the path to the netaddr folder 
