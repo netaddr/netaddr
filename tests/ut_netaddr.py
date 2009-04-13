@@ -19,7 +19,6 @@ import platform as _platform
 import random as _random
 
 PATH = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), '..'))
-print '***', PATH
 _sys.path.insert(0, PATH)
 
 from netaddr import *
@@ -656,6 +655,13 @@ class AddrTests(TestCase):
         self.assertTrue(addr_max >  addr_min)
         self.assertTrue(addr_max >= addr_min)
 
+        self.assertTrue(IP('127.1') != 'foo')
+        self.assertFalse(IP('127.1') != IP('127.1'))
+        self.assertTrue(IP('127.1') == IP('127.1'))
+        self.assertFalse(IP('127.1') == 2130706433)
+        self.assertTrue(IP('127.1') == IP(2130706433))
+        self.assertFalse(IP('127.1') == '127.1')
+
     def testIncrementAndDecrementIPv4(self):
         """Addr() - increment and decrement tests (IPv4)"""
         addr = netaddr.address.Addr('0.0.0.0')
@@ -1098,7 +1104,10 @@ class IPTests(TestCase):
         self.assertEqual(ip.addr_type, AT_INET)
         self.assertEqual(ip.strategy, ST_IPV4)
         self.assertEqual(ip.prefixlen, 32)
-        self.assertEqual(IP('127.0.0.1').hostname(), 'localhost')
+
+        #   Disabled test below as there are seemingly too many variations of
+        #   localhost across operating systems (wtf)?
+        #DISABLED:   self.assertEqual(IP('127.0.0.1').hostname(), 'localhost')
 
         #   Prefix /32 for IPv4 addresses should be implicit.
         self.assertEqual(repr(ip), "IP('192.0.2.1')")
@@ -1788,7 +1797,7 @@ class CIDRTests(TestCase):
 
         #   Direct object to object comparisons will always fail.
         self.assertFalse(ip == cidr)
-        self.assertFalse(ip != cidr)
+        self.assertTrue(ip != cidr)
         self.assertFalse(ip > cidr)
         self.assertFalse(ip >= cidr)
         self.assertFalse(ip < cidr)
@@ -2274,7 +2283,7 @@ class WildcardTests(TestCase):
 
         #   Direct object to object comparisons will always fail.
         self.assertFalse(ip == wc)
-        self.assertFalse(ip != wc)
+        self.assertTrue(ip != wc)
         self.assertFalse(ip > wc)
         self.assertFalse(ip >= wc)
         self.assertFalse(ip < wc)

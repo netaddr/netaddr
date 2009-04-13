@@ -399,19 +399,21 @@ class Addr(object):
             C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) == (other.addr_type, other.value)
+            return (self.addr_type, self.value) == (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
     def __ne__(self, other):
         """
-        @return: C{True} if this address is not numerically the same other,
-            C{False} otherwise.
+        @return: C{False} if this address is numerically the same as the
+            other, C{True} otherwise.
         """
         try:
-            return (self.addr_type, self.value) != (other.addr_type, other.value)
+            return (self.addr_type, self.value) != (other.addr_type,
+                other.value)
         except AttributeError:
-            return False
+            return True
 
     def __lt__(self, other):
         """
@@ -419,7 +421,8 @@ class Addr(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) < (other.addr_type, other.value)
+            return (self.addr_type, self.value) < (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -429,7 +432,8 @@ class Addr(object):
             value to other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) <= (other.addr_type, other.value)
+            return (self.addr_type, self.value) <= (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -439,7 +443,8 @@ class Addr(object):
             other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) > (other.addr_type, other.value)
+            return (self.addr_type, self.value) > (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -449,7 +454,8 @@ class Addr(object):
             value to other, C{False} otherwise.
         """
         try:
-            return (self.addr_type, self.value) >= (other.addr_type, other.value)
+            return (self.addr_type, self.value) >= (other.addr_type,
+                other.value)
         except AttributeError:
             return False
 
@@ -1203,7 +1209,7 @@ class IPRange(object):
             #
             #FIXME: see PySlice_GetIndicesEx function in Python SVN
             #FIXME: repository for implementation details :-
-            #FIXME:   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
+            #   http://svn.python.org/view/python/trunk/Objects/sliceobject.c
             (start, stop, step) = index.indices(self.size())
 
             start_addr = IP(self.first + start, self.addr_type)
@@ -1265,14 +1271,14 @@ class IPRange(object):
         """
         @param other: an address object of the same address type as C{self}.
 
-        @return: C{True} if the boundaries of this range are not the same as
-            other, C{False} otherwise.
+        @return: C{False} if the boundaries of this range are the same as
+            other, C{True} otherwise.
         """
         try:
             return (self.addr_type,  self.first,  self.last) != \
                    (other.addr_type, other.first, other.last)
         except AttributeError:
-            return False
+            return True
 
     def __lt__(self, other):
         """
