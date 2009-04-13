@@ -1,7 +1,7 @@
 
 Internet Multicast Addresses
 
-(last updated 2008-07-23)
+(last updated 2009-03-17)
 
 Registries included below:
 - IPv4 Multicast Addresses
@@ -75,8 +75,9 @@ Registry:
 224.0.0.106 All-Snoopers                                 [RFC4286]
 224.0.0.107 PTP-pdelay                           [IEEE1588][K.Lee]  02 February 2007
 224.0.0.108 Saratoga                                        [Wood]  30 August 2007
-224.0.0.109 LL-MANET-Routers                             [RFC-ietf-manet-iana-07.txt]
-224.0.0.110-224.0.0.250 Unassigned                           [JBP]
+224.0.0.109 LL-MANET-Routers                             [RFC5498] 
+224.0.0.110 IGRS                                            [Zhou]  20 January 2009
+224.0.0.111-224.0.0.250 Unassigned                           [JBP]
 224.0.0.251 mDNS                                        [Cheshire]
 224.0.0.252 Link-local Multicast Name Resolution         [RFC4795]
 224.0.0.253 Teredo                                       [RFC-huitema-v6ops-teredo-05.txt]
@@ -230,7 +231,7 @@ Registry:
 224.0.1.137 Make Source                                     [Daga]
 224.0.1.138 Teleborsa                                  [Strazzera]
 224.0.1.139 SUMAConfig                                   [Wallach]
-224.0.1.140 Unassigned
+224.0.1.140 capwap-ac                                    [RFC5415]
 224.0.1.141 DHCP-SERVERS                                    [Hall]
 224.0.1.142 CN Router-LL                                [Armitage]
 224.0.1.143 EMWIN                                       [Querubin]
@@ -275,7 +276,7 @@ Registry:
 224.0.1.182 1451_Dot5_802_Group_3                        [Coleman]  11 April 2006  
 224.0.1.183 1451_Dot5_802_Group_4                        [Coleman]  11 April 2006
 224.0.1.184 VFSDP                                           [Zorc]  06 March 2007
-224.0.1.185 ASAP                   [RFC-ietf-rserpool-asap-21.txt] 
+224.0.1.185 ASAP                                         [RFC5352] 
 224.0.1.186-224.0.1.255  Unassigned                          [JBP] 
 
 
@@ -362,7 +363,9 @@ Registry:
 224.0.23.57 noaaport3                                   [Querubin]  04 February 2008
 224.0.23.58 noaaport4                                   [Querubin]  04 February 2008
 224.0.23.59 DigacIP7                                   [Niedfeldt]  22 February 2008
-224.0.23.60-224.0.23.63 Unassigned
+224.0.23.60 AtscSvcSig                                  [Whitaker]  19 December 2008
+224.0.23.61 SafetyNET p (potentially IGMPv1)                [Pilz]  13 March 2009
+224.0.23.62-224.0.23.63 Unassigned
 224.0.23.64-224.0.23.80 Moneyline                       [Petronio]
 224.0.23.81-224.0.23.127 Reserved (Moneyline)
 224.0.23.128-224.0.23.157 PHLX                         [Linthicum]
@@ -378,7 +381,8 @@ Registry:
 224.0.23.167 Systech Mcast                              [Jakubiec]  21 September 2006
 224.0.23.168 tricon-system-management                     [Gabler]  06 July 2007
 224.0.23.169 MNET discovery                                [Crick]  14 January 2008
-224.0.23.170-224.0.23.255 Unassigned 
+224.0.23.170-224.0.23.191 Unassigned
+224.0.23.192-224.0.23.255 PINKOTC                        [Shulgin]  12 August 2008
 224.0.24.0-224.0.24.127 AGSC UK VVs                       [Rowley]  09 June 2006
 224.0.24.128-224.0.24.255 EM-MULTI                      [Sorensen]  07 August 2006
 224.0.25.0-224.0.28.255 CME Market Data               [Brakauskas]  22 March 2007
@@ -392,7 +396,12 @@ Registry:
 224.0.46.0-224.0.50.255 Deutsche Boerse                    [Drwal]  25 January 2008
 224.0.51.0-224.0.51.255 ALCOM-IPTV                       [Erikson]  09 April 2008
 224.0.52.0-224.0.53.255 NYSE-EURONEXT                  [Stevenson]  23 July 2008
-224.0.54.0-224.0.251.255  Unassigned
+224.0.54.0-224.0.57.255 Get - BCN                       [Hvidsten]  20 August 2008
+224.0.58.0-224.0.61.255  NYSE-AMEX_L1_L2                [Castillo]  27 August 2008
+224.0.62.0-224.0.62.255  BATS                              [Brown]  24 December 2008
+224.0.63.0-224.0.63.255  BATS Trading                   [Gorsline]  13 March 2009
+224.0.64.0-224.0.67.255 NYSE Euronext                     [Gupta2]  13 March 2009
+224.0.68.0-224.0.251.255  Unassigned
 224.0.252.0-224.0.252.255 KPN Broadcast Services           [Spelt] 
 224.0.253.000-224.0.253.255 KPN Broadcast Services         [Spelt]              
 224.0.254.000-224.0.254.255 Intelsat IPTV                   [Elad]  31 March 2006
@@ -424,7 +433,8 @@ Registry:
 224.4.0.0-224.4.0.255  London Stock Exchange           [Whitehouse]  31 March 2006
 224.4.1.0-224.4.1.255  London Stock Exchange             [Saunders]  25 February 2008
 224.4.2.0-224.4.2.255  London Stock Exchange             [Saunders]  29 February 2008
-224.4.3.0-224.251.255.255  Reserved                          [IANA]
+224.4.3.0-224.4.4.255  London Stock Exchange             [Saunders]  24 December 2008
+224.4.5.0-224.251.255.255  Reserved                          [IANA]
 224.252.000.000-224.255.255.255 DIS Transient Groups         [IANA]
 225.000.000.000-231.255.255.255 Reserved                     [IANA]
 
@@ -562,16 +572,16 @@ References
            C. Huitema, "Teredo: Tunneling IPv6 over UDP through NATs", 
            RFC XXXX, Month Year.
 
-[RFC-ietf-manet-iana-07.txt]
-           I. Chakeres, "IANA Allocations for MANET Protocols", RFC XXXX, 
-           Month Year.
+[RFC5498]  I. Chakeres, "IANA Allocations for MANET Protocols", RFC 5498,
+           March 2009.
 
-[RFC-ietf-rserpool-asap-21.txt]
-           R. Stewart, Q. Xie, M. Stillman, M. Tuexen, "Aggregate Server 
-           Access Protocol (ASAP)", RFC XXXX, Month Year.
+[RFC5352]  R. Stewart, Q. Xie, M. Stillman, M. Tuexen, "Aggregate Server 
+           Access Protocol (ASAP)", RFC 5352, September 2008.
 
+[RFC5415]  P. Calhoun, Ed., M. Montemurro, Ed., D. Stanley, Ed., "CAPWAP 
+           Protocol Specification", RFC 5415, March 2009.
 
-Peopel
+People
 ------
 [Aboba] Bernard Aboba, <bernarda&windows.microsoft.com>, May 2004.
 
@@ -617,20 +627,22 @@ Peopel
 
 [Blank] Tom Blank, <tomblank&microsoft.com>, November 1996.
 
+<bloomer&birch.crd.ge.com>
+
 [Bognaes] Kristian A. Bognaes, <kbo&norman.no>, February 2004.
 
 [Braden] Bob Braden, <braden&isi.edu>, April 1996.
 
 [Brakauskas] Sarunas Brakauskas, <sbrakaus&cme.com>, 22 March 2007, 17 July 2007.
 
-[Brzezinski] Bob Brzezinski, <bob.brzezinski&activfinancial.com>, November 2004,
-             May 2005, 28 October 2005. 
-
 [Bob Brenner]
 
 [Brockbank] Darcy Brockbank, <darcy&hasc.com>, December 1997.
 
-<bloomer&birch.crd.ge.com>
+[Brown] Andrew Brown, <abrown&batstrading.com>, 24 December 2008.
+
+[Brzezinski] Bob Brzezinski, <bob.brzezinski&activfinancial.com>, November 2004,
+             May 2005, 28 October 2005.
 
 [BXE1] Brendan Eic, <brendan&illyria.wpd.sgi.com>
 
@@ -641,6 +653,8 @@ Peopel
 [Carr] Wayne Carr, <Wayne_Carr&ccm.intel.com>, December 1997.
 
 [Casner] Steve Casner, <casner&isi.edu>, January 1995.
+
+[Castillo] Frank Castillo, <fcastillo&nyx.com>, 27 August 2008.
 
 [Catherino] John Catherino, <cajo&dev.java.net>, 31 March 2006. 
 
@@ -737,9 +751,13 @@ Peopel
 
 [Gordon] Howard Gordon, <hgordon&xingtech.com>
 
+[Gorsline] Tim Gorsline, <tgorsline&batstrading.com>, 13 March 2009.
+
 [Green] Cliff Green, <cgreen&xypoint.com>, February 1998.
 
-[Gupta] Pankaj Gupta, <pgupta&nyse.com>, 28 November 2007.
+[Gupta] Pankaj Gupta, <pgupta&nyse.com>, 28 November 2007. 
+
+[Gupta2] Pankaj Gupta, <pgupta&nyx.com>, 13 March 2009.
 
 [Guttman] Erik Guttman, <Erik.Guttman&sun.com>, March 1998,
           December 2001.
@@ -765,6 +783,8 @@ January 1997.
 [Honton] Chas Honton, <chas&secant.com>, December 1997.
 
 [Hoshi] Tetsuo Hoshi, <tetsuo.hoshi&jp.yokogawa.com>, June 2004.
+
+[Hvidsten] Arne Hvidsten, <arne.hvidsten&get.no>, 20 August 2008.
 
 [IANA] IANA <iana&iana.org>
 
@@ -897,6 +917,8 @@ for temp use: renew 06/2000
 
 [Pevzner] Alexander Pevzner, <pzz&pzz.msk.ru>, 17 March 2006.
 
+[Pilz] Pilz GmbH & Co. KG, <pilz.gmbh&pilz.de>, 17 March 2009.
+
 [Polishinski] Steve Polishinski, <spolishinski&etcconnect.com>,  March 2000.
 
 [Poole] David Poole, <davep&extendsys.com>, April 1997.
@@ -929,7 +951,7 @@ for temp use: renew 06/2000
 
 [Saito] Takeshi Saito, <takeshi.saito&toshiba.co.jp>, February 2003.
 
-[Saunders] Greig Saunders, <gsaunder&londonstockexchange.com>, 25 February 2008, 29 February 2008.
+[Saunders] Greig Saunders, <gsaunder&londonstockexchange.com>, 25 February 2008, 29 February 2008, 24 December 2008.
 
 [Sautter] Robert Sautter, <rsautter&acdnj.itt.com>, August 1999.
 
@@ -948,6 +970,8 @@ for temp use: renew 06/2000
 [Shindoh] Masato Shindoh, <jl11456&yamato.ibm.co.jp>, August 1997.
 
 [Shukla] Gajendra Shukla, <gshukla&proxim.com>, February 2002.
+
+[Shulgin] Sergey Shulgin, <sshulgin&pinkotc.com>, 12 August 2008.
 
 [Shum] Raymond Shum, <rshum&ms.com>, April 1998.
 
@@ -1025,6 +1049,8 @@ for temp use: renew 06/2000
 
 [Wessels] Duane Wessels, <wessels&nlanr.net>, February 1997.
 
+[Whitaker] Jerry Whitaker, <jwhitaker&atsc.org>, 19 December 2008.
+
 [White] Peter White, <peter_white&3com.com>, April 1999.
 
 [Whitehouse] Guy Whitehouse, <gwhitehouse&londonstockexchange.com>, 31 March 2006.
@@ -1040,6 +1066,8 @@ for temp use: renew 06/2000
 [Woodcock] Bill Woodcock, <woody&zocalo.net>, November 1998.
 
 [Wu] Ishan Wu, <iwu&cisco.com>, March 2000.
+
+[Zhou] Xiaoyu Zhou, <zhouxyi&lenovo.com>, 20 January 2009.
 
 [Zorc] Brian Zorc, <brian.zorc&videofurnace.com>, 06 March 2007.
 
