@@ -950,11 +950,10 @@ IAB Range    			Organization
 				Seoul  
 				KOREA, REPUBLIC OF
 
-00-50-C2	(hex)		Sekusui Chemical Co. Ltd.
-09A000-09AFFF	(base 16)	Sekusui Chemical Co. Ltd.
-				New Business Operations Headquarters
-				Handicapped Aid Supporting Business, Pro
-				32 Wadai, Tsukuba-shi Ibaraki, 300-4292 
+00-50-C2	(hex)		NBO Development Center Sekusui Chemical Co. Ltd.
+09A000-09AFFF	(base 16)	NBO Development Center Sekusui Chemical Co. Ltd.
+				32 Wadai, Tsukuba-shi
+				Ibaraki, 300-4292 
 				JAPAN
 
 00-50-C2	(hex)		Seffle Instrument AB
@@ -2472,9 +2471,13 @@ IAB Range    			Organization
 				Trezzano S/N Milan 20090
 				ITALY
 
-00-50-C2	(hex)		PRIVATE
-18D000-18DFFF	(base 16)		 
-				 
+00-50-C2	(hex)		CCII Systems (Pty) Ltd
+18D000-18DFFF	(base 16)	CCII Systems (Pty) Ltd
+				Unit 3, 67 Rosmead Avenue
+				Kenilworth
+				Cape Town Cape 7708
+				SOUTH AFRICA
+
 00-50-C2	(hex)		SPARR ELECTRONICS LTD
 18E000-18EFFF	(base 16)	SPARR ELECTRONICS LTD
 				43, HMT MAIN RD
@@ -3476,9 +3479,12 @@ IAB Range    			Organization
 				CORBREUSE  91410
 				FRANCE
 
-00-50-C2	(hex)		PRIVATE
-22F000-22FFFF	(base 16)		 
-				 
+00-50-C2	(hex)		HTEC Limited
+22F000-22FFFF	(base 16)	HTEC Limited
+				George Curl Way
+				Southampton Hampshire SO18 2RX
+				UNITED KINGDOM
+
 00-50-C2	(hex)		AutoTOOLS group Co. Ltd.
 230000-230FFF	(base 16)	AutoTOOLS group Co. Ltd.
 				15F, No. 88, Chung Hsiao E. Rd., Sec. 2,
@@ -3581,9 +3587,13 @@ IAB Range    			Organization
 				Exton PA 19341
 				UNITED STATES
 
-00-50-C2	(hex)		PRIVATE
-240000-240FFF	(base 16)		 
-				 
+00-50-C2	(hex)		Geoquip Ltd
+240000-240FFF	(base 16)	Geoquip Ltd
+				Cromford Road
+				Wirksworth
+				Matlock Derbyshire D4 4FR
+				UNITED KINGDOM
+
 00-50-C2	(hex)		Contronics Automacao Ltda
 241000-241FFF	(base 16)	Contronics Automacao Ltda
 				R. Lauro Linhares 589
@@ -3676,9 +3686,12 @@ IAB Range    			Organization
 				Buenos Aires  1270
 				ARGENTINA
 
-00-50-C2	(hex)		PRIVATE
-250000-250FFF	(base 16)		 
-				 
+00-50-C2	(hex)		ACD Elektronik GmbH
+250000-250FFF	(base 16)	ACD Elektronik GmbH
+				Industriegebiet Engelberg 2
+				Achstetten  88480
+				GERMANY
+
 00-50-C2	(hex)		DGT Sp. z o.o.
 251000-251FFF	(base 16)	DGT Sp. z o.o.
 				ul. Jaskowa Dolina 15
@@ -3771,9 +3784,12 @@ IAB Range    			Organization
 				Biberach D-BW 88483
 				GERMANY
 
-00-50-C2	(hex)		PRIVATE
-260000-260FFF	(base 16)		 
-				 
+00-50-C2	(hex)		BIOTAGE
+260000-260FFF	(base 16)	BIOTAGE
+				1725 DISCOVERY DR.
+				CHARLOTTESVILLE VIRGINIA 22911
+				UNITED STATES
+
 00-50-C2	(hex)		Tattile Srl
 261000-261FFF	(base 16)	Tattile Srl
 				Via Trento 127/129
@@ -3793,9 +3809,12 @@ IAB Range    			Organization
 				FORSSA  FIN-30101
 				FINLAND
 
-00-50-C2	(hex)		PRIVATE
-264000-264FFF	(base 16)		 
-				 
+00-50-C2	(hex)		Confidence Direct Ltd
+264000-264FFF	(base 16)	Confidence Direct Ltd
+				17-20 Napier Road
+				Luton Beds LU1 1RF
+				UNITED KINGDOM
+
 00-50-C2	(hex)		BELIK S.P.R.L.
 265000-265FFF	(base 16)	BELIK S.P.R.L.
 				Rue du Roussart 147
@@ -3880,9 +3899,12 @@ IAB Range    			Organization
 				RICHARDSON TEXAS 75081
 				UNITED STATES
 
-00-50-C2	(hex)		PRIVATE
-272000-272FFF	(base 16)		 
-				 
+00-50-C2	(hex)		Verex Technology
+272000-272FFF	(base 16)	Verex Technology
+				5201 Explorer Drive
+				Mississauga Ontario L4W 4H1
+				CANADA
+
 00-50-C2	(hex)		Servicios Condumex, S. A. de C. V.
 273000-273FFF	(base 16)	Servicios Condumex, S. A. de C. V.
 				Carretera a San Luis Potosí km. 9.6
@@ -4412,9 +4434,12 @@ IAB Range    			Organization
 				COMBREE  49520
 				FRANCE
 
-00-50-C2	(hex)		PRIVATE
-2C9000-2C9FFF	(base 16)		 
-				 
+00-50-C2	(hex)		Roseman Engineering Ltd.
+2C9000-2C9FFF	(base 16)	Roseman Engineering Ltd.
+				65 Weizman St.
+				Givataim  53468
+				ISRAEL
+
 00-50-C2	(hex)		PUTERCOM CO., LTD
 2CA000-2CAFFF	(base 16)	PUTERCOM CO., LTD
 				5F-3, NO. 130 JIAN KANG ROAD
@@ -6268,10 +6293,10 @@ IAB Range    			Organization
 				Konstanz Baden Württemberg 78467
 				GERMANY
 
-00-50-C2	(hex)		University of Mannheim - Chair of Electrical Engineering
-3F3000-3F3FFF	(base 16)	University of Mannheim - Chair of Electrical Engineering
-				Quadrate B6, 23-29
-				Mannheim Baden-Wuerttemberg 68131
+00-50-C2	(hex)		Hytec Geraetebau GmbH
+3F3000-3F3FFF	(base 16)	Hytec Geraetebau GmbH
+				Cochemer Str. 12 – 14
+				68309 Mannheim 
 				GERMANY
 
 00-50-C2	(hex)		MC TECHNOLOGY GmbH
@@ -6623,10 +6648,10 @@ IAB Range    			Organization
 				RICHARDSON TEXAS 75081
 				UNITED STATES
 
-00-50-C2	(hex)		SIEMENS VDO
-42C000-42CFFF	(base 16)	SIEMENS VDO
-				5265 ROCKWELL DRIVE NE
-				CEDAR RAPIDS IOWA 52402
+00-50-C2	(hex)		Continental Automotive Systems US, Inc.
+42C000-42CFFF	(base 16)	Continental Automotive Systems US, Inc.
+				5265 Rockwell Drive NE
+				Cedar Rapids IA 52402
 				UNITED STATES
 
 00-50-C2	(hex)		Argo-Tech
@@ -7571,7 +7596,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Quantum3D, Inc.
 4C3000-4C3FFF	(base 16)	Quantum3D, Inc.
 				6330 San Ignacio Avenue
-				San Jose CA 95119
+				San Jose CA 95051
 				UNITED STATES
 
 00-50-C2	(hex)		Black Diamond Video, Inc.
@@ -8547,11 +8572,12 @@ IAB Range    			Organization
 				Tempe AZ 85282
 				UNITED STATES
 
-00-50-C2	(hex)		MOSDAN Internation Co.,Ltd
-560000-560FFF	(base 16)	MOSDAN Internation Co.,Ltd
-				No.74Cheggung Shintsuen,Shanhua Jen,Tainan
-				741
-				TAIWAN, REPUBLIC OF CHINA
+00-50-C2	(hex)		Procon Electronics
+560000-560FFF	(base 16)	Procon Electronics
+				P O Box 24
+				Stanfield
+				Pinetown KZN 3613
+				SOUTH AFRICA
 
 00-50-C2	(hex)		Seitec Elektronik GmbH
 561000-561FFF	(base 16)	Seitec Elektronik GmbH
@@ -12528,11 +12554,11 @@ IAB Range    			Organization
 				Coventry Warwickshire CV6 5PY
 				UNITED KINGDOM
 
-00-50-C2	(hex)		HTEC Ltd
-7DA000-7DAFFF	(base 16)	HTEC Ltd
+00-50-C2	(hex)		HTEC Limited
+7DA000-7DAFFF	(base 16)	HTEC Limited
 				Southampton International Park
 				George Curl Way
-				Southampton Hampshire SO182RX
+				Southampton Hampshire SO18 2RX
 				UNITED KINGDOM
 
 00-50-C2	(hex)		Mueller Elektronik
@@ -13148,11 +13174,11 @@ IAB Range    			Organization
 				Berlin  10969
 				GERMANY
 
-00-50-C2	(hex)		EasyData Software GmbH
-83E000-83EFFF	(base 16)	EasyData Software GmbH
-				Steinbacher Straße 14-24
-				Eschborn Hessen 65760
-				GERMANY
+00-50-C2	(hex)		KPE spol. s r.o.
+83E000-83EFFF	(base 16)	KPE spol. s r.o.
+				Blattného 2313
+				Praha CZ 15800
+				CZECH REPUBLIC
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 83F000-83FFFF	(base 16)	Phytec Messtechnik GmbH
@@ -14961,5 +14987,2003 @@ IAB Range    			Organization
 960000-960FFF	(base 16)	kuroneko dennnou kenkyuushitsu
 				671-1 obinata minakamimachi
 				tonegun gunma 379-1612
+				JAPAN
+
+00-50-C2	(hex)		Picsolve International Limited
+961000-961FFF	(base 16)	Picsolve International Limited
+				Woodlands Lodge
+				107-111 Uttoxeter New Road
+				Derby Derbyshire DE223NL
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Shockfish SA
+962000-962FFF	(base 16)	Shockfish SA
+				PSE-C
+				Parc Scientifique
+				Lausanne VD 1015
+				SWITZERLAND
+
+00-50-C2	(hex)		Lécureux SA
+963000-963FFF	(base 16)	Lécureux SA
+				Rue des Pres 137
+				Biel/Bienne BE 2503
+				SWITZERLAND
+
+00-50-C2	(hex)		IQ Automation GmbH
+964000-964FFF	(base 16)	IQ Automation GmbH
+				Breslauer Str. 3
+				Eching  85386
+				GERMANY
+
+00-50-C2	(hex)		Emitech Corporation
+965000-965FFF	(base 16)	Emitech Corporation
+				2F,NO.7-1,Industry E.Rd.9,Science-Based Industrial Park,
+				Hsinchu Taiwan 308
+				TAIWAN, REPUBLIC OF CHINA
+
+00-50-C2	(hex)		PCM Industries
+966000-966FFF	(base 16)	PCM Industries
+				46 Shaggy Mt. Drive
+				Herriman Utah 84096
+				UNITED STATES
+
+00-50-C2	(hex)		Watthour Engineering Co., Inc.
+967000-967FFF	(base 16)	Watthour Engineering Co., Inc.
+				333 Crosspark Dr
+				Pearl MS 39208
+				UNITED STATES
+
+00-50-C2	(hex)		BuLogics, Inc.
+968000-968FFF	(base 16)	BuLogics, Inc.
+				6 Poplar St, Unit B
+				Conshohocken PA 19460
+				UNITED STATES
+
+00-50-C2	(hex)		Gehrke Kommunikationssysteme GmbH
+969000-969FFF	(base 16)	Gehrke Kommunikationssysteme GmbH
+				Seligenportenerstr. 30
+				Allersberg  90584
+				GERMANY
+
+00-50-C2	(hex)		Elektrobit Wireless Communications Ltd
+96A000-96AFFF	(base 16)	Elektrobit Wireless Communications Ltd
+				Tutkijantie 8
+				Oulu  FIN-90570
+				FINLAND
+
+00-50-C2	(hex)		Electronic Media Services Ltd
+96B000-96BFFF	(base 16)	Electronic Media Services Ltd
+				Passfield Business Centre
+				Lynchborough Road
+				Liphook Hampshire GU30 7SB
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Aqua Cooler Pty Ltd
+96C000-96CFFF	(base 16)	Aqua Cooler Pty Ltd
+				161 Orchard Rd
+				Chester Hill NSW 2162
+				AUSTRALIA
+
+00-50-C2	(hex)		Keene Electronics Ltd.
+96D000-96DFFF	(base 16)	Keene Electronics Ltd.
+				unit 9 old hall mills business park
+				little eaton
+				derby  de21 5dz
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Peek Traffic Corporation
+96E000-96EFFF	(base 16)	Peek Traffic Corporation
+				2511 Corporate Way
+				Palmetto Florida 34221
+				UNITED STATES
+
+00-50-C2	(hex)		Varec Inc.
+96F000-96FFFF	(base 16)	Varec Inc.
+				5834 Peachtree Corners East
+				Norcross GA 30092
+				UNITED STATES
+
+00-50-C2	(hex)		Tsuji Electronics Co.,Ltd
+970000-970FFF	(base 16)	Tsuji Electronics Co.,Ltd
+				3739 Kandatsu-machi
+				Tsuchiura-city Ibafaki Pref. 3000013
+				JAPAN
+
+00-50-C2	(hex)		Ipitek
+971000-971FFF	(base 16)	Ipitek
+				2330 Faraday Avenue
+				Carlsbad CA 92008
+				UNITED STATES
+
+00-50-C2	(hex)		Switch Science (Panini Keikaku)
+972000-972FFF	(base 16)	Switch Science (Panini Keikaku)
+				2-12-1 Kohjimachi, #805
+				Chiyoda-ku Tokyo 1020083
+				JAPAN
+
+00-50-C2	(hex)		Systèmes Pran
+973000-973FFF	(base 16)	Systèmes Pran
+				2245, Rue Léon Harmel
+				Québec  G1N4J6
+				CANADA
+
+00-50-C2	(hex)		EMAC, INC.
+974000-974FFF	(base 16)	EMAC, INC.
+				2390 EMAC WAY
+				PO BOX 2042
+				CARBONDALE IL 62902
+				UNITED STATES
+
+00-50-C2	(hex)		Pyramid Technical Consultants
+975000-975FFF	(base 16)	Pyramid Technical Consultants
+				1050 Waltham St
+				Suite 200
+				Lexington MA 02421
+				UNITED STATES
+
+00-50-C2	(hex)		SANDS INSTRUMENTATION INDIA PVT LTD
+976000-976FFF	(base 16)	SANDS INSTRUMENTATION INDIA PVT LTD
+				MF-7 CIPET HOSTEL ROAD, TVK INDUS ESTATE
+				EKKADUTHANGAL
+				CHENNAI TAMIL NADU 600097
+				INDIA
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+977000-977FFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		LOGITAL DIGITAL MEDIA srl
+978000-978FFF	(base 16)	LOGITAL DIGITAL MEDIA srl
+				via Palazzetti, 5
+				San Lazzaro di Savena Bologna 40068
+				ITALY
+
+00-50-C2	(hex)		Far South Networks (Pty) Ltd
+979000-979FFF	(base 16)	Far South Networks (Pty) Ltd
+				3 Milagro Lane
+				Noordhoek Western Cape 7975
+				SOUTH AFRICA
+
+00-50-C2	(hex)		KST Technology Co., Ltd
+97A000-97AFFF	(base 16)	KST Technology Co., Ltd
+				# 506, ACE TWIN TOWER I
+				212-1, KURO-DONG, KURO-KU
+				SEOUL 152-779
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		SMARTQUANTUM SA
+97B000-97BFFF	(base 16)	SMARTQUANTUM SA
+				4 rue Louis de Broglie
+				Lannion  22300
+				FRANCE
+
+00-50-C2	(hex)		Creacon Technologies B.V.
+97C000-97CFFF	(base 16)	Creacon Technologies B.V.
+				Cornelis Houtmanstraat 26
+				Emmen  7825 VG
+				NETHERLANDS
+
+00-50-C2	(hex)		Soehnle Professional GmbH & Co.KG
+97D000-97DFFF	(base 16)	Soehnle Professional GmbH & Co.KG
+				Manfred-von-Ardenne-Allee 12
+				Backnang  71522
+				GERMANY
+
+00-50-C2	(hex)		Long Distance Technologies
+97E000-97EFFF	(base 16)	Long Distance Technologies
+				PO Box 5
+				Welland SA 5007
+				AUSTRALIA
+
+00-50-C2	(hex)		C&I  Co.Ltd
+97F000-97FFFF	(base 16)	C&I  Co.Ltd
+				Shiba Daimon 2-1-15
+				Minatku Tokyo 105-0012
+				JAPAN
+
+00-50-C2	(hex)		Digital Payment Technologies
+980000-980FFF	(base 16)	Digital Payment Technologies
+				4105 Grandview Highway
+				Burnaby BC V5C 6B4
+				CANADA
+
+00-50-C2	(hex)		Novotronik GmbH
+981000-981FFF	(base 16)	Novotronik GmbH
+				Baeumenheimer Strasse 3
+				Mertingen Bavaria 86690
+				GERMANY
+
+00-50-C2	(hex)		Triple Ring Technologies, Inc.
+982000-982FFF	(base 16)	Triple Ring Technologies, Inc.
+				39655 Eureka Ave
+				Newark Ca 94560
+				UNITED STATES
+
+00-50-C2	(hex)		Bogart Engineering
+983000-983FFF	(base 16)	Bogart Engineering
+				19020 Two Bar Road
+				Boulder Creek CA 95006
+				UNITED STATES
+
+00-50-C2	(hex)		Atel Corporation
+984000-984FFF	(base 16)	Atel Corporation
+				2-18-10, NISHISHINGAI-CHO
+				FUKUYAMA-SHI HIROSHIMA 721-0958
+				JAPAN
+
+00-50-C2	(hex)		Earnestcom Sdn Bhd
+985000-985FFF	(base 16)	Earnestcom Sdn Bhd
+				57B, JLN PU 7/4, Bandar Puchong Utama,
+				47100 Selangor 
+				MALAYSIA
+
+00-50-C2	(hex)		DSCI
+986000-986FFF	(base 16)	DSCI
+				12249 Science Drive
+				Suite 135
+				Orlando FL 32826
+				UNITED STATES
+
+00-50-C2	(hex)		Joinsoon Electronics MFG. Co., Ltd
+987000-987FFF	(base 16)	Joinsoon Electronics MFG. Co., Ltd
+				19F., No. 79, Sec. 1, Sintai 5th Rd., Sijhih City
+				Taipei County Taiwan 221
+				TAIWAN, REPUBLIC OF CHINA
+
+00-50-C2	(hex)		Pantel International
+988000-988FFF	(base 16)	Pantel International
+				125 Joseph Zatzma Drive
+				Dartmouth Nova Scotia B3B1W1
+				CANADA
+
+00-50-C2	(hex)		Psigenics Corporation
+989000-989FFF	(base 16)	Psigenics Corporation
+				PO Box 2160
+				Gainesville FL 32602
+				UNITED STATES
+
+00-50-C2	(hex)		MEV Limited
+98A000-98AFFF	(base 16)	MEV Limited
+				Unit 8, Baxall Business Centre
+				Adswood Road
+				STOCKPORT Cheshire SK3 8LF
+				UNITED KINGDOM
+
+00-50-C2	(hex)		TI2000 TECNOLOGIA INFORMATICA 2000
+98B000-98BFFF	(base 16)	TI2000 TECNOLOGIA INFORMATICA 2000
+				CARDENAL HERRERA ORIA 165
+				MADRID  28034
+				SPAIN
+
+00-50-C2	(hex)		MGM-Devices Oy
+98C000-98CFFF	(base 16)	MGM-Devices Oy
+				Länsikatu 15
+				Joensuu Pohjois-Karjala 80110
+				FINLAND
+
+00-50-C2	(hex)		Mecos Traxler AG
+98D000-98DFFF	(base 16)	Mecos Traxler AG
+				Industriestrasse 26
+				Winterthur  8404
+				SWITZERLAND
+
+00-50-C2	(hex)		Link Technologies, Inc
+98E000-98EFFF	(base 16)	Link Technologies, Inc
+				6560 Satke Drive
+				House Springs MO 63051
+				UNITED STATES
+
+00-50-C2	(hex)		BELIK S.P.R.L.
+98F000-98FFFF	(base 16)	BELIK S.P.R.L.
+				Rue du Roussart 147
+				Waterloo Brabant 1410
+				BELGIUM
+
+00-50-C2	(hex)		Keith & Koep GmbH
+990000-990FFF	(base 16)	Keith & Koep GmbH
+				Uellendahler Str. 199
+				Wuppertal NRW 42109
+				GERMANY
+
+00-50-C2	(hex)		United Group Limited
+991000-991FFF	(base 16)	United Group Limited
+				Level 5, 40 Miller Street
+				North Sydney NSW 2060
+				AUSTRALIA
+
+00-50-C2	(hex)		IDT Sound Processing Corporation
+992000-992FFF	(base 16)	IDT Sound Processing Corporation
+				917 chemin Pierre Drevet
+				CALUIRE Rhone 69300
+				FRANCE
+
+00-50-C2	(hex)		UNETCONVERGENCE CO., LTD
+993000-993FFF	(base 16)	UNETCONVERGENCE CO., LTD
+				101-511 DIGITAL EMPIRE 2
+				486, SHIN-DONG, YOUNG TONG-GU
+				SUWON-SI KYUNGGI-DO, 443-390
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Xafax Nederland bv
+994000-994FFF	(base 16)	Xafax Nederland bv
+				Postbus 107
+				Alkmaar NH 1800AC
+				NETHERLANDS
+
+00-50-C2	(hex)		Inter Control Hermann Köhler Elektrik GmbH&Co.KG
+995000-995FFF	(base 16)	Inter Control Hermann Köhler Elektrik GmbH&Co.KG
+				Schafhofstraße 30
+				Nürnberg Bavaria 90411
+				GERMANY
+
+00-50-C2	(hex)		Commercial Timesharing Inc.
+996000-996FFF	(base 16)	Commercial Timesharing Inc.
+				2740 Cory Ave.
+				Akron OH 44314
+				UNITED STATES
+
+00-50-C2	(hex)		Depro Electronique
+997000-997FFF	(base 16)	Depro Electronique
+				755 Curé-Boivin
+				Boisbriand Quebec J7G2J2
+				CANADA
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+998000-998FFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straße 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Cambustion Ltd
+999000-999FFF	(base 16)	Cambustion Ltd
+				J6, The Paddocks
+				347 Cherry Hinton Road
+				Cambridge Cambridgeshire CB1 8DH
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Miromico AG
+99A000-99AFFF	(base 16)	Miromico AG
+				Sonneggstrasse 76
+				Zuerich ZH 8006
+				SWITZERLAND
+
+00-50-C2	(hex)		Bettini srl
+99B000-99BFFF	(base 16)	Bettini srl
+				Via Cesare Battisti 22
+				Cesano Maderno Milano I - 20031
+				ITALY
+
+00-50-C2	(hex)		CaTs3 Limited
+99C000-99CFFF	(base 16)	CaTs3 Limited
+				21 Lindisfarne Drive
+				Kenilworth Warwickshire CV8 2PQ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Powersense A/S
+99D000-99DFFF	(base 16)	Powersense A/S
+				Skovlytoften 33
+				Holte Rudersdal 2840
+				DENMARK
+
+00-50-C2	(hex)		Engage Technologies
+99E000-99EFFF	(base 16)	Engage Technologies
+				7041 Boone Avenue North
+				Brooklyn Park MN 55428
+				UNITED STATES
+
+00-50-C2	(hex)		Sietron Elektronik
+99F000-99FFFF	(base 16)	Sietron Elektronik
+				Mittere Feldstrasse 5
+				Freilassing  83395
+				GERMANY
+
+00-50-C2	(hex)		Trs Systems, Inc.
+9A0000-9A0FFF	(base 16)	Trs Systems, Inc.
+				601 Carlson Parkway, #1050
+				Minnetonka MN 55305
+				UNITED STATES
+
+00-50-C2	(hex)		ComAp s.r.o
+9A1000-9A1FFF	(base 16)	ComAp s.r.o
+				Kundratka 17
+				Prague  18000
+				CZECH REPUBLIC
+
+00-50-C2	(hex)		SAMsystems GmbH
+9A2000-9A2FFF	(base 16)	SAMsystems GmbH
+				Bannwaldallee 46
+				Karlsruhe  76139
+				GERMANY
+
+00-50-C2	(hex)		Computerwise, Inc.
+9A3000-9A3FFF	(base 16)	Computerwise, Inc.
+				302 N. Winchester
+				Olathe Ks 66062
+				UNITED STATES
+
+00-50-C2	(hex)		Entwicklung Hard- & Software
+9A4000-9A4FFF	(base 16)	Entwicklung Hard- & Software
+				Berlinerstr. 9
+				Schoenaich BW 71101
+				GERMANY
+
+00-50-C2	(hex)		Conolog Corporation
+9A5000-9A5FFF	(base 16)	Conolog Corporation
+				5 Columbia Road
+				Somerville NJ 08876
+				UNITED STATES
+
+00-50-C2	(hex)		Metodo2
+9A6000-9A6FFF	(base 16)	Metodo2
+				Via IV Novembre 11
+				Cologno Monzese MI 20093
+				ITALY
+
+00-50-C2	(hex)		Thales Communications France
+9A7000-9A7FFF	(base 16)	Thales Communications France
+				3-5 avenue Carnot
+				Massy  91300
+				FRANCE
+
+00-50-C2	(hex)		DOMIS SA
+9A8000-9A8FFF	(base 16)	DOMIS SA
+				10 AV jean Moulin
+				RUMILLY  74150
+				FRANCE
+
+00-50-C2	(hex)		General Dynamics C4 Systems
+9A9000-9A9FFF	(base 16)	General Dynamics C4 Systems
+				8220 East Roosevelt St.
+				MD: R1122
+				Scottsdale Arizona 85257
+				UNITED STATES
+
+00-50-C2	(hex)		TEKO TELECOM SpA
+9AA000-9AAFFF	(base 16)	TEKO TELECOM SpA
+				Via dell' Industria, 5
+				San Lazzaro di Savena Bologna 40068
+				ITALY
+
+00-50-C2	(hex)		Electrodata Inc.
+9AB000-9ABFFF	(base 16)	Electrodata Inc.
+				23020 Miles Road
+				Bedford Heights OHIO 44128
+				UNITED STATES
+
+00-50-C2	(hex)		Questek Australia Pty Ltd
+9AC000-9ACFFF	(base 16)	Questek Australia Pty Ltd
+				22 Brodie St
+				Rydalmere NSW 2116
+				AUSTRALIA
+
+00-50-C2	(hex)		Chronos Technology Ltd.
+9AD000-9ADFFF	(base 16)	Chronos Technology Ltd.
+				Stowfield House
+				Upper Stowfield
+				Lydbrook Gloucestershire GL17 9PD
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Esensors, Inc.
+9AE000-9AEFFF	(base 16)	Esensors, Inc.
+				4240 Ridge Lea Road - Ste. 37
+				Amherst NY 14226
+				UNITED STATES
+
+00-50-C2	(hex)		KRESS-NET Krzysztof Rutecki
+9AF000-9AFFFF	(base 16)	KRESS-NET Krzysztof Rutecki
+				Stawowa 8a
+				Gaszowice  44-293
+				POLAND
+
+00-50-C2	(hex)		Ebru GmbH
+9B0000-9B0FFF	(base 16)	Ebru GmbH
+				In den Kreuzwiesen
+				Schönau  69250
+				GERMANY
+
+00-50-C2	(hex)		Bon Hora GmbH
+9B1000-9B1FFF	(base 16)	Bon Hora GmbH
+				Steinbuehlstrasse 15b
+				Wetzlar Hessen 35578
+				GERMANY
+
+00-50-C2	(hex)		TempSys
+9B2000-9B2FFF	(base 16)	TempSys
+				160 Arlingtoin Ave
+				Kensington CA 94707
+				UNITED STATES
+
+00-50-C2	(hex)		Kahler Automation
+9B3000-9B3FFF	(base 16)	Kahler Automation
+				808 Timberlake Rd
+				Fairmont MN 56031
+				UNITED STATES
+
+00-50-C2	(hex)		EUKREA ELECTROMATIQUE SARL
+9B4000-9B4FFF	(base 16)	EUKREA ELECTROMATIQUE SARL
+				74 AVENUE JEAN JAURES
+				PESSAC GIRONDE 33600
+				FRANCE
+
+00-50-C2	(hex)		Telegamma srl
+9B5000-9B5FFF	(base 16)	Telegamma srl
+				Via Noalese, 63/B
+				Treviso TV 31100
+				ITALY
+
+00-50-C2	(hex)		ACTECH
+9B6000-9B6FFF	(base 16)	ACTECH
+				Parc d'activités Angers-Beaucouzé
+				4, rue Olivier de Serres
+				Beaucouzé  49070
+				FRANCE
+
+00-50-C2	(hex)		St. Michael Strategies
+9B7000-9B7FFF	(base 16)	St. Michael Strategies
+				701 Salaberry
+				Suite 201
+				Chambly Quebec J3L 1R2
+				CANADA
+
+00-50-C2	(hex)		Sound Player Systems e.K.
+9B8000-9B8FFF	(base 16)	Sound Player Systems e.K.
+				Max-Volmer-Strasse 27
+				Hilden NRW 40721
+				GERMANY
+
+00-50-C2	(hex)		ISA - Intelligent Sensing Anywhere, S.A.
+9B9000-9B9FFF	(base 16)	ISA - Intelligent Sensing Anywhere, S.A.
+				Estádio Cidade de Coimbra
+				Rua D. Manuel I, nº92
+				Coimbra  3030-320
+				PORTUGAL
+
+00-50-C2	(hex)		Connor-Winfield
+9BA000-9BAFFF	(base 16)	Connor-Winfield
+				2111 Comprehensive Dr
+				Aurora Illinois 60505
+				UNITED STATES
+
+00-50-C2	(hex)		OMICRON electronics GmbH
+9BB000-9BBFFF	(base 16)	OMICRON electronics GmbH
+				Oberes Ried 1
+				Klaus  6833
+				AUSTRIA
+
+00-50-C2	(hex)		Vester Elektronik GmbH
+9BC000-9BCFFF	(base 16)	Vester Elektronik GmbH
+				Otto-Hahn-Strasse 14
+				Straubenhardt Baden Württemberg 75334
+				GERMANY
+
+00-50-C2	(hex)		Sensitron Semiconductor
+9BD000-9BDFFF	(base 16)	Sensitron Semiconductor
+				221 West Industry Court
+				Deer Park New York 11729
+				UNITED STATES
+
+00-50-C2	(hex)		Xad Communications Ltd
+9BE000-9BEFFF	(base 16)	Xad Communications Ltd
+				Weir House
+				93 Whitby Road
+				Bristol UK BS4 4AR
+				UNITED KINGDOM
+
+00-50-C2	(hex)		2N TELEKOMUNIKACE a.s.
+9BF000-9BFFFF	(base 16)	2N TELEKOMUNIKACE a.s.
+				Modranska 621
+				Prague Czech Republic 143 01
+				CZECH REPUBLIC
+
+00-50-C2	(hex)		Stuyts Engineering Haarlem BV
+9C0000-9C0FFF	(base 16)	Stuyts Engineering Haarlem BV
+				Hogeweg 40
+				Zandvoort Noord-Holland 2042GH
+				NETHERLANDS
+
+00-50-C2	(hex)		Tattile srl
+9C1000-9C1FFF	(base 16)	Tattile srl
+				via Donizetti 1/3/5
+				Mairano BS 25030
+				ITALY
+
+00-50-C2	(hex)		Team Enginers
+9C2000-9C2FFF	(base 16)	Team Enginers
+				3-18-3, First floor Pragati Nagar
+				Ramanthapur,Hyderabad
+				Hyderabad Andrapradesh 500013
+				INDIA
+
+00-50-C2	(hex)		GE Security-Kampro
+9C3000-9C3FFF	(base 16)	GE Security-Kampro
+				2F, No.8, Lane97, Wugong Rd.,
+				Wu-Ku Ind.Park,
+				Hsin-Chuang City Taipei County 248
+				TAIWAN, REPUBLIC OF CHINA
+
+00-50-C2	(hex)		Vitel Net
+9C4000-9C4FFF	(base 16)	Vitel Net
+				8201 Greensboro Dr.
+				Ste 600
+				McLean VA 22102
+				UNITED STATES
+
+00-50-C2	(hex)		Scansonic MI GmbH
+9C5000-9C5FFF	(base 16)	Scansonic MI GmbH
+				Rudolf-Baschant-Straße 2
+				Berlin  13086
+				GERMANY
+
+00-50-C2	(hex)		Protronic GmbH
+9C6000-9C6FFF	(base 16)	Protronic GmbH
+				Am Schwarzwasser 2b
+				Bennewitz Sachsen 04828
+				GERMANY
+
+00-50-C2	(hex)		Kumera Drives Oy
+9C7000-9C7FFF	(base 16)	Kumera Drives Oy
+				Kumerankatu 2
+				Riihimäki Häme 11100
+				FINLAND
+
+00-50-C2	(hex)		ethermetrics
+9C8000-9C8FFF	(base 16)	ethermetrics
+				1223 peoples ave
+				Troy New York 12180
+				UNITED STATES
+
+00-50-C2	(hex)		LUMINEX Lighting Control Equipment
+9C9000-9C9FFF	(base 16)	LUMINEX Lighting Control Equipment
+				Berkenlaan 8 A
+				Hechtel - Eksel Limburg 3940
+				BELGIUM
+
+00-50-C2	(hex)		ESAB-ATAS GmbH
+9CA000-9CAFFF	(base 16)	ESAB-ATAS GmbH
+				Liebigstraße 16
+				Seligenstadt Hessen 63500
+				GERMANY
+
+00-50-C2	(hex)		NIS-time GmbH
+9CB000-9CBFFF	(base 16)	NIS-time GmbH
+				Valterweg 10
+				Bremthal  65817
+				GERMANY
+
+00-50-C2	(hex)		Hirotech, Inc
+9CC000-9CCFFF	(base 16)	Hirotech, Inc
+				Shinyokohama I.O Bldg. #602, 1-3-10, Shinyokohama, Kohoku-ku
+				Yokohama City Kanagawa 222-0033
+				JAPAN
+
+00-50-C2	(hex)		Uwe Schneider GmbH
+9CD000-9CDFFF	(base 16)	Uwe Schneider GmbH
+				Heegwaldring 12
+				Limeshain  63694
+				GERMANY
+
+00-50-C2	(hex)		Ronan Engineering
+9CE000-9CEFFF	(base 16)	Ronan Engineering
+				21200 Oxnard St.
+				Woodland Hills CA 91367
+				UNITED STATES
+
+00-50-C2	(hex)		Intuitive Surgical, Inc
+9CF000-9CFFFF	(base 16)	Intuitive Surgical, Inc
+				950 Kifer Road
+				Sunnyvale CA 94040
+				UNITED STATES
+
+00-50-C2	(hex)		J. DITTRICH ELEKTRONIC GmbH & Co. KG
+9D0000-9D0FFF	(base 16)	J. DITTRICH ELEKTRONIC GmbH & Co. KG
+				Bahnhofstraße 67
+				Baden-Baden / Haueneberstein Baden-Württemberg 76532
+				GERMANY
+
+00-50-C2	(hex)		Bladelius Design Group AB
+9D1000-9D1FFF	(base 16)	Bladelius Design Group AB
+				Kallakersvagen 10
+				Alingsas  44196
+				SWEDEN
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+9D2000-9D2FFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		Telemetrie Elektronik GmbH
+9D3000-9D3FFF	(base 16)	Telemetrie Elektronik GmbH
+				Berliner Allee 42
+				Langenhagen Niedersachsen 30855
+				GERMANY
+
+00-50-C2	(hex)		FIRST
+9D4000-9D4FFF	(base 16)	FIRST
+				200 Bedford Street
+				Manchester New Hampshire 03101
+				UNITED STATES
+
+00-50-C2	(hex)		Netpower Labs AB
+9D5000-9D5FFF	(base 16)	Netpower Labs AB
+				Stubbsundsv 17
+				Stockholm  13141
+				SWEDEN
+
+00-50-C2	(hex)		Innovation, Institute, Inc
+9D6000-9D6FFF	(base 16)	Innovation, Institute, Inc
+				P.O. Box 9359
+				Caguas Puerto Rico 00726-9359
+				PUERTO RICO
+
+00-50-C2	(hex)		Melex Inc.
+9D7000-9D7FFF	(base 16)	Melex Inc.
+				1417-27 Toke-cho Midori-ku
+				CHIBA 2670061
+				JAPAN
+
+00-50-C2	(hex)		SAMSUNG HEAVY INDUSTRIES CO.,LTD.
+9D8000-9D8FFF	(base 16)	SAMSUNG HEAVY INDUSTRIES CO.,LTD.
+				Institute of industrial Technology
+				103-28, Munji-dong, Yuseong-gu
+				Daejeon  305-380
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		CNS Systems, Inc.
+9D9000-9D9FFF	(base 16)	CNS Systems, Inc.
+				363 Hawick Court
+				Severna Park Maryland 21146
+				UNITED STATES
+
+00-50-C2	(hex)		NEUTRONIK e.K.
+9DA000-9DAFFF	(base 16)	NEUTRONIK e.K.
+				Taitinger Str. 14
+				Dasing Bayern 86453
+				GERMANY
+
+00-50-C2	(hex)		Walter Grotkasten
+9DB000-9DBFFF	(base 16)	Walter Grotkasten
+				Grabäckerstr. 14
+				Schorndorf BW 73614
+				GERMANY
+
+00-50-C2	(hex)		FTM Marketing Limited
+9DC000-9DCFFF	(base 16)	FTM Marketing Limited
+				Unit 26 Enterprise Estate
+				Moorfield Road
+				Guildford Surrey GU1 1RB
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Institut Dr. Foerster
+9DD000-9DDFFF	(base 16)	Institut Dr. Foerster
+				In Laisen 70
+				Reutlingen  72766
+				GERMANY
+
+00-50-C2	(hex)		CHAUVIN ARNOUX
+9DE000-9DEFFF	(base 16)	CHAUVIN ARNOUX
+				LA QUEUE DEVEE
+				REUX  14130
+				FRANCE
+
+00-50-C2	(hex)		CODEC Co., Ltd.
+9DF000-9DFFFF	(base 16)	CODEC Co., Ltd.
+				1021-1 Kuriki Asao-ward
+				Kawasaki Kanagawa 215-0033
+				JAPAN
+
+00-50-C2	(hex)		DST Swiss AG
+9E0000-9E0FFF	(base 16)	DST Swiss AG
+				Schuebelbachstrasse 3
+				Eglisau ZH 8193
+				SWITZERLAND
+
+00-50-C2	(hex)		Enreduce Energy Control AB
+9E1000-9E1FFF	(base 16)	Enreduce Energy Control AB
+				Box 459
+				751 06
+				UPPSALA  751 06
+				SWEDEN
+
+00-50-C2	(hex)		E-ViEWS SAFETY SYSTEMS, INC
+9E2000-9E2FFF	(base 16)	E-ViEWS SAFETY SYSTEMS, INC
+				5331 DERRY AVE
+				SUITE J
+				AGOURA HILLS CA 91301
+				UNITED STATES
+
+00-50-C2	(hex)		beON Automatenmanagement GmbH
+9E3000-9E3FFF	(base 16)	beON Automatenmanagement GmbH
+				Hackhofergasse 1
+				Vienna  1190
+				AUSTRIA
+
+00-50-C2	(hex)		Pyxis Controls WLL
+9E4000-9E4FFF	(base 16)	Pyxis Controls WLL
+				Kingdom Tower
+				Manama Bahrain 0000
+				BAHRAIN
+
+00-50-C2	(hex)		Halliburton Far East Pte Ltd
+9E5000-9E5FFF	(base 16)	Halliburton Far East Pte Ltd
+				315 Jalan Ahmad Ibrahim
+				639940
+				SINGAPORE
+
+00-50-C2	(hex)		Kumho Electric, Inc.
+9E6000-9E6FFF	(base 16)	Kumho Electric, Inc.
+				211-1, Jangji-Ri, Dongtan-myun,
+				Hwasung City Kyonggi-Do 445-812
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		DORLET S.A.
+9E7000-9E7FFF	(base 16)	DORLET S.A.
+				Albert Einstein 34
+				Miñano Mayor
+				Vitoria-gasteiz Alava 01510
+				SPAIN
+
+00-50-C2	(hex)		Hammock Corporation
+9E8000-9E8FFF	(base 16)	Hammock Corporation
+				7-8-F 30SANKYO-Building
+				1-30-4 TAKADANOBABA
+				SHINJUKU-WARD TOKYO 169-0075
+				JAPAN
+
+00-50-C2	(hex)		Ciemme Sistemi Spa
+9E9000-9E9FFF	(base 16)	Ciemme Sistemi Spa
+				Viale Ariosto, 492/A
+				Sesto Fiorentino (FIRENZE) 50019
+				ITALY
+
+00-50-C2	(hex)		SISMODULAR - Engenharia, Lda
+9EA000-9EAFFF	(base 16)	SISMODULAR - Engenharia, Lda
+				Lrg. S. Paulo Nº13, 1º - E2
+				Braga  4700-042
+				PORTUGAL
+
+00-50-C2	(hex)		AFORE Solutions Inc.
+9EB000-9EBFFF	(base 16)	AFORE Solutions Inc.
+				2680 Queensview Drive
+				Suite 150
+				Ottawa Ontario K2B 8J9
+				CANADA
+
+00-50-C2	(hex)		TOPEX SA
+9EC000-9ECFFF	(base 16)	TOPEX SA
+				10 FELEACULUI STREET
+				BUCHAREST  014186
+				ROMANIA
+
+00-50-C2	(hex)		Picell B.V.
+9ED000-9EDFFF	(base 16)	Picell B.V.
+				Liede 35
+				Rotterdam  3068GP
+				NETHERLANDS
+
+00-50-C2	(hex)		Michael Stevens & Partners Ltd
+9EE000-9EEFFF	(base 16)	Michael Stevens & Partners Ltd
+				Invicta Works
+				Elliott Road
+				Bromley Kent BR2 9NT
+				UNITED KINGDOM
+
+00-50-C2	(hex)		WoKa-Elektronik GmbH
+9EF000-9EFFFF	(base 16)	WoKa-Elektronik GmbH
+				Zeller-Str.7
+				Romrod Hessen 36329
+				GERMANY
+
+00-50-C2	(hex)		Veracity UK Ltd
+9F0000-9F0FFF	(base 16)	Veracity UK Ltd
+				6 Barns Street
+				Ayr South Ayrshire KA7 1XA
+				UNITED KINGDOM
+
+00-50-C2	(hex)		IDEAS s.r.l.
+9F1000-9F1FFF	(base 16)	IDEAS s.r.l.
+				Via XXV Aprile 9/A
+				Cassina de pecchi Milan 20060
+				ITALY
+
+00-50-C2	(hex)		Keith & Koep GmbH
+9F2000-9F2FFF	(base 16)	Keith & Koep GmbH
+				Uellendahler Str. 199
+				Wuppertal NRW 42109
+				GERMANY
+
+00-50-C2	(hex)		Vision Technologies, Inc.
+9F3000-9F3FFF	(base 16)	Vision Technologies, Inc.
+				609 W Dyke Rd
+				Rogers AR 72756
+				UNITED STATES
+
+00-50-C2	(hex)		FSR Inc.
+9F4000-9F4FFF	(base 16)	FSR Inc.
+				244 Bergen Blvd
+				West Paterson NJ 07424
+				UNITED STATES
+
+00-50-C2	(hex)		Commex Technologies
+9F5000-9F5FFF	(base 16)	Commex Technologies
+				4 Hanechoshet St.
+				Tel Aviv  69719
+				ISRAEL
+
+00-50-C2	(hex)		Ion Sense Inc.
+9F6000-9F6FFF	(base 16)	Ion Sense Inc.
+				999 Broadway
+				Suite 404
+				Saugus MA 01906
+				UNITED STATES
+
+00-50-C2	(hex)		Dave Jones Design
+9F7000-9F7FFF	(base 16)	Dave Jones Design
+				34 Lake St.
+				Owego NY 13827
+				UNITED STATES
+
+00-50-C2	(hex)		Austco Communication Systems Pty Ltd
+9F8000-9F8FFF	(base 16)	Austco Communication Systems Pty Ltd
+				40 O'Malley Street
+				Osborne Park Western Australia 6017
+				AUSTRALIA
+
+00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+9F9000-9F9FFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+				ABB Industrial Park, Torch Hi-Tech Development Zone.Xiamen.China
+				Xiao Dong Shan, Xiamen
+				Xiamen Fujian 361006
+				CHINA
+
+00-50-C2	(hex)		Teranex A Division of Silicon Optix
+9FA000-9FAFFF	(base 16)	Teranex A Division of Silicon Optix
+				12600 Challenger Parkway
+				Suite 100
+				Orlando FL 32826-2700
+				UNITED STATES
+
+00-50-C2	(hex)		Villbau Kft.
+9FB000-9FBFFF	(base 16)	Villbau Kft.
+				Üllöi út 611.
+				BUdapest  H-1182
+				HUNGARY
+
+00-50-C2	(hex)		ECTEC INC.
+9FC000-9FCFFF	(base 16)	ECTEC INC.
+				632 Rancho Vista Blvd
+				Suite A
+				Palmdale California 93550
+				UNITED STATES
+
+00-50-C2	(hex)		Bitt technology-A Ltd.
+9FD000-9FDFFF	(base 16)	Bitt technology-A Ltd.
+				Wiener Strasse 70
+				Spillern Lower Austria 2104
+				AUSTRIA
+
+00-50-C2	(hex)		SPECTRA EMBEDDED SYSTEMS
+9FE000-9FEFFF	(base 16)	SPECTRA EMBEDDED SYSTEMS
+				Khasra No. 24, Village Ghumman,1st Floor, Chawla Mansion,
+				B/h. Sant Vihar, Uncha Parwanoo,Sector-1,
+				Parwanoo Himachal Pradesh 173 220
+				INDIA
+
+00-50-C2	(hex)		Humphrey Products
+9FF000-9FFFFF	(base 16)	Humphrey Products
+				5070 East 'N' Ave
+				Kalamazoo MI 49048
+				UNITED STATES
+
+00-50-C2	(hex)		Technovare Systems
+A00000-A00FFF	(base 16)	Technovare Systems
+				1675 Scenic Ave. Suite 200
+				Costa Mesa CA 92626
+				UNITED STATES
+
+00-50-C2	(hex)		Patronics International LTD
+A01000-A01FFF	(base 16)	Patronics International LTD
+				Eurotech House
+				Burrington Way
+				Plymouth Devon PL5 3LZ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Reference, LLC.
+A02000-A02FFF	(base 16)	Reference, LLC.
+				690 E Bridge St.
+				P.O. Box 158
+				Elkader IA 52043-0158
+				UNITED STATES
+
+00-50-C2	(hex)		EEG Enterprises Inc
+A03000-A03FFF	(base 16)	EEG Enterprises Inc
+				586 Main Street
+				Farmingdale NY 11735
+				UNITED STATES
+
+00-50-C2	(hex)		TP Radio
+A04000-A04FFF	(base 16)	TP Radio
+				Agenavej 37
+				Greve . 2670
+				DENMARK
+
+00-50-C2	(hex)		Adgil Design Inc.
+A05000-A05FFF	(base 16)	Adgil Design Inc.
+				12915 Brault
+				Mirabel Quebec J7J 1P3
+				CANADA
+
+00-50-C2	(hex)		Cloos Schweisstechnik GmbH
+A06000-A06FFF	(base 16)	Cloos Schweisstechnik GmbH
+				Industriestraße 34-36
+				Haiger Hessen 35708
+				GERMANY
+
+00-50-C2	(hex)		Dynon Instruments
+A07000-A07FFF	(base 16)	Dynon Instruments
+				19825 141st PL NE
+				Woodinville WA 98072
+				UNITED STATES
+
+00-50-C2	(hex)		LabJack Corporation
+A08000-A08FFF	(base 16)	LabJack Corporation
+				3232 S Vance St STE 100
+				Lakewood CO 80227
+				UNITED STATES
+
+00-50-C2	(hex)		Innovative American Technology
+A09000-A09FFF	(base 16)	Innovative American Technology
+				4800 Lyons Technology Pkwy, Ste 3
+				Coconut Creek FL 33073
+				UNITED STATES
+
+00-50-C2	(hex)		ACD Elektronik Gmbh
+A0A000-A0AFFF	(base 16)	ACD Elektronik Gmbh
+				Engelberg 2
+				Achstetten  88480
+				GERMANY
+
+00-50-C2	(hex)		I.D.S. Ingegneria Dei Sistemi  S.p.A.
+A0B000-A0BFFF	(base 16)	I.D.S. Ingegneria Dei Sistemi  S.p.A.
+				via Sterpulino, 20
+				PISA PI 56121
+				ITALY
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+A0C000-A0CFFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straße 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		CHARLYROBOT
+A0D000-A0DFFF	(base 16)	CHARLYROBOT
+				192, route de l'usine
+				BP 22
+				CRUSEILLES HAUTE-SAVOIE 74350
+				FRANCE
+
+00-50-C2	(hex)		Engicam srl
+A0E000-A0EFFF	(base 16)	Engicam srl
+				Via dei pratoni, 16 int. 13
+				Scandicci Firenze 50018
+				ITALY
+
+00-50-C2	(hex)		Visualware Inc
+A0F000-A0FFFF	(base 16)	Visualware Inc
+				PO Box 668
+				937 Sierra Drive
+				Turlock California 95381
+				UNITED STATES
+
+00-50-C2	(hex)		Essential Design & Integration P/L
+A10000-A10FFF	(base 16)	Essential Design & Integration P/L
+				PO Box 3110
+				Narellan DC NSW 2567
+				AUSTRALIA
+
+00-50-C2	(hex)		OJSC Rawenstvo
+A11000-A11FFF	(base 16)	OJSC Rawenstvo
+				19, Promyshlennaya str,
+				Saint-Petersburg  198099
+				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		HCE Engineering S.r.l.
+A12000-A12FFF	(base 16)	HCE Engineering S.r.l.
+				Via Lamarmora 2L
+				Livorno LI 57122
+				ITALY
+
+00-50-C2	(hex)		Talyst, Inc.
+A13000-A13FFF	(base 16)	Talyst, Inc.
+				13555 SE 36th Avenue
+				Suite 150
+				Bellevue WA 98006
+				UNITED STATES
+
+00-50-C2	(hex)		Elbit Systems of America - Tallahassee Operations
+A14000-A14FFF	(base 16)	Elbit Systems of America - Tallahassee Operations
+				1721 W. Paul Dirac Drive
+				Tallahassee Florida 32310
+				UNITED STATES
+
+00-50-C2	(hex)		Industrial Computing Ltd
+A15000-A15FFF	(base 16)	Industrial Computing Ltd
+				Elmcroft
+				Wyke Road
+				Gillingham Dorset SP8 4NG
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Baudisch Electronic GmbH
+A16000-A16FFF	(base 16)	Baudisch Electronic GmbH
+				Im Gewerbegebiet 7-9
+				Wäschenbeuren Baden Württemberg 73116
+				GERMANY
+
+00-50-C2	(hex)		Winners Satellite Electronics Corp.
+A17000-A17FFF	(base 16)	Winners Satellite Electronics Corp.
+				3F, NO. 4, LANE 263, CHUNG YANG RD., TAIPEI 115, TAIWAN
+				TAIPEI  115
+				TAIWAN, REPUBLIC OF CHINA
+
+00-50-C2	(hex)		Eoslink
+A18000-A18FFF	(base 16)	Eoslink
+				#602, 900-1
+				Gwanyang-Dong, Dongan-Gu
+				Anyang-City Kyonggi-Do 431-060
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Icon Time Systems
+A19000-A19FFF	(base 16)	Icon Time Systems
+				15201 NW Greenbrier Parkway #A1
+				Beaverton OR 97006
+				UNITED STATES
+
+00-50-C2	(hex)		DDL
+A1A000-A1AFFF	(base 16)	DDL
+				SANSEN MINAMI 7-JYO BLDG.
+				2-26, MINAMI 7-JYO NISHI 14-
+				SAPPORO HOKKAIDO 064-0807
+				JAPAN
+
+00-50-C2	(hex)		Realtime Systems Ltd.
+A1B000-A1BFFF	(base 16)	Realtime Systems Ltd.
+				A-49, Okhla Industrial Area
+				Okhla Phase-1
+				New Delhi  110020
+				INDIA
+
+00-50-C2	(hex)		Microtechnica
+A1C000-A1CFFF	(base 16)	Microtechnica
+				1-3-10-501 Tamagawa
+				Setagayaku Tokyo 1580094
+				JAPAN
+
+00-50-C2	(hex)		SAMH Engineering Services
+A1D000-A1DFFF	(base 16)	SAMH Engineering Services
+				1 Leopardstown Drive
+				Blackrock
+				Dublin  Co.
+				IRELAND
+
+00-50-C2	(hex)		MAMAC Systems, Inc.
+A1E000-A1EFFF	(base 16)	MAMAC Systems, Inc.
+				8189 Century Blvd.
+				Chanhassen Minnesota 55317-8002
+				UNITED STATES
+
+00-50-C2	(hex)		Flight Data Systems Pty Ltd
+A1F000-A1FFFF	(base 16)	Flight Data Systems Pty Ltd
+				31 Mc Gregors Drive
+				Keilor Park Victoria 3042
+				AUSTRALIA
+
+00-50-C2	(hex)		Quorum Technologies Ltd
+A20000-A20FFF	(base 16)	Quorum Technologies Ltd
+				South Stour Avenue
+				Ashford Kent TN23 7RS
+				UNITED KINGDOM
+
+00-50-C2	(hex)		ISAC SRL
+A21000-A21FFF	(base 16)	ISAC SRL
+				via Maestri del Lavoro 30
+				CASCINA PISA 56021
+				ITALY
+
+00-50-C2	(hex)		Nippon Manufacturing Service Corporation (abbreviated as 'nms')
+A22000-A22FFF	(base 16)	Nippon Manufacturing Service Corporation (abbreviated as 'nms')
+				Tokyo Opera City Tower 11F
+				3-20-2 Nishi-shinjuku
+				Shinjuku-ku Tokyo 163-1411
+				JAPAN
+
+00-50-C2	(hex)		Agility Mfg, Inc.
+A23000-A23FFF	(base 16)	Agility Mfg, Inc.
+				279 Locust Street
+				Dover NH 03820
+				UNITED STATES
+
+00-50-C2	(hex)		GRUPO EPELSA s.l.
+A24000-A24FFF	(base 16)	GRUPO EPELSA s.l.
+				C/ ALBASANZ 6 AND 8
+				Madrid  28037
+				SPAIN
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+A25000-A25FFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		Preferred Oil, LLC
+A26000-A26FFF	(base 16)	Preferred Oil, LLC
+				1819 Moen Ave
+				Joliet IL 60436
+				UNITED STATES
+
+00-50-C2	(hex)		meconet e. K.
+A27000-A27FFF	(base 16)	meconet e. K.
+				Bottenbacher Str. 78
+				Kreuztal NRW 57223
+				GERMANY
+
+00-50-C2	(hex)		KENDA ELECTRONIC SYSTEMS LIMITED
+A28000-A28FFF	(base 16)	KENDA ELECTRONIC SYSTEMS LIMITED
+				NUTSEY LANE
+				TOTTON
+				SOUTHAMPTON HAMPSHIRE SO40 3NB
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Luminex Corporation
+A29000-A29FFF	(base 16)	Luminex Corporation
+				12212 Technology Blvd.
+				Austin Texas 78727
+				UNITED STATES
+
+00-50-C2	(hex)		Custom Control Concepts
+A2A000-A2AFFF	(base 16)	Custom Control Concepts
+				6020 S 190th St
+				Kent WA 98032
+				UNITED STATES
+
+00-50-C2	(hex)		APRILIA RACING S.R.L.
+A2B000-A2BFFF	(base 16)	APRILIA RACING S.R.L.
+				VIA MARCONI, 9
+				REPARTO CORSE APRILIA
+				NOALE VENEZIA 30033
+				ITALY
+
+00-50-C2	(hex)		KWS-Electronic GmbH
+A2C000-A2CFFF	(base 16)	KWS-Electronic GmbH
+				Sportplatzstrasse 1
+				Grosskarolinenfeld  D-83109
+				GERMANY
+
+00-50-C2	(hex)		Inventure Inc.
+A2D000-A2DFFF	(base 16)	Inventure Inc.
+				3-1-1, Shin-yokohama, Kouhoku-ku
+				Yokohama Kanagawa-ken 222-8505
+				JAPAN
+
+00-50-C2	(hex)		Yuyama Mfg. Co., Ltd.
+A2E000-A2EFFF	(base 16)	Yuyama Mfg. Co., Ltd.
+				3-3-1 Meishinguchi
+				Toyonaka Osaka 561-0841
+				JAPAN
+
+00-50-C2	(hex)		DragonFly Scientific LLC
+A2F000-A2FFFF	(base 16)	DragonFly Scientific LLC
+				RR2 Box 467A
+				Harveys Lake PA 18618
+				UNITED STATES
+
+00-50-C2	(hex)		D-TA Systems
+A30000-A30FFF	(base 16)	D-TA Systems
+				2500 Lancaster Road
+				Ottawa ON K1B 4S5
+				CANADA
+
+00-50-C2	(hex)		Coolit Systems, Inc.
+A31000-A31FFF	(base 16)	Coolit Systems, Inc.
+				3920 - 29th St. N.E.
+				Calgary AB T1Y6B6
+				CANADA
+
+00-50-C2	(hex)		Harris Designs of NRV, Inc.
+A32000-A32FFF	(base 16)	Harris Designs of NRV, Inc.
+				4034 Pepperell Way
+				Dublin VA 24084
+				UNITED STATES
+
+00-50-C2	(hex)		Fuji Firmware
+A33000-A33FFF	(base 16)	Fuji Firmware
+				535-211 Nakayamacyou-Nishi
+				4-Cyoume
+				Nara-City Nara-Prefecture 6310013
+				JAPAN
+
+00-50-C2	(hex)		Casabyte Inc.
+A34000-A34FFF	(base 16)	Casabyte Inc.
+				200 Country Club Drive
+				Blacksburg VA 24060
+				UNITED STATES
+
+00-50-C2	(hex)		Appareo Systems, LLC
+A35000-A35FFF	(base 16)	Appareo Systems, LLC
+				1854 NDSU Research Circle North
+				Fargo ND 58102
+				UNITED STATES
+
+00-50-C2	(hex)		Shenzhen Shangji electronic Co.Ltd
+A36000-A36FFF	(base 16)	Shenzhen Shangji electronic Co.Ltd
+				Room 2017, Tianan Digital Era Building, Futian District,
+				Shenzhen Guangdong 518048
+				CHINA
+
+00-50-C2	(hex)		Software Systems Plus
+A37000-A37FFF	(base 16)	Software Systems Plus
+				9924 N. Ash Avenue
+				Kansas City Missouri 64157
+				UNITED STATES
+
+00-50-C2	(hex)		Tred Displays
+A38000-A38FFF	(base 16)	Tred Displays
+				5201 Eagle Rock Rd NE
+				Suite 2B
+				Albuquerque NM 87113
+				UNITED STATES
+
+00-50-C2	(hex)		Industrial Data Products Ltd
+A39000-A39FFF	(base 16)	Industrial Data Products Ltd
+				The Studio
+				Oldbury Business Centre
+				Cwmbran Gwent NP44 3JU
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Telecor Inc.
+A3A000-A3AFFF	(base 16)	Telecor Inc.
+				1114 Westport Crescent
+				Mississauga Ontario L5T 1G1
+				CANADA
+
+00-50-C2	(hex)		IPcontrols GmbH
+A3B000-A3BFFF	(base 16)	IPcontrols GmbH
+				Neue Kasseler Str. 50
+				Marburg  35039
+				GERMANY
+
+00-50-C2	(hex)		BRÄHLER ICS Konferenztechnik AG
+A3C000-A3CFFF	(base 16)	BRÄHLER ICS Konferenztechnik AG
+				Auf der Alten Burg 6
+				Koenigswinter NRW 53639
+				GERMANY
+
+00-50-C2	(hex)		OWANDY
+A3D000-A3DFFF	(base 16)	OWANDY
+				6 Allée Kepler
+				Champs sur Marne  77420
+				FRANCE
+
+00-50-C2	(hex)		DUEVI SNC DI MORA E SANTESE
+A3E000-A3EFFF	(base 16)	DUEVI SNC DI MORA E SANTESE
+				Via Gioberti 7
+				Piossasco Torino 10045
+				ITALY
+
+00-50-C2	(hex)		LHA Systems CC
+A3F000-A3FFFF	(base 16)	LHA Systems CC
+				1 Innovation Centre 2
+				Technopark
+				Stellenbosch Western Cape 7600
+				SOUTH AFRICA
+
+00-50-C2	(hex)		Mosberger Consulting LLC
+A40000-A40FFF	(base 16)	Mosberger Consulting LLC
+				1935 Stony Hill Rd
+				Boulder CO 80305
+				UNITED STATES
+
+00-50-C2	(hex)		Meiryo Denshi Corp.
+A41000-A41FFF	(base 16)	Meiryo Denshi Corp.
+				38-23 higashi maeda
+				Asada cho
+				Nishin City Aichi 470-0124
+				JAPAN
+
+00-50-C2	(hex)		RealVision Inc.
+A42000-A42FFF	(base 16)	RealVision Inc.
+				3-1-4 Shin-Yokohama, Kouhoku-Ku
+				Yokohama Kanagawa 222-0033
+				JAPAN
+
+00-50-C2	(hex)		NKS Co.Ltd.
+A43000-A43FFF	(base 16)	NKS Co.Ltd.
+				Yodogawa-ku Niitaka
+				1-8-17
+				Osaka  532-0033
+				JAPAN
+
+00-50-C2	(hex)		TORC Technologies
+A44000-A44FFF	(base 16)	TORC Technologies
+				2200 Kraft Dr, Ste 1325
+				Blacksburg VA 24060
+				UNITED STATES
+
+00-50-C2	(hex)		Sofradir-EC
+A45000-A45FFF	(base 16)	Sofradir-EC
+				373 Route 46 West
+				Fairfield NJ 07004
+				UNITED STATES
+
+00-50-C2	(hex)		Softronics Ltd.
+A46000-A46FFF	(base 16)	Softronics Ltd.
+				6920 Bowman Lane NE
+				Cedar Rapids IA 52402
+				UNITED STATES
+
+00-50-C2	(hex)		PRIMETECH ENGINEERING CORP.
+A47000-A47FFF	(base 16)	PRIMETECH ENGINEERING CORP.
+				1-21-15,Kitakoujiya,
+				Ota-ku Tokyo 144-0032
+				JAPAN
+
+00-50-C2	(hex)		Thales Optronics Limited
+A48000-A48FFF	(base 16)	Thales Optronics Limited
+				1 Linthouse Road
+				Glasgow  G51 4BZ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Wayne Dalton Corp.
+A49000-A49FFF	(base 16)	Wayne Dalton Corp.
+				3395 addison Dr.
+				Pensacola FL 32514
+				UNITED STATES
+
+00-50-C2	(hex)		DITRON S.r.l.
+A4A000-A4AFFF	(base 16)	DITRON S.r.l.
+				Via Antiniana, 115
+				Pozzuoli Napoli 80078
+				ITALY
+
+00-50-C2	(hex)		L-3 Communications Mobile-Vision, Inc.
+A4B000-A4BFFF	(base 16)	L-3 Communications Mobile-Vision, Inc.
+				90 Fanny Rd.
+				Boonton NJ 07005
+				UNITED STATES
+
+00-50-C2	(hex)		VasoNova, Inc.
+A4C000-A4CFFF	(base 16)	VasoNova, Inc.
+				1368 Bordeaux Drive
+				Sunnyvale CA 94089
+				UNITED STATES
+
+00-50-C2	(hex)		LevelStar LLC.
+A4D000-A4DFFF	(base 16)	LevelStar LLC.
+				685 S. Arthur Ave.
+				Louisville CO 80027
+				UNITED STATES
+
+00-50-C2	(hex)		Conduant Corporation
+A4E000-A4EFFF	(base 16)	Conduant Corporation
+				1501 S. Sunset St.
+				Suite C
+				Longmont CO 80501
+				UNITED STATES
+
+00-50-C2	(hex)		Deuta GmbH
+A4F000-A4FFFF	(base 16)	Deuta GmbH
+				Paffrather Str. 140
+				Bergisch Gladbach Northrhine Westfalia 51465
+				GERMANY
+
+00-50-C2	(hex)		i-RED Infrarot Systeme GmbH
+A50000-A50FFF	(base 16)	i-RED Infrarot Systeme GmbH
+				Hafenstr. 47-51
+				Linz Upper Austria 4020
+				AUSTRIA
+
+00-50-C2	(hex)		Y-products co.ltd.
+A51000-A51FFF	(base 16)	Y-products co.ltd.
+				Yamato-higashi1-11-24
+				Yamato-city Kanagawa-pref 242-0017
+				JAPAN
+
+00-50-C2	(hex)		The VON Corporation
+A52000-A52FFF	(base 16)	The VON Corporation
+				1038 Lomb Ave. SW
+				Birmingham AL 35211
+				UNITED STATES
+
+00-50-C2	(hex)		Quality & Design
+A53000-A53FFF	(base 16)	Quality & Design
+				Bergweg 32
+				Rhenen  3911 VB
+				NETHERLANDS
+
+00-50-C2	(hex)		Diamond Point International (Europe) Ltd
+A54000-A54FFF	(base 16)	Diamond Point International (Europe) Ltd
+				13 Ashford House, Beaufort Court
+				Sir Thomas Longley Road
+				Rochester Kent ME2 4FA
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Arrowvale Electronics
+A55000-A55FFF	(base 16)	Arrowvale Electronics
+				Shawbank Road
+				Lakeside
+				Redditch Worcestershire B98 8YN
+				UNITED KINGDOM
+
+00-50-C2	(hex)		ReaMetrix, Inc.
+A56000-A56FFF	(base 16)	ReaMetrix, Inc.
+				1585 Industrial Road
+				San Carlos CA 94070
+				UNITED STATES
+
+00-50-C2	(hex)		Juice Technologies, LLC
+A57000-A57FFF	(base 16)	Juice Technologies, LLC
+				930 Kinnear Rd
+				Columbus OH 43212
+				UNITED STATES
+
+00-50-C2	(hex)		EPL
+A58000-A58FFF	(base 16)	EPL
+				4 IMPASSE DES SAULES
+				ZA DE LA PITANCERIE
+				FAREMOUTIERS SEINE ET MARNE 77515
+				FRANCE
+
+00-50-C2	(hex)		GSP Sprachtechnologie GmbH
+A59000-A59FFF	(base 16)	GSP Sprachtechnologie GmbH
+				Teltowkanalstr. 1
+				Berlin 12247
+				GERMANY
+
+00-50-C2	(hex)		ITAS A/S
+A5A000-A5AFFF	(base 16)	ITAS A/S
+				Klosterport 4A
+				Århus C  DK-8000
+				DENMARK
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+A5B000-A5BFFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straße 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		JSC "Component-ASU"
+A5C000-A5CFFF	(base 16)	JSC "Component-ASU"
+				Severnyi proezd 1, k.5/6
+				Chernogolovka Moscow Region 142432
+				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		MECC CO., LTD.
+A5D000-A5DFFF	(base 16)	MECC CO., LTD.
+				196-1 FUKUDO
+				OGORI-SHI FUKUOKA 838-0137
+				JAPAN
+
+00-50-C2	(hex)		Ansen Investment Holdings Ltd.
+A5E000-A5EFFF	(base 16)	Ansen Investment Holdings Ltd.
+				Room 78, 2/F, Sino Industrial Plaza,
+				9 Kai Cheung Road,
+				Kowloon Bay 
+				HONG KONG
+
+00-50-C2	(hex)		Mitec Telecom Inc
+A5F000-A5FFFF	(base 16)	Mitec Telecom Inc
+				3299 J.B Deschamps
+				Lachine QC H8T 3E4
+				CANADA
+
+00-50-C2	(hex)		Arrow Central Europe GmbH - Division Spoerle
+A60000-A60FFF	(base 16)	Arrow Central Europe GmbH - Division Spoerle
+				Max-Planck-Str. 1-3
+				Dreieich  D-63303
+				GERMANY
+
+00-50-C2	(hex)		Fr. Sauter AG
+A61000-A61FFF	(base 16)	Fr. Sauter AG
+				Im Surinam 55
+				Basel  CH4016
+				SWITZERLAND
+
+00-50-C2	(hex)		Grossenbacher Systeme AG
+A62000-A62FFF	(base 16)	Grossenbacher Systeme AG
+				Spinnereistrasse 10
+				St. Gallen  9008
+				SWITZERLAND
+
+00-50-C2	(hex)		EMS Industries
+A63000-A63FFF	(base 16)	EMS Industries
+				PO Box 38822
+				Faerie Glen
+				Pretoria Gauteng 0043
+				SOUTH AFRICA
+
+00-50-C2	(hex)		tetronik GmbH AEN
+A64000-A64FFF	(base 16)	tetronik GmbH AEN
+				Silberbachstr.10
+				Taunusstein Hessen 65232
+				GERMANY
+
+00-50-C2	(hex)		Mark-O-Print GmbH
+A65000-A65FFF	(base 16)	Mark-O-Print GmbH
+				Reepschlaeger Strasse 11a
+				Luebeck Schleswig-Holstein 23556
+				GERMANY
+
+00-50-C2	(hex)		DVTech
+A66000-A66FFF	(base 16)	DVTech
+				10 Kehilat Venezia st.
+				Tel Aviv Israel 69400
+				ISRAEL
+
+00-50-C2	(hex)		GSS Avionics Limited
+A67000-A67FFF	(base 16)	GSS Avionics Limited
+				Thorne House
+				Eastville
+				Yeovil Somerset BA214JD
+				UNITED KINGDOM
+
+00-50-C2	(hex)		X-Pert Paint Mixing Systems
+A68000-A68FFF	(base 16)	X-Pert Paint Mixing Systems
+				2715 Lincoln Drive
+				Roseville MN 55113
+				UNITED STATES
+
+00-50-C2	(hex)		Advanced Integrated Systems
+A69000-A69FFF	(base 16)	Advanced Integrated Systems
+				81 David Love Pl.
+				Suite J
+				Goleta CA 93117
+				UNITED STATES
+
+00-50-C2	(hex)		Infocrossing
+A6A000-A6AFFF	(base 16)	Infocrossing
+				11800 Ridge Parkway
+				Broomfield CO 80021
+				UNITED STATES
+
+00-50-C2	(hex)		Explorer Inc.
+A6B000-A6BFFF	(base 16)	Explorer Inc.
+				379-22
+				kikyou-cho
+				Hakodateshi Hokkaido 041-0801
+				JAPAN
+
+00-50-C2	(hex)		Figment Design Laboratories
+A6C000-A6CFFF	(base 16)	Figment Design Laboratories
+				113 11th Avenue
+				Fairland
+				Johannesburg Guateng 2170
+				SOUTH AFRICA
+
+00-50-C2	(hex)		DTV Innovations
+A6D000-A6DFFF	(base 16)	DTV Innovations
+				1252 W. Northwest Highway
+				Palatine IL 60067
+				UNITED STATES
+
+00-50-C2	(hex)		Screen Technics Pty Limited
+A6E000-A6EFFF	(base 16)	Screen Technics Pty Limited
+				Corner Vale & Suttor Roads
+				PO Box 745
+				Moss Vale NSW 2577
+				AUSTRALIA
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+A6F000-A6FFFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		Reliable System Services Corp
+A70000-A70FFF	(base 16)	Reliable System Services Corp
+				4450 West Eau Gallie Blvd.
+				Suite 130
+				Melbourne Florida 32934
+				UNITED STATES
+
+00-50-C2	(hex)		Purite Ltd
+A71000-A71FFF	(base 16)	Purite Ltd
+				Bandet Way
+				Thame Oxfordshire OX9 3SJ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Gamber-Johnson LLC.
+A72000-A72FFF	(base 16)	Gamber-Johnson LLC.
+				3001 Borham Avenue
+				Stevens Point WI 54481
+				UNITED STATES
+
+00-50-C2	(hex)		KYOEI ENGINEERING Co.,Ltd.
+A73000-A73FFF	(base 16)	KYOEI ENGINEERING Co.,Ltd.
+				1-3-35 ATSUBETSU HIGASHI 5 JYO
+				ATSUBETSU-KU
+				SAPPORO-SHI HOKKAIDO 004-0005
+				JAPAN
+
+00-50-C2	(hex)		DSP DESIGN LTD
+A74000-A74FFF	(base 16)	DSP DESIGN LTD
+				TAPTON PARK INNOVATION CENTRE
+				BRIMINGTON ROAD
+				CHESTERFIELD  S41 0TZ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		JTL Systems Ltd.
+A75000-A75FFF	(base 16)	JTL Systems Ltd.
+				41 Kingfisher Court
+				Hambridge Road
+				Newbury Berks RG14 5SJ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Roesch & Walter Industrie-Elektronik GmbH
+A76000-A76FFF	(base 16)	Roesch & Walter Industrie-Elektronik GmbH
+				Woertelweg 2b/c
+				Schwanau  77963
+				GERMANY
+
+00-50-C2	(hex)		Keith & Koep GmbH
+A77000-A77FFF	(base 16)	Keith & Koep GmbH
+				Uellendahler Str. 199
+				Wuppertal NRW 42109
+				GERMANY
+
+00-50-C2	(hex)		Apantac LLC
+A78000-A78FFF	(base 16)	Apantac LLC
+				13500 SW Pacific HWY
+				#117
+				Portland OR 97223
+				UNITED STATES
+
+00-50-C2	(hex)		Saintronic
+A79000-A79FFF	(base 16)	Saintronic
+				Parc Atlantique
+				Ormeau de Pied
+				Saintes France 17100
+				FRANCE
+
+00-50-C2	(hex)		DetNet South Africa PTY (LTD)
+A7A000-A7AFFF	(base 16)	DetNet South Africa PTY (LTD)
+				1 Platinum Drive
+				Longmeadow Business Estate
+				Modderfontein Gauteng 1645
+				SOUTH AFRICA
+
+00-50-C2	(hex)		Orange Tree Technologies
+A7B000-A7BFFF	(base 16)	Orange Tree Technologies
+				Harwell Innovation Centre
+				173 Curie Avenue
+				Didcot Oxfordshire OX110QG
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Pneu-Logic Corporation
+A7C000-A7CFFF	(base 16)	Pneu-Logic Corporation
+				6650 SW Redwood Lane
+				Suite 390
+				Portland OR 97224
+				UNITED STATES
+
+00-50-C2	(hex)		Vitel Net
+A7D000-A7DFFF	(base 16)	Vitel Net
+				8201 Greensboro Dr.
+				Ste 600
+				McLean VA 22102
+				UNITED STATES
+
+00-50-C2	(hex)		Independent Project Engineering Ltd
+A7E000-A7EFFF	(base 16)	Independent Project Engineering Ltd
+				Saxon Way
+				Melbourn
+				Royston Herts SG8 6DN
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+A7F000-A7FFFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straße 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		ARD SA
+A80000-A80FFF	(base 16)	ARD SA
+				Micropolis BP 169
+				GAP  05005
+				FRANCE
+
+00-50-C2	(hex)		BPC circuits Ltd
+A81000-A81FFF	(base 16)	BPC circuits Ltd
+				Omni House
+				Sheene Road
+				Leicester  LE4 1BF
+				UNITED KINGDOM
+
+00-50-C2	(hex)		CT Company
+A82000-A82FFF	(base 16)	CT Company
+				Nizhni Krasnoselsky st., 35
+				Moscow RUSSIA 140070
+				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		Techno Sobi Co. Ltd.
+A83000-A83FFF	(base 16)	Techno Sobi Co. Ltd.
+				Tsurunoso 6-11
+				Takarazuka-shi Hyogo-ken 6650833
+				JAPAN
+
+00-50-C2	(hex)		Lino Manfrotto +Co spa
+A84000-A84FFF	(base 16)	Lino Manfrotto +Co spa
+				via sasso rosso 19
+				Bassano del Grappa Vicenza 36061
+				ITALY
+
+00-50-C2	(hex)		JOYSYSTEM
+A85000-A85FFF	(base 16)	JOYSYSTEM
+				2-3-21 DAIKAIDORI
+				HYOGO-KU
+				KOBE HYOUGO 652-0803
+				JAPAN
+
+00-50-C2	(hex)		LIMAB AB
+A86000-A86FFF	(base 16)	LIMAB AB
+				Exportgatan 38B
+				Hisings Backa  42246
+				SWEDEN
+
+00-50-C2	(hex)		Littlemore Scientific
+A87000-A87FFF	(base 16)	Littlemore Scientific
+				Gutchpool Farm
+				Gillingham Dorset SP8 5QP
+				UNITED KINGDOM
+
+00-50-C2	(hex)		S-SYS
+A88000-A88FFF	(base 16)	S-SYS
+				Dijkstraat 8
+				Ham Limburg 3945
+				BELGIUM
+
+00-50-C2	(hex)		CA Traffic Ltd
+A89000-A89FFF	(base 16)	CA Traffic Ltd
+				32-36 Lodge Farm Business Centre
+				Wolverton Road, Castlethorpe
+				Milton Keynes  MK19 7ES
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Audio Engineering Ltd.
+A8A000-A8AFFF	(base 16)	Audio Engineering Ltd.
+				75 Parnell Rise
+				Parnell
+				Auckland  1052
+				NEW ZEALAND
+
+00-50-C2	(hex)		Navicron Oy
+A8B000-A8BFFF	(base 16)	Navicron Oy
+				Teknologiantie 7A
+				Oulu  90570
+				FINLAND
+
+00-50-C2	(hex)		Redwire, LLC
+A8C000-A8CFFF	(base 16)	Redwire, LLC
+				8 Thorndike St
+				Everett MA 02149
+				UNITED STATES
+
+00-50-C2	(hex)		Frontier Electronic Systems Corp.
+A8D000-A8DFFF	(base 16)	Frontier Electronic Systems Corp.
+				4500 W 6th Ave
+				Stillwater OK 74074
+				UNITED STATES
+
+00-50-C2	(hex)		BFI Industrie-Elektronik GmbH & Co.KG
+A8E000-A8EFFF	(base 16)	BFI Industrie-Elektronik GmbH & Co.KG
+				Winchenbachstrasse 3b
+				Wuppertal NRW 42281
+				GERMANY
+
+00-50-C2	(hex)		Quantum3D, Inc.
+A8F000-A8FFFF	(base 16)	Quantum3D, Inc.
+				6330 San Igancio Ave
+				San Jose CA 95119
+				UNITED STATES
+
+00-50-C2	(hex)		S.two Corporation
+A90000-A90FFF	(base 16)	S.two Corporation
+				9475 Double R Blvd.
+				Reno NV 89521
+				UNITED STATES
+
+00-50-C2	(hex)		Ceron Tech Co.,LTD
+A91000-A91FFF	(base 16)	Ceron Tech Co.,LTD
+				#809-1, Kranz Techno, 5442-1,
+				Sangdaewon-dong, Jungwon-gu
+				Seongnam-si  462-819
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Sicon s.r.l.
+A92000-A92FFF	(base 16)	Sicon s.r.l.
+				Via Sila, 1/3
+				Isola Vicentina Vicenza 36033
+				ITALY
+
+00-50-C2	(hex)		SPX Dehydration & Filtration
+A93000-A93FFF	(base 16)	SPX Dehydration & Filtration
+				4647 S.W. 40th Ave.
+				Ocala FL 34474
+				UNITED STATES
+
+00-50-C2	(hex)		Par-Tech, Inc.
+A94000-A94FFF	(base 16)	Par-Tech, Inc.
+				139 Premier Dr.
+				Lake Orion MI 48359
+				UNITED STATES
+
+00-50-C2	(hex)		INNOVACIONES MICROELECTRONICAS SL (AnaFocus)
+A95000-A95FFF	(base 16)	INNOVACIONES MICROELECTRONICAS SL (AnaFocus)
+				C/Isaac Newton, 4-Pabellon de Italia-7ªpl. Atico
+				Parque Tecnologico Isla de la Cartuja
+				Sevilla  41092
+				SPAIN
+
+00-50-C2	(hex)		FEP SRL
+A96000-A96FFF	(base 16)	FEP SRL
+				VIA MODENA, 68
+				SAN GIOVANNI IN PERSICETO BOLOGNA 40017
+				ITALY
+
+00-50-C2	(hex)		MICROSYSTEMES
+A97000-A97FFF	(base 16)	MICROSYSTEMES
+				14 rue Jean Perrin
+				ZI du Chapitre
+				TOULOUSE  31100
+				FRANCE
+
+00-50-C2	(hex)		Sentry 360 Security
+A98000-A98FFF	(base 16)	Sentry 360 Security
+				1280 Iroquois Ave
+				Suite 108
+				Naperville IL 60563
+				UNITED STATES
+
+00-50-C2	(hex)		Haivision Systems Inc
+A99000-A99FFF	(base 16)	Haivision Systems Inc
+				4445 Garand
+				Montreal QC H4R 2H9
+				CANADA
+
+00-50-C2	(hex)		Absolutron. LLC
+A9A000-A9AFFF	(base 16)	Absolutron. LLC
+				1107 Fair Oaks Ave. #476
+				South Pasadena CA 91030
+				UNITED STATES
+
+00-50-C2	(hex)		PDQ Manufacturing  Inc.
+A9B000-A9BFFF	(base 16)	PDQ Manufacturing  Inc.
+				1698 Scheuring Road
+				De Pere WI 54115
+				UNITED STATES
+
+00-50-C2	(hex)		Eberspaecher Electronics GmbH & Co. KG
+A9C000-A9CFFF	(base 16)	Eberspaecher Electronics GmbH & Co. KG
+				Robert-Bosch-Straße 6
+				Göppingen BW 73037
+				GERMANY
+
+00-50-C2	(hex)		Joehl & Koeferli AG
+A9D000-A9DFFF	(base 16)	Joehl & Koeferli AG
+				Neumuehlestrasse 42
+				Winterthur ZH 8406
+				SWITZERLAND
+
+00-50-C2	(hex)		Procon Engineering Limited
+A9E000-A9EFFF	(base 16)	Procon Engineering Limited
+				Vestry Estate
+				Otford Road
+				Sevenoaks Kent TN14 5EL
+				UNITED KINGDOM
+
+00-50-C2	(hex)		YellowSoft Co., Ltd.
+A9F000-A9FFFF	(base 16)	YellowSoft Co., Ltd.
+				624-7 Takahagi
+				Hidaka Saitama 350-1213
 				JAPAN
 
