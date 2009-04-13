@@ -141,10 +141,10 @@ class IPv4Parser(LineRecordParser):
 
         self.record_widths = (
             ('prefix', 0, 8),
-            ('designation', 8, 37),
-            ('date', 45, 10),
-            ('whois', 55, 20),
-            ('status', 75, 19),
+            ('designation', 8, 49),
+            ('date', 57, 10),
+            ('whois', 67, 20),
+            ('status', 87, 19),
         )
 
     def parse_line(self, line):
@@ -361,6 +361,34 @@ def query(ip_addr):
                 info['IPv6'].append(record)
 
     return info
+
+#-----------------------------------------------------------------------------
+def get_latest_files():
+    """Download the latest files from IANA"""
+    import urllib2
+
+    urls = [
+        'http://www.iana.org/assignments/ipv4-address-space',
+        'http://www.iana.org/assignments/ipv6-address-space',
+        'http://www.iana.org/assignments/multicast-addresses',
+    ]
+
+    for url in urls:
+        print 'downloading latest copy of %s' % url
+        request = urllib2.Request(url)
+        response = urllib2.urlopen(request)
+        save_path = _path.dirname(__file__)
+        basename = _os.path.basename(response.geturl().rstrip('/'))
+        filename = _path.join(save_path, basename)
+        fh = open(filename, 'wb')
+        fh.write(response.read())
+        fh.close()
+
+
+#-----------------------------------------------------------------------------
+if __name__ == '__main__':
+    #   Generate indices when module is executed as a script.
+    get_latest_files()
 
 #   On module import, read IANA data files and populate lookups dict.
 load_iana_info()
