@@ -26,6 +26,8 @@ except:
 try:
     import socket as _socket
     #   These might all generate exceptions on different platforms.
+    if not _socket.has_ipv6:
+        raise Exception('IPv6 disabled')
     _socket.inet_pton
     _socket.AF_INET6
     from socket import inet_pton as _inet_pton, \
