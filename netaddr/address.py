@@ -246,7 +246,7 @@ class Addr(object):
 
     def __hash__(self):
         """@return: hash of this address suitable for dict keys, sets etc"""
-        return hash((self.value, self.addr_type))
+        return hash((self.addr_type, self.value))
 
     def __int__(self):
         """@return: value of this address as an unsigned integer"""
@@ -1131,7 +1131,7 @@ class IPRange(object):
         @return: The hash of this address range. Allow them to be used in sets
             and as keys in dictionaries.
         """
-        return hash((self.first, self.last, self.addr_type))
+        return hash((self.addr_type, self.first, self.last))
 
     def tuple(self):
         """
