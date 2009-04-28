@@ -5,7 +5,7 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-Miscellanous functions and classes. Do not rely on anything in here as it is
+Miscellaneous functions and classes. Do not rely on anything in here as it is
 liable to change, move or be deleted with each release.
 """
 import pprint
