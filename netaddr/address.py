@@ -755,7 +755,7 @@ class IP(Addr):
         mask_bits = bits.translate(IP.TRANSLATE_STR, ':.0')
         mask_length = len(mask_bits)
 
-        if not 1 <= mask_length <= self.strategy.width:
+        if not 0 <= mask_length <= self.strategy.width:
             raise ValueError('Unexpected mask length %d for address type!' \
                 % mask_length)
 

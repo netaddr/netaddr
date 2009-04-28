@@ -1114,6 +1114,9 @@ class IPTests(TestCase):
         ip.prefixlen = 24
         self.assertEqual(repr(ip), "IP('192.0.2.1/24')")
 
+        self.assertEqual(IP('0.0.0.0/0'), IP('0.0.0.0/0'))
+        self.assertEqual(IP('0.0.0.0/0'), IP('0.0.0.0/0.0.0.0'))
+
         self.assertRaises(ValueError, IP, '0.0.0.0/-1')
         self.assertRaises(ValueError, IP, '0.0.0.0/33')
 
