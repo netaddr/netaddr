@@ -2453,6 +2453,7 @@ class Wildcard(IPRange):
     addr_type = AddrTypeDescriptor(ADDR_TYPES)
     fmt = FormatDescriptor(IP)
 
+    @staticmethod
     def is_valid(wildcard):
         """
         A static method that validates wildcard address ranges.
@@ -2500,8 +2501,6 @@ class Wildcard(IPRange):
         except ValueError:
             return False
         return True
-
-    is_valid = staticmethod(is_valid)
 
     def __init__(self, wildcard, fmt=IP):
         """

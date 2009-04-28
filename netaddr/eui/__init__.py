@@ -346,6 +346,7 @@ class IAB(object):
 
     For online details see - http://standards.ieee.org/regauth/oui/
     """
+    @staticmethod
     def split_iab_mac(eui_int, strict=False):
         """
         @param eui_int: a MAC IAB as an unsigned integer.
@@ -369,8 +370,6 @@ class IAB(object):
             raise ValueError('%r is not an IAB address!' % hex(eui_int))
 
         return iab_bits, user_bits
-
-    split_iab_mac = staticmethod(split_iab_mac)
 
     def __init__(self, iab, strict=False):
         """
