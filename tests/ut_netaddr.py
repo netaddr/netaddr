@@ -1771,22 +1771,53 @@ class CIDRTests(TestCase):
 
     def testCIDRSubtraction(self):
         """CIDR() - subtraction tests (IPv4 + IPv6)"""
+        #   Equivalent to :-
+        #   >>> set([1]) - set([1])
+        #   set([1])
         result0 = CIDR('192.0.2.1/32') - CIDR('192.0.2.1/32')
         self.assertEqual(result0, [])
 
+        #   Equivalent to :-
+        #   >>> set([1,2]) - set([2])
+        #   set([1])
         result1 = CIDR('192.0.2.0/31', fmt=str) - CIDR('192.0.2.1/32')
         self.assertEqual(result1, ['192.0.2.0/32'])
 
+        #   Equivalent to :-
+        #   >>> set([1,2,3,4,5,6,7,8]) - set([5,6,7,8])
+        #   set([1, 2, 3, 4])
         result2 = CIDR('192.0.2.0/24', fmt=str) - CIDR('192.0.2.128/25')
         self.assertEqual(result2, ['192.0.2.0/25'])
 
+        #   Equivalent to :-
+        #   >>> set([1,2,3,4,5,6,7,8]) - set([5,6])
+        #   set([1, 2, 3, 4, 7, 8])
         result3 = CIDR('192.0.2.0/24', fmt=str) - CIDR('192.0.2.128/27')
         self.assertEqual(result3, ['192.0.2.0/25', '192.0.2.160/27', '192.0.2.192/26'])
 
         #   Subtracting a larger range from a smaller one results in an empty
         #   list (rather than a negative CIDR - which would be rather odd)!
+        #
+        #   Equivalent to :-
+        #   >>> set([1]) - set([1,2,3])
+        #   set([])
         result4 = CIDR('192.0.2.1/32') - CIDR('192.0.2.0/24')
         self.assertEqual(result4, [])
+
+        #   Subtracting CIDRs that are not within each other or have no
+        #   overlaps should return the original LHS CIDR.
+        #
+        #   Equivalent to :-
+        #   >>> set([1,2,3]) - set([4])
+        #   set([1,2,3])
+        result5 = CIDR('192.0.2.0/28', fmt=str) - CIDR('192.0.2.16/32')
+        self.assertEqual(result5, ['192.0.2.0/28'])
+
+        #   Equivalent to :-
+        #   >>> set([1]) - set([2,3,4])
+        #   set([1])
+        result6 = CIDR('192.0.1.255/32', fmt=str) - CIDR('192.0.2.0/28')
+        self.assertEqual(result6, ['192.0.1.255/32'])
 
     def testCIDRToIPEquality(self):
         """CIDR() - equality tests with IP() objects"""

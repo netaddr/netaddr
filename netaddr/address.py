@@ -2153,44 +2153,64 @@ class CIDR(IPRange):
         """
         cidrs = []
 
-        if self.prefixlen == self.strategy.width:
-            #   Fail fast. Nothing to do in this case.
-            return cidrs
+        if hasattr(other, 'value'):
+            #   Convert IP object to its CIDR object equivalent.
+            other = other.cidr()
+
+        if other.last < self.first:
+            #   Other CIDR's upper bound is less than this CIDR's lower bound.
+            if self.fmt is str:
+                return [str(self.cidrs()[0])]
+            else:
+                return [self.cidrs()[0]]
+        elif self.last < other.first:
+            #   Other CIDR's lower bound is greater than this CIDR's upper
+            #   bound.
+            if self.fmt is str:
+                return [str(self.cidrs()[0])]
+            else:
+                return [self.cidrs()[0]]
 
         new_prefixlen = self.prefixlen + 1
-        i_lower = self.first
-        i_upper = self.first + (2 ** (self.strategy.width - new_prefixlen))
 
-        lower = CIDR('%s/%d' % (self.strategy.int_to_str(i_lower),
-            new_prefixlen))
-        upper = CIDR('%s/%d' % (self.strategy.int_to_str(i_upper),
-            new_prefixlen))
-
-        while other.prefixlen >= new_prefixlen:
-            if other in lower:
-                matched = i_lower
-                unmatched = i_upper
-            elif other in upper:
-                matched = i_upper
-                unmatched = i_lower
-
-            cidr = CIDR('%s/%d' % (self.strategy.int_to_str(unmatched),
-                new_prefixlen))
-
-            cidrs.append(cidr)
-
-            new_prefixlen += 1
-
-            if new_prefixlen > self.strategy.width:
-                break
-
-            i_lower = matched
-            i_upper = matched + (2 ** (self.strategy.width - new_prefixlen))
+        if new_prefixlen <= self.strategy.width:
+            i_lower = self.first
+            i_upper = self.first + (2 ** (self.strategy.width - new_prefixlen))
 
             lower = CIDR('%s/%d' % (self.strategy.int_to_str(i_lower),
                 new_prefixlen))
             upper = CIDR('%s/%d' % (self.strategy.int_to_str(i_upper),
                 new_prefixlen))
+
+            while other.prefixlen >= new_prefixlen:
+                if other in lower:
+                    matched = i_lower
+                    unmatched = i_upper
+                elif other in upper:
+                    matched = i_upper
+                    unmatched = i_lower
+                else:
+                    #   Other CIDR not within self.
+                    cidrs.append(self.cidrs()[0])
+                    break
+
+                cidr = CIDR('%s/%d' % (self.strategy.int_to_str(unmatched),
+                    new_prefixlen))
+
+                cidrs.append(cidr)
+
+                new_prefixlen += 1
+
+                if new_prefixlen > self.strategy.width:
+                    break
+
+                i_lower = matched
+                i_upper = matched + (2 ** (self.strategy.width - new_prefixlen))
+
+                lower = CIDR('%s/%d' % (self.strategy.int_to_str(i_lower),
+                    new_prefixlen))
+                upper = CIDR('%s/%d' % (self.strategy.int_to_str(i_upper),
+                    new_prefixlen))
 
         cidrs.sort()
 
