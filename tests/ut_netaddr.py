@@ -1523,6 +1523,15 @@ class CIDRTests(TestCase):
             self.assertTrue(hasattr(CIDR, attribute))
             self.assertTrue(callable(eval('CIDR.%s' % attribute)))
 
+    def testFormatting(self):
+        """CIDR() - formatting tests"""
+        cidr = CIDR('192.0.2.0/24')
+        self.assertTrue(type(cidr.network), IP)
+        cidr.fmt = str
+        self.assertTrue(type(cidr.network), str)
+        cidr.fmt = None     # Reset formatter back to default.
+        self.assertTrue(type(cidr.network), IP)
+
     def testRFC4291WithCIDR(self):
         """CIDR() - RFC 4291 tests"""
         expected = '2001:db8:0:cd30::/60'
@@ -2466,6 +2475,108 @@ class IPandCIDRDifferences(TestCase):
         #!!!   rules. Compatible with pgsql's cidr() function.
         self.assertEqual(IP('192.0.2/24'), IP('192.0.0.2/24'))
         self.assertEqual(CIDR('192.0.2/24'), CIDR('192.0.2.0/24'))
+
+
+#-----------------------------------------------------------------------------
+class FullCoverage(TestCase):
+    """Test cast to 'fill in the blanks' on unit test coverage"""
+    def testAddrValuePropertyOverflow(self):
+        ip1 = IP('192.0.2.0')
+        self.assertRaises(OverflowError, ip1.__setattr__, 'value', 0x1ffffffff)
+
+        ip2 = IP('::')
+        self.assertRaises(OverflowError, ip2.__setattr__, 'value', 2 ** 128)
+
+    def testAddrInvalidStrategy(self):
+        ip1 = IP('192.0.2.0')
+        self.assertRaises(ValueError, ip1.__setattr__, 'strategy', 'foo')
+
+        ip2 = IP('::192.0.2.0')
+        self.assertRaises(ValueError, ip2.__setattr__, 'strategy', 10)
+
+    def testAddrInvalidFormatString(self):
+        cidr1 = CIDR('192.0.2.0')
+        self.assertRaises(TypeError, cidr1.__setattr__, 'fmt', float)
+
+        cidr2 = CIDR('192.0.2.0')
+        self.assertRaises(TypeError, cidr1.__setattr__, 'fmt', float)
+
+    def testAddrReprComparisons(self):
+        self.assertEqual(repr(IP('192.0.2.0/24')), "IP('192.0.2.0/24')")
+        self.assertEqual(repr(IP('::')), "IP('::')")
+        self.assertEqual(repr(IP('::0.0.0.0')), "IP('::')")
+        self.assertEqual(repr(EUI(0)), "EUI('00-00-00-00-00-00')")
+
+    def testIPRangeComparisons(self):
+        self.assertEqual(repr(CIDR('::/128')), "CIDR('::/128')")
+        self.assertEqual(repr(CIDR('10')), "CIDR('10.0.0.0/8')")
+        self.assertEqual(repr(IPRange('192.0.2.0', '192.0.2.255')),
+            "IPRange('192.0.2.0', '192.0.2.255')")
+
+    def testAddrHashFunction(self):
+        s = set([IP(0), IP('0.0.0.0'), IP('::'), IP('::0.0.0.0')])
+        self.assertEqual(repr(s), "set([IP('::'), IP('0.0.0.0')])")
+
+    def testAddrPackedMethod(self):
+        self.assertEqual(IP('0.0.0.0').packed(), '\x00'*4)
+        self.assertEqual(IP('::').packed(), '\x00'*16)
+
+#TODO:    def testAddrStrategyPropertyAssignment(self):
+#TODO:        ip = IP('::')
+#TODO:        self.assertEqual(repr(ip), "IP('::')")
+#TODO:        self.assertEqual(ip.prefixlen, 128)
+#TODO:        ip.strategy = ST_IPV4
+#TODO:        self.assertEqual(repr(ip), "IP('0.0.0.0')")
+#TODO:        self.assertEqual(ip.prefixlen, 32)
+
+#TODO:    def testCIDRStrategyPropertyAssignment(self):
+#TODO:        cidr = CIDR('192.0.2.0/24')
+#TODO:        self.assertEqual(repr(cidr), "CIDR('192.0.2.0/24')")
+#TODO:        self.assertEqual(cidr.prefixlen, 24)
+#TODO:        cidr.strategy = ST_IPV6
+#TODO:        self.assertEqual(repr(cidr), "CIDR('::192.0.2.0/120')")
+#TODO:        self.assertEqual(cidr.prefixlen, 120)
+
+    def testAddrBinMethod(self):
+        self.assertEqual(IP('0.0.0.0').bin(), '0b0')
+        self.assertEqual(IP('255.255.255.255').bin(),
+            '0b11111111111111111111111111111111')
+
+        if 'bin' in dir(__builtins__):
+            #   Test bin() builtin (Python 2.6 onwards)
+            ip = IP('192.0.2.0')
+            self.assertEqual(ip.bin(), bin(int(ip)))
+
+    def testAddrGetItemOperator(self):
+        ip = IP('192.0.2.0')
+        self.assertRaises(IndexError, ip.__getitem__, 4)
+        self.assertRaises(TypeError, ip.__getitem__, 'foo')
+        mac = EUI('00-00-00-00-00-00')
+        self.assertRaises(IndexError, mac.__getitem__, 6)
+        self.assertRaises(TypeError, mac.__getitem__, 1.0)
+
+    def testAddrSetItemOperator(self):
+        ip = IP('192.0.2.0')
+        self.assertRaises(NotImplementedError, ip.__setitem__,
+            slice(0,2), [1,2])
+        self.assertRaises(TypeError, ip.__setitem__, 'foo', 1)
+        self.assertRaises(IndexError, ip.__setitem__, 5, 193)
+        self.assertRaises(TypeError, ip.__setitem__, 0, 'foo')
+        self.assertRaises(ValueError, ip.__setitem__, 0, 256)
+
+        mac = EUI('00-00-00-00-00-00')
+        self.assertRaises(NotImplementedError, mac.__setitem__,
+            slice(0,2), [1,2])
+        self.assertRaises(TypeError, mac.__setitem__, 'foo', 1)
+        self.assertRaises(IndexError, mac.__setitem__, 6, 193)
+        self.assertRaises(TypeError, mac.__setitem__, 0, 'foo')
+        self.assertRaises(ValueError, mac.__setitem__, 0, 256)
+
+    def testAddrIAddOperator(self):
+        ip = IP('192.0.2.0')
+        self.assertRaises(TypeError, ip.__iadd__, 'foo')
+        mac = EUI('00-00-00-00-00-00')
+        self.assertRaises(TypeError, mac.__iadd__, 'foo')
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
