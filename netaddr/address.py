@@ -113,16 +113,17 @@ class StrategyDescriptor(object):
         """
         Constructor.
 
-        @param strategies: a list of strategy objects that are acceptable for
-            assignment to the strategy property.
+        @param strategies: a list of valid strategy objects that are suitable
+            for assignment to the strategy property.
         """
         self.strategies = strategies
 
     def __set__(self, instance, value):
         if value not in self.strategies:
-            raise Exception('%r is not a supported strategy!' % value)
-        instance.__dict__['strategy'] = value
-        instance.__dict__['addr_type'] = instance.strategy.addr_type
+            raise ValueError('%r is not a supported strategy!' % value)
+        new_strategy = value
+        instance.__dict__['strategy'] = new_strategy
+        instance.__dict__['addr_type'] = new_strategy.addr_type
 
 #-----------------------------------------------------------------------------
 class PrefixLenDescriptor(object):
@@ -148,9 +149,6 @@ class PrefixLenDescriptor(object):
             #   Convert possible subnet mask to integer subnet prefix.
             ip = IP(value)
 
-            if instance.addr_type != ip.addr_type:
-                raise ValueError('address and netmask type mismatch!')
-
             if ip.is_netmask():
                 #   prefixlen is a netmask address.
                 prefixlen = ip.netmask_bits()
@@ -165,12 +163,6 @@ class PrefixLenDescriptor(object):
         if not 0 <= prefixlen <= instance.strategy.width:
             raise ValueError('%d is an invalid prefix for an %s CIDR!' \
                 % (prefixlen, AT_NAMES[instance.addr_type]))
-
-        #   Make sure instance is not a subnet mask trying to set a prefix!
-        if isinstance(instance, IP):
-            if instance.is_netmask() and instance.addr_type == AT_INET \
-               and prefixlen != 32 and instance.value != 0:
-                raise ValueError('IPv4 netmasks must have a prefix of /32!')
 
         instance.__dict__['prefixlen'] = prefixlen
 
@@ -327,7 +319,7 @@ class Addr(object):
             raise TypeError('value not an integer!')
 
         if not 0 <= value <= self.strategy.max_word:
-            raise IndexError('value %d outside word size maximum of %d bits!'
+            raise ValueError('value %d outside word size maximum of %d bits!'
                 % (value, self.strategy.word_size))
 
         words = list(self.strategy.int_to_words(self.value))
