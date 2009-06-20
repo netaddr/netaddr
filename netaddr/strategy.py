@@ -93,7 +93,7 @@ class AddrStrategy(object):
 
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object"""
-        return "%s(%r, %r, %r, %r, %r, %r)" %  (self.__class__.__name__,
+        return "%s(%r, %r, %r, %r, %r)" %  (self.__class__.__name__,
             self.width, self.word_size, self.word_sep, self.addr_type,
             self.word_base)
 
@@ -216,7 +216,7 @@ class AddrStrategy(object):
             bits = ('0'*self.word_size+bit_str)[-self.word_size:]
             bit_words.append(bits)
 
-        return '0b' + ''.join(bit_words)
+        return '0b' + _re.sub(r'^[0]+([01]+)$', r'\1', ''.join(bit_words))
 
     def int_to_words(self, int_val, num_words=None, word_size=None):
         """
