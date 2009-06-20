@@ -465,7 +465,7 @@ class Addr(object):
 
         @return: bitwise AND (x & y) of self.value with other.value.
         """
-        return self.__class__(self.value | other.value, self.addr_type)
+        return self.__class__(self.value & other.value, self.addr_type)
 
     def __xor__(self, other):
         """

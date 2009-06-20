@@ -2578,6 +2578,11 @@ class FullCoverage(TestCase):
         mac = EUI('00-00-00-00-00-00')
         self.assertRaises(TypeError, mac.__iadd__, 'foo')
 
+    def testAddrBitwiseOperators(self):
+        ip = IP('192.168.1.1')
+        netmask = IP('255.255.255.0')
+        self.assertEqual(ip & netmask, IP('192.168.1.0'))
+
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
     unit_test_suite = TestSuite()

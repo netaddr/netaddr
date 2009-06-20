@@ -1,5 +1,35 @@
+Release: 0.6.3
+Date: TBC
+
+Major changes since 0.6.2
+-------------------------
+
+* Fixed line endings in a number of new files created under Windows.
+
+* Tweaked the ordering of values in tuple passed into the hash() function in 
+  the __hash__ method of the IP and IPRange classes to make it the same as 
+  the values used for comparisons implemented in the __eq__ method (Python
+  best practice).
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 35 - http://code.google.com/p/netaddr/issues/detail?id=32
+
+	- install error (on Python interpreters where socket.has_ipv6 is False)
+
+* FIXED Issue 36 - http://code.google.com/p/netaddr/issues/detail?id=36
+
+	- netaddr.CIDR fails to parse default route CIDR
+
+* FIXED Issue 37 - http://code.google.com/p/netaddr/issues/detail?id=37
+
+	- Bug in bitwise AND operator for IP addresses
+
+------------------------------------------------------------------------------
+
 Release: 0.6.2
-Date: 13th Apr 2008
+Date: 13th Apr 2009
 
 Major changes since 0.6.1
 -------------------------
@@ -26,7 +56,7 @@ Specific bug fixes addressed in this release
 ------------------------------------------------------------------------------
 
 Release: 0.6.1
-Date: 6th Apr 2008
+Date: 6th Apr 2009
 
 Major changes since 0.6
 -----------------------
