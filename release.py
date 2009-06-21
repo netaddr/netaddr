@@ -41,34 +41,32 @@ license = 'BSD License',
 
 #   NB - keep this text around 74 characters wide so it is viewable
 #        in various fixed window sizes.
-long_description = """
-netaddr is a Python library for the representation and manipulation
-of various common network address formats and notations.
+long_description = """A network address representation and manipulation library.
 
-It takes the hassle out of fiddling with innumerable variations of
-network addresses, presenting a consistent, extensible, easy-to-use
-and above all Pythonic API.
+netaddr provides a Pythonic way to work with :-
 
-With it you can represent, validate, convert, categorize, iterate,
-generate, slice (and dice) :-
+- IPv4 and IPv6 addresses and subnet (including CIDR notation)
+- MAC (Media Access Control) addresses in multiple formats
+- IEEE EUI-64, OUI and IAB identifiers
+- a user friendly IP glob-style format
 
-* IP version 4
-* IP version 6
-* CIDR (Classless Inter-Domain Routing) both IPv4 and IPv6
-* MAC (Media Access Control) and IEEE EUI-48 and EUI-64
-* Support for arbitrary IP address ranges with CIDR interoperability
-* User friendly alternative IPv4 range syntax using netaddr's
-  glob-style Wildcard addresses
+Included are routines for :-
 
-For examples see the project wiki :-
+- generating, sorting and summarizing IP addresses
+- converting IP addresses and ranges between various different formats
+- arbitrary IP address range calculations and conversions
+- querying IEEE OUI and IAB organisational information
+- querying of IP standards related data from key IANA data sources
+
+For examples please visit the example wiki pages :-
 
     http://code.google.com/p/netaddr/wiki/NetAddrExamples
 
-API documentation (auto-generated with epydoc) :-
+Complete online API documentation is also available on PyPI :-
 
     http://packages.python.org/netaddr/
 
-For details on latest changes and updates in the current and previous
+For details on latest changes and updates in current and previous
 releases see the CHANGELOG :-
 
     http://code.google.com/p/netaddr/wiki/CHANGELOG

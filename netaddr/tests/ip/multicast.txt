@@ -1,0 +1,43 @@
+=IP Constructor Stress Tests=
+
+Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+
+{{{
+
+>>> from netaddr import *
+
+>>> ip = IP('239.192.0.1')
+
+>>> ip.is_multicast()
+True
+
+}}}
+
+It is *not* valid to have a multicast address with a prefixlen of anything other than a /32 or /128.
+
+{{{
+
+>>> ip.prefixlen = 24
+Traceback (most recent call last):
+...
+IPMulticastError: invalid prefix/netmask '/24' for multicast IP '239.192.0.1'!
+
+>>> IP('239.192.0.1/23')
+Traceback (most recent call last):
+...
+IPMulticastError: invalid prefix/netmask '/23' for multicast IP '239.192.0.1'!
+
+}}}
+
+It is *not* valid to have netmask or hostmask address with a prefixlen of anything other than a /32 or /128.
+
+{{{
+
+>>> IP('255.255.255.0/24')
+Traceback (most recent call last):
+...
+IPValueError: netmasks and hostmasks do not support CIDR prefix options!
+
+}}}
+
+Read this http://lwn.net/SubscriberLink/337684/6b141b49807caf91/

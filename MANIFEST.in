@@ -1,35 +1,47 @@
-recursive-include docs/api *.html *.css *.js *.png
-
-include tests/ut_*.py
-
-include netaddr/__init__.py
-include netaddr/address.py
-include netaddr/strategy.py
-include netaddr/core.py
-include netaddr/util.py
-include netaddr/fallback.py
-
-include netaddr/eui/__init__.py
-include netaddr/eui/*.txt
-include netaddr/eui/*.idx
-
-include netaddr/ip/__init__.py
-include netaddr/ip/multicast-addresses
-include netaddr/ip/ipv6-address-space
-include netaddr/ip/ipv4-address-space
-
 include AUTHORS
 include CHANGELOG
 include COPYRIGHT
-include GLOSSARY
 include INSTALL
-include LICENSE
+include LICENCE
+include MANIFEST.in
 include README
-include python-netaddr.spec
-include setup.py
+
+include release.bat
 include release.py
+include release.sh
 include setup.cfg
+include setup.py
 include setup_egg.py
+
+include docs
+include docs/epydoc.cfg
+include docs/epydoc.css
+
+recursive-include docs/api *.html *.css *.js *.png *.txt
+
+include netaddr/__init__.py
+include netaddr/core.py
+include netaddr/fbsocket.py
+include netaddr/ipglob.py
+
+include netaddr/eui/__init__.py
+include netaddr/eui/ieee.py
+include netaddr/eui/*.idx
+include netaddr/eui/*.txt
+
+include netaddr/ip/__init__.py
+include netaddr/ip/iana.py
+include netaddr/ip/ipv4-address-space
+include netaddr/ip/ipv6-address-space
+include netaddr/ip/multicast-addresses
+
+include netaddr/strategy/__init__.py
+include netaddr/strategy/eui48.py
+include netaddr/strategy/eui64.py
+include netaddr/strategy/ipv4.py
+include netaddr/strategy/ipv6.py
+
+recursive-include netaddr/tests *.txt *.py *.bat
 
 global-exclude *.pyc
 global-exclude *.svn*

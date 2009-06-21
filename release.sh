@@ -2,6 +2,9 @@
 #
 #   netaddr source release script
 #
+# get latest .spec file
+wget http://cvs.fedoraproject.org/viewvc/devel/python-netaddr/python-netaddr.spec?view=co
+
 #   clean up
 cd $(dirname $0)
 rm docs/api/*

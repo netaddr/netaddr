@@ -1,14 +1,43 @@
-#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
-"""
-Classes and routines that are common to various netaddr sub modules.
-"""
+"""common code shared between various modules"""
+
 import sys as _sys
+import struct as _struct
 import pprint as _pprint
+
+#: True if platform is natively big endian, False otherwise.
+BIG_ENDIAN_PLATFORM = _struct.pack('=h', 1) == _struct.pack('>h', 1)
+
+#-----------------------------------------------------------------------------
+#   Custom exceptions.
+#-----------------------------------------------------------------------------
+class AddrFormatError(Exception):
+    """
+    An Exception indicating that a network address format is not recognised.
+    """
+    pass
+
+#-----------------------------------------------------------------------------
+class AddrConversionError(Exception):
+    """
+    An Exception indicating a failure to convert between address types or
+    notations.
+    """
+    pass
+
+#-----------------------------------------------------------------------------
+def num_bits(n):
+    """Minimum number of bits needed to represent a given unsigned integer."""
+    n = abs(n)
+    numbits = 0
+    while n:
+         numbits += 1
+         n >>= 1
+    return numbits
 
 #-----------------------------------------------------------------------------
 class Subscriber(object):
@@ -79,3 +108,4 @@ class Publisher(object):
         """Send notification message to all registered subscribers"""
         for subscriber in self.subscribers:
             subscriber.update(data)
+

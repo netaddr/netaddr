@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
@@ -13,78 +12,42 @@ if _sys.version_info[0:2] < (2, 4):
 
 __version__ = '0.7'
 
-import struct as _struct
+from netaddr.core import AddrConversionError, AddrFormatError
 
-#-----------------------------------------------------------------------------
-#  Constants.
-#-----------------------------------------------------------------------------
+from netaddr.ip import IP, cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, \
+    iprange_to_cidrs, spanning_cidr, within_iprange, iter_iprange, \
+    iter_unique_ips
 
-#: True if platform is natively big endian, False otherwise.
-BIG_ENDIAN_PLATFORM = _struct.pack('=h', 1) == _struct.pack('>h', 1)
+from netaddr.ipglob import cidr_to_glob, glob_to_cidrs, glob_to_iprange, \
+    valid_glob, iprange_to_globs
 
-AT_UNSPEC = 0x0     #: unspecified address type constant.
-AT_INET   = 0x4     #: IPv4 address type constant.
-AT_INET6  = 0x6     #: IPv6 address type constant.
-AT_LINK   = 0x30    #: MAC/EUI-48 address type constant.
-AT_EUI64  = 0x40    #: EUI-64 address type constant.
+from netaddr.eui import NotRegisteredError, EUI, IAB, OUI
 
-#: Address type to address description lookup dictionary.
-AT_NAMES = {
-    #   Address Type : Descriptive Name.
-    AT_UNSPEC   : 'unspecified',
-    AT_INET     : 'IPv4',
-    AT_INET6    : 'IPv6',
-    AT_LINK     : 'MAC',
-    AT_EUI64    : 'EUI-64',
-}
+from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_cisco, mac_bare, \
+    mac_pgsql
 
-#-----------------------------------------------------------------------------
-#   Custom exceptions.
-#-----------------------------------------------------------------------------
-
-class AddrFormatError(Exception):
-    """
-    An Exception indicating that a network address format is not recognised.
-    """
-    pass
-
-class AddrConversionError(Exception):
-    """
-    An Exception indicating a failure to convert between address types or
-    notations.
-    """
-    pass
-
-#-----------------------------------------------------------------------------
-#   Submodule imports.
-#-----------------------------------------------------------------------------
-
-from netaddr.address import nrange, IP, IPRange, IPRangeSet, CIDR, \
-    IPGlob, EUI, CIDRGroup
-
-from netaddr.eui import OUI, IAB, NotRegisteredError
-
-import netaddr.ip
-
-from netaddr.strategy import ST_IPV4, ST_IPV6, ST_EUI48, ST_EUI64
-
-#-----------------------------------------------------------------------------
-#   Public interface.
-#-----------------------------------------------------------------------------
-__all__ = [
-     # type constants
-    'AT_UNSPEC', 'AT_INET', 'AT_INET6', 'AT_LINK', 'AT_EUI64',
-
-    # module specific exceptions
-    'AddrFormatError', 'AddrConversionError', 'NotRegisteredError',
-
-    # shared strategy objects
-    'ST_IPV4', 'ST_IPV6', 'ST_EUI48', 'ST_EUI64',
-
-    # main interface classes
-    'CIDR', 'IP', 'IPRange', 'IPRangeSet', 'IPGlob', 'CIDRGroup',
-    'EUI', 'OUI', 'IAB',
-
-    #   functions
-    'nrange',
-]
+__all__ = """AddrConversionError
+AddrFormatError
+EUI
+IAB
+IP
+NotRegisteredError
+OUI
+cidr_abbrev_to_verbose
+cidr_exclude
+cidr_merge
+cidr_to_glob
+glob_to_cidrs
+glob_to_iprange
+iprange_to_cidrs
+iprange_to_globs
+iter_iprange
+iter_unique_ips
+mac_bare
+mac_cisco
+mac_eui48
+mac_pgsql
+mac_unix
+spanning_cidr
+valid_glob
+within_iprange""".split("\n")
