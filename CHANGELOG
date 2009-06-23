@@ -1,5 +1,5 @@
 Release: 0.6.3
-Date: TBC
+Date: 23rd Jun 2009
 
 Major changes since 0.6.2
 -------------------------
@@ -11,10 +11,16 @@ Major changes since 0.6.2
   the values used for comparisons implemented in the __eq__ method (Python
   best practice).
 
+* Added a number of unit test to improve code coverage.
+
 Specific bug fixes addressed in this release
 --------------------------------------------
 
-* FIXED Issue 35 - http://code.google.com/p/netaddr/issues/detail?id=32
+* FIXED Issue 33 - http://code.google.com/p/netaddr/issues/detail?id=33
+
+	- CIDR subtraction is broken for out-of-range CIDR objects
+
+* FIXED Issue 35 - http://code.google.com/p/netaddr/issues/detail?id=35
 
 	- install error (on Python interpreters where socket.has_ipv6 is False)
 
@@ -25,6 +31,15 @@ Specific bug fixes addressed in this release
 * FIXED Issue 37 - http://code.google.com/p/netaddr/issues/detail?id=37
 
 	- Bug in bitwise AND operator for IP addresses
+
+* FIXED Issue 38 - http://code.google.com/p/netaddr/issues/detail?id=38
+
+	- Feature request: Addr.__nonzero__
+
+* FIXED Issue 39 - http://code.google.com/p/netaddr/issues/detail?id=39
+
+	- CIDR.abbrev_to_verbose() not applying implicit classful netmask
+	  rules consistently
 
 ------------------------------------------------------------------------------
 
