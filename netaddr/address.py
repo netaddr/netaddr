@@ -453,51 +453,55 @@ class Addr(object):
 
     def __or__(self, other):
         """
-        @param other: an integer or int-like object.
+        @param other: An Addr (sub)class instance (or int-like object).
 
-        @return: bitwise OR (x | y) of self.value with other.value.
+        @return: bitwise OR (x | y) between the integer value of this IP
+            address and another.
         """
         return self.__class__(self.value | other.value, self.addr_type)
 
     def __and__(self, other):
         """
-        @param other: an integer or int-like object.
+        @param other: An Addr (sub)class instance (or int-like object).
 
-        @return: bitwise AND (x & y) of self.value with other.value.
+        @return: bitwise AND (x & y) between the integer value of this
+            address and another.
         """
         return self.__class__(self.value & other.value, self.addr_type)
 
     def __xor__(self, other):
         """
-        @param other: an integer or int-like object.
+        @param other: An Addr (sub)class instance (or int-like object).
 
-        @return: bitwise exclusive OR (x ^ y) of self.value with other.value.
+        @return: bitwise exclusive OR (x ^ y) between the integer value of
+            this address and another.
         """
         return self.__class__(self.value ^ other.value, self.addr_type)
 
     def __lshift__(self, numbits):
         """
-        @param numbits: size of shift (in bits).
+        @param numbits: size of bitwise shift.
 
-        @return: integer value of this IP address shifted left by x bits.
+        @return: an address based on this one with its integer value
+            left shifted by x bits.
         """
         return self.__class__(self.value << numbits, self.addr_type)
 
     def __rshift__(self, numbits):
         """
-        @param numbits: size of shift (in bits).
+        @param numbits: size of bitwise shift.
 
-        @return: integer value of this IP address right shifted by x bits.
+        @return: an address based on this one with its integer value
+            right shifted by x bits.
         """
         return self.__class__(self.value >> numbits, self.addr_type)
 
-    def __invert__(self, other):
+    def __nonzero__(self):
         """
-        @param other: an integer or int-like object.
-
-        @return: inversion (~x) of self.value.
+        @return: True if the numerical value of this address is not zero,
+            False otherwise.
         """
-        return self.__class__(~self.value)
+        return bool(self.value)
 
 #-----------------------------------------------------------------------------
 class EUI(Addr):
@@ -1865,13 +1869,9 @@ class CIDR(IPRange):
             else:
                 tokens = [part_addr]
 
-            if 1 <= len(tokens) < 4:
+            if 1 <= len(tokens) <= 4:
                 for i in range(4 - len(tokens)):
                     tokens.append('0')
-            elif len(tokens) == 4:
-                if prefix is None:
-                    #   Non-partial addresses without a prefix.
-                    prefix = 32
             else:
                 #   Not a recognisable format.
                 return None
