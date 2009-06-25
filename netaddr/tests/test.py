@@ -3,7 +3,7 @@
 import unittest
 import doctest
 
-tests = ['tutorial.txt', 'constructor.txt']
+tests = ['ip/tutorial.txt']
 
 for test in tests:
     suite = doctest.DocFileSuite(test, optionflags=doctest.ELLIPSIS)

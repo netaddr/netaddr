@@ -21,7 +21,7 @@ from netaddr.core import AddrFormatError, AddrConversionError, Subscriber, \
 from netaddr.strategy import eui48 as _eui48
 from netaddr.strategy import eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
-from netaddr.ip import IP
+from netaddr.ip import IPAddress
 
 from netaddr.eui.ieee import IEEE_OUI_INDEX, IEEE_OUI_REGISTRY, \
     IEEE_IAB_INDEX, IEEE_IAB_REGISTRY, NotRegisteredError
@@ -608,8 +608,8 @@ class EUI(object):
         self[0] -= 2
 
         ipv6_addr = ':'.join(suffix)
-        addr = prefix + ipv6_addr + '/64'
-        return IP(addr)
+        addr = prefix + ipv6_addr
+        return IPAddress(addr)
 
     def info(self):
         """

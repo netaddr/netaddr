@@ -10,11 +10,11 @@ import sys as _sys
 if _sys.version_info[0:2] < (2, 4):
     raise RuntimeError('Python 2.4.x or higher is required!')
 
-__version__ = '0.7'
+__version__ = 'exp_0.7_non-multiplex-ip'
 
 from netaddr.core import AddrConversionError, AddrFormatError
 
-from netaddr.ip import IP, cidr_abbrev_to_verbose, \
+from netaddr.ip import IPAddress, IPNetwork, cidr_abbrev_to_verbose, \
     cidr_exclude, cidr_merge, spanning_cidr, iter_unique_ips, \
     iprange_to_cidrs, within_iprange, iter_iprange
 
@@ -37,7 +37,7 @@ __all__ = [
     'mac_bare', 'mac_cisco', 'mac_eui48', 'mac_pgsql', 'mac_unix',
 
     #   IP, CIDR and IP range related classes and functions.
-    'IP',
+    'IPAddress', 'IPNetwork',
 
     'cidr_abbrev_to_verbose', 'cidr_exclude', 'cidr_merge', 'spanning_cidr',
     'within_iprange', 'iter_iprange', 'iprange_to_cidrs','iter_unique_ips',

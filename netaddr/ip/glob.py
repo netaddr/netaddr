@@ -43,7 +43,7 @@ Aside
 """
 
 from netaddr.core import AddrFormatError, AddrConversionError
-from netaddr.ip import IP, iprange_to_cidrs
+from netaddr.ip import IPAddress, IPNetwork, iprange_to_cidrs
 
 #-----------------------------------------------------------------------------
 def valid_glob(ipglob):
@@ -122,7 +122,7 @@ def glob_to_iprange(ipglob):
             start_tokens.append(octet)
             end_tokens.append(octet)
 
-    return IP('.'.join(start_tokens)), IP('.'.join(end_tokens))
+    return IPAddress('.'.join(start_tokens)), IPAddress('.'.join(end_tokens))
 
 #-----------------------------------------------------------------------------
 def iprange_to_globs(start, end):
@@ -136,8 +136,8 @@ def iprange_to_globs(start, end):
 
     @return: a list containing one or more IP globs.
     """
-    start = IP(start)
-    end = IP(end)
+    start = IPAddress(start)
+    end = IPAddress(end)
 
     if start.version != 4 and end.version != 4:
         raise AddrConversionError('IP glob ranges only support IPv4!')
@@ -215,7 +215,7 @@ def cidr_to_glob(cidr):
 
     @return: a list of one or more IP addresses and subnets.
     """
-    ip = IP(cidr)
+    ip = IPNetwork(cidr)
     globs = iprange_to_globs(ip[0], ip[-1])
     if len(globs) != 1:
         #   There should only ever be a one to one mapping between a CIDR and

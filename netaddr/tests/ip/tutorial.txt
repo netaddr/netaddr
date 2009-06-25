@@ -12,15 +12,17 @@ Let's start with the standard module import.
 
 }}}
 
-You can safely import everything from the netaddr namespace as care has been taken to only export the necessary classes, functions and constants. You can always hand pick them if you are unsure.
+You can safely import everything from the netaddr namespace as care has been taken to only export the necessary classes, functions and constants. 
 
-==Basic IP Operations==
+You can always hand pick them if you are unsure.
+
+==Basic IP Address Operations==
 
 This IP object represents a single address.
 
 {{{
 
->>> ip = IP('192.0.2.1')
+>>> ip = IPAddress('192.0.2.1')
 
 }}}
 
@@ -29,7 +31,7 @@ Standard repr() access returns a Python statement that can reconstruct the IP ad
 {{{
 
 >>> ip
-IP('192.0.2.1')
+IPAddress('192.0.2.1')
 
 }}}
 
@@ -49,8 +51,8 @@ Here are a few other common properties.
 
 {{{
 
->>> str(ip), ip.prefixlen, ip.version
-('192.0.2.1', 32, 4)
+>>> str(ip), ip.version
+('192.0.2.1', 4)
 
 }}}
 
@@ -76,69 +78,55 @@ You can view an individual IP address in various other formats.
 
 ==Representing IP Subnets==
 
-You might be wondering at this point what an IP object actually represents.
-
-Is it :-
-
-a) single IP address
-b) an IP subnet
-c) a combination of both
-
-The answer depends on what you pass to the constructor. The IP object is flexible enough to be all three. Technically, it is option c). While this may seem a bit odd at first it isn't a problem in practice. You access the information you require from using the object in different ways.
-
-Here is some examples to illustrate this :-
-
-This IP object represents a single address.
+IPNetwork objects are used to represent subnets that accept netmasks and CIDR prefixes.
 
 {{{
 
->>> ip = IP('192.0.2.1')
+>>> ip = IPNetwork('192.0.2.1')
 >>> ip.ip, ip.network, ip.broadcast, ip.netmask, ip.hostmask, ip.size
-(IP('192.0.2.1'), IP('192.0.2.1'), IP('192.0.2.1'), IP('255.255.255.255'), IP('0.0.0.0'), 1)
+(IPAddress('192.0.2.1'), IPAddress('192.0.2.1'), IPAddress('192.0.2.1'), IPAddress('255.255.255.255'), IPAddress('0.0.0.0'), 1)
 
 }}}
 
-In this case, the network and broadcast address at the same as the actual IP address, so you probably don't care about them.
-
-This IP object represents a subnet.
+In this case, the network and broadcast address at the same, akin to a host route.
 
 {{{
 
->>> ip = IP('192.0.2.0/24')
+>>> ip = IPNetwork('192.0.2.0/24')
 >>> ip.ip, ip.network, ip.broadcast, ip.netmask, ip.hostmask, ip.size
-(IP('192.0.2.0'), IP('192.0.2.0'), IP('192.0.2.255'), IP('255.255.255.0'), IP('0.0.0.255'), 256)
+(IPAddress('192.0.2.0'), IPAddress('192.0.2.0'), IPAddress('192.0.2.255'), IPAddress('255.255.255.0'), IPAddress('0.0.0.255'), 256)
 
 }}}
 
-Note here that the value of the IP address and its network address match. This is a *true* CIDR address (i.e. it doesn't have any non-zero bits to the right of the subnet mask.
+Here the value of the IP address and its network address match. This is a true CIDR address (i.e. it doesn't have any non-zero bits to the right of the subnet mask).
 
-An finally, this IP object represents a single address that belong to a given subnet.
+And finally, this IPNetwork object represents an IP address that belongs to a given IP subnet.
 
 {{{
 
->>> ip = IP('192.0.3.112/22')
+>>> ip = IPNetwork('192.0.3.112/22')
 >>> ip.ip, ip.network, ip.broadcast, ip.netmask, ip.hostmask, ip.size
-(IP('192.0.3.112'), IP('192.0.0.0'), IP('192.0.3.255'), IP('255.255.252.0'), IP('0.0.3.255'), 1024)
+(IPAddress('192.0.3.112'), IPAddress('192.0.0.0'), IPAddress('192.0.3.255'), IPAddress('255.255.252.0'), IPAddress('0.0.3.255'), 1024)
 
 }}}
 
-Internally, each IP object only stores 3 integers, the IP address value, the version of IP protocol the address represents and its CIDR prefix. All the other values are calculated on-the-fly as they are accessed.
+Internally, each IPNetwork object only stores 3 values, the IP address value, a reference to an IP protocol module for the IP version being represented by the object and the network CIDR prefix length. All the other values are calculated on-the-fly as they are accessed.
 
 It is possible to adjust the IP address value and the CIDR prefix after object instantiation.
 
 {{{
 
->>> ip = IP(0)
+>>> ip = IPNetwork('0.0.0.0/0')
 >>> ip
-IP('0.0.0.0')
+IPNetwork('0.0.0.0/0')
 >>> ip.value = '192.0.2.1'
 >>> ip
-IP('192.0.2.1')
+IPNetwork('192.0.2.1/0')
 >>> ip.prefixlen
-32
+0
 >>> ip.prefixlen = 23
 >>> ip
-IP('192.0.2.1/23')
+IPNetwork('192.0.2.1/23')
 
 }}}
 
@@ -147,13 +135,13 @@ There is also a property that lets you access the actual *true* CIDR address (af
 {{{
 
 >>> ip.cidr
-IP('192.0.2.0/23')
+IPNetwork('192.0.2.0/23')
 
 }}}
 
 This is handy for specifying some networking configurations correctly.
 
-If you want to access information about each of the various IP addresses that form the IP subnet, this is available by performing pass through calls to sub methods of each object.
+If you want to access information about each of the various IP addresses that form the IP subnet, this is available by performing pass through calls to sub methods of each IPAddress object.
 
 For example if you want to see a binary digit representation of each address you can do the following.
 
@@ -175,34 +163,34 @@ For example if you want to see a binary digit representation of each address you
 
 ==IPv6 support==
 
-IP objects provide full support for IPv6 addresses as well. To prove this, let's try a few examples.
+Full support for IPv6 addressing is provided as well. To prove this, let's try a few examples.
 
 {{{
 
->>> ip = IP(0, 6)
+>>> ip = IPAddress(0, 6)
 >>> ip
-IP('::')
+IPAddress('::')
 
->>> ip = IP('fe80::dead:beef/64')
+>>> ip = IPNetwork('fe80::dead:beef/64')
 
 >>> str(ip), ip.prefixlen, ip.version
 ('fe80::dead:beef/64', 64, 6)
 
->>> int(ip)
+>>> int(ip.ip)
 338288524927261089654018896845083623151L
 
->>> hex(ip)
+>>> hex(ip.ip)
 '0xfe8000000000000000000000deadbeef'
 
 Bit-style output isn't as quite as friendly as hexadecimal for such a long numbers, but here the proof that it at least works!
 
->>> ip.bits()
+>>> ip.ip.bits()
 '1111111010000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:1101111010101101:1011111011101111'
 
 Here are some networking details for an IPv6 subnet.
 
 >>> ip.network, ip.broadcast, ip.netmask, ip.hostmask
-(IP('fe80::'), IP('fe80::ffff:ffff:ffff:ffff'), IP('ffff:ffff:ffff:ffff::'), IP('::ffff:ffff:ffff:ffff'))
+(IPAddress('fe80::'), IPAddress('fe80::ffff:ffff:ffff:ffff'), IPAddress('ffff:ffff:ffff:ffff::'), IPAddress('::ffff:ffff:ffff:ffff'))
 
 }}}
 
@@ -214,16 +202,16 @@ Here are a couple of handy methods provided by the IP object to help you to this
 
 {{{
 
->>> ip = IP('192.0.2.1/23')
+>>> ip = IPNetwork('192.0.2.1/23')
 
 >>> ip.ipv4()
-IP('192.0.2.1/23')
+IPNetwork('192.0.2.1/23')
 
 >>> ip.ipv6()
-IP('::ffff:192.0.2.1/119')
+IPNetwork('::ffff:192.0.2.1/119')
 
 >>> ip.ipv6(ipv4_compatible=True)
-IP('::192.0.2.1/119')
+IPNetwork('::192.0.2.1/119')
 
 }}}
 
@@ -231,11 +219,11 @@ Note that the IP object returns IPv4 "mapped" addresses by default in preference
 
 ==List Operations On IP Objects==
 
-If you treat an IP object as if it were a standard Python list object it will behave as if you are accessing a list of individual IP objects. This of course is illusory and they are not created until you access them.
+If you treat an IP network object as if it were a standard Python list object it will give you access to a list of individual IP address objects. This of course is illusory and they are not created until you access them.
 
 {{{
 
->>> ip = IP('192.0.2.16/29')
+>>> ip = IPNetwork('192.0.2.16/29')
 
 }}}
 
@@ -247,7 +235,7 @@ Accessing an IP object using the list() context invokes the default generator wh
 >>> len(ip_list)
 8
 >>> ip_list
-[IP('192.0.2.16'), IP('192.0.2.17'), ..., IP('192.0.2.22'), IP('192.0.2.23')]
+[IPAddress('192.0.2.16'), IPAddress('192.0.2.17'), ..., IPAddress('192.0.2.22'), IPAddress('192.0.2.23')]
 
 }}}
 
@@ -265,13 +253,13 @@ You can use standard index access to IP addresses in the subnet.
 {{{
 
 >>> ip[0]
-IP('192.0.2.16')
+IPAddress('192.0.2.16')
 
 >>> ip[1]
-IP('192.0.2.17')
+IPAddress('192.0.2.17')
 
 >>> ip[-1]
-IP('192.0.2.23')
+IPAddress('192.0.2.23')
 
 }}}
 
@@ -291,7 +279,7 @@ Here is how you'd access all elements in a slice.
 {{{
 
 >>> list(ip[0:4])
-[IP('192.0.2.16'), IP('192.0.2.17'), IP('192.0.2.18'), IP('192.0.2.19')]
+[IPAddress('192.0.2.16'), IPAddress('192.0.2.17'), IPAddress('192.0.2.18'), IPAddress('192.0.2.19')]
 
 }}}
 
@@ -300,7 +288,7 @@ Extended slicing is also supported.
 {{{
 
 >>> list(ip[0::2])
-[IP('192.0.2.16'), IP('192.0.2.18'), IP('192.0.2.20'), IP('192.0.2.22')]
+[IPAddress('192.0.2.16'), IPAddress('192.0.2.18'), IPAddress('192.0.2.20'), IPAddress('192.0.2.22')]
 
 }}}
 
@@ -309,7 +297,7 @@ List reversal.
 {{{
 
 >>> list(ip[-1::-1])
-[IP('192.0.2.23'), IP('192.0.2.22'), ..., IP('192.0.2.17'), IP('192.0.2.16')]
+[IPAddress('192.0.2.23'), IPAddress('192.0.2.22'), ..., IPAddress('192.0.2.17'), IPAddress('192.0.2.16')]
 
 }}}
 
@@ -317,7 +305,7 @@ Use of generators ensures working with large IP subnets is efficient.
 
 {{{
 
->>> for ip in IP('192.0.2.0/23'):
+>>> for ip in IPNetwork('192.0.2.0/23'):
 ...    print '%s' % ip
 ...
 192.0.2.0
@@ -338,7 +326,7 @@ Here is the iterator provided for accessing these IP addresses :-
 
 {{{
 
->>> for ip in IP('192.0.2.0/23').iter_hosts():
+>>> for ip in IPNetwork('192.0.2.0/23').iter_hosts():
 ...     print '%s' % ip
 ...
 192.0.2.1
@@ -362,10 +350,10 @@ Here is how sorting works with individual addresses.
 {{{
 
 >>> import random
->>> ip_list = list(IP('192.0.2.128/28'))
+>>> ip_list = list(IPNetwork('192.0.2.128/28'))
 >>> random.shuffle(ip_list)
 >>> sorted(ip_list)
-[IP('192.0.2.128'), IP('192.0.2.129'), IP('192.0.2.130'), IP('192.0.2.131'), IP('192.0.2.132'), IP('192.0.2.133'), IP('192.0.2.134'), IP('192.0.2.135'), IP('192.0.2.136'), IP('192.0.2.137'), IP('192.0.2.138'), IP('192.0.2.139'), IP('192.0.2.140'), IP('192.0.2.141'), IP('192.0.2.142'), IP('192.0.2.143')]
+[IPAddress('192.0.2.128'), IPAddress('192.0.2.129'), IPAddress('192.0.2.130'), IPAddress('192.0.2.131'), IPAddress('192.0.2.132'), IPAddress('192.0.2.133'), IPAddress('192.0.2.134'), IPAddress('192.0.2.135'), IPAddress('192.0.2.136'), IPAddress('192.0.2.137'), IPAddress('192.0.2.138'), IPAddress('192.0.2.139'), IPAddress('192.0.2.140'), IPAddress('192.0.2.141'), IPAddress('192.0.2.142'), IPAddress('192.0.2.143')]
 
 }}}
 
@@ -373,11 +361,11 @@ You can just as easily sort IP subnets at the same time, including combinations 
 
 {{{
 
->>> ip_list = [IP('192.0.2.130'), IP('10.0.0.1'), IP('192.0.2.128/28'), IP('192.0.3.0/24'), IP('192.0.2.0/24'), IP('fe80::/64'), IP('::'), IP('172.24/12')]
+>>> ip_list = [IPAddress('192.0.2.130'), IPAddress('10.0.0.1'), IPNetwork('192.0.2.128/28'), IPNetwork('192.0.3.0/24'), IPNetwork('192.0.2.0/24'), IPNetwork('fe80::/64'), IPAddress('::'), IPNetwork('172.24/12')]
 >>> random.shuffle(ip_list)
 >>> ip_list.sort()
 >>> ip_list
-[IP('10.0.0.1'), IP('172.0.0.24/12'), IP('192.0.2.0/24'), IP('192.0.2.128/28'), IP('192.0.2.130'), IP('192.0.3.0/24'), IP('::'), IP('fe80::/64')]
+[IPAddress('10.0.0.1'), IPNetwork('172.0.0.24/12'), IPNetwork('192.0.2.0/24'), IPNetwork('192.0.2.128/28'), IPAddress('192.0.2.130'), IPNetwork('192.0.3.0/24'), IPAddress('::'), IPNetwork('fe80::/64')]
 
 }}}
 
@@ -393,15 +381,15 @@ First we create a list of IP objects that is a good mix of individual addresses 
 
 {{{
 
->>> ip_list = [ip for ip in IP('fe80::/120')]
->>> ip_list.append(IP('192.0.2.0/24'))
->>> ip_list.extend([str(ip) for ip in IP('192.0.3.0/24')])
->>> ip_list.append(IP('192.0.4.0/25'))
->>> ip_list.append(IP('192.0.4.128/25'))
+>>> ip_list = [ip for ip in IPNetwork('fe80::/120')]
+>>> ip_list.append(IPNetwork('192.0.2.0/24'))
+>>> ip_list.extend([str(ip) for ip in IPNetwork('192.0.3.0/24')])
+>>> ip_list.append(IPNetwork('192.0.4.0/25'))
+>>> ip_list.append(IPNetwork('192.0.4.128/25'))
 >>> len(ip_list)
 515
 >>> cidr_merge(ip_list)
-[IP('192.0.2.0/23'), IP('192.0.4.0/24'), IP('fe80::/120')]
+[IPNetwork('192.0.2.0/23'), IPNetwork('192.0.4.0/24'), IPNetwork('fe80::/120')]
 
 }}}
 
@@ -417,7 +405,7 @@ The iter_iprange() function allow you to do just this.
 >>> len(ip_list)
 13
 >>> ip_list
-[IP('192.0.2.1'), IP('192.0.2.2'), ..., IP('192.0.2.12'), IP('192.0.2.13')]
+[IPAddress('192.0.2.1'), IPAddress('192.0.2.2'), ..., IPAddress('192.0.2.12'), IPAddress('192.0.2.13')]
 
 }}}
 
@@ -428,7 +416,7 @@ Here is cidr_merge() coming to the rescue.
 {{{
 
 >>> cidr_merge(ip_list)
-[IP('192.0.2.1'), IP('192.0.2.2/31'), IP('192.0.2.4/30'), IP('192.0.2.8/30'), IP('192.0.2.12/31')]
+[IPNetwork('192.0.2.1/32'), IPNetwork('192.0.2.2/31'), IPNetwork('192.0.2.4/30'), IPNetwork('192.0.2.8/30'), IPNetwork('192.0.2.12/31')]
 
 }}}
 
@@ -438,7 +426,7 @@ It is quite common to have a large CIDR subnet that you may want to split up int
 
 {{{
 
->>> ip = IP('172.24.0.0/16')
+>>> ip = IPNetwork('172.24.0.0/16')
 >>> ip.subnet(23)
 <generator object ...>
 
@@ -452,7 +440,7 @@ Again this method produces and iterator because of the possibility for a large n
 >>> len(subnets)
 128
 >>> subnets
-[IP('172.24.0.0/23'), IP('172.24.2.0/23'), IP('172.24.4.0/23'), ..., IP('172.24.250.0/23'), IP('172.24.252.0/23'), IP('172.24.254.0/23')]
+[IPNetwork('172.24.0.0/23'), IPNetwork('172.24.2.0/23'), IPNetwork('172.24.4.0/23'), ..., IPNetwork('172.24.250.0/23'), IPNetwork('172.24.252.0/23'), IPNetwork('172.24.254.0/23')]
 
 }}}
 
@@ -460,9 +448,9 @@ It is also possible to retrieve the list of supernets that a given IP address or
  
 {{{
 
->>> ip = IP('192.0.2.114')
+>>> ip = IPNetwork('192.0.2.114')
 >>> ip.supernet(22)
-[IP('192.0.0.0/22'), IP('192.0.2.0/23'), IP('192.0.2.0/24'), IP('192.0.2.0/25'), IP('192.0.2.64/26'), IP('192.0.2.96/27'), IP('192.0.2.112/28'), IP('192.0.2.112/29'), IP('192.0.2.112/30'), IP('192.0.2.114/31')]
+[IPNetwork('192.0.0.0/22'), IPNetwork('192.0.2.0/23'), IPNetwork('192.0.2.0/24'), IPNetwork('192.0.2.0/25'), IPNetwork('192.0.2.64/26'), IPNetwork('192.0.2.96/27'), IPNetwork('192.0.2.112/28'), IPNetwork('192.0.2.112/29'), IPNetwork('192.0.2.112/30'), IPNetwork('192.0.2.114/31')]
 
 }}}
 
@@ -482,7 +470,7 @@ Here is an example of these rules for the whole of the IPv4 address space.
 >>> len(cidrs)
 256
 >>> cidrs
-['0.0.0.0/8', ..., '127.0.0.0/8', '128.0.0.0/16', ..., '191.0.0.0/16', '192.0.0.0/24', ..., '223.0.0.0/24', '224.0.0.0/4', '225.0.0.0/8', ..., '239.0.0.0/8', '240.0.0.0/32', ..., '255.0.0.0/32']
+['0.0.0.0/8', '1.0.0.0/8', '2.0.0.0/8', '3.0.0.0/8', '4.0.0.0/8', '5.0.0.0/8', '6.0.0.0/8', '7.0.0.0/8', '8.0.0.0/8', '9.0.0.0/8', '10.0.0.0/8', '11.0.0.0/8', '12.0.0.0/8', '13.0.0.0/8', '14.0.0.0/8', '15.0.0.0/8', '16.0.0.0/8', '17.0.0.0/8', '18.0.0.0/8', '19.0.0.0/8', '20.0.0.0/8', '21.0.0.0/8', '22.0.0.0/8', '23.0.0.0/8', '24.0.0.0/8', '25.0.0.0/8', '26.0.0.0/8', '27.0.0.0/8', '28.0.0.0/8', '29.0.0.0/8', '30.0.0.0/8', '31.0.0.0/8', '32.0.0.0/8', '33.0.0.0/8', '34.0.0.0/8', '35.0.0.0/8', '36.0.0.0/8', '37.0.0.0/8', '38.0.0.0/8', '39.0.0.0/8', '40.0.0.0/8', '41.0.0.0/8', '42.0.0.0/8', '43.0.0.0/8', '44.0.0.0/8', '45.0.0.0/8', '46.0.0.0/8', '47.0.0.0/8', '48.0.0.0/8', '49.0.0.0/8', '50.0.0.0/8', '51.0.0.0/8', '52.0.0.0/8', '53.0.0.0/8', '54.0.0.0/8', '55.0.0.0/8', '56.0.0.0/8', '57.0.0.0/8', '58.0.0.0/8', '59.0.0.0/8', '60.0.0.0/8', '61.0.0.0/8', '62.0.0.0/8', '63.0.0.0/8', '64.0.0.0/8', '65.0.0.0/8', '66.0.0.0/8', '67.0.0.0/8', '68.0.0.0/8', '69.0.0.0/8', '70.0.0.0/8', '71.0.0.0/8', '72.0.0.0/8', '73.0.0.0/8', '74.0.0.0/8', '75.0.0.0/8', '76.0.0.0/8', '77.0.0.0/8', '78.0.0.0/8', '79.0.0.0/8', '80.0.0.0/8', '81.0.0.0/8', '82.0.0.0/8', '83.0.0.0/8', '84.0.0.0/8', '85.0.0.0/8', '86.0.0.0/8', '87.0.0.0/8', '88.0.0.0/8', '89.0.0.0/8', '90.0.0.0/8', '91.0.0.0/8', '92.0.0.0/8', '93.0.0.0/8', '94.0.0.0/8', '95.0.0.0/8', '96.0.0.0/8', '97.0.0.0/8', '98.0.0.0/8', '99.0.0.0/8', '100.0.0.0/8', '101.0.0.0/8', '102.0.0.0/8', '103.0.0.0/8', '104.0.0.0/8', '105.0.0.0/8', '106.0.0.0/8', '107.0.0.0/8', '108.0.0.0/8', '109.0.0.0/8', '110.0.0.0/8', '111.0.0.0/8', '112.0.0.0/8', '113.0.0.0/8', '114.0.0.0/8', '115.0.0.0/8', '116.0.0.0/8', '117.0.0.0/8', '118.0.0.0/8', '119.0.0.0/8', '120.0.0.0/8', '121.0.0.0/8', '122.0.0.0/8', '123.0.0.0/8', '124.0.0.0/8', '125.0.0.0/8', '126.0.0.0/8', '127.0.0.0/8', '128.0.0.0/16', '129.0.0.0/16', '130.0.0.0/16', '131.0.0.0/16', '132.0.0.0/16', '133.0.0.0/16', '134.0.0.0/16', '135.0.0.0/16', '136.0.0.0/16', '137.0.0.0/16', '138.0.0.0/16', '139.0.0.0/16', '140.0.0.0/16', '141.0.0.0/16', '142.0.0.0/16', '143.0.0.0/16', '144.0.0.0/16', '145.0.0.0/16', '146.0.0.0/16', '147.0.0.0/16', '148.0.0.0/16', '149.0.0.0/16', '150.0.0.0/16', '151.0.0.0/16', '152.0.0.0/16', '153.0.0.0/16', '154.0.0.0/16', '155.0.0.0/16', '156.0.0.0/16', '157.0.0.0/16', '158.0.0.0/16', '159.0.0.0/16', '160.0.0.0/16', '161.0.0.0/16', '162.0.0.0/16', '163.0.0.0/16', '164.0.0.0/16', '165.0.0.0/16', '166.0.0.0/16', '167.0.0.0/16', '168.0.0.0/16', '169.0.0.0/16', '170.0.0.0/16', '171.0.0.0/16', '172.0.0.0/16', '173.0.0.0/16', '174.0.0.0/16', '175.0.0.0/16', '176.0.0.0/16', '177.0.0.0/16', '178.0.0.0/16', '179.0.0.0/16', '180.0.0.0/16', '181.0.0.0/16', '182.0.0.0/16', '183.0.0.0/16', '184.0.0.0/16', '185.0.0.0/16', '186.0.0.0/16', '187.0.0.0/16', '188.0.0.0/16', '189.0.0.0/16', '190.0.0.0/16', '191.0.0.0/16', '192.0.0.0/24', '193.0.0.0/24', '194.0.0.0/24', '195.0.0.0/24', '196.0.0.0/24', '197.0.0.0/24', '198.0.0.0/24', '199.0.0.0/24', '200.0.0.0/24', '201.0.0.0/24', '202.0.0.0/24', '203.0.0.0/24', '204.0.0.0/24', '205.0.0.0/24', '206.0.0.0/24', '207.0.0.0/24', '208.0.0.0/24', '209.0.0.0/24', '210.0.0.0/24', '211.0.0.0/24', '212.0.0.0/24', '213.0.0.0/24', '214.0.0.0/24', '215.0.0.0/24', '216.0.0.0/24', '217.0.0.0/24', '218.0.0.0/24', '219.0.0.0/24', '220.0.0.0/24', '221.0.0.0/24', '222.0.0.0/24', '223.0.0.0/24', '224.0.0.0/4', '225.0.0.0/4', '226.0.0.0/4', '227.0.0.0/4', '228.0.0.0/4', '229.0.0.0/4', '230.0.0.0/4', '231.0.0.0/4', '232.0.0.0/4', '233.0.0.0/4', '234.0.0.0/4', '235.0.0.0/4', '236.0.0.0/4', '237.0.0.0/4', '238.0.0.0/4', '239.0.0.0/4', '240.0.0.0/32', '241.0.0.0/32', '242.0.0.0/32', '243.0.0.0/32', '244.0.0.0/32', '245.0.0.0/32', '246.0.0.0/32', '247.0.0.0/32', '248.0.0.0/32', '249.0.0.0/32', '250.0.0.0/32', '251.0.0.0/32', '252.0.0.0/32', '253.0.0.0/32', '254.0.0.0/32', '255.0.0.0/32']
 
 }}}
 
@@ -492,41 +480,41 @@ IP addresses fall several broad categories and not all are suitable for assignme
 
 Unicast
 
->>> IP('192.0.2.1').is_unicast()
+>>> IPAddress('192.0.2.1').is_unicast()
 True
 
->>> IP('fe80::1').is_unicast()
+>>> IPAddress('fe80::1').is_unicast()
 True
 
 Multicast
 
->>> IP('239.192.0.1').is_multicast()
+>>> IPAddress('239.192.0.1').is_multicast()
 True
 
->>> IP('ff00::1').is_multicast()
+>>> IPAddress('ff00::1').is_multicast()
 True
 
 Private
 
->>> IP('172.24.0.1').is_private()
+>>> IPAddress('172.24.0.1').is_private()
 True
 
->>> IP('10.0.0.1').is_private()
+>>> IPAddress('10.0.0.1').is_private()
 True
 
->>> IP('192.168.0.1').is_private()
+>>> IPAddress('192.168.0.1').is_private()
 True
 
 Reserved
 
->>> IP('253.0.0.1').is_reserved()
+>>> IPAddress('253.0.0.1').is_reserved()
 True
 
 Public (Internet) addresses.
 
 Note that not all of these may be allocated by the various regional Internet registrars.
 
->>> ip = IP('62.125.24.5')
+>>> ip = IPAddress('62.125.24.5')
 >>> ip.is_unicast() and not ip.is_private()
 True
 
@@ -534,24 +522,24 @@ There are also other types of addresses that have specific functions e.g. maskin
 
 Netmasks
 
->>> IP('255.255.254.0').is_netmask()
+>>> IPAddress('255.255.254.0').is_netmask()
 True
 
 Hostmasks
 
->>> IP('0.0.1.255').is_hostmask()
+>>> IPAddress('0.0.1.255').is_hostmask()
 True
 
 Loopback addresses
 
 IPv4
 
->>> IP('127.0.0.1').is_loopback()
+>>> IPAddress('127.0.0.1').is_loopback()
 True
 
 IPv6
 
->>> IP('::1').is_loopback()
+>>> IPAddress('::1').is_loopback()
 True
 
 ==IP address comparisons==
@@ -560,59 +548,59 @@ IP objects can be compared with each other. As an IP object can represent both a
 
 Here are some comparisons of individual IP address to get the ball rolling.
 
->>> IP('192.0.2.1') == IP('192.0.2.1')
+>>> IPAddress('192.0.2.1') == IPAddress('192.0.2.1')
 True
 
->>> IP('192.0.2.1') < IP('192.0.2.2')
+>>> IPAddress('192.0.2.1') < IPAddress('192.0.2.2')
 True
 
->>> IP('192.0.2.2') > IP('192.0.2.1')
+>>> IPAddress('192.0.2.2') > IPAddress('192.0.2.1')
 True
 
->>> IP('192.0.2.1') != IP('192.0.2.1')
+>>> IPAddress('192.0.2.1') != IPAddress('192.0.2.1')
 False
 
->>> IP('192.0.2.1') >= IP('192.0.2.1')
+>>> IPAddress('192.0.2.1') >= IPAddress('192.0.2.1')
 True
 
->>> IP('192.0.2.2') >= IP('192.0.2.1')
+>>> IPAddress('192.0.2.2') >= IPAddress('192.0.2.1')
 True
 
->>> IP('192.0.2.1') <= IP('192.0.2.1')
+>>> IPAddress('192.0.2.1') <= IPAddress('192.0.2.1')
 True
 
->>> IP('192.0.2.1') <= IP('192.0.2.2')
+>>> IPAddress('192.0.2.1') <= IPAddress('192.0.2.2')
 True
 
 Now lets try something a little more interesting.
 
->>> IP('192.0.2.0/24') == IP('192.0.2.112/24')
+>>> IPNetwork('192.0.2.0/24') == IPNetwork('192.0.2.112/24')
 True
 
 Hmmmmmmmm... looks a bit odd doesn't it? That's because by default, IP objects compare their subnets (or lower and upper boundaries) rather than their individual IP address values.
 
 The solution to this situation is very simple. Knowing this default behaviour, just be explicit about exactly which portion of each IP object you'd like to compare using pass-through properties.
 
->>> IP('192.0.2.0/24').ip == IP('192.0.2.112/24').ip
+>>> IPNetwork('192.0.2.0/24').ip == IPNetwork('192.0.2.112/24').ip
 False
 
->>> IP('192.0.2.0/24').ip < IP('192.0.2.112/24').ip
+>>> IPNetwork('192.0.2.0/24').ip < IPNetwork('192.0.2.112/24').ip
 True
 
 That's more like it. You can also be explicit about comparing networks in this way if you so wish (although it is not strictly necessary).
 
->>> IP('192.0.2.0/24').cidr == IP('192.0.2.112/24').cidr
+>>> IPNetwork('192.0.2.0/24').cidr == IPNetwork('192.0.2.112/24').cidr
 True
 
 Armed with this information here are some examples of network comparisons.
 
->>> IP('192.0.2.0/24') == IP('192.0.3.0/24')
+>>> IPNetwork('192.0.2.0/24') == IPNetwork('192.0.3.0/24')
 False
 
->>> IP('192.0.2.0/24') < IP('192.0.3.0/24')
+>>> IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
 True
 
->>> IP('192.0.2.0/24') < IP('192.0.3.0/24')
+>>> IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
 True
 
 ==Interaction with DNS==
@@ -625,7 +613,7 @@ IPv4
 
 {{{
 
->>> IP('172.24.0.13').reverse_dns
+>>> IPAddress('172.24.0.13').reverse_dns
 '13.0.24.172.in-addr.arpa.'
 
 }}}
@@ -634,7 +622,7 @@ IPv6
 
 {{{
 
->>> IP('fe80::feeb:daed').reverse_dns
+>>> IPAddress('fe80::feeb:daed').reverse_dns
 'd.e.a.d.b.e.e.f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.'
 
 }}}

@@ -13,14 +13,14 @@ Abbreviation tests.
 {{{
 
 >>> ranges = (
-... (IP('::'), IP('::')),
-... (IP('0.0.0.0'), IP('255.255.255.255')),
-... (IP('::'), IP('::FFFF')),
-... (IP('0.0.0.0'), IP('0.0.0.0')),
+... (IPAddress('::'), IPAddress('::')),
+... (IPAddress('0.0.0.0'), IPAddress('255.255.255.255')),
+... (IPAddress('::'), IPAddress('::FFFF')),
+... (IPAddress('0.0.0.0'), IPAddress('0.0.0.0')),
 ... )
 
 >>> sorted(ranges)
-[(IP('0.0.0.0'), IP('0.0.0.0')), (IP('0.0.0.0'), IP('255.255.255.255')), (IP('::'), IP('::')), (IP('::'), IP('::ffff'))]
+[(IPAddress('0.0.0.0'), IPAddress('0.0.0.0')), (IPAddress('0.0.0.0'), IPAddress('255.255.255.255')), (IPAddress('::'), IPAddress('::')), (IPAddress('::'), IPAddress('::ffff'))]
 
 #   Integer values.
 >>> cidr_abbrev_to_verbose(-1)
@@ -50,9 +50,9 @@ Abbreviation tests.
 >>> cidr_abbrev_to_verbose(224)
 '224.0.0.0/4'
 >>> cidr_abbrev_to_verbose(225)
-'225.0.0.0/8'
+'225.0.0.0/4'
 >>> cidr_abbrev_to_verbose(239)
-'239.0.0.0/8'
+'239.0.0.0/4'
 
 #   Class E (reserved)
 >>> cidr_abbrev_to_verbose(240)
@@ -92,9 +92,9 @@ Abbreviation tests.
 >>> cidr_abbrev_to_verbose('224')
 '224.0.0.0/4'
 >>> cidr_abbrev_to_verbose('225')
-'225.0.0.0/8'
+'225.0.0.0/4'
 >>> cidr_abbrev_to_verbose('239')
-'239.0.0.0/8'
+'239.0.0.0/4'
 
 #   Class E (reserved)
 >>> cidr_abbrev_to_verbose('240')

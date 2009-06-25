@@ -12,7 +12,7 @@ Incrementing IP objects.
 
 {{{
 
->>> ip = IP('192.0.2.0/28')
+>>> ip = IPNetwork('192.0.2.0/28')
 >>> for i in range(16):
 ...     str(ip)
 ...     ip += 1
