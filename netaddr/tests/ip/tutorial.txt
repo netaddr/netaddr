@@ -66,11 +66,11 @@ You can view an individual IP address in various other formats.
 >>> hex(ip)
 '0xc0000201'
 
+>>> ip.bin
+'0b11000000000000000000001000000001'
+
 >>> ip.bits()
 '11000000.00000000.00000010.00000001'
-
->>> ip.bin()
-'0b11000000000000000000001000000001'
 
 }}}
 
@@ -625,7 +625,7 @@ IPv4
 
 {{{
 
->>> IP('172.24.0.13').reverse_dns()
+>>> IP('172.24.0.13').reverse_dns
 '13.0.24.172.in-addr.arpa.'
 
 }}}
@@ -634,7 +634,7 @@ IPv6
 
 {{{
 
->>> IP('fe80::feeb:daed').reverse_dns()
+>>> IP('fe80::feeb:daed').reverse_dns
 'd.e.a.d.b.e.e.f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.'
 
 }}}

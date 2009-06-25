@@ -196,7 +196,8 @@ def iprange_to_globs(start, end):
 #-----------------------------------------------------------------------------
 def glob_to_cidrs(ipglob):
     """
-    A function that accepts a glob-style IP range and returns a list of one or more IP CIDRs that exactly matches it.
+    A function that accepts a glob-style IP range and returns a list of one
+    or more IP CIDRs that exactly matches it.
 
     @param ipglob: an IP address range in a glob-style format.
 

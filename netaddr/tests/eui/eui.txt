@@ -42,7 +42,7 @@ Individual Address Block tests.
 >>> lower_eui = EUI('00-50-C2-05-C0-00')
 >>> upper_eui = EUI('00-50-C2-05-CF-FF')
 
->>> lower_eui.isiab()
+>>> lower_eui.is_iab()
 True
 
 >>> str(lower_eui.oui)
@@ -60,7 +60,7 @@ True
 >>> int(lower_eui.iab) == 0x0050c205c
 True
 
->>> upper_eui.isiab()
+>>> upper_eui.is_iab()
 True
 
 >>> str(upper_eui.oui)
@@ -150,5 +150,20 @@ False
 Sortability
 
 {{{
+
+>>> import random
+
+>>> eui_list = [EUI(0, 64), EUI(0), EUI(0xffffffffffff, dialect=mac_unix), EUI(0x1000000000000)]
+
+>>> random.shuffle(eui_list)
+
+>>> eui_list.sort()
+
+>>> for eui in eui_list:
+... 	str(eui), eui.version
+('00-00-00-00-00-00', 48)
+('ff:ff:ff:ff:ff:ff', 48)
+('00-00-00-00-00-00-00-00', 64)
+('00-01-00-00-00-00-00-00', 64)
 
 }}}

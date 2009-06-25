@@ -1,0 +1,26 @@
+=Core Module Tests=
+
+Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+
+Basic Publisher and Subscriber object tests.
+
+{{{
+
+>>> from netaddr.core import Publisher, Subscriber, PrettyPrinter
+
+>>> class Subject(Publisher):
+...     pass
+
+
+>>> class Object(Subscriber):
+...     def update(self, data):
+...         print data
+
+>>> s = Subject()
+
+>>> s.attach(Object())
+
+>>> s.notify({'foo': 42})
+{'foo': 42}
+
+}}}

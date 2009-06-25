@@ -148,7 +148,7 @@ class OUI(object):
 
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object."""
-        return '%s(%r)' % (self.__class__.__name__, str(self))
+        return "OUI('%s')" % self
 
 #-----------------------------------------------------------------------------
 class IAB(object):
@@ -283,13 +283,14 @@ class IAB(object):
 
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object."""
-        return 'IAB(%s)' % self
+        return "IAB('%s')" % self
 
 #-----------------------------------------------------------------------------
 class EUI(object):
     """
-    Represents an IEEE EUI (Extended Unique Identifier). Both EUI-48, better
-    known as a MAC (Media Access Control) address and EUI-64 are supported.
+    Represents an IEEE EUI (Extended Unique Identifier).
+
+    Both EUI-48 (used for layer 2 MAC addresses) and EUI-64 are supported.
 
     Input parsing for EUI-48 addresses is flexible, supporting many MAC
     variants.
@@ -308,8 +309,13 @@ class EUI(object):
         self._value = None
         self._module = None
 
-        if version is not None and version not in (48, 64):
-            raise ValueError('Unsupport EUI version: %r!' % version)
+        if version is not None:
+            if version == 48:
+                self._module = _eui48
+            elif version == 64:
+                self._module = _eui64
+            else:
+                raise ValueError('unsupported EUI version %r' % version)
 
         if dialect is None:
             self._dialect = mac_eui48
@@ -318,10 +324,11 @@ class EUI(object):
 
         #   Choose a default version when addr is an integer and version is
         #   not specified.
-        if 0 <= addr <= 0xffffffffffff:
-            self._module = _eui48
-        elif 0xffffffffffff < addr <= 0xffffffffffffffff:
-            self._module = _eui64
+        if self._module is None:
+            if 0 <= addr <= 0xffffffffffff:
+                self._module = _eui48
+            elif 0xffffffffffff < addr <= 0xffffffffffffffff:
+                self._module = _eui64
 
         self.value = addr
 
@@ -375,8 +382,8 @@ class EUI(object):
             self._dialect = value
 
     dialect = property(_get_dialect, _set_dialect, None,
-        'a Python class providing support for the interpretation of various'
-        ' MAC address formats.')
+        "a Python class providing support for the interpretation of "
+        "various MAC\n address formats.")
 
     @property
     def oui(self):
@@ -394,17 +401,17 @@ class EUI(object):
         elif self._module == _eui64:
             return '-'.join(["%02x" % i for i in self[3:8]]).upper()
 
-    def isiab(self):
+    def is_iab(self):
         """@return: True if this EUI is an IAB address, False otherwise"""
         return 0x50c2000 <= (self._value >> 12) <= 0x50c2fff
 
     @property
     def iab(self):
         """
-        If isiab() is True, the IAB (Individual Address Block) is returned,
+        If is_iab() is True, the IAB (Individual Address Block) is returned,
         C{None} otherwise.
         """
-        if self.isiab():
+        if self.is_iab():
             return IAB(self._value >> 12)
 
     @property
@@ -610,6 +617,6 @@ class EUI(object):
             EUI (MAC-48) if available, None otherwise.
         """
         data = {'OUI': self.oui().registration()}
-        if self.isiab():
+        if self.is_iab():
             data['IAB'] = self.iab().registration()
         return data

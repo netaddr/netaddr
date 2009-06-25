@@ -67,19 +67,26 @@ class NotRegisteredError(Exception):
 
 #-----------------------------------------------------------------------------
 class FileIndexer(Subscriber):
-    """Stores index data found by a parser in a CSV file"""
-    def __init__(self, filename):
+    """
+    A concrete Subscriber that receives OUI record offset information that is written to an index data file as a set of comma separated records.
+    """
+    def __init__(self, index_file):
         """
         Constructor.
 
-        filename - location of CSV index file.
+        @param index_file: a file-like object or name of index file where
+            index records will be written.
         """
-        self.fh = open(filename, 'w')
+        if hasattr(index_file, 'readline') and hasattr(index_file, 'tell'):
+            self.fh = index_file
+        else:
+            self.fh = open(index_file, 'w')
+
         self.writer = _csv.writer(self.fh, lineterminator="\n")
 
     def update(self, data):
         """
-        Write received record to a CSV file
+        Receives and writes index data to a CSV data file.
 
         @param data: record containing offset record information.
         """
@@ -88,18 +95,18 @@ class FileIndexer(Subscriber):
 #-----------------------------------------------------------------------------
 class OUIIndexParser(Publisher):
     """
-    A parser that processes OUI (Organisationally Unique Identifier)
-    registration file data published by the IEEE.
+    A concrete Publisher that parses OUI (Organisationally Unique Identifier)
+    records from IEEE text-based registration files
 
-    It sends out notifications to registered subscribers for each record it
-    encounters, passing on the record's position relative to file start
-    (offset) and the size of the record (in bytes).
+    It notifies registered Subscribers as each record is encountered, passing
+    on the record's position relative to the start of the file (offset) and
+    the size of the record (in bytes).
 
-    The file is available online here :-
+    The file processed by this parser is available online from this URL :-
 
         - U{http://standards.ieee.org/regauth/oui/oui.txt}
 
-    Sample record::
+    This is a sample of the record structure expected::
 
         00-CA-FE   (hex)        ACME CORPORATION
         00CAFE     (base 16)        ACME CORPORATION
@@ -107,17 +114,26 @@ class OUIIndexParser(Publisher):
                         SPRINGFIELD
                         UNITED STATES
     """
-    def __init__(self, filename):
+    def __init__(self, ieee_file):
         """
         Constructor.
 
-        filename - location of file containing OUI records.
+        @param ieee_file: a file-like object or name of file containing OUI
+            records. When using a file-like object always open it in binary
+            mode otherwise offsets will probably misbehave.
         """
         super(OUIIndexParser, self).__init__()
-        self.fh = open(filename, 'rb')
+
+        if hasattr(ieee_file, 'readline') and hasattr(ieee_file, 'tell'):
+            self.fh = ieee_file
+        else:
+            self.fh = open(ieee_file, 'rb')
 
     def parse(self):
-        """Parse an OUI registration file for records notifying subscribers"""
+        """
+        Starts the parsing process which detects records and notifies
+        registered subscribers as it finds each OUI record.
+        """
         skip_header = True
         record = None
         size = 0
@@ -158,18 +174,18 @@ class OUIIndexParser(Publisher):
 #-----------------------------------------------------------------------------
 class IABIndexParser(Publisher):
     """
-    A parser that processes IAB (Individual Address Block) registration file
-    data published by the IEEE.
+    A concrete Publisher that parses IAB (Individual Address Block) records
+    from IEEE text-based registration files
 
-    It sends out notifications to registered Subscriber objects for each
-    record it encounters, passing on the record's position relative to file
-    start (offset) and the size of the record (in bytes).
+    It notifies registered Subscribers as each record is encountered, passing
+    on the record's position relative to the start of the file (offset) and
+    the size of the record (in bytes).
 
-    The file is available online here :-
+    The file processed by this parser is available online from this URL :-
 
         - U{http://standards.ieee.org/regauth/oui/iab.txt}
 
-    Sample record::
+    This is a sample of the record structure expected::
 
         00-50-C2   (hex)        ACME CORPORATION
         ABC000-ABCFFF     (base 16)        ACME CORPORATION
@@ -177,17 +193,26 @@ class IABIndexParser(Publisher):
                         SPRINGFIELD
                         UNITED STATES
     """
-    def __init__(self, filename):
+    def __init__(self, ieee_file):
         """
         Constructor.
 
-        filename - location of file containing IAB records.
+        @param ieee_file: a file-like object or name of file containing IAB
+            records. When using a file-like object always open it in binary
+            mode otherwise offsets will probably misbehave.
         """
         super(IABIndexParser, self).__init__()
-        self.fh = open(filename, 'rb')
+
+        if hasattr(ieee_file, 'readline') and hasattr(ieee_file, 'tell'):
+            self.fh = ieee_file
+        else:
+            self.fh = open(ieee_file, 'rb')
 
     def parse(self):
-        """Parse an IAB registration file for records notifying subscribers"""
+        """
+        Starts the parsing process which detects records and notifies
+        registered subscribers as it finds each IAB record.
+        """
         skip_header = True
         record = None
         size = 0

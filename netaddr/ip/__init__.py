@@ -15,19 +15,20 @@ from netaddr.strategy import ipv6 as _ipv6
 #-----------------------------------------------------------------------------
 class IP(object):
     """
-    Represents an individual IP address or an IP network with subnet prefix.
-    The subnet prefix may either be an integer CIDR prefix, a netmask IP
-    address or a hostmask IP address (Cisco style ACLs).
+    Represents either an individual IP address or an IP subnet.
 
-    Supports both IPv4 and IPv6.
+    The subnet is defined using a netmask prefix specific as a single integer
+    value (CIDR prefix), a netmask or a hostmask (e.g. Cisco style ACLs).
+
+    This class supports both IPv4 and IPv6 addressing.
     """
     def __init__(self, addr, version=None):
         """
         Constructor.
 
-        @param addr: an IPv4 or IPv6 address with optional subnet prefix.
-            May be an IP address in representation (string) format, an integer
-            or another IP object (copy construction).
+        @param addr: an IPv4 or IPv6 address with optional subnet prefix. May
+            be an IP address in representation (string) format, an integer or
+            another IP object (copy construction).
 
         @param version: the explict IP version to use when interpreting addr.
         """
@@ -134,8 +135,8 @@ class IP(object):
                 raise ValueError('CIDR prefix mask %r is invalid!' % addr)
 
     prefixlen = property(_get_prefixlen, _set_prefixlen, None,
-        'size of the bitmask used to indentify and separate the network '
-        'identifier from the host identifier in this IP address.')
+        "size of the bitmask used to indentify and separate the network ' \
+        'identifier\nfrom the host identifier in this IP address.")
 
     def is_unicast(self):
         """@return: C{True} if this IP is unicast, C{False} otherwise"""
@@ -243,7 +244,7 @@ class IP(object):
                          IP('238.0.0.0/8')):
                 if self in cidr:
                     return True
-        if self.version == 6:
+        elif self.version == 6:
             for cidr in (IP('ff00::/12'),IP('::/8'), IP('0100::/8'),
                          IP('0200::/7'), IP('0400::/6'), IP('0800::/5'),
                          IP('1000::/4'), IP('4000::/3'), IP('6000::/3'),
@@ -593,10 +594,12 @@ class IP(object):
         @return: human-readable binary digit string of this address"""
         return self._module.int_to_bits(self._value, word_sep)
 
+    @property
     def packed(self):
         """@return: binary packed string of this address"""
         return self._module.int_to_packed(self._value)
 
+    @property
     def bin(self):
         """
         @return: standard Python binary representation of this address. A back
@@ -604,6 +607,7 @@ class IP(object):
             Python 2.6.x and higher."""
         return self._module.int_to_bin(self._value)
 
+    @property
     def reverse_dns(self):
         """@return: The reverse DNS lookup string for this IP address"""
         return self._module.int_to_arpa(self._value)
@@ -755,6 +759,7 @@ class IP(object):
             else:
                 return iter(self)
 
+    @property
     def info(self):
         """
         @return: A record dict containing IANA registration details for this
@@ -766,52 +771,57 @@ class IP(object):
         from netaddr.ip.iana import query
         return query(self)
 
-#-----------------------------------------------------------------------------
-def iter_iprange(start_ip, stop_ip, step=1):
-    """
-    An xrange work-alike generator for IP addresses. It produces sequences
-    based on start and stop IP address values, in intervals of step size.
+    def __or__(self, other):
+        """
+        @param other: An IP object (or int-like object).
 
-    @param start_ip: start IP address (any format supported by IP.__init__).
+        @return: bitwise OR (x | y) between the integer value of this IP
+            address and another.
+        """
+        return IP(self._value | int(other), self.version)
 
-    @param stop_ip: end IP address (any format supported by IP.__init__).
+    def __and__(self, other):
+        """
+        @param other: An IP object.
 
-    @param step: (optional) size of step between IP addresses.
-        (Default: 1)
+        @return: bitwise AND (x & y) between the integer value of this IP
+            address and another.
+        """
+        return IP(self._value & int(other), self.version)
 
-    @return: an iterator yielding one or more IP objects.
-    """
-    start_ip = IP(start_ip)
-    stop_ip = IP(stop_ip)
+    def __xor__(self, other):
+        """
+        @param other: An IP object (or int-like object).
 
-    if start_ip.version != stop_ip.version:
-        raise TypeError('start and stop IP versions do not match!')
-    version = start_ip.version
+        @return: bitwise exclusive OR (x ^ y) between the integer value of
+            this IP address and another.
+        """
+        return IP(self._value ^ int(other), self.version)
 
-    step = int(step)
-    if step == 0:
-        raise ValueError('step argument cannot be zero')
+    def __lshift__(self, numbits):
+        """
+        @param numbits: size of bitwise shift.
 
-    #   We don't need objects from here, just integers.
-    start = int(start_ip)
-    stop = int(stop_ip)
+        @return: an IP address based on this one with its integer value
+            left shifted by x bits.
+        """
+        return IP(self._value << numbits, self.version)
 
-    negative_step = False
+    def __rshift__(self, numbits):
+        """
+        @param numbits: size of bitwise shift.
 
-    if step < 0:
-        negative_step = True
+        @return: an IP address based on this one with its integer value
+            right shifted by x bits.
+        """
+        return IP(self._value >> numbits, self.version)
 
-    index = start - step
-    while True:
-        index += step
-        if negative_step:
-            if not index > stop:
-                return
-        else:
-            if not index < stop:
-                return
-        yield IP(index, version)
-
+    def __nonzero__(self):
+        """
+        @return: True if the numerical value of this IP address is not zero,
+            False otherwise.
+        """
+        return bool(self._value)
 
 #-----------------------------------------------------------------------------
 def iter_unique_ips(*args):
@@ -897,7 +907,8 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
         if prefix is not None:
             try:
                 if not 0 <= int(prefix) <= 32:
-                    return abbrev_cidr
+                    raise ValueError('prefixlen in address %r out of range' \
+                        ' for IPv4!' % abbrev_cidr)
             except ValueError:
                 return abbrev_cidr
 
@@ -906,13 +917,9 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
         else:
             tokens = [part_addr]
 
-        if 1 <= len(tokens) < 4:
+        if 1 <= len(tokens) <= 4:
             for i in range(4 - len(tokens)):
                 tokens.append('0')
-        elif len(tokens) == 4:
-            if prefix is None:
-                #   Non-partial addresses without a prefix.
-                prefix = 32
         else:
             #   Not a recognisable format.
             return abbrev_cidr
@@ -1135,6 +1142,70 @@ def spanning_cidr(ip_addrs):
     return ip.cidr
 
 #-----------------------------------------------------------------------------
+def cidr_gaps(cidrs, supernet=None):
+    """
+    A function that accepts a list of CIDR subnets and IP addresses detecting
+    and returning the gaps between each one.
+
+    @param cidrs: A sequence CIDR subnets or IP addresses.
+
+    @param supernet: An optional supernet CIDR. If it contains all IPs and
+        CIDRs in cidrs suquence, it will return any gaps on either side as
+        well.
+
+    @return: A list of cidrs that fill the gaps between each CIDR subnet
+        and or IP address.
+    """
+    raise NotImplementedError('TODO')
+
+#-----------------------------------------------------------------------------
+def iter_iprange(start, end, step=1):
+    """
+    An xrange work-alike generator for IP addresses. It produces sequences
+    based on start and stop IP address values, in intervals of step size.
+
+    @param start: start IP address (any format supported by IP.__init__).
+
+    @param end: end IP address (any format supported by IP.__init__).
+
+    @param step: (optional) size of step between IP addresses.
+        (Default: 1)
+
+    @return: an iterator yielding one or more IP objects.
+    """
+    start = IP(start)
+    end = IP(end)
+
+    if start.version != end.version:
+        raise TypeError('start and stop IP versions do not match!')
+    version = start.version
+
+    step = int(step)
+    if step == 0:
+        raise ValueError('step argument cannot be zero')
+
+    #   We don't need objects from here, just integers.
+    start = int(start)
+    stop = int(end)
+
+    negative_step = False
+
+    if step < 0:
+        negative_step = True
+
+    index = start - step
+    while True:
+        index += step
+        if negative_step:
+            if not index > stop:
+                return
+        else:
+            if not index < stop:
+                return
+        yield IP(index, version)
+
+
+#-----------------------------------------------------------------------------
 def iprange_to_cidrs(start, end):
     """
     A function that accepts an arbitrary start and end IP address or subnet
@@ -1240,20 +1311,3 @@ def within_iprange(ip, start, end):
         return True
 
     return False
-
-#-----------------------------------------------------------------------------
-def cidr_gaps(cidrs, supernet=None):
-    """
-    A function that accepts a list of CIDR subnets and IP addresses detecting
-    and returning the gaps between each one.
-
-    @param cidrs: A sequence CIDR subnets or IP addresses.
-
-    @param supernet: An optional supernet CIDR. If it contains all IPs and
-        CIDRs in cidrs suquence, it will return any gaps on either side as
-        well.
-
-    @return: A list of cidrs that fill the gaps between each CIDR subnet
-        and or IP address.
-    """
-    raise NotImplementedError('TODO')

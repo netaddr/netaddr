@@ -69,3 +69,31 @@ False
 True
 
 }}}
+
+Less well known inet_aton compatible IPv4 address formatting is supported.
+
+{{{
+
+#	Hexadecmimal.
+>>> IP('0x7f.0x1')
+IP('127.0.0.1')
+
+>>> IP('0x7f.0x0.0x0.0x1')
+IP('127.0.0.1')
+
+#	Octal
+>>> IP('0177.01')
+IP('127.0.0.1')
+
+#	Mixed.
+>>> IP('0x7f.0.01')
+IP('127.0.0.1')
+
+#	Partial addresses.
+>>> IP('127')
+IP('0.0.0.127')
+
+>>> IP('127')
+IP('0.0.0.127')
+
+}}}

@@ -16,11 +16,12 @@ DEBUG = True
 #-----------------------------------------------------------------------------
 def test_suit_all():
 
-    test_dirs = ['.', 'ip', 'eui', 'strategy']
+    test_dirs = ['.', 'ip', 'eui', 'strategy', 'core']
 
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
     if DEBUG:
+        print
         print 'module base path:', base_path
         print
 

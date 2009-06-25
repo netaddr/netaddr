@@ -8,6 +8,7 @@
 IPv4 address logic.
 """
 import struct as _struct
+import platform as _platform
 
 OPT_IMPORTS = False
 
@@ -97,6 +98,11 @@ def str_to_int(addr):
     try:
         return _struct.unpack('>I', _inet_aton(addr))[0]
     except:
+        #   Windows platform workaround.
+        if hasattr(addr, 'lower') and _platform.system() == 'Windows':
+            if addr.lower() == '0xffffffff':
+                return 0xffffffff
+
         raise AddrFormatError('%r is not a valid IPv4 address string!' \
             % addr)
 

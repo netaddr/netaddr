@@ -17,7 +17,7 @@ BIG_ENDIAN_PLATFORM = _struct.pack('=h', 1) == _struct.pack('>h', 1)
 #-----------------------------------------------------------------------------
 class AddrFormatError(Exception):
     """
-    An Exception indicating that a network address format is not recognised.
+    An Exception indicating a network address is not correctly formatted.
     """
     pass
 
@@ -30,48 +30,62 @@ class AddrConversionError(Exception):
     pass
 
 #-----------------------------------------------------------------------------
-def num_bits(n):
-    """Minimum number of bits needed to represent a given unsigned integer."""
-    n = abs(n)
+def num_bits(int_val):
+    """
+    @param int_val: an unsigned integer.
+
+    @return: the minimum number of bits needed to represent value provided.
+    """
+    int_val = abs(int_val)
     numbits = 0
-    while n:
+    while int_val:
          numbits += 1
-         n >>= 1
+         int_val >>= 1
     return numbits
 
 #-----------------------------------------------------------------------------
 class Subscriber(object):
     """
-    Abstract class defining interface expected by a Publisher that concrete
-    subclass instances register with to receive updates from.
+    An abstract class defining the interface expected by a Publisher.
     """
     def update(self, data):
         """
-        Callback function used by Publisher to notify this Subscriber about
-        an update.
+        A callback method used by a Publisher to notify this Subscriber about
+        updates.
+
+        @param data: a Python object containing data provided by Publisher.
         """
         raise NotImplementedError('cannot invoke virtual method!')
 
 #-----------------------------------------------------------------------------
 class PrettyPrinter(Subscriber):
     """
-    Concrete Subscriber that uses the pprint module to format all data from
-    updates received writing them to any file-like object. Useful for
-    debugging.
+    A concrete Subscriber that employs the pprint in the standard library to
+    format all data from updates received, writing them to a file-like
+    object.
+
+    Useful as a debugging aid.
     """
     def __init__(self, fh=_sys.stdout, write_eol=True):
         """
         Constructor.
 
-        fh - file or file like object to write to. Default: sys.stdout.
+        @param fh: a file-like object to write updates to.
+            Default: sys.stdout.
+
+
+        @param write_eol: if C{True} this object will write newlines to
+            output, if C{False} it will not.
         """
         self.fh = fh
         self.write_eol = write_eol
 
     def update(self, data):
         """
-        Callback function used by Publisher to notify this Subscriber about
-        an update.
+        A callback method used by a Publisher to notify this Subscriber about
+        updates.
+
+        @param data: a Python object containing data provided by Publisher.
         """
         self.fh.write(_pprint.pformat(data))
         if self.write_eol:
@@ -80,15 +94,21 @@ class PrettyPrinter(Subscriber):
 #-----------------------------------------------------------------------------
 class Publisher(object):
     """
-    A 'push' publisher that maintains a list of Subscriber objects notifying
-    them of state changes when its subclasses encounter events of interest.
+    A 'push' Publisher that maintains a list of Subscriber objects notifying
+    them of state changes by passing them update data when it encounter events
+    of interest.
     """
     def __init__(self):
         """Constructor"""
         self.subscribers = []
 
     def attach(self, subscriber):
-        """Add a new subscriber"""
+        """
+        Add a new subscriber.
+
+        @param subscriber: a new object that implements the Subscriber object
+            interface.
+        """
         if hasattr(subscriber, 'update') and \
            callable(eval('subscriber.update')):
             if subscriber not in self.subscribers:
@@ -98,14 +118,23 @@ class Publisher(object):
                 % subscriber)
 
     def detach(self, subscriber):
-        """Remove an existing subscriber"""
+        """
+        Remove an existing subscriber.
+
+        @param subscriber: a new object that implements the Subscriber object
+            interface.
+        """
         try:
             self.subscribers.remove(subscriber)
         except ValueError:
             pass
 
     def notify(self, data):
-        """Send notification message to all registered subscribers"""
+        """
+        Send update data to to all registered Subscribers.
+
+        @data: the data to be passed to each registered Subscriber.
+        """
         for subscriber in self.subscribers:
             subscriber.update(data)
 

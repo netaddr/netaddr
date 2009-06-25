@@ -142,3 +142,20 @@ Abbreviation tests.
 {}
 
 }}}
+
+Negative testing.
+
+{{{
+
+>>> cidr_abbrev_to_verbose('192.0.2.0')
+'192.0.2.0/24'
+
+>>> cidr_abbrev_to_verbose('192.0.2.0/32')
+'192.0.2.0/32'
+
+#FIXME: >>> cidr_abbrev_to_verbose('192.0.2.0/33')
+Traceback (most recent call last):
+...
+ValueError: prefixlen in address '192.0.2.0/33' out of range for IPv4!
+
+}}}
