@@ -11,6 +11,8 @@ import glob
 import doctest
 import unittest
 
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
+
 DEBUG = True
 
 #-----------------------------------------------------------------------------

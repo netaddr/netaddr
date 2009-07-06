@@ -30,10 +30,12 @@ More details can be found at the following URLs :-
 
 import os as _os
 import os.path as _path
+import sys as _sys
 import re as _re
 
 from netaddr.core import Publisher, Subscriber, PrettyPrinter
-from netaddr.ip import IP, cidr_abbrev_to_verbose, within_iprange
+from netaddr.ip import IPAddress, IPNetwork, IPRange, \
+    cidr_abbrev_to_verbose, within_iprange, iprange_to_cidrs
 
 #-----------------------------------------------------------------------------
 
@@ -313,23 +315,26 @@ class DictUpdater(Subscriber):
         data_id = data[self.unique_key]
 
         if self.topic == 'IPv4':
-            cidr = IP(cidr_abbrev_to_verbose(data_id))
+            cidr = IPNetwork(cidr_abbrev_to_verbose(data_id))
             self.dct[cidr] = data
         elif self.topic == 'IPv6':
-            cidr = IP(cidr_abbrev_to_verbose(data_id))
+            cidr = IPNetwork(cidr_abbrev_to_verbose(data_id))
             self.dct[cidr] = data
         elif self.topic == 'multicast':
             iprange = None
             if '-' in data_id:
+                #   See if we can manage a single CIDR.
                 (first, last) = data_id.split('-')
-                iprange = (IP(cidr_abbrev_to_verbose(first)),
-                           IP(cidr_abbrev_to_verbose(last)))
+                iprange = IPRange(first, last)
+                cidrs = iprange.cidrs()
+                if len(cidrs) == 1:
+                    iprange = cidrs[0]
             else:
-                iprange = IP(cidr_abbrev_to_verbose(data_id))
+                iprange = IPAddress(data_id)
             self.dct[iprange] = data
 
 #-----------------------------------------------------------------------------
-def load_iana_info():
+def load_info():
     """
     Parse and load internal IANA data lookups with the latest information from
     data files.
@@ -349,6 +354,23 @@ def load_iana_info():
     mcast.parse()
 
 #-----------------------------------------------------------------------------
+def pprint_info(fh=None):
+    """
+    Pretty prints IANA information to filehandle.
+    """
+    if fh is None:
+        fh = _sys.stdout
+
+    for category in sorted(IANA_INFO):
+        print >> fh, '-' * len(category)
+        print >> fh, category
+        print >> fh, '-' * len(category)
+        ipranges = IANA_INFO[category]
+        for iprange in sorted(ipranges):
+            details = ipranges[iprange]
+            print >> fh, '%-45r' % (iprange), details
+
+#-----------------------------------------------------------------------------
 def query(ip_addr):
     """
     Returns informational data specific to this IP address.
@@ -356,10 +378,15 @@ def query(ip_addr):
     info = {}
 
     def within_bounds(ip, ip_range):
-        if hasattr(ip_range, 'value'):
+        #   Boundary checking for multiple IP classes.
+        if hasattr(ip_range, 'first'):
+            #   IP network or IP range.
             return ip in ip_range
-        else:
-            return within_iprange(ip, ip_range[0], ip_range[-1])
+        elif hasattr(ip_range, 'value'):
+            #   IP address.
+            return ip == ip_range
+
+        raise Exception('Unsupported IP range or address: %r!' % ip_range)
 
     if ip_addr.version == 4:
         for cidr, record in IANA_INFO['IPv4'].items():
@@ -410,4 +437,4 @@ if __name__ == '__main__':
     get_latest_files()
 
 #   On module import, read IANA data files and populate lookups dict.
-load_iana_info()
+load_info()

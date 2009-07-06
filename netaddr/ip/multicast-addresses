@@ -1,7 +1,7 @@
 
 Internet Multicast Addresses
 
-(last updated 2009-03-17)
+(last updated 2009-06-16)
 
 Registries included below:
 - IPv4 Multicast Addresses
@@ -43,7 +43,7 @@ Registry:
 224.0.0.12 DHCP Server / Relay Agent                     [RFC1884]
 224.0.0.13 All PIM Routers                             [Farinacci]
 224.0.0.14 RSVP-ENCAPSULATION                             [Braden]
-224.0.0.15 all-cbt-routers                             [Ballardie]
+224.0.0.15 all-cbt-routers                    [RFC2189][Ballardie]
 224.0.0.16 designated-sbm                                  [Baker]
 224.0.0.17 all-sbms                                        [Baker]
 224.0.0.18 VRRP                                          [RFC3768]
@@ -365,7 +365,8 @@ Registry:
 224.0.23.59 DigacIP7                                   [Niedfeldt]  22 February 2008
 224.0.23.60 AtscSvcSig                                  [Whitaker]  19 December 2008
 224.0.23.61 SafetyNET p (potentially IGMPv1)                [Pilz]  13 March 2009
-224.0.23.62-224.0.23.63 Unassigned
+224.0.23.62 BluemoonGamesMC                               [Mettin]  12 May 2009
+224.0.23.63 iADT Discovery                                [Suhler]  12 May 2009
 224.0.23.64-224.0.23.80 Moneyline                       [Petronio]
 224.0.23.81-224.0.23.127 Reserved (Moneyline)
 224.0.23.128-224.0.23.157 PHLX                         [Linthicum]
@@ -397,11 +398,13 @@ Registry:
 224.0.51.0-224.0.51.255 ALCOM-IPTV                       [Erikson]  09 April 2008
 224.0.52.0-224.0.53.255 NYSE-EURONEXT                  [Stevenson]  23 July 2008
 224.0.54.0-224.0.57.255 Get - BCN                       [Hvidsten]  20 August 2008
-224.0.58.0-224.0.61.255  NYSE-AMEX_L1_L2                [Castillo]  27 August 2008
-224.0.62.0-224.0.62.255  BATS                              [Brown]  24 December 2008
-224.0.63.0-224.0.63.255  BATS Trading                   [Gorsline]  13 March 2009
+224.0.58.0-224.0.61.255 NYSE-AMEX_L1_L2                 [Castillo]  27 August 2008
+224.0.62.0-224.0.62.255 BATS                               [Brown]  24 December 2008
+224.0.63.0-224.0.63.255 BATS Trading                    [Gorsline]  13 March 2009
 224.0.64.0-224.0.67.255 NYSE Euronext                     [Gupta2]  13 March 2009
-224.0.68.0-224.0.251.255  Unassigned
+224.0.68.0-224.0.69.255 ISE                               [Albert]  12 May 2009
+224.0.70.0-224.0.71.255 NYSE-AB-UTP                      [Serrano]  16 June 2009
+224.0.72.0-224.0.251.255  Unassigned
 224.0.252.0-224.0.252.255 KPN Broadcast Services           [Spelt] 
 224.0.253.000-224.0.253.255 KPN Broadcast Services         [Spelt]              
 224.0.254.000-224.0.254.255 Intelsat IPTV                   [Elad]  31 March 2006
@@ -434,7 +437,8 @@ Registry:
 224.4.1.0-224.4.1.255  London Stock Exchange             [Saunders]  25 February 2008
 224.4.2.0-224.4.2.255  London Stock Exchange             [Saunders]  29 February 2008
 224.4.3.0-224.4.4.255  London Stock Exchange             [Saunders]  24 December 2008
-224.4.5.0-224.251.255.255  Reserved                          [IANA]
+224.4.5.0-224.4.6.255  London Stock Exchange             [Saunders]  12 May 2009
+224.4.7.0-224.251.255.255  Reserved                          [IANA]
 224.252.000.000-224.255.255.255 DIS Transient Groups         [IANA]
 225.000.000.000-231.255.255.255 Reserved                     [IANA]
 
@@ -533,6 +537,9 @@ References
 [RFC2114]  Chiang, S, J. Lee adn H. Yasuda, "Data Link Switching Client
            Access Protocol", RFC 2114, Cisco, Mitsubishi
            February 1997.
+
+[RFC2189]  A. Ballardie, "Core Based Trees (CBT version 2) Multicast 
+           Routing Protocol Specification", RFC 2189, September 1997.
            
 [RFC2328]  Moy, J., "OSPF Version 2", STD 54, RFC 2328, Ascend
            Communications, April 1998.
@@ -586,6 +593,8 @@ People
 [Aboba] Bernard Aboba, <bernarda&windows.microsoft.com>, May 2004.
 
 [Adams] Chris Adams, <jc.adams&reuters.com>, July 2000.
+
+[Albert] Fabrice Albert, <falbert&ise.com>, 12 May 2009.
 
 [Albin] Jerome Albin, <albin&taec.enet.dec.com>, June 1997.
 
@@ -874,6 +883,8 @@ January 1997.
 
 [Mendal] Geoff Mendal, <mendal&talarian.com>, January 1999.
 
+[Mettin] Christopher Mettin, <cmettin&gqbc-online.com>, 12 May 2009.
+
 [Meyer] David Meyer, <meyer&ns.uoregon.edu>, January 1997.
 
 [Meyer2] David Meyer, <dmm&cisco.com>, June 1999 - MALLOC assignment
@@ -951,7 +962,8 @@ for temp use: renew 06/2000
 
 [Saito] Takeshi Saito, <takeshi.saito&toshiba.co.jp>, February 2003.
 
-[Saunders] Greig Saunders, <gsaunder&londonstockexchange.com>, 25 February 2008, 29 February 2008, 24 December 2008.
+[Saunders] Greig Saunders, <gsaunder&londonstockexchange.com>, 25 February 2008, 29 February 2008, 
+           24 December 2008, 12 May 2009.
 
 [Sautter] Robert Sautter, <rsautter&acdnj.itt.com>, August 1999.
 
@@ -966,6 +978,8 @@ for temp use: renew 06/2000
 [Schwartz] Beverly Schwartz, <bschwart&BBN.COM>, June 1998.
 
 [SEIKO EPSON Corp] SEIKO EPSON Corp, <ogata.hideaki&exc.epson.co.jp>, January 2005.
+
+[Serrano] Sam Serrano, <sserrano&nyx.com>, 16 June 2009.
 
 [Shindoh] Masato Shindoh, <jl11456&yamato.ibm.co.jp>, August 1997.
 
@@ -996,6 +1010,8 @@ for temp use: renew 06/2000
 [Straight] Matthew Straight, <matt_straight&yahoo.com>, March 2007.
 
 [Strazzera] Paolo Strazzera, <p.strazzera&telematica.it>, June 1999.
+
+[Suhler] Paul Suhler, <paul.suhler&quantum.com>, 12 May 2009.
 
 [Sveistrup] Darrell Sveistrup, <darrells&truesolutions.net>, June 1999.
 

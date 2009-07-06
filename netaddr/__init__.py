@@ -14,9 +14,9 @@ __version__ = 'exp_0.7_non-multiplex-ip'
 
 from netaddr.core import AddrConversionError, AddrFormatError
 
-from netaddr.ip import IPAddress, IPNetwork, cidr_abbrev_to_verbose, \
-    cidr_exclude, cidr_merge, spanning_cidr, iter_unique_ips, \
-    iprange_to_cidrs, within_iprange, iter_iprange
+from netaddr.ip import IPAddress, IPNetwork, IPRange, \
+    cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, spanning_cidr, \
+    iter_unique_ips, iprange_to_cidrs, within_iprange, iter_iprange
 
 from netaddr.ip.glob import cidr_to_glob, glob_to_cidrs, glob_to_iprange, \
     valid_glob, iprange_to_globs
@@ -37,7 +37,7 @@ __all__ = [
     'mac_bare', 'mac_cisco', 'mac_eui48', 'mac_pgsql', 'mac_unix',
 
     #   IP, CIDR and IP range related classes and functions.
-    'IPAddress', 'IPNetwork',
+    'IPAddress', 'IPNetwork', 'IPRange',
 
     'cidr_abbrev_to_verbose', 'cidr_exclude', 'cidr_merge', 'spanning_cidr',
     'within_iprange', 'iter_iprange', 'iprange_to_cidrs','iter_unique_ips',

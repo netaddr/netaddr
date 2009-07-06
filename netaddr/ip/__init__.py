@@ -15,6 +15,85 @@ from netaddr.strategy import ipv6 as _ipv6
 #-----------------------------------------------------------------------------
 class BaseIP(object):
 
+    def __hash__(self):
+        """
+        @return: A hash value uniquely indentifying this IP object. It is
+            based on the subnet of this IP object, *not* its IP address value.
+        """
+        return hash(self.key())
+
+    def __eq__(self, other):
+        """
+        @param other: an IP address object of the same version as C{self}.
+
+        @return: C{True} if the boundary of this IP's subnet match that
+            of other, C{False} otherwise.
+        """
+        try:
+            return self.key() == other.key()
+        except AttributeError:
+            return False
+
+    def __ne__(self, other):
+        """
+        @param other: an IP address object of the same version as C{self}.
+
+        @return: C{False} if the boundary of this IP's subnet match that
+            of other, C{True} otherwise.
+        """
+        try:
+            return self.key() != other.key()
+        except AttributeError:
+            return True
+
+    def __lt__(self, other):
+        """
+        @param other: an IP address object of the same version as C{self}.
+
+        @return: C{True} if the boundary of this IP's subnet are less than
+            other, C{False} otherwise.
+        """
+        try:
+            return self.sort_key() < other.sort_key()
+        except AttributeError:
+            return False
+
+    def __le__(self, other):
+        """
+        @param other: an IP address object of the same version as C{self}.
+
+        @return: C{True} if the boundary of this IP's subnet are less than or
+            equal to other, C{False} otherwise.
+        """
+        try:
+            return self.sort_key() <= other.sort_key()
+        except AttributeError:
+            return False
+
+    def __gt__(self, other):
+        """
+        @param other: an IP address object of the same version as C{self}.
+
+        @return: C{True} if the boundary of this IP's subnet are greater
+            than other, C{False} otherwise.
+        """
+        try:
+            return self.sort_key() > other.sort_key()
+        except AttributeError:
+            return False
+
+    def __ge__(self, other):
+        """
+        @param other: an IP address object of the same version as C{self}.
+
+        @return: C{True} if the boundary of this IP's subnet are greater than
+            or equal than other, C{False} otherwise.
+        """
+        try:
+            return self.sort_key() >= other.sort_key()
+        except AttributeError:
+            return False
+
     def is_unicast(self):
         """@return: C{True} if this IP is unicast, C{False} otherwise"""
         return not self.is_multicast()
@@ -60,8 +139,7 @@ class BaseIP(object):
             3330, 4193, 3879 and 2365.
         """
         if self.version == 4:
-            for cidr in (IPNetwork('192.168.0.0/16'),
-                         IPNetwork('10.0.0.0/8'),
+            for cidr in (IPNetwork('192.168.0.0/16'), IPNetwork('10.0.0.0/8'),
                          IPNetwork('172.16.0.0/12'),  IPNetwork('192.0.2.0/24'),
                          IPNetwork('239.192.0.0/14')):
                 if self in cidr:
@@ -129,12 +207,30 @@ class BaseIP(object):
         """
         return self.version == 6 and (self._value >> 32) == 0
 
+    @property
+    def info(self):
+        """
+        @return: A record dict containing IANA registration details for this
+            IP address if available, None otherwise.
+        """
+        #   This import is placed here for efficiency. If you don't call this
+        #   method, you don't take the (small), one time, import start up
+        #   penalty.
+        from netaddr.ip.iana import query
+        return query(self)
+
+    @property
+    def version(self):
+        """the IP protocol version represented by this IP object."""
+        return self._module.version
+
+
 #-----------------------------------------------------------------------------
 class IPAddress(BaseIP):
     """
-    An individual IP address. Does contain or support an notion of masking.
+    An individual IP address without any net mask or subnet prefix.
 
-    See the IPNetwork class which supports prefix lengths, netmasks etc.
+    For a class that supports network based operations, see C{IPNetwork}.
     """
     def __init__(self, addr, version=None):
         """
@@ -230,11 +326,6 @@ class IPAddress(BaseIP):
 
         return mask_length
 
-    @property
-    def version(self):
-        """the IP protocol version represented by this IP object."""
-        return self._module.version
-
     def __iadd__(self, i):
         """
         Increases the value of this IP object by the current size * i.
@@ -263,90 +354,25 @@ class IPAddress(BaseIP):
         self._value = new_first
         return self
 
-    def __hash__(self):
+    def key(self):
         """
-        @return: A hash value uniquely indentifying this IP object. It is
-            based on the subnet of this IP object, *not* its IP address value.
+        @return: A key (tuple of values) used to uniquely identify this IP
+            subnet.
         """
-        return hash((self.version, self._value))
+        #   NB - we return the value here twice because this IP Address may
+        #   be sorted with a list of networks and it should still end up
+        #   in the expected order.
+        return self.version, self._value, self._value
 
-    def __eq__(self, other):
+    def sort_key(self):
         """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet match that
-            of other, C{False} otherwise.
+        @return: A key (tuple of values) used to uniquely identify this IP
+            subnet and aids in correct sorting.
         """
-        try:
-            return (self.version,  self._value) == \
-                   (other.version, other._value)
-        except AttributeError:
-            return False
-
-    def __ne__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{False} if the boundary of this IP's subnet match that
-            of other, C{True} otherwise.
-        """
-        try:
-            return (self.version,  self._value) != \
-                   (other.version, other._value)
-        except AttributeError:
-            return True
-
-    def __lt__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are less than
-            other, C{False} otherwise.
-        """
-        try:
-            return (self.version,  self._value) < \
-                   (other.version, other._value)
-        except AttributeError:
-            return False
-
-    def __le__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are less than or
-            equal to other, C{False} otherwise.
-        """
-        try:
-            return (self.version,  self._value) <= \
-                   (other.version, other._value)
-        except AttributeError:
-            return False
-
-    def __gt__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are greater
-            than other, C{False} otherwise.
-        """
-        try:
-            return (self.version,  self._value) > \
-                   (other.version, other._value)
-        except AttributeError:
-            return False
-
-    def __ge__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are greater than
-            or equal than other, C{False} otherwise.
-        """
-        try:
-            return (self.version,  self._value) >= \
-                   (other.version, other._value)
-        except AttributeError:
-            return False
+        #   A sort key is essentially a CIDR prefixlen value.
+        #   Required as IPRange (and subclasses other than CIDR) do not
+        #   calculate it.
+        return self.version, self._value, self._module.width
 
     def __int__(self):
         """@return: value of this address as an unsigned integer"""
@@ -445,18 +471,6 @@ class IPAddress(BaseIP):
                 ip = klass(0xffff00000000 + self._value, 6)
 
         return ip
-
-    @property
-    def info(self):
-        """
-        @return: A record dict containing IANA registration details for this
-            IP address if available, None otherwise.
-        """
-        #   This import is placed here for efficiency. If you don't call this
-        #   method, you don't take the (small), one time, import start up
-        #   penalty.
-        from netaddr.ip.iana import query
-        return query(self)
 
     def __or__(self, other):
         """
@@ -641,11 +655,6 @@ class IPNetwork(BaseIP):
         return IPAddress(self._value, self.version)
 
     @property
-    def version(self):
-        """the IP protocol version represented by this IP object."""
-        return self._module.version
-
-    @property
     def network(self):
         """The network address of this IP object."""
         return IPAddress(self._value & int(self.netmask), self.version)
@@ -822,110 +831,23 @@ class IPNetwork(BaseIP):
         end_ip = IPAddress(self.last+1, self.version)
         return iter_iprange(start_ip, end_ip)
 
-    def __hash__(self):
+    def key(self):
         """
-        @return: A hash value uniquely indentifying this IP object. It is
-            based on the subnet of this IP object, *not* its IP address value.
+        @return: A key (tuple of values) used to uniquely identify this IP
+            subnet.
         """
-        return hash((self.version, self.first, self.last))
+        return self.version, self.first, self.last
 
-    def __eq__(self, other):
+    def sort_key(self):
         """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet match that
-            of other, C{False} otherwise.
+        @return: A key (tuple of values) used to uniquely identify this IP
+            subnet and aids in correct sorting.
         """
-        try:
-            return (self.version,  self.first,  self.last) == \
-                   (other.version, other.first, other.last)
-        except AttributeError:
-            return False
-
-    def __ne__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{False} if the boundary of this IP's subnet match that
-            of other, C{True} otherwise.
-        """
-        try:
-            return (self.version,  self.first,  self.last) != \
-                   (other.version, other.first, other.last)
-        except AttributeError:
-            return True
-
-    def __lt__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are less than
-            other, C{False} otherwise.
-        """
-        try:
-            #   A sort key is essentially a CIDR prefixlen value.
-            #   Required as IPRange (and subclasses other than CIDR) do not
-            #   calculate it.
-            self_sort_key = self._module.width - num_bits(self.size)
-            other_sort_key = other._module.width - num_bits(other.size)
-            return (self.version,  self.first,  self_sort_key) < \
-                   (other.version, other.first, other_sort_key)
-        except AttributeError:
-            return False
-
-    def __le__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are less than or
-            equal to other, C{False} otherwise.
-        """
-        try:
-            #   A sort key is essentially a CIDR prefixlen value.
-            #   Required as IPRange (and subclasses other than CIDR) do not
-            #   calculate it.
-            self_sort_key = self._module.width - num_bits(self.size)
-            other_sort_key = other._module.width - num_bits(other.size)
-            return (self.version,  self.first,  self_sort_key) <= \
-                   (other.version, other.first, other_sort_key)
-        except AttributeError:
-            return False
-
-    def __gt__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are greater
-            than other, C{False} otherwise.
-        """
-        try:
-            #   A sort key is essentially a CIDR prefixlen value.
-            #   Required as IPRange (and subclasses other than CIDR) do not
-            #   calculate it.
-            self_sort_key = self._module.width - num_bits(self.size)
-            other_sort_key = other._module.width - num_bits(other.size)
-            return (self.version,  self.first,  self_sort_key) > \
-                   (other.version, other.first, other_sort_key)
-        except AttributeError:
-            return False
-
-    def __ge__(self, other):
-        """
-        @param other: an IP address object of the same version as C{self}.
-
-        @return: C{True} if the boundary of this IP's subnet are greater than
-            or equal than other, C{False} otherwise.
-        """
-        try:
-            #   A sort key is essentially a CIDR prefixlen value.
-            #   Required as IPRange (and subclasses other than CIDR) do not
-            #   calculate it.
-            self_sort_key = self._module.width - num_bits(self.size)
-            other_sort_key = other._module.width - num_bits(other.size)
-            return (self.version,  self.first,  self_sort_key) >= \
-                   (other.version, other.first, other_sort_key)
-        except AttributeError:
-            return False
+        #   A sort key is essentially a CIDR prefixlen value.
+        #   Required as IPRange (and subclasses other than CIDR) do not
+        #   calculate it.
+        skey = self._module.width - num_bits(self.size)
+        return self.version, self.first, skey
 
     def __str__(self):
         """@return: IP address in representational format"""
@@ -1083,17 +1005,149 @@ class IPNetwork(BaseIP):
             else:
                 return iter(self)
 
+
+#-----------------------------------------------------------------------------
+class IPRange(BaseIP):
+    """
+    An arbitrary IP address range.
+
+    Formed from a lower and upper bound IP address. The upper bound IP cannot
+    be numerically smaller than the lower bound. The IP version of both
+    addresses must match.
+
+    """
+    def __init__(self, start, end):
+        """
+        Constructor.
+
+        @param start: an IPv4 or IPv6 address that forms the lower
+            boundary of this IP range.
+
+        @param end: an IPv4 or IPv6 address that forms the upper
+            boundary of this IP range.
+
+        """
+        self._start = IPAddress(start)
+        self._module = self._start._module
+        self._end = IPAddress(end, self._module.version)
+        if int(self._start) > int(self._end):
+            raise AddrFormatError('lower bound IP greater than upper bound!')
+
     @property
-    def info(self):
+    def first(self):
+        """The integer value of first IP address in this IP range."""
+        return int(self._start)
+
+    @property
+    def last(self):
+        """The integer value of last IP address in this IP range."""
+        return int(self._end)
+
+    def __getitem__(self, index):
         """
-        @return: A record dict containing IANA registration details for this
-            IP address if available, None otherwise.
+        @return: The IP address(es) in this address range referenced by
+            index/slice. Slicing objects can produce large sequences so
+            generator objects are returned instead of a list. Wrapping a slice
+            with C{list()} or C{tuple()} may be required dependent on context
+            in which it is called.
         """
-        #   This import is placed here for efficiency. If you don't call this
-        #   method, you don't take the (small), one time, import start up
-        #   penalty.
-        from netaddr.ip.iana import query
-        return query(self)
+        if hasattr(index, 'indices'):
+            if self._module.version == 6:
+                #FIXME: IPv6 breaks the .indices() method on the slice object
+                #FIXME: spectacularly. We'll have to work out the start, stop
+                #FIXME: and step ourselves :-(
+                #FIXME: See PySlice_GetIndicesEx function in Python SVN
+                #FIXME: repository for implementation details :-
+                #http://svn.python.org/view/python/trunk/Objects/sliceobject.c
+                raise TypeError('slices unsupported on IPv6 objects!')
+
+            (start, stop, step) = index.indices(self.size)
+            start_ip = IPAddress(self.first + start, self.version)
+            end_ip = IPAddress(self.first + stop, self.version)
+            return iter_iprange(start_ip, end_ip, step)
+        else:
+            try:
+                index = int(index)
+                if (- self.size) <= index < 0:
+                    #   negative index.
+                    return IPAddress(self.last + index + 1, self.version)
+                elif 0 <= index <= (self.size - 1):
+                    #   Positive index or zero index.
+                    return IPAddress(self.first + index, self.version)
+                else:
+                    raise IndexError('index out range for address range size!')
+            except ValueError:
+                raise TypeError('unsupported index type %r!' % index)
+
+    def __len__(self):
+        """
+        @return: The number of IP addresses in this IP range. Raises
+            IndexError if size > sys.maxint (a Python limitation). Use the
+            .size() property for subnets of any size.
+        """
+        size = self.size
+        if size > _sys.maxint:
+            #   Use .size() method in this class instead as len() will b0rk!
+            raise IndexError("range contains greater than %d (sys.maxint)" \
+                "addresses! Use the .size() method instead.")
+        return size
+
+    def __contains__(self, other):
+        """
+        @param other: an IP address, network or range.
+
+        @return: C{True} if other falls within the boundary of this IP range,
+            C{False} otherwise.
+        """
+        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
+            other = IPNetwork("%s/%d" % (other, other._module.width))
+        return other.first >= self.first and other.last <= self.last
+
+    def __iter__(self):
+        """
+        @return: An iterator object providing access to all addresses within
+            this IP range.
+        """
+        return iter_iprange(self.first, self.last + 1, self.version)
+
+    def key(self):
+        """
+        @return: A key (tuple of values) used to uniquely identify this IP
+            subnet.
+        """
+        return self.version, self.first, self.last
+
+    def sort_key(self):
+        """
+        @return: A key (tuple of values) used to uniquely identify this IP
+            subnet and aids in correct sorting.
+        """
+        #   A sort key is essentially a CIDR prefixlen value.
+        #   Required as IPRange (and subclasses other than CIDR) do not
+        #   calculate it.
+        skey = self._module.width - num_bits(self.size)
+        return self.version, self.first, skey
+
+    def cidrs(self):
+        """
+        The list of CIDR network addresses found within the lower and upper
+        bound addresses of this IP range.
+        """
+        return iprange_to_cidrs(self._start, self._end)
+
+    @property
+    def size(self):
+        """The number of IP addresses in this subnet."""
+        return int(self._end) - int(self._start) + 1
+
+    def __str__(self):
+        """@return: IP range in a common representational format."""
+        return "%s-%s" % (self._start, self._end)
+
+    def __repr__(self):
+        """@return: Python statement to create equivalent IP range."""
+        return "%s('%s', '%s')" % (self.__class__.__name__,
+            self._start, self._end)
 
 #-----------------------------------------------------------------------------
 def iter_unique_ips(*args):
@@ -1572,8 +1626,8 @@ def within_iprange(ip, start, end):
     @return: True if ip falls with the bounds of iprange, False otherwise.
     """
     ip = IPAddress(ip)
-    start = IPAddress(start)
-    end = IPAddress(end)
+    start = IPNetwork(start)
+    end = IPNetwork(end)
 
     if start.last > end.first:
         raise ValueError('bad IP range, start IP is greater than end IP!')

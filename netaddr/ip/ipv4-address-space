@@ -1,6 +1,6 @@
 IANA IPv4 Address Space Registry
 
-(last updated 2009-03-11)
+(last updated 2009-04-28)
 
 The allocation of Internet Protocol version 4 (IPv4) address space to various registries is listed 
 here. Originally, all the IPv4 address spaces was managed directly by the IANA. Later parts of the 
@@ -196,10 +196,10 @@ Prefix  Designation                                      Date      Whois        
 177/8   IANA                                                                           UNALLOCATED        
 178/8   RIPE NCC                                         2009-01   whois.ripe.net      ALLOCATED        
 179/8   IANA                                                                           UNALLOCATED        
-180/8   IANA                                                                           UNALLOCATED        
+180/8   APNIC                                            2009-04   whois.apnic.net     ALLOCATED        
 181/8   IANA                                                                           UNALLOCATED        
 182/8   IANA                                                                           UNALLOCATED        
-183/8   IANA                                                                           UNALLOCATED        
+183/8   APNIC                                            2009-04   whois.apnic.net     ALLOCATED        
 184/8   ARIN                                             2008-12   whois.arin.net      ALLOCATED         
 185/8   IANA                                                                           UNALLOCATED        
 186/8   LACNIC                                           2007-09   whois.lacnic.net    ALLOCATED        

@@ -5,37 +5,52 @@ Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 {{{
 
 >>> from netaddr import *
+>>> import pprint
 
 >>> ip = IPAddress('239.192.0.1')
 
 >>> ip.is_multicast()
 True
 
-}}}
+>>> ip = IPAddress(3221225984L)
 
-It is *not* valid to have a multicast address with a prefixlen of anything other than a /32 or /128.
+>>> ip.value = '231.192.0.1'
 
-{{{
 
-#DISABLED: >>> ip.prefixlen = 24
-Traceback (most recent call last):
-...
-IPMulticastError: invalid prefix/netmask '/24' for multicast IP '239.192.0.1'!
+>>> pprint.pprint(IPAddress('224.0.1.173').info)
+{'IPv4': [{'date': '1981-09',
+           'designation': 'Multicast',
+           'prefix': '224/8',
+           'status': 'Reserved',
+           'whois': ''}],
+ 'Multicast': [{'address': '224.0.1.0-224.0.1.255',
+                'descr': '(224.0.1/24) Internetwork Control Block'},
+               {'address': '224.0.1.173', 'descr': 'host-request'}]}
 
-#DISABLED: >>> IP('239.192.0.1/23')
-Traceback (most recent call last):
-...
-IPMulticastError: invalid prefix/netmask '/23' for multicast IP '239.192.0.1'!
+>>> pprint.pprint(IPAddress('224.0.0.111').info)
+{'IPv4': [{'date': '1981-09',
+           'designation': 'Multicast',
+           'prefix': '224/8',
+           'status': 'Reserved',
+           'whois': ''}],
+ 'Multicast': [{'address': '224.0.0.0-224.0.0.255',
+                'descr': '(224.0.0/24) Local Network Control Block'},
+               {'address': '224.0.0.111-224.0.0.250', 'descr': 'Unassigned'}]}
+               
+>>> pprint.pprint(IPNetwork('239.252.0.0/16').info)
+{'IPv4': [{'date': '1981-09',
+           'designation': 'Multicast',
+           'prefix': '239/8',
+           'status': 'Reserved',
+           'whois': ''}],
+ 'Multicast': [{'address': '239.0.0.0-239.255.255.255',
+                'descr': 'Administratively Scoped'},
+               {'address': '239.252.0.0-239.252.255.255',
+                'descr': 'Site-Local Scope (reserved)'}]}
 
-}}}
 
-It is *not* valid to have netmask or hostmask address with a prefixlen of anything other than a /32 or /128.
+>>> import netaddr.ip.iana as iana
 
-{{{
-
-#DISABLED: >>> IP('255.255.255.0/24')
-Traceback (most recent call last):
-...
-IPValueError: netmasks and hostmasks do not support CIDR prefix options!
+iana.pprint_info()
 
 }}}
