@@ -36,7 +36,7 @@ IP Glob tests.
 >>> glob_to_cidrs('*.*.*.*')
 [IPNetwork('0.0.0.0/0')]
 
->>> glob_to_iprange('*.*.*.*')
+>>> glob_to_iptuple('*.*.*.*')
 (IPAddress('0.0.0.0'), IPAddress('255.255.255.255'))
 
 >>> iprange_to_globs('192.0.2.0', '192.0.2.255')

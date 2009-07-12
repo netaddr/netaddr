@@ -3,7 +3,7 @@
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
-"""contains fallback versions of some socket module constants and functions"""
+"""Fallback routines for Python's standard library socket module"""
 
 from struct import unpack as _unpack, pack as _pack
 
@@ -18,8 +18,12 @@ def inet_ntoa(packed_ip):
     """
     Convert an IP address from 32-bit packed binary format to string format.
     """
-    if len(packed_ip) != 4 or not hasattr(packed_ip, 'split'):
+    if not hasattr(packed_ip, 'split'):
+        raise TypeError('string type expected, not %s' % str(type(packed_ip)))
+
+    if len(packed_ip) != 4:
         raise ValueError('invalid length of packed IP address string')
+
     return '%d.%d.%d.%d' % _unpack('4B', packed_ip)
 
 #-----------------------------------------------------------------------------

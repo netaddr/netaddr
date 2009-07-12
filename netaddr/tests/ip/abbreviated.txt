@@ -159,3 +159,15 @@ Traceback (most recent call last):
 ValueError: prefixlen in address '192.0.2.0/33' out of range for IPv4!
 
 }}}
+
+Negative testing.
+
+{{{
+
+>>> IPNetwork('192.168/16', True)
+IPNetwork('192.168.0.0/16')
+
+>>> IPNetwork('192.168/16', False)
+IPNetwork('192.0.0.168/16')
+
+}}}

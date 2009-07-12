@@ -20,7 +20,8 @@
 #
 #-----------------------------------------------------------------------------
 """
-Provides access to public network address information published by IANA.
+Routines for accessing data published by IANA (Internet Assigned Numbers
+Authority).
 
 More details can be found at the following URLs :-
 
@@ -35,7 +36,7 @@ import re as _re
 
 from netaddr.core import Publisher, Subscriber, PrettyPrinter
 from netaddr.ip import IPAddress, IPNetwork, IPRange, \
-    cidr_abbrev_to_verbose, within_iprange, iprange_to_cidrs
+    cidr_abbrev_to_verbose, iprange_to_cidrs
 
 #-----------------------------------------------------------------------------
 

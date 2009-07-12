@@ -4,7 +4,7 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-Utility functions for dealing with wildcard or glob-style IP address ranges.
+Routines for IP glob-style address ranges.
 
 Individual octets can be represented using the following shortcuts :
 
@@ -43,7 +43,7 @@ Aside
 """
 
 from netaddr.core import AddrFormatError, AddrConversionError
-from netaddr.ip import IPAddress, IPNetwork, iprange_to_cidrs
+from netaddr.ip import IPRange, IPAddress, IPNetwork, iprange_to_cidrs
 
 #-----------------------------------------------------------------------------
 def valid_glob(ipglob):
@@ -95,7 +95,7 @@ def valid_glob(ipglob):
     return True
 
 #-----------------------------------------------------------------------------
-def glob_to_iprange(ipglob):
+def glob_to_iptuple(ipglob):
     """
     A function that accepts a glob-style IP range and returns the component
     lower and upper bound IP address.
@@ -203,7 +203,7 @@ def glob_to_cidrs(ipglob):
 
     @return: a list of one or more IP objects.
     """
-    return iprange_to_cidrs(*glob_to_iprange(ipglob))
+    return iprange_to_cidrs(*glob_to_iptuple(ipglob))
 
 #-----------------------------------------------------------------------------
 def cidr_to_glob(cidr):
@@ -222,3 +222,32 @@ def cidr_to_glob(cidr):
         #   an IP glob range.
         raise AddrConversionError('bad CIDR to IP glob conversion!')
     return globs[0]
+
+#-----------------------------------------------------------------------------
+class IPGlob(IPRange):
+    """
+    Represents an IP address range using a glob-style syntax (x.x.x-y.*).
+    """
+    def __init__(self, ipglob):
+        (start, end) = glob_to_iptuple(ipglob)
+        super(IPGlob, self).__init__(start, end)
+        self.glob = iprange_to_globs(self._start, self._end)[0]
+
+    def _get_glob(self):
+        return self._glob
+
+    def _set_glob(self, ipglob):
+        (self._start, self._end) = glob_to_iptuple(ipglob)
+        self._glob = iprange_to_globs(self._start, self._end)[0]
+
+    glob = property(_get_glob, _set_glob, None,
+        'an arbitrary IP address range in glob format.')
+
+    def __str__(self):
+        """@return: IP glob in common representational format."""
+        return "%s" % self.glob
+
+    def __repr__(self):
+        """@return: Python statement to create an equivalent object"""
+        return "%s('%s')" % (self.__class__.__name__,
+            self.glob)

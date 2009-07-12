@@ -89,11 +89,9 @@ UNIT TESTS
 
 No code can ever be deemed truly complete or trustworthy without reasonable
 unit test coverage. Full coverage for netaddr is the certainly the ultimate
-goal. To this end coverage.py by Gareth Rees and Ned Batchelder has been
-included starting with release 0.7.x to help track this. The latest coverage
-report, netaddr_coverage_report.txt in the same directory as coverage.py, is
-also included for those who are interested. Feel free to add tests to improve
-coverage ;-)
+goal. To this end coverage.py by Ned Batchelder is being used from release
+0.7.x onwards to help with this. The latest coverage report can be found in
+the tests/ subdirectory. Feel free to add tests to help improve coverage ;-)
 
 Wherever possible all changes and new features will be covered with specific
 regression tests.
@@ -126,30 +124,33 @@ that is exposed via its API.
 
 IPv4 RFCs
 
+	RFC 791 - Internet Protocol
+		http://www.ietf.org/rfc/rfc791
+
 	RFC 1918 - Address Allocation for Private Internets
-		http://www.ietf.org/html/rfc1918
+		http://www.ietf.org/rfc/rfc1918
 
 	RFC 3330 - Special-Use IPv4 Addresses
-		http://www.ietf.org/html/rfc3330
+		http://www.ietf.org/rfc/rfc3330
 
 	RFC 3927 - Dynamic Configuration of IPv4 Link-Local Addresses
-		http://www.ietf.org/html/rfc3927
+		http://www.ietf.org/rfc/rfc3927
 
 Multicast (IPv4) RFCs
 
 	RFC 2365 - Administratively Scoped IP Multicast
-		http://www.ietf.org/html/rfc2365
+		http://www.ietf.org/rfc/rfc2365
 
 	RFC 3171 - IANA IPv4 Multicast Guidelines
 		http://www.ietf.org/rfc/rfc3171
 
 	RFC 3927 - Dynamic Configuration of IPv4 Link-Local Addresses
-		http://www.ietf.org/html/rfc3927
+		http://www.ietf.org/rfc/rfc3927
 
 IPv6 RFCs
 
 	RFC 3330 - Special-Use IPv4 Addresses
-		http://www.ietf.org/html/rfc3330
+		http://www.ietf.org/rfc/rfc3330
 
 	RFC 4291 - IPv6 Addressing Architecture
 		http://www.ietf.org/rfc/rfc4291

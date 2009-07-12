@@ -5,7 +5,7 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-classes and functions for dealing with MAC, OUI, IAB and EUI-64 identifiers.
+Classes and functions for dealing with MAC addresses, EUI-48, EUI-64, OUI, IAB identifiers.
 """
 
 import sys as _sys
@@ -29,10 +29,9 @@ from netaddr.eui.ieee import IEEE_OUI_INDEX, IEEE_OUI_REGISTRY, \
 #-----------------------------------------------------------------------------
 class OUI(object):
     """
-    Represents an individual IEEE OUI (Organisationally Unique Identifier)
-    identifier.
+    An individual IEEE OUI (Organisationally Unique Identifier) identifier.
 
-    For online details see - http://standards.ieee.org/regauth/oui/
+    For online details see - U{http://standards.ieee.org/regauth/oui/}
     """
     def __init__(self, oui):
         """
@@ -153,9 +152,9 @@ class OUI(object):
 #-----------------------------------------------------------------------------
 class IAB(object):
     """
-    Represents an individual IEEE IAB (Individual Address Block) identifier.
+    An individual IEEE IAB (Individual Address Block) identifier.
 
-    For online details see - http://standards.ieee.org/regauth/oui/
+    For online details see - U{http://standards.ieee.org/regauth/oui/}
     """
     @staticmethod
     def split_iab_mac(eui_int, strict=False):
@@ -288,7 +287,7 @@ class IAB(object):
 #-----------------------------------------------------------------------------
 class EUI(object):
     """
-    Represents an IEEE EUI (Extended Unique Identifier).
+    An IEEE EUI (Extended Unique Identifier).
 
     Both EUI-48 (used for layer 2 MAC addresses) and EUI-64 are supported.
 
@@ -495,7 +494,7 @@ class EUI(object):
         try:
             return(self.version, self._value) == (other.version, other._value)
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __ne__(self, other):
         """
@@ -505,7 +504,7 @@ class EUI(object):
         try:
             return(self.version, self._value) != (other.version, other._value)
         except AttributeError:
-            return True
+            return NotImplemented
 
     def __lt__(self, other):
         """
@@ -515,7 +514,7 @@ class EUI(object):
         try:
             return (self.version, self._value) < (other.version, other._value)
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __le__(self, other):
         """
@@ -525,7 +524,7 @@ class EUI(object):
         try:
             return(self.version, self._value) <= (other.version, other._value)
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __gt__(self, other):
         """
@@ -535,7 +534,7 @@ class EUI(object):
         try:
             return (self.version, self._value) > (other.version, other._value)
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __ge__(self, other):
         """
@@ -545,7 +544,7 @@ class EUI(object):
         try:
             return(self.version, self._value) >= (other.version, other._value)
         except AttributeError:
-            return False
+            return NotImplemented
 
     def bits(self, word_sep=None):
         """
@@ -584,8 +583,8 @@ class EUI(object):
 
     def ipv6_link_local(self):
         """
-        @return: new link local IPv6 L{IP} object based on this L{EUI} using
-            technique described in RFC 4291. B{Please Note:} this technique
+        @return: new link local IPv6 L{IPAddress} object based on this L{EUI}
+            using the technique described in RFC 4291. B{Please Note:} this
             poses security risks in certain scenarios. Please read RFC 4941 for
             details. Reference: RFCs 4291 and 4941.
         """

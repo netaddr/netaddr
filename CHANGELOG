@@ -1,101 +1,40 @@
-
-Release: 0.7
-Date: DDth Jun 2009
+Release: 0.7a1 
+Date 7th Jun 2009
 
 Changes since 0.6.x
 -------------------
 
-There has been a **major** (but necessary) reworking of the entire library!
+Major overhaul compared with previous versions that breaks backward compatibility.
 
-	Please Note - this release breaks backward compatibility with all previous
-	releases. Please consult the API documentation, the readable unit tests
-	(now bundled with all releases) as well as netaddr wiki example pages for
-	full details.
+* Redesigned the internal module hierarchy. All public classes, functions and
+  constants are still available via the main netaddr module interface.
 
-Here is a brief run down of significant improvements and changes.
+* Removed the Addr base class. There is no longer a shared base class between
+  IP and MAC/EUI style addresses.
 
-* A whole redesign of the netaddr module hierarchy. Now, cleaner and simpler
-  with the correct division of labour between submodules.
+* Strategy classes have been replaced with a set of modules. Logic is similar
+  but has been dressed up different. Each address object now holds a reference
+  to a module rather than an object. 
 
-* The Addr base class no longer exists. There will no longer be examples of
-  it cited on mailing lists and in group discussions. It has been banished
-  for good!
+* IP and CIDR classes have been replaced with IPAddress and IPNetwork
+  respectively. The rename is important as these new interfaces now enforce
+  the distinction between an individual IP address and an IP network/subnet.
+  IPAddress objects do not support any notion of a netmask or CIDR prefix;
+  this is the primary function of an IPNetwork object.
 
-* The logic in former strategy classes have been moved into Python strategy
-  modules instead. This makes the most sense as the former strategy classes
-  were almost always singletons instantiated at module load time and hardly
-  (if ever) changed. This switch has meant some duplication of code in each
-  of the new strategy modules (violating DRY) but is deemed an acceptable
-  trade off to improve code clarity and readability. The gains from using
-  inheritance are now seen (in the cold light of day) as a false economy.
+* Many operations have been moved from static class methods to module functions.
+  
+* IP globbing has been moved into a submodule as it is special case code that.
+  They is no longer parity between 
+  
+* Ended the use of custom descriptor classes.
 
-* Functionality of previous Addr, IP and CIDR classes has been combined into
-  a single new IP class. Somewhat controversially perhaps, the new class
-  now represents both individual addresses *and* IP subnets / network blocks
-  *dependent on the methods and properties you choose to access*. Hopefully
-  this has been done in a sensitive enough way to stifle accusations of
-  conflation between individual IP addresses and IP subnets (fingers
-  crossed). Please direct any debate on this choice to the netaddr discussion
-  group.
-
-* The IPRange and Wildcard (IP globbing) classes have been removed in favour
-  of discrete functions. This greatly improves code clarity and readability
-  throughout the entire code base. A new netaddr.ipglob namespace separates
-  IP globbing (a specialist area) into its own sub module.
-
-* Moved IP address and subnet summarization and IP subtraction (exclusion)
-  logic into a set of functions. Old-style classful abbreviations of IPv4
-  CIDR addresses are still supported but through a pass through function
-  that is not part of the IP class constructor.
-
-* Removed all overt uses of Python descriptors for handling properties in
-  favour of standard @property decorators for read-only properties and
-  property() builtin calls for read-write properties. Descriptors were always
-  potentially confusing and non-obvious to contributors and code reviewers.
-  The reason for their use has also gone away with the massive reduction in
-  various related classes starting in this release. The switch from 
-  supporting Python 2.3.x also supported this decision.
-
-* The whole internal formatting infrastucture has been removed. All methods
-  and properties of the various classes largely return objects, which can be
-  passed through str(), int(), hex() etc as required. There was so much
-  conditional code propping up formatting that I decided to hand off string
-  and integer IP address value conversion to the end user to make the library
-  simpler. This *greatly* improves the quality of netaddr's internal
-  implementation and gets around annoying edges cases where bugs are
-  introduced on pass through calls.
-
-	Here is a working example of some pass through code :-
-
-	>>> ip = IP('192.0.2.10/24')
-	
-	>>> ip.network
-	IP('192.0.2.0/24')
-	
-	>>> ip.network.bits()
-	'11000000.00000000.00000010.00000000'
-	
-	>>> ip.network.packed()
-	'\xc0\x00\x02\x00'
-
-  If I implemented the formatting options as there were in netaddr 0.6.x and
-  earlier :-
-
-	>>> ip = IP('192.0.2.10/24', format=str)
-
-	>>> ip.network
-	IP('192.0.2.0/24')
-
-	>>> ip.network.bits()
-	AttributeError: 'str' object has no attribute 'bits'
-
-  The network property uses the internal formatting logic and breaks for the
-  user in non-obvious ways.
-
-  There could be the possibility of changing properties such as 'network' and
-  'broadcast' back into methods in future that accept formatting arguments. It
-  will stay this way for now unless there are any major complaints as it is
-  far simpler.
+* All methods and properties that previously used or supported the 'fmt'
+  formatting property no longer do so. In all cases objects are now returned
+  instead to properly support pass through calls without side effects. It is up
+  to the user to extract data in the right format from the objects returned as
+  required.
+  
 
 Specific bug fixes addressed in this release
 --------------------------------------------
@@ -103,6 +42,106 @@ Specific bug fixes addressed in this release
 * FIXED Issue 26 - http://code.google.com/p/netaddr/issues/detail?id=26
 
 	- Refactor out use of isinstance()
+
+------------------------------------------------------------------------------
+
+#REMOVE:Release: 0.7
+#REMOVE:Date: DDth Jun 2009
+
+#REMOVE:Changes since 0.6.x
+#REMOVE:-------------------
+
+#REMOVE:There has been a **major** (but necessary) reworking of the entire library!
+
+#REMOVE:	Please Note - this release breaks backward compatibility with all previous
+#REMOVE:	releases. Please consult the API documentation, the readable unit tests
+#REMOVE:	(now bundled with all releases) as well as netaddr wiki example pages for
+#REMOVE:	full details.
+
+#REMOVE:Here is a brief run down of significant improvements and changes.
+
+#REMOVE:* A whole redesign of the netaddr module hierarchy. Now, cleaner and simpler
+#REMOVE:  with the correct division of labour between submodules.
+
+#REMOVE:* The Addr base class no longer exists. There will no longer be examples of
+#REMOVE:  it cited on mailing lists and in group discussions. It has been banished
+#REMOVE:  for good!
+
+#REMOVE:* The logic in former strategy classes have been moved into Python strategy
+#REMOVE:  modules instead. This makes the most sense as the former strategy classes
+#REMOVE:  were almost always singletons instantiated at module load time and hardly
+#REMOVE:  (if ever) changed. This switch has meant some duplication of code in each
+#REMOVE:  of the new strategy modules (violating DRY) but is deemed an acceptable
+#REMOVE:  trade off to improve code clarity and readability. The gains from using
+#REMOVE:  inheritance are now seen (in the cold light of day) as a false economy.
+
+#REMOVE:* Functionality of previous Addr, IP and CIDR classes has been combined into
+#REMOVE:  a single new IP class. Somewhat controversially perhaps, the new class
+#REMOVE:  now represents both individual addresses *and* IP subnets / network blocks
+#REMOVE:  *dependent on the methods and properties you choose to access*. Hopefully
+#REMOVE:  this has been done in a sensitive enough way to stifle accusations of
+#REMOVE:  conflation between individual IP addresses and IP subnets (fingers
+#REMOVE:  crossed). Please direct any debate on this choice to the netaddr discussion
+#REMOVE:  group.
+
+#REMOVE:* The IPRange and Wildcard (IP globbing) classes have been removed in favour
+#REMOVE:  of discrete functions. This greatly improves code clarity and readability
+#REMOVE:  throughout the entire code base. A new netaddr.ipglob namespace separates
+#REMOVE:  IP globbing (a specialist area) into its own sub module.
+
+#REMOVE:* Moved IP address and subnet summarization and IP subtraction (exclusion)
+#REMOVE:  logic into a set of functions. Old-style classful abbreviations of IPv4
+#REMOVE:  CIDR addresses are still supported but through a pass through function
+#REMOVE:  that is not part of the IP class constructor.
+
+#REMOVE:* Removed all overt uses of Python descriptors for handling properties in
+#REMOVE:  favour of standard @property decorators for read-only properties and
+#REMOVE:  property() builtin calls for read-write properties. Descriptors were always
+#REMOVE:  potentially confusing and non-obvious to contributors and code reviewers.
+#REMOVE:  The reason for their use has also gone away with the massive reduction in
+#REMOVE:  various related classes starting in this release. The switch from 
+#REMOVE:  supporting Python 2.3.x also supported this decision.
+
+#REMOVE:* The whole internal formatting infrastucture has been removed. All methods
+#REMOVE:  and properties of the various classes largely return objects, which can be
+#REMOVE:  passed through str(), int(), hex() etc as required. There was so much
+#REMOVE:  conditional code propping up formatting that I decided to hand off string
+#REMOVE:  and integer IP address value conversion to the end user to make the library
+#REMOVE:  simpler. This *greatly* improves the quality of netaddr's internal
+#REMOVE:  implementation and gets around annoying edges cases where bugs are
+#REMOVE:  introduced on pass through calls.
+
+#REMOVE:	Here is a working example of some pass through code :-
+
+#REMOVE:	>>> ip = IP('192.0.2.10/24')
+#REMOVE:	
+#REMOVE:	>>> ip.network
+#REMOVE:	IP('192.0.2.0/24')
+#REMOVE:	
+#REMOVE:	>>> ip.network.bits()
+#REMOVE:	'11000000.00000000.00000010.00000000'
+	
+#REMOVE:	>>> ip.network.packed()
+#REMOVE:	'\xc0\x00\x02\x00'
+
+#REMOVE:  If I implemented the formatting options as there were in netaddr 0.6.x and
+#REMOVE:  earlier :-
+
+#REMOVE:	>>> ip = IP('192.0.2.10/24', format=str)
+
+#REMOVE:	>>> ip.network
+#REMOVE:	IP('192.0.2.0/24')
+
+#REMOVE:	>>> ip.network.bits()
+#REMOVE:	AttributeError: 'str' object has no attribute 'bits'
+
+#REMOVE:  The network property uses the internal formatting logic and breaks for the
+#REMOVE:  user in non-obvious ways.
+
+#REMOVE:  There could be the possibility of changing properties such as 'network' and
+#REMOVE:  'broadcast' back into methods in future that accept formatting arguments. It
+#REMOVE:  will stay this way for now unless there are any major complaints as it is
+#REMOVE:  far simpler.
 
 ------------------------------------------------------------------------------
 

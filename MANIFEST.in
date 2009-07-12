@@ -22,7 +22,6 @@ recursive-include docs/api *.html *.css *.js *.png *.txt
 include netaddr/__init__.py
 include netaddr/core.py
 include netaddr/fbsocket.py
-include netaddr/ipglob.py
 
 include netaddr/eui/__init__.py
 include netaddr/eui/ieee.py
@@ -30,10 +29,13 @@ include netaddr/eui/*.idx
 include netaddr/eui/*.txt
 
 include netaddr/ip/__init__.py
+include netaddr/ip/glob.py
 include netaddr/ip/iana.py
+include netaddr/ip/intset.py
 include netaddr/ip/ipv4-address-space
 include netaddr/ip/ipv6-address-space
 include netaddr/ip/multicast-addresses
+include netaddr/ip/sets.py
 
 include netaddr/strategy/__init__.py
 include netaddr/strategy/eui48.py
@@ -41,7 +43,7 @@ include netaddr/strategy/eui64.py
 include netaddr/strategy/ipv4.py
 include netaddr/strategy/ipv6.py
 
-recursive-include netaddr/tests *.txt *.py *.bat
+recursive-include netaddr/tests *.txt *.py *.sh
 
 global-exclude *.pyc
 global-exclude *.svn*

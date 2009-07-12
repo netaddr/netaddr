@@ -58,3 +58,26 @@ IPv6 '::' compression algorithm tests.
 'fedc:ba98:7654:3210:fedc:ba98:7654:3210'
 
 }}}
+
+IPv4 failure tests
+
+{{{
+
+>>> inet_ntoa(1)
+Traceback (most recent call last):
+...
+TypeError: string type expected, not <type 'int'>
+
+
+>>> inet_ntoa('\x00')
+Traceback (most recent call last):
+...
+ValueError: invalid length of packed IP address string
+
+>>> inet_aton('0x0')
+'\x00\x00\x00\x00'
+
+>>> inet_aton('010')
+'\x08\x00\x00\x00'
+
+}}}

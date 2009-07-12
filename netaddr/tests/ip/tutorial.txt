@@ -88,7 +88,7 @@ IPNetwork objects are used to represent subnets that accept netmasks and CIDR pr
 
 }}}
 
-In this case, the network and broadcast address at the same, akin to a host route.
+In this case, the network and broadcast address are the same, akin to a host route.
 
 {{{
 
@@ -110,7 +110,13 @@ And finally, this IPNetwork object represents an IP address that belongs to a gi
 
 }}}
 
-Internally, each IPNetwork object only stores 3 values, the IP address value, a reference to an IP protocol module for the IP version being represented by the object and the network CIDR prefix length. All the other values are calculated on-the-fly as they are accessed.
+Internally, each IPNetwork object only stores 3 values :-
+
+  * the IP address value as an unsigned integer
+  * a reference to the IP protocol module for the IP version being represented
+  * the network CIDR prefix bitmask
+  
+All the other values are calculated on-the-fly as they are accessed.
 
 It is possible to adjust the IP address value and the CIDR prefix after object instantiation.
 
@@ -130,7 +136,7 @@ IPNetwork('192.0.2.1/23')
 
 }}}
 
-There is also a property that lets you access the actual *true* CIDR address (after applying the CIDR prefix to the IP address of the IP object).
+There is also a property that lets you access the *true* CIDR address which removes all host bits from the network address based on the CIDR subnet prefix.
 
 {{{
 

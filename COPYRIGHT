@@ -2,9 +2,17 @@
 netaddr
 -------
 
-	Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+    Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 
-	Released under the BSD license. See the LICENSE file for details.
+    Released under the BSD license. See the LICENSE file for details.
+
+
+IntSet.py
+---------
+
+    Copyright (C) 2006, Heiko Wundram.
+    
+    Released under the MIT license. See the LICENSE file for details.
 
 
 IANA (Internet Assigned Numbers Authority)
@@ -39,9 +47,3 @@ IEEE (Institution of Electrical Engineers)
 
    See README file and source code for URLs to latest copies of the relevant
    files.
-
-coverage.py
------------
-
-	Copyright 2001 Gareth Rees.  All rights reserved.
-	Copyright 2004-2008 Ned Batchelder.  All rights reserved.

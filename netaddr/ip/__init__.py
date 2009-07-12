@@ -3,7 +3,7 @@
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
-"""classes and functions for dealing with IPv4 and IPv6."""
+"""Routines for IPv4 and IPv6 addresses, subnets and ranges."""
 
 import sys as _sys
 import re as _re
@@ -14,85 +14,97 @@ from netaddr.strategy import ipv6 as _ipv6
 
 #-----------------------------------------------------------------------------
 class BaseIP(object):
+    """
+    An abstract base class for common operations shared between L{IPAddress}
+    and L{IPNetwork}.
+    """
+
+    def __iter__(self):
+        """
+        @return: An iterator providing access to all IPAddress objects within
+            range represented by this IPNetwork object.
+        """
+        start_ip = IPAddress(self.first, self.version)
+        end_ip = IPAddress(self.last+1, self.version)
+        return iter_iprange(start_ip, end_ip)
 
     def __hash__(self):
         """
-        @return: A hash value uniquely indentifying this IP object. It is
-            based on the subnet of this IP object, *not* its IP address value.
+        @return: A hash value uniquely indentifying this IP object.
         """
         return hash(self.key())
 
     def __eq__(self, other):
         """
-        @param other: an IP address object of the same version as C{self}.
+        @param other: an L{IPAddress} or L{IPNetwork} object.
 
-        @return: C{True} if the boundary of this IP's subnet match that
-            of other, C{False} otherwise.
+        @return: C{True} if this L{IPAddress} or L{IPNetwork} object is
+            equivalent to C{other}, C{False} otherwise.
         """
         try:
             return self.key() == other.key()
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __ne__(self, other):
         """
-        @param other: an IP address object of the same version as C{self}.
+        @param other: an L{IPAddress} or L{IPNetwork} object.
 
-        @return: C{False} if the boundary of this IP's subnet match that
-            of other, C{True} otherwise.
+        @return: C{True} if this L{IPAddress} or L{IPNetwork} object is
+            not equivalent to C{other}, C{False} otherwise.
         """
         try:
             return self.key() != other.key()
         except AttributeError:
-            return True
+            return NotImplemented
 
     def __lt__(self, other):
         """
-        @param other: an IP address object of the same version as C{self}.
+        @param other: an L{IPAddress} or L{IPNetwork} object.
 
-        @return: C{True} if the boundary of this IP's subnet are less than
-            other, C{False} otherwise.
+        @return: C{True} if this L{IPAddress} or L{IPNetwork} object is
+            less than C{other}, C{False} otherwise.
         """
         try:
             return self.sort_key() < other.sort_key()
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __le__(self, other):
         """
-        @param other: an IP address object of the same version as C{self}.
+        @param other: an L{IPAddress} or L{IPNetwork} object.
 
-        @return: C{True} if the boundary of this IP's subnet are less than or
-            equal to other, C{False} otherwise.
+        @return: C{True} if this L{IPAddress} or L{IPNetwork} object is
+            less than or equal to C{other}, C{False} otherwise.
         """
         try:
             return self.sort_key() <= other.sort_key()
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __gt__(self, other):
         """
-        @param other: an IP address object of the same version as C{self}.
+        @param other: an L{IPAddress} or L{IPNetwork} object.
 
-        @return: C{True} if the boundary of this IP's subnet are greater
-            than other, C{False} otherwise.
+        @return: C{True} if this L{IPAddress} or L{IPNetwork} object is
+            greater than C{other}, C{False} otherwise.
         """
         try:
             return self.sort_key() > other.sort_key()
         except AttributeError:
-            return False
+            return NotImplemented
 
     def __ge__(self, other):
         """
-        @param other: an IP address object of the same version as C{self}.
+        @param other: an L{IPAddress} or L{IPNetwork} object.
 
-        @return: C{True} if the boundary of this IP's subnet are greater than
-            or equal than other, C{False} otherwise.
+        @return: C{True} if this L{IPAddress} or L{IPNetwork} object is
+            greater than or equal to C{other}, C{False} otherwise.
         """
         try:
             return self.sort_key() >= other.sort_key()
         except AttributeError:
-            return False
+            return NotImplemented
 
     def is_unicast(self):
         """@return: C{True} if this IP is unicast, C{False} otherwise"""
@@ -104,22 +116,6 @@ class BaseIP(object):
             return self in IPNetwork('224.0.0.0/4')
         elif  self._module == _ipv6:
             return self in IPNetwork('ff00::/8')
-
-    def is_hostmask(self):
-        """
-        @return: C{True} if this address is a mask that would return a host
-            id, C{False} otherwise.
-        """
-        int_val = self._value + 1
-        return (int_val & (int_val - 1) == 0)
-
-    def is_netmask(self):
-        """
-        @return: C{True} if this addr is a mask that would return a host id,
-            C{False} otherwise.
-        """
-        int_val = (self._value ^ self._module.max_int) + 1
-        return (int_val & (int_val - 1) == 0)
 
     def is_loopback(self):
         """
@@ -140,13 +136,14 @@ class BaseIP(object):
         """
         if self.version == 4:
             for cidr in (IPNetwork('192.168.0.0/16'), IPNetwork('10.0.0.0/8'),
-                         IPNetwork('172.16.0.0/12'),  IPNetwork('192.0.2.0/24'),
+                         IPNetwork('172.16.0.0/12'), IPNetwork('192.0.2.0/24'),
                          IPNetwork('239.192.0.0/14')):
                 if self in cidr:
                     return True
         elif self.version == 6:
             #   Please Note: FEC0::/10 has been deprecated! See RFC 3879.
-            return self in IPNetwork('fc00::/7') #   ULAs - Unique Local Addresses
+            #   ULAs - Unique Local Addresses
+            return self in IPNetwork('fc00::/7')
 
         if self.is_link_local():
             return True
@@ -210,8 +207,8 @@ class BaseIP(object):
     @property
     def info(self):
         """
-        @return: A record dict containing IANA registration details for this
-            IP address if available, None otherwise.
+        A record dict containing IANA registration details for this IP address
+        if available, None otherwise.
         """
         #   This import is placed here for efficiency. If you don't call this
         #   method, you don't take the (small), one time, import start up
@@ -228,9 +225,9 @@ class BaseIP(object):
 #-----------------------------------------------------------------------------
 class IPAddress(BaseIP):
     """
-    An individual IP address without any net mask or subnet prefix.
+    An individual IPv4 or IPv6 address without a net mask or subnet prefix.
 
-    For a class that supports network based operations, see C{IPNetwork}.
+    To support these and other network based operations, see L{IPNetwork}.
     """
     def __init__(self, addr, version=None):
         """
@@ -306,19 +303,25 @@ class IPAddress(BaseIP):
     value = property(_get_value, _set_value, None,
         'a positive integer representing the value of this IP address.')
 
-    def netmask_bits(self): #FIXME: replace this
+    def netmask_bits(self):
         """
         @return: If this IP is a valid netmask, the number of non-zero
             bits are returned, otherwise it returns the width in bits for
-            based on the IP address version, 32 for IPv4 and 128 for IPv6.
+            the IP address version.
         """
         if not self.is_netmask():
             return self._module.width
 
-        bits = self._module.int_to_bits(self._value)
-        mask_bits = bits.translate(
-            ''.join([chr(_) for _ in range(256)]), ':.0')
-        mask_length = len(mask_bits)
+        i_val = self._value
+        numbits = 0
+
+        while i_val > 0:
+            if i_val & 1 == 1:
+                break
+            numbits += 1
+            i_val >>= 1
+
+        mask_length = self._module.width - numbits
 
         if not 0 <= mask_length <= self._module.width:
             raise ValueError('Unexpected mask length %d for address type!' \
@@ -326,13 +329,29 @@ class IPAddress(BaseIP):
 
         return mask_length
 
-    def __iadd__(self, i):
+    def is_hostmask(self):
         """
-        Increases the value of this IP object by the current size * i.
+        @return: C{True} if this IP address host mask, C{False} otherwise.
+        """
+        int_val = self._value + 1
+        return (int_val & (int_val - 1) == 0)
 
-        An IndexError is raised if result exceeds address range maximum.
+    def is_netmask(self):
         """
-        new_first = self._value + i
+        @return: C{True} if this IP address network mask, C{False} otherwise.
+        """
+        int_val = (self._value ^ self._module.max_int) + 1
+        return (int_val & (int_val - 1) == 0)
+
+    def __iadd__(self, num):
+        """
+        Increases the numerical value of this IPAddress by num.
+
+        @param num: size of IP address increment.
+
+        An IndexError is raised if result exceeds maximum IP address value.
+        """
+        new_first = self._value + num
 
         if new_first > self._module.max_int:
             raise IndexError('increment exceeds maximum address value!')
@@ -340,13 +359,15 @@ class IPAddress(BaseIP):
         self._value = new_first
         return self
 
-    def __isub__(self, i):
+    def __isub__(self, num):
         """
-        Decreases the value of this IP object by the current size * i.
+        Decreases the numerical value of this IPAddress by num.
+
+        @param num: size of IP address decrement.
 
         An IndexError is raised if result is less than zero.
         """
-        new_first = self._value - i
+        new_first = self._value - num
 
         if new_first < 0:
             raise IndexError('decrement is less than zero!')
@@ -356,8 +377,7 @@ class IPAddress(BaseIP):
 
     def key(self):
         """
-        @return: A key (tuple of values) used to uniquely identify this IP
-            subnet.
+        @return: a key tuple that uniquely identifies this IP address.
         """
         #   NB - we return the value here twice because this IP Address may
         #   be sorted with a list of networks and it should still end up
@@ -366,68 +386,55 @@ class IPAddress(BaseIP):
 
     def sort_key(self):
         """
-        @return: A key (tuple of values) used to uniquely identify this IP
-            subnet and aids in correct sorting.
+        @return: A key tuple used to compare and sort this L{IPAddress}
+            correctly.
         """
-        #   A sort key is essentially a CIDR prefixlen value.
-        #   Required as IPRange (and subclasses other than CIDR) do not
-        #   calculate it.
         return self.version, self._value, self._module.width
 
     def __int__(self):
-        """@return: value of this address as an unsigned integer"""
+        """@return: the value of this IP address as an unsigned integer"""
         return self._value
 
     def __long__(self):
-        """@return: value of this address as an unsigned integer"""
+        """@return: the value of this IP address as an unsigned integer"""
         return self._value
 
     def __hex__(self):
-        """@return: hexadecimal string representation of this IP address."""
+        """@return: a hexadecimal string representation of this IP address."""
         return hex(self._value).rstrip('L').lower()
-
-    def __str__(self):
-        """@return: IP address in representational format"""
-        return self._module.int_to_str(self._value)
-
-    def __repr__(self):
-        """@return: Python statement to create equivalent IP object"""
-        return "%s('%s')" % (self.__class__.__name__, self)
 
     def bits(self, word_sep=None):
         """
         @param word_sep: (optional) the separator to insert between words.
             Default: None - use default separator for address type.
 
-        @return: human-readable binary digit string of this address"""
+        @return: the value of this IP address as a binary digit string."""
         return self._module.int_to_bits(self._value, word_sep)
 
     @property
     def packed(self):
-        """@return: binary packed string of this address"""
+        """The value of this IP address as a packed binary string."""
         return self._module.int_to_packed(self._value)
 
     @property
     def bin(self):
         """
-        @return: standard Python binary representation of this address. A back
-            port of the format provided by the builtin bin() type available in
-            Python 2.6.x and higher."""
+        The value of this IP adddress in standard Python binary
+        representational form (0bxxx). A back port of the format provided by
+        the builtin bin() function found in Python 2.6.x and higher.
+        """
         return self._module.int_to_bin(self._value)
 
     @property
     def reverse_dns(self):
-        """@return: The reverse DNS lookup string for this IP address"""
+        """The reverse DNS lookup record for this IP address"""
         return self._module.int_to_arpa(self._value)
 
     def ipv4(self):
         """
-        @return: A new IPv4 address numerically equivalent to this one.
-        An object copy is returned if this object is already IPv4. If
-        this object is IPv6 and its value is compatible with IPv4, a new IPv4
-        L{IP} object is returned.
-
-        Raises an L{AddrConversionError} is IPv6 address cannot be converted.
+        @return: A numerically equivalent version 4 L{IPAddress} object.
+            Raises an L{AddrConversionError} is IPv6 address cannot be
+            converted to IPv4.
         """
         ip = None
         klass = self.__class__
@@ -446,17 +453,14 @@ class IPAddress(BaseIP):
 
     def ipv6(self, ipv4_compatible=False):
         """
-        B{Please Note:} the IPv4-Mapped IPv6 address format is now considered
-        deprecated. Reference: RFC 4291
+        B{Please Note:} the IPv4-mapped IPv6 address format is now considered
+        deprecated. See RFC 4291 or later for details.
 
-        @param ipv4_compatible: If C{True} returns an IPv4-Mapped address
-            (::ffff:x.x.x.x), an IPv4-Compatible (::x.x.x.x) address
-            otherwise. Default: False (IPv4-Mapped).
+        @param ipv4_compatible: If C{True} returns an IPv4-mapped address
+            (::ffff:x.x.x.x), an IPv4-compatible (::x.x.x.x) address
+            otherwise. Default: False (IPv4-mapped).
 
-        @return: A new L{IP} version 6 object that is numerically equivalent
-            this address. If this object is already IPv6 then a copy of this
-            object is returned. If this object is IPv4, a new version 6 L{IP}
-            object is returned.
+        @return: A numerically equivalent version 6 L{IPAddress} object.
         """
         ip = None
         klass = self.__class__
@@ -474,73 +478,122 @@ class IPAddress(BaseIP):
 
     def __or__(self, other):
         """
-        @param other: An IP object (or int-like object).
+        @param other: An L{IPAddress} object (or other int-like object).
 
         @return: bitwise OR (x | y) between the integer value of this IP
-            address and another.
+            address and C{other}.
         """
-        return IPAddress(self._value | int(other), self.version)
+        return self.__class__(self._value | int(other), self.version)
 
     def __and__(self, other):
         """
-        @param other: An IP object.
+        @param other: An L{IPAddress} object (or other int-like object).
 
         @return: bitwise AND (x & y) between the integer value of this IP
-            address and another.
+            address and C{other}.
         """
-        return IPAddress(self._value & int(other), self.version)
+        return self.__class__(self._value & int(other), self.version)
 
     def __xor__(self, other):
         """
-        @param other: An IP object (or int-like object).
+        @param other: An L{IPAddress} object (or other int-like object).
 
         @return: bitwise exclusive OR (x ^ y) between the integer value of
-            this IP address and another.
+            this IP address and C{other}.
         """
-        return IPAddress(self._value ^ int(other), self.version)
+        return self.__class__(self._value ^ int(other), self.version)
 
     def __lshift__(self, numbits):
         """
         @param numbits: size of bitwise shift.
 
-        @return: an IP address based on this one with its integer value
-            left shifted by x bits.
+        @return: an L{IPAddress} object based on this one with its integer
+            value left shifted by C{numbits}.
         """
-        return IPAddress(self._value << numbits, self.version)
+        return self.__class__(self._value << numbits, self.version)
 
     def __rshift__(self, numbits):
         """
         @param numbits: size of bitwise shift.
 
-        @return: an IP address based on this one with its integer value
-            right shifted by x bits.
+        @return: an L{IPAddress} object based on this one with its integer
+            value right shifted by C{numbits}.
         """
-        return IPAddress(self._value >> numbits, self.version)
+        return self.__class__(self._value >> numbits, self.version)
 
     def __nonzero__(self):
         """
-        @return: True if the numerical value of this IP address is not zero,
-            False otherwise.
+        @return: C{True} if the numerical value of this IP address is not zero,
+            C{False} otherwise.
         """
         return bool(self._value)
+
+    def __str__(self):
+        """@return: IP address in representational format"""
+        return self._module.int_to_str(self._value)
+
+    def __repr__(self):
+        """@return: Python statement to create an equivalent object"""
+        return "%s('%s')" % (self.__class__.__name__, self)
 
 #-----------------------------------------------------------------------------
 class IPNetwork(BaseIP):
     """
-    An IP network. Essentially a combination of an IP address and a netmask.
+    An IPv4 or IPv6 network or subnet. A combination of an IP address and a
+    network mask address.
+
+    Accepts CIDR and several variants :-
+
+    a) Standard CIDR::
+
+        x.x.x.x/y -> 192.0.2.0/24
+        x::/y -> fe80::/10
+
+    b) Hybrid CIDR format (netmask address instead of prefix)::
+
+        x.x.x.x/y.y.y.y -> 192.0.2.0/255.255.255.0
+        x::/y:: -> fe80::/ffc0::
+
+    where 'y' address represent a valid netmask.
+
+    c) ACL hybrid CIDR format (hostmask address instead of prefix)::
+
+        x.x.x.x/y.y.y.y -> 192.0.2.0/0.0.0.255
+        x::/y:: -> fe80::/3f:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+
+    where 'y' address represent a valid netmask.
+
+    This is like Cisco's ACL (Access Control List) bitmasks.
+
+    d) Abbreviated CIDR format (as of netaddr 0.7.x this requires
+    the optional constructor argument C{implicit_prefix=True})::
+
+        x       -> 192
+        x/y     -> 10/8
+        x.x/y   -> 192.168/16
+        x.x.x/y -> 192.168.0/24
+
+    which are equivalent to::
+
+        x.0.0.0/y   -> 192.0.0.0/24
+        x.0.0.0/y   -> 10.0.0.0/8
+        x.x.0.0/y   -> 192.168.0.0/16
+        x.x.x.0/y   -> 192.168.0.0/24
+
     """
     def __init__(self, addr, implicit_prefix=False):
         """
         Constructor.
 
-        @param addr: an IPv4 or IPv6 address with optional subnet prefix. May
-            be an IP address in representation (string) format, an integer or
-            another IP object (copy construction).
+        @param addr: an IPv4 or IPv6 address with optional CIDR prefix,
+            netmask or hostmask. May be an IP address in representation
+            (string) format, an integer or another IP object (copy
+            construction).
 
         @param implicit_prefix: if True, the constructor uses classful IPv4
-            rules to select a default prefix when one is not provided. If
-            False it uses the length of the IP address version.
-                (default: False).
+            rules to select a default prefix when one is not provided.
+            If False it uses the length of the IP address version.
+            (default: False).
         """
         self._value = None
         self._prefixlen = None
@@ -642,32 +695,32 @@ class IPNetwork(BaseIP):
                 raise ValueError('CIDR prefix mask %r is invalid!' % addr)
 
     prefixlen = property(_get_prefixlen, _set_prefixlen, None,
-        "size of the bitmask used to indentify and separate the network ' \
-        'identifier\nfrom the host identifier in this IP address.")
+        "size of the bitmask used to indentify and separate the network " \
+        "identifier\nfrom the host identifier in this IP address.")
 
     @property
     def ip(self):
         """
-        The IP address of this IP object. This is not necessarily the same as
-        the network address indicated by various CIDR prefixes or network
-        masks.
+        The IP address of this L{IPNetwork} object. This is may or may not be
+        the same as the network IP address which varies according to the value
+        of the CIDR subnet prefix.
         """
         return IPAddress(self._value, self.version)
 
     @property
     def network(self):
-        """The network address of this IP object."""
+        """The network address of this L{IPNetwork} object."""
         return IPAddress(self._value & int(self.netmask), self.version)
 
     @property
     def broadcast(self):
-        """The broadcast address of this IP object"""
+        """The broadcast address of this L{IPNetwork} object"""
         return IPAddress(self._value | self.hostmask._value, self.version)
 
     @property
     def first(self):
         """
-        The integer value of first IP address in the CIDR block for this IP
+        The integer value of first IP address found within this L{IPNetwork}
         object.
         """
         return self._value & (self._module.max_int ^ self.hostmask._value)
@@ -675,7 +728,7 @@ class IPNetwork(BaseIP):
     @property
     def last(self):
         """
-        The integer value of last IP address in the CIDR block for this IP
+        The integer value of last IP address found within this L{IPNetwork}
         object.
         """
         hostmask = (1 << (self._module.width - self._prefixlen)) - 1
@@ -683,22 +736,21 @@ class IPNetwork(BaseIP):
 
     @property
     def netmask(self):
-        """The subnet mask of this IP object."""
+        """The subnet mask of this L{IPNetwork} object."""
         netmask = self._module.max_int ^ self.hostmask._value
         return IPAddress(netmask, self.version)
 
     @property
     def hostmask(self):
-        """The host mask of this IP object."""
+        """The host mask of this L{IPNetwork} object."""
         hostmask = (1 << (self._module.width - self._prefixlen)) - 1
         return IPAddress(hostmask, self.version)
 
     @property
     def cidr(self):
         """
-        The CIDR network address for this IP object. This excludes any host
-        address bits that remain after applying the subnet prefix to the IP
-        address of an IP object.
+        The true CIDR address for this L{IPNetwork} object which omits any
+        host bits to the right of the CIDR subnet prefix.
         """
         ip = IPAddress(self._value & int(self.netmask), self.version)
         cidr = IPNetwork("%s/%d" % (ip, self.prefixlen))
@@ -706,41 +758,22 @@ class IPNetwork(BaseIP):
 
     @property
     def size(self):
-        """The number of IP addresses in this subnet."""
+        """
+        The total number of IP addresses within this L{IPNetwork} object.
+        """
         return int(self.last - self.first + 1)
 
-    def supernet(self, prefixlen=0):
+    def __iadd__(self, num):
         """
-        Provides a list of supernet CIDR blocks for this IP object's subnet
-        between the size of the current prefix and (if specified) and end
-        prefix.
+        Increases the value of this L{IPNetwork} object by the current size
+        multiplied by C{num}.
 
-        @param prefixlen: (optional) a CIDR prefix for the maximum supernet.
-            Default: 0 - returns all possible supernets.
+        @param num: (optional) number of L{IPNetwork} blocks to increment this
+        IPNetwork's value by.
 
-        @return: an tuple containing IP object supernets containing this one.
+        An C{IndexError} is raised if result exceeds maximum IP address value.
         """
-        if not 0 <= prefixlen <= self._module.width:
-            raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
-                % (prefixlen, self.version))
-
-        #   Use a copy of self as we'll be editing it.
-        supernet = self.cidr
-
-        supernets = []
-        while supernet.prefixlen > prefixlen:
-            supernet.prefixlen -= 1
-            supernets.append(supernet.cidr)
-
-        return list(reversed(supernets))
-
-    def __iadd__(self, i):
-        """
-        Increases the value of this IP object by the current size * i.
-
-        An IndexError is raised if result exceeds address range maximum.
-        """
-        new_first = int(self.network) + (self.size * i)
+        new_first = int(self.network) + (self.size * num)
 
         if (new_first + (self.size - 1)) > self._module.max_int:
             raise IndexError('increment exceeds address boundary!')
@@ -748,13 +781,17 @@ class IPNetwork(BaseIP):
         self._value = new_first
         return self
 
-    def __isub__(self, i):
+    def __isub__(self, num):
         """
-        Decreases the value of this IP object by the current size * i.
+        Decreases the value of this L{IPNetwork} object by the current size
+        multiplied by C{num}.
 
-        An IndexError is raised if result is less than zero.
+        @param num: (optional) number of L{IPNetwork} blocks to decrement this
+        IPNetwork's value by.
+
+        An C{IndexError} is raised if result is less than zero.
         """
-        new_first = int(self.network) - (self.size * i)
+        new_first = int(self.network) - (self.size * num)
 
         if new_first < 0:
             raise IndexError('decrement is less than zero!')
@@ -764,21 +801,13 @@ class IPNetwork(BaseIP):
 
     def __getitem__(self, index):
         """
-        @return: The IP address(es) in this address range referenced by
-            index/slice. Slicing objects can produce large sequences so
-            generator objects are returned instead of a list. Wrapping a slice
-            with C{list()} or C{tuple()} may be required dependent on context
-            in which it is called.
+        @return: The IP address(es) in this L{IPNetwork} object referenced by
+            index or slice. As slicing can produce large sequences of objects
+            an iterator is returned instead of the more usual C{list}.
         """
         if hasattr(index, 'indices'):
             if self._module.version == 6:
-                #FIXME: IPv6 breaks the .indices() method on the slice object
-                #FIXME: spectacularly. We'll have to work out the start, stop
-                #FIXME: and step ourselves :-(
-                #FIXME: See PySlice_GetIndicesEx function in Python SVN
-                #FIXME: repository for implementation details :-
-                #http://svn.python.org/view/python/trunk/Objects/sliceobject.c
-                raise TypeError('slices unsupported on IPv6 objects!')
+                raise TypeError('slices not supported with IPv6!')
 
             (start, stop, step) = index.indices(self.size)
             start_ip = IPAddress(self.first + start, self.version)
@@ -800,84 +829,59 @@ class IPNetwork(BaseIP):
 
     def __len__(self):
         """
-        @return: The number of IP addresses in this subnet. Raises IndexError
-            if size > sys.maxint (a Python limitation). Use the .size()
-            property for subnets of any size.
+        @return: the number of IP addresses in this L{IPNetwork}. Raises an
+            C{IndexError} if size > sys.maxint (a Python 2.x limitation).
+            Use the .size property for subnets of any size.
         """
         size = self.size
         if size > _sys.maxint:
-            #   Use .size() method in this class instead as len() will b0rk!
-            raise IndexError("range contains greater than %d (sys.maxint)" \
-                "addresses! Use the .size() method instead.")
+            raise IndexError("range contains more than %d (sys.maxint) " \
+                "IP addresses! Use the .size property instead." % _sys.maxint)
         return size
 
     def __contains__(self, other):
         """
-        @param other: an IP address (any format supported by IP.__init__).
+        @param other: an L{IPAddress} or L{IPNetwork} object.
 
-        @return: C{True} if a given IP address/ranges falls within the
-            boundary of this IP address/range, C{False} otherwise.
+        @return: C{True} if other falls within the boundary of this one,
+            C{False} otherwise.
         """
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             other = IPNetwork("%s/%d" % (other, other._module.width))
         return other.first >= self.first and other.last <= self.last
 
-    def __iter__(self):
-        """
-        @return: An iterator object providing access to all network addresses
-            within this range.
-        """
-        start_ip = IPAddress(self.first, self.version)
-        end_ip = IPAddress(self.last+1, self.version)
-        return iter_iprange(start_ip, end_ip)
-
     def key(self):
         """
-        @return: A key (tuple of values) used to uniquely identify this IP
-            subnet.
+        @return: A key tuple used to uniquely identify this L{IPNetwork}.
         """
         return self.version, self.first, self.last
 
     def sort_key(self):
         """
-        @return: A key (tuple of values) used to uniquely identify this IP
-            subnet and aids in correct sorting.
+        @return: A key tuple used to compare and sort this L{IPNetwork}
+            correctly.
         """
-        #   A sort key is essentially a CIDR prefixlen value.
-        #   Required as IPRange (and subclasses other than CIDR) do not
-        #   calculate it.
         skey = self._module.width - num_bits(self.size)
         return self.version, self.first, skey
 
-    def __str__(self):
-        """@return: IP address in representational format"""
-        addr = self._module.int_to_str(self._value)
-        return "%s/%s" % (addr, self.prefixlen)
-
-    def __repr__(self):
-        """@return: Python statement to create equivalent IP object"""
-        return "%s('%s')" % (self.__class__.__name__, self)
-
     def ipv4(self):
         """
-        @return: A new IPv4 address numerically equivalent to this one.
-        An object copy is returned if this object is already IPv4. If
-        this object is IPv6 and its value is compatible with IPv4, a new IPv4
-        L{IP} object is returned.
-
-        Raises an L{AddrConversionError} is IPv6 address cannot be converted.
+        @return: A numerically equivalent version 4 L{IPNetwork} object.
+            Raises an L{AddrConversionError} is IPv6 address cannot be
+            converted to IPv4.
         """
         ip = None
+        klass = self.__class__
 
         if self.version == 4:
-            ip = IPNetwork('%s/%d' % (self.ip, self.prefixlen))
+            ip = klass('%s/%d' % (self.ip, self.prefixlen))
         elif self.version == 6:
             if 0 <= self._value <= _ipv4.max_int:
                 addr = _ipv4.int_to_str(self._value)
-                ip = IPNetwork('%s/%d' % (addr, self.prefixlen - 96))
+                ip = klass('%s/%d' % (addr, self.prefixlen - 96))
             elif _ipv4.max_int <= self._value <= 0xffffffffffff:
                 addr = _ipv4.int_to_str(self._value - 0xffff00000000)
-                ip = IPNetwork('%s/%d' % (addr, self.prefixlen - 96))
+                ip = klass('%s/%d' % (addr, self.prefixlen - 96))
             else:
                 raise AddrConversionError('IPv6 address %s unsuitable for ' \
                     'conversion to IPv4!' % self)
@@ -885,22 +889,20 @@ class IPNetwork(BaseIP):
 
     def ipv6(self, ipv4_compatible=False):
         """
-        B{Please Note:} the IPv4-Mapped IPv6 address format is now considered
-        deprecated. Reference: RFC 4291
+        B{Please Note:} the IPv4-mapped IPv6 address format is now considered
+        deprecated. See RFC 4291 or later for details.
 
-        @param ipv4_compatible: If C{True} returns an IPv4-Mapped address
-            (::ffff:x.x.x.x), an IPv4-Compatible (::x.x.x.x) address
-            otherwise. Default: False (IPv4-Mapped).
+        @param ipv4_compatible: If C{True} returns an IPv4-mapped address
+            (::ffff:x.x.x.x), an IPv4-compatible (::x.x.x.x) address
+            otherwise. Default: False (IPv4-mapped).
 
-        @return: A new L{IP} version 6 object that is numerically equivalent
-            this address. If this object is already IPv6 then a copy of this
-            object is returned. If this object is IPv4, a new version 6 L{IP}
-            object is returned.
+        @return: A numerically equivalent version 6 L{IPNetwork} object.
         """
         ip = None
+        klass = self.__class__
 
         if self.version == 6:
-            ip = IPNetwork('%s/%d' % (self.ip, self.prefixlen))
+            ip = klass('%s/%d' % (self.ip, self.prefixlen))
         elif self.version == 4:
             if ipv4_compatible:
                 #   IPv4-Compatible IPv6 address
@@ -908,46 +910,70 @@ class IPNetwork(BaseIP):
             else:
                 #   IPv4-Mapped IPv6 address
                 addr = _ipv6.int_to_str(0xffff00000000 + self._value)
-            ip = IPNetwork('%s/%d' % (addr, self.prefixlen + 96))
+            ip = klass('%s/%d' % (addr, self.prefixlen + 96))
 
         return ip
 
     def previous(self, step=1):
         """
-        @param step: the number of IP subnets between this IP object and the
-            expected subnet. Default is 1 (the previous IP subnet).
+        @param step: the number of IP subnets between this L{IPNetwork} object
+            and the expected subnet. Default: 1 (the previous IP subnet).
 
-        @return: The adjacent subnet that precedes this IP object.
+        @return: The adjacent subnet preceding this L{IPNetwork} object.
         """
-        ip_copy = IPNetwork('%s/%d' % (self.network, self.prefixlen),
+        ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
             self.version)
         ip_copy -= step
         return ip_copy
 
     def next(self, step=1):
         """
-        @param step: the number of IP subnets between this IP object and the
-            expected subnet. Default is 1 (the next IP subnet).
+        @param step: the number of IP subnets between this L{IPNetwork} object
+            and the expected subnet. Default: 1 (the next IP subnet).
 
-        @return: The adjacent subnet that succeeds this IP object.
+        @return: The adjacent subnet succeeding this L{IPNetwork} object.
         """
-        ip_copy = IPNetwork('%s/%d' % (self.network, self.prefixlen),
+        ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
             self.version)
         ip_copy += step
         return ip_copy
 
+    def supernet(self, prefixlen=0):
+        """
+        Provides a list of supernets for this L{IPNetwork} object between the
+        size of the current prefix and (if specified) an endpoint prefix.
+
+        @param prefixlen: (optional) a CIDR prefix for the maximum supernet.
+            Default: 0 - returns all possible supernets.
+
+        @return: a tuple of supernet L{IPNetwork} objects.
+        """
+        if not 0 <= prefixlen <= self._module.width:
+            raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
+                % (prefixlen, self.version))
+
+        #   Use a copy of self as we'll be editing it.
+        supernet = self.cidr
+
+        supernets = []
+        while supernet.prefixlen > prefixlen:
+            supernet.prefixlen -= 1
+            supernets.append(supernet.cidr)
+
+        return list(reversed(supernets))
+
     def subnet(self, prefixlen, count=None, fmt=None):
         """
-        A generator divides up and returns smaller IP subnets of the current
-        IP subnet based on a new smaller CIDR prefix (block size).
+        A generator that divides up this IPNetwork's subnet into smaller
+        subnets based on a specified CIDR prefix.
 
-        @param prefixlen: a CIDR prefix indicate size of subnets to create.
+        @param prefixlen: a CIDR prefix indicating size of subnets to be
+            returned.
 
         @param count: (optional) number of consecutive IP subnets to be
             returned.
 
-        @return: an iterator (as lists could potentially be very large)
-            containing IP subnets based on this IP object's subnet.
+        @return: an iterator containing IPNetwork subnet objects.
         """
         if not 0 <= self.prefixlen <= self._module.width:
             raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
@@ -970,7 +996,7 @@ class IPNetwork(BaseIP):
         base_subnet = self._module.int_to_str(self.first)
 
         for i in xrange(count):
-            subnet = IPNetwork('%s/%d' % (base_subnet, prefixlen),
+            subnet = self.__class__('%s/%d' % (base_subnet, prefixlen),
                 self.version)
             subnet.value += (subnet.size * i)
             subnet.prefixlen = prefixlen
@@ -981,8 +1007,8 @@ class IPNetwork(BaseIP):
         @return: An iterator that provides all IP addresses that can be
             assigned to hosts within the range of this IP object's subnet.
                 - for IPv4, the network and broadcast addresses are always
-                excluded from any yielded list. Therefore, any subnet that
-                contains less than 4 IP addresses yields an empty list.
+                excluded. Any subnet that contains less than 4 IP addresses
+                yields an empty list.
                 - for IPv6, only the unspecified address '::' is excluded
                 from any yielded IP addresses.
         """
@@ -1005,6 +1031,14 @@ class IPNetwork(BaseIP):
             else:
                 return iter(self)
 
+    def __str__(self):
+        """@return: this IPNetwork in CIDR format"""
+        addr = self._module.int_to_str(self._value)
+        return "%s/%s" % (addr, self.prefixlen)
+
+    def __repr__(self):
+        """@return: Python statement to create an equivalent object"""
+        return "%s('%s')" % (self.__class__.__name__, self)
 
 #-----------------------------------------------------------------------------
 class IPRange(BaseIP):
@@ -1012,8 +1046,8 @@ class IPRange(BaseIP):
     An arbitrary IP address range.
 
     Formed from a lower and upper bound IP address. The upper bound IP cannot
-    be numerically smaller than the lower bound. The IP version of both
-    addresses must match.
+    be numerically smaller than the lower bound and the IP version of both
+    must match.
 
     """
     def __init__(self, start, end):
@@ -1035,31 +1069,23 @@ class IPRange(BaseIP):
 
     @property
     def first(self):
-        """The integer value of first IP address in this IP range."""
+        """The integer value of first IP address in this L{IPRange} object."""
         return int(self._start)
 
     @property
     def last(self):
-        """The integer value of last IP address in this IP range."""
+        """The integer value of last IP address in this L{IPRange} object."""
         return int(self._end)
 
     def __getitem__(self, index):
         """
-        @return: The IP address(es) in this address range referenced by
-            index/slice. Slicing objects can produce large sequences so
-            generator objects are returned instead of a list. Wrapping a slice
-            with C{list()} or C{tuple()} may be required dependent on context
-            in which it is called.
+        @return: The IP address(es) in this L{IPNetwork} object referenced by
+            index or slice. As slicing can produce large sequences of objects
+            an iterator is returned instead of the more usual C{list}.
         """
         if hasattr(index, 'indices'):
             if self._module.version == 6:
-                #FIXME: IPv6 breaks the .indices() method on the slice object
-                #FIXME: spectacularly. We'll have to work out the start, stop
-                #FIXME: and step ourselves :-(
-                #FIXME: See PySlice_GetIndicesEx function in Python SVN
-                #FIXME: repository for implementation details :-
-                #http://svn.python.org/view/python/trunk/Objects/sliceobject.c
-                raise TypeError('slices unsupported on IPv6 objects!')
+                raise TypeError('slices not supported with IPv6!')
 
             (start, stop, step) = index.indices(self.size)
             start_ip = IPAddress(self.first + start, self.version)
@@ -1081,71 +1107,59 @@ class IPRange(BaseIP):
 
     def __len__(self):
         """
-        @return: The number of IP addresses in this IP range. Raises
-            IndexError if size > sys.maxint (a Python limitation). Use the
-            .size() property for subnets of any size.
+        @return: the number of IP addresses in this L{IPRange}. Raises an
+            C{IndexError} if size > sys.maxint (a Python 2.x limitation).
+            Use the .size property for subnets of any size.
         """
         size = self.size
         if size > _sys.maxint:
-            #   Use .size() method in this class instead as len() will b0rk!
-            raise IndexError("range contains greater than %d (sys.maxint)" \
-                "addresses! Use the .size() method instead.")
+            raise IndexError("range contains more than %d (sys.maxint) " \
+                "IP addresses! Use the .size property instead." % _sys.maxint)
         return size
 
     def __contains__(self, other):
         """
-        @param other: an IP address, network or range.
+        @param other: an L{IPAddress}, L{IPNetwork} or L{IPRange} object.
 
-        @return: C{True} if other falls within the boundary of this IP range,
+        @return: C{True} if other falls within the boundary of this one,
             C{False} otherwise.
         """
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             other = IPNetwork("%s/%d" % (other, other._module.width))
         return other.first >= self.first and other.last <= self.last
 
-    def __iter__(self):
-        """
-        @return: An iterator object providing access to all addresses within
-            this IP range.
-        """
-        return iter_iprange(self.first, self.last + 1, self.version)
-
     def key(self):
         """
-        @return: A key (tuple of values) used to uniquely identify this IP
-            subnet.
+        @return: A key tuple used to uniquely identify this L{IPRange}.
         """
         return self.version, self.first, self.last
 
     def sort_key(self):
         """
-        @return: A key (tuple of values) used to uniquely identify this IP
-            subnet and aids in correct sorting.
+        @return: A key tuple used to compare and sort this L{IPRange}
+            correctly.
         """
-        #   A sort key is essentially a CIDR prefixlen value.
-        #   Required as IPRange (and subclasses other than CIDR) do not
-        #   calculate it.
         skey = self._module.width - num_bits(self.size)
         return self.version, self.first, skey
 
     def cidrs(self):
         """
-        The list of CIDR network addresses found within the lower and upper
-        bound addresses of this IP range.
+        The list of CIDR addresses found within the lower and upper bound
+        addresses of this L{IPRange}.
         """
         return iprange_to_cidrs(self._start, self._end)
 
     @property
     def size(self):
-        """The number of IP addresses in this subnet."""
+        """The number of IP addresses within this L{IPRange}."""
         return int(self._end) - int(self._start) + 1
 
     def __str__(self):
-        """@return: IP range in a common representational format."""
+        """@return: this L{IPRange} in a common representational format."""
         return "%s-%s" % (self._start, self._end)
 
     def __repr__(self):
-        """@return: Python statement to create equivalent IP range."""
+        """@return: Python statement to create an equivalent object"""
         return "%s('%s', '%s')" % (self.__class__.__name__,
             self._start, self._end)
 
@@ -1268,16 +1282,12 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
 def cidr_merge(ip_addrs):
     """
     A function that accepts an iterable sequence of IP addresses and subnets
-    returning the smallest possible list of the largest possible IP addresses
-    and subnets.
-
-    It does this by merging any adjacent subnets where possible and
-    removing any addresses or subnets contained within those found in the list
-    after any merges have taken place.
+    merging them into the smallest possible list of CIDRs. It merges adjacent
+    subnets where possible and removes duplicates.
 
     @param ip_addrs: an iterable sequence of IP addresses and subnets.
 
-    @return: a summarized list of IP objects.
+    @return: a summarized list of L{IPNetwork} objects.
     """
     if not hasattr(ip_addrs, '__iter__'):
         raise ValueError('A sequence or iterable is expected!')
@@ -1342,6 +1352,12 @@ def cidr_merge(ip_addrs):
     new_cidrs = []
 
     def _bits_to_cidr(bits, module):
+        if bits == '':
+            if module.version == 4:
+                return IPNetwork('0.0.0.0/0', 4)
+            else:
+                return IPNetwork('::/0', 6)
+
         if _re.match('^[01]+$', bits) is None:
             raise ValueError('%r is an invalid bit string!' % bits)
 
@@ -1366,13 +1382,13 @@ def cidr_merge(ip_addrs):
 #-----------------------------------------------------------------------------
 def cidr_exclude(target, exclude):
     """
-    Removes an exclude IP object from a target IP object.
+    Removes an exclude IP address or subnet from target IP subnet.
 
-    @param target: the target IP object.
+    @param target: the target IP address or subnet to be divided up.
 
-    @param exclude: the IP object to be removed from target.
+    @param exclude: the IP address or subnet to be removed from target.
 
-    @return: list of remaining IP objects after exclusion has been performed.
+    @return: list of L{IPNetwork} objects remaining after exclusion.
     """
     cidrs = []
 
@@ -1437,12 +1453,12 @@ def cidr_exclude(target, exclude):
 def spanning_cidr(ip_addrs):
     """
     Function that accepts a sequence of IP addresses and subnets returning
-    a single (CIDR) subnet that is large enough to span the lower and upper
-    bound IPs with a possible overlap on either end.
+    a single L{IPNetwork} subnet that is large enough to span the lower and
+    upper bound IP addresses with a possible overlap on either end.
 
     @param ip_addrs: sequence of IP addresses and subnets.
 
-    @return: a single spanning IP subnet.
+    @return: a single spanning L{IPNetwork} subnet.
     """
     sorted_ips = sorted(
         [IPNetwork(ip) for ip in ip_addrs])
@@ -1467,36 +1483,18 @@ def spanning_cidr(ip_addrs):
     return ip.cidr
 
 #-----------------------------------------------------------------------------
-def cidr_gaps(cidrs, supernet=None):
-    """
-    A function that accepts a list of CIDR subnets and IP addresses detecting
-    and returning the gaps between each one.
-
-    @param cidrs: A sequence CIDR subnets or IP addresses.
-
-    @param supernet: An optional supernet CIDR. If it contains all IPs and
-        CIDRs in cidrs suquence, it will return any gaps on either side as
-        well.
-
-    @return: A list of cidrs that fill the gaps between each CIDR subnet
-        and or IP address.
-    """
-    raise NotImplementedError('TODO')
-
-#-----------------------------------------------------------------------------
 def iter_iprange(start, end, step=1):
     """
     An xrange work-alike generator for IP addresses. It produces sequences
     based on start and stop IP address values, in intervals of step size.
 
-    @param start: start IP address (any format supported by IP.__init__).
+    @param start: start IP address.
 
-    @param end: end IP address (any format supported by IP.__init__).
+    @param end: end IP address.
 
-    @param step: (optional) size of step between IP addresses.
-        (Default: 1)
+    @param step: (optional) size of step between IP addresses. Default: 1
 
-    @return: an iterator yielding one or more IP objects.
+    @return: an iterator of one or more L{IPAddress} objects.
     """
     start = IPAddress(start)
     end = IPAddress(end)
@@ -1609,30 +1607,3 @@ def iprange_to_cidrs(start, end):
                 break
 
     return cidr_list
-
-#-----------------------------------------------------------------------------
-def within_iprange(ip, start, end):
-    """
-    A function that accepts two arbitrary IP addresses that form a boundary
-    IP range and a target IP object. It checks to see if the IP object falls
-    within the boundary of start and end addresses.
-
-    @param ip: an IP object to be tested against IP range.
-
-    @param start: the start IP address or subnet.
-
-    @param end: the end IP address or subnet.
-
-    @return: True if ip falls with the bounds of iprange, False otherwise.
-    """
-    ip = IPAddress(ip)
-    start = IPNetwork(start)
-    end = IPNetwork(end)
-
-    if start.last > end.first:
-        raise ValueError('bad IP range, start IP is greater than end IP!')
-
-    if start.first <= ip.value <= end.last:
-        return True
-
-    return False

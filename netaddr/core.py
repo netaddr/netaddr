@@ -3,7 +3,7 @@
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
-"""common code shared between various modules"""
+"""Common code shared between various netaddr sub modules"""
 
 import sys as _sys
 import struct as _struct
@@ -133,7 +133,7 @@ class Publisher(object):
         """
         Send update data to to all registered Subscribers.
 
-        @data: the data to be passed to each registered Subscriber.
+        @param data: the data to be passed to each registered Subscriber.
         """
         for subscriber in self.subscribers:
             subscriber.update(data)

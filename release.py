@@ -1,3 +1,9 @@
+#-----------------------------------------------------------------------------
+#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+#
+#   Released under the BSD license. See the LICENSE file for details.
+#-----------------------------------------------------------------------------
+
 import netaddr
 
 name = 'netaddr'

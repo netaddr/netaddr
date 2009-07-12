@@ -3,22 +3,22 @@
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
-"""
-network address manipulation, done Pythonically
-"""
+"""A Python library for manipulating IP and EUI network addresses."""
 import sys as _sys
 if _sys.version_info[0:2] < (2, 4):
     raise RuntimeError('Python 2.4.x or higher is required!')
 
-__version__ = 'exp_0.7_non-multiplex-ip'
+__version__ = '0.7a1'
 
 from netaddr.core import AddrConversionError, AddrFormatError
 
 from netaddr.ip import IPAddress, IPNetwork, IPRange, \
     cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, spanning_cidr, \
-    iter_unique_ips, iprange_to_cidrs, within_iprange, iter_iprange
+    iter_unique_ips, iprange_to_cidrs, iter_iprange
 
-from netaddr.ip.glob import cidr_to_glob, glob_to_cidrs, glob_to_iprange, \
+from netaddr.ip.sets import IPSet
+
+from netaddr.ip.glob import cidr_to_glob, glob_to_cidrs, glob_to_iptuple, \
     valid_glob, iprange_to_globs
 
 from netaddr.eui import NotRegisteredError, EUI, IAB, OUI
@@ -37,11 +37,11 @@ __all__ = [
     'mac_bare', 'mac_cisco', 'mac_eui48', 'mac_pgsql', 'mac_unix',
 
     #   IP, CIDR and IP range related classes and functions.
-    'IPAddress', 'IPNetwork', 'IPRange',
+    'IPAddress', 'IPNetwork', 'IPRange', 'IPSet',
 
     'cidr_abbrev_to_verbose', 'cidr_exclude', 'cidr_merge', 'spanning_cidr',
-    'within_iprange', 'iter_iprange', 'iprange_to_cidrs','iter_unique_ips',
+    'iter_iprange', 'iprange_to_cidrs','iter_unique_ips',
 
     #   IP globbing routines.
-    'valid_glob', 'cidr_to_glob', 'glob_to_cidrs', 'glob_to_iprange', 'iprange_to_globs',
+    'valid_glob', 'cidr_to_glob', 'glob_to_cidrs', 'glob_to_iptuple', 'iprange_to_globs',
 ]

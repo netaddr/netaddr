@@ -1,3 +1,8 @@
+:-----------------------------------------------------------------------------
+:   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+:
+:   Released under the BSD license. See the LICENSE file for details.
+:-----------------------------------------------------------------------------
 :@echo off
 :
 :   netaddr Windows binary and Python egg package release build

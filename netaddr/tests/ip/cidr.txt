@@ -325,7 +325,7 @@ True
 >>> list(ip[0:5:1])
 Traceback (most recent call last):
 ...
-TypeError: slices unsupported on IPv6 objects!
+TypeError: slices not supported with IPv6!
 
 
 }}}
