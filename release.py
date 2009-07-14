@@ -37,40 +37,55 @@ package_data = {
     ],
 }
 
-license = 'BSD License',
+license = 'BSD License'
 
 #   NB - keep this text around 74 characters wide so it is viewable
 #        in various fixed window sizes.
-long_description = """netaddr is a Python library for the representation and manipulation
-of various common network address formats and notations.
+long_description = """
+A Python library for representing and manipulating network addresses.
 
-It takes the hassle out of fiddling with innumerable variations of
-network addresses, presenting a consistent, extensible, easy-to-use
-and above all Pythonic API.
+It takes the hassle out of dealing with a variety of common layer 2 and
+layer 3 network addressing formats and operations performed on them,
+presented in a consistent, easy to use and extensible Pythonic API.
 
-With it you can represent, validate, convert, categorize, iterate,
-generate, slice (and dice) :-
+The netaddr library allows you to work with :-
 
-* IP version 4
-* IP version 6
-* CIDR (Classless Inter-Domain Routing) both IPv4 and IPv6
-* MAC (Media Access Control) and IEEE EUI-48 and EUI-64
-* Support for arbitrary IP address ranges with CIDR interoperability
-* User friendly alternative IPv4 range syntax using netaddr's
-  glob-style Wildcard addresses
+    - IPv4 and IPv6 addresses and subnets (including CIDR notation)
 
-For examples see the project wiki :-
+    - MAC (Media Access Control) addresses (and its many variant formats)
 
-    http://code.google.com/p/netaddr/wiki/NetAddrExamples
+    - IEEE OUI, IAB, EUI-48 and EUI-64 identifiers
 
-API documentation (auto-generated with epydoc) :-
+    - arbitary IP address ranges and user-friendly glob style IP ranges
 
-    http://packages.python.org/netaddr/
+Included are routines for :-
 
-For details on latest changes and updates in the current and previous
-releases see the CHANGELOG :-
+    - generating, sorting, summarizing and excluding IP addresses and
+      ranges
 
-    http://code.google.com/p/netaddr/wiki/CHANGELOG
+    - converting IP addresses and ranges from one notation to another
+
+    - querying OUI and IAB organisational information published by the
+      IEEE
+
+    - querying information on IP standards published by IANA
+
+
+Online resources :-
+
+    - Examples and tutorials
+
+        http://code.google.com/p/netaddr/wiki/NetAddrExamples
+
+    - API documentation
+
+        http://packages.python.org/netaddr/
+
+    - Changes and updates for all previous and current releases
+
+        http://code.google.com/p/netaddr/wiki/CHANGELOG
+
+
 """
 
 platforms = 'OS Independent'

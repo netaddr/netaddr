@@ -4,7 +4,7 @@
 :
 set DIST_DIR=..\builds\
 
-D:\python24\python setup.py bdist_wininst --dist-dir=%DIST_DIR%
+C:\python24\python setup.py bdist_wininst --dist-dir=%DIST_DIR%
 rmdir /S /Q .\build\
 
 Y:\virtualenv\py24_vanilla\Scripts\python.exe setup_egg.py bdist_egg --dist-dir=%DIST_DIR%

@@ -1,3 +1,17 @@
+Release: 0.6.4
+Date: 14th Jul 2009
+
+Major changes since 0.6.3
+-------------------------
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 40 - http://code.google.com/p/netaddr/issues/detail?id=40
+
+    - Building RPM wth "python setup.py bdist_rpm" fails, multiple errors
+
+------------------------------------------------------------------------------
 Release: 0.6.3
 Date: 23rd Jun 2009
 
@@ -11,35 +25,35 @@ Major changes since 0.6.2
   the values used for comparisons implemented in the __eq__ method (Python
   best practice).
 
-* Added a number of unit test to improve code coverage.
+* Added a number of unit tests to improve code coverage.
 
 Specific bug fixes addressed in this release
 --------------------------------------------
 
 * FIXED Issue 33 - http://code.google.com/p/netaddr/issues/detail?id=33
 
-	- CIDR subtraction is broken for out-of-range CIDR objects
+    - CIDR subtraction is broken for out-of-range CIDR objects
 
 * FIXED Issue 35 - http://code.google.com/p/netaddr/issues/detail?id=35
 
-	- install error (on Python interpreters where socket.has_ipv6 is False)
+    - install error (on Python interpreters where socket.has_ipv6 is False)
 
 * FIXED Issue 36 - http://code.google.com/p/netaddr/issues/detail?id=36
 
-	- netaddr.CIDR fails to parse default route CIDR
+    - netaddr.CIDR fails to parse default route CIDR
 
 * FIXED Issue 37 - http://code.google.com/p/netaddr/issues/detail?id=37
 
-	- Bug in bitwise AND operator for IP addresses
+    - Bug in bitwise AND operator for IP addresses
 
 * FIXED Issue 38 - http://code.google.com/p/netaddr/issues/detail?id=38
 
-	- Feature request: Addr.__nonzero__
+    - Feature request: Addr.__nonzero__
 
 * FIXED Issue 39 - http://code.google.com/p/netaddr/issues/detail?id=39
 
-	- CIDR.abbrev_to_verbose() not applying implicit classful netmask
-	  rules consistently
+    - CIDR.abbrev_to_verbose() not applying implicit classful netmask
+      rules consistently
 
 ------------------------------------------------------------------------------
 
@@ -66,7 +80,7 @@ Specific bug fixes addressed in this release
 
 * FIXED Issue 32 - http://code.google.com/p/netaddr/issues/detail?id=32
 
-	- Addr.__ne__ returns wrong answer
+    - Addr.__ne__ returns wrong answer
 
 ------------------------------------------------------------------------------
 
@@ -137,23 +151,23 @@ Specific bug fixes addressed in this release
 
 * FIXED Issue 23 - http://code.google.com/p/netaddr/issues/detail?id=23
 
-	- Improve IPv6 IPv4 mapped/compatible address formatting
+    - Improve IPv6 IPv4 mapped/compatible address formatting
 
 * FIXED Issue 24 - http://code.google.com/p/netaddr/issues/detail?id=24
 
-	- bug in CIDR.subnet() when using the fmt argument
+    - bug in CIDR.subnet() when using the fmt argument
 
 * FIXED Issue 29 - http://code.google.com/p/netaddr/issues/detail?id=29
 
-	- CIDR.subnet method's count argument isn't working as documented
+    - CIDR.subnet method's count argument isn't working as documented
 
 * FIXED Issue 30 - http://code.google.com/p/netaddr/issues/detail?id=30
 
-	- not compatible with Python 2.3
+    - not compatible with Python 2.3
 
 * FIXED Issue 31 - http://code.google.com/p/netaddr/issues/detail?id=31
 
-	- byte order in documentation confusing or wrong
+    - byte order in documentation confusing or wrong
 
 ------------------------------------------------------------------------------
 
@@ -211,7 +225,7 @@ Major changes since 0.5.x
   - This class is only ever meant to be used internally and its usage may soon
     be deprecated in favour converting it into an abstract base class in 
     future releases.
-	
+    
 * Deletion of AddrRange() class
 
   - replaced with the more specific IPRange() class. AddrRange() wasn't
@@ -426,11 +440,11 @@ General changes
 * obeying the 'Law of Demeter', the address type of Addr and AddrRange 
   (sub)class instances can be accessed using the property directly :-
   
-  	obj.addr_type  # 0.5 onwards
-  	
+    obj.addr_type  # 0.5 onwards
+    
   rather than having to go via the strategy object :- 
   
-  	obj.strategy.addr_type	# 0.4 and earlier
+    obj.strategy.addr_type  # 0.4 and earlier
 
 * renamed the AT_DESCR lookup dictionary to AT_NAMES. Removed invalid and 
   duplicated imports from all modules.
@@ -549,10 +563,10 @@ Major changes since 0.3.x
 
 * CIDR and Wildcard classes now have methods that support conversions between 
   these two aggregate types :-
-  	
-  	* CIDR -> Wildcard
-  	* Wildcard -> CIDR
-  	
+    
+    * CIDR -> Wildcard
+    * Wildcard -> CIDR
+    
 Housekeeping Changes
 --------------------
 

@@ -24,6 +24,7 @@ include COPYRIGHT
 include GLOSSARY
 include INSTALL
 include LICENSE
+include MANIFEST.in
 include README
 include python-netaddr.spec
 include setup.py

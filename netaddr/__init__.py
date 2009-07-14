@@ -11,7 +11,7 @@ import sys as _sys
 if _sys.version_info[0:2] < (2, 4):
     raise RuntimeError('Python 2.4.x or higher is required!')
 
-__version__ = '0.6.3'
+__version__ = '0.6.4'
 
 import struct as _struct
 
