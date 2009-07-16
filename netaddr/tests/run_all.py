@@ -11,7 +11,8 @@ import glob
 import doctest
 import unittest
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+sys.path.insert(0, os.path.abspath(os.path.join(
+    os.path.dirname(__file__), '../..')))
 
 DEBUG = True
 
@@ -34,9 +35,8 @@ def test_suit_all():
         files = glob.glob(test_path)
         test_files.extend(files)
 
+    #   Add anything to the skiplist that we want to leave out.
     skiplist = []
-
-    #   Add anything to the skiplist that we want to leave out here...
 
     #   Exclude any entries from the skip list.
     test_files = [t for t in test_files if os.path.basename(t) not in skiplist]

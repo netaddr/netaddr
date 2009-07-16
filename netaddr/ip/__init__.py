@@ -9,8 +9,8 @@ import sys as _sys
 import re as _re
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits
-from netaddr.strategy import ipv4 as _ipv4
-from netaddr.strategy import ipv6 as _ipv6
+from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
+from netaddr.strategy.ipv6 import ipv6_compact
 
 #-----------------------------------------------------------------------------
 class BaseIP(object):
@@ -210,11 +210,9 @@ class BaseIP(object):
         A record dict containing IANA registration details for this IP address
         if available, None otherwise.
         """
-        #   This import is placed here for efficiency. If you don't call this
-        #   method, you don't take the (small), one time, import start up
-        #   penalty.
-        from netaddr.ip.iana import query
-        return query(self)
+        #   Lazy loading of IANA data structures.
+        from netaddr.ip import iana
+        return iana.query(self)
 
     @property
     def version(self):
@@ -229,7 +227,7 @@ class IPAddress(BaseIP):
 
     To support these and other network based operations, see L{IPNetwork}.
     """
-    def __init__(self, addr, version=None):
+    def __init__(self, addr, version=None, dialect=None):
         """
         Constructor.
 
@@ -237,8 +235,14 @@ class IPAddress(BaseIP):
             representation (string) format, an integer or another IPAddress
             object (copy construction).
 
-        @param version: the explict IP version to disambiguate integer or
-            hexadecimal values that may be shared between IPv4 and IPv6.
+        @param version: (optional) the explict IP address version. Mainly
+            used to distinguish between IPv4 and IPv6 IPv4-compatible
+            addresses specified as integers (which may be numerically
+            equivalent).
+
+        @param dialect: (optional) the ipv6_* dialect class to be used to
+            configure the formatting of IPv6 addresses. Ignored for IPv4
+            addresses.
         """
         self._value = None
         self._module = None
@@ -260,8 +264,11 @@ class IPAddress(BaseIP):
                 else:
                     raise ValueError('unsupported IP version %r' % version)
 
-            #   IP address (no CIDR prefix).
+            #   Implicit IP address version.
             self.value = addr
+
+        #   Choose a dialect for IPv6 formatting.
+        self.dialect = dialect
 
     def _get_value(self):
         return self._value
@@ -302,6 +309,21 @@ class IPAddress(BaseIP):
 
     value = property(_get_value, _set_value, None,
         'a positive integer representing the value of this IP address.')
+
+    def _get_dialect(self):
+        return self._dialect
+
+    def _set_dialect(self, value):
+        if value is None:
+            self._dialect = ipv6_compact
+        else:
+            if hasattr(value, 'compact') and hasattr(value, 'word_fmt'):
+                self._dialect = value
+            else:
+                raise TypeError('custom dialects should subclass ipv6_verbose!')
+
+    dialect = property(_get_dialect, _set_dialect, None,
+        "a Python class to support various IPv6 output formats.")
 
     def netmask_bits(self):
         """
@@ -530,7 +552,7 @@ class IPAddress(BaseIP):
 
     def __str__(self):
         """@return: IP address in representational format"""
-        return self._module.int_to_str(self._value)
+        return self._module.int_to_str(self._value, self._dialect)
 
     def __repr__(self):
         """@return: Python statement to create an equivalent object"""
@@ -1290,7 +1312,7 @@ def cidr_merge(ip_addrs):
     @return: a summarized list of L{IPNetwork} objects.
     """
     if not hasattr(ip_addrs, '__iter__'):
-        raise ValueError('A sequence or iterable is expected!')
+        raise ValueError('A sequence or iterator is expected!')
 
     #   Start off using set as we'll remove any duplicates at the start.
     ipv4_bit_cidrs = set()

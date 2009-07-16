@@ -1,3 +1,4 @@
+
 Release: 0.7a1 
 Date 7th Jun 2009
 
@@ -34,114 +35,15 @@ Major overhaul compared with previous versions that breaks backward compatibilit
   instead to properly support pass through calls without side effects. It is up
   to the user to extract data in the right format from the objects returned as
   required.
-  
+
+* Now supports RFC 1924!
 
 Specific bug fixes addressed in this release
 --------------------------------------------
 
 * FIXED Issue 26 - http://code.google.com/p/netaddr/issues/detail?id=26
 
-	- Refactor out use of isinstance()
-
-------------------------------------------------------------------------------
-
-#REMOVE:Release: 0.7
-#REMOVE:Date: DDth Jun 2009
-
-#REMOVE:Changes since 0.6.x
-#REMOVE:-------------------
-
-#REMOVE:There has been a **major** (but necessary) reworking of the entire library!
-
-#REMOVE:	Please Note - this release breaks backward compatibility with all previous
-#REMOVE:	releases. Please consult the API documentation, the readable unit tests
-#REMOVE:	(now bundled with all releases) as well as netaddr wiki example pages for
-#REMOVE:	full details.
-
-#REMOVE:Here is a brief run down of significant improvements and changes.
-
-#REMOVE:* A whole redesign of the netaddr module hierarchy. Now, cleaner and simpler
-#REMOVE:  with the correct division of labour between submodules.
-
-#REMOVE:* The Addr base class no longer exists. There will no longer be examples of
-#REMOVE:  it cited on mailing lists and in group discussions. It has been banished
-#REMOVE:  for good!
-
-#REMOVE:* The logic in former strategy classes have been moved into Python strategy
-#REMOVE:  modules instead. This makes the most sense as the former strategy classes
-#REMOVE:  were almost always singletons instantiated at module load time and hardly
-#REMOVE:  (if ever) changed. This switch has meant some duplication of code in each
-#REMOVE:  of the new strategy modules (violating DRY) but is deemed an acceptable
-#REMOVE:  trade off to improve code clarity and readability. The gains from using
-#REMOVE:  inheritance are now seen (in the cold light of day) as a false economy.
-
-#REMOVE:* Functionality of previous Addr, IP and CIDR classes has been combined into
-#REMOVE:  a single new IP class. Somewhat controversially perhaps, the new class
-#REMOVE:  now represents both individual addresses *and* IP subnets / network blocks
-#REMOVE:  *dependent on the methods and properties you choose to access*. Hopefully
-#REMOVE:  this has been done in a sensitive enough way to stifle accusations of
-#REMOVE:  conflation between individual IP addresses and IP subnets (fingers
-#REMOVE:  crossed). Please direct any debate on this choice to the netaddr discussion
-#REMOVE:  group.
-
-#REMOVE:* The IPRange and Wildcard (IP globbing) classes have been removed in favour
-#REMOVE:  of discrete functions. This greatly improves code clarity and readability
-#REMOVE:  throughout the entire code base. A new netaddr.ipglob namespace separates
-#REMOVE:  IP globbing (a specialist area) into its own sub module.
-
-#REMOVE:* Moved IP address and subnet summarization and IP subtraction (exclusion)
-#REMOVE:  logic into a set of functions. Old-style classful abbreviations of IPv4
-#REMOVE:  CIDR addresses are still supported but through a pass through function
-#REMOVE:  that is not part of the IP class constructor.
-
-#REMOVE:* Removed all overt uses of Python descriptors for handling properties in
-#REMOVE:  favour of standard @property decorators for read-only properties and
-#REMOVE:  property() builtin calls for read-write properties. Descriptors were always
-#REMOVE:  potentially confusing and non-obvious to contributors and code reviewers.
-#REMOVE:  The reason for their use has also gone away with the massive reduction in
-#REMOVE:  various related classes starting in this release. The switch from 
-#REMOVE:  supporting Python 2.3.x also supported this decision.
-
-#REMOVE:* The whole internal formatting infrastucture has been removed. All methods
-#REMOVE:  and properties of the various classes largely return objects, which can be
-#REMOVE:  passed through str(), int(), hex() etc as required. There was so much
-#REMOVE:  conditional code propping up formatting that I decided to hand off string
-#REMOVE:  and integer IP address value conversion to the end user to make the library
-#REMOVE:  simpler. This *greatly* improves the quality of netaddr's internal
-#REMOVE:  implementation and gets around annoying edges cases where bugs are
-#REMOVE:  introduced on pass through calls.
-
-#REMOVE:	Here is a working example of some pass through code :-
-
-#REMOVE:	>>> ip = IP('192.0.2.10/24')
-#REMOVE:	
-#REMOVE:	>>> ip.network
-#REMOVE:	IP('192.0.2.0/24')
-#REMOVE:	
-#REMOVE:	>>> ip.network.bits()
-#REMOVE:	'11000000.00000000.00000010.00000000'
-	
-#REMOVE:	>>> ip.network.packed()
-#REMOVE:	'\xc0\x00\x02\x00'
-
-#REMOVE:  If I implemented the formatting options as there were in netaddr 0.6.x and
-#REMOVE:  earlier :-
-
-#REMOVE:	>>> ip = IP('192.0.2.10/24', format=str)
-
-#REMOVE:	>>> ip.network
-#REMOVE:	IP('192.0.2.0/24')
-
-#REMOVE:	>>> ip.network.bits()
-#REMOVE:	AttributeError: 'str' object has no attribute 'bits'
-
-#REMOVE:  The network property uses the internal formatting logic and breaks for the
-#REMOVE:  user in non-obvious ways.
-
-#REMOVE:  There could be the possibility of changing properties such as 'network' and
-#REMOVE:  'broadcast' back into methods in future that accept formatting arguments. It
-#REMOVE:  will stay this way for now unless there are any major complaints as it is
-#REMOVE:  far simpler.
+    - Refactor out use of isinstance()
 
 ------------------------------------------------------------------------------
 
@@ -165,28 +67,28 @@ Specific bug fixes addressed in this release
 
 * FIXED Issue 33 - http://code.google.com/p/netaddr/issues/detail?id=33
 
-	- CIDR subtraction is broken for out-of-range CIDR objects
+    - CIDR subtraction is broken for out-of-range CIDR objects
 
 * FIXED Issue 35 - http://code.google.com/p/netaddr/issues/detail?id=35
 
-	- install error (on Python interpreters where socket.has_ipv6 is False)
+    - install error (on Python interpreters where socket.has_ipv6 is False)
 
 * FIXED Issue 36 - http://code.google.com/p/netaddr/issues/detail?id=36
 
-	- netaddr.CIDR fails to parse default route CIDR
+    - netaddr.CIDR fails to parse default route CIDR
 
 * FIXED Issue 37 - http://code.google.com/p/netaddr/issues/detail?id=37
 
-	- Bug in bitwise AND operator for IP addresses
+    - Bug in bitwise AND operator for IP addresses
 
 * FIXED Issue 38 - http://code.google.com/p/netaddr/issues/detail?id=38
 
-	- Feature request: Addr.__nonzero__
+    - Feature request: Addr.__nonzero__
 
 * FIXED Issue 39 - http://code.google.com/p/netaddr/issues/detail?id=39
 
-	- CIDR.abbrev_to_verbose() not applying implicit classful netmask
-	  rules consistently
+    - CIDR.abbrev_to_verbose() not applying implicit classful netmask
+      rules consistently
 
 ------------------------------------------------------------------------------
 
@@ -213,7 +115,7 @@ Specific bug fixes addressed in this release
 
 * FIXED Issue 32 - http://code.google.com/p/netaddr/issues/detail?id=32
 
-	- Addr.__ne__ returns wrong answer
+    - Addr.__ne__ returns wrong answer
 
 ------------------------------------------------------------------------------
 
@@ -284,23 +186,23 @@ Specific bug fixes addressed in this release
 
 * FIXED Issue 23 - http://code.google.com/p/netaddr/issues/detail?id=23
 
-	- Improve IPv6 IPv4 mapped/compatible address formatting
+    - Improve IPv6 IPv4 mapped/compatible address formatting
 
 * FIXED Issue 24 - http://code.google.com/p/netaddr/issues/detail?id=24
 
-	- bug in CIDR.subnet() when using the fmt argument
+    - bug in CIDR.subnet() when using the fmt argument
 
 * FIXED Issue 29 - http://code.google.com/p/netaddr/issues/detail?id=29
 
-	- CIDR.subnet method's count argument isn't working as documented
+    - CIDR.subnet method's count argument isn't working as documented
 
 * FIXED Issue 30 - http://code.google.com/p/netaddr/issues/detail?id=30
 
-	- not compatible with Python 2.3
+    - not compatible with Python 2.3
 
 * FIXED Issue 31 - http://code.google.com/p/netaddr/issues/detail?id=31
 
-	- byte order in documentation confusing or wrong
+    - byte order in documentation confusing or wrong
 
 ------------------------------------------------------------------------------
 
@@ -358,7 +260,7 @@ Major changes since 0.5.x
   - This class is only ever meant to be used internally and its usage may soon
     be deprecated in favour converting it into an abstract base class in 
     future releases.
-	
+    
 * Deletion of AddrRange() class
 
   - replaced with the more specific IPRange() class. AddrRange() wasn't
@@ -573,11 +475,11 @@ General changes
 * obeying the 'Law of Demeter', the address type of Addr and AddrRange 
   (sub)class instances can be accessed using the property directly :-
   
-  	obj.addr_type  # 0.5 onwards
-  	
+    obj.addr_type  # 0.5 onwards
+    
   rather than having to go via the strategy object :- 
   
-  	obj.strategy.addr_type	# 0.4 and earlier
+    obj.strategy.addr_type  # 0.4 and earlier
 
 * renamed the AT_DESCR lookup dictionary to AT_NAMES. Removed invalid and 
   duplicated imports from all modules.
@@ -696,10 +598,10 @@ Major changes since 0.3.x
 
 * CIDR and Wildcard classes now have methods that support conversions between 
   these two aggregate types :-
-  	
-  	* CIDR -> Wildcard
-  	* Wildcard -> CIDR
-  	
+    
+    * CIDR -> Wildcard
+    * Wildcard -> CIDR
+    
 Housekeeping Changes
 --------------------
 

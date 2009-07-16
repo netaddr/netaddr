@@ -8,7 +8,7 @@
 import unittest
 import doctest
 
-tests = ['ip/sets.txt']
+tests = ['ip/ipv6_formatting.txt']
 
 for test in tests:
     suite = doctest.DocFileSuite(test, optionflags=doctest.ELLIPSIS)

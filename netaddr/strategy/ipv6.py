@@ -46,9 +46,6 @@ width = 128
 #: The individual word size (in bits) of this address type.
 word_size = 16
 
-#: The format string to be used when converting words to string values.
-word_fmt = '%x'
-
 #: The separator character used between each word.
 word_sep = ':'
 
@@ -72,6 +69,33 @@ num_words = width / word_size
 
 #: The maximum integer value for an individual word in this address type.
 max_word = 2 ** word_size - 1
+
+#-----------------------------------------------------------------------------
+#   Dialect classes.
+#-----------------------------------------------------------------------------
+
+class ipv6_compact(object):
+    """An IPv6 dialect class - compact form."""
+    #: The format string used to converting words into string values. n/a if L{compact} is C{True}.
+    word_fmt='%x'
+
+    #: Boolean flag indicating if IPv6 compaction algorithm should be used.
+    compact=True
+
+class ipv6_full(ipv6_compact):
+    """An IPv6 dialect class - 'all zeroes' form."""
+
+    #: Boolean flag indicating if IPv6 compaction algorithm should be used.
+    compact=False
+
+class ipv6_verbose(ipv6_compact):
+    """An IPv6 dialect class - extra wide 'all zeroes' form."""
+
+    #: The format string used to converting words into string values. n/a if L{compact} is C{True}.
+    word_fmt='%.4x'
+
+    #: Boolean flag indicating if IPv6 compaction algorithm should be used.
+    compact=False
 
 #-----------------------------------------------------------------------------
 def valid_str(addr):
@@ -106,33 +130,27 @@ def str_to_int(addr):
             % addr)
 
 #-----------------------------------------------------------------------------
-def int_to_str(int_val, compact=True, word_fmt=None):
+def int_to_str(int_val, dialect=None):
     """
     @param int_val: An unsigned integer.
 
-    @param compact: (optional) A boolean flag indicating if compact
-        formatting should be used. If True, this method uses the '::'
-        string to represent the first adjacent group of words with a value
-        of zero. Default: True
-
-    @param word_fmt: (optional) The Python format string used to override
-        formatting for each word. Please Note: this option only applies when
-        compact is False.
+    @param dialect: (optional) a Python class defining formatting options.
 
     @return: The IPv6 presentation (string) format address equivalent to the
         unsigned integer provided.
     """
+    if dialect is None:
+        dialect = ipv6_compact
+
     try:
         packed_int = int_to_packed(int_val)
-        if compact:
+        if dialect.compact:
             #   Default return value.
             return _inet_ntop(AF_INET6, packed_int)
         else:
             #   Custom return value.
-            if word_fmt is None:
-                word_fmt = globals()['word_fmt']
             words = list(_struct.unpack('>8H', packed_int))
-            tokens = [word_fmt % word for word in words]
+            tokens = [dialect.word_fmt % word for word in words]
             return word_sep.join(tokens)
     except Exception, e:
         raise ValueError('%r is not a valid 128-bit unsigned integer!' \
@@ -146,7 +164,7 @@ def int_to_arpa(int_val):
     @return: The reverse DNS lookup for an IPv6 address in network byte
         order integer form.
     """
-    addr = int_to_str(int_val, compact=False, word_fmt='%.4x')
+    addr = int_to_str(int_val, ipv6_verbose)
     tokens = list(addr.replace(':', ''))
     tokens.reverse()
     #   We won't support ip6.int here - see RFC 3152 for details.

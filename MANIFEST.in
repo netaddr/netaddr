@@ -2,9 +2,10 @@ include AUTHORS
 include CHANGELOG
 include COPYRIGHT
 include INSTALL
-include LICENCE
+include LICENSE
 include MANIFEST.in
 include README
+include THANKS
 
 include release.bat
 include release.py
@@ -17,7 +18,7 @@ include docs
 include docs/epydoc.cfg
 include docs/epydoc.css
 
-recursive-include docs/api *.html *.css *.js *.png *.txt
+recursive-include docs/api *
 
 include netaddr/__init__.py
 include netaddr/core.py

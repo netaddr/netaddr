@@ -16,15 +16,11 @@ import csv as _csv
 
 import pprint as _pprint
 
-from netaddr.core import AddrFormatError, AddrConversionError, Subscriber, \
-    Publisher
-from netaddr.strategy import eui48 as _eui48
-from netaddr.strategy import eui64 as _eui64
+from netaddr.core import NotRegisteredError, AddrFormatError, \
+    AddrConversionError, Subscriber, Publisher
+from netaddr.strategy import eui48 as _eui48, eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
 from netaddr.ip import IPAddress
-
-from netaddr.eui.ieee import IEEE_OUI_INDEX, IEEE_OUI_REGISTRY, \
-    IEEE_IAB_INDEX, IEEE_IAB_REGISTRY, NotRegisteredError
 
 #-----------------------------------------------------------------------------
 class OUI(object):
@@ -41,6 +37,9 @@ class OUI(object):
             Also accepts and parses full MAC/EUI-48 address strings (but not
             MAC/EUI-48 integers)!
         """
+        #   Lazy loading of IEEE data structures.
+        from netaddr.eui import ieee
+
         self.value = None
         self.records = []
 
@@ -57,15 +56,15 @@ class OUI(object):
             raise TypeError('unexpected OUI format: %r' % oui)
 
         #   Discover offsets.
-        if self.value in IEEE_OUI_INDEX:
-            fh = open(IEEE_OUI_REGISTRY, 'rb')
-            for (offset, size) in IEEE_OUI_INDEX[self.value]:
+        if self.value in ieee.OUI_INDEX:
+            fh = open(ieee.OUI_REGISTRY, 'rb')
+            for (offset, size) in ieee.OUI_INDEX[self.value]:
                 fh.seek(offset)
                 data = fh.read(size)
                 self._parse_data(data, offset, size)
             fh.close()
         else:
-            raise NotRegisteredError('OUI %r not registered!' % oui)
+            raise ieee.NotRegisteredError('OUI %r not registered!' % oui)
 
     def _parse_data(self, data, offset, size):
         """Returns a dict record from raw OUI record data"""
@@ -193,6 +192,9 @@ class IAB(object):
             IAB MAC/EUI-48 address are non-zero, ignores them otherwise.
             (Default: False)
         """
+        #   Lazy loading of IEEE data structures.
+        from netaddr.eui import ieee
+
         self.value = None
         self.record = {
             'idx': 0,
@@ -216,9 +218,9 @@ class IAB(object):
             raise TypeError('unexpected IAB format: %r!' % iab)
 
         #   Discover offsets.
-        if self.value in IEEE_IAB_INDEX:
-            fh = open(IEEE_IAB_REGISTRY, 'rb')
-            (offset, size) = IEEE_IAB_INDEX[self.value][0]
+        if self.value in ieee.IAB_INDEX:
+            fh = open(ieee.IAB_REGISTRY, 'rb')
+            (offset, size) = ieee.IAB_INDEX[self.value][0]
             self.record['offset'] = offset
             self.record['size'] = size
             fh.seek(offset)
@@ -226,7 +228,7 @@ class IAB(object):
             self._parse_data(data, offset, size)
             fh.close()
         else:
-            raise NotRegisteredError('IAB %r not unregistered!' % iab)
+            raise ieee.NotRegisteredError('IAB %r not unregistered!' % iab)
 
     def _parse_data(self, data, offset, size):
         """Returns a dict record from raw IAB record data"""
@@ -301,9 +303,12 @@ class EUI(object):
         @param addr: an EUI-48 (MAC) or EUI-64 address in string format or an
         unsigned integer. May also be another EUI object (copy construction).
 
-        @param version: the explict EUI address version. Mainly used to
-            distinguish between EUI-48 and EUI-64 identifiers specified as
-            integers that may be numerically equivalent.
+        @param version: (optional) the explict EUI address version. Mainly
+            used to distinguish between EUI-48 and EUI-64 identifiers
+            specified as integers which may be numerically equivalent.
+
+        @param dialect: (optional) the mac_* dialect to be used to configure
+            the formatting of EUI-48 (MAC) addresses.
         """
         self._value = None
         self._module = None
@@ -316,11 +321,6 @@ class EUI(object):
             else:
                 raise ValueError('unsupported EUI version %r' % version)
 
-        if dialect is None:
-            self._dialect = mac_eui48
-        else:
-            self._dialect = dialect
-
         #   Choose a default version when addr is an integer and version is
         #   not specified.
         if self._module is None:
@@ -330,6 +330,9 @@ class EUI(object):
                 self._module = _eui64
 
         self.value = addr
+
+        #   Choose a dialect for MAC formatting.
+        self.dialect = dialect
 
     def _get_value(self):
         return self._value
@@ -375,10 +378,13 @@ class EUI(object):
         return self._dialect
 
     def _set_dialect(self, value):
-        if not issubclass(value, mac_eui48):
-            raise TypeError('custom dialects should subclass mac_eui48!')
+        if value is None:
+            self._dialect = mac_eui48
         else:
-            self._dialect = value
+            if hasattr(value, 'word_size') and hasattr(value, 'word_fmt'):
+                self._dialect = value
+            else:
+                raise TypeError('custom dialects should subclass mac_eui48!')
 
     dialect = property(_get_dialect, _set_dialect, None,
         "a Python class providing support for the interpretation of "
@@ -477,14 +483,6 @@ class EUI(object):
         @return: hexadecimal string representation of this EUI identifier.
         """
         return hex(self._value).rstrip('L').lower()
-
-    def __str__(self):
-        """@return: EUI in representational format"""
-        return self._module.int_to_str(self._value, self._dialect)
-
-    def __repr__(self):
-        """@return: Python statement to create equivalent EUI object"""
-        return "EUI('%s')" % self
 
     def __eq__(self, other):
         """
@@ -610,12 +608,21 @@ class EUI(object):
         addr = prefix + ipv6_addr
         return IPAddress(addr)
 
+    @property
     def info(self):
         """
         @return: A record dict containing IEEE registration details for this
             EUI (MAC-48) if available, None otherwise.
         """
-        data = {'OUI': self.oui().registration()}
+        data = {'OUI': self.oui.registration}
         if self.is_iab():
-            data['IAB'] = self.iab().registration()
+            data['IAB'] = self.iab.registration
         return data
+
+    def __str__(self):
+        """@return: EUI in representational format"""
+        return self._module.int_to_str(self._value, self._dialect)
+
+    def __repr__(self):
+        """@return: Python statement to create equivalent object"""
+        return "%s('%s')" % (self.__class__.__name__, self)

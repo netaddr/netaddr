@@ -13,6 +13,34 @@ from netaddr.ip import IPNetwork, IPAddress, cidr_merge, cidr_exclude, \
 from intset import IntSet as _IntSet
 
 #-----------------------------------------------------------------------------
+def partition_ips(iterable):
+    """
+    Takes a sequence of IP addresses and networks splitting them into two
+    separate sequences by IP version.
+
+    @param iterable: a sequence or iterator contain IP addresses and networks.
+
+    @return: a two element tuple (ipv4_list, ipv6_list).
+    """
+    #   Start off using set as we'll remove any duplicates at the start.
+    if not hasattr(iterable, '__iter__'):
+        raise ValueError('A sequence or iterator is expected!')
+
+    ipv4 = []
+    ipv6 = []
+
+    for ip in iterable:
+        if not hasattr(ip, 'version'):
+            raise TypeError('IPAddress or IPNetwork expected!')
+
+        if ip.version == 4:
+            ipv4.append(ip)
+        else:
+            ipv6.append(ip)
+
+    return ipv4, ipv6
+
+#-----------------------------------------------------------------------------
 class IPSet(object):
     """
     Represents an unordered collection (set) of unique IP addresses and
@@ -220,11 +248,19 @@ class IPSet(object):
         if not hasattr(other, '_cidrs'):
             return NotImplemented
 
-        #TODO:   !!! implement IPv6 support !!!
-        lhs = _IntSet(*[(c.first, c.last) for c in self._cidrs])
-        rhs = _IntSet(*[(c.first, c.last) for c in other._cidrs])
+        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
+        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
 
-        return lhs.issubset(rhs)
+        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
+        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+
+        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
+        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
+
+        ipv4 = l_ipv4_iset.issubset(r_ipv4_iset)
+        ipv6 = l_ipv6_iset.issubset(r_ipv6_iset)
+
+        return ipv4 and ipv6
 
     __le__ = issubset
 
@@ -250,11 +286,19 @@ class IPSet(object):
         if not hasattr(other, '_cidrs'):
             return NotImplemented
 
-        #TODO:   !!! implement IPv6 support !!!
-        lhs = _IntSet(*[(c.first, c.last) for c in self._cidrs])
-        rhs = _IntSet(*[(c.first, c.last) for c in other._cidrs])
+        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
+        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
 
-        return lhs.issuperset(rhs)
+        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
+        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+
+        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
+        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
+
+        ipv4 = l_ipv4_iset.issuperset(r_ipv4_iset)
+        ipv6 = l_ipv6_iset.issuperset(r_ipv6_iset)
+
+        return ipv4 and ipv6
 
     __ge__ = issuperset
 
@@ -265,22 +309,10 @@ class IPSet(object):
         @return: the union of this IP set and another as a new IP set
             (combines IP addresses and subnets from both sets).
         """
-#COMPARE:        ipset = self.copy()
-#COMPARE:        ipset.update(other)
-#COMPARE:        ipset.compact()
-#COMPARE:        return ipset
-        #TODO:   !!! implement IPv6 support !!!
-        lhs = _IntSet(*[(c.first, c.last) for c in self._cidrs])
-        rhs = _IntSet(*[(c.first, c.last) for c in other._cidrs])
-
-        sdiff = lhs | rhs
-
-        cidr_list = []
-        for start, end in list(sdiff._ranges):
-            cidrs = iprange_to_cidrs(IPAddress(start), IPAddress(end-1))
-            cidr_list.extend(cidrs)
-
-        return IPSet(sorted(cidr_list))
+        ip_set = self.copy()
+        ip_set.update(other)
+        ip_set.compact()
+        return ip_set
 
     __or__ = union
 
@@ -291,18 +323,33 @@ class IPSet(object):
         @return: the intersection of this IP set and another as a new IP set.
             (IP addresses and subnets common to both sets).
         """
-        #TODO:   !!! implement IPv6 support !!!
-        lhs = _IntSet(*[(c.first, c.last) for c in self._cidrs])
-        rhs = _IntSet(*[(c.first, c.last) for c in other._cidrs])
-
-        sdiff = lhs & rhs
-
         cidr_list = []
-        for start, end in list(sdiff._ranges):
-            cidrs = iprange_to_cidrs(IPAddress(start), IPAddress(end-1))
+
+        #   Separate IPv4 from IPv6.
+        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
+        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
+
+        #   Process IPv4.
+        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
+        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+
+        ipv4_result = l_ipv4_iset & r_ipv4_iset
+
+        for start, end in list(ipv4_result._ranges):
+            cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
             cidr_list.extend(cidrs)
 
-        return IPSet(sorted(cidr_list))
+        #   Process IPv6.
+        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
+        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
+
+        ipv6_result = l_ipv6_iset & r_ipv6_iset
+
+        for start, end in list(ipv6_result._ranges):
+            cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
+            cidr_list.extend(cidrs)
+
+        return IPSet(cidr_list)
 
     __and__ = intersection
 
@@ -314,18 +361,33 @@ class IPSet(object):
             IP set (all IP addresses and subnets that are in exactly one
             of the sets).
         """
-        #TODO:   !!! implement IPv6 support !!!
-        lhs = _IntSet(*[(c.first, c.last) for c in self._cidrs])
-        rhs = _IntSet(*[(c.first, c.last) for c in other._cidrs])
-
-        sdiff = lhs ^ rhs
-
         cidr_list = []
-        for start, end in list(sdiff._ranges):
-            cidrs = iprange_to_cidrs(IPAddress(start), IPAddress(end-1))
+
+        #   Separate IPv4 from IPv6.
+        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
+        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
+
+        #   Process IPv4.
+        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
+        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+
+        ipv4_result = l_ipv4_iset ^ r_ipv4_iset
+
+        for start, end in list(ipv4_result._ranges):
+            cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
             cidr_list.extend(cidrs)
 
-        return IPSet(sorted(cidr_list))
+        #   Process IPv6.
+        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
+        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
+
+        ipv6_result = l_ipv6_iset ^ r_ipv6_iset
+
+        for start, end in list(ipv6_result._ranges):
+            cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
+            cidr_list.extend(cidrs)
+
+        return IPSet(cidr_list)
 
     __xor__ = symmetric_difference
 
@@ -337,18 +399,33 @@ class IPSet(object):
             set (all IP addresses and subnets that are in this IP set but
             not found in the other.)
         """
-        #TODO:   !!! implement IPv6 support !!!
-        lhs = _IntSet(*[(c.first, c.last) for c in self._cidrs])
-        rhs = _IntSet(*[(c.first, c.last) for c in other._cidrs])
-
-        sdiff = lhs - rhs
-
         cidr_list = []
-        for start, end in list(sdiff._ranges):
-            cidrs = iprange_to_cidrs(IPAddress(start), IPAddress(end-1))
+
+        #   Separate IPv4 from IPv6.
+        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
+        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
+
+        #   Process IPv4.
+        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
+        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+
+        ipv4_result = l_ipv4_iset - r_ipv4_iset
+
+        for start, end in list(ipv4_result._ranges):
+            cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
             cidr_list.extend(cidrs)
 
-        return IPSet(sorted(cidr_list))
+        #   Process IPv6.
+        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
+        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
+
+        ipv6_result = l_ipv6_iset - r_ipv6_iset
+
+        for start, end in list(ipv6_result._ranges):
+            cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
+            cidr_list.extend(cidrs)
+
+        return IPSet(cidr_list)
 
     __sub__ = difference
 
@@ -380,9 +457,9 @@ class IPSet(object):
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
-    import pprint
-    print IPNetwork('0.0.0.0/0').size
-    print IPSet(['0.0.0.0/0']).size
+#    import pprint
+#    print IPNetwork('0.0.0.0/0').size
+#    print IPSet(['0.0.0.0/0']).size
 #    s1 = IPSet(['192.0.4.0', '192.0.2.0/30', IPAddress('192.0.3.16')])
 #
 #    print len(s1)
@@ -459,7 +536,7 @@ if __name__ == '__main__':
 #    print '---'
 #
 #    print IPSet(['192.0.2.0/24']) | IPSet(['192.0.3.0/24'])
-
+#
 #    s1 = IPSet(['192.168.0.0/24', '192.168.2.0/24', '192.168.4.0/24'])
 #    print s1
 #    addr = '192.168.0.0/23'
@@ -469,40 +546,47 @@ if __name__ == '__main__':
 #    print IPSet(['1.1.1.0/24']) ^ IPSet(['1.1.1.16/28'])
 #    print IPSet(['1.1.1.0/21', '1.1.2.0/24', '1.1.3.0/24']) ^ \
 #          IPSet(['1.1.2.0/24', '1.1.4.0/24'])
-
-
-    ipv4_addr_space = IPSet(['0.0.0.0/0'])
-
-    private = IPSet([
-        '192.168.0.0/16',
-        '10.0.0.0/8',
-        '172.16.0.0/12',
-        '192.0.2.0/24',
-        '239.192.0.0/14'])
-
-    reserved = IPSet([
-        '240.0.0.0/4',
-        '234.0.0.0/7',
-        '236.0.0.0/7',
-        '225.0.0.0/8',
-        '226.0.0.0/7',
-        '228.0.0.0/6',
-        '234.0.0.0/7',
-        '236.0.0.0/7',
-        '238.0.0.0/8'])
-
-    unavailable = reserved | private
-
-    print 'LHS:', ipv4_addr_space
-    print 'RHS:', unavailable
-    result = ipv4_addr_space ^ unavailable
-    print 'Result:', result
-    for  cidr in result.iter_cidrs():
-        print cidr, cidr[0], cidr[-1]
+#
+#
+#    ipv4_addr_space = IPSet(['0.0.0.0/0'])
+#
+#    private = IPSet([
+#        '192.168.0.0/16',
+#        '10.0.0.0/8',
+#        '172.16.0.0/12',
+#        '192.0.2.0/24',
+#        '239.192.0.0/14'])
+#
+#    reserved = IPSet([
+#        '240.0.0.0/4',
+#        '234.0.0.0/7',
+#        '236.0.0.0/7',
+#        '225.0.0.0/8',
+#        '226.0.0.0/7',
+#        '228.0.0.0/6',
+#        '234.0.0.0/7',
+#        '236.0.0.0/7',
+#        '238.0.0.0/8'])
+#
+#    unavailable = reserved | private
+#
+#    print 'LHS:', ipv4_addr_space
+#    print 'RHS:', unavailable
+#    result = ipv4_addr_space ^ unavailable
+#    print 'Result:', result
+#    for  cidr in result.iter_cidrs():
+#        print cidr, cidr[0], cidr[-1]
 #        try:
 #            ipv4_info = cidr.info['IPv4'][0]
 #            info = ipv4_info['prefix'], ipv4_info['status']
 #        except KeyError:
 #            info = 'n/a'
 #        print '%-20s %-17s %-17s' % (cidr, cidr[0], cidr[-1]), info
+
+    s1 = IPSet(['192.0.2.0', '::192.0.2.0', '192.0.2.2', '::192.0.2.2'])
+    s2 = IPSet(['192.0.2.2', '::192.0.2.2', '192.0.2.4', '::192.0.2.4'])
+    print s1
+    print s2
+    print s1 | s2
+    print s1 ^ s2
 

@@ -41,29 +41,21 @@ from netaddr.core import Subscriber, Publisher
 #-----------------------------------------------------------------------------
 
 #: Path to local copy of IEEE OUI Registry data file.
-IEEE_OUI_REGISTRY = _path.join(_path.dirname(__file__), 'oui.txt')
+OUI_REGISTRY = _path.join(_path.dirname(__file__), 'oui.txt')
 #: Path to netaddr OUI index file.
-IEEE_OUI_METADATA = _path.join(_path.dirname(__file__), 'oui.idx')
+OUI_METADATA = _path.join(_path.dirname(__file__), 'oui.idx')
 
 #: OUI index lookup dictionary.
-IEEE_OUI_INDEX = {}
+OUI_INDEX = {}
 
 #: Path to local copy of IEEE IAB Registry data file.
-IEEE_IAB_REGISTRY = _path.join(_path.dirname(__file__), 'iab.txt')
+IAB_REGISTRY = _path.join(_path.dirname(__file__), 'iab.txt')
 
 #: Path to netaddr IAB index file.
-IEEE_IAB_METADATA = _path.join(_path.dirname(__file__), 'iab.idx')
+IAB_METADATA = _path.join(_path.dirname(__file__), 'iab.idx')
 
 #: IAB index lookup dictionary.
-IEEE_IAB_INDEX = {}
-
-#-----------------------------------------------------------------------------
-class NotRegisteredError(Exception):
-    """
-    An Exception indicating that an OUI or IAB was not found in the IEEE
-    Registry.
-    """
-    pass
+IAB_INDEX = {}
 
 #-----------------------------------------------------------------------------
 class FileIndexer(Subscriber):
@@ -258,26 +250,26 @@ class IABIndexParser(Publisher):
 #-----------------------------------------------------------------------------
 def create_ieee_indices():
     """Create indices for OUI and IAB file based lookups"""
-    oui_parser = OUIIndexParser(IEEE_OUI_REGISTRY)
-    oui_parser.attach(FileIndexer(IEEE_OUI_METADATA))
+    oui_parser = OUIIndexParser(OUI_REGISTRY)
+    oui_parser.attach(FileIndexer(OUI_METADATA))
     oui_parser.parse()
 
-    iab_parser = IABIndexParser(IEEE_IAB_REGISTRY)
-    iab_parser.attach(FileIndexer(IEEE_IAB_METADATA))
+    iab_parser = IABIndexParser(IAB_REGISTRY)
+    iab_parser.attach(FileIndexer(IAB_METADATA))
     iab_parser.parse()
 
 #-----------------------------------------------------------------------------
 def load_ieee_indices():
     """Load OUI and IAB lookup indices into memory"""
-    for row in _csv.reader(open(IEEE_OUI_METADATA)):
+    for row in _csv.reader(open(OUI_METADATA)):
         (key, offset, size) = [int(_) for _ in row]
-        IEEE_OUI_INDEX.setdefault(key, [])
-        IEEE_OUI_INDEX[key].append((offset, size))
+        OUI_INDEX.setdefault(key, [])
+        OUI_INDEX[key].append((offset, size))
 
-    for row in _csv.reader(open(IEEE_IAB_METADATA)):
+    for row in _csv.reader(open(IAB_METADATA)):
         (key, offset, size) = [int(_) for _ in row]
-        IEEE_IAB_INDEX.setdefault(key, [])
-        IEEE_IAB_INDEX[key].append((offset, size))
+        IAB_INDEX.setdefault(key, [])
+        IAB_INDEX[key].append((offset, size))
 
 #-----------------------------------------------------------------------------
 def get_latest_files():

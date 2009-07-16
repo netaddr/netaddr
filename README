@@ -2,31 +2,30 @@
 INTRODUCTION
 ============
 
-netaddr is a pure Python network address representation and manipulation 
-library.
+A pure Python network address representation and manipulation library.
 
-It allows you to work with several common network address formats and 
-notations in a very Pythonic way, including :-
+netaddr provides a Pythonic way to work with :-
 
-- Internet Protocol addresses (comprehensive support for both IPv4 and IPv6)
-- CIDR (Classless Inter-Domain Routing) notation
-- IEEE EUI-48 (a.k.a. MAC addresses) and EUI-64 identifiers
+- IPv4 and IPv6 addresses and subnet (including CIDR notation)
+- MAC (Media Access Control) addresses in multiple formats
+- IEEE EUI-64, OUI and IAB identifiers
+- a user friendly IP glob-style format
 
-There is a decent set of routines for generating, sorting and summarizing
-addresses along with the ability to convert individual addresses and ranges
-between different formats (e.g. arbitrary IP address ranges to and from CIDR).
-You can easily represent groups of related addresses in order to emulate 
-networks and networking functionality within your Python code.
+Included are routines for :-
 
-netaddr also provides a convenient interface to address specific information
-gathered from various standard sources on the Internet such as :-
+- generating, sorting and summarizing IP addresses
+- converting IP addresses and ranges between various different formats
+- arbitrary IP address range calculations and conversions
+- querying IEEE OUI and IAB organisational information
+- querying of IP standards related data from key IANA data sources
 
-- OUI and IAB organisational lookups for MAC addresses
-- Range specific details/membership for IPv4, IPv6 and multicast addresses
-- geographical IP information (coming soon)
+For examples please visit the example wiki pages :-
 
-See the documentation for more details.
+    http://code.google.com/p/netaddr/wiki/NetAddrExamples
 
+Complete API documentation for the latest release is available online :-
+
+    http://packages.python.org/netaddr/
 
 LICENSE
 -------
@@ -115,7 +114,8 @@ testing. If you happen to work on big endian architectures with Python and wish
 to use netaddr *PLEASE* ensure you run the unit tests before you using it in a 
 production setting just to make sure everything is functioning as expected.
 
-References
+
+REFERENCES
 ----------
 
 The following lists the main external references that have not only guided the 
@@ -170,6 +170,9 @@ IPv6 RFCs
 	RFC 4941 - Privacy Extensions for Stateless Address
 		http://www.ietf.org/rfc/rfc4941
 
+	RFC 1924 - A Compact Representation of IPv6 Addresses
+		http://www.ietf.org/rfc/rfc1924
+
 CIDR RFCs
 
 	RFC 1338 - Supernetting: an Address Assignment and Aggregation Strategy
@@ -204,9 +207,16 @@ IEEE online resources
 	IAB (Individual Address Block) Registrations
 		http://standards.ieee.org/regauth/oui/iab.txt
 
+
 AUTHORS
 -------
 
 See the AUTHORS file for details.
+
+
+THANKS
+------
+
+See the THANKS file for details.
 
 Share and enjoy!

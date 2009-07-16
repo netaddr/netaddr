@@ -10,7 +10,7 @@ import struct as _struct
 import pprint as _pprint
 
 #: True if platform is natively big endian, False otherwise.
-BIG_ENDIAN_PLATFORM = _struct.pack('=h', 1) == _struct.pack('>h', 1)
+BIG_ENDIAN_PLATFORM = _sys.byteorder == 'big'
 
 #-----------------------------------------------------------------------------
 #   Custom exceptions.
@@ -26,6 +26,14 @@ class AddrConversionError(Exception):
     """
     An Exception indicating a failure to convert between address types or
     notations.
+    """
+    pass
+
+#-----------------------------------------------------------------------------
+class NotRegisteredError(Exception):
+    """
+    An Exception indicating that an OUI or IAB was not found in the IEEE
+    Registry.
     """
     pass
 

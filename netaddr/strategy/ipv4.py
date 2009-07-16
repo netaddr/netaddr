@@ -107,9 +107,11 @@ def str_to_int(addr):
             % addr)
 
 #-----------------------------------------------------------------------------
-def int_to_str(int_val):
+def int_to_str(int_val, dialect=None):
     """
     @param int_val: An unsigned integer.
+
+    @param dialect: (unused) Any value passed in is ignored.
 
     @return: The IPv4 presentation (string) format address equivalent to the
         unsigned integer provided.

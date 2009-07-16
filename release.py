@@ -43,11 +43,12 @@ package_data = {
     ],
 }
 
-license = 'BSD License',
+license = 'BSD License'
 
 #   NB - keep this text around 74 characters wide so it is viewable
 #        in various fixed window sizes.
-long_description = """A network address representation and manipulation library.
+long_description = """
+A pure Python network address representation and manipulation library.
 
 netaddr provides a Pythonic way to work with :-
 
@@ -68,12 +69,11 @@ For examples please visit the example wiki pages :-
 
     http://code.google.com/p/netaddr/wiki/NetAddrExamples
 
-Complete online API documentation is also available on PyPI :-
+Complete API documentation for the latest release is available online :-
 
     http://packages.python.org/netaddr/
 
-For details on latest changes and updates in current and previous
-releases see the CHANGELOG :-
+For details on history changes and updates see the CHANGELOG :-
 
     http://code.google.com/p/netaddr/wiki/CHANGELOG
 """
