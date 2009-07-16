@@ -1,37 +1,4 @@
 
-netaddr is a project that was released to the Python community under the
-BSD license in early 2008.
+Authors of netaddr.
 
-Author and maintainer :-
-
-	David P. D. Moss <drkjam AT gmail DOT com>
-
-A very special thanks go to the following for your encouragement, support
-and assistance :-
-
-	James William Pye <jwp AT gmail DOT com>
-	Duncan McGreggor <duncan DOT mcgreggor AT gmail DOT com> 
-	Sebastien Douche <sdouche AT gmail DOT com>
-
-Linux distro package maintainers :-
-
-	Debian and Ubuntu
-
-		Vincent Bernat <bernat AT debian DOT org>
-
-	Fedora
-
-		John Eckersberg <john DOT eckersberg AT gmail DOT com>
-
-Thanks go to everyone on the netaddr mailing list for helping to test 
-releases and suggest improvements. Thanks also to those who've raised
-tickets in the bug tracker and made comments on the code hosting site.
-
-Thanks also to for use of recipe 18.11 "Formatting Integers as Binary 
-Strings" from :-
-
-	Python Cookbook 2d ed.
-	by Alex Martelli, Anna Martelli Ravenscroft and David Ascher
-	(O'Reilly Media 2005) ISBN 0596-00797-3.
-
-And finally, thanks to Guido van Rossum for giving us Python.
+David P. D. Moss <drkjam AT gmail.com>

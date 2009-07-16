@@ -1,0 +1,60 @@
+
+netaddr was written by David P. D. Moss and release under the BSD License.
+
+Many people further contributed to netaddr by reporting problems, suggesting
+various improvements or submitting actual code. Here is a list of these people.
+Help me keep it complete and free of errors.
+
+Special thanks to the following (in alphabetical order) :-
+
+	Vincent Bernat <bernat AT debian.org>
+
+	Sebastien Douche <sdouche AT gmail.com>
+
+	John Eckersberg <john DOT eckersberg AT gmail.com>
+
+	Yi-Jheng Lin <yzlin AT cs.nctu.edu.tw>
+
+	Clay McClure <clay AT daemons.net> 
+
+	Duncan McGreggor <duncan DOT mcgreggor AT gmail.com> 
+
+	Brian F. Peters <brianfpeters AT gmail.com>
+
+	James William Pye <jwp AT gmail.com>
+
+	Victor Stinner <victor.stinner AT haypocalc.com>
+
+Their contributions have been of great benefit, helping to both improve
+netaddr and to make it widely available and accessible to end users on many
+platforms.
+
+On behalf of myself and netaddr's users a big *thank you* to everyone who has
+raised tickets on the bug tracker, pointing out bugs and providing suggestions
+for improvement. Your efforts are very much appreciated and highly beneficial
+to the project as a whole. Thanks also to those who have posted (helpful)
+comments on the code hosting site wiki.
+
+Thanks to everyone on the netaddr mailing list and to all those who have,
+directly and indirectly, guided and influenced the development of this
+library.
+
+Thanks also to the following for their invaluable code contributions :-
+
+a) Python Cookbook recipe 18.11: "Formatting Integers as Binary Strings"
+
+	Python Cookbook 2d ed. (O'Reilly Media 2005) ISBN 0596-00797-3
+	Alex Martelli, Anna Martelli Ravenscroft and David Ascher 
+
+b) ASPN Cookbook Recipe 466286: "Integer set type" by Heiko Wundram
+
+	http://code.activestate.com/recipes/466286/
+
+c) Modules that have great assisted in netaddr's development
+
+	epydoc - http://epydoc.sourceforge.net/
+
+	coverage - http://pypi.python.org/pypi/coverage/
+
+And last but not least, thanks to Guido van Rossum for his encouraging words
+and for giving us all Python.
