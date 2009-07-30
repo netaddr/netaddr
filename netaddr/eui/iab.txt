@@ -17402,3 +17402,250 @@ AE1000-AE1FFF	(base 16)	EVERCARE
 				Seoul  135-890
 				KOREA, REPUBLIC OF
 
+00-50-C2	(hex)		Power Medical Interventions
+AE2000-AE2FFF	(base 16)	Power Medical Interventions
+				2021 Cabot Blvd. West
+				Langhorne PA 19047
+				UNITED STATES
+
+00-50-C2	(hex)		PSD
+AE3000-AE3FFF	(base 16)	PSD
+				Boerkensleen 31
+				Roosendaal  4705 RL
+				NETHERLANDS
+
+00-50-C2	(hex)		Advanced Electronic Designs, Inc.
+AE4000-AE4FFF	(base 16)	Advanced Electronic Designs, Inc.
+				233 Enterprise Blvd
+				Bozeman MT 59718
+				UNITED STATES
+
+00-50-C2	(hex)		ABS Gesellschaft f. Automatisierung, Bildverarbeitung und Software mbH
+AE5000-AE5FFF	(base 16)	ABS Gesellschaft f. Automatisierung, Bildverarbeitung und Software mbH
+				Erlanger Alle 103
+				Jena Thueringen 07747
+				GERMANY
+
+00-50-C2	(hex)		VECOM USA
+AE6000-AE6FFF	(base 16)	VECOM USA
+				4803 George Road
+				Unit 300
+				Tampa FL 33634
+				UNITED STATES
+
+00-50-C2	(hex)		Redwood Systems
+AE7000-AE7FFF	(base 16)	Redwood Systems
+				46665 Fremont Blvd.
+				Fremont CA 95030
+				UNITED STATES
+
+00-50-C2	(hex)		Bit-Lab PTY LTD
+AE8000-AE8FFF	(base 16)	Bit-Lab PTY LTD
+				4 Ferrer Place
+				Woodlands WA 6018
+				AUSTRALIA
+
+00-50-C2	(hex)		ClearCorp Enterprises, Inc
+AE9000-AE9FFF	(base 16)	ClearCorp Enterprises, Inc
+				7485 Park Lane Rd
+				Longmont CO 80503
+				UNITED STATES
+
+00-50-C2	(hex)		EMBEDIA
+AEA000-AEAFFF	(base 16)	EMBEDIA
+				11 Avenue Albert EINSTEIN
+				VILLEURBANNE  69100
+				FRANCE
+
+00-50-C2	(hex)		UMLogics Corporation
+AEB000-AEBFFF	(base 16)	UMLogics Corporation
+				EXPOTEL 924, 381 Manyeon-dong, Seo-gu
+				Daejeon  302-150
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Fritz Pauker Ingenieure GmbH
+AEC000-AECFFF	(base 16)	Fritz Pauker Ingenieure GmbH
+				Paul-Lenz-Str. 5
+				Friedberg Bayern 86316
+				GERMANY
+
+00-50-C2	(hex)		3Roam
+AED000-AEDFFF	(base 16)	3Roam
+				Parc Haute Technologie, Bat 6
+				694 Avenue Maurice Donat
+				Mougins  06250
+				FRANCE
+
+00-50-C2	(hex)		IPtec, Inc.
+AEE000-AEEFFF	(base 16)	IPtec, Inc.
+				5673 W. Las Positas Blvd.
+				Suite 207
+				Pleasanton CA 94588
+				UNITED STATES
+
+00-50-C2	(hex)		National CineMedia
+AEF000-AEFFFF	(base 16)	National CineMedia
+				9110 East Nichols Ave.
+				Suite 200
+				Centennial CO 80112
+				UNITED STATES
+
+00-50-C2	(hex)		Fr. Sauter AG
+AF0000-AF0FFF	(base 16)	Fr. Sauter AG
+				Im Surinam 55
+				Basel  4016
+				SWITZERLAND
+
+00-50-C2	(hex)		Green Goose
+AF1000-AF1FFF	(base 16)	Green Goose
+				6025 SW Taylor St.
+				Portland OR 97221
+				UNITED STATES
+
+00-50-C2	(hex)		ACD Elektronik Gmbh
+AF2000-AF2FFF	(base 16)	ACD Elektronik Gmbh
+				Engelberg 2
+				Achstetten  88480
+				GERMANY
+
+00-50-C2	(hex)		Palomar Products, Inc.
+AF3000-AF3FFF	(base 16)	Palomar Products, Inc.
+				23042 Arroyo Vista
+				Rancho Santa Margarita California 92688
+				UNITED STATES
+
+00-50-C2	(hex)		Dixell S.p.A.
+AF4000-AF4FFF	(base 16)	Dixell S.p.A.
+				Via dell'Industria, 27
+				Pieve d'Alpago Belluno 32010
+				ITALY
+
+00-50-C2	(hex)		Kramara s.r.o.
+AF5000-AF5FFF	(base 16)	Kramara s.r.o.
+				Cisovicka 246
+				Mnisek pod Brdy Stredocesky kraj 25210
+				CZECH REPUBLIC
+
+00-50-C2	(hex)		Energid
+AF6000-AF6FFF	(base 16)	Energid
+				124 Mt Auburn St
+				Suite 200N
+				Cambridge MA 02138
+				UNITED STATES
+
+00-50-C2	(hex)		Midwest Microwave Solutions Inc.
+AF7000-AF7FFF	(base 16)	Midwest Microwave Solutions Inc.
+				4150 Oak Valley Drive NE
+				Cedar Rapids Iowa 52411
+				UNITED STATES
+
+00-50-C2	(hex)		Global Satellite Engineering
+AF8000-AF8FFF	(base 16)	Global Satellite Engineering
+				1831 Cordova Road
+				Fort Lauderdale FL 33316
+				UNITED STATES
+
+00-50-C2	(hex)		Ingenieurbuero Bickele und Buehler GmbH
+AF9000-AF9FFF	(base 16)	Ingenieurbuero Bickele und Buehler GmbH
+				St.Poeltener Str. 70
+				Stuttgart BW 70469
+				GERMANY
+
+00-50-C2	(hex)		Absolute Fire Solutions Inc.
+AFA000-AFAFFF	(base 16)	Absolute Fire Solutions Inc.
+				1338 - 36 Ave NE
+				Calgary Alberta T2E 6T6
+				CANADA
+
+00-50-C2	(hex)		PRIVATE
+AFB000-AFBFFF	(base 16)		 
+				 
+00-50-C2	(hex)		Odus Technologies SA
+AFC000-AFCFFF	(base 16)	Odus Technologies SA
+				Rue des bosquets 18
+				VEVEY VAUD 1800
+				SWITZERLAND
+
+00-50-C2	(hex)		HomeScenario, Inc.
+AFD000-AFDFFF	(base 16)	HomeScenario, Inc.
+				12F No. 17 Sec. 3 Chongcing S. Rd.
+				Taipei  100
+				TAIWAN, REPUBLIC OF CHINA
+
+00-50-C2	(hex)		Trolex Limited
+AFE000-AFEFFF	(base 16)	Trolex Limited
+				Newby Road,
+				Hazel Grove,
+				Stockport. Cheshire SK7 5DY
+				UNITED KINGDOM
+
+00-50-C2	(hex)		XoByte LLC
+AFF000-AFFFFF	(base 16)	XoByte LLC
+				235 Peconic Street
+				Ronkonkoma New York 11779
+				UNITED STATES
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+B00000-B00FFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		HSR Harald L. Reuter
+B01000-B01FFF	(base 16)	HSR Harald L. Reuter
+				Entwicklung - Reparatur - Fertigung
+				Kammermühlenweg 24
+				Bielefeld NRW 33607
+				GERMANY
+
+00-50-C2	(hex)		MASTER CO LTD
+B02000-B02FFF	(base 16)	MASTER CO LTD
+				42-20, Palyong-Dong
+				Changwon-City Gyeongnam 641-847
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Spider Tecnologia Ind. e Com. Ltda.
+B03000-B03FFF	(base 16)	Spider Tecnologia Ind. e Com. Ltda.
+				Rua Alencar Araripe, 1440
+				Sacoma
+				Sao Paulo  04253-000
+				BRAZIL
+
+00-50-C2	(hex)		Ubiquiti Networks
+B04000-B04FFF	(base 16)	Ubiquiti Networks
+				91 E Tasman Dr
+				San Jose CA 95134
+				UNITED STATES
+
+00-50-C2	(hex)		POLA s.r.l.
+B05000-B05FFF	(base 16)	POLA s.r.l.
+				via Del Perolo 13
+				Soncino CR 26029
+				ITALY
+
+00-50-C2	(hex)		CompuDesigns, Inc.
+B06000-B06FFF	(base 16)	CompuDesigns, Inc.
+				1655 Redbourne Drive
+				Sandy Springs GA 30350-5640
+				UNITED STATES
+
+00-50-C2	(hex)		FARECO
+B07000-B07FFF	(base 16)	FARECO
+				8 EUROPARC de la Sainte Victoire
+				Le Canet
+				MEYREUIL  13590
+				FRANCE
+
+00-50-C2	(hex)		Goerlitz AG
+B08000-B08FFF	(base 16)	Goerlitz AG
+				August-Thyssen-Str. 32
+				Koblenz Rheinland-Pfalz 56077
+				GERMANY
+
+00-50-C2	(hex)		Harper Chalice Group Limited
+B09000-B09FFF	(base 16)	Harper Chalice Group Limited
+				8 Binns Close
+				Tile Hill
+				Coventry West Midlands CV4 9TB
+				UNITED KINGDOM
+

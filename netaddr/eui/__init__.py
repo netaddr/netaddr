@@ -5,7 +5,8 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-Classes and functions for dealing with MAC addresses, EUI-48, EUI-64, OUI, IAB identifiers.
+Classes and functions for dealing with MAC addresses, EUI-48, EUI-64, OUI, IAB
+identifiers.
 """
 
 import sys as _sys
@@ -17,7 +18,7 @@ import csv as _csv
 import pprint as _pprint
 
 from netaddr.core import NotRegisteredError, AddrFormatError, \
-    AddrConversionError, Subscriber, Publisher
+    AddrConversionError, Subscriber, Publisher, DictDotLookup
 from netaddr.strategy import eui48 as _eui48, eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
 from netaddr.ip import IPAddress
@@ -25,7 +26,7 @@ from netaddr.ip import IPAddress
 #-----------------------------------------------------------------------------
 class OUI(object):
     """
-    An individual IEEE OUI (Organisationally Unique Identifier) identifier.
+    An individual IEEE OUI (Organisationally Unique Identifier).
 
     For online details see - U{http://standards.ieee.org/regauth/oui/}
     """
@@ -44,8 +45,9 @@ class OUI(object):
         self.records = []
 
         if isinstance(oui, str):
-#FIXME: Improve string parsing here. Accept full MAC/EUI-48 addressses as
-#FIXME: well as XX-XX-XX and just take /16 (see IAB for details)!
+            #TODO: Improve string parsing here.
+            #TODO: Accept full MAC/EUI-48 addressses as well as XX-XX-XX
+            #TODO: and just take /16 (see IAB for details)
             self.value = int(oui.replace('-', ''), 16)
         elif isinstance(oui, (int, long)):
             if 0 <= oui <= 0xffffff:
@@ -98,26 +100,6 @@ class OUI(object):
         """Number of registered organisations with this OUI"""
         return len(self.records)
 
-    def address(self, index=0):
-        """
-        @param index: the index of record (multiple registrations)
-            (Default: 0 - first registration)
-
-        @return: registered address of organisation linked to OUI
-        """
-        return self.records[index]['address']
-
-    def org(self, index=0):
-        """
-        @param index: the index of record (multiple registrations)
-            (Default: 0 - first registration)
-
-        @return: the name of organisation linked to OUI
-        """
-        return self.records[index]['org']
-
-    organisation = org
-
     def __int__(self):
         """@return: integer representation of this OUI"""
         return self.value
@@ -129,6 +111,18 @@ class OUI(object):
         """
         return hex(self.value).rstrip('L').lower()
 
+    def registration(self, index=0):
+        """
+        The IEEE registration details for this OUI.
+
+        @param index: the index of record (may contain multiple registrations)
+            (Default: 0 - first registration)
+
+        @return: Objectified Python data structure containing registration
+            details.
+        """
+        return DictDotLookup(self.records[index])
+
     def __str__(self):
         """@return: string representation of this OUI"""
         int_val = self.value
@@ -139,14 +133,9 @@ class OUI(object):
             int_val >>= 8
         return '-'.join(reversed(words)).upper()
 
-    @property
-    def registration(self):
-        """ The IEEE registration details for this OUI"""
-        return self.records
-
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object."""
-        return "OUI('%s')" % self
+        return "%s('%s')" % (self.__class__.__name__, self)
 
 #-----------------------------------------------------------------------------
 class IAB(object):
@@ -206,8 +195,9 @@ class IAB(object):
         }
 
         if isinstance(iab, str):
-#FIXME: Improve string parsing here !!! '00-50-C2' is actually invalid.
-#FIXME: Should be '00-50-C2-00-00-00' (i.e. a full MAC/EUI-48)
+            #TODO: Improve string parsing here.
+            #TODO: '00-50-C2' is actually invalid.
+            #TODO: Should be '00-50-C2-00-00-00' (i.e. a full MAC/EUI-48)
             int_val = int(iab.replace('-', ''), 16)
             (iab_int, user_int) = IAB.split_iab_mac(int_val, strict)
             self.value = iab_int
@@ -246,16 +236,6 @@ class IAB(object):
             else:
                 self.record['address'].append(line)
 
-    def address(self):
-        """@return: registered address of organisation"""
-        return self.record['address']
-
-    def org(self):
-        """@return: the name of organisation"""
-        return self.record['org']
-
-    organisation = org
-
     def __int__(self):
         """@return: integer representation of this IAB"""
         return self.value
@@ -267,6 +247,10 @@ class IAB(object):
         """
         return hex(self.value).rstrip('L').lower()
 
+    def registration(self):
+        """ The IEEE registration details for this IAB"""
+        return DictDotLookup(self.record)
+
     def __str__(self):
         """@return: string representation of this IAB"""
         int_val = self.value << 12
@@ -277,14 +261,9 @@ class IAB(object):
             int_val >>= 8
         return '-'.join(reversed(words)).upper()
 
-    @property
-    def registration(self):
-        """The IEEE registration details for this IAB"""
-        return self.record
-
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object."""
-        return "IAB('%s')" % self
+        return "%s('%s')" % (self.__class__.__name__, self)
 
 #-----------------------------------------------------------------------------
 class EUI(object):
@@ -586,27 +565,16 @@ class EUI(object):
             poses security risks in certain scenarios. Please read RFC 4941 for
             details. Reference: RFCs 4291 and 4941.
         """
-        prefix = 'fe80:0000:0000:0000:'
-
-        #   Add 2 to the first octet of this EUI address (temporarily).
-        self[0] += 2
+        int_val = 0xfe800000000000000200000000000000
 
         if self.version == 48:
-            #   Modify MAC to make it an EUI-64.
-            suffix = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
-                     ["%02x" % i for i in self[3:6]]
+            eui64_tokens = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
+                ["%02x" % i for i in self[3:6]]
+            int_val += int(''.join(eui64_tokens), 16)
         else:
-            suffix = ["%02x" % i for i in list(self)]
+            int_val += self._value
 
-        suffix = ["%02x%02x" % (int(x[0], 16), int(x[1], 16)) for x in \
-            zip(suffix[::2], suffix[1::2])]
-
-        #   Subtract 2 again to return EUI to its original value.
-        self[0] -= 2
-
-        ipv6_addr = ':'.join(suffix)
-        addr = prefix + ipv6_addr
-        return IPAddress(addr)
+        return IPAddress(int_val, 6)
 
     @property
     def info(self):
@@ -617,7 +585,8 @@ class EUI(object):
         data = {'OUI': self.oui.registration}
         if self.is_iab():
             data['IAB'] = self.iab.registration
-        return data
+
+        return DictDotLookup(data)
 
     def __str__(self):
         """@return: EUI in representational format"""

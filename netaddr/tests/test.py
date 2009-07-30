@@ -8,7 +8,7 @@
 import unittest
 import doctest
 
-tests = ['ip/ipv6_formatting.txt']
+tests = ['eui/eui64.txt']
 
 for test in tests:
     suite = doctest.DocFileSuite(test, optionflags=doctest.ELLIPSIS)

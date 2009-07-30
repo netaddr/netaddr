@@ -7,6 +7,7 @@ include MANIFEST.in
 include README
 include THANKS
 
+include nash
 include release.bat
 include release.py
 include release.sh
@@ -36,6 +37,7 @@ include netaddr/ip/intset.py
 include netaddr/ip/ipv4-address-space
 include netaddr/ip/ipv6-address-space
 include netaddr/ip/multicast-addresses
+include netaddr/ip/rfc1924.py
 include netaddr/ip/sets.py
 
 include netaddr/strategy/__init__.py

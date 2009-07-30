@@ -142,19 +142,23 @@ def int_to_str(int_val, dialect=None):
     if dialect is None:
         dialect = ipv6_compact
 
+    addr = None
+
     try:
         packed_int = int_to_packed(int_val)
         if dialect.compact:
             #   Default return value.
-            return _inet_ntop(AF_INET6, packed_int)
+            addr = _inet_ntop(AF_INET6, packed_int)
         else:
             #   Custom return value.
             words = list(_struct.unpack('>8H', packed_int))
             tokens = [dialect.word_fmt % word for word in words]
-            return word_sep.join(tokens)
+            addr = word_sep.join(tokens)
     except Exception, e:
         raise ValueError('%r is not a valid 128-bit unsigned integer!' \
             % int_val)
+
+    return addr
 
 #-----------------------------------------------------------------------------
 def int_to_arpa(int_val):

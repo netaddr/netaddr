@@ -4,6 +4,7 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """Set based operations for IP addresses and subnets."""
+
 import sys as _sys
 import itertools as _itertools
 
@@ -197,6 +198,8 @@ class IPSet(object):
             #   An iterable contain IP addresses or subnets.
             for ip in cidr_merge(self._cidrs.keys() + list(iterable)):
                 self._cidrs[ip] = True
+
+        self.compact()
 
     def clear(self):
         """Remove all IP addresses and subnets from this IP set."""
@@ -454,139 +457,3 @@ class IPSet(object):
         return 'IPSet(%r)' % [str(c) for c in sorted(self._cidrs)]
 
     __str__ = __repr__
-
-#-----------------------------------------------------------------------------
-if __name__ == '__main__':
-#    import pprint
-#    print IPNetwork('0.0.0.0/0').size
-#    print IPSet(['0.0.0.0/0']).size
-#    s1 = IPSet(['192.0.4.0', '192.0.2.0/30', IPAddress('192.0.3.16')])
-#
-#    print len(s1)
-#    pprint.pprint(list(s1))
-#    print repr(s1)
-#
-#    s2 = IPSet([
-#        IPNetwork('192.0.2.0/30'),
-#        IPAddress('192.0.3.16'),
-#        IPAddress('192.0.4.0')])
-#
-#    print s1 == s2
-#    print s1 != s2
-#    s3 = s1.copy()
-#    print s3
-#    print id(s1)
-#    print id(s3)
-#    #   Union
-#    s4 = IPSet(['1.1.1.1', '1.1.1.2']) | IPSet(['1.1.1.3'])
-#    pprint.pprint(list(s4))
-#
-#    print cidr_merge(['1.1.1.1', '1.1.1.2', '1.1.1.3'])
-#    #   Intersection
-#    print IPSet(['1.1.1.1', '1.1.1.2']) & IPSet(['1.1.1.2', '1.1.1.3'])
-#
-#    print IPSet(['192.0.2.0', '192.0.2.0/32'])
-
-#    s1 = IPSet()
-#
-#    print s1
-#    for ip in IPNetwork('192.0.2.0/28'):
-#        s1.add(ip)
-#        print s1, len(s1)
-#
-#    print '-' * 79
-#
-#    s2 = IPSet(['192.0.2.0/28'])
-#
-#    print s2
-#    for ip in IPNetwork('192.0.2.0/28'):
-#        s2.remove(ip)
-#        print s2, len(s2)
-#
-#    print '-' * 79
-#
-#    removals = [
-#        '192.0.1.0/22',
-#        '192.0.7.0/24',
-#        '192.0.9.0/24',
-#        '192.0.11.0/24',
-#        '192.0.13.0/24',
-#        '192.0.15.0/24',
-#    ]
-#
-#    s3 = IPSet(['192.168.0.0/23'])
-#
-#    print 'start:', s3
-#    cidr = IPNetwork('192.168.0.0/23')
-#    print '%-20s %-17s -> %-17s' % (cidr, cidr[0], cidr[-1])
-#
-#    print '---'
-#    print 'to be removed :-'
-#    print
-#    for cidr in removals:
-#        cidr = IPNetwork(cidr)
-#        print '%-20s %-17s -> %-17s' % (cidr, cidr[0], cidr[-1])
-#        s3.remove(cidr)
-#
-#    print '---'
-#    print 'results:', s3
-#    print '---'
-#    for cidr in s3.iter_cidrs():
-#        print '%-20s %-17s -> %-17s' % (cidr, cidr[0], cidr[-1])
-#    print '---'
-#
-#    print IPSet(['192.0.2.0/24']) | IPSet(['192.0.3.0/24'])
-#
-#    s1 = IPSet(['192.168.0.0/24', '192.168.2.0/24', '192.168.4.0/24'])
-#    print s1
-#    addr = '192.168.0.0/23'
-#    print 'remove: ', addr
-#    s1.remove(addr)
-#    print s1
-#    print IPSet(['1.1.1.0/24']) ^ IPSet(['1.1.1.16/28'])
-#    print IPSet(['1.1.1.0/21', '1.1.2.0/24', '1.1.3.0/24']) ^ \
-#          IPSet(['1.1.2.0/24', '1.1.4.0/24'])
-#
-#
-#    ipv4_addr_space = IPSet(['0.0.0.0/0'])
-#
-#    private = IPSet([
-#        '192.168.0.0/16',
-#        '10.0.0.0/8',
-#        '172.16.0.0/12',
-#        '192.0.2.0/24',
-#        '239.192.0.0/14'])
-#
-#    reserved = IPSet([
-#        '240.0.0.0/4',
-#        '234.0.0.0/7',
-#        '236.0.0.0/7',
-#        '225.0.0.0/8',
-#        '226.0.0.0/7',
-#        '228.0.0.0/6',
-#        '234.0.0.0/7',
-#        '236.0.0.0/7',
-#        '238.0.0.0/8'])
-#
-#    unavailable = reserved | private
-#
-#    print 'LHS:', ipv4_addr_space
-#    print 'RHS:', unavailable
-#    result = ipv4_addr_space ^ unavailable
-#    print 'Result:', result
-#    for  cidr in result.iter_cidrs():
-#        print cidr, cidr[0], cidr[-1]
-#        try:
-#            ipv4_info = cidr.info['IPv4'][0]
-#            info = ipv4_info['prefix'], ipv4_info['status']
-#        except KeyError:
-#            info = 'n/a'
-#        print '%-20s %-17s %-17s' % (cidr, cidr[0], cidr[-1]), info
-
-    s1 = IPSet(['192.0.2.0', '::192.0.2.0', '192.0.2.2', '::192.0.2.2'])
-    s2 = IPSet(['192.0.2.2', '::192.0.2.2', '192.0.2.4', '::192.0.2.4'])
-    print s1
-    print s2
-    print s1 | s2
-    print s1 ^ s2
-

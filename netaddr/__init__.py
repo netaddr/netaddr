@@ -10,14 +10,15 @@ import sys as _sys
 if _sys.version_info[0:2] < (2, 4):
     raise RuntimeError('Python 2.4.x or higher is required!')
 
-__version__ = '0.7a1'
+__version__ = '0.7rc1'
 
 from netaddr.core import AddrConversionError, AddrFormatError, \
     NotRegisteredError
 
 from netaddr.ip import IPAddress, IPNetwork, IPRange, \
     cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, spanning_cidr, \
-    iter_unique_ips, iprange_to_cidrs, iter_iprange
+    iter_unique_ips, iprange_to_cidrs, iter_iprange, smallest_matching_cidr, \
+    largest_matching_cidr, all_matching_cidrs
 
 from netaddr.ip.sets import IPSet
 
@@ -49,6 +50,7 @@ __all__ = [
 
     'cidr_abbrev_to_verbose', 'cidr_exclude', 'cidr_merge', 'spanning_cidr',
     'iter_iprange', 'iprange_to_cidrs','iter_unique_ips',
+    'smallest_matching_cidr', 'largest_matching_cidr', 'all_matching_cidrs',
 
     #   IP globbing routines.
     'IPGlob', 'valid_glob', 'cidr_to_glob', 'glob_to_cidrs', 'glob_to_iptuple',

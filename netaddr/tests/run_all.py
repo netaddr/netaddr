@@ -4,6 +4,7 @@
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
+"""Runs all netaddr unit tests."""
 
 import os
 import sys

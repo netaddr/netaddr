@@ -1,42 +1,35 @@
 
-Release: 0.7a1 
-Date 7th Jun 2009
+Release: 0.7 
+Date 30th Jul 2009
 
 Changes since 0.6.x
 -------------------
 
-Major overhaul compared with previous versions that breaks backward compatibility.
+Please Note - This release represents a major overhaul of entire library. It breaks backward compatibility.
 
-* Redesigned the internal module hierarchy. All public classes, functions and
-  constants are still available via the main netaddr module interface.
+* Internal module hierarchy has been completely overhauled and redesigned. This fixes up a lot of inconsistencies and problems with interdependent imports. All public classes, objects, functions and constants are still published via the main netaddr module namespace as in previous releases.
 
-* Removed the Addr base class. There is no longer a shared base class between
-  IP and MAC/EUI style addresses.
+* The Addr base class is no more. This removes the link between EUI and IP functionality so the library is can now easily be split into distinct units without many interdependencies between layer 2 and layer 3 functionality.
 
-* Strategy classes have been replaced with a set of modules. Logic is similar
-  but has been dressed up different. Each address object now holds a reference
-  to a module rather than an object. 
+* Strategy classes and objects have been replaced with a group of strategy modules in their own netaddr.strategy namespace. Each IP or EUI address object now holds a reference to a module rather than an singleton object.
 
-* IP and CIDR classes have been replaced with IPAddress and IPNetwork
-  respectively. The rename is important as these new interfaces now enforce
-  the distinction between an individual IP address and an IP network/subnet.
-  IPAddress objects do not support any notion of a netmask or CIDR prefix;
-  this is the primary function of an IPNetwork object.
-
-* Many operations have been moved from static class methods to module functions.
+* Many operations that were previous static class methods are now presented as functions in the relevant modules.
   
-* IP globbing has been moved into a submodule as it is special case code that.
-  They is no longer parity between 
-  
-* Ended the use of custom descriptor classes.
+* The IP and CIDR classes have been replaced with two new classes called IPAddress and IPNetwork respectively. This rename is important as they have changed significantly. The notion of an individual IP address and an IP network or subnet has been made more obvious. IPAddress objects are now true scalars and do not evaluate in a list or tuple context at all. They also do not support any notion of a netmask or CIDR prefix; this is the primary function of an IPNetwork object.
 
-* All methods and properties that previously used or supported the 'fmt'
-  formatting property no longer do so. In all cases objects are now returned
-  instead to properly support pass through calls without side effects. It is up
-  to the user to extract data in the right format from the objects returned as
-  required.
+* Abritrary IP ranges and are still supported but a lot of their functionality has also been exposed via functions.
 
-* Now supports RFC 1924!
+* IP globs (Wildcard class previously) has been moved into its own submodule. 
+
+* The use of custom descriptor classes has been completely discontinued.
+
+* All methods and properties that previously used or supported the 'fmt' formatting property no longer do so. Now, in all cases, objects are now returned to properly support pass through calls without side effects. It is up to the user to extract data in the right format from the objects IPAddress objects returned as required.
+
+* Unit test suite has been completed re-written to support docstring style tests bundled into test suites. These are handy as they double up as documentation being combined with wiki syntax. Implemented code coverage checking using coverage 3.x.
+
+* Easter Egg - support for RFC 1924 added ;-)
+
+* nash - a nascent shell like tool for the netaddr library (requires IPython).
 
 Specific bug fixes addressed in this release
 --------------------------------------------
@@ -45,7 +38,7 @@ Specific bug fixes addressed in this release
 
     - Refactor out use of isinstance()
 
-------------------------------------------------------------------------------
+---------------------------------------------------------------------
 
 Release: 0.6.3
 Date: 23rd Jun 2009
