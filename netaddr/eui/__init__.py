@@ -579,8 +579,8 @@ class EUI(object):
     @property
     def info(self):
         """
-        @return: A record dict containing IEEE registration details for this
-            EUI (MAC-48) if available, None otherwise.
+        A record dict containing IEEE registration details for this EUI
+        (MAC-48) if available, None otherwise.
         """
         data = {'OUI': self.oui.registration}
         if self.is_iab():
