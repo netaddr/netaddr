@@ -76,26 +76,26 @@ max_word = 2 ** word_size - 1
 
 class ipv6_compact(object):
     """An IPv6 dialect class - compact form."""
-    #: The format string used to converting words into string values. n/a if L{compact} is C{True}.
-    word_fmt='%x'
+    #: The format string used to converting words into string values.
+    word_fmt = '%x'
 
     #: Boolean flag indicating if IPv6 compaction algorithm should be used.
-    compact=True
+    compact = True
 
 class ipv6_full(ipv6_compact):
     """An IPv6 dialect class - 'all zeroes' form."""
 
     #: Boolean flag indicating if IPv6 compaction algorithm should be used.
-    compact=False
+    compact = False
 
 class ipv6_verbose(ipv6_compact):
     """An IPv6 dialect class - extra wide 'all zeroes' form."""
 
-    #: The format string used to converting words into string values. n/a if L{compact} is C{True}.
-    word_fmt='%.4x'
+    #: The format string used to converting words into string values.
+    word_fmt = '%.4x'
 
     #: Boolean flag indicating if IPv6 compaction algorithm should be used.
-    compact=False
+    compact = False
 
 #-----------------------------------------------------------------------------
 def valid_str(addr):
@@ -125,7 +125,7 @@ def str_to_int(addr):
     try:
         packed_int = _inet_pton(AF_INET6, addr)
         return packed_to_int(packed_int)
-    except Exception, e:
+    except Exception:
         raise AddrFormatError('%r is not a valid IPv6 address string!' \
             % addr)
 
@@ -154,7 +154,7 @@ def int_to_str(int_val, dialect=None):
             words = list(_struct.unpack('>8H', packed_int))
             tokens = [dialect.word_fmt % word for word in words]
             addr = word_sep.join(tokens)
-    except Exception, e:
+    except Exception:
         raise ValueError('%r is not a valid 128-bit unsigned integer!' \
             % int_val)
 

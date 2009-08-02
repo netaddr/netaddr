@@ -8,10 +8,10 @@
 import sys as _sys
 import itertools as _itertools
 
-from netaddr.ip import IPNetwork, IPAddress, cidr_merge, cidr_exclude, \
-    iter_iprange, iprange_to_cidrs
+from netaddr.ip.intset import IntSet as _IntSet
 
-from intset import IntSet as _IntSet
+from netaddr.ip import IPNetwork, IPAddress, cidr_merge, cidr_exclude, \
+    iprange_to_cidrs
 
 #-----------------------------------------------------------------------------
 def partition_ips(iterable):

@@ -10,7 +10,7 @@ import sys as _sys
 if _sys.version_info[0:2] < (2, 4):
     raise RuntimeError('Python 2.4.x or higher is required!')
 
-__version__ = '0.7rc1'
+__version__ = '0.7'
 
 from netaddr.core import AddrConversionError, AddrFormatError, \
     NotRegisteredError
@@ -30,8 +30,6 @@ from netaddr.eui import EUI, IAB, OUI
 from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_cisco, \
     mac_bare, mac_pgsql
 
-from netaddr.strategy.ipv6 import ipv6_compact, ipv6_full, ipv6_verbose
-
 __all__ = [
     #   Custom exceptions.
     'AddrConversionError', 'AddrFormatError', 'NotRegisteredError',
@@ -41,9 +39,6 @@ __all__ = [
 
     #   MAC address dialect classes.
     'mac_bare', 'mac_cisco', 'mac_eui48', 'mac_pgsql', 'mac_unix',
-
-    #   IPv6 dialect classes.
-    'ipv6_compact', 'ipv6_full', 'ipv6_verbose',
 
     #   IP, CIDR and IP range related classes and functions.
     'IPAddress', 'IPNetwork', 'IPRange', 'IPSet',

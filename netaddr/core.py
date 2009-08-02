@@ -47,8 +47,8 @@ def num_bits(int_val):
     int_val = abs(int_val)
     numbits = 0
     while int_val:
-         numbits += 1
-         int_val >>= 1
+        numbits += 1
+        int_val >>= 1
     return numbits
 
 #-----------------------------------------------------------------------------

@@ -10,8 +10,8 @@ import re as _re
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
     DictDotLookup
+
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
-from netaddr.strategy.ipv6 import ipv6_compact
 
 #-----------------------------------------------------------------------------
 class BaseIP(object):
@@ -19,6 +19,24 @@ class BaseIP(object):
     An abstract base class for common operations shared between L{IPAddress}
     and L{IPNetwork}.
     """
+    """Constructor."""
+    def __init__(self):
+        self._value = None
+        self._module = None
+
+    def key(self):
+        """
+        @return: a key tuple that uniquely identifies this IP address.
+        """
+        return NotImplemented
+
+    def sort_key(self):
+        """
+        @return: A key tuple used to compare and sort this L{IPAddress}
+            correctly.
+        """
+        return NotImplemented
+
     def __hash__(self):
         """
         @return: A hash value uniquely indentifying this IP object.
@@ -202,8 +220,8 @@ class BaseIP(object):
         if available, None otherwise.
         """
         #   Lazy loading of IANA data structures.
-        from netaddr.ip import iana
-        return DictDotLookup(iana.query(self))
+        from netaddr.ip.iana import query
+        return DictDotLookup(query(self))
 
     @property
     def version(self):
@@ -231,8 +249,7 @@ class IPAddress(BaseIP):
             addresses specified as integers (which may be numerically
             equivalent).
         """
-        self._value = None
-        self._module = None
+        super(IPAddress, self).__init__()
 
         if hasattr(addr, '_value'):
             #   Copy constructor.
@@ -591,9 +608,8 @@ class IPNetwork(BaseIP):
             If False it uses the length of the IP address version.
             (default: False).
         """
-        self._value = None
+        super(IPNetwork, self).__init__()
         self._prefixlen = None
-        self._module = None
 
         if hasattr(addr, '_prefixlen'):
             #   Copy constructor - IPNetwork.
@@ -1389,10 +1405,10 @@ def cidr_merge(ip_addrs):
 
     #   Reduce and format lists of reduced CIDRs.
     for bits in _reduce_bit_cidrs(list(ipv4_bit_cidrs)):
-            new_cidrs.append(_bits_to_cidr(bits, _ipv4))
+        new_cidrs.append(_bits_to_cidr(bits, _ipv4))
 
     for bits in _reduce_bit_cidrs(list(ipv6_bit_cidrs)):
-            new_cidrs.append(_bits_to_cidr(bits, _ipv6))
+        new_cidrs.append(_bits_to_cidr(bits, _ipv6))
 
     return new_cidrs
 

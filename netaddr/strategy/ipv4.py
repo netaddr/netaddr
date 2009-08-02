@@ -28,8 +28,7 @@ except:
                                  AF_INET
 
 from netaddr.core import AddrFormatError
-from netaddr.strategy import BYTES_TO_BITS as _BYTES_TO_BITS, \
-    valid_words  as _valid_words, \
+from netaddr.strategy import valid_words  as _valid_words, \
     valid_bits   as _valid_bits, \
     bits_to_int  as _bits_to_int, \
     int_to_bits  as _int_to_bits, \

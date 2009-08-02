@@ -66,7 +66,7 @@ class OUI(object):
                 self._parse_data(data, offset, size)
             fh.close()
         else:
-            raise ieee.NotRegisteredError('OUI %r not registered!' % oui)
+            raise NotRegisteredError('OUI %r not registered!' % oui)
 
     def _parse_data(self, data, offset, size):
         """Returns a dict record from raw OUI record data"""
@@ -218,7 +218,7 @@ class IAB(object):
             self._parse_data(data, offset, size)
             fh.close()
         else:
-            raise ieee.NotRegisteredError('IAB %r not unregistered!' % iab)
+            raise NotRegisteredError('IAB %r not unregistered!' % iab)
 
     def _parse_data(self, data, offset, size):
         """Returns a dict record from raw IAB record data"""

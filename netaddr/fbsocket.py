@@ -78,21 +78,18 @@ def _compact_ipv6_tokens(tokens):
     new_tokens = []
 
     positions = []
-    within_run = False
     start_index = None
     num_tokens = 0
 
     #   Discover all runs of zeros.
     for idx, token in enumerate(tokens):
         if token == '0':
-            within_run = True
             if start_index is None:
                 start_index = idx
             num_tokens += 1
         else:
             if num_tokens > 1:
                 positions.append((num_tokens, start_index))
-            within_run = False
             start_index = None
             num_tokens = 0
 
