@@ -13,7 +13,7 @@ version = netaddr.__version__
 description = 'Pythonic manipulation of IPv4, IPv6, CIDR, EUI and MAC network addresses'
 
 keywords = [
-    'Networking', 'Systems Administration', 'IANA', 'IEEE', 'CIDR',
+    'Networking', 'Systems Administration', 'IANA', 'IEEE', 'CIDR', 'IP',
     'IPv4', 'IPv6', 'CIDR', 'EUI', 'MAC', 'MAC-48', 'EUI-48', 'EUI-64'
 ]
 
@@ -29,6 +29,7 @@ packages = [
     'netaddr',
     'netaddr.ip',
     'netaddr.eui',
+    'netaddr.strategy',
 ]
 
 package_data = {
@@ -40,6 +41,10 @@ package_data = {
     'netaddr.eui': [
         '*.txt',
         '*.idx'
+    ],
+    'netaddr.tests': [
+        'run_all.py',
+        'netaddr_coverage.sh',
     ],
 }
 
@@ -81,7 +86,7 @@ For details on history changes and updates see the CHANGELOG :-
 platforms = 'OS Independent'
 
 classifiers = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 5 - Production/Stable',
     'Environment :: Console',
     'Environment :: Plugins',
     'Intended Audience :: Developers',
@@ -91,6 +96,7 @@ classifiers = [
     'Intended Audience :: System Administrators',
     'Intended Audience :: Telecommunications Industry',
     'License :: OSI Approved :: BSD License',
+    'License :: OSI Approved :: MIT License',
     'Natural Language :: English',
     'Operating System :: OS Independent',
     'Programming Language :: Python',

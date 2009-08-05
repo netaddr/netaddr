@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
@@ -270,8 +269,3 @@ def bin_to_int(bin_val, width):
         raise ValueError('not a valid Python binary string: %r!' % bin_val)
 
     return int(bin_val.replace('0b', ''), 2)
-
-if __name__ == '__main__':
-    i = 0x100000000
-    print hex(i)
-    print int_to_bin(i, 32)

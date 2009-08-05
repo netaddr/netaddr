@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
@@ -582,9 +581,9 @@ class EUI(object):
         A record dict containing IEEE registration details for this EUI
         (MAC-48) if available, None otherwise.
         """
-        data = {'OUI': self.oui.registration}
+        data = {'OUI': self.oui.registration()}
         if self.is_iab():
-            data['IAB'] = self.iab.registration
+            data['IAB'] = self.iab.registration()
 
         return DictDotLookup(data)
 

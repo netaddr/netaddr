@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #

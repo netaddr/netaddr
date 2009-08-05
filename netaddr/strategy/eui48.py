@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-----------------------------------------------------------------------------
 #   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
 #
@@ -79,7 +78,7 @@ class mac_unix(mac_eui48):
     word_base = 16
 
 class mac_cisco(mac_eui48):
-    """A Cisco 'triple hextet' MAC address dialect class.."""
+    """A Cisco 'triple hextet' MAC address dialect class."""
     word_size = 16
     num_words = width / word_size
     word_sep  = '.'

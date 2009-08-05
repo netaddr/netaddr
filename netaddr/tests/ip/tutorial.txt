@@ -74,6 +74,9 @@ You can view an individual IP address in various other formats.
 >>> ip.bits()
 '11000000.00000000.00000010.00000001'
 
+>>> ip.words
+(192, 0, 2, 1)
+
 }}}
 
 ==Representing IP Subnets==
@@ -188,12 +191,20 @@ IPAddress('::')
 >>> hex(ip.ip)
 '0xfe8000000000000000000000deadbeef'
 
-Bit-style output isn't as quite as friendly as hexadecimal for such a long numbers, but here the proof that it at least works!
+}}}
+
+Bit-style output isn't as quite as friendly as hexadecimal for such a long numbers, but here the proof that it works!
+
+{{{
 
 >>> ip.ip.bits()
 '1111111010000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:1101111010101101:1011111011101111'
 
+}}}
+
 Here are some networking details for an IPv6 subnet.
+
+{{{
 
 >>> ip.network, ip.broadcast, ip.netmask, ip.hostmask
 (IPAddress('fe80::'), IPAddress('fe80::ffff:ffff:ffff:ffff'), IPAddress('ffff:ffff:ffff:ffff::'), IPAddress('::ffff:ffff:ffff:ffff'))
@@ -204,9 +215,23 @@ Here are some networking details for an IPv6 subnet.
 
 It is likely that with IPv6 becoming more prevalent, you'll want to be able to interoperate between IPv4 and IPv6 address seemlessly.
 
-Here are a couple of handy methods provided by the IP object to help you to this end.
+Here are a couple of methods that help achieve this.
+
+===IPv4 to IPv6===
 
 {{{
+
+>>> IPAddress('192.0.2.15').ipv4()
+IPAddress('192.0.2.15')
+
+>>> IPAddress('192.0.2.15').ipv6()
+IPAddress('::ffff:192.0.2.15')
+
+>>> IPAddress('192.0.2.15').ipv6(ipv4_compatible=True)
+IPAddress('::192.0.2.15')
+
+>>> IPAddress('192.0.2.15').ipv6(True)
+IPAddress('::192.0.2.15')
 
 >>> ip = IPNetwork('192.0.2.1/23')
 
@@ -218,6 +243,16 @@ IPNetwork('::ffff:192.0.2.1/119')
 
 >>> ip.ipv6(ipv4_compatible=True)
 IPNetwork('::192.0.2.1/119')
+
+===IPv6 to IPv4===
+
+{{{
+
+>>> IPNetwork('::ffff:192.0.2.1/119').ipv4()
+IPNetwork('192.0.2.1/23')
+
+>>> IPNetwork('::192.0.2.1/119').ipv4()
+IPNetwork('192.0.2.1/23')
 
 }}}
 
@@ -381,7 +416,7 @@ Notice how IPv4 is ordered before IPv6 and overlapping subnets sort in order fro
 
 Another useful operation is the ability to summarize groups of IP subnets and addresses, merging them together where possible to create the smallest possible list of CIDR subnets.
 
-Here is how to do this using the cidr_merge() function.
+Here is how to do this using the `cidr_merge()` function.
 
 First we create a list of IP objects that is a good mix of individual addresses and subnets, along with some string based IP address values for good measure. To make things more challenging some IPv6 addresses have been included as well.
 
@@ -417,7 +452,7 @@ The iter_iprange() function allow you to do just this.
 
 It is equally nice to know what the actual list of CIDR subnets is that would correctly cover this non-aligned range of addresses.
 
-Here is cidr_merge() coming to the rescue.
+Here `cidr_merge()` comes to the rescue.
 
 {{{
 
@@ -486,13 +521,19 @@ IP addresses fall several broad categories and not all are suitable for assignme
 
 Unicast
 
+{{{
+
 >>> IPAddress('192.0.2.1').is_unicast()
 True
 
 >>> IPAddress('fe80::1').is_unicast()
 True
 
+}}}
+
 Multicast
+
+{{{
 
 >>> IPAddress('239.192.0.1').is_multicast()
 True
@@ -500,7 +541,11 @@ True
 >>> IPAddress('ff00::1').is_multicast()
 True
 
+}}}
+
 Private
+
+{{{
 
 >>> IPAddress('172.24.0.1').is_private()
 True
@@ -511,48 +556,68 @@ True
 >>> IPAddress('192.168.0.1').is_private()
 True
 
+}}}
+
 Reserved
+
+{{{
 
 >>> IPAddress('253.0.0.1').is_reserved()
 True
+
+}}}
 
 Public (Internet) addresses.
 
 Note that not all of these may be allocated by the various regional Internet registrars.
 
+{{{
+
 >>> ip = IPAddress('62.125.24.5')
 >>> ip.is_unicast() and not ip.is_private()
 True
+
+}}}
 
 There are also other types of addresses that have specific functions e.g. masking
 
 Netmasks
 
+{{{
+
 >>> IPAddress('255.255.254.0').is_netmask()
 True
 
+}}}
+
 Hostmasks
+
+{{{
 
 >>> IPAddress('0.0.1.255').is_hostmask()
 True
 
+}}}
+
 Loopback addresses
 
-IPv4
+{{{
 
 >>> IPAddress('127.0.0.1').is_loopback()
 True
 
-IPv6
-
 >>> IPAddress('::1').is_loopback()
 True
+
+}}}
 
 ==IP address comparisons==
 
 IP objects can be compared with each other. As an IP object can represent both an individual IP address and an implicit network, it pays to get both sides of your comparison into the same terms before you compare them to avoid any odd results.
 
 Here are some comparisons of individual IP address to get the ball rolling.
+
+{{{
 
 >>> IPAddress('192.0.2.1') == IPAddress('192.0.2.1')
 True
@@ -578,14 +643,22 @@ True
 >>> IPAddress('192.0.2.1') <= IPAddress('192.0.2.2')
 True
 
+}}}
+
 Now lets try something a little more interesting.
+
+{{{
 
 >>> IPNetwork('192.0.2.0/24') == IPNetwork('192.0.2.112/24')
 True
 
+}}}
+
 Hmmmmmmmm... looks a bit odd doesn't it? That's because by default, IP objects compare their subnets (or lower and upper boundaries) rather than their individual IP address values.
 
 The solution to this situation is very simple. Knowing this default behaviour, just be explicit about exactly which portion of each IP object you'd like to compare using pass-through properties.
+
+{{{
 
 >>> IPNetwork('192.0.2.0/24').ip == IPNetwork('192.0.2.112/24').ip
 False
@@ -609,24 +682,18 @@ True
 >>> IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
 True
 
+}}}
+
 ==Interaction with DNS==
 
 It is a common administrative task to Generating reverse IP lookups for DNS. This is particularly arduous for IPv6 addresses.
 
-Here is how you do this using the IP object's reverse_dns() method.
-
-IPv4
+Here is how you do this using the IP object's `reverse_dns()` method.
 
 {{{
 
 >>> IPAddress('172.24.0.13').reverse_dns
 '13.0.24.172.in-addr.arpa.'
-
-}}}
-
-IPv6
-
-{{{
 
 >>> IPAddress('fe80::feeb:daed').reverse_dns
 'd.e.a.d.b.e.e.f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.'

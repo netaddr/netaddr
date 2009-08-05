@@ -1,4 +1,3 @@
-# -*- coding: iso-8859-15 -*-
 """Immutable integer set type.
 
 Integer set class.
@@ -507,29 +506,3 @@ class IntSet(object):
         if self._max is not _MAXINF:
             rv.append("max=%r" % self._max)
         return "%s(%s)" % (self.__class__.__name__, ",".join(rv))
-
-if __name__ == "__main__":
-    # Little test script demonstrating functionality.
-    x = IntSet((10, 20), 30)
-    y = IntSet((10, 20))
-    z = IntSet((10, 20), 30, (15, 19), min=0, max=40)
-    print x
-    print x&110
-    print x|110
-    print x^(15, 25)
-    print x-12
-    print 12 in x
-    print x.issubset(x)
-    print y.issubset(x)
-    print x.istruesubset(x)
-    print y.istruesubset(x)
-    for val in x:
-        print val
-    print x.inverse()
-    print x == z
-    print x == y
-    print x <> y
-    print hash(x)
-    print hash(z)
-    print len(x)
-    print x.len()

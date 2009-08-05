@@ -53,11 +53,3 @@ def base85_to_ipv6(addr):
     ip = IPAddress(result, 6)
 
     return str(ip)
-
-#-----------------------------------------------------------------------------
-if __name__ == '__main__':
-    ip_addr = '1080::8:800:200c:417a'
-    print ip_addr
-    base85 = ipv6_to_base85(ip_addr)
-    print base85
-    print base85_to_ipv6(base85)

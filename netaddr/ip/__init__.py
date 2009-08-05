@@ -16,11 +16,12 @@ from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 #-----------------------------------------------------------------------------
 class BaseIP(object):
     """
-    An abstract base class for common operations shared between L{IPAddress}
-    and L{IPNetwork}.
+    An abstract base class for common operations shared between various IP
+    related subclasses.
     """
-    """Constructor."""
+
     def __init__(self):
+        """Constructor."""
         self._value = None
         self._module = None
 
@@ -430,6 +431,14 @@ class IPAddress(BaseIP):
         return self._module.int_to_packed(self._value)
 
     @property
+    def words(self):
+        """
+        A list of unsigned integer words (octets for IPv4, hextets for IPv6)
+        found in this IP address.
+        """
+        return self._module.int_to_words(self._value)
+
+    @property
     def bin(self):
         """
         The value of this IP adddress in standard Python binary
@@ -553,7 +562,7 @@ class IPAddress(BaseIP):
 class IPNetwork(BaseIP):
     """
     An IPv4 or IPv6 network or subnet. A combination of an IP address and a
-    network mask address.
+    network mask.
 
     Accepts CIDR and several variants :-
 
@@ -576,7 +585,7 @@ class IPNetwork(BaseIP):
 
     where 'y' address represent a valid netmask.
 
-    This is like Cisco's ACL (Access Control List) bitmasks.
+    This is like Cisco's ACL bitmasks.
 
     d) Abbreviated CIDR format (as of netaddr 0.7.x this requires
     the optional constructor argument C{implicit_prefix=True})::
@@ -1064,7 +1073,7 @@ class IPNetwork(BaseIP):
 #-----------------------------------------------------------------------------
 class IPRange(BaseIP):
     """
-    An arbitrary IP address range.
+    An arbitrary IPv4 or IPv6 address range.
 
     Formed from a lower and upper bound IP address. The upper bound IP cannot
     be numerically smaller than the lower bound and the IP version of both
@@ -1651,8 +1660,8 @@ def smallest_matching_cidr(ip, cidrs):
 
     @param cidrs: a sequence of IP addresses and/or subnets.
 
-    @return: the smallest (best) matching IPAddress or IPNetwork object from
-        the provided sequence, None if there was no match.
+    @return: the smallest (most specific) matching IPAddress or IPNetwork 
+        object from the provided sequence, None if there was no match.
     """
     match = None
 

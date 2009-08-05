@@ -10,7 +10,9 @@ Please Note - This release represents a major overhaul of entire library.
 It breaks backward compatibility with previous releases.
 
 * Internal module hierarchy has been completely overhauled and redesigned. This
-  fixes up a lot of inconsistencies and problems with interdependent imports.   All public classes, objects, functions and constants are still published via the main netaddr module namespace as in previous releases.
+  fixes up a lot of inconsistencies and problems with interdependent imports.
+  All public classes, objects, functions and constants are still published via
+  the main netaddr module namespace as in previous releases.
 
 * The Addr base class is no more. This removes the link between EUI and IP
   functionality so the library is can now easily be split into distinct units
