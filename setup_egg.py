@@ -5,15 +5,21 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-An Python setup file specifically supporting setuptools.
+A Python setup file specifically to support setuptools.
 
-To create a Python egg :-
+Reference :-
 
->>> python setup_egg.py bdist_egg
+    http://peak.telecommunity.com/DevCenter/setuptools
 """
+import os
 import sys
 
+import ez_setup
+ez_setup.use_setuptools()
 from setuptools import setup, find_packages
+
+if os.path.exists('MANIFEST'):
+    os.remove('MANIFEST')
 
 import release
 
@@ -34,12 +40,12 @@ def main():
         long_description = release.long_description,
         name             = release.name,
         packages         = find_packages(),
-        package_data     = release.package_data,
         include_package_data = True,
         platforms        = release.platforms,
         url              = release.url,
         version          = release.version,
         zip_safe         = False,   #   Package should always be extracted.
+        test_suite       = 'netaddr.tests.test_suit_all',
     )
 
 #-----------------------------------------------------------------------------

@@ -25,29 +25,6 @@ author_email = 'drkjam@gmail.com'
 
 url = 'http://code.google.com/p/netaddr/'
 
-packages = [
-    'netaddr',
-    'netaddr.ip',
-    'netaddr.eui',
-    'netaddr.strategy',
-]
-
-package_data = {
-    'netaddr.ip': [
-        'ipv4-address-space',
-        'ipv6-address-space',
-        'multicast-addresses'
-    ],
-    'netaddr.eui': [
-        '*.txt',
-        '*.idx'
-    ],
-    'netaddr.tests': [
-        'run_all.py',
-        'netaddr_coverage.sh',
-    ],
-}
-
 license = 'BSD License'
 
 #   NB - keep this text around 74 characters wide so it is viewable

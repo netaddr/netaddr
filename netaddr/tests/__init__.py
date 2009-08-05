@@ -57,10 +57,6 @@ def test_suit_all():
 
     return suite
 
-#-----------------------------------------------------------------------------
-def main():
+if __name__ == "__main__":
     runner = unittest.TextTestRunner()
     runner.run(test_suit_all())
-
-if __name__ == "__main__":
-    main()

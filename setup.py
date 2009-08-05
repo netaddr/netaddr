@@ -5,12 +5,7 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-An Python setup file for distutils (see setup_egg.py) for setuptools support.
-
-To install this release :-
-
->>> python setup.py install
-
+A distutils Python setup file. For setuptools support see setup_egg.py.
 """
 import os
 import sys
@@ -41,8 +36,6 @@ def main():
         author           = release.author,
         author_email     = release.author_email,
         url              = release.url,
-        packages         = release.packages,
-        package_data     = release.package_data,
         license          = release.license,
         long_description = release.long_description,
         platforms        = release.platforms,

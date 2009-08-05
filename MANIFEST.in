@@ -30,6 +30,7 @@ include netaddr/ip/multicast-addresses
 recursive-include netaddr/strategy *.py
 
 include netaddr/tests/run_all.py
+include netaddr/tests/netaddr_coverage.sh
 recursive-include netaddr/tests/core *.txt
 recursive-include netaddr/tests/eui *.txt
 recursive-include netaddr/tests/ip *.txt

@@ -23,7 +23,7 @@ from netaddr.ip import IPAddress, IPNetwork, IPRange, \
 from netaddr.ip.sets import IPSet
 
 from netaddr.ip.glob import IPGlob, cidr_to_glob, glob_to_cidrs, \
-    glob_to_iptuple, valid_glob, iprange_to_globs
+    glob_to_iptuple, valid_glob, iprange_to_globs, glob_to_iprange
 
 from netaddr.eui import EUI, IAB, OUI
 
@@ -57,5 +57,5 @@ __all__ = [
 
     #   IP globbing routines.
     'IPGlob', 'valid_glob', 'cidr_to_glob', 'glob_to_cidrs', 'glob_to_iptuple',
-    'iprange_to_globs',
+    'iprange_to_globs', 'glob_to_iprange'
 ]
