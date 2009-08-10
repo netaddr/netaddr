@@ -1,5 +1,5 @@
 Release: 0.6.4
-Date: 14th Jul 2009
+Date: 10th Aug 2009
 
 Major changes since 0.6.3
 -------------------------
@@ -12,6 +12,7 @@ Specific bug fixes addressed in this release
     - Building RPM wth "python setup.py bdist_rpm" fails, multiple errors
 
 ------------------------------------------------------------------------------
+
 Release: 0.6.3
 Date: 23rd Jun 2009
 
