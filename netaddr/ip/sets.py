@@ -159,7 +159,7 @@ class IPSet(object):
 
         @return: An IP address or subnet.
         """
-        return self._cidrs.popitem()
+        return self._cidrs.popitem()[0]
 
     def isdisjoint(self, other):
         """

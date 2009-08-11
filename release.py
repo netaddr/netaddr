@@ -25,6 +25,34 @@ author_email = 'drkjam@gmail.com'
 
 url = 'http://code.google.com/p/netaddr/'
 
+#   Required by distutils only.
+packages = [
+    'netaddr',
+    'netaddr.ip',
+    'netaddr.eui',
+    'netaddr.strategy',
+    'netaddr.tests',
+]
+
+#   Required by distutils only.
+package_data = {
+    'netaddr.ip': [
+        'ipv4-address-space',
+        'ipv6-address-space',
+        'multicast-addresses'
+    ],
+    'netaddr.eui': [
+        '*.txt',
+        '*.idx'
+    ],
+    'netaddr.tests': [
+        'core/*.txt',
+        'eui/*.txt',
+        'ip/*.txt',
+        'strategy/*.txt',
+    ],
+}
+
 license = 'BSD License'
 
 #   NB - keep this text around 74 characters wide so it is viewable
@@ -61,6 +89,8 @@ For details on history changes and updates see the CHANGELOG :-
 """
 
 platforms = 'OS Independent'
+
+scripts = ['netaddr/tools/nash']
 
 classifiers = [
     'Development Status :: 5 - Production/Stable',

@@ -1,59 +1,70 @@
 
-Release: 0.7rc1 - release candidate 1
-Date 30th Jul 2009
+Release: 0.7
+Date: 11th Aug 2009
+
 
 Changes since 0.6.x
 -------------------
 
-Please Note - This release represents a major overhaul of entire library.
+Please Note - This release represents a major overhaul of netaddr. It breaks
+backward compatibility with previous releases. See the API documentation for
+full details of what is available.
 
-It breaks backward compatibility with previous releases.
+Some highlights of what has changed :-
 
 * Internal module hierarchy has been completely overhauled and redesigned. This
   fixes up a lot of inconsistencies and problems with interdependent imports.
   All public classes, objects, functions and constants are still published via
   the main netaddr module namespace as in previous releases.
 
-* The Addr base class is no more. This removes the link between EUI and IP
+* No more AT_* and ST_* 'constants'.
+
+* The Addr base class is gone. This removes the link between EUI and IP
   functionality so the library is can now easily be split into distinct units
   without many interdependencies between layer 2 and layer 3 functionality.
 
-* Strategy classes and objects have been replaced with a group of strategy
-  modules in their own netaddr.strategy namespace. Each IP or EUI address object
-  now holds a reference to a module rather than an singleton object.
-
-* Many operations that were previous static class methods are now presented as
-functions in the relevant modules.
-  
-* The IP and CIDR classes have been replaced with two new classes called
-  IPAddress and IPNetwork respectively. This rename is important as they have
-  changed significantly. The notion of an individual IP address and an IP  
-  network or subnet has been made more obvious. IPAddress objects are now true
-  scalars and do not evaluate in a list or tuple context at all. They also do
-  not support any notion of a netmask or CIDR prefix; this is the primary
-  function of an IPNetwork object.
-
-* Abritrary IP ranges and are still supported but a lot of their functionality
-has also been exposed via functions.
-
-* IP globs (Wildcard class previously) has been moved into its own submodule. 
-
 * The use of custom descriptor classes has been completely discontinued.
 
-* All methods and properties that previously used or supported the 'fmt'
-  formatting property no longer do so. Now, in all cases, objects are now
-  returned to properly support pass through calls without side effects. It is up
-  to the user to extract data in the right format from the objects IPAddress
-  objects returned as required.
+* Strategy classes and singleton objects have been replaced with a group of
+  strategy modules in their own netaddr.strategy namespace. Each IP or EUI
+  address object now holds a reference to a module rather than a singleton
+  object.
 
-* Unit test suite has been completed re-written to support docstring style tests
+* Many operations that were previously static class methods are now presented as
+  functions in the relevant modules. See the API documentation for details.
+  
+* The IP and CIDR classes have been replaced with two new classes called
+  IPAddress and IPNetwork respectively. This name change is important as the IP
+  part of netaddr has been completed redesigned. The notion of an individual IP
+  address and an IP network or subnet has been made more obvious. IPAddress
+  objects are now true scalars and do not evaluate in a list or tuple context.
+  They also do not support any notion of a netmask or CIDR prefix; this is the
+  primary function of an IPNetwork object.
+
+* Abritrary IP ranges and are still supported but a lot of their functionality
+  has also been exposed via handy functions.
+
+* IP globbing routines (previous known as Wildcards) have been moved into
+  their own submodule. 
+
+* Added a new IPSet class which fully emulates mutable Python sets. This
+  replaces a lot of half-baked experimental classes found in 0.5.x and 0.6.x
+  such as IPRangeSet and CIDRGroup. See documentation for details.
+
+* All methods and properties that previously used or supported the 'fmt'
+  formatting property no longer do so. In all cases, objects are now returned to
+  correctly support pass through calls without side effects. It is up to the
+  user to extract data in the right format from the objects IPAddress objects
+  returned as required.
+
+* Unit tests have been completed re-written to support docstring style tests
   bundled into test suites. These are handy as they double up as documentation
   being combined with wiki syntax. Implemented code coverage checking using
   coverage 3.x.
 
 * nash - a nascent shell like tool for the netaddr library (requires IPython).
 
-* Easter Egg - support for RFC 1924 added ;-)
+* Support for RFC 1924 added ;-)
 
 Specific bug fixes addressed in this release
 --------------------------------------------
@@ -75,6 +86,21 @@ Specific bug fixes addressed in this release
     - Addition issue?
 
 ---------------------------------------------------------------------
+
+Release: 0.6.4
+Date: 11th Aug 2009
+
+Major changes since 0.6.3
+-------------------------
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 40 - http://code.google.com/p/netaddr/issues/detail?id=40
+
+    - Building RPM wth "python setup.py bdist_rpm" fails, multiple errors
+
+------------------------------------------------------------------------------
 
 Release: 0.6.3
 Date: 23rd Jun 2009

@@ -5,10 +5,15 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 
+import os
+import sys
 import unittest
 import doctest
 
-tests = ['eui/eui64.txt']
+sys.path.insert(0, os.path.abspath(os.path.join(
+    os.path.dirname(__file__), '../..')))
+
+tests = ['ip/tutorial.txt']
 
 for test in tests:
     suite = doctest.DocFileSuite(test, optionflags=doctest.ELLIPSIS)

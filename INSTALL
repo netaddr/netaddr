@@ -12,10 +12,12 @@ netaddr is available in various packaged and non-packaged forms :-
 Linux distribution specific :-
 
 - Ubuntu and Debian (.deb packages)
-- Fedora yum (.rpm packages)
+- Fedora (.rpm packages)
 
 Please see these Linux projects for availability and installation details.
 
+You can also build your own RPM packages, using bdist_rpm with setup.py
+available in the source tarball.
 
 Locating the software
 ---------------------
@@ -25,11 +27,11 @@ repository.
 
 Details on how to check out the source code can be found here :-
 
-	http://code.google.com/p/netaddr/source/checkout
+    http://code.google.com/p/netaddr/source/checkout
 
 Official milestone releases can be found here :-
 
-	http://pypi.python.org/pypi/netaddr
+    http://pypi.python.org/pypi/netaddr
 
 
 Source Release Packages
@@ -43,39 +45,41 @@ You now have several choices :-
 
 - Automated Install
 
-	Run the setup file in the root directory like this :-
+    Run the setup file in the root directory like this :-
 
-		python setup.py install
+        python setup.py install
 
-	This automatically places the required files in the lib/site-packages
-	directory of the Python version you used to run the setup script.
+    This automatically places the required files in the lib/site-packages
+    directory of the Python version you used to run the setup script.
 
 - Manual Install
 
-	Manually copy the netaddr folder and its contents to the lib/site-packages
-	directory of your Python interpreter.
+    Manually copy the netaddr folder and its contents to the lib/site-packages
+    directory of your Python interpreter.
 
 - Soft Linking
 
-	Add the path of the netaddr folder below the directory where you 
-	extracted or checked out the source files to your PYTHONPATH environment
-	variable. Alternatively, create a netaddr.pth file in your 
-	lib/site-packages directory containing the path to the netaddr folder 
-	where the source files are located.
+    Add the path of the netaddr folder below the directory where you 
+    extracted or checked out the source files to your PYTHONPATH environment
+    variable. Alternatively, create a netaddr.pth file in your 
+    lib/site-packages directory containing the path to the netaddr folder 
+    where the source files are located.
 
 
 Python Eggs
 -----------
 
-This requires that you install setuptools which is beyond the scope of 
-this document. See the following URL for details :-
+This requires that you install setuptools which is not distributed as part
+of the Python standard library.
 
-	http://peak.telecommunity.com/DevCenter/setuptools
+See the following URL for details :-
+
+    http://peak.telecommunity.com/DevCenter/setuptools
 
 Download and install the latest easy_install script and run the following
 command :-
 
-	easy_install netaddr
+    easy_install netaddr
 
 This will go to the Python Package Index and automatically find the 
 appropriate version of netaddr for your Python setup.

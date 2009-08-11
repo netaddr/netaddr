@@ -20,7 +20,7 @@ DEBUG = True
 #-----------------------------------------------------------------------------
 def test_suit_all():
 
-    test_dirs = ['.', 'ip', 'eui', 'strategy', 'core']
+    test_dirs = ['ip', 'eui', 'strategy', 'core']
 
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 

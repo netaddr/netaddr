@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 License(s) for incorporated software
 ====================================
 
-IntSet.py - Immutable integer set type
+intset.py - Immutable integer set type
 
 COPYRIGHT AND LICENSE
 

@@ -6,11 +6,11 @@ include LICENSE
 include MANIFEST.in
 include README
 include THANKS
-include nash
 include release.py
 include setup.cfg
 include setup.py
 include setup_egg.py
+include ez_setup.py
 
 include docs/epydoc.cfg
 include docs/epydoc.css
@@ -31,10 +31,13 @@ recursive-include netaddr/strategy *.py
 
 include netaddr/tests/run_all.py
 include netaddr/tests/netaddr_coverage.sh
+include netaddr/tests/netaddr_coverage_report.txt
 recursive-include netaddr/tests/core *.txt
 recursive-include netaddr/tests/eui *.txt
 recursive-include netaddr/tests/ip *.txt
 recursive-include netaddr/tests/strategy *.txt
+
+include netaddr/tools/nash
 
 global-exclude *.pyc
 global-exclude *.svn*

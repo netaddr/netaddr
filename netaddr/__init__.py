@@ -15,47 +15,59 @@ __version__ = '0.7'
 from netaddr.core import AddrConversionError, AddrFormatError, \
     NotRegisteredError
 
-from netaddr.ip import IPAddress, IPNetwork, IPRange, \
-    cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, spanning_cidr, \
-    iter_unique_ips, iprange_to_cidrs, iter_iprange, smallest_matching_cidr, \
-    largest_matching_cidr, all_matching_cidrs
+from netaddr.ip import IPAddress, IPNetwork, IPRange, all_matching_cidrs, \
+    cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, iprange_to_cidrs, \
+    iter_iprange, iter_unique_ips, largest_matching_cidr, \
+    smallest_matching_cidr, spanning_cidr
 
 from netaddr.ip.sets import IPSet
 
 from netaddr.ip.glob import IPGlob, cidr_to_glob, glob_to_cidrs, \
-    glob_to_iptuple, valid_glob, iprange_to_globs, glob_to_iprange
+    glob_to_iprange, glob_to_iptuple, iprange_to_globs, valid_glob
+
+from netaddr.ip.rfc1924 import base85_to_ipv6, ipv6_to_base85
 
 from netaddr.eui import EUI, IAB, OUI
 
 from netaddr.strategy.ipv4 import valid_str as valid_ipv4
 
-from netaddr.strategy.ipv6 import valid_str as valid_ipv6
-
-from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_cisco, \
-    mac_bare, mac_pgsql, valid_str as valid_mac
+from netaddr.strategy.ipv6 import valid_str as valid_ipv6, ipv6_compact, \
+    ipv6_full, ipv6_verbose
 
 from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_cisco, \
     mac_bare, mac_pgsql, valid_str as valid_mac
 
 __all__ = [
-    #   Custom exceptions.
+    #   Custom Exceptions.
     'AddrConversionError', 'AddrFormatError', 'NotRegisteredError',
 
-    #   EUI related classes.
-    'EUI', 'IAB', 'OUI',
-
-    #   MAC address dialect classes.
-    'mac_bare', 'mac_cisco', 'mac_eui48', 'mac_pgsql', 'mac_unix', 'valid_mac',
-
-    #   IP, CIDR and IP range related classes and functions.
+    #   IP classes.
     'IPAddress', 'IPNetwork', 'IPRange', 'IPSet',
 
-    'cidr_abbrev_to_verbose', 'cidr_exclude', 'cidr_merge', 'spanning_cidr',
-    'iter_iprange', 'iprange_to_cidrs','iter_unique_ips',
-    'smallest_matching_cidr', 'largest_matching_cidr', 'all_matching_cidrs',
-    'valid_ipv4', 'valid_ipv6',
+    #   IPv6 dialect classes.
+    'ipv6_compact', 'ipv6_full', 'ipv6_verbose',
 
-    #   IP globbing routines.
-    'IPGlob', 'valid_glob', 'cidr_to_glob', 'glob_to_cidrs', 'glob_to_iptuple',
-    'iprange_to_globs', 'glob_to_iprange'
+    #   IP functions and generators.
+    'all_matching_cidrs', 'cidr_abbrev_to_verbose', 'cidr_exclude',
+    'cidr_merge', 'iprange_to_cidrs', 'iter_iprange', 'iter_unique_ips',
+    'largest_matching_cidr', 'smallest_matching_cidr', 'spanning_cidr',
+
+    #   IP globbing class.
+    'IPGlob',
+
+    #   IP globbing functions.
+    'cidr_to_glob', 'glob_to_cidrs', 'glob_to_iprange', 'glob_to_iptuple',
+    'iprange_to_globs',
+
+    #   IEEE EUI classes.
+    'EUI', 'IAB', 'OUI',
+
+    #   EUI-48 (MAC) dialect classes.
+    'mac_bare', 'mac_cisco', 'mac_eui48', 'mac_pgsql', 'mac_unix',
+
+    #   Validation functions.
+    'valid_ipv4', 'valid_ipv6', 'valid_glob', 'valid_mac',
+
+    #   RFC 1924 functions.
+    'base85_to_ipv6', 'ipv6_to_base85',
 ]

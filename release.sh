@@ -15,8 +15,12 @@ rm ./docs/netaddr.zip
 #   build API documentation using epydoc
 epydoc --config=docs/epydoc.cfg
 
+#   Run code coverage tests.
+./netaddr/tests/netaddr_coverage.sh
+
 #   build source releases
 cd docs/api/
 zip ../netaddr.zip *
 cd ../..
 python setup.py sdist --no-defaults --formats=gztar,zip --dist-dir=../builds/
+

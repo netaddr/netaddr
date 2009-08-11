@@ -7,7 +7,7 @@ netaddr
     Released under the BSD license. See the LICENSE file for details.
 
 
-IntSet.py
+intset.py
 ---------
 
     Copyright (C) 2006, Heiko Wundram.

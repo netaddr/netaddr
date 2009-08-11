@@ -14,7 +14,7 @@ Let's start with the standard module import.
 
 You can safely import everything from the netaddr namespace as care has been taken to only export the necessary classes, functions and constants. 
 
-You can always hand pick them if you are unsure.
+You can always hand pick them if you are unsure about possible name clashes.
 
 ==Basic IP Address Operations==
 
@@ -24,11 +24,17 @@ This IP object represents a single address.
 
 >>> ip = IPAddress('192.0.2.1')
 
+>>> ip.version
+4
+
 }}}
 
-Standard repr() access returns a Python statement that can reconstruct the IP address object from scratch if executed in the Python interpreter.
+Standard repr() access returns a Python statement that can reconstruct an equivalent IP address object from scratch if executed in the Python interpreter.
 
 {{{
+
+>>> repr(ip)
+"IPAddress('192.0.2.1')"
 
 >>> ip
 IPAddress('192.0.2.1')
@@ -45,20 +51,14 @@ Access in the string context returns the IP object as a string value.
 >>> '%s' % ip
 '192.0.2.1'
 
-}}}
-
-Here are a few other common properties.
-
-{{{
-
->>> str(ip), ip.version
-('192.0.2.1', 4)
+>>> ip.format()  # only really useful for IPv6 addresses.
+'192.0.2.1'
 
 }}}
 
 ==IP Address Numerical Representations==
 
-You can view an individual IP address in various other formats.
+You can view an IP address in various other formats.
 
 {{{
 
@@ -684,6 +684,53 @@ True
 
 }}}
 
+This will inevitably raise questions about comparing IPAddress (scalar) objects and IPNetwork (vector) objects with each other (or at least it should).
+
+Here is how netaddr chooses to address this situation.
+
+{{{
+
+>>> IPAddress('192.0.2.0') == IPNetwork('192.0.2.0/32')
+False
+
+>>> IPAddress('192.0.2.0') != IPNetwork('192.0.2.0/32')
+True
+
+}}}
+
+A IP network/subnet is different from an individual IP address and therefore they do not (directly) compare favourably.
+
+If you want to compare them successfully, you must be explicit about which portion of the IP network you wish to match against the IP address.
+
+You can use the index of the first or last address if it is a /32 like so :-
+
+{{{
+
+>>> IPAddress('192.0.2.0') == IPNetwork('192.0.2.0/32')[0]
+True
+
+>>> IPAddress('192.0.2.0') == IPNetwork('192.0.2.0/32')[-1]
+True
+
+>>> IPAddress('192.0.2.0') != IPNetwork('192.0.2.0/32')[0]
+False
+
+}}}
+
+You can also use the base address if this is what you wish to compare :-
+
+{{{
+
+>>> IPAddress('192.0.2.0') == IPNetwork('192.0.2.0/32').ip
+True
+
+>>> IPAddress('192.0.2.0') != IPNetwork('192.0.2.0/32').ip
+False
+
+}}}
+
+While this may seem a bit pointless at first, netaddr strives to keep IP addresses and network separate from one another while still allowing reasonable interoperability.
+
 ==Interaction with DNS==
 
 It is a common administrative task to Generating reverse IP lookups for DNS. This is particularly arduous for IPv6 addresses.
@@ -701,3 +748,140 @@ Here is how you do this using the IP object's `reverse_dns()` method.
 }}}
 
 Note that ip6.int is not used as this has been deprecated (see RFC 3152 for details).
+
+==Non standard IP address range types==
+
+As CIDR is a relative newcomer given the long history of IP version 4 you are quite likely to come across systems and documentation which make reference to IP address ranges in formats other than CIDR. Converting from these arbitrary range types to CIDR and back again isn't a particularly fun task. Fortunately, netaddr tries to make this job easy for both you and your end users with two purpose built classes.
+
+===Arbitrary IP Address Ranges===
+
+You can represent an arbitrary IP address range using a lower and upper bound address in the form of an IPRange object.
+
+{{{
+
+>>> r1 = IPRange('192.0.2.1', '192.0.2.15')
+
+>>> r1
+IPRange('192.0.2.1', '192.0.2.15')
+
+}}}
+
+You can iterate across and index these ranges just like and IPNetwork object.
+
+Importantly, you can also convert it to it's CIDR equivalent.
+
+{{{
+
+>>> r1.cidrs()
+[IPNetwork('192.0.2.1/32'), IPNetwork('192.0.2.2/31'), IPNetwork('192.0.2.4/30'), IPNetwork('192.0.2.8/29')]
+
+}}}
+
+Here is how individual IPRange and IPNetwork compare.
+
+{{{
+
+>>> IPRange('192.0.2.0', '192.0.2.255') != IPNetwork('192.0.2.0/24')
+False
+
+>>> IPRange('192.0.2.0', '192.0.2.255') == IPNetwork('192.0.2.0/24')
+True
+
+}}}
+
+You may wish to compare an IP range against a list of IPAddress and IPNetwork
+objects.
+
+{{{
+
+>>> r1 = IPRange('192.0.2.1', '192.0.2.15')
+
+>>> addrs = list(r1)
+
+>>> addrs 
+[IPAddress('192.0.2.1'), IPAddress('192.0.2.2'), IPAddress('192.0.2.3'), IPAddress('192.0.2.4'), IPAddress('192.0.2.5'), IPAddress('192.0.2.6'), IPAddress('192.0.2.7'), IPAddress('192.0.2.8'), IPAddress('192.0.2.9'), IPAddress('192.0.2.10'), IPAddress('192.0.2.11'), IPAddress('192.0.2.12'), IPAddress('192.0.2.13'), IPAddress('192.0.2.14'), IPAddress('192.0.2.15')]
+
+>>> r1 == addrs  
+False
+
+}}}
+
+Oops! Not quite what we were looking for or expecting.
+
+The way to do this is to get either side of the comparison operation into the same terms.
+
+{{{
+
+>>> list(r1) == addrs
+True
+
+}}}
+
+That's more like it.
+
+The same goes for IPNetwork objects.
+
+>>> subnets = r1.cidrs()
+
+>>> subnets
+[IPNetwork('192.0.2.1/32'), IPNetwork('192.0.2.2/31'), IPNetwork('192.0.2.4/30'), IPNetwork('192.0.2.8/29')]
+
+>>> r1 == subnets
+False
+
+>>> r1.cidrs() == subnets
+True
+
+}}}
+
+The above works if the list you are comparing contains one type or the other, but what if you have a mixed list of IPAddress, IPNetwork and string addresses?
+
+Time for some slightly more powerful operations. Let's make use of a new class for dealing with groups of IP addresses and subnets. The IPSet class.
+
+{{{
+
+>>> ips = [IPAddress('192.0.2.1'), '192.0.2.2/31', IPNetwork('192.0.2.4/31'), IPAddress('192.0.2.6'), IPAddress('192.0.2.7'), '192.0.2.8', '192.0.2.9', IPAddress('192.0.2.10'), IPAddress('192.0.2.11'), IPNetwork('192.0.2.12/30')]
+
+>>> s1 = IPSet(r1.cidrs()) 
+
+>>> s2 = IPSet(ips)
+
+>>> s2
+IPSet(['192.0.2.1/32', '192.0.2.2/31', '192.0.2.4/30', '192.0.2.8/29'])
+
+>>> s1 == s2
+True
+
+}}}
+
+Let's remove one of the element from one of the IPSet objects and see what happens.
+
+{{{
+
+>>> s2.pop()
+IPNetwork('192.0.2.4/30')
+
+>>> s1 == s2
+False
+
+}}}
+
+This is perhaps a somewhat contrived example but it just shows you some of the capabilities on offer.
+
+See the IPSet tutorial in the wiki for more details on that class.
+
+===IP Globs===
+
+netaddr also supports a user friendly form of specifying IP address ranges using a glob style syntax. Please note that at the current time this only supports IPv4.
+
+{{{
+
+>>> IPGlob('192.0.2.*') == IPNetwork('192.0.2.0/24')
+True
+
+IPGlob('192.0.2.*') != IPNetwork('192.0.2.0/24')
+False
+
+}}}
+
+As IPGlob is a subnet of IPRange, all of the same operations apply.

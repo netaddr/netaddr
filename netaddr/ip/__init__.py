@@ -123,9 +123,9 @@ class BaseIP(object):
     def is_multicast(self):
         """@return: C{True} if this IP is multicast, C{False} otherwise"""
         if self._module == _ipv4:
-            return self in IPNetwork('224.0.0.0/4')
+            return self in IPV4_MULTICAST
         elif  self._module == _ipv6:
-            return self in IPNetwork('ff00::/8')
+            return self in IPV6_MULTICAST
 
     def is_loopback(self):
         """
@@ -134,9 +134,9 @@ class BaseIP(object):
             References: RFC 3330 and 4291.
         """
         if self.version == 4:
-            return self in IPNetwork('127.0.0.0/8')
+            return self in IPV4_LOOPBACK
         elif  self.version == 6:
-            return self == IPAddress('::1')
+            return self == IPV6_LOOPBACK
 
     def is_private(self):
         """
@@ -145,15 +145,13 @@ class BaseIP(object):
             3330, 4193, 3879 and 2365.
         """
         if self.version == 4:
-            for cidr in (IPNetwork('192.168.0.0/16'), IPNetwork('10.0.0.0/8'),
-                         IPNetwork('172.16.0.0/12'), IPNetwork('192.0.2.0/24'),
-                         IPNetwork('239.192.0.0/14')):
+            for cidr in IPV4_PRIVATE:
                 if self in cidr:
                     return True
         elif self.version == 6:
-            #   Please Note: FEC0::/10 has been deprecated! See RFC 3879.
-            #   ULAs - Unique Local Addresses
-            return self in IPNetwork('fc00::/7')
+            for cidr in IPV6_PRIVATE:
+                if self in cidr:
+                    return True
 
         if self.is_link_local():
             return True
@@ -166,9 +164,9 @@ class BaseIP(object):
             Reference: RFCs 3927 and 4291.
         """
         if self.version == 4:
-            return self in IPNetwork('169.254.0.0/16')
+            return self in IPV4_LINK_LOCAL
         elif self.version == 6:
-            return self in IPNetwork('fe80::/10')
+            return self in IPV6_LINK_LOCAL
 
     def is_reserved(self):
         """
@@ -176,26 +174,11 @@ class BaseIP(object):
             otherwise. Reference: RFCs 3330 and 3171.
         """
         if self.version == 4:
-            #   Use of ipglobs here would be much more concise than CIDRs...
-            for cidr in (IPNetwork('240.0.0.0/4'), IPNetwork('234.0.0.0/7'),
-                         IPNetwork('236.0.0.0/7'),
-                         #  225-231.*.*.*
-                         IPNetwork('225.0.0.0/8'), IPNetwork('226.0.0.0/7'),
-                         IPNetwork('228.0.0.0/6'),
-                         #  234-238.*.*.*
-                         IPNetwork('234.0.0.0/7'), IPNetwork('236.0.0.0/7'),
-                         IPNetwork('238.0.0.0/8')):
+            for cidr in IPV4_RESERVED:
                 if self in cidr:
                     return True
         elif self.version == 6:
-            for cidr in (IPNetwork('ff00::/12'), IPNetwork('::/8'),
-                         IPNetwork('0100::/8'),  IPNetwork('0200::/7'),
-                         IPNetwork('0400::/6'),  IPNetwork('0800::/5'),
-                         IPNetwork('1000::/4'),  IPNetwork('4000::/3'),
-                         IPNetwork('6000::/3'),  IPNetwork('8000::/3'),
-                         IPNetwork('A000::/3'),  IPNetwork('C000::/3'),
-                         IPNetwork('E000::/4'),  IPNetwork('F000::/5'),
-                         IPNetwork('F800::/6'),  IPNetwork('FE00::/9')):
+            for cidr in IPV6_RESERVED:
                 if self in cidr:
                     return True
         return False
@@ -396,7 +379,7 @@ class IPAddress(BaseIP):
         #   NB - we return the value here twice because this IP Address may
         #   be sorted with a list of networks and it should still end up
         #   in the expected order.
-        return self.version, self._value, self._value
+        return self.version, self._value
 
     def sort_key(self):
         """
@@ -497,6 +480,20 @@ class IPAddress(BaseIP):
                 ip = klass(0xffff00000000 + self._value, 6)
 
         return ip
+
+    def format(self, dialect=None):
+        """
+        Only relevant for IPv6 addresses. Has no effect for IPv4.
+
+        @param dialect: An ipv6_* dialect class.
+
+        @return: an alternate string representation for this IP address.
+        """
+        if dialect is not None:
+            if not hasattr(dialect, 'word_fmt'):
+                raise TypeError(
+                    'custom dialects should subclass ipv6_verbose!')
+        return self._module.int_to_str(self._value, dialect=dialect)
 
     def __or__(self, other):
         """
@@ -1660,7 +1657,7 @@ def smallest_matching_cidr(ip, cidrs):
 
     @param cidrs: a sequence of IP addresses and/or subnets.
 
-    @return: the smallest (most specific) matching IPAddress or IPNetwork 
+    @return: the smallest (most specific) matching IPAddress or IPNetwork
         object from the provided sequence, None if there was no match.
     """
     match = None
@@ -1699,12 +1696,10 @@ def largest_matching_cidr(ip, cidrs):
             % cidrs)
 
     ip = IPAddress(ip)
-    for cidr in reversed(sorted([IPNetwork(cidr) for cidr in cidrs])):
+    for cidr in sorted([IPNetwork(cidr) for cidr in cidrs]):
         if ip in cidr:
             match = cidr
-        else:
-            if match is not None:
-                break
+            break
 
     return match
 
@@ -1736,3 +1731,61 @@ def all_matching_cidrs(ip, cidrs):
                 break
 
     return matches
+
+#-----------------------------------------------------------------------------
+#   Cached IPv4 address range lookups.
+#-----------------------------------------------------------------------------
+IPV4_LOOPBACK  = IPNetwork('127.0.0.0/8')
+
+IPV4_PRIVATE = (
+    IPNetwork('10.0.0.0/8'),                    #   Private-Use Networks
+    IPNetwork('172.16.0.0/12'),                 #   Private-Use Networks
+    IPNetwork('192.0.2.0/24'),                  #   Test-Net
+    IPNetwork('192.168.0.0/16'),                #   Private-Use Networks
+    IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
+)
+
+IPV4_LINK_LOCAL = IPNetwork('169.254.0.0/16')
+
+IPV4_MULTICAST = IPNetwork('224.0.0.0/4')
+
+IPV4_6TO4 = IPNetwork('192.88.99.0/24')    #   6to4 Relay Anycast
+
+IPV4_RESERVED = (
+    IPNetwork('39.0.0.0/8'),        #   Reserved but subject to allocation
+    IPNetwork('128.0.0.0/16'),      #   Reserved but subject to allocation
+    IPNetwork('191.255.0.0/16'),    #   Reserved but subject to allocation
+    IPNetwork('192.0.0.0/24'),      #   Reserved but subject to allocation
+    IPNetwork('223.255.255.0/24'),  #   Reserved but subject to allocation
+    IPNetwork('240.0.0.0/4'),       #   Reserved for Future Use
+
+    #   Reserved multicast
+    IPRange('234.0.0.0', '238.255.255.255'),
+    IPRange('225.0.0.0', '231.255.255.255'),
+)
+
+#-----------------------------------------------------------------------------
+#   Cached IPv6 address range lookups.
+#-----------------------------------------------------------------------------
+IPV6_LOOPBACK = IPAddress('::1')
+
+IPV6_PRIVATE = (
+    IPNetwork('fc00::/7'),  #   Unique Local Addresses (ULA)
+    IPNetwork('fec0::/10'), #   Site Local Addresses (deprecated - RFC 3879)
+)
+
+IPV6_LINK_LOCAL = IPNetwork('fe80::/10')
+
+IPV6_MULTICAST = IPNetwork('ff00::/8')
+
+IPV6_RESERVED = (
+    IPNetwork('ff00::/12'), IPNetwork('::/8'),
+    IPNetwork('0100::/8'), IPNetwork('0200::/7'),
+    IPNetwork('0400::/6'), IPNetwork('0800::/5'),
+    IPNetwork('1000::/4'), IPNetwork('4000::/3'),
+    IPNetwork('6000::/3'), IPNetwork('8000::/3'),
+    IPNetwork('A000::/3'), IPNetwork('C000::/3'),
+    IPNetwork('E000::/4'), IPNetwork('F000::/5'),
+    IPNetwork('F800::/6'), IPNetwork('FE00::/9'),
+)
+
