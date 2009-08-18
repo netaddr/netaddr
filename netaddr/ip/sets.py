@@ -63,7 +63,7 @@ class IPSet(object):
         """
         Compact internal list of L{IPNetwork} objects using a CIDR merge.
         """
-        cidrs = cidr_merge(self._cidrs)
+        cidrs = cidr_merge(list(self._cidrs))
         self._cidrs = dict(zip(cidrs, [True] * len(cidrs)))
 
     def __hash__(self):

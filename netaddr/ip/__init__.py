@@ -1328,7 +1328,7 @@ def cidr_merge(ip_addrs):
 
     @return: a summarized list of L{IPNetwork} objects.
     """
-    if not hasattr(ip_addrs, '__iter__'):
+    if not hasattr(ip_addrs, '__iter__') or hasattr(ip_addrs, 'keys'):
         raise ValueError('A sequence or iterator is expected!')
 
     #   Start off using set as we'll remove any duplicates at the start.
@@ -1336,14 +1336,27 @@ def cidr_merge(ip_addrs):
     ipv6_bit_cidrs = set()
 
     #   Convert IP addresses and subnets into their CIDR bit strings.
+    ipv4_match_all_found = False
+    ipv6_match_all_found = False
+
     for ip in ip_addrs:
         cidr = IPNetwork(ip)
         bits = cidr.network.bits(word_sep='')[0:cidr.prefixlen]
 
         if cidr.version == 4:
-            ipv4_bit_cidrs.add(bits)
+            if bits == '':
+                ipv4_match_all_found = True
+                ipv4_bit_cidrs = set([''])  # Clear all other IPv4 values.
+
+            if not ipv4_match_all_found:
+                ipv4_bit_cidrs.add(bits)
         else:
-            ipv6_bit_cidrs.add(bits)
+            if bits == '':
+                ipv6_match_all_found = True
+                ipv6_bit_cidrs = set([''])  # Clear all other IPv6 values.
+
+            if not ipv6_match_all_found:
+                ipv6_bit_cidrs.add(bits)
 
     #   Merge binary CIDR addresses where possible.
     def _reduce_bit_cidrs(cidrs):
@@ -1385,6 +1398,11 @@ def cidr_merge(ip_addrs):
                 #   still seeing matches, reset.
                 cidrs = new_cidrs
                 new_cidrs = []
+
+        if new_cidrs == ['0', '1']:
+            #   Special case where summary CIDR result is '0.0.0.0/0' or
+            #   '::/0' i.e. the whole IPv4 or IPv6 address space.
+            new_cidrs = ['']
 
         return new_cidrs
 

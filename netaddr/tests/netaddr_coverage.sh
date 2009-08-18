@@ -19,7 +19,7 @@ SOURCE_GLOBS='*.py ip/*.py eui/*.py strategy/*.py'
 /usr/bin/coverage -e
 
 #   Gather coverage information including line numbers that were omitted
-/usr/bin/coverage -x -m tests/run_all.py
+/usr/bin/coverage -x -m tests/__init__.py
 
 #   generate a coverage report, omitting Python libraries
 /usr/bin/coverage -r -m -i $SOURCE_GLOBS > tests/netaddr_coverage_report.txt

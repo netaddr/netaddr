@@ -60,9 +60,9 @@ license = 'BSD License'
 long_description = """
 A pure Python network address representation and manipulation library.
 
-netaddr provides a Pythonic way to work with :-
+netaddr provides a Pythonic way of working with :-
 
-- IPv4 and IPv6 addresses and subnet (including CIDR notation)
+- IPv4 and IPv6 addresses and subnets (including CIDR notation)
 - MAC (Media Access Control) addresses in multiple formats
 - IEEE EUI-64, OUI and IAB identifiers
 - a user friendly IP glob-style format
@@ -71,6 +71,7 @@ Included are routines for :-
 
 - generating, sorting and summarizing IP addresses
 - converting IP addresses and ranges between various different formats
+- performing set based operations on groups of IP addresses and subnets
 - arbitrary IP address range calculations and conversions
 - querying IEEE OUI and IAB organisational information
 - querying of IP standards related data from key IANA data sources
@@ -90,7 +91,7 @@ For details on history changes and updates see the CHANGELOG :-
 
 platforms = 'OS Independent'
 
-scripts = ['netaddr/tools/nash']
+scripts = ['netaddr/tools/netaddr']
 
 classifiers = [
     'Development Status :: 5 - Production/Stable',

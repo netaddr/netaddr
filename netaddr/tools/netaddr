@@ -4,7 +4,7 @@
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
-"""An interactive shell for working with the netaddr library"""
+"""an interactive shell for the netaddr library"""
 
 import os
 import sys
@@ -23,7 +23,7 @@ except ImportError:
 
 argv = sys.argv[1:]
 
-banner = "\nnash %s - %s\n" % (netaddr.__version__, __doc__)
+banner = "\nnetaddr shell %s - %s\n" % (netaddr.__version__, __doc__)
 exit_msg = "\nShare and enjoy!"
 rc_override = None
 

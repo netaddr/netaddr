@@ -17649,3 +17649,110 @@ B09000-B09FFF	(base 16)	Harper Chalice Group Limited
 				Coventry West Midlands CV4 9TB
 				UNITED KINGDOM
 
+00-50-C2	(hex)		Indutherm Giesstechnologie GmbH
+B0A000-B0AFFF	(base 16)	Indutherm Giesstechnologie GmbH
+				Brettener Strasse 32
+				Walzbachtal Baden-Wuerttemberg 75045
+				GERMANY
+
+00-50-C2	(hex)		Honeywell
+B0B000-B0BFFF	(base 16)	Honeywell
+				13350 US Hwy 19 North
+				MS/522-4
+				Clearwater FL 33764-7290
+				UNITED STATES
+
+00-50-C2	(hex)		SMARTB TECHNOLOGIES
+B0C000-B0CFFF	(base 16)	SMARTB TECHNOLOGIES
+				#625 1ST FLOOR 3 RD CROSS CBI MAIN ROAD HMT LAYOUT RT NAGAR
+				BANAGALORE KARNATAKA 560032
+				INDIA
+
+00-50-C2	(hex)		Japan Electronics System, Inc
+B0D000-B0DFFF	(base 16)	Japan Electronics System, Inc
+				Sanno 3-45-3
+				Sanno Hills 2F
+				Ota ku Tokyo 143-0023
+				JAPAN
+
+00-50-C2	(hex)		KYAB Lulea AB
+B0E000-B0EFFF	(base 16)	KYAB Lulea AB
+				Aurorum 6
+				Lulea Norrbotten 97775
+				SWEDEN
+
+00-50-C2	(hex)		NARA Controls Inc.
+B0F000-B0FFFF	(base 16)	NARA Controls Inc.
+				Nara Bldg. 71-22 Chungdamdong Kangnamku
+				Seoul  135-100
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Marine Entertainment Systems Ltd
+B10000-B10FFF	(base 16)	Marine Entertainment Systems Ltd
+				LSC House
+				Murray Road
+				Orpington Kent BR5 3QY
+				UNITED KINGDOM
+
+00-50-C2	(hex)		EXEL s.r.l
+B11000-B11FFF	(base 16)	EXEL s.r.l
+				Via di Corticella 201
+				Bologna  40128
+				ITALY
+
+00-50-C2	(hex)		CM Elektronik GmbH
+B12000-B12FFF	(base 16)	CM Elektronik GmbH
+				Im Kleinfeldele 17
+				Riegel a.K. Baden Württemberg 79359
+				GERMANY
+
+00-50-C2	(hex)		Measy Electronics Co., Ltd.
+B13000-B13FFF	(base 16)	Measy Electronics Co., Ltd.
+				Rm 1506, Block B, Haisong Bldg, Tairan 9th Rd, Chegongmiao, Futian
+				Shenzhen Guangdong 518040
+				CHINA
+
+00-50-C2	(hex)		Keith & Koep GmbH
+B14000-B14FFF	(base 16)	Keith & Koep GmbH
+				Uellendahler Str. 199
+				Wuppertal NRW 42109
+				GERMANY
+
+00-50-C2	(hex)		PhotoTelesis LP
+B15000-B15FFF	(base 16)	PhotoTelesis LP
+				4801 NW Loop 410
+				Suite 203
+				San Antonio Texas 78229
+				UNITED STATES
+
+00-50-C2	(hex)		Neothings, Inc.
+B16000-B16FFF	(base 16)	Neothings, Inc.
+				1594 Fayette St
+				El Cajon CA 92020
+				UNITED STATES
+
+00-50-C2	(hex)		Elcoteq Design Center Oy
+B17000-B17FFF	(base 16)	Elcoteq Design Center Oy
+				Joensuunkatu 13
+				Salo  24100
+				FINLAND
+
+00-50-C2	(hex)		Rosslare Enterprises Limited
+B18000-B18FFF	(base 16)	Rosslare Enterprises Limited
+				Flat 912 Wing Fat Industrial Building
+				12 Wang Tai Road
+				Kowloon Bay Kowloon 
+				HONG KONG
+
+00-50-C2	(hex)		Polytron Corporation
+B19000-B19FFF	(base 16)	Polytron Corporation
+				4400 Wyland Dr,
+				Elkhart IN 46516
+				UNITED STATES
+
+00-50-C2	(hex)		ELCUS
+B1A000-B1AFFF	(base 16)	ELCUS
+				Varshavskaia st. 5a, liter 'L'
+				St. Petersburg  196128
+				RUSSIAN FEDERATION
+

@@ -1,4 +1,4 @@
-=IP Constructor Stress Tests=
+=IntSet Tests=
 
 Copyright (c) 2006, Heiko Wundram.
 

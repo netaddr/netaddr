@@ -1,7 +1,7 @@
 
 Internet Multicast Addresses
 
-(last updated 2009-07-30)
+(last updated 2009-08-12)
 
 Registries included below:
 - IPv4 Multicast Addresses
@@ -275,7 +275,7 @@ Registry:
 224.0.1.181 1451_Dot5_802_Group_2                        [Coleman]  11 April 2006  
 224.0.1.182 1451_Dot5_802_Group_3                        [Coleman]  11 April 2006  
 224.0.1.183 1451_Dot5_802_Group_4                        [Coleman]  11 April 2006
-224.0.1.184 VFSDP                                           [Zorc]  06 March 2007
+224.0.1.184 VFSDP                                         [Yellen]  06 March 2007
 224.0.1.185 ASAP                                         [RFC5352] 
 224.0.1.186-224.0.1.255  Unassigned                          [JBP] 
 
@@ -1079,9 +1079,9 @@ for temp use: renew 06/2000
 
 [Wu] Ishan Wu, <iwu&cisco.com>, March 2000.
 
-[Zhou] Xiaoyu Zhou, <zhouxyi&lenovo.com>, 20 January 2009.
+[Yellen] Adam Yellen, <adam&videofurnace.com>, 12 August 2009.
 
-[Zorc] Brian Zorc, <brian.zorc&videofurnace.com>, 06 March 2007.
+[Zhou] Xiaoyu Zhou, <zhouxyi&lenovo.com>, 20 January 2009.
 
 [Zulch] Richard Zulch, <richard_zulch&dantz.com>, February 1996, updated May 2004.
 

@@ -4,7 +4,7 @@ INTRODUCTION
 
 A pure Python network address representation and manipulation library.
 
-netaddr provides a Pythonic way to work with :-
+netaddr provides a Pythonic way of working with :-
 
 - IPv4 and IPv6 addresses and subnets (including CIDR notation)
 - MAC (Media Access Control) addresses in multiple presentation formats
@@ -96,10 +96,10 @@ the tests/ subdirectory. Feel free to add tests to help improve coverage ;-)
 Wherever possible all changes and new features will be covered with specific
 regression tests.
 
-To run the unit tests, go into the netaddr/tests directory and run the 
+To run the unit tests, go into the netaddr directory and run the 
 following using your Python interpreter :-
 
-    python tests/__main__.py
+    python tests/__init__.py
 
 Or if you are partial to setuptools :-
 

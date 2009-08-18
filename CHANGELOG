@@ -1,4 +1,27 @@
 
+Release: 0.7.1
+Date: 14th Aug 2009
+
+Changes since 0.7
+-----------------
+
+* Renamed the netaddr shell script from 'nash' to plain 'netaddr'. This
+  is to avoid a potentially nasty clash with an important Linux tool
+  with the same name.
+  
+  Thanks to John Eckersberg for spotting this one early!
+
+* Updated IANA and IEEE data files with latest versions.
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 42 - http://code.google.com/p/netaddr/issues/detail?id=42
+
+    - Bug in cidr_merge() function when passed the CIDRs 0.0.0.0/0 and/or ::/0
+
+---------------------------------------------------------------------
+
 Release: 0.7
 Date: 11th Aug 2009
 
