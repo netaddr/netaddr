@@ -1,4 +1,28 @@
 
+Release: 0.7.2
+Date: 19th Aug 2009
+
+Changes since 0.7.1
+-------------------
+
+* Fixed a boundary problem with the iter_iprange() generator function
+  and all associated calls to it throughout the codebase, including
+  unit test coverage and adjustments.
+
+* Replaced regular expressions in cidr_merge() with pre-compiled equivalents
+  for a small speed boost.
+
+* Adjustments to README raised by John Eckersberg.
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 43 - http://code.google.com/p/netaddr/issues/detail?id=43
+
+    - IPNetwork('0.0.0.0/0') not usable in for loop
+
+---------------------------------------------------------------------
+
 Release: 0.7.1
 Date: 14th Aug 2009
 

@@ -13,7 +13,7 @@ import doctest
 sys.path.insert(0, os.path.abspath(os.path.join(
     os.path.dirname(__file__), '../..')))
 
-tests = ['ip/tutorial.txt']
+tests = ['ip/boundaries.txt']
 
 for test in tests:
     suite = doctest.DocFileSuite(test, optionflags=doctest.ELLIPSIS)

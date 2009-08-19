@@ -14,6 +14,12 @@ from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
 #-----------------------------------------------------------------------------
+#   Pre-compiled regexen used by cidr_merge() function.
+RE_CIDR_ADJACENT = _re.compile(r'^([01]+)0 \1[1]$')
+RE_CIDR_WITHIN = _re.compile(r'^([01]+) \1[10]+$')
+RE_VALID_CIDR_BITS = _re.compile('^[01]+$')
+
+#-----------------------------------------------------------------------------
 class BaseIP(object):
     """
     An abstract base class for common operations shared between various IP
@@ -823,7 +829,7 @@ class IPNetwork(BaseIP):
             range represented by this IPNetwork object.
         """
         start_ip = IPAddress(self.first, self.version)
-        end_ip = IPAddress(self.last+1, self.version)
+        end_ip = IPAddress(self.last, self.version)
         return iter_iprange(start_ip, end_ip)
 
     def __getitem__(self, index):
@@ -832,27 +838,36 @@ class IPNetwork(BaseIP):
             index or slice. As slicing can produce large sequences of objects
             an iterator is returned instead of the more usual C{list}.
         """
+        item = None
+
         if hasattr(index, 'indices'):
             if self._module.version == 6:
-                raise TypeError('slices not supported with IPv6!')
+                raise TypeError('IPv6 slices are not supported!')
 
             (start, stop, step) = index.indices(self.size)
-            start_ip = IPAddress(self.first + start, self.version)
-            end_ip = IPAddress(self.first + stop, self.version)
-            return iter_iprange(start_ip, end_ip, step)
+
+            if (start + step < 0) or (step > stop):
+                #   step value exceeds start and stop boundaries.
+                item = iter([IPAddress(self.first, self.version)])
+            else:
+                start_ip = IPAddress(self.first + start, self.version)
+                end_ip = IPAddress(self.first + stop - step, self.version)
+                item = iter_iprange(start_ip, end_ip, step)
         else:
             try:
                 index = int(index)
                 if (- self.size) <= index < 0:
                     #   negative index.
-                    return IPAddress(self.last + index + 1, self.version)
+                    item = IPAddress(self.last + index + 1, self.version)
                 elif 0 <= index <= (self.size - 1):
                     #   Positive index or zero index.
-                    return IPAddress(self.first + index, self.version)
+                    item = IPAddress(self.first + index, self.version)
                 else:
                     raise IndexError('index out range for address range size!')
             except ValueError:
                 raise TypeError('unsupported index type %r!' % index)
+
+        return item
 
     def __len__(self):
         """
@@ -1039,24 +1054,25 @@ class IPNetwork(BaseIP):
                 - for IPv6, only the unspecified address '::' is excluded
                 from any yielded IP addresses.
         """
+        it_hosts = iter([])
+
         if self.version == 4:
             #   IPv4 logic.
             if self.size >= 4:
-                return iter_iprange(IPAddress(self.first+1, self.version),
-                                    IPAddress(self.last, self.version))
-            else:
-                return iter([])
+                it_hosts = iter_iprange(IPAddress(self.first+1, self.version),
+                                        IPAddress(self.last-1, self.version))
         else:
             #   IPv6 logic.
             if self.first == 0:
                 if self.size != 1:
                     #   Don't return '::'.
-                    return iter_iprange(IPAddress(self.first+1, self.version),
-                                        IPAddress(self.last+1, self.version))
-                else:
-                    return iter([])
+                    it_hosts = iter_iprange(
+                        IPAddress(self.first+1, self.version),
+                        IPAddress(self.last, self.version))
             else:
-                return iter(self)
+                it_hosts = iter(self)
+
+        return it_hosts
 
     def __str__(self):
         """@return: this IPNetwork in CIDR format"""
@@ -1105,44 +1121,49 @@ class IPRange(BaseIP):
 
     def __iter__(self):
         """
-        @return: An iterator providing access to all IPAddress objects within
-            range represented by this IPNetwork object.
+        @return: An iterator providing access to all L{IPAddress} objects
+            within range represented by this L{IPRange} object.
         """
         start_ip = IPAddress(self.first, self.version)
-        end_ip = IPAddress(self.last+1, self.version)
+        end_ip = IPAddress(self.last, self.version)
         return iter_iprange(start_ip, end_ip)
 
     def __getitem__(self, index):
         """
-        @return: The IP address(es) in this L{IPNetwork} object referenced by
+        @return: The IP address(es) in this L{IPRange} object referenced by
             index or slice. As slicing can produce large sequences of objects
             an iterator is returned instead of the more usual C{list}.
         """
+        item = None
+
         if hasattr(index, 'indices'):
             if self._module.version == 6:
-                raise TypeError('slices not supported with IPv6!')
+                raise TypeError('IPv6 slices are not supported!')
 
             (start, stop, step) = index.indices(self.size)
-            start_ip = IPAddress(
-                self.first + start, self.version)
-            end_ip = IPAddress(
-                self.first + stop, self.version)
-            return iter_iprange(start_ip, end_ip, step)
+
+            if (start + step < 0) or (step > stop):
+                #   step value exceeds start and stop boundaries.
+                item = iter([IPAddress(self.first, self.version)])
+            else:
+                start_ip = IPAddress(self.first + start, self.version)
+                end_ip = IPAddress(self.first + stop - step, self.version)
+                item = iter_iprange(start_ip, end_ip, step)
         else:
             try:
                 index = int(index)
                 if (- self.size) <= index < 0:
                     #   negative index.
-                    return IPAddress(
-                        self.last + index + 1, self.version)
+                    item = IPAddress(self.last + index + 1, self.version)
                 elif 0 <= index <= (self.size - 1):
                     #   Positive index or zero index.
-                    return IPAddress(
-                        self.first + index, self.version)
+                    item = IPAddress(self.first + index, self.version)
                 else:
                     raise IndexError('index out range for address range size!')
             except ValueError:
                 raise TypeError('unsupported index type %r!' % index)
+
+        return item
 
     def __len__(self):
         """
@@ -1322,7 +1343,8 @@ def cidr_merge(ip_addrs):
     """
     A function that accepts an iterable sequence of IP addresses and subnets
     merging them into the smallest possible list of CIDRs. It merges adjacent
-    subnets where possible and removes duplicates.
+    subnets where possible, those contained within others and also removes
+    any duplicates.
 
     @param ip_addrs: an iterable sequence of IP addresses and subnets.
 
@@ -1373,7 +1395,7 @@ def cidr_merge(ip_addrs):
                 if len(cidrs) == 0:
                     break
                 #   lhs and rhs are same size and adjacent.
-                (new_cidr, subs) = _re.subn(r'^([01]+)0 \1[1]$',
+                (new_cidr, subs) = RE_CIDR_ADJACENT.subn(
                     r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
                 if subs:
                     #   merge lhs with rhs.
@@ -1382,7 +1404,7 @@ def cidr_merge(ip_addrs):
                     finished = False
                 else:
                     #   lhs contains rhs.
-                    (new_cidr, subs) = _re.subn(r'^([01]+) \1[10]+$',
+                    (new_cidr, subs) = RE_CIDR_WITHIN.subn(
                         r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
                     if subs:
                         #   keep lhs, discard rhs.
@@ -1415,7 +1437,7 @@ def cidr_merge(ip_addrs):
             else:
                 return IPNetwork('::/0', 6)
 
-        if _re.match('^[01]+$', bits) is None:
+        if RE_VALID_CIDR_BITS.match(bits) is None:
             raise ValueError('%r is an invalid bit string!' % bits)
 
         num_bits = len(bits)
@@ -1542,8 +1564,9 @@ def spanning_cidr(ip_addrs):
 #-----------------------------------------------------------------------------
 def iter_iprange(start, end, step=1):
     """
-    An xrange work-alike generator for IP addresses. It produces sequences
-    based on start and stop IP address values, in intervals of step size.
+    A generator that produces IPAddress objects between an arbitrary start
+    and stop IP address with intervals of step between them. Sequences
+    produce are inclusive of boundary IPs.
 
     @param start: start IP address.
 
@@ -1577,11 +1600,11 @@ def iter_iprange(start, end, step=1):
     while True:
         index += step
         if negative_step:
-            if not index > stop:
-                return
+            if not index >= stop:
+                break
         else:
-            if not index < stop:
-                return
+            if not index <= stop:
+                break
         yield IPAddress(index, version)
 
 

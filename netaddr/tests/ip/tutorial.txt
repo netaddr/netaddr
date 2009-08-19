@@ -515,10 +515,10 @@ The iter_iprange() function allow you to do just this.
 >>> ip_list = list(iter_iprange('192.0.2.1', '192.0.2.14'))
 
 >>> len(ip_list)
-13
+14
 
 >>> ip_list
-[IPAddress('192.0.2.1'), IPAddress('192.0.2.2'), ..., IPAddress('192.0.2.12'), IPAddress('192.0.2.13')]
+[IPAddress('192.0.2.1'), IPAddress('192.0.2.2'), ..., IPAddress('192.0.2.13'), IPAddress('192.0.2.14')]
 
 }}}
 
@@ -529,7 +529,7 @@ Here `cidr_merge()` comes to the rescue.
 {{{
 
 >>> cidr_merge(ip_list)
-[IPNetwork('192.0.2.1/32'), IPNetwork('192.0.2.2/31'), IPNetwork('192.0.2.4/30'), IPNetwork('192.0.2.8/30'), IPNetwork('192.0.2.12/31')]
+[IPNetwork('192.0.2.1/32'), IPNetwork('192.0.2.2/31'), IPNetwork('192.0.2.4/30'), IPNetwork('192.0.2.8/30'), IPNetwork('192.0.2.12/31'), IPNetwork('192.0.2.14/32')]
 
 }}}
 
