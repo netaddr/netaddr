@@ -1,4 +1,19 @@
+Release: 0.7.3
+Date: TBD
 
+Changes since 0.7.2
+-------------------
+
+* Removed some unused constants from fallback socket module.
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 44 - http://code.google.com/p/netaddr/issues/detail?id=44
+
+    - int/long type error
+
+---------------------------------------------------------------------
 Release: 0.7.2
 Date: 20th Aug 2009
 

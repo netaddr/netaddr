@@ -66,8 +66,8 @@ You can view an IP address in various other formats.
 
 {{{
 
->>> int(ip)
-3221225985L
+>>> int(ip) == 3221225985
+True
 
 >>> hex(ip)
 '0xc0000201'

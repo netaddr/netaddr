@@ -7,11 +7,8 @@
 
 from struct import unpack as _unpack, pack as _pack
 
-AF_UNSPEC =  0
 AF_INET   =  2
 AF_INET6  = 10
-AF_LINK   = 48
-AF_EUI64  = 64
 
 #-----------------------------------------------------------------------------
 def inet_ntoa(packed_ip):

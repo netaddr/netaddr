@@ -20,8 +20,8 @@ EUI('00-1B-77-49-54-FD')
 >>> eui
 EUI('00-1B-77-FF-FE-49-54-FD')
 
->>> int(eui)
-7731765737772285L
+>>> int(eui) == 7731765737772285
+True
 
 >>> eui.packed()
 '\x00\x1bw\xff\xfeIT\xfd'

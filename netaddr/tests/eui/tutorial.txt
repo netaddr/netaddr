@@ -54,8 +54,8 @@ You can view an individual IP address in various other formats.
 
 {{{
 
->>> int(mac)
-117965411581L
+>>> int(mac) == 117965411581
+True
 
 >>> hex(mac)
 '0x1b774954fd'
@@ -243,7 +243,7 @@ IAB('00-50-C2-00-00-00')
 >>> iab.registration()
 {'address': ['2101 Superior Avenue', 'Cleveland OH 44114', 'UNITED STATES'],
  'iab': '00-50-C2-00-00-00',
- 'idx': 84680704L,
+ ...
  'offset': 68,
  'org': 'T.L.S. Corp.',
  'size': 133}
