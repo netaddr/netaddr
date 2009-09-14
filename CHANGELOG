@@ -1,8 +1,13 @@
 Release: 0.7.3
-Date: TBD
+Date: 14th Sep 2009
 
 Changes since 0.7.2
 -------------------
+
+* Added __add__, __radd__, __sub__, __rsub__ operators to the IPAddress class.
+
+* Added support for validation and iteration of simple nmap style IPv4 ranges
+  (raised in Issue 46).
 
 * Removed some unused constants from fallback socket module.
 
@@ -12,6 +17,14 @@ Specific bug fixes addressed in this release
 * FIXED Issue 44 - http://code.google.com/p/netaddr/issues/detail?id=44
 
     - int/long type error
+
+* FIXED Issue 46 - http://code.google.com/p/netaddr/issues/detail?id=46
+
+    - Question about IPv4 ranges
+
+* FIXED Issue 47 - http://code.google.com/p/netaddr/issues/detail?id=47
+
+    - IPNetwork cannot be evaluated as a boolean when it has a large size
 
 ---------------------------------------------------------------------
 Release: 0.7.2

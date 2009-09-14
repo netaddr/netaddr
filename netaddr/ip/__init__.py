@@ -130,7 +130,7 @@ class BaseIP(object):
         """@return: C{True} if this IP is multicast, C{False} otherwise"""
         if self._module == _ipv4:
             return self in IPV4_MULTICAST
-        elif  self._module == _ipv6:
+        elif self._module == _ipv6:
             return self in IPV6_MULTICAST
 
     def is_loopback(self):
@@ -141,7 +141,7 @@ class BaseIP(object):
         """
         if self.version == 4:
             return self in IPV4_LOOPBACK
-        elif  self.version == 6:
+        elif self.version == 6:
             return self == IPV6_LOOPBACK
 
     def is_private(self):
@@ -352,15 +352,14 @@ class IPAddress(BaseIP):
 
         @param num: size of IP address increment.
 
-        An IndexError is raised if result exceeds maximum IP address value.
+        An IndexError is raised if result exceeds maximum IP address value or
+        is less than zero.
         """
-        new_first = self._value + num
-
-        if new_first > self._module.max_int:
-            raise IndexError('increment exceeds maximum address value!')
-
-        self._value = new_first
-        return self
+        new_value = self._value + num
+        if 0 <= new_value <= self._module.max_int:
+            self._value = new_value
+            return self
+        raise IndexError('result outside valid IP address boundary!')
 
     def __isub__(self, num):
         """
@@ -368,15 +367,60 @@ class IPAddress(BaseIP):
 
         @param num: size of IP address decrement.
 
-        An IndexError is raised if result is less than zero.
+        An IndexError is raised if result is less than zero or exceeds maximum
+        IP address value.
         """
-        new_first = self._value - num
+        new_value = self._value - num
+        if 0 <= new_value <= self._module.max_int:
+            self._value = new_value
+            return self
+        raise IndexError('result outside valid IP address boundary!')
 
-        if new_first < 0:
-            raise IndexError('decrement is less than zero!')
+    def __add__(self, num):
+        """
+        Add the numerical value of this IP address to num and provide the
+        result as a new IPAddress object.
 
-        self._value = new_first
-        return self
+        @param num: size of IP address increase.
+
+        @return: a new IPAddress object with its numerical value increased by
+        num.
+        """
+        new_value = self._value + num
+        if 0 <= new_value <= self._module.max_int:
+            return self.__class__(new_value, self.version)
+        raise IndexError('result outside valid IP address boundary!')
+
+    __radd__ = __add__
+
+    def __sub__(self, num):
+        """
+        Subtract the numerical value of this IP address from num providing
+        the result as a new IPAddress object.
+
+        @param num: size of IP address decrease.
+
+        @return: a new IPAddress object with its numerical value decreased by
+        num.
+        """
+        new_value = self._value - num
+        if 0 <= new_value <= self._module.max_int:
+            return self.__class__(new_value, self.version)
+        raise IndexError('result outside valid IP address boundary!')
+
+    def __rsub__(self, num):
+        """
+        Subtract num (lvalue) from the numerical value of this IP address (rvalue) providing the result as a new IPAddress object.
+
+        @param num: size of IP address decrease.
+
+        @return: a new IPAddress object with its numerical value decreased by
+        num.
+        """
+        new_value = num - self._value
+        if 0 <= new_value <= self._module.max_int:
+            return self.__class__(new_value, self.version)
+        raise IndexError('result outside valid IP address boundary!')
 
     def key(self):
         """
@@ -444,7 +488,7 @@ class IPAddress(BaseIP):
     def ipv4(self):
         """
         @return: A numerically equivalent version 4 L{IPAddress} object.
-            Raises an L{AddrConversionError} is IPv6 address cannot be
+            Raises an L{AddrConversionError} if IPv6 address cannot be
             converted to IPv4.
         """
         ip = None
@@ -795,14 +839,17 @@ class IPNetwork(BaseIP):
         @param num: (optional) number of L{IPNetwork} blocks to increment this
         IPNetwork's value by.
 
-        An C{IndexError} is raised if result exceeds maximum IP address value.
+        An C{IndexError} is raised if result exceeds maximum IP address value
+        or is less than zero.
         """
-        new_first = int(self.network) + (self.size * num)
+        new_value = int(self.network) + (self.size * num)
 
-        if (new_first + (self.size - 1)) > self._module.max_int:
+        if (new_value + (self.size - 1)) > self._module.max_int:
             raise IndexError('increment exceeds address boundary!')
+        if new_value < 0:
+            raise IndexError('increment is less than zero!')
 
-        self._value = new_first
+        self._value = new_value
         return self
 
     def __isub__(self, num):
@@ -813,14 +860,17 @@ class IPNetwork(BaseIP):
         @param num: (optional) number of L{IPNetwork} blocks to decrement this
         IPNetwork's value by.
 
-        An C{IndexError} is raised if result is less than zero.
+        An C{IndexError} is raised if result is less than zero or exceeds
+        maximum IP address value.
         """
-        new_first = int(self.network) - (self.size * num)
+        new_value = int(self.network) - (self.size * num)
 
-        if new_first < 0:
+        if new_value < 0:
             raise IndexError('decrement is less than zero!')
+        if (new_value + (self.size - 1)) > self._module.max_int:
+            raise IndexError('decrement exceeds address boundary!')
 
-        self._value = new_first
+        self._value = new_value
         return self
 
     def __iter__(self):
@@ -892,6 +942,13 @@ class IPNetwork(BaseIP):
             other = IPNetwork("%s/%d" % (other, other._module.width))
         return other.first >= self.first and other.last <= self.last
 
+    def __nonzero__(self):
+        """
+        IPNetwork objects always represent a sequence of at least one IP
+        address and are therefore always True in the boolean context.
+        """
+        return True
+
     def key(self):
         """
         @return: A key tuple used to uniquely identify this L{IPNetwork}.
@@ -909,7 +966,7 @@ class IPNetwork(BaseIP):
     def ipv4(self):
         """
         @return: A numerically equivalent version 4 L{IPNetwork} object.
-            Raises an L{AddrConversionError} is IPv6 address cannot be
+            Raises an L{AddrConversionError} if IPv6 address cannot be
             converted to IPv4.
         """
         ip = None
@@ -1152,7 +1209,7 @@ class IPRange(BaseIP):
         else:
             try:
                 index = int(index)
-                if (- self.size) <= index < 0:
+                if (-self.size) <= index < 0:
                     #   negative index.
                     item = IPAddress(self.last + index + 1, self.version)
                 elif 0 <= index <= (self.size - 1):
@@ -1187,6 +1244,13 @@ class IPRange(BaseIP):
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             other = IPNetwork("%s/%d" % (other, other._module.width))
         return other.first >= self.first and other.last <= self.last
+
+    def __nonzero__(self):
+        """
+        IPRange objects always represent a sequence of at least one IP
+        address and are therefore always True in the boolean context.
+        """
+        return True
 
     def key(self):
         """

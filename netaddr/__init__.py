@@ -25,6 +25,8 @@ from netaddr.ip.sets import IPSet
 from netaddr.ip.glob import IPGlob, cidr_to_glob, glob_to_cidrs, \
     glob_to_iprange, glob_to_iptuple, iprange_to_globs, valid_glob
 
+from netaddr.ip.nmap import valid_nmap_range, iter_nmap_range
+
 from netaddr.ip.rfc1924 import base85_to_ipv6, ipv6_to_base85
 
 from netaddr.eui import EUI, IAB, OUI
@@ -67,6 +69,9 @@ __all__ = [
 
     #   Validation functions.
     'valid_ipv4', 'valid_ipv6', 'valid_glob', 'valid_mac',
+
+    #   nmap-style range functions.
+    'valid_nmap_range', 'iter_nmap_range',
 
     #   RFC 1924 functions.
     'base85_to_ipv6', 'ipv6_to_base85',
