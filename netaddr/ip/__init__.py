@@ -241,7 +241,7 @@ class IPAddress(BaseIP):
         """
         super(IPAddress, self).__init__()
 
-        if hasattr(addr, '_value'):
+        if isinstance(addr, BaseIP):
             #   Copy constructor.
             if version is not None and version != addr._module.version:
                 raise ValueError('cannot switch IP versions using '
@@ -265,7 +265,8 @@ class IPAddress(BaseIP):
         return self._value
 
     def _set_value(self, value):
-        if hasattr(value, 'upper') and '/' in value:
+        has_upper = hasattr(value, 'upper')
+        if has_upper and '/' in value:
             raise ValueError('%s() does not support netmasks or subnet' \
                 ' prefixes! See documentation for details.'
                 % self.__class__.__name__)
@@ -291,7 +292,7 @@ class IPAddress(BaseIP):
                     % value)
         else:
             #   IP version is explicit.
-            if hasattr(value, 'upper'):
+            if has_upper:
                 try:
                     self._value = self._module.str_to_int(value)
                 except AddrFormatError:

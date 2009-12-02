@@ -291,6 +291,16 @@ class EUI(object):
         self._value = None
         self._module = None
 
+        if isinstance(addr, EUI):
+            #   Copy constructor.
+            if version is not None and version != addr._module.version:
+                raise ValueError('cannot switch EUI versions using '
+                    'copy constructor!')
+            self._module = addr._module
+            self._value = addr._value
+            self.dialect = addr.dialect
+            return
+
         if version is not None:
             if version == 48:
                 self._module = _eui48
@@ -298,10 +308,9 @@ class EUI(object):
                 self._module = _eui64
             else:
                 raise ValueError('unsupported EUI version %r' % version)
-
+        else:
         #   Choose a default version when addr is an integer and version is
         #   not specified.
-        if self._module is None:
             if 0 <= addr <= 0xffffffffffff:
                 self._module = _eui48
             elif 0xffffffffffff < addr <= 0xffffffffffffffff:
@@ -530,10 +539,19 @@ class EUI(object):
         @return: human-readable binary digit string of this address"""
         return self._module.int_to_bits(self._value, word_sep)
 
+    @property
     def packed(self):
         """@return: binary packed string of this address"""
         return self._module.int_to_packed(self._value)
 
+    @property
+    def words(self):
+        """
+        A list of unsigned integer octets found in this EUI address.
+        """
+        return self._module.int_to_words(self._value)
+
+    @property
     def bin(self):
         """
         @return: standard Python binary representation of this address. A back

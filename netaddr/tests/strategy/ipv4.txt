@@ -30,8 +30,8 @@ True
 >>> int_to_str(i)
 '192.0.2.1'
 
->>> int_to_words(i)
-(192, 0, 2, 1)
+>>> int_to_words(i) == (192, 0, 2, 1)
+True
 
 >>> int_to_packed(i)
 '\xc0\x00\x02\x01'

@@ -218,8 +218,7 @@ def int_to_packed(int_val):
     @return: a packed string that is equivalent to value represented by an
     unsigned integer.
     """
-    words = int_to_words(int_val)
-    return _struct.pack('>6B', *words)
+    return _struct.pack(">HI", int_val >> 32, int_val & 0xffffffff)
 
 #-----------------------------------------------------------------------------
 def packed_to_int(packed_int):

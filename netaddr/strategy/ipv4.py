@@ -141,8 +141,7 @@ def int_to_packed(int_val):
     @return: a packed string that is equivalent to value represented by an
     unsigned integer.
     """
-    words = int_to_words(int_val)
-    return _struct.pack('>4B', *words)
+    return _struct.pack('>I', int_val)
 
 #-----------------------------------------------------------------------------
 def packed_to_int(packed_int):
@@ -153,8 +152,7 @@ def packed_to_int(packed_int):
     @return: An unsigned integer equivalent to value of network address
         represented by packed binary string.
     """
-    words = list(_struct.unpack('>4B', packed_int))
-    return _struct.unpack('>I', _struct.pack('4B', *words))[0]
+    return _struct.unpack('>I', packed_int)[0]
 
 #-----------------------------------------------------------------------------
 def valid_words(words):
@@ -171,7 +169,10 @@ def int_to_words(int_val):
     if not 0 <= int_val <= max_int:
         raise ValueError('%r is not a valid integer value supported ' \
             'by this address type!' % int_val)
-    return _struct.unpack('4B', _struct.pack('>I', int_val))
+    return ( (int_val >> 24),
+             (int_val >> 16 & 255),
+             (int_val >> 8 & 255),
+             (int_val & 255) )
 
 #-----------------------------------------------------------------------------
 def words_to_int(words):

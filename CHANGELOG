@@ -1,3 +1,16 @@
+Release: 0.7.4
+Date: 2nd Dec 2009
+
+Changes since 0.7.3
+-------------------
+
+* Applied speed patches by S. Nordhausen
+
+* Fixed an inconsistency between EUI and IPAddress interfaces. Made
+  EUI.packed and EUI.bin properties (previously methods) and added a
+  words() property.
+
+---------------------------------------------------------------------
 Release: 0.7.3
 Date: 14th Sep 2009
 
