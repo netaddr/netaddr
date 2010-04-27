@@ -1,0 +1,60 @@
+=IP version 4 Strategy Module=
+
+Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+
+Uses TEST-NET references throughout, as described in RFC 3330.
+
+{{{
+
+>>> from netaddr.strategy.ipv4 import *
+
+}}}
+
+==Basic Smoke Tests==
+
+{{{
+
+>>> b = '11000000.00000000.00000010.00000001'
+>>> i = 3221225985
+>>> t = (192, 0, 2, 1)
+>>> s = '192.0.2.1'
+>>> p = '\xc0\x00\x02\x01'
+>>> bin_val = '0b11000000000000000000001000000001'
+
+>>> bits_to_int(b) == 3221225985
+True
+
+>>> int_to_bits(i)
+'11000000.00000000.00000010.00000001'
+
+>>> int_to_str(i)
+'192.0.2.1'
+
+>>> int_to_words(i) == (192, 0, 2, 1)
+True
+
+>>> int_to_packed(i)
+'\xc0\x00\x02\x01'
+
+>>> int_to_bin(i)
+'0b11000000000000000000001000000001'
+
+>>> int_to_bin(i)
+'0b11000000000000000000001000000001'
+
+>>> bin_to_int(bin_val) == 3221225985
+True
+
+>>> words_to_int(t) == 3221225985
+True
+
+>>> words_to_int(list(t)) == 3221225985
+True
+
+>>> packed_to_int(p) == 3221225985
+True
+
+>>> valid_bin(bin_val)
+True
+
+}}}

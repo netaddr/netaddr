@@ -1,0 +1,80 @@
+=IntSet Tests=
+
+Copyright (c) 2006, Heiko Wundram.
+
+{{{
+
+>>> from netaddr.ip.intset import IntSet
+
+>>> x = IntSet((10, 20), 30)
+>>> y = IntSet((10, 20))
+>>> z = IntSet((10, 20), 30, (15, 19), min=0, max=40)
+
+>>> x
+IntSet((10,20),30)
+    
+>>> x & 110
+IntSet()
+    
+>>> x | 110
+IntSet((10,20),30,110)
+
+>>> x ^ (15, 25)
+IntSet((10,14),(21,25),30)
+    
+>>> x - 12
+IntSet((10,11),(13,20),30)
+
+>>> 12 in x
+True
+    
+>>> x.issubset(x)
+True
+
+>>> y.issubset(x)
+True
+
+>>> x.istruesubset(x)
+False
+
+>>> y.istruesubset(x)
+True
+
+>>> for val in x:
+...     val
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+30
+
+
+>>> x.inverse()
+IntSet((None,9),(21,29),(31,None))
+
+>>> x == z
+True
+
+>>> x == y
+False
+
+>>> x != y
+True
+
+>>> hash(x) == hash(z)
+True
+      
+>>> len(x)
+12
+
+>>> x.len()
+12
+
+}}}

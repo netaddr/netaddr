@@ -1,0 +1,1091 @@
+
+Internet Multicast Addresses
+
+(last updated 2009-08-12)
+
+Registries included below:
+- IPv4 Multicast Addresses
+
+
+Note:
+Host Extensions for IP Multicasting [RFC1112] specifies the extensions
+required of a host implementation of the Internet Protocol (IP) to
+support multicasting.  The multicast addresses are in the range
+224.0.0.0 through 239.255.255.255. Current addresses are listed below.
+
+The range of addresses between 224.0.0.0 and 224.0.0.255, inclusive,
+is reserved for the use of routing protocols and other low-level
+topology discovery or maintenance protocols, such as gateway discovery
+and group membership reporting.  Multicast routers should not forward
+any multicast datagram with destination addresses in this range,
+regardless of its TTL.
+
+Registry Name: IPv4 Multicast Addresses
+Reference: [RFC3171]
+Registration Procedures: Expert Review, IESG Approval or Standards Action
+
+Registry:
+224.0.0.0 - 224.0.0.255  (224.0.0/24) Local Network Control Block   Date registered
+------------------------------------------------------------------  ---------------
+
+224.0.0.0  Base Address (Reserved)                  [RFC1112][JBP]
+224.0.0.1  All Systems on this Subnet               [RFC1112][JBP]
+224.0.0.2  All Routers on this Subnet                        [JBP]
+224.0.0.3  Unassigned                                        [JBP]
+224.0.0.4  DVMRP    Routers                         [RFC1075][JBP]
+224.0.0.5  OSPFIGP  OSPFIGP All Routers            [RFC2328][JXM1]
+224.0.0.6  OSPFIGP  OSPFIGP Designated Routers     [RFC2328][JXM1]
+224.0.0.7  ST Routers                              [RFC1190][KS14]
+224.0.0.8  ST Hosts                                [RFC1190][KS14]
+224.0.0.9  RIP2 Routers                           [RFC1723][GSM11]
+224.0.0.10 IGRP Routers                                [Farinacci]
+224.0.0.11 Mobile-Agents                            [Bill Simpson]
+224.0.0.12 DHCP Server / Relay Agent                     [Unknown]
+224.0.0.13 All PIM Routers                             [Farinacci]
+224.0.0.14 RSVP-ENCAPSULATION                             [Braden]
+224.0.0.15 all-cbt-routers                    [RFC2189][Ballardie]
+224.0.0.16 designated-sbm                                  [Baker]
+224.0.0.17 all-sbms                                        [Baker]
+224.0.0.18 VRRP                                          [RFC3768]
+224.0.0.19 IPAllL1ISs                                 [Przygienda]
+224.0.0.20 IPAllL2ISs                                 [Przygienda]
+224.0.0.21 IPAllIntermediate Systems                  [Przygienda]
+224.0.0.22 IGMP                                          [Deering]
+224.0.0.23 GLOBECAST-ID                                 [Scannell]
+224.0.0.24 OSPFIGP-TE                                    [RFC4973]
+224.0.0.25 router-to-switch                                   [Wu]
+224.0.0.26 Unassigned                                        [JBP]
+224.0.0.27 Al MPP Hello                               [Martinicky]  
+224.0.0.28 ETC Control                               [Polishinski]
+224.0.0.29 GE-FANUC                                        [Wacey]
+224.0.0.30 indigo-vhdp                                   [Caughie]
+224.0.0.31 shinbroadband                       [Kittivatcharapong]   
+224.0.0.32 digistar                                       [Kerkan]
+224.0.0.33 ff-system-management                          [Glanzer] 
+224.0.0.34 pt2-discover                             [Kammerlander]
+224.0.0.35 DXCLUSTER                                     [Koopman]
+224.0.0.36 DTCP Announcement                             [Cipiere] 
+224.0.0.37-224.0.0.68 zeroconfaddr   (renew 12/02)       [Guttman]
+224.0.0.69-224.0.0.100 Reserved                             [IANA]
+224.0.0.101 cisco-nhap                                     [Bakke]
+224.0.0.102 HSRP                                          [Wilson]
+224.0.0.103 MDAP                                           [Deleu]
+224.0.0.104 Nokia MC CH                                  [Kalhour]
+224.0.0.105 ff-lr-address                                [Glanzer]
+224.0.0.106 All-Snoopers                                 [RFC4286]
+224.0.0.107 PTP-pdelay                           [IEEE1588][K.Lee]  02 February 2007
+224.0.0.108 Saratoga                                        [Wood]  30 August 2007
+224.0.0.109 LL-MANET-Routers                             [RFC5498] 
+224.0.0.110 IGRS                                            [Zhou]  20 January 2009
+224.0.0.111-224.0.0.250 Unassigned                           [JBP]
+224.0.0.251 mDNS                                        [Cheshire]
+224.0.0.252 Link-local Multicast Name Resolution         [RFC4795]
+224.0.0.253 Teredo                                       [RFC-huitema-v6ops-teredo-05.txt]
+224.0.0.254 RFC3692-style Experiment (*)                 [RFC4727]
+224.0.0.255-224.0.0.255 Unassigned                           [JBP]
+
+  *  It is only appropriate to use these values in explicitly-
+      configured experiments; they MUST NOT be shipped as defaults in
+      implementations.  See RFC 3692 for details.
+
+224.0.1.0 - 224.0.1.255  (224.0.1/24) Internetwork Control Block
+----------------------------------------------------------------
+
+224.0.1.0  VMTP Managers Group	                  [RFC1045][DRC3]
+224.0.1.1  NTP      Network Time Protocol          [RFC1119][DLM1]
+224.0.1.2  SGI-Dogfight                                      [AXC]
+224.0.1.3  Rwhod                                             [SXD]
+224.0.1.4  VNP                                              [DRC3]       
+224.0.1.5  Artificial Horizons - Aviator                     [BXF]
+224.0.1.6  NSS - Name Service Server                        [BXS2]
+224.0.1.7  AUDIONEWS - Audio News Multicast                 [MXF2]
+224.0.1.8  SUN NIS+ Information Service                     [CXM3]
+224.0.1.9  MTP Multicast Transport Protocol                  [SXA]
+224.0.1.10 IETF-1-LOW-AUDIO                                  [SC3]
+224.0.1.11 IETF-1-AUDIO                                      [SC3]
+224.0.1.12 IETF-1-VIDEO                                      [SC3]
+224.0.1.13 IETF-2-LOW-AUDIO                                  [SC3]
+224.0.1.14 IETF-2-AUDIO                                      [SC3]
+224.0.1.15 IETF-2-VIDEO                                      [SC3]
+224.0.1.16 MUSIC-SERVICE                        [Guido van Rossum]
+224.0.1.17 SEANET-TELEMETRY                        [Andrew Maffei]
+224.0.1.18 SEANET-IMAGE                            [Andrew Maffei]
+224.0.1.19 MLOADD                                         [Braden]
+224.0.1.20 any private experiment                            [JBP]
+224.0.1.21 DVMRP on MOSPF                               [John Moy]
+224.0.1.22 SVRLOC                                       [Veizades]
+224.0.1.23 XINGTV                                         [Gordon]
+224.0.1.24 microsoft-ds                    <arnoldm&microsoft.com>
+224.0.1.25 nbc-pro                      <bloomer&birch.crd.ge.com>
+224.0.1.26 nbc-pfn                      <bloomer&birch.crd.ge.com>
+224.0.1.27 lmsc-calren-1                                    [Uang]
+224.0.1.28 lmsc-calren-2                                    [Uang]
+224.0.1.29 lmsc-calren-3                                    [Uang]
+224.0.1.30 lmsc-calren-4                                    [Uang]
+224.0.1.31 ampr-info                                     [Janssen]
+224.0.1.32 mtrace                                         [Casner]
+224.0.1.33 RSVP-encap-1                                   [Braden]
+224.0.1.34 RSVP-encap-2                                   [Braden]
+224.0.1.35 SVRLOC-DA                                    [Veizades]
+224.0.1.36 rln-server                                       [Kean]
+224.0.1.37 proshare-mc                                     [Lewis]
+224.0.1.38 unassigned
+224.0.1.39 cisco-rp-announce                           [Farinacci]
+224.0.1.40 cisco-rp-discovery                          [Farinacci]
+224.0.1.41 gatekeeper                                       [Toga]
+224.0.1.42 iberiagames                                   [Marocho]
+224.0.1.43 nwn-discovery                                 [Zwemmer]
+224.0.1.44 nwn-adaptor                                   [Zwemmer]
+224.0.1.45 isma-1                                          [Dunne]
+224.0.1.46 isma-2                                          [Dunne]
+224.0.1.47 telerate                                         [Peng]
+224.0.1.48 ciena                                         [Rodbell]
+224.0.1.49 dcap-servers                                  [RFC2114]
+224.0.1.50 dcap-clients                                  [RFC2114]
+224.0.1.51 mcntp-directory                                  [Rupp]
+224.0.1.52 mbone-vcr-directory                         [Holfelder]
+224.0.1.53 heartbeat                                     [Mamakos]
+224.0.1.54 sun-mc-grp                                    [DeMoney]
+224.0.1.55 extended-sys                                    [Poole]
+224.0.1.56 pdrncs                                     [Wissenbach]
+224.0.1.57 tns-adv-multi                                   [Albin]
+224.0.1.58 vcals-dmu                                     [Shindoh]
+224.0.1.59 zuba                                          [Jackson]
+224.0.1.60 hp-device-disc                               [Albright]
+224.0.1.61 tms-production                                 [Gilani]
+224.0.1.62 sunscalar                                      [Gibson]
+224.0.1.63 mmtp-poll                                    [Costales]
+224.0.1.64 compaq-peer                                     [Volpe]
+224.0.1.65 iapp                                            [Meier]
+224.0.1.66 multihasc-com                               [Brockbank]
+224.0.1.67 serv-discovery                                 [Honton]
+224.0.1.68 mdhcpdisover                                  [RFC2730]
+224.0.1.69 MMP-bundle-discovery1                          [Malkin]
+224.0.1.70 MMP-bundle-discovery2                          [Malkin]
+224.0.1.71 XYPOINT DGPS Data Feed                          [Green]
+224.0.1.72 GilatSkySurfer                                    [Gal]
+224.0.1.73 SharesLive                                     [Rowatt]
+224.0.1.74 NorthernData                                   [Sheers]
+224.0.1.75 SIP                                       [Schulzrinne]
+224.0.1.76 IAPP                                          [Moelard]
+224.0.1.77 AGENTVIEW                                        [Iyer]
+224.0.1.78 Tibco Multicast1                                 [Shum]
+224.0.1.79 Tibco Multicast2                                 [Shum]
+224.0.1.80 MSP                                             [Caves]
+224.0.1.81 OTT (One-way Trip Time)                      [Schwartz]  
+224.0.1.82 TRACKTICKER                                    [Novick]
+224.0.1.83 dtn-mc                                         [Gaddie]
+224.0.1.84 jini-announcement                           [Scheifler]
+224.0.1.85 jini-request                                [Scheifler]
+224.0.1.86 sde-discovery                                 [Aronson]
+224.0.1.87 DirecPC-SI                                     [Dillon] 
+224.0.1.88 B1RMonitor                                    [Purkiss]
+224.0.1.89 3Com-AMP3 dRMON                               [Banthia] 
+224.0.1.90 imFtmSvc                                       [Bhatti]
+224.0.1.91 NQDS4                                           [Flynn]
+224.0.1.92 NQDS5                                           [Flynn]
+224.0.1.93 NQDS6                                           [Flynn]
+224.0.1.94 NLVL12                                          [Flynn]
+224.0.1.95 NTDS1                                           [Flynn]
+224.0.1.96 NTDS2                                           [Flynn]
+224.0.1.97 NODSA                                           [Flynn]
+224.0.1.98 NODSB                                           [Flynn]
+224.0.1.99 NODSC                                           [Flynn]
+224.0.1.100 NODSD                                          [Flynn]
+224.0.1.101 NQDS4R                                         [Flynn]
+224.0.1.102 NQDS5R                                         [Flynn]
+224.0.1.103 NQDS6R                                         [Flynn]
+224.0.1.104 NLVL12R                                        [Flynn]
+224.0.1.105 NTDS1R                                         [Flynn]
+224.0.1.106 NTDS2R                                         [Flynn]
+224.0.1.107 NODSAR                                         [Flynn]
+224.0.1.108 NODSBR                                         [Flynn]
+224.0.1.109 NODSCR                                         [Flynn]
+224.0.1.110 NODSDR                                         [Flynn]
+224.0.1.111 MRM                                              [Wei]
+224.0.1.112 TVE-FILE                                 [Blackketter]
+224.0.1.113 TVE-ANNOUNCE                             [Blackketter]
+224.0.1.114 Mac Srv Loc                                 [Woodcock]
+224.0.1.115 Simple Multicast                           [Crowcroft]
+224.0.1.116 SpectraLinkGW                               [Hamilton]
+224.0.1.117 dieboldmcast                                   [Marsh]
+224.0.1.118 Tivoli Systems                               [Gabriel]
+224.0.1.119 pq-lic-mcast                                  [Sledge]
+224.0.1.120 SPRYWARE LLC                              [Kreutzjans]
+224.0.1.121 Pipesplatform                                [Dissett] 
+224.0.1.122 LiebDevMgmg-DM                                [Velten]
+224.0.1.123 TRIBALVOICE                                 [Thompson]
+224.0.1.124 Unassigned (Retracted 1/29/01)
+224.0.1.125 PolyCom Relay1                              [Coutiere]
+224.0.1.126 Infront Multi1                              [Lindeman]
+224.0.1.127 XRX DEVICE DISC                                 [Wang]
+224.0.1.128 CNN                                            [Lynch]
+224.0.1.129 PTP-primary                          [IEEE1588][K.Lee]
+224.0.1.130 PTP-alternate1                       [IEEE1588][K.Lee]
+224.0.1.131 PTP-alternate2                       [IEEE1588][K.Lee]
+224.0.1.132 PTP-alternate3                       [IEEE1588][K.Lee]
+224.0.1.133 ProCast                                       [Revzen]
+224.0.1.134 3Com Discp                                     [White]
+224.0.1.135 CS-Multicasting                               [Stanev]
+224.0.1.136 TS-MC-1                                    [Sveistrup]
+224.0.1.137 Make Source                                     [Daga]
+224.0.1.138 Teleborsa                                  [Strazzera]
+224.0.1.139 SUMAConfig                                   [Wallach]
+224.0.1.140 capwap-ac                                    [RFC5415]
+224.0.1.141 DHCP-SERVERS                                    [Hall]
+224.0.1.142 CN Router-LL                                [Armitage]
+224.0.1.143 EMWIN                                       [Querubin]
+224.0.1.144 Alchemy Cluster                             [O'Rourke]
+224.0.1.145 Satcast One                                   [Nevell]
+224.0.1.146 Satcast Two                                   [Nevell]
+224.0.1.147 Satcast Three                                 [Nevell]
+224.0.1.148 Intline                                    [Sliwinski]
+224.0.1.149 8x8 Multicast                                  [Roper]
+224.0.1.150 Unassigned                                       [JBP]
+224.0.1.151 Intline-1                                  [Sliwinski]
+224.0.1.152 Intline-2                                  [Sliwinski]
+224.0.1.153 Intline-3                                  [Sliwinski]
+224.0.1.154 Intline-4                                  [Sliwinski]
+224.0.1.155 Intline-5                                  [Sliwinski]
+224.0.1.156 Intline-6                                  [Sliwinski]
+224.0.1.157 Intline-7                                  [Sliwinski]
+224.0.1.158 Intline-8                                  [Sliwinski]
+224.0.1.159 Intline-9                                  [Sliwinski]
+224.0.1.160 Intline-10                                 [Sliwinski]
+224.0.1.161 Intline-11                                 [Sliwinski]
+224.0.1.162 Intline-12                                 [Sliwinski]
+224.0.1.163 Intline-13                                 [Sliwinski]
+224.0.1.164 Intline-14                                 [Sliwinski]
+224.0.1.165 Intline-15                                 [Sliwinski]
+224.0.1.166 marratech-cc                                  [Parnes]
+224.0.1.167 EMS-InterDev                                    [Lyda]
+224.0.1.168 itb301                                      [Rueskamp]
+224.0.1.169 rtv-audio                                      [Adams]
+224.0.1.170 rtv-video                                      [Adams]
+224.0.1.171 HAVI-Sim                                  [Wasserroth]
+224.0.1.172 Nokia Cluster                               [O'Rourke]
+224.0.1.173 host-request                              [K.Thompson]  
+224.0.1.174 host-announce                             [K.Thompson]  
+224.0.1.175 ptk-cluster                                  [Hodgson]
+224.0.1.176 Proxim Protocol                               [Shukla]  
+224.0.1.177 Gemtek Systems                                 [A.Lee]
+224.0.1.178 IEEE IAPP                                      [Kerry]
+224.0.1.179 1451_Dot5_802_Discovery                      [Coleman]  11 April 2006
+224.0.1.180 1451_Dot5_802_Group_1                        [Coleman]  11 April 2006  
+224.0.1.181 1451_Dot5_802_Group_2                        [Coleman]  11 April 2006  
+224.0.1.182 1451_Dot5_802_Group_3                        [Coleman]  11 April 2006  
+224.0.1.183 1451_Dot5_802_Group_4                        [Coleman]  11 April 2006
+224.0.1.184 VFSDP                                         [Yellen]  06 March 2007
+224.0.1.185 ASAP                                         [RFC5352] 
+224.0.1.186-224.0.1.255  Unassigned                          [JBP] 
+
+
+224.0.2.0 - 224.0.255.0   AD-HOC Block
+--------------------------------------
+224.0.2.0  Unassigned
+224.0.2.1  "rwho" Group (BSD) (unofficial)                   [JBP]
+224.0.2.2  SUN RPC PMAPPROC_CALLIT                          [BXE1]
+224.0.2.3  EPSON-disc-set                       [SEIKO EPSON Corp]
+224.0.2.4-224.0.2.063 Unassigned
+224.0.2.064-224.0.2.095 Amex MDD Service                   [Madry]  April 1996, July 2007 - modified
+224.0.2.096-224.0.2.127 BallisterNet                   [Ballister]
+224.0.2.128-224.0.2.191 WOZ-Garage                     [Marquardt]
+224.0.2.192-224.0.2.255 SIAC MDD Market Service          [Lamberg]
+224.0.3.000-224.0.3.255 RFE Generic Service                 [DXS3]
+224.0.4.000-224.0.4.255 RFE Individual Conferences          [DXS3]
+224.0.5.000-224.0.5.127 CDPD Groups                  [Bob Brenner]
+224.0.5.128-224.0.5.191 SIAC Market Service                  [Cho]
+224.0.5.192-224.0.5.255 SIAC NYSE Order PDP protocol        [Chan]
+224.0.6.000-224.0.6.127 Cornell ISIS Project           [Tim Clark]
+224.0.6.128-224.0.6.255 Unassigned                          [IANA]
+224.0.7.000-224.0.7.255 Where-Are-You                    [Simpson]
+224.0.8.000-224.0.8.255 INTV                               [Tynan]
+224.0.9.000-224.0.9.255 Invisible Worlds                 [Malamud]
+224.0.10.000-224.0.10.255 DLSw Groups                        [Lee]
+224.0.11.000-224.0.11.255 NCC.NET Audio                    [Rubin]
+224.0.12.000-224.0.12.063 Microsoft and MSNBC              [Blank]
+224.0.13.000-224.0.13.255 WorldCom Broadcast Services     [Barber]
+224.0.14.000-224.0.14.255 NLANR                          [Wessels]
+224.0.15.000-224.0.15.255 Agilent Technologies    [van der Meulen]
+224.0.16.000-224.0.16.255 XingNet                       [Uusitalo]
+224.0.17.000-224.0.17.031 Mercantile & Commodity Exchange [Gilani]
+224.0.17.032-224.0.17.063 NDQMD1                          [Nelson]
+224.0.17.064-224.0.17.127 ODN-DTV                         [Hodges]
+224.0.18.000-224.0.18.255 Dow Jones                         [Peng]
+224.0.19.000-224.0.19.063 Walt Disney Company             [Watson]
+224.0.19.064-224.0.19.095 Cal Multicast                    [Moran]  
+224.0.19.096-224.0.19.127 Amex Market Service              [Madry]  October 1997, July 2007 - modified
+224.0.19.128-224.0.19.191 IIG Multicast                     [Carr]
+224.0.19.192-224.0.19.207 Metropol                      [Crawford]
+224.0.19.208-224.0.19.239 Xenoscience, Inc.                 [Timm]
+224.0.19.240-224.0.19.255 MJDPM                         [Straight]
+224.0.20.000-224.0.20.063 MS-IP/TV                          [Wong]
+224.0.20.064-224.0.20.127 Reliable Network Solutions      [Vogels]
+224.0.20.128-224.0.20.143 TRACKTICKER Group               [Novick]
+224.0.20.144-224.0.20.207 CNR Rebroadcast MCA            [Sautter]
+224.0.21.000-224.0.21.127 Talarian MCAST                  [Mendal]
+224.0.22.000-224.0.22.239 WORLD MCAST                    [Stewart]
+224.0.22.240-224.0.22.255 Jones International           [Ginsburg]  31 October 2007
+224.0.23.0 ECHONET                                         [Saito]
+224.0.23.1 Ricoh-device-ctrl                             [Nishida] 
+224.0.23.2 Ricoh-device-ctrl                             [Nishida]
+224.0.23.3-224.0.23.10  Telefeed                          [Beddoe]
+224.0.23.11 SpectraTalk                                  [Karhade]
+224.0.23.12 EIBnet/IP                                   [Goossens]
+224.0.23.13 TVE-ANNOUNCE2                                  [Dolan]
+224.0.23.14 DvbServDisc                             [van Willigen]
+224.0.23.15-224.0.23.31 MJDPM                           [Straight]
+224.0.23.32 Norman MCMP                                  [Bognaes]
+224.0.23.33 RRDP                                           [Hoshi]
+224.0.23.34 AF_NA                                     [Brzezinski]
+224.0.23.35 AF_OPRA_NBBO                              [Brzezinski]
+224.0.23.36 AF_OPRA_FULL                              [Brzezinski]
+224.0.23.37 AF_NEWS                                   [Brzezinski]
+224.0.23.38 AF_NA_CHI                                 [Brzezinski]
+224.0.23.39 AF_OPRA_NBBO_CHI                          [Brzezinski]
+224.0.23.40 AF_OPRA_FULL_CHI                          [Brzezinski]
+224.0.23.41 AF_NEWS_CHI                               [Brzezinski]           
+224.0.23.42 Control for IP Video                       [Guillaume]
+224.0.23.43 acp-discovery                                   [Belk]
+224.0.23.44 acp-management                                  [Belk]
+224.0.23.45 acp-data                                        [Belk]
+224.0.23.46 oap-multicast                                [Eastham]  16 June 2006
+224.0.23.47 AF_DOB_CHI                                [Brzezinski]  28 October 2005
+224.0.23.48 AF_OPRA_FULL2_CHI                         [Brzezinski]  28 October 2005
+224.0.23.49 AF_DOB                                    [Brzezinski]  28 October 2005
+224.0.23.50 AF_OPRA_FULL2                             [Brzezinski]  28 October 2005
+224.0.23.51 Fairview                                        [Lyle]  07 August 2006
+224.0.23.52 Amex Market Data                               [Madry]  11 August 2006
+224.0.23.53 MCP                                        [DeBaillie]  30 November 2006
+224.0.23.54 ServDiscovery                               [Langille]  17 January 2007
+224.0.23.55 noaaport1                                   [Querubin]  04 February 2008
+224.0.23.56 noaaport2                                   [Querubin]  04 February 2008
+224.0.23.57 noaaport3                                   [Querubin]  04 February 2008
+224.0.23.58 noaaport4                                   [Querubin]  04 February 2008
+224.0.23.59 DigacIP7                                   [Niedfeldt]  22 February 2008
+224.0.23.60 AtscSvcSig                                  [Whitaker]  19 December 2008
+224.0.23.61 SafetyNET p (potentially IGMPv1)                [Pilz]  13 March 2009
+224.0.23.62 BluemoonGamesMC                               [Mettin]  12 May 2009
+224.0.23.63 iADT Discovery                                [Suhler]  12 May 2009
+224.0.23.64-224.0.23.80 Moneyline                       [Petronio]
+224.0.23.81-224.0.23.127 Reserved (Moneyline)
+224.0.23.128-224.0.23.157 PHLX                         [Linthicum]
+224.0.23.158 VSCP                                         [Tewiah]
+224.0.23.159 LXI-EVENT                                   [Barendt]  04 November 2005
+224.0.23.160 solera_lmca                               [Armstrong]  09 February 2006
+224.0.23.161 VBooster                                    [Pevzner]  17 March 2006
+224.0.23.162 cajo discovery                            [Catherino]  31 March 2006
+224.0.23.163 INTELLIDEN                                   [Schenk]  31 March 2006
+224.0.23.164 IceEDCP                                     [O.Lewis]  11 July 2006
+224.0.23.165 omasg                                       [Lipford]  11 July 2006
+224.0.23.166 MEDIASTREAM                               [Robberson]  15 September 2006
+224.0.23.167 Systech Mcast                              [Jakubiec]  21 September 2006
+224.0.23.168 tricon-system-management                     [Gabler]  06 July 2007
+224.0.23.169 MNET discovery                                [Crick]  14 January 2008
+224.0.23.170-224.0.23.191 Unassigned
+224.0.23.192-224.0.23.255 PINKOTC                        [Shulgin]  12 August 2008
+224.0.24.0-224.0.24.127 AGSC UK VVs                       [Rowley]  09 June 2006
+224.0.24.128-224.0.24.255 EM-MULTI                      [Sorensen]  07 August 2006
+224.0.25.0-224.0.28.255 CME Market Data               [Brakauskas]  22 March 2007
+224.0.29.0-224.0.30.255 Deutsche Boerse                    [Drwal]  22 March 2007
+224.0.31.0-224.0.34.255 CME Market Data               [Brakauskas]  17 July 2007
+224.0.35.0-224.0.35.255 M2S                                [Gilad]  31 August 2007
+224.0.36.0-224.0.38.255 Unassigned
+224.0.39.0-224.0.40.255 CDAS                               [Olsen]  12 September 2007
+224.0.41.0-224.0.41.255 NYSE-EURONEXT                      [Gupta]  28 November 2007
+224.0.42.0-224.0.45.255 MEDIAL                            [MEDIAL]  15 January 2008
+224.0.46.0-224.0.50.255 Deutsche Boerse                    [Drwal]  25 January 2008
+224.0.51.0-224.0.51.255 ALCOM-IPTV                       [Erikson]  09 April 2008
+224.0.52.0-224.0.53.255 NYSE-EURONEXT                  [Stevenson]  23 July 2008
+224.0.54.0-224.0.57.255 Get - BCN                       [Hvidsten]  20 August 2008
+224.0.58.0-224.0.61.255 NYSE-AMEX_L1_L2                 [Castillo]  27 August 2008
+224.0.62.0-224.0.62.255 BATS                               [Brown]  24 December 2008
+224.0.63.0-224.0.63.255 BATS Trading                    [Gorsline]  13 March 2009
+224.0.64.0-224.0.67.255 NYSE Euronext                     [Gupta2]  13 March 2009
+224.0.68.0-224.0.69.255 ISE                               [Albert]  12 May 2009
+224.0.70.0-224.0.71.255 NYSE-AB-UTP                      [Serrano]  16 June 2009
+224.0.72.0-224.0.251.255  Unassigned
+224.0.252.0-224.0.252.255 KPN Broadcast Services           [Spelt] 
+224.0.253.000-224.0.253.255 KPN Broadcast Services         [Spelt]              
+224.0.254.000-224.0.254.255 Intelsat IPTV                   [Elad]  31 March 2006
+224.0.255.000-224.0.255.255 Intelsat IPTV                   [Elad]  31 March 2006
+
+224.1.0.0-224.1.255.255 (224.1/16) ST Multicast Groups
+-------------------------------------------------------
+
+224.1.0.0-224.1.0.37  Reserved                              [IANA]
+224.1.0.38 dantz                                           [Zulch]
+224.1.0.39-224.1.1.255 Reserved                             [IANA]
+224.1.2.0-224.1.2.255  arca-ex                           [Andrews]  17 February 2006
+224.1.3.0-224.1.4.255  NOB Cross media facilities     [Mattheijer]  22 May 2006
+224.1.5.0-224.1.255.255 Reserved                            [IANA]
+
+224.2.0.0-224.2.255.255 (224.2/16) SDP/SAP Block
+--------------------------------------------------
+
+ 224.2.0.0-224.2.127.253    Multimedia Conference Calls       [SC3]
+ 224.2.127.254              SAPv1 Announcements               [SC3]
+ 224.2.127.255              SAPv0 Announcements (deprecated)  [SC3]
+ 224.2.128.0-224.2.255.255  SAP Dynamic Assignments           [SC3]
+
+224.3.0.0-224.4.255.255 (224.3/16, 224.4/16)  AD-HOC Block
+-----------------------------------------------------------
+
+224.3.0.0 - 224.3.0.63 Nasdaqmdfeeds  (re-new/March 2003)    [Nelson]
+224.3.0.64-224.3.255.255     Reserved                          [IANA]
+224.4.0.0-224.4.0.255  London Stock Exchange             [Whitehouse]  31 March 2006
+224.4.1.0-224.4.1.255  London Stock Exchange               [Saunders]  25 February 2008
+224.4.2.0-224.4.2.255  London Stock Exchange               [Saunders]  29 February 2008
+224.4.3.0-224.4.4.255  London Stock Exchange               [Saunders]  24 December 2008
+224.4.5.0-224.4.6.255  London Stock Exchange               [Saunders]  12 May 2009
+224.4.7.0-224.251.255.255  Reserved                            [IANA]
+224.252.000.000-224.255.255.255 DIS Transient Groups  [IANA][RFC2365]
+225.000.000.000-231.255.255.255 Reserved                       [IANA]
+
+
+232.0.0.0-232.255.255.255 (232/8) Source-Specific Multicast Block
+Registration Rules: IETF Consensus
+Addresses within the 232.0.1.0-232.255.255.255 are dynamically 
+allocated by hosts when needed [RFC4607]
+
+Address/Range                    Description                         Reference
+-------------------------        ----------------------------------  ---------
+232.0.0.0                        Reserved                            [RFC4607]
+232.0.0.1-232.0.0.255            Reserved for IANA allocation        [RFC4607]
+232.0.1.0-232.255.255.255        Reserved for local host allocation  [RFC4607]
+
+
+233.000.000.000-233.255.255.255  GLOP Block                          [RFC3180]
+234.000.000.000-238.255.255.255  Reserved                            [IANA]
+
+239.000.000.000-239.255.255.255  Administratively Scoped             [IANA][RFC2365]
+
+ 239.000.000.000-239.063.255.255 Reserved                            [IANA]
+ 239.064.000.000-239.127.255.255 Reserved                            [IANA]
+ 239.128.000.000-239.191.255.255 Reserved                            [IANA]
+ 239.192.000.000-239.251.255.255 Organization-Local Scope            [Meyer][RFC2365]
+ 239.252.000.000-239.252.255.255 Site-Local Scope (reserved)         [Meyer][RFC2365]
+ 239.253.000.000-239.253.255.255 Site-Local Scope (reserved)         [Meyer][RFC2365]
+ 239.254.000.000-239.254.255.255 Site-Local Scope (reserved)         [Meyer][RFC2365]
+ 239.255.000.000-239.255.255.255 Site-Local Scope                    [Meyer][RFC2365]
+ 239.255.002.002                 rasadv                              [Thaler]                           
+
+There is a concept of relative addresses to be used with the scoped
+multicast addresses.  These relative addresses are listed here:
+
+
+Relative     Description                                       Reference
+---------    ------------------------------------------------- ---------
+  0          SAP Session Announcement Protocol                 [Handley]
+  1          MADCAP Protocol                                   [RFC2730]
+  2          SLPv2 Discovery                                   [Guttman]
+  3          MZAP                                              [Thaler]
+  4          Multicast Discovery of DNS Services               [Manning]
+  5          SSDP                                              [UPnP]
+  6          DHCP v4                                           [Hall]
+  7          AAP                                               [Hanna]
+  8          MBUS                                              [RFC3259]
+  9          UPnP                                              [UPnP]
+  10-252     Reserved - To be assigned by the IANA  
+  253        Reserved 
+  254        RFC3692-style Experiment (*)                      [RFC4727] 
+  255        Reserved - To be assigned by the IANA     
+                                                 
+  *  It is only appropriate to use these values in explicitly-
+      configured experiments; they MUST NOT be shipped as defaults in
+      implementations.  See RFC 3692 for details.
+
+These addresses are listed in the Domain Name Service under MCAST.NET
+and 224.IN-ADDR.ARPA.
+
+Note that when used on an Ethernet or IEEE 802 network, the 23
+low-order bits of the IP Multicast address are placed in the low-order
+23 bits of the Ethernet or IEEE 802 net multicast address
+1.0.94.0.0.0.  See the section on "IANA ETHERNET ADDRESS BLOCK".
+
+
+References
+----------
+[IEEE1588] http://ieee1588.nist.gov/ 
+
+[RFC1045]  Cheriton, D., "VMTP: Versatile Message Transaction
+           Protocol Specification", RFC 1045, Stanford University,
+           February 1988.
+
+[RFC1075]  Waitzman, D., C. Partridge, and S. Deering "Distance Vector
+           Multicast Routing Protocol", RFC-1075, BBN STC, Stanford
+           University, November 1988.
+
+[RFC1112]  Deering, S., "Host Extensions for IP Multicasting",
+           STD 5, RFC 1112, Stanford University, August 1989.
+
+[RFC1119]  Mills, D., "Network Time Protocol (Version 1), Specification
+           and Implementation", STD 12, RFC 1119, University of
+           Delaware, July 1988.
+
+[RFC1190]  Topolcic, C., Editor, "Experimental Internet Stream
+           Protocol, Version 2 (ST-II)", RFC 1190, CIP Working Group,
+           October 1990.
+
+[RFC1723]  Malkin, G., "RIP Version 2: Carying Additional Information",
+           RFC 1723, Xylogics, November 1994.
+
+[RFC2114]  Chiang, S, J. Lee adn H. Yasuda, "Data Link Switching Client
+           Access Protocol", RFC 2114, Cisco, Mitsubishi
+           February 1997.
+
+[RFC2189]  A. Ballardie, "Core Based Trees (CBT version 2) Multicast 
+           Routing Protocol Specification", RFC 2189, September 1997.
+           
+[RFC2328]  Moy, J., "OSPF Version 2", STD 54, RFC 2328, Ascend
+           Communications, April 1998.
+
+[RFC2365]  Meyer, D., "Administratively Scoped IP Multicast", RFC 2365,
+           University of Oregon, July 1998.
+
+[RFC2730]  Hanna, S., Patel, B. and M. Shah, "Multicast Address Dynamic
+           Client Allocation Protocol (MADCAP), December 1999.
+
+[RFC3077]  Duros, E., W. Dabbous, H. Izumiyama, N. Fujii, and Y. Zhang,
+           "A Link-Layer Tunneling Mechanism for Unidirectional Links",
+           RFC 3077, March 2001. 
+
+[RFC3259]  J. Ott, C. Perkins, and D. Kutscher, "A Message Bus for 
+           Local Coordination", RFC 3259, April 2002.
+
+[RFC3768]  R. Hinden, Ed., "Virtual Router Redundancy Protocol (VRRP)",
+           RFC 3768, April 2004.
+
+[RFC4286]  B. Haberman and J. Martin, "Multicast Router Discovery", 
+           RFC 4286, December 2005.
+
+[RFC4607]  H. Holbrook and B. Cain, "Source-Specific Multicast for IP",
+           RFC 4607, August 2006.
+
+[RFC4727]  B. Fenner, "Experimental values In IPv4, IPv6, ICMPv4, ICMPv6,
+           UDP and TCP Headers",  RFC 4727,  November 2006.
+
+[RFC4795]  B. Aboba, D. Thaler, L. Esibov, "Link-local Multicast Name 
+           Resolution (LLMNR)", RFC 4795, January 2007.
+
+[RFC4973]  P. Srisuresh and P. Joseph, "OSPF-xTE: An experimental extension to 
+           OSPF for Traffic Engineering", RFC 4973, July 2007.
+
+[RFC-huitema-v6ops-teredo-05.txt]
+           C. Huitema, "Teredo: Tunneling IPv6 over UDP through NATs", 
+           RFC XXXX, Month Year.
+
+[RFC5498]  I. Chakeres, "IANA Allocations for MANET Protocols", RFC 5498,
+           March 2009.
+
+[RFC5352]  R. Stewart, Q. Xie, M. Stillman, M. Tuexen, "Aggregate Server 
+           Access Protocol (ASAP)", RFC 5352, September 2008.
+
+[RFC5415]  P. Calhoun, Ed., M. Montemurro, Ed., D. Stanley, Ed., "CAPWAP 
+           Protocol Specification", RFC 5415, March 2009.
+
+People
+------
+[Aboba] Bernard Aboba, <bernarda&windows.microsoft.com>, May 2004.
+
+[Adams] Chris Adams, <jc.adams&reuters.com>, July 2000.
+
+[Albert] Fabrice Albert, <falbert&ise.com>, 12 May 2009.
+
+[Albin] Jerome Albin, <albin&taec.enet.dec.com>, June 1997.
+
+[Albright] Shivaun Albright, <shivaun_albright&hp.com>, July 1997.
+
+[Andrews] Dave Andrews, <DAndrews&archipelago.com>, 17 February 2006.
+
+[Armitage] Ian Armitage, <ian&coactive.com>, August 1999.
+
+[Armstrong] Mark Armstrong, <Mark.Armstrong&SoleraTec.com>, 09 February 2006.
+
+[Aronson] Peter Aronson, <paronson&esri.com>, August 1998.
+
+          <arnoldm&microsoft.com>
+
+[AXC] Andrew Cherenson, <arc&SGI.COM>
+
+[Baker] Fred Baker, <fred&cisco.com>, June 1997.
+
+[Bakke] Mark Bakke, <mbakke&cisco.com>, December 2001.
+
+[Ballardie] Tony Ballardie, <A.Ballardie&cs.ucl.ac.uk>, February 1997.
+
+[Ballister] Tom Ballister, <tom&ballister.com>, July 1997.
+
+[Banthia] Prakash Banthia, <prakash_banthia&3com.com>, September 1998.
+
+[Barber] Tony Barber, <tony.barber&wcom.com>, January 1997.
+
+[Barendt] Nick Barendt, <nbarendt&vxitech.com>, November 2005.
+
+[Beddoe] Wally Beddoe, <WBeddoe&tkusa.com>, April 2003.
+
+[Belk] Andy Belk, <register1&azulsystems.com>, February 2005.
+
+[Bhatti] Zia Bhatti, <zia&netright.com>, September 1998.
+
+[Blackketter] Dean Blackketter, <dean&corp.webtv.net>, November 1998.
+
+[Blank] Tom Blank, <tomblank&microsoft.com>, November 1996.
+
+<bloomer&birch.crd.ge.com>
+
+[Bognaes] Kristian A. Bognaes, <kbo&norman.no>, February 2004.
+
+[Braden] Bob Braden, <braden&isi.edu>, April 1996.
+
+[Brakauskas] Sarunas Brakauskas, <sbrakaus&cme.com>, 22 March 2007, 17 July 2007.
+
+[Bob Brenner]
+
+[Brockbank] Darcy Brockbank, <darcy&hasc.com>, December 1997.
+
+[Brown] Andrew Brown, <abrown&batstrading.com>, 24 December 2008.
+
+[Brzezinski] Bob Brzezinski, <bob.brzezinski&activfinancial.com>, November 2004,
+             May 2005, 28 October 2005.
+
+[BXE1] Brendan Eic, <brendan&illyria.wpd.sgi.com>
+
+[BXF] Bruce Factor, <ahi!bigapple!bruce&uunet.UU.NET>
+
+[BXS2] Bill Schilit, <schilit&parc.xerox.com>
+
+[Carr] Wayne Carr, <Wayne_Carr&ccm.intel.com>, December 1997.
+
+[Casner] Steve Casner, <casner&isi.edu>, January 1995.
+
+[Castillo] Frank Castillo, <fcastillo&nyx.com>, 27 August 2008.
+
+[Catherino] John Catherino, <cajo&dev.java.net>, 31 March 2006. 
+
+[Caughie] Colin Caughie, <cfc&indigo-avs.com>, May 2000.
+
+[Caves] Evan Caves, <evan&acc.com>, June 1998. 
+
+[Chan] Helen Chan, <hchan&siac.com>, August 2001.
+
+[Cheshire] Stuart Cheshire, <cheshire&apple.com>, April 2000. 
+
+[Chiang] Steve Chiang, <schiang&cisco.com>, January 1997
+
+[Cho] Joan Cho/SIAC, <jcho&siac.com>, October 1998.
+
+[Cipiere] Patrick Cipiere, <Patrick.Cipiere&UDcast.com>, January 1999,
+          January 2001. 
+
+[Tim Clark]
+
+[Coleman] Ryon Coleman, <rcoleman&3eti.com>, 11 April 2006.
+
+[Costales] Bryan Costales, <bcx&infobeat.com>, September 1997.
+
+[Crawford] James Crawford, <jcrawford&metropol.net>, May 1998.
+
+[Crick] Andy Crick, <acrick&haascnc.com>, 14 January 2008.
+
+[Crowcroft] Jon Crowcroft, <jon&hocus.cs.ucl.ac.uk>, November 1998.
+
+[CXM3] Chuck McManis, <cmcmanis&sun.com>
+
+[Daga] Anthony Daga, <anthony&mksrc.com>, June 1999.
+
+[DeBaillie] Tim DeBaillie, <debaillie&ciholas.com>, 30 November 2006.
+
+[Deering] Steve Deering, <deering&cisco.com>, October 1999.
+
+[Deleu] Johan Deleu, <johan.deleu&alcatel.be>, February 2002.
+
+[DeMoney] Michael DeMoney, <demoney&eng.sun.com>, April 1997.
+
+[Dillonn] Doug Dillon, <dillon&hns.com>, August 1998.
+
+[Dissett] Daniel Dissett, <ddissett&peerlogic.com>, December 1998.
+
+[DLM1] David Mills, <Mills&HUEY.UDEL.EDU>
+
+[Dolan]  Michael Dolan, <miked&tbt.com>, October 2003
+
+[DRC3] Dave Cheriton, <cheriton&DSG.STANFORD.EDU>
+
+[Drwal] Jan Drwal, <Jan.Drwal&deutsche-boerse.com>, 22 March 2007, 25 January 2008.
+
+[Dunne] Stephen Dunne, <sdun&isma.co.uk>, January 1997.
+
+[DXS3] Daniel Steinber, <Daniel.Steinberg&Eng.Sun.COM>
+
+[Eastham] Bryant Eastham, <protocols&pewla.us.pewg.panasonic.com>, 16 June 2006.
+
+[Elad] Karl Elad, <karl.elad&intelsat.com>, 31 March 2006.
+
+[Erikson] Jan-Erik Erikson, <jee&alcom.ax>, 09 April 2008.
+
+[Fenner] Bill Fenner, <fenner&parc.xerox.com>, December 1997.
+
+[Farinacci] Dino Farinacci, <dino&procket.com>, February, March 1996.
+
+[Flynn] Edward Flynn, <flynne&nasdaq.com>, September 1998.
+
+[Gabler] John Gabler, <john.gabler&ips.invensys.com>, 06 July 2007.
+
+[Gabriel] Jon Gabriel, <grabriel&tivoli.com>, December 1998.
+
+[Gaddie] Bob Gaddie, <bobg&dtn.com>, August 1998.
+
+[Gal] Yossi Gal, <yossi&gilat.com>, February 1998.
+
+[Gibson] Terry Gibson, <terry.gibson&sun.com>, August 1997.
+
+[Gilad] Itamar Gilad, <itamar&arootz.com>, 31 August 2007.
+
+[Gilani] Asad Gilani, <agilani&nymex.com>, July 1997.
+
+[Ginsburg] Jim Ginsburg, <JGinsburg&jonescorp.com>, 31 October 2007.
+
+[Glanzer] Dave Glanzer, <dave.glanzer&fieldbus.org>, June 2000, March 2003.
+
+[GSM11] Gary S. Malkin, <GMALKIN&XYLOGICS.COM>
+
+[Guillaume] Nadine Guillaume, <nadine.guillaume&sciatl.com>, February 2005.
+
+[Goossens] Marc Goossens, <mgoossens&eiba.com>, July 2003.
+
+[Gordon] Howard Gordon, <hgordon&xingtech.com>
+
+[Gorsline] Tim Gorsline, <tgorsline&batstrading.com>, 13 March 2009.
+
+[Green] Cliff Green, <cgreen&xypoint.com>, February 1998.
+
+[Gupta] Pankaj Gupta, <pgupta&nyse.com>, 28 November 2007. 
+
+[Gupta2] Pankaj Gupta, <pgupta&nyx.com>, 13 March 2009.
+
+[Guttman] Erik Guttman, <Erik.Guttman&sun.com>, March 1998,
+          December 2001.
+
+[Hall] Eric Hall, <ehall&ntrg.com>, August 1999, October 1999. 
+
+[Hamilton] Mark Hamilton, <mah&spectralink.com>, November 1998.
+
+[Handley] Mark Handley, <mjh&ISI.EDU>, December 1998.
+
+[Hanna] Stephen Hanna, <steve.hanna&sun.com>, July 2000.
+
+[Hinden] Bob Hinden, <hinden&Ipsilon.com>, November 1997.
+
+[Hodges] Richard Hodges, <rh&source.net>, March 1999.
+
+[Hodgson] Robert Hodgson, <robert&paratek.co.uk>, December 2001.
+
+[Holfelder] Wieland Holdfelder, <whd&pi4.informatik.uni-mannheim.de>,
+
+January 1997.
+
+[Honton] Chas Honton, <chas&secant.com>, December 1997.
+
+[Hoshi] Tetsuo Hoshi, <tetsuo.hoshi&jp.yokogawa.com>, June 2004.
+
+[Hvidsten] Arne Hvidsten, <arne.hvidsten&get.no>, 20 August 2008.
+
+[IANA] IANA <iana&iana.org>
+
+[Iyer] Ram Iyer, <ram&aaccorp.com>, March 1998.
+
+[Jackson] Dan Jackson, <jdan&us.ibm.com>, September 1997.
+
+[Jakubiec] Dan Jakubiec, <dan.jakubiec&systech.com>, 21 September 2006.
+
+[Janssen] Rob Janssen, <rob&pe1chl.ampr.org>, January 1995.
+
+[JBP] Jon Postel, <postel&isi.edu>
+ 
+[JXM1] Jim Miner, <miner&star.com>
+
+[Kalhour] Morteza Kalhour, <morteza.kalhour&nokia.com>, October 2002.
+
+[Kammerlander] Ralph Kammerlander, <ralph.kammerlander&khe.siemens.de>,
+               June 2000.
+
+[Karhade] Madhav Karhade, <Madhav.Karhade&WiBhu.com>, May 2003.
+
+[Kean] Brian Kean, <bkean&dca.com>, August 1995.
+
+[Kerkan] Brian Kerkan, <brian&satcomsystems.com>, May 2000. 
+
+[Kittivatcharapong] Sakon Kittivatcharapong, <sakonk&cscoms.net>, May 2000.
+
+[Koopman] Dirk Koopman, <djk&tobit.co.uk>, July 2000.
+
+[Kreutzjans] Michael Kreutzjans, <mike&spryware.com>, March 2007.
+
+[KS14] Karen Seo, <kseo&bbn.com> 
+
+[K.Thompson] Keith Thompson, <thompson&ridgeback.east.sun.com>, June 2001.
+
+[Kutscher] Dirk Kutscher, <dku&tzi.org>, May 2001. 
+
+[Lamberg] Mike Lamberg, <mlamberg&siac.com>, February 1997.
+
+[A.Lee] Alex Lee, <alex_mrlee&gemtek.com.tw>, October 2002.
+
+[Lee] Choon Lee, <cwl&nsd.3com.com>, April 1996.
+
+[K.Lee] Kang Lee, <kang.lee&nist.gov>, April 1999, 02 February 2007.
+
+[Lewis] Mark Lewis, <Mark_Lewis&ccm.jf.intel.com>, October 1995.
+
+[O.Lewis] Oliver Lewis, <o.lewis&icerobotics.co.uk>, 11 July 2006.
+
+[Lindeman] Morten Lindeman, <Morten.Lindeman&os.telia.no>, March 1999.
+
+[Lipford] Mark Lipford, <mark.a.lipford&sprint.com>, 11 July 2006.
+
+[Lyda] Stephen T. Lyda, <slyda&emsg.com>, February 2000.
+
+[Lyle] Jim Lyle, <jim.lyle&siliconimage.com>, 07 August 2006.
+
+[Lynch] Joel Lynch, <joel.lynch&cnn.com>, April 1999.
+
+[Madry] Nabeel Madry, <nabeel.madry&amex.com>, 11 August 2006, 05 July 2007.
+
+[Malamud] Carl Malamud, <carl&invisible.net>, April 1998.
+
+[Andrew Maffei]
+
+[Malkin] Gary Scott Malkin, <gmalkin&baynetworks.com>, February 1998.
+
+[Mamakos] Louis Mamakos, <louie&uu.net>, March 1997.
+
+[Manning] Bill Manning, <bmanning&isi.edu>, August 1999.
+
+[Marocho] Jose Luis Marocho, <73374.313&compuserve.com>, July 1996.
+
+[Marquardt] Douglas Marquardt, <dmarquar&woz.org>, February 1997.
+
+[Marsh] Gene Marsh, <MarshM&diebold.com>, November 1998.
+
+[Martinicky] Brian Martinicky, <Brian_Martinicky&automationintelligence.com>,
+             March 2000.
+
+[Mattheijer] Marcel Mattheijer, <noc&nob.nl>, 22 May 2006.
+
+[MEDIAL] Media Alliance, JSC, <noc&medi-a.ru>, 15 January 2008.
+
+[Meier] Bob Meier, <meierb&norand.com>, December 1997.
+
+[Mendal] Geoff Mendal, <mendal&talarian.com>, January 1999.
+
+[Mettin] Christopher Mettin, <cmettin&gqbc-online.com>, 12 May 2009.
+
+[Meyer] David Meyer, <meyer&ns.uoregon.edu>, January 1997.
+
+[Meyer2] David Meyer, <dmm&cisco.com>, June 1999 - MALLOC assignment
+for temp use: renew 06/2000
+
+[Moelard] Henri Moelard, <HMOELARD&wcnd.nl.lucent.com>, March 1998.
+
+[Moran] Ed Moran, <admin&cruzjazz.com>, October 1997.
+
+[Moy] John Moy, <jmoy&casc.com>
+
+[Kerry] Stuart Kerry, <stuart.kerry&philips.com>, January 2003.
+
+[Langille] Paul Langille, <plangille&dnpg.com>, 17 January 2007.
+
+[Linthicum] Dana Linthicum, <dana.linthicum&phlx.com>, January 2004.
+
+[MXF2] Martin Forssen, <maf&dtek.chalmers.se>
+
+[Nelson] Gunnar Nelson, <nelsong&nasd.com>, March 1999.
+                       <gunnar.nelson&nazdaq.com>, March 2002.
+
+[Nevell] Julian Nevell, <JNEVELL&vbs.bt.co.uk>, August 1999.
+
+[Niedfeldt] Jonathan Niedfeldt, <jon&digitalacoustics.com>, 22 February 2008.
+
+[Nishida] Akihiro Nishida, <nishida&src.ricoh.co.jp>, February 2003.
+
+[Novick] Alan Novick, <anovick&tdc.com>, August 1998.
+
+[O'Rourke] Stacey O'Rourke, <stacey&network-alchemy.com>, 
+           <stacey&cips.nokia.com>, August 1999, January 2001.
+
+[Olsen] Oyvind H. Olsen, <oyvind-hollup.olsen&canaldigital.com>, 12 September 2007.
+
+[Parnes] Peter Parnes, <peppar&marratech.com> February 2000.
+
+[Peng] Wenjie Peng, <wpeng&tts.telerate.com>, January 1997.
+
+[Petronio] Guido Petronio, <guido.petronio&moneyline.com>, January 2004.
+
+[Pevzner] Alexander Pevzner, <pzz&pzz.msk.ru>, 17 March 2006.
+
+[Pilz] Pilz GmbH & Co. KG, <pilz.gmbh&pilz.de>, 17 March 2009.
+
+[Polishinski] Steve Polishinski, <spolishinski&etcconnect.com>,  March 2000.
+
+[Poole] David Poole, <davep&extendsys.com>, April 1997.
+
+[Przygienda] Tony Przygienda, <prz&siara.com>, October 1999.
+
+[Purkiss] Ed Purkiss, <epurkiss&wdmacodi.com>, September 1998.
+
+[Querubin] Antonio Querubin, <tony&lava.net>, August 1999, 04 February 2008.
+
+[Revzen] Shai Revzen, <shai.revzen&harmonicinc.com>, April 1999.
+
+[Robberson] Maurice Robberson, <ceo&mediastreamusa.com>, 15 September 2006.
+
+[Rodbell] Mike Rodbell, <mrodbell&ciena.com>, January 1997.
+
+[Roper] Mike Roper, <mroper&8x8.com>, September 1999.
+
+[Guido van Rossum]
+
+[Rowatt] Shane Rowatt, <shane.rowatt&star.com.au>, March 1997.
+
+[Rowley] Andrew Rowley, <Andrew.Rowley&manchester.ac.uk>, 09 June 2006.
+
+[Rubin] David Rubin, <drubin&ncc.net>, August 1996.
+
+[Rupp] Heiko Rupp, <hwr&xlink.net>, January 1997.
+
+[Rueskamp] Bodo Rueskamp, <br&itchigo.com>, March 2000.
+
+[Saito] Takeshi Saito, <takeshi.saito&toshiba.co.jp>, February 2003.
+
+[Saunders] Greig Saunders, <gsaunder&londonstockexchange.com>, 25 February 2008, 29 February 2008, 
+           24 December 2008, 12 May 2009.
+
+[Sautter] Robert Sautter, <rsautter&acdnj.itt.com>, August 1999.
+
+[SC3] Steve Casner, <casner&precept.com>
+
+[Scannell] Piers Scannell, <piers&globecastne.com>, March 2000.
+
+[Scheifler] Bob Scheifler, <Bob.Scheifler&sun.com>, August 1998.
+
+[Schenk] Jeff Schenk, <Jeff.Schenk&intelliden.com>, 31 March 2006.
+
+[Schwartz] Beverly Schwartz, <bschwart&BBN.COM>, June 1998.
+
+[SEIKO EPSON Corp] SEIKO EPSON Corp, <ogata.hideaki&exc.epson.co.jp>, January 2005.
+
+[Serrano] Sam Serrano, <sserrano&nyx.com>, 16 June 2009.
+
+[Shindoh] Masato Shindoh, <jl11456&yamato.ibm.co.jp>, August 1997.
+
+[Shukla] Gajendra Shukla, <gshukla&proxim.com>, February 2002.
+
+[Shulgin] Sergey Shulgin, <sshulgin&pinkotc.com>, 12 August 2008.
+
+[Shum] Raymond Shum, <rshum&ms.com>, April 1998.
+
+[Simpson] Bill Simpson, <bill.simpson&um.cc.umich.edu> November 1994.
+
+[Sledge] Bob Sledge, <bob&pqsystems.com>, December 1998.
+
+[Sliwinski] Robert Sliwinski, <sliwinre&mail1st.com>, February 2000.
+
+[Joel Snyder]
+
+[Sorensen] Soren Martin Sorensen, <sms&energimidt.dk>, 07 August 2006.
+
+[Spelt]  Ad C. Spelt, <a.c.spelt&kpn.com>, August 2005.
+
+[Stanev] Nedelcho Stanev, <nstanev&csoft.bg>, May 1999.
+
+[Stevenson] Ian Stevenson, <ian.stevenson&aems.net>, 23 July 2008.
+
+[Stewart] Ian Stewart, <iandbige&yahoo.com>, June 1999.
+
+[Straight] Matthew Straight, <matt_straight&yahoo.com>, March 2007.
+
+[Strazzera] Paolo Strazzera, <p.strazzera&telematica.it>, June 1999.
+
+[Suhler] Paul Suhler, <paul.suhler&quantum.com>, 12 May 2009.
+
+[Sveistrup] Darrell Sveistrup, <darrells&truesolutions.net>, June 1999.
+
+[SXA] Susie Armstrong, <Armstrong.wbst128&XEROX.COM>
+
+[SXD] Steve Deering, <deering&PARC.XEROX.COM>
+
+[Tangalitchev] Denis I Tangalitchev, <tangaldi&medi-a.ru>, 15 January 2008.
+
+[Tewiah] Charles Tewiah, <charles.tewiah&westlb-systems.co.uk>, September 2005.
+
+[Thaler] Dave Thaler, <dthaler&microsoft.com>, March 1999, June 2000.
+
+[Thompson] Nigel Thompson, <nigelt&tribal.com>, January 1999.
+
+[Timm] Mary Timm, <mary&xenoscience.com>, July 1998.
+
+[tynan] Dermot Tynan, <dtynan&claddagh.ie>, August 1995.
+
+[Toga] Jim Toga, <jtoga&ibeam.jf.intel.com>, May 1996.
+
+[Uang] Yea Uang, <uang&force.decnet.lockheed.com> November 1994.
+
+[UPnP] UPnP Forum, <upnpadmin&forum.upnp.org>, August 1999, 27 June 2006.
+
+[Uusitalo] Mika Uusitalo, <msu&xingtech.com>, April 1997.
+
+[van der Meulen] Ron van der Meulen, <ron_vandermeulen&agilent.com> February 1997.
+
+[van Willigen] Bert van Willigen, <bert.vanwilligen&philips.com>, January 2004
+
+[Veizades] John Veizades, <veizades&tgv.com>, May 1995.
+
+[Velten] Mike Velten, <mike_velten&liebert.com>, January 1999.
+ 
+[Vogels] Werner Vogels, <vogels&rnets.com>, August 1998.
+
+[Volpe] Victor Volpe, <vvolpe&smtp.microcom.com>, October 1997.
+
+[Wacey] Ian Wacey, <iain.wacey&gefalbany.ge.com>, May 2000.
+
+[Wallach] Walter Wallach, <walt&sumatech.com>, July 1999.
+
+[Wang] Michael Wang, <Michael.Wang&usa.xerox.com>, March 1999.
+
+[Wasserroth] Stephan Wasserroth, <wasserroth&fokus.gmd.de>, July 2000.
+
+[Watson] Scott Watson, <scott&disney.com>, August 1997.
+
+[Wei] Liming Wei, <lwei&cisco.com>, October 1998.
+
+[Wessels] Duane Wessels, <wessels&nlanr.net>, February 1997.
+
+[Whitaker] Jerry Whitaker, <jwhitaker&atsc.org>, 19 December 2008.
+
+[White] Peter White, <peter_white&3com.com>, April 1999.
+
+[Whitehouse] Guy Whitehouse, <gwhitehouse&londonstockexchange.com>, 31 March 2006.
+
+[Wilson] Ian Wilson, <iwilson&cisco.com>, December 2001.
+
+[Wissenbach] Paul Wissenbach, <paulwi&vnd.tek.com>, June 1997.
+
+[Wong] Tony Wong, <wongt&ms.com>, July 1998.
+
+[Wood] Lloyd Wood, <lwood&cisco.com>, 30 August 2007.
+
+[Woodcock] Bill Woodcock, <woody&zocalo.net>, November 1998.
+
+[Wu] Ishan Wu, <iwu&cisco.com>, March 2000.
+
+[Yellen] Adam Yellen, <adam&videofurnace.com>, 12 August 2009.
+
+[Zhou] Xiaoyu Zhou, <zhouxyi&lenovo.com>, 20 January 2009.
+
+[Zulch] Richard Zulch, <richard_zulch&dantz.com>, February 1996, updated May 2004.
+
+[Zwemmer] Arnoud Zwemmer, <arnoud&nwn.nl>, November 1996.
+
+[]
+
