@@ -13,7 +13,7 @@ Individual octets can be represented using the following shortcuts :
 
 A few basic rules also apply :
 
-    1. x must always be greater than y, therefore :
+    1. x must always be less than y, therefore :
 
         - x can only be 0 through 254
         - y can only be 1 through 255
