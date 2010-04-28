@@ -10,7 +10,8 @@ import sys as _sys
 if _sys.version_info[0:2] < (2, 4):
     raise RuntimeError('Python 2.4.x or higher is required!')
 
-__version__ = '0.7.4'
+VERSION = (0, 7, 5, '-pre', 0)
+__version__ = '%d.%d.%d%s' % VERSION[0:4] + str(VERSION[4] or '')
 
 from netaddr.core import AddrConversionError, AddrFormatError, \
     NotRegisteredError

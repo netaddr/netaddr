@@ -52,7 +52,7 @@ word_base = 16
 max_int = 2 ** width - 1
 
 #: The number of words in this address type.
-num_words = width / word_size
+num_words = width // word_size
 
 #: The maximum integer value for an individual word in this address type.
 max_word = 2 ** word_size - 1

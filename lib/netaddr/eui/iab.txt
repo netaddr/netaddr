@@ -154,9 +154,9 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Hunter Technology Inc.
 017000-017FFF	(base 16)	Hunter Technology Inc.
-				Haedong Bldg., 2F,
-				897-15, Dae-Chi-Dong
-				Kangnam-gu, Seoul  
+				1408, Woolim e-biz Center,
+				170-5, Guro-3dong, Guro-gu,
+				Seoul  
 				KOREA, REPUBLIC OF
 
 00-50-C2	(hex)		CAD-UL GmbH
@@ -417,10 +417,11 @@ IAB Range    			Organization
 				RTP NC 27709
 				UNITED STATES
 
-00-50-C2	(hex)		Miyazaki System Planning Office, Ltd.
-040000-040FFF	(base 16)	Miyazaki System Planning Office, Ltd.
-				1-8-5, Saginuma, Miyamae-ku
-				Kawasaki-shi  216-0004
+00-50-C2	(hex)		MiSPO Co., Ltd.
+040000-040FFF	(base 16)	MiSPO Co., Ltd.
+				Kanagawa Prefecture,
+				Takatsu-ku,Futago, 5-1-1, Takatsu Park plaza, 3F
+				Kawasaki City,  213-0002
 				JAPAN
 
 00-50-C2	(hex)		Damler Chrysler Rail System (Signal) AB
@@ -792,7 +793,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Matuschek Messtechnik GmbH
 081000-081FFF	(base 16)	Matuschek Messtechnik GmbH
-				Werner-Heisenberg-Straße 14
+				Werner-Heisenberg-Straï¿½e 14
 				Alsdorf NRW 52477
 				GERMANY
 
@@ -998,9 +999,9 @@ IAB Range    			Organization
 				Etobicoke Ontario M8Z 1K2
 				CANADA
 
-00-50-C2	(hex)		Jäger Computergesteuerte Messtechnik GmbH
-0A2000-0A2FFF	(base 16)	Jäger Computergesteuerte Messtechnik GmbH
-				Rheinstraße 2-4
+00-50-C2	(hex)		Jï¿½ger Computergesteuerte Messtechnik GmbH
+0A2000-0A2FFF	(base 16)	Jï¿½ger Computergesteuerte Messtechnik GmbH
+				Rheinstraï¿½e 2-4
 				64653 Lorsch  
 				GERMANY
 
@@ -1539,8 +1540,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Tecnint HTE S.r.L.
 0F8000-0F8FFF	(base 16)	Tecnint HTE S.r.L.
-				Via Como 35
-				23807 Merate (Lecco)  
+				Via della tecnica 16/18
+				Osnago (Lecco)  23875
 				ITALY
 
 00-50-C2	(hex)		Raven Industries
@@ -1885,8 +1886,8 @@ IAB Range    			Organization
 				Rishon Lezion  
 				ISRAEL
 
-00-50-C2	(hex)		INTERZEAG AG
-12F000-12FFFF	(base 16)	INTERZEAG AG
+00-50-C2	(hex)		HAAG-STREIT AG
+12F000-12FFFF	(base 16)	HAAG-STREIT AG
 				Rietbachstrasse 5
 				Schlieren  CH-8952
 				SWITZERLAND
@@ -2329,7 +2330,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Wavium AB
 176000-176FFF	(base 16)	Wavium AB
-				Västberga Allé 60
+				Vï¿½stberga Allï¿½ 60
 				Stockholm  SE-126 75
 				SWEDEN
 
@@ -2410,7 +2411,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Mixbaal S.A. de C.V.
 183000-183FFF	(base 16)	Mixbaal S.A. de C.V.
-				Blvd. José Guadalupe Zuno #48-MIX
+				Blvd. Josï¿½ Guadalupe Zuno #48-MIX
 				Los Belenes
 				Zapopan Jalisco 45101
 				MEXICO
@@ -2442,7 +2443,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		dresden-elektronik
 188000-188FFF	(base 16)	dresden-elektronik
-				Glasewaldtstraße 22
+				Glasewaldtstraï¿½e 22
 				Dresden  D-01277
 				GERMANY
 
@@ -2538,7 +2539,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		EPM Tecnologia e Equipamentos
 197000-197FFF	(base 16)	EPM Tecnologia e Equipamentos
 				Av Com Gumercindo Barranqueiros, 285
-				Jundiaí São Paulo 13211-410
+				Jundiaï¿½ Sï¿½o Paulo 13211-410
 				BRAZIL
 
 00-50-C2	(hex)		PotsTek, Inc
@@ -2568,7 +2569,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Artec Design
 19C000-19CFFF	(base 16)	Artec Design
-				Järvevana tee 9
+				Jï¿½rvevana tee 9
 				Tallinn  11314
 				ESTONIA
 
@@ -2648,7 +2649,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Axotec Technologies GmbH
 1A9000-1A9FFF	(base 16)	Axotec Technologies GmbH
-				Sudetenstraße 88
+				Sudetenstraï¿½e 88
 				Geretsried Bavaria 82538
 				GERMANY
 
@@ -2668,7 +2669,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Beckmann+Egle GmbH
 1AC000-1ACFFF	(base 16)	Beckmann+Egle GmbH
 				Kirchstrasse 30
-				Stetten BaWü 71394
+				Stetten BaWï¿½ 71394
 				GERMANY
 
 00-50-C2	(hex)		Remia s.r.o.
@@ -2962,11 +2963,11 @@ IAB Range    			Organization
 				Campbell CA 95008
 				UNITED STATES
 
-00-50-C2	(hex)		Prolificx Ltd
-1DC000-1DCFFF	(base 16)	Prolificx Ltd
-				Level 1
-				13 Ronwood Avenue
-				Manukau City Auckland 1702
+00-50-C2	(hex)		Imarda New Zealand Limited
+1DC000-1DCFFF	(base 16)	Imarda New Zealand Limited
+				Suite G16, National Innovation Centre,
+				Australian Technology Park,
+				Eveleigh NSW   2015
 				NEW ZEALAND
 
 00-50-C2	(hex)		Peiker acustic GmbH & Co. KG
@@ -3022,7 +3023,7 @@ IAB Range    			Organization
 1E5000-1E5FFF	(base 16)	DORLET S.A.
 				Albert Einstein 34
 				Parque Tecnologico de Alava
-				Miñano Mayor ALAVA 01510
+				Miï¿½ano Mayor ALAVA 01510
 				SPAIN
 
 00-50-C2	(hex)		United Tri-Tech Corporation
@@ -3070,15 +3071,15 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		EMKA-electronic AG
 1ED000-1EDFFF	(base 16)	EMKA-electronic AG
-				Lohmühlenweg 18a
-				Arnstadt Thüringen 99310
+				Lohmï¿½hlenweg 18a
+				Arnstadt Thï¿½ringen 99310
 				GERMANY
 
-00-50-C2	(hex)		Perto Periféricos de Automação S.A.
-1EE000-1EEFFF	(base 16)	Perto Periféricos de Automação S.A.
+00-50-C2	(hex)		Perto Perifï¿½ricos de Automaï¿½ï¿½o S.A.
+1EE000-1EEFFF	(base 16)	Perto Perifï¿½ricos de Automaï¿½ï¿½o S.A.
 				Rua Nissin Castiel, 640
-				Distrito Industrial de Gravataí
-				Gravataí RS 94000-970
+				Distrito Industrial de Gravataï¿½
+				Gravataï¿½ RS 94000-970
 				BRAZIL
 
 00-50-C2	(hex)		M2 Technology Pty Ltd
@@ -3130,8 +3131,8 @@ IAB Range    			Organization
 				Johnson City NY 13790
 				UNITED STATES
 
-00-50-C2	(hex)		ARC'Créations
-1F7000-1F7FFF	(base 16)	ARC'Créations
+00-50-C2	(hex)		ARC'Crï¿½ations
+1F7000-1F7FFF	(base 16)	ARC'Crï¿½ations
 				ZI les Milles 100 rue Pierre DUHEM
 				La Robole Bt A   Cedex 3
 				Aix en Provence BDR 13856
@@ -3291,9 +3292,9 @@ IAB Range    			Organization
 				Los Angeles CA 90064
 				UNITED STATES
 
-00-50-C2	(hex)		Hochschule für Technik, Wirtschaft und Kultur Leipzig (FH)
-211000-211FFF	(base 16)	Hochschule für Technik, Wirtschaft und Kultur Leipzig (FH)
-				Wächterstrasse 13
+00-50-C2	(hex)		Hochschule fï¿½r Technik, Wirtschaft und Kultur Leipzig (FH)
+211000-211FFF	(base 16)	Hochschule fï¿½r Technik, Wirtschaft und Kultur Leipzig (FH)
+				Wï¿½chterstrasse 13
 				Leipzig Saxonia D-04107
 				GERMANY
 
@@ -3319,8 +3320,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		VoiceCom AG
 215000-215FFF	(base 16)	VoiceCom AG
-				Südwestpark 65
-				Nürnberg Germany 90449
+				Sï¿½dwestpark 65
+				Nï¿½rnberg Germany 90449
 				GERMANY
 
 00-50-C2	(hex)		Level Control Systems
@@ -3336,9 +3337,9 @@ IAB Range    			Organization
 				Glasgow Scotland G76 0EQ
 				UNITED KINGDOM
 
-00-50-C2	(hex)		Nansen S. A. - Instrumentos de Precisão
-218000-218FFF	(base 16)	Nansen S. A. - Instrumentos de Precisão
-				José Pedro Araújo, 960
+00-50-C2	(hex)		Nansen S. A. - Instrumentos de Precisï¿½o
+218000-218FFF	(base 16)	Nansen S. A. - Instrumentos de Precisï¿½o
+				Josï¿½ Pedro Araï¿½jo, 960
 				Contagem Minas Gerais 32341560
 				BRAZIL
 
@@ -3407,12 +3408,12 @@ IAB Range    			Organization
 00-50-C2	(hex)		visicontrol GmbH
 223000-223FFF	(base 16)	visicontrol GmbH
 				Ettishofer Str. 8
-				Weingarten Baden-Württemberg 88250
+				Weingarten Baden-Wï¿½rttemberg 88250
 				GERMANY
 
 00-50-C2	(hex)		PANNOCOM Ltd.
 224000-224FFF	(base 16)	PANNOCOM Ltd.
-				Törökvész út 98/b
+				Tï¿½rï¿½kvï¿½sz ï¿½t 98/b
 				Budapest Pest Megye 1025
 				HUNGARY
 
@@ -3456,7 +3457,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Riegl Laser Measurement Systems GmbH
 22B000-22BFFF	(base 16)	Riegl Laser Measurement Systems GmbH
 				Riedenburgstrasse 48
-				Horn Niederösterreich A-3580
+				Horn Niederï¿½sterreich A-3580
 				AUSTRIA
 
 00-50-C2	(hex)		Intrinsity
@@ -3634,7 +3635,7 @@ IAB Range    			Organization
 247000-247FFF	(base 16)	Gradual Tecnologia Ltda.
 				Rod. Alkindar M. Junqueira Km 34,2
 				Caixa Postal 66
-				Bragança Paulista SP 12914-970
+				Braganï¿½a Paulista SP 12914-970
 				BRAZIL
 
 00-50-C2	(hex)		Dixtal Biomedica Ind. Com. Ltda.
@@ -3646,7 +3647,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Dipl.-Ing. W. Bender GmbH & Co. KG
 249000-249FFF	(base 16)	Dipl.-Ing. W. Bender GmbH & Co. KG
 				Londorfer Str. 65
-				35305 Grünberg  1161
+				35305 Grï¿½nberg  1161
 				GERMANY
 
 00-50-C2	(hex)		CDS Rail
@@ -3907,14 +3908,14 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Servicios Condumex, S. A. de C. V.
 273000-273FFF	(base 16)	Servicios Condumex, S. A. de C. V.
-				Carretera a San Luis Potosí km. 9.6
+				Carretera a San Luis Potosï¿½ km. 9.6
 				Parque industrial Jurica
 				Queretaro  76120
 				MEXICO
 
-00-50-C2	(hex)		FUNDACIÓN ROBOTIKER
-274000-274FFF	(base 16)	FUNDACIÓN ROBOTIKER
-				Parque Tecnológico Edificio 202
+00-50-C2	(hex)		FUNDACIï¿½N ROBOTIKER
+274000-274FFF	(base 16)	FUNDACIï¿½N ROBOTIKER
+				Parque Tecnolï¿½gico Edificio 202
 				Zamudio Vizcaya 48170
 				SPAIN
 
@@ -3958,7 +3959,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		LinkSecurity A/S
 27B000-27BFFF	(base 16)	LinkSecurity A/S
 				Glerupvej 20
-				Rødovre  2610
+				Rï¿½dovre  2610
 				DENMARK
 
 00-50-C2	(hex)		Danlaw Inc
@@ -4110,8 +4111,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		EPSa GmbH
 294000-294FFF	(base 16)	EPSa GmbH
-				Göschwitzer Straße 32
-				Jena Thüringen D-07745
+				Gï¿½schwitzer Straï¿½e 32
+				Jena Thï¿½ringen D-07745
 				GERMANY
 
 00-50-C2	(hex)		LOGOSOL, INC.
@@ -4325,7 +4326,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Rafi GmbH & Co. KG
 2B7000-2B7FFF	(base 16)	Rafi GmbH & Co. KG
 				P.O. Box 2060
-				Ravensburg Baden-Württemberg 88190
+				Ravensburg Baden-Wï¿½rttemberg 88190
 				GERMANY
 
 00-50-C2	(hex)		Admiral Secure Products, Ltd.
@@ -4387,7 +4388,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Stage Tec Entwicklungsgesellschaft fuer professionelle Audio
 2C1000-2C1FFF	(base 16)	Stage Tec Entwicklungsgesellschaft fuer professionelle Audio
-				Tabbertstraße 10
+				Tabbertstraï¿½e 10
 				Berlin Berlin 12459
 				GERMANY
 
@@ -4471,8 +4472,8 @@ IAB Range    			Organization
 				BAYSWATER VICTORIA 3153
 				AUSTRALIA
 
-00-50-C2	(hex)		Diseño de Sistemas en Silicio S.A.
-2CF000-2CFFFF	(base 16)	Diseño de Sistemas en Silicio S.A.
+00-50-C2	(hex)		Diseï¿½o de Sistemas en Silicio S.A.
+2CF000-2CFFFF	(base 16)	Diseï¿½o de Sistemas en Silicio S.A.
 				Charles Robert Darwin, 2
 				Parc tecnologic
 				Paterna Valencia 46980
@@ -4571,7 +4572,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		MICREL-NKE
 2DF000-2DFFFF	(base 16)	MICREL-NKE
 				rue gutenberg
-				Z.I. de Kerandré
+				Z.I. de Kerandrï¿½
 				HENNEBONT  56700
 				FRANCE
 
@@ -4596,7 +4597,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		MG Industrieelektronik GmbH
 2E3000-2E3FFF	(base 16)	MG Industrieelektronik GmbH
-				Nobelstraße 7
+				Nobelstraï¿½e 7
 				Ettlingen  76275
 				GERMANY
 
@@ -4629,7 +4630,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		S.M.V. Systemelektronik GmbH
 2E8000-2E8FFF	(base 16)	S.M.V. Systemelektronik GmbH
 				Firkenweg 7
-				Unterföhring Bayern 85774
+				Unterfï¿½hring Bayern 85774
 				GERMANY
 
 00-50-C2	(hex)		SRI International
@@ -4766,8 +4767,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Saab AB
 2FE000-2FEFFF	(base 16)	Saab AB
-				Nobymalmsvägen
-				Linköping Östergötland 581 82
+				Nobymalmsvï¿½gen
+				Linkï¿½ping ï¿½stergï¿½tland 581 82
 				SWEDEN
 
 00-50-C2	(hex)		Patria Advanced Solutions
@@ -4791,7 +4792,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		EuroDesign embedded technologies GmbH
 302000-302FFF	(base 16)	EuroDesign embedded technologies GmbH
-				Waldstraße 4A
+				Waldstraï¿½e 4A
 				Kirchdorf a.d. Amper Bayern 85414
 				GERMANY
 
@@ -4854,7 +4855,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		TEAMLOG
 30C000-30CFFF	(base 16)	TEAMLOG
 				10, rue Lavoisier
-				Montbonnot Isère (38) 38330
+				Montbonnot Isï¿½re (38) 38330
 				FRANCE
 
 00-50-C2	(hex)		SETARAM
@@ -4872,7 +4873,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Digicontrole Lda
 30F000-30FFFF	(base 16)	Digicontrole Lda
-				Av. Eng. Arantes e Oliveira Nº5 - 2ºD
+				Av. Eng. Arantes e Oliveira Nï¿½5 - 2ï¿½D
 				Olaias
 				Lisboa  1900-221 LIS
 				PORTUGAL
@@ -4917,7 +4918,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Dataline AB
 316000-316FFF	(base 16)	Dataline AB
 				Katrinedalsgatan 53
-				BORÅS  S-50451
+				BORï¿½S  S-50451
 				SWEDEN
 
 00-50-C2	(hex)		Cosine Systems, Inc.
@@ -4959,11 +4960,11 @@ IAB Range    			Organization
 				Tewksbury MA 01876
 				UNITED STATES
 
-00-50-C2	(hex)		Prolificx Ltd
-31D000-31DFFF	(base 16)	Prolificx Ltd
-				Level 1
-				13 Ronwood Avenue
-				Manukau City Auckland 1702
+00-50-C2	(hex)		Imarda New Zealand Limited
+31D000-31DFFF	(base 16)	Imarda New Zealand Limited
+				Suite G16, National Innovation Centre,
+				Australian Technology Park,
+				Eveleigh NSW   2015
 				NEW ZEALAND
 
 00-50-C2	(hex)		C3-ilex, LLC
@@ -4987,7 +4988,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		UXP
 321000-321FFF	(base 16)	UXP
 				12 AVENUE PIERRE DE COUBERTIN
-				ZI PERCEVALIERE N° 7408
+				ZI PERCEVALIERE Nï¿½ 7408
 				SEYSSINET PARISET CEDEX ISERE 38174
 				FRANCE
 
@@ -5005,7 +5006,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ODIXION
 324000-324FFF	(base 16)	ODIXION
-				188 rue de la Liberté
+				188 rue de la Libertï¿½
 				AVRANCHES France 50300
 				FRANCE
 
@@ -5024,7 +5025,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Dornier GmbH
 327000-327FFF	(base 16)	Dornier GmbH
 				an der B31
-				Friedrichshafen Baden-Würtemberg 88039
+				Friedrichshafen Baden-Wï¿½rtemberg 88039
 				GERMANY
 
 00-50-C2	(hex)		I.C.S. Electronics Limited
@@ -5040,8 +5041,8 @@ IAB Range    			Organization
 				Mississauga Ontario L5K 1B1
 				CANADA
 
-00-50-C2	(hex)		PHYTEC Meßtechnik GmbH
-32A000-32AFFF	(base 16)	PHYTEC Meßtechnik GmbH
+00-50-C2	(hex)		PHYTEC Meï¿½technik GmbH
+32A000-32AFFF	(base 16)	PHYTEC Meï¿½technik GmbH
 				Robert-Koch-Strasse 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
@@ -5268,8 +5269,8 @@ IAB Range    			Organization
 				Augsburg Bavaria 86156
 				GERMANY
 
-00-50-C2	(hex)		ABB Power Technologies S.p.A.  Unità Operativa SACE (PTMV)
-34E000-34EFFF	(base 16)	ABB Power Technologies S.p.A.  Unità Operativa SACE (PTMV)
+00-50-C2	(hex)		ABB Power Technologies S.p.A.  Unitï¿½ Operativa SACE (PTMV)
+34E000-34EFFF	(base 16)	ABB Power Technologies S.p.A.  Unitï¿½ Operativa SACE (PTMV)
 				vai Friuli 4
 				Dalmine (Bergamo) 20044
 				ITALY
@@ -5605,7 +5606,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Wireless Reading Systems Holding ASA
 384000-384FFF	(base 16)	Wireless Reading Systems Holding ASA
 				Skredderveien 9
-				Moss Østfold 1537
+				Moss ï¿½stfold 1537
 				NORWAY
 
 00-50-C2	(hex)		SUNGJIN NEOTECH Co.Ltd.
@@ -5666,7 +5667,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Nordic Alarm AB
 38E000-38EFFF	(base 16)	Nordic Alarm AB
-				Englundavägen 11
+				Englundavï¿½gen 11
 				Solna  17141
 				SWEDEN
 
@@ -5846,7 +5847,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		taskit Rechnertechnik GmbH
 3AB000-3ABFFF	(base 16)	taskit Rechnertechnik GmbH
-				Seelenbinder Straße 33
+				Seelenbinder Straï¿½e 33
 				Berlin  12 555
 				GERMANY
 
@@ -5900,10 +5901,10 @@ IAB Range    			Organization
 				Tokyo  101-0021
 				JAPAN
 
-00-50-C2	(hex)		Contrôle Analytique inc.
-3B4000-3B4FFF	(base 16)	Contrôle Analytique inc.
+00-50-C2	(hex)		Contrï¿½le Analytique inc.
+3B4000-3B4FFF	(base 16)	Contrï¿½le Analytique inc.
 				1076 rue Johnson
-				Thetford Mines Québec G6G 5W6
+				Thetford Mines Quï¿½bec G6G 5W6
 				CANADA
 
 00-50-C2	(hex)		NEC TOKIN Corporation
@@ -5930,8 +5931,8 @@ IAB Range    			Organization
 				Wuppertal D 42277
 				GERMANY
 
-00-50-C2	(hex)		Autotank AB
-3B9000-3B9FFF	(base 16)	Autotank AB
+00-50-C2	(hex)		Gilbarco Autotank AB
+3B9000-3B9FFF	(base 16)	Gilbarco Autotank AB
 				P.O. Box 11059
 				Johannesfredsvagen 11A
 				BROMMA  SE-16111
@@ -5943,8 +5944,8 @@ IAB Range    			Organization
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
-00-50-C2	(hex)		Strampe Systemelektronik GmbH & Co. KG
-3BB000-3BBFFF	(base 16)	Strampe Systemelektronik GmbH & Co. KG
+00-50-C2	(hex)		IMAGO Technologies GmbH
+3BB000-3BBFFF	(base 16)	IMAGO Technologies GmbH
 				In der Grobach 22
 				Florstadt Hessen D-61197
 				GERMANY
@@ -6047,7 +6048,7 @@ IAB Range    			Organization
 3CB000-3CBFFF	(base 16)	Analytica GmbH
 				Vorholzstr. 84
 				76137
-				Karlsruhe Baden-Württemberg 
+				Karlsruhe Baden-Wï¿½rttemberg 
 				GERMANY
 
 00-50-C2	(hex)		LINKWELL TELESYSTEMS PRIVATE LIMITED
@@ -6122,7 +6123,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		TTC TELEKOMUNIKACE Ltd
 3D7000-3D7FFF	(base 16)	TTC TELEKOMUNIKACE Ltd
-				Tøebohostická 987/5, Prague 10
+				Tï¿½ebohostickï¿½ 987/5, Prague 10
 				Prague  CZ-100 00
 				CZECH REPUBLIC
 
@@ -6290,13 +6291,13 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		STL GmbH
 3F2000-3F2FFF	(base 16)	STL GmbH
-				Max-Stromeyer-Straße 116
-				Konstanz Baden Württemberg 78467
+				Max-Stromeyer-Straï¿½e 116
+				Konstanz Baden Wï¿½rttemberg 78467
 				GERMANY
 
 00-50-C2	(hex)		Hytec Geraetebau GmbH
 3F3000-3F3FFF	(base 16)	Hytec Geraetebau GmbH
-				Cochemer Str. 12 – 14
+				Cochemer Str. 12 ï¿½ 14
 				68309 Mannheim 
 				GERMANY
 
@@ -6378,7 +6379,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		SmartMotor AS
 400000-400FFF	(base 16)	SmartMotor AS
 				Stiklestadveien 1
-				Trondheim Sør-Trøndelag 7041
+				Trondheim Sï¿½r-Trï¿½ndelag 7041
 				NORWAY
 
 00-50-C2	(hex)		Promess Incorporated
@@ -6393,8 +6394,8 @@ IAB Range    			Organization
 				Czestochowa  42-200
 				POLAND
 
-00-50-C2	(hex)		TOPEX PUBLIC SWITCHING S.A.
-403000-403FFF	(base 16)	TOPEX PUBLIC SWITCHING S.A.
+00-50-C2	(hex)		TOPEX S.A.
+403000-403FFF	(base 16)	TOPEX S.A.
 				Str. Feleacului, nr.10, sector 1, cod 014186, Bucuresti,
 				Bucharest  014186
 				ROMANIA
@@ -6465,7 +6466,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		ads-tec GmbH
 40E000-40EFFF	(base 16)	ads-tec GmbH
 				Raiffeisenstr. 14
-				Leinfelden-Echterdingen Baden-Württemberg 70771
+				Leinfelden-Echterdingen Baden-Wï¿½rttemberg 70771
 				GERMANY
 
 00-50-C2	(hex)		BIR,INC.
@@ -6521,8 +6522,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		QT systems ab
 417000-417FFF	(base 16)	QT systems ab
-				Alfavägen 3
-				Lycksele Västerbotten 921 33
+				Alfavï¿½gen 3
+				Lycksele Vï¿½sterbotten 921 33
 				SWEDEN
 
 00-50-C2	(hex)		Planea Oy
@@ -6583,13 +6584,13 @@ IAB Range    			Organization
 00-50-C2	(hex)		EFSYS
 421000-421FFF	(base 16)	EFSYS
 				60, rue de la bolle
-				Saint-dié des Vosges Vosges 88100
+				Saint-diï¿½ des Vosges Vosges 88100
 				FRANCE
 
 00-50-C2	(hex)		Gekeler Martina
 422000-422FFF	(base 16)	Gekeler Martina
 				Raiffeisenstr. 14
-				Leinfelden-Echterdingen Baden-Württemberg 70771
+				Leinfelden-Echterdingen Baden-Wï¿½rttemberg 70771
 				GERMANY
 
 00-50-C2	(hex)		Power-One Inc.
@@ -6601,7 +6602,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Metrolab Instruments SA
 424000-424FFF	(base 16)	Metrolab Instruments SA
 				ch. du Pont-du-Centenaire 110
-				Plan-les-Ouates Genève 1228
+				Plan-les-Ouates Genï¿½ve 1228
 				SWITZERLAND
 
 00-50-C2	(hex)		Pinnacle Technology
@@ -6649,8 +6650,8 @@ IAB Range    			Organization
 				RICHARDSON TEXAS 75081
 				UNITED STATES
 
-00-50-C2	(hex)		Continental Automotive Systems US, Inc.
-42C000-42CFFF	(base 16)	Continental Automotive Systems US, Inc.
+00-50-C2	(hex)		Trapeze ITS U.S.A., LLC
+42C000-42CFFF	(base 16)	Trapeze ITS U.S.A., LLC
 				5265 Rockwell Drive NE
 				Cedar Rapids IA 52402
 				UNITED STATES
@@ -6695,7 +6696,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Idetech Europe S.A.
 433000-433FFF	(base 16)	Idetech Europe S.A.
-				Pedrosa C, nº23 (Polígono Pedrosa)
+				Pedrosa C, nï¿½23 (Polï¿½gono Pedrosa)
 				Hospitalet de Llobregat BARCELONA 08908
 				SPAIN
 
@@ -6889,7 +6890,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		SCAME SISTEMI s.r.l.
 452000-452FFF	(base 16)	SCAME SISTEMI s.r.l.
-				Via Lombardia N°5
+				Via Lombardia Nï¿½5
 				ARLUNO MI 20010
 				ITALY
 
@@ -6917,7 +6918,7 @@ IAB Range    			Organization
 456000-456FFF	(base 16)	DRDC Valcartier
 				2459 blvd. Pie XI North
 				Bldg 53
-				Val-Belair Québec G3J 1X5
+				Val-Belair Quï¿½bec G3J 1X5
 				CANADA
 
 00-50-C2	(hex)		Danbridge
@@ -7121,7 +7122,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		SEV Tidsystem AB
 477000-477FFF	(base 16)	SEV Tidsystem AB
 				Box 121
-				Västerhaninge Stockholm 137 22
+				Vï¿½sterhaninge Stockholm 137 22
 				SWEDEN
 
 00-50-C2	(hex)		Metafix Inc.
@@ -7177,7 +7178,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		SELKOM GmbH
 480000-480FFF	(base 16)	SELKOM GmbH
 				Jahnstr. 4
-				Muggensturm Baden Württemberg 76461
+				Muggensturm Baden Wï¿½rttemberg 76461
 				GERMANY
 
 00-50-C2	(hex)		Computer Sciences Corp
@@ -7208,14 +7209,14 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		PHYTEC Messtechnik GmbH
 485000-485FFF	(base 16)	PHYTEC Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
 00-50-C2	(hex)		Safegate International AB
 486000-486FFF	(base 16)	Safegate International AB
-				Storsjöstråket 15
-				Östersund  83134
+				Storsjï¿½strï¿½ket 15
+				ï¿½stersund  83134
 				SWEDEN
 
 00-50-C2	(hex)		Eridon Corporation
@@ -7248,7 +7249,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		ADS-TEC GmbH
 48B000-48BFFF	(base 16)	ADS-TEC GmbH
 				Raiffeisentr. 14
-				Leinfelden-Echterdingen Baden-Württemberg 70771
+				Leinfelden-Echterdingen Baden-Wï¿½rttemberg 70771
 				GERMANY
 
 00-50-C2	(hex)		UNITON AG
@@ -7440,7 +7441,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		HEINEN ELEKTRONIK GmbH
 4AA000-4AAFFF	(base 16)	HEINEN ELEKTRONIK GmbH
-				Hunsrückstr. 7
+				Hunsrï¿½ckstr. 7
 				HAAN NRW 42781
 				GERMANY
 
@@ -7467,7 +7468,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		ads-tec GmbH
 4AE000-4AEFFF	(base 16)	ads-tec GmbH
 				Raiffeisenstr. 14
-				Leinfelden-Echterdingen Baden-Württemberg 70771
+				Leinfelden-Echterdingen Baden-Wï¿½rttemberg 70771
 				GERMANY
 
 00-50-C2	(hex)		Orbis Oy
@@ -7695,7 +7696,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		SOFTIN sp. z o.o.
 4D3000-4D3FFF	(base 16)	SOFTIN sp. z o.o.
-				Skwer Ks. Krd. St. Wyszyñskiego 2/62
+				Skwer Ks. Krd. St. Wyszyï¿½skiego 2/62
 				Warsaw Mazowieckie 01-015
 				POLAND
 
@@ -7711,9 +7712,9 @@ IAB Range    			Organization
 				Dandenong VIC 3175
 				AUSTRALIA
 
-00-50-C2	(hex)		Ingenieurbüro Schober
-4D6000-4D6FFF	(base 16)	Ingenieurbüro Schober
-				Schloßgarten 16
+00-50-C2	(hex)		Ingenieurbï¿½ro Schober
+4D6000-4D6FFF	(base 16)	Ingenieurbï¿½ro Schober
+				Schloï¿½garten 16
 				Cadolzburg Bayern 90556
 				GERMANY
 
@@ -7744,7 +7745,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Alfing Montagetechnik GmbH
 4DB000-4DBFFF	(base 16)	Alfing Montagetechnik GmbH
 				Auguste-Kessler-Str. 20
-				Aalen Baden-Württemberg 73433
+				Aalen Baden-Wï¿½rttemberg 73433
 				GERMANY
 
 00-50-C2	(hex)		Ace Electronics Inc.
@@ -7824,7 +7825,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		SATEL sp. z o.o.
 4E8000-4E8FFF	(base 16)	SATEL sp. z o.o.
 				Schuberta 79
-				Gdañsk pomorskie 80-172
+				Gdaï¿½sk pomorskie 80-172
 				POLAND
 
 00-50-C2	(hex)		Seachange international
@@ -8010,8 +8011,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		7+ Kft
 506000-506FFF	(base 16)	7+ Kft
-				Homoród 17
-				Budapest magyarország 1118
+				Homorï¿½d 17
+				Budapest magyarorszï¿½g 1118
 				HUNGARY
 
 00-50-C2	(hex)		Micro Connect Pty Ltd
@@ -8067,7 +8068,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Polystar Instruments AB
 50F000-50FFFF	(base 16)	Polystar Instruments AB
-				Mårbackagatan 19
+				Mï¿½rbackagatan 19
 				123 43 Farsta
 				Stockholm  11559
 				SWEDEN
@@ -8126,7 +8127,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Christ Elektronik GmbH
 518000-518FFF	(base 16)	Christ Elektronik GmbH
-				Alpenstraße 34
+				Alpenstraï¿½e 34
 				Memmingen Bavaria 87700
 				GERMANY
 
@@ -8234,7 +8235,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 529000-529FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -8270,10 +8271,10 @@ IAB Range    			Organization
 				CHESTERFIELD DERBYSHIRE S41 0TZ
 				UNITED KINGDOM
 
-00-50-C2	(hex)		Gesellschaft für Rationalisierung und Rechentechnik mbH
-52F000-52FFFF	(base 16)	Gesellschaft für Rationalisierung und Rechentechnik mbH
+00-50-C2	(hex)		Gesellschaft fï¿½r Rationalisierung und Rechentechnik mbH
+52F000-52FFFF	(base 16)	Gesellschaft fï¿½r Rationalisierung und Rechentechnik mbH
 				Ob der Eck 4
-				Gütenbach Baden Württemberg 78148
+				Gï¿½tenbach Baden Wï¿½rttemberg 78148
 				GERMANY
 
 00-50-C2	(hex)		Innovation, Institute, Inc
@@ -8323,7 +8324,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		DST CONTROL AB
 537000-537FFF	(base 16)	DST CONTROL AB
 				Westmansgatan 29
-				Linköping  58216
+				Linkï¿½ping  58216
 				SWEDEN
 
 00-50-C2	(hex)		EtherTek Circuits
@@ -8471,11 +8472,11 @@ IAB Range    			Organization
 00-50-C2	(hex)		Valtronic SA
 54F000-54FFFF	(base 16)	Valtronic SA
 				Rue de Bon Port
-				Les Charbonnières Vaud 1343
+				Les Charbonniï¿½res Vaud 1343
 				SWITZERLAND
 
-00-50-C2	(hex)		LJU Industrieelektronik GmbH
-550000-550FFF	(base 16)	LJU Industrieelektronik GmbH
+00-50-C2	(hex)		LJU Automatisierungstechnik GmbH 
+550000-550FFF	(base 16)	LJU Automatisierungstechnik GmbH 
 				Am Schlahn 1
 				Potsdam Brandenburg D-14476
 				GERMANY
@@ -8552,7 +8553,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		ads-tec GmbH
 55C000-55CFFF	(base 16)	ads-tec GmbH
 				Raiffeisenstr. 14
-				Leinfelden-Echterdingen Baden-Württemberg 70771
+				Leinfelden-Echterdingen Baden-Wï¿½rttemberg 70771
 				GERMANY
 
 00-50-C2	(hex)		ACD Elektronik GmbH
@@ -8595,7 +8596,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ORTRAT, S.L.
 563000-563FFF	(base 16)	ORTRAT, S.L.
-				c/ Sófora, 15
+				c/ Sï¿½fora, 15
 				E-28020 Madrid 
 				SPAIN
 
@@ -8622,7 +8623,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Tess GmbH
 567000-567FFF	(base 16)	Tess GmbH
 				Schumanstr. 33d
-				Würselen NRW 52146
+				Wï¿½rselen NRW 52146
 				GERMANY
 
 00-50-C2	(hex)		GeoFocus, LLC
@@ -8700,9 +8701,9 @@ IAB Range    			Organization
 				Taganrog Rostov Region 347916
 				RUSSIAN FEDERATION
 
-00-50-C2	(hex)		Ingeniería Almudí S.L.
-574000-574FFF	(base 16)	Ingeniería Almudí S.L.
-				c/ San Luis, 8 bajo 1º
+00-50-C2	(hex)		Ingenierï¿½a Almudï¿½ S.L.
+574000-574FFF	(base 16)	Ingenierï¿½a Almudï¿½ S.L.
+				c/ San Luis, 8 bajo 1ï¿½
 				Murcia Alcantarilla 30820
 				SPAIN
 
@@ -8721,7 +8722,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Advanced Software Technologies
 577000-577FFF	(base 16)	Advanced Software Technologies
-				c/ Caleruega, 102 2ª Planta
+				c/ Caleruega, 102 2ï¿½ Planta
 				Madrid  28033
 				SPAIN
 
@@ -8793,16 +8794,16 @@ IAB Range    			Organization
 				Toftlund Jutland DK-6520
 				DENMARK
 
-00-50-C2	(hex)		Jünger Audio-Studiotechnik GmbH
-583000-583FFF	(base 16)	Jünger Audio-Studiotechnik GmbH
-				Justus-von-Liebig-Straße 7
+00-50-C2	(hex)		Jï¿½nger Audio-Studiotechnik GmbH
+583000-583FFF	(base 16)	Jï¿½nger Audio-Studiotechnik GmbH
+				Justus-von-Liebig-Straï¿½e 7
 				Berlin  12489
 				GERMANY
 
 00-50-C2	(hex)		Toyota Motorsport GmbH
 584000-584FFF	(base 16)	Toyota Motorsport GmbH
 				Toyota-Allee 7
-				Köln NRW 50858
+				Kï¿½ln NRW 50858
 				GERMANY
 
 00-50-C2	(hex)		Wireless Cables Inc
@@ -8829,8 +8830,8 @@ IAB Range    			Organization
 				Cranston Rhode Island 02921
 				UNITED STATES
 
-00-50-C2	(hex)		HORIBA ABX
-589000-589FFF	(base 16)	HORIBA ABX
+00-50-C2	(hex)		HORIBA MEDICAL
+589000-589FFF	(base 16)	HORIBA MEDICAL
 				rue du caducee
 				Montpellier Herault 34000
 				FRANCE
@@ -8926,8 +8927,8 @@ IAB Range    			Organization
 				Hackett's Cove Nova Scotia B3Z3J4
 				CANADA
 
-00-50-C2	(hex)		Bundesamt für Strahlenschutz
-598000-598FFF	(base 16)	Bundesamt für Strahlenschutz
+00-50-C2	(hex)		Bundesamt fï¿½r Strahlenschutz
+598000-598FFF	(base 16)	Bundesamt fï¿½r Strahlenschutz
 				Rosastrasse 9
 				Freiburg NA 79098
 				GERMANY
@@ -8975,7 +8976,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		ads-tec GmbH
 59F000-59FFFF	(base 16)	ads-tec GmbH
 				Raiffeisenstr. 14
-				Leinfelden-Echterdingen Baden-Württemberg 70771
+				Leinfelden-Echterdingen Baden-Wï¿½rttemberg 70771
 				GERMANY
 
 00-50-C2	(hex)		Rudolph Technologies, Inc.
@@ -9000,7 +9001,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		LUMEL S.A.
 5A3000-5A3FFF	(base 16)	LUMEL S.A.
 				UL. SULECHOWSKA 1
-				ZIELONA GÓRA WOJ. LUBUSKIE 65-022
+				ZIELONA Gï¿½RA WOJ. LUBUSKIE 65-022
 				POLAND
 
 00-50-C2	(hex)		Federal State Unitary Enterprise Experimental Factory for Sc
@@ -9009,8 +9010,8 @@ IAB Range    			Organization
 				Chernogolovka Moscow Region 142432
 				RUSSIAN FEDERATION
 
-00-50-C2	(hex)		Equipos de Telecomunicación Optoelectronicos, S.A.
-5A5000-5A5FFF	(base 16)	Equipos de Telecomunicación Optoelectronicos, S.A.
+00-50-C2	(hex)		Equipos de Telecomunicaciï¿½n Optoelectronicos, S.A.
+5A5000-5A5FFF	(base 16)	Equipos de Telecomunicaciï¿½n Optoelectronicos, S.A.
 				Poligono Malpica G. Quejido, 74
 				Zaragoza  50007
 				SPAIN
@@ -9022,9 +9023,9 @@ IAB Range    			Organization
 				Cambridge Cambridgeshire CB4 0FX
 				UNITED KINGDOM
 
-00-50-C2	(hex)		Phytec Meßtechnik GmbH
-5A7000-5A7FFF	(base 16)	Phytec Meßtechnik GmbH
-				Robert-Koch-Straße 39
+00-50-C2	(hex)		Phytec Meï¿½technik GmbH
+5A7000-5A7FFF	(base 16)	Phytec Meï¿½technik GmbH
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -9274,7 +9275,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Innomed Medical Inc
 5CF000-5CFFFF	(base 16)	Innomed Medical Inc
-				Szabó J. 12
+				Szabï¿½ J. 12
 				Budapest  1146
 				HUNGARY
 
@@ -9380,7 +9381,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 5E0000-5E0FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -9419,7 +9420,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Musatel
 5E6000-5E6FFF	(base 16)	Musatel
 				c/Caridad, 1 BIS
-				Pozuelo de Alarcón Madrid 28224
+				Pozuelo de Alarcï¿½n Madrid 28224
 				SPAIN
 
 00-50-C2	(hex)		EADS TEST & SERVICES
@@ -9450,7 +9451,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Garper Telecomunicaciones, S.L.
 5EB000-5EBFFF	(base 16)	Garper Telecomunicaciones, S.L.
-				C/Antoñita Jiménez, 8 Local
+				C/Antoï¿½ita Jimï¿½nez, 8 Local
 				Madrid  28019
 				SPAIN
 
@@ -9491,10 +9492,10 @@ IAB Range    			Organization
 				Saint-Petersburg  198035
 				RUSSIAN FEDERATION
 
-00-50-C2	(hex)		ESEM Grünau GmbH & Co. KG
-5F2000-5F2FFF	(base 16)	ESEM Grünau GmbH & Co. KG
+00-50-C2	(hex)		ESEM Grï¿½nau GmbH & Co. KG
+5F2000-5F2FFF	(base 16)	ESEM Grï¿½nau GmbH & Co. KG
 				Dornierstr. 6
-				Markdorf Baden-Württemberg 88677
+				Markdorf Baden-Wï¿½rttemberg 88677
 				GERMANY
 
 00-50-C2	(hex)		POSNET Polska S.A.
@@ -9525,13 +9526,13 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Metrologic Group
 5F7000-5F7FFF	(base 16)	Metrologic Group
-				6 ch du vieux chêne
-				Meylan Isère 38700
+				6 ch du vieux chï¿½ne
+				Meylan Isï¿½re 38700
 				FRANCE
 
 00-50-C2	(hex)		Grupo Epelsa s. l.
 5F8000-5F8FFF	(base 16)	Grupo Epelsa s. l.
-				C/ Albasanz Nº 6,8
+				C/ Albasanz Nï¿½ 6,8
 				Madrid  28037
 				SPAIN
 
@@ -9595,7 +9596,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		CHAUVIN ARNOUX
 602000-602FFF	(base 16)	CHAUVIN ARNOUX
-				la queue Devée
+				la queue Devï¿½e
 				REUX PONT L'EVEQUE 14130
 				FRANCE
 
@@ -9646,7 +9647,7 @@ IAB Range    			Organization
 60A000-60AFFF	(base 16)	Gradual Tecnologia Ltda
 				Rodovia Alkindar Monteiro Junqueira, km 34,2
 				Caixa Postal 108
-				Bragança Paulista São Paulo 12914-970
+				Braganï¿½a Paulista Sï¿½o Paulo 12914-970
 				BRAZIL
 
 00-50-C2	(hex)		Shanghai QianJin Electronic Equipment Co. Ltd.
@@ -9785,7 +9786,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Harman/Becker Automotive Systems GmbH
 620000-620FFF	(base 16)	Harman/Becker Automotive Systems GmbH
-				Becker-Göring-Str. 16
+				Becker-Gï¿½ring-Str. 16
 				Karlsbad  76307
 				GERMANY
 
@@ -9855,8 +9856,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		First Control Systems AB
 62B000-62BFFF	(base 16)	First Control Systems AB
-				Ängsgärdsgatan 4
-				Västerås Västmanland SE-72130
+				ï¿½ngsgï¿½rdsgatan 4
+				Vï¿½sterï¿½s Vï¿½stmanland SE-72130
 				SWEDEN
 
 00-50-C2	(hex)		AirMatrix, Inc.
@@ -9871,10 +9872,10 @@ IAB Range    			Organization
 				Stanfield KZN 3613
 				SOUTH AFRICA
 
-00-50-C2	(hex)		TDM ingénierie
-62E000-62EFFF	(base 16)	TDM ingénierie
+00-50-C2	(hex)		TDM ingï¿½nierie
+62E000-62EFFF	(base 16)	TDM ingï¿½nierie
 				6 av H. Becquerel
-				Mérignac Aquitaine 33700
+				Mï¿½rignac Aquitaine 33700
 				FRANCE
 
 00-50-C2	(hex)		QES
@@ -9897,8 +9898,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		RoseTechnology A/S
 632000-632FFF	(base 16)	RoseTechnology A/S
-				Ellegårdvej 36
-				Sønderborg  6400
+				Ellegï¿½rdvej 36
+				Sï¿½nderborg  6400
 				DENMARK
 
 00-50-C2	(hex)		Rice University
@@ -10010,9 +10011,9 @@ IAB Range    			Organization
 				Christchurch  8011
 				NEW ZEALAND
 
-00-50-C2	(hex)		Phytec Meßtechnik GmbH
-644000-644FFF	(base 16)	Phytec Meßtechnik GmbH
-				Robert-Koch-Straße 39
+00-50-C2	(hex)		Phytec Meï¿½technik GmbH
+644000-644FFF	(base 16)	Phytec Meï¿½technik GmbH
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -10099,8 +10100,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Wideco Sweden AB
 652000-652FFF	(base 16)	Wideco Sweden AB
-				Företagsgatan 7
-				Borås Viared 50494
+				Fï¿½retagsgatan 7
+				Borï¿½s Viared 50494
 				SWEDEN
 
 00-50-C2	(hex)		Doble Engineering
@@ -10149,8 +10150,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Hisstema AB
 65A000-65AFFF	(base 16)	Hisstema AB
-				Hantverksvägen 13
-				Södertälje  S-151 65
+				Hantverksvï¿½gen 13
+				Sï¿½dertï¿½lje  S-151 65
 				SWEDEN
 
 00-50-C2	(hex)		Silverbrook Research
@@ -10228,13 +10229,9 @@ IAB Range    			Organization
 				Te Awamutu North Island 3800
 				NEW ZEALAND
 
-00-50-C2	(hex)		Vocality International Ltd
-667000-667FFF	(base 16)	Vocality International Ltd
-				Lydling Barn
-				Puttenham Lane
-				Shackleford Surrey GU8 6AP
-				UNITED KINGDOM
-
+00-50-C2	(hex)		PRIVATE
+667000-667FFF	(base 16)		 
+				 
 00-50-C2	(hex)		Keith & Koep GmbH
 668000-668FFF	(base 16)	Keith & Koep GmbH
 				Uellendahler Str. 199
@@ -10299,7 +10296,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		DDS Elettronica srl
 672000-672FFF	(base 16)	DDS Elettronica srl
-				Via Niccolò Biondo 171
+				Via Niccolï¿½ Biondo 171
 				Modena  41100
 				ITALY
 
@@ -10376,9 +10373,9 @@ IAB Range    			Organization
 				Murten FR 3280
 				SWITZERLAND
 
-00-50-C2	(hex)		Phytec Meßtechnik GmbH
-67F000-67FFFF	(base 16)	Phytec Meßtechnik GmbH
-				Robert-Koch-Straße 39
+00-50-C2	(hex)		Phytec Meï¿½technik GmbH
+67F000-67FFFF	(base 16)	Phytec Meï¿½technik GmbH
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -10411,8 +10408,8 @@ IAB Range    			Organization
 00-50-C2	(hex)		REASON Tecnologia S.A.
 684000-684FFF	(base 16)	REASON Tecnologia S.A.
 				R. Delminda Silveira, 855
-				Bairro: Agronômica
-				Florianópolis Santa Catarina 88025-500
+				Bairro: Agronï¿½mica
+				Florianï¿½polis Santa Catarina 88025-500
 				BRAZIL
 
 00-50-C2	(hex)		Datamars SA
@@ -10577,7 +10574,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Ideus AB
 69E000-69EFFF	(base 16)	Ideus AB
 				Box 133
-				Skövde  SE-54123
+				Skï¿½vde  SE-54123
 				SWEDEN
 
 00-50-C2	(hex)		Total RF, LLC
@@ -10621,7 +10618,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		FHF Funke+Huster Fernsig GmbH
 6A5000-6A5FFF	(base 16)	FHF Funke+Huster Fernsig GmbH
 				Gewerbeallee 15-19
-				Mülheim an der Ruhr NRW D-45478
+				Mï¿½lheim an der Ruhr NRW D-45478
 				GERMANY
 
 00-50-C2	(hex)		Victory Concept Industries Ltd.
@@ -10669,10 +10666,10 @@ IAB Range    			Organization
 				London West Sussex RH10 9PZ
 				UNITED KINGDOM
 
-00-50-C2	(hex)		Heim- & Bürokommunikation
-6AD000-6ADFFF	(base 16)	Heim- & Bürokommunikation
+00-50-C2	(hex)		Heim- & Bï¿½rokommunikation
+6AD000-6ADFFF	(base 16)	Heim- & Bï¿½rokommunikation
 				Markt 6
-				Altdöbern Brandenburg 03229
+				Altdï¿½bern Brandenburg 03229
 				GERMANY
 
 00-50-C2	(hex)		Qualisys AB
@@ -10714,7 +10711,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		SOMESCA
 6B4000-6B4FFF	(base 16)	SOMESCA
-				80 rue Jean Jaurès
+				80 rue Jean Jaurï¿½s
 				BOIS-COLOMBES  92270
 				FRANCE
 
@@ -10742,7 +10739,7 @@ IAB Range    			Organization
 6B8000-6B8FFF	(base 16)	Epec Oy
 				P.O. Box 194
 				Matinkatu 6
-				Seinäjoki Etelä-Pohjanmaa 60101
+				Seinï¿½joki Etelï¿½-Pohjanmaa 60101
 				FINLAND
 
 00-50-C2	(hex)		unipo GmbH
@@ -10774,7 +10771,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Mitron Oy
 6BD000-6BDFFF	(base 16)	Mitron Oy
 				P.O. Box 113
-				FORSSA HÄME FIN-30101
+				FORSSA Hï¿½ME FIN-30101
 				FINLAND
 
 00-50-C2	(hex)		ESTEC Co.,Ltd.
@@ -10791,7 +10788,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		GLOSTER SANTE EUROPE
 6C0000-6C0FFF	(base 16)	GLOSTER SANTE EUROPE
-				Prologue 1 - La Pyrénéenne
+				Prologue 1 - La Pyrï¿½nï¿½enne
 				BP27201
 				LABEGE HAUTE GARONNE 31672
 				FRANCE
@@ -10880,7 +10877,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		EMITALL Surveillance S.A,
 6CE000-6CEFFF	(base 16)	EMITALL Surveillance S.A,
-				Rue du Théâtre 5
+				Rue du Thï¿½ï¿½tre 5
 				Montreux Vaud 1820
 				SWITZERLAND
 
@@ -11087,7 +11084,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Pneumopartners LaenneXT SA
 6EF000-6EFFFF	(base 16)	Pneumopartners LaenneXT SA
 				91b route des Romains
-				STRASBOURG Région Alsace F-67200
+				STRASBOURG Rï¿½gion Alsace F-67200
 				FRANCE
 
 00-50-C2	(hex)		Stanley Security Solutions, Inc.
@@ -11124,7 +11121,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Kitron Microelectronics AB
 6F5000-6F5FFF	(base 16)	Kitron Microelectronics AB
 				P.O. Box 1052
-				Jönköping  SE-551 10
+				Jï¿½nkï¿½ping  SE-551 10
 				SWEDEN
 
 00-50-C2	(hex)		TSAT AS
@@ -11133,9 +11130,9 @@ IAB Range    			Organization
 				Hvalstad Asker 1395
 				NORWAY
 
-00-50-C2	(hex)		infoplan Gesellschaft für Informationssysteme mbH
-6F7000-6F7FFF	(base 16)	infoplan Gesellschaft für Informationssysteme mbH
-				Wallbergstraße 1
+00-50-C2	(hex)		infoplan Gesellschaft fï¿½r Informationssysteme mbH
+6F7000-6F7FFF	(base 16)	infoplan Gesellschaft fï¿½r Informationssysteme mbH
+				Wallbergstraï¿½e 1
 				Taufkirchen Bayern D-82024
 				GERMANY
 
@@ -11148,7 +11145,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Revox GmbH
 6F9000-6F9FFF	(base 16)	Revox GmbH
 				Am Krebsgraben 15
-				VS-Villingen Baden-Württemberg 78048
+				VS-Villingen Baden-Wï¿½rttemberg 78048
 				GERMANY
 
 00-50-C2	(hex)		DCN
@@ -11204,13 +11201,13 @@ IAB Range    			Organization
 00-50-C2	(hex)		SPM Instrument AB
 702000-702FFF	(base 16)	SPM Instrument AB
 				Box 504
-				Strängnäs  SE-64525
+				Strï¿½ngnï¿½s  SE-64525
 				SWEDEN
 
 00-50-C2	(hex)		SAE IT-systems GmbH & Co. KG
 703000-703FFF	(base 16)	SAE IT-systems GmbH & Co. KG
 				Im Gewerbegebiet Pesch 14
-				Köln NRW 50767
+				Kï¿½ln NRW 50767
 				GERMANY
 
 00-50-C2	(hex)		The Dini Group, La Jolla inc.
@@ -11267,12 +11264,12 @@ IAB Range    			Organization
 00-50-C2	(hex)		Exertus
 70C000-70CFFF	(base 16)	Exertus
 				Kampusranta 9
-				Seinäjoki  FI-60320
+				Seinï¿½joki  FI-60320
 				FINLAND
 
 00-50-C2	(hex)		ela-soft GmbH & Co. KG
 70D000-70DFFF	(base 16)	ela-soft GmbH & Co. KG
-				Rosenstarße 2
+				Rosenstarï¿½e 2
 				Berlin  10178
 				GERMANY
 
@@ -11305,7 +11302,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Pasan SA
 712000-712FFF	(base 16)	Pasan SA
 				Rue Jaquet-Droz 8
-				2000 Neuchâtel 
+				2000 Neuchï¿½tel 
 				SWITZERLAND
 
 00-50-C2	(hex)		3DX-Ray Limited
@@ -11348,7 +11345,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		ennovatis GmbH
 719000-719FFF	(base 16)	ennovatis GmbH
 				Dechwitzer Str. 11
-				Großpösna Sachsen 04463
+				Groï¿½pï¿½sna Sachsen 04463
 				GERMANY
 
 00-50-C2	(hex)		Logus Broadband Wireless Solutions Inc.
@@ -11383,8 +11380,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ASC telecom AG
 71F000-71FFFF	(base 16)	ASC telecom AG
-				Seibelstraße 2
-				Hösbach Bavaria 63768
+				Seibelstraï¿½e 2
+				Hï¿½sbach Bavaria 63768
 				GERMANY
 
 00-50-C2	(hex)		Colorado Engineering Inc.
@@ -11533,7 +11530,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Teradici Corporation
 737000-737FFF	(base 16)	Teradici Corporation
-				500 – 4400 Dominion St.
+				500 ï¿½ 4400 Dominion St.
 				Burnaby BC V5G 4G3
 				CANADA
 
@@ -11607,7 +11604,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Elektro-Top 3000 Ltd.
 743000-743FFF	(base 16)	Elektro-Top 3000 Ltd.
-				Öv. u. 140.
+				ï¿½v. u. 140.
 				Budapest  1147
 				HUNGARY
 
@@ -11678,7 +11675,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		TRONICO
 74E000-74EFFF	(base 16)	TRONICO
 				26 rue du Bocage
-				St Philbert de Bouaine Vendée 85660
+				St Philbert de Bouaine Vendï¿½e 85660
 				FRANCE
 
 00-50-C2	(hex)		German Technologies
@@ -11696,7 +11693,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		e&s Engineering & Software GmbH
 751000-751FFF	(base 16)	e&s Engineering & Software GmbH
-				Schmücker Str. 82a
+				Schmï¿½cker Str. 82a
 				MANEBACH Thueringen D98693
 				GERMANY
 
@@ -11763,10 +11760,10 @@ IAB Range    			Organization
 				Lissone Milan 20035
 				ITALY
 
-00-50-C2	(hex)		STÖRK-TRONIC Störk GmbH&Co. KG
-75C000-75CFFF	(base 16)	STÖRK-TRONIC Störk GmbH&Co. KG
-				Untere Waldplätze 6
-				Stuttgart Baden Württemberg D-70569
+00-50-C2	(hex)		STï¿½RK-TRONIC Stï¿½rk GmbH&Co. KG
+75C000-75CFFF	(base 16)	STï¿½RK-TRONIC Stï¿½rk GmbH&Co. KG
+				Untere Waldplï¿½tze 6
+				Stuttgart Baden Wï¿½rttemberg D-70569
 				GERMANY
 
 00-50-C2	(hex)		Fluid Analytics, Inc.
@@ -11822,7 +11819,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 765000-765FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -11848,7 +11845,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		BES GmbH
 769000-769FFF	(base 16)	BES GmbH
-				Große Wehe 1
+				Groï¿½e Wehe 1
 				Bad Zwischenahn  D 26160
 				GERMANY
 
@@ -11866,7 +11863,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		EFG CZ spol. s r.o.
 76C000-76CFFF	(base 16)	EFG CZ spol. s r.o.
-				Na Jarovì 4
+				Na Jarovï¿½ 4
 				Praha 3 Czech republic 13000
 				CZECH REPUBLIC
 
@@ -11916,7 +11913,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		GeoSIG Ltd.
 774000-774FFF	(base 16)	GeoSIG Ltd.
 				Europastrasse 11
-				Glattbrugg Zürich 8152
+				Glattbrugg Zï¿½rich 8152
 				SWITZERLAND
 
 00-50-C2	(hex)		Laserdyne Technologies
@@ -12002,7 +11999,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Mestechnik GmbH
 782000-782FFF	(base 16)	Phytec Mestechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -12052,8 +12049,8 @@ IAB Range    			Organization
 00-50-C2	(hex)		LEVEL TELECOM
 78A000-78AFFF	(base 16)	LEVEL TELECOM
 				Parque Empresarial NovoMilladoiro
-				Rúa das Hedras, 47-B2
-				Milladoiro - Ames A Coruña 15895
+				Rï¿½a das Hedras, 47-B2
+				Milladoiro - Ames A Coruï¿½a 15895
 				SPAIN
 
 00-50-C2	(hex)		OMICRON electronics GmbH
@@ -12129,13 +12126,13 @@ IAB Range    			Organization
 00-50-C2	(hex)		DORLET S.A.
 796000-796FFF	(base 16)	DORLET S.A.
 				Albert Einstein 34
-				Miñano Mayor
+				Miï¿½ano Mayor
 				Vitoria-gasteiz Alava 01510
 				SPAIN
 
 00-50-C2	(hex)		Tiefenbach Control Systems GmbH
 797000-797FFF	(base 16)	Tiefenbach Control Systems GmbH
-				Brückenstr. 8
+				Brï¿½ckenstr. 8
 				Erlangen Bayern 91056
 				GERMANY
 
@@ -12255,7 +12252,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		EPEL INDUSTRIAL
 7AA000-7AAFFF	(base 16)	EPEL INDUSTRIAL
-				CALLE ALBASANZ Nº 6 AND 8
+				CALLE ALBASANZ Nï¿½ 6 AND 8
 				MADRID  28037
 				SPAIN
 
@@ -12285,9 +12282,9 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		C2 Microsystems
 7AF000-7AFFFF	(base 16)	C2 Microsystems
-				525 Race St
-				Suite 100
-				San Jose CA 95126
+				2833 Junction Ave
+				Suite 101
+				San Jose CA 95134-1224
 				UNITED STATES
 
 00-50-C2	(hex)		IMP Telekom
@@ -12399,13 +12396,13 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Primary Integration Encorp LLC
 7C1000-7C1FFF	(base 16)	Primary Integration Encorp LLC
-				2573 Midpoint Drive
+				1825 Sharp Point Drive, Suite 118
 				Fort Collins CO 80525
 				UNITED STATES
 
 00-50-C2	(hex)		DSR Information Technologies Ltd.
 7C2000-7C2FFF	(base 16)	DSR Information Technologies Ltd.
-				Fehévári u. 50-52
+				Fehï¿½vï¿½ri u. 50-52
 				Budapest  1117
 				HUNGARY
 
@@ -12437,7 +12434,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Pyrosequencing AB
 7C7000-7C7FFF	(base 16)	Pyrosequencing AB
 				Kungsgatan 76
-				Uppsala Uppsala län SE-753 18
+				Uppsala Uppsala lï¿½n SE-753 18
 				SWEDEN
 
 00-50-C2	(hex)		Fr. Sauter AG
@@ -12469,7 +12466,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		SWECO JAPS AB
 7CC000-7CCFFF	(base 16)	SWECO JAPS AB
 				Metallverksgatan 8
-				Västerås  SE-721 30
+				Vï¿½sterï¿½s  SE-721 30
 				SWEDEN
 
 00-50-C2	(hex)		Precision MicroControl Corporation
@@ -12495,13 +12492,13 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Radar Tronic ltd.
 7D0000-7D0FFF	(base 16)	Radar Tronic ltd.
-				Törökkö u. 5-7.
+				Tï¿½rï¿½kkï¿½ u. 5-7.
 				Budapest Pest 1037
 				HUNGARY
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 7D1000-7D1FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße39
+				Robert-Koch-Straï¿½e39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -12538,13 +12535,13 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Newtec A/S
 7D7000-7D7FFF	(base 16)	Newtec A/S
-				Stærmosegårdsvej 18
+				Stï¿½rmosegï¿½rdsvej 18
 				Odense SV Region Syd 5230
 				DENMARK
 
 00-50-C2	(hex)		InnoScan K/S
 7D8000-7D8FFF	(base 16)	InnoScan K/S
-				Sødalsparken 11
+				Sï¿½dalsparken 11
 				Brabrand  8220
 				DENMARK
 
@@ -12578,7 +12575,7 @@ IAB Range    			Organization
 7DD000-7DDFFF	(base 16)	LS Elektronik AB
 				Avestagatan 35
 				Box 8301
-				Spånga  163 08
+				Spï¿½nga  163 08
 				SWEDEN
 
 00-50-C2	(hex)		Cascade Technologies Ltd
@@ -12710,7 +12707,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Logotherm Regelsysteme GmbH
 7F2000-7F2FFF	(base 16)	Logotherm Regelsysteme GmbH
-				Erlauftalstraße 28
+				Erlauftalstraï¿½e 28
 				Purgstall Lower Austria AT-3251
 				AUSTRIA
 
@@ -12744,10 +12741,10 @@ IAB Range    			Organization
 				Jerusalem  45116
 				ISRAEL
 
-00-50-C2	(hex)		Wise Industria de Telecomunicações Ldta.
-7F8000-7F8FFF	(base 16)	Wise Industria de Telecomunicações Ldta.
+00-50-C2	(hex)		Wise Industria de Telecomunicaï¿½ï¿½es Ldta.
+7F8000-7F8FFF	(base 16)	Wise Industria de Telecomunicaï¿½ï¿½es Ldta.
 				SIBS Quadra 01 conjunto
-				Núcleo Bandeirante Distrito Federal 71736-104
+				Nï¿½cleo Bandeirante Distrito Federal 71736-104
 				BRAZIL
 
 00-50-C2	(hex)		Karl DUNGS GmbH & Co. KG
@@ -12758,7 +12755,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		AutomationX GmbH
 7FA000-7FAFFF	(base 16)	AutomationX GmbH
-				Teslastraße 8
+				Teslastraï¿½e 8
 				Grambach Stmk 8074
 				AUSTRIA
 
@@ -12834,7 +12831,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		TECHNOMARK
 807000-807FFF	(base 16)	TECHNOMARK
-				Parc d'Activités STELYTEC
+				Parc d'Activitï¿½s STELYTEC
 				Saint-Chamond RA F-42400
 				FRANCE
 
@@ -13034,8 +13031,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Enero Solutions inc.
 827000-827FFF	(base 16)	Enero Solutions inc.
-				4401 Coolbrook
-				Montreal Quebec H4A3G1
+				5764 Monkland Ave., Suite 100,
+				Montreal Quebec H4A 1E9
 				CANADA
 
 00-50-C2	(hex)		SLICAN sp. z o.o.
@@ -13104,7 +13101,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		S1nn GmbH & Co. KG
 832000-832FFF	(base 16)	S1nn GmbH & Co. KG
 				Entennest 1
-				Esslingen Baden-Württemberg 73730
+				Esslingen Baden-Wï¿½rttemberg 73730
 				GERMANY
 
 00-50-C2	(hex)		LaserLinc, Inc.
@@ -13145,8 +13142,8 @@ IAB Range    			Organization
 				ISTANBUL  34716
 				TURKEY
 
-00-50-C2	(hex)		IMS Röntgensysteme GmbH
-839000-839FFF	(base 16)	IMS Röntgensysteme GmbH
+00-50-C2	(hex)		IMS Rï¿½ntgensysteme GmbH
+839000-839FFF	(base 16)	IMS Rï¿½ntgensysteme GmbH
 				Dieselstr. 52
 				Heiligenhaus Nordrhein-Westfalen 42579
 				GERMANY
@@ -13165,8 +13162,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		hema electronic GmbH
 83C000-83CFFF	(base 16)	hema electronic GmbH
-				Röntgenstrasse 31
-				Aalen Baden Württemberg 73431
+				Rï¿½ntgenstrasse 31
+				Aalen Baden Wï¿½rttemberg 73431
 				GERMANY
 
 00-50-C2	(hex)		beroNet GmbH
@@ -13177,13 +13174,13 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		KPE spol. s r.o.
 83E000-83EFFF	(base 16)	KPE spol. s r.o.
-				Blattného 2313
+				Blattnï¿½ho 2313
 				Praha CZ 15800
 				CZECH REPUBLIC
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 83F000-83FFFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				UNITED STATES
 
@@ -13320,7 +13317,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Ratioplast-Optoelectronics GmbH
 854000-854FFF	(base 16)	Ratioplast-Optoelectronics GmbH
 				Jockweg 66
-				Lübbecke NRW D-32312
+				Lï¿½bbecke NRW D-32312
 				GERMANY
 
 00-50-C2	(hex)		TOPEX SA
@@ -13505,7 +13502,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Oliotalo - Objecthouse Oy
 872000-872FFF	(base 16)	Oliotalo - Objecthouse Oy
-				Lämmittäjänkatu 4 B
+				Lï¿½mmittï¿½jï¿½nkatu 4 B
 				Helsinki Uusimaa 00880
 				FINLAND
 
@@ -13525,7 +13522,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 875000-875FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -13562,7 +13559,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		UAVNavigation S.L.
 87B000-87BFFF	(base 16)	UAVNavigation S.L.
 				Av. Doctor Severo Ochoa
-				Nº 45, 1º A
+				Nï¿½ 45, 1ï¿½ A
 				Alcobendas Madrid 28100
 				SPAIN
 
@@ -13611,8 +13608,8 @@ IAB Range    			Organization
 				Gunpo-Si Gyeonggi-Do 435-010
 				KOREA, REPUBLIC OF
 
-00-50-C2	(hex)		Neocontrol Soluçoes em Automação
-883000-883FFF	(base 16)	Neocontrol Soluçoes em Automação
+00-50-C2	(hex)		Neocontrol Soluï¿½oes em Automaï¿½ï¿½o
+883000-883FFF	(base 16)	Neocontrol Soluï¿½oes em Automaï¿½ï¿½o
 				Rua Alagoas 1160, 10. andar
 				Belo Horizonte Minas Gerais 30130-912
 				BRAZIL
@@ -13631,8 +13628,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Transas Scandinavia AB
 886000-886FFF	(base 16)	Transas Scandinavia AB
-				Datavägen 37
-				Askim Västra Götaland 436 32
+				Datavï¿½gen 37
+				Askim Vï¿½stra Gï¿½taland 436 32
 				SWEDEN
 
 00-50-C2	(hex)		Inventis Technology Pty Limited
@@ -13686,14 +13683,14 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Keynote SIGOS GmbH
 88F000-88FFFF	(base 16)	Keynote SIGOS GmbH
-				Klingenhofstraße 50d
-				Nürnberg Bayern 90411
+				Klingenhofstraï¿½e 50d
+				Nï¿½rnberg Bayern 90411
 				GERMANY
 
-00-50-C2	(hex)		BAE Systems Hägglunds AB
-890000-890FFF	(base 16)	BAE Systems Hägglunds AB
-				Björnavägen 41
-				Örnsköldsvik Västernorrland 891 82
+00-50-C2	(hex)		BAE Systems Hï¿½gglunds AB
+890000-890FFF	(base 16)	BAE Systems Hï¿½gglunds AB
+				Bjï¿½rnavï¿½gen 41
+				ï¿½rnskï¿½ldsvik Vï¿½sternorrland 891 82
 				SWEDEN
 
 00-50-C2	(hex)		Admiral Secure Products, Ltd.
@@ -13709,8 +13706,8 @@ IAB Range    			Organization
 				Ostrava Privoz 70200
 				CZECH REPUBLIC
 
-00-50-C2	(hex)		eg-electronic
-893000-893FFF	(base 16)	eg-electronic
+00-50-C2	(hex)		EIZO Technologies GmbH
+893000-893FFF	(base 16)	EIZO Technologies GmbH
 				BGM-Seidl-Strasse 8
 				Wolfratshausen Bavaria / Bayern 82515
 				GERMANY
@@ -13774,7 +13771,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Systemtechnik GmbH
 89D000-89DFFF	(base 16)	Systemtechnik GmbH
 				Wielandstrasse 12
-				Sömmerda Thuringia 99610
+				Sï¿½mmerda Thuringia 99610
 				GERMANY
 
 00-50-C2	(hex)		Broadcast Electronics
@@ -13811,7 +13808,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		RTW GmbH & Co.KG
 8A3000-8A3FFF	(base 16)	RTW GmbH & Co.KG
 				Elbeallee 19
-				Köln NRW 50765
+				Kï¿½ln NRW 50765
 				GERMANY
 
 00-50-C2	(hex)		BALOGH T.A.G Corporation
@@ -13853,7 +13850,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ATS Elektronik GmbH
 8AA000-8AAFFF	(base 16)	ATS Elektronik GmbH
-				Albert-Einstein-Straße 3
+				Albert-Einstein-Straï¿½e 3
 				Wunstorf Lower saxony 31515
 				GERMANY
 
@@ -13878,7 +13875,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		DESARROLLO DE SISTEMAS INTEGRADOS DE CONTROL S.A.
 8AE000-8AEFFF	(base 16)	DESARROLLO DE SISTEMAS INTEGRADOS DE CONTROL S.A.
-				C/FEDANCI 8-10, 3º-3ª
+				C/FEDANCI 8-10, 3ï¿½-3ï¿½
 				SANT CUGAT DEL VALLES BARCELONA 08174
 				SPAIN
 
@@ -13959,7 +13956,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		smtag international ag
 8BB000-8BBFFF	(base 16)	smtag international ag
 				Bahnhofstrasse 198
-				Wetzikon Zürich 8620
+				Wetzikon Zï¿½rich 8620
 				SWITZERLAND
 
 00-50-C2	(hex)		Honeywell Sensotec
@@ -14007,7 +14004,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Byte Paradigm
 8C3000-8C3FFF	(base 16)	Byte Paradigm
-				Chaussée de Namur, 119
+				Chaussï¿½e de Namur, 119
 				Nivelles (Thines) Brabant 1402
 				BELGIUM
 
@@ -14027,7 +14024,7 @@ IAB Range    			Organization
 8C6000-8C6FFF	(base 16)	Gradual Tecnologia Ltda.
 				Rod. Alkindar M. Junqueira Km 34,2
 				Caixa Postal 108
-				Bragança Paulista São Paulo 12914-970
+				Braganï¿½a Paulista Sï¿½o Paulo 12914-970
 				BRAZIL
 
 00-50-C2	(hex)		Tattile srl
@@ -14037,11 +14034,11 @@ IAB Range    			Organization
 				Brescia Italy 25030
 				ITALY
 
-00-50-C2	(hex)		Pumatronix Equipamentos Eletrônicos Ltda
-8C8000-8C8FFF	(base 16)	Pumatronix Equipamentos Eletrônicos Ltda
+00-50-C2	(hex)		Pumatronix Equipamentos Eletrï¿½nicos Ltda
+8C8000-8C8FFF	(base 16)	Pumatronix Equipamentos Eletrï¿½nicos Ltda
 				Rua Algacyr Munhoz Mader, 3775
 				CIC
-				Curitiba Paraná 81350-010
+				Curitiba Paranï¿½ 81350-010
 				BRAZIL
 
 00-50-C2	(hex)		A+S Aktuatorik und Sensorik GmbH
@@ -14076,7 +14073,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 8CE000-8CEFFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				UNITED STATES
 
@@ -14110,9 +14107,9 @@ IAB Range    			Organization
 				Erfurt Thuringia 99092
 				GERMANY
 
-00-50-C2	(hex)		Internet Protocolo Lógica SL
-8D4000-8D4FFF	(base 16)	Internet Protocolo Lógica SL
-				Ramón y Cajal 5
+00-50-C2	(hex)		Internet Protocolo Lï¿½gica SL
+8D4000-8D4FFF	(base 16)	Internet Protocolo Lï¿½gica SL
+				Ramï¿½n y Cajal 5
 				Centro de Empresas, Local 25
 				Alcobendas Madrid 28100
 				SPAIN
@@ -14173,7 +14170,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		GIMCON
 8DD000-8DDFFF	(base 16)	GIMCON
-				Reininghausstraße 5
+				Reininghausstraï¿½e 5
 				Graz Styria 8020
 				AUSTRIA
 
@@ -14208,8 +14205,8 @@ IAB Range    			Organization
 				Santa Cruz CA 95062
 				UNITED STATES
 
-00-50-C2	(hex)		bioMérieux Italia S.p.A.
-8E3000-8E3FFF	(base 16)	bioMérieux Italia S.p.A.
+00-50-C2	(hex)		bioMï¿½rieux Italia S.p.A.
+8E3000-8E3FFF	(base 16)	bioMï¿½rieux Italia S.p.A.
 				Via di Campigliano, 58
 				Ponte a Ema FI 50015
 				ITALY
@@ -14235,7 +14232,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		MKT Systemtechnik
 8E7000-8E7FFF	(base 16)	MKT Systemtechnik
 				Hasskampstrasse 75-77
-				Bünde NRW 32257
+				Bï¿½nde NRW 32257
 				GERMANY
 
 00-50-C2	(hex)		Friedrich Kuhnt GmbH
@@ -14284,7 +14281,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Technologies Sensio Inc
 8EF000-8EFFFF	(base 16)	Technologies Sensio Inc
 				1751 Richardson, Suite 4.206
-				Montréal Québec H3K 1G6
+				Montrï¿½al Quï¿½bec H3K 1G6
 				CANADA
 
 00-50-C2	(hex)		PRIVATE
@@ -14366,11 +14363,11 @@ IAB Range    			Organization
 				West Melbourne Fl 32901
 				UNITED STATES
 
-00-50-C2	(hex)		Sindoma Müh Mim Ýnþ Elk San Tic Ltd.
-8FD000-8FDFFF	(base 16)	Sindoma Müh Mim Ýnþ Elk San Tic Ltd.
-				Dereboyu cad. Þair Necati sok.
-				No:8/2 Ortaköy Beþiktaþ
-				Ýstanbul TR 34347
+00-50-C2	(hex)		Sindoma Mï¿½h Mim ï¿½nï¿½ Elk San Tic Ltd.
+8FD000-8FDFFF	(base 16)	Sindoma Mï¿½h Mim ï¿½nï¿½ Elk San Tic Ltd.
+				Dereboyu cad. ï¿½air Necati sok.
+				No:8/2 Ortakï¿½y Beï¿½iktaï¿½
+				ï¿½stanbul TR 34347
 				TURKEY
 
 00-50-C2	(hex)		Cross Country Systems AB
@@ -14456,7 +14453,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		E.ON ES Sverige AB
 90B000-90BFFF	(base 16)	E.ON ES Sverige AB
 				Box 50529
-				Malmö  20250
+				Malmï¿½  20250
 				SWEDEN
 
 00-50-C2	(hex)		LSS GmbH
@@ -14473,7 +14470,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 90E000-90EFFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -14599,7 +14596,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Metrum Sweden AB
 922000-922FFF	(base 16)	Metrum Sweden AB
 				Vestagatan 2A
-				Göteborg Vastra Gotaland 41664
+				Gï¿½teborg Vastra Gotaland 41664
 				SWEDEN
 
 00-50-C2	(hex)		Amicus Wireless
@@ -14628,7 +14625,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ATIS group s.r.o.
 927000-927FFF	(base 16)	ATIS group s.r.o.
-				Za Strašnickou vozovnou 7
+				Za Straï¿½nickou vozovnou 7
 				Praha 10
 				Prague Czech Republic 110 00
 				CZECH REPUBLIC
@@ -14679,7 +14676,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 92F000-92FFFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-koch-Straße 39
+				Robert-koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -14910,7 +14907,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 954000-954FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-straße 39
+				Robert-Koch-straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -14967,7 +14964,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		full electronic system
 95D000-95DFFF	(base 16)	full electronic system
 				parc des ruires
-				3 rue irène joliot curie
+				3 rue irï¿½ne joliot curie
 				eybens  38320
 				FRANCE
 
@@ -15004,8 +15001,8 @@ IAB Range    			Organization
 				Lausanne VD 1015
 				SWITZERLAND
 
-00-50-C2	(hex)		Lécureux SA
-963000-963FFF	(base 16)	Lécureux SA
+00-50-C2	(hex)		Lï¿½cureux SA
+963000-963FFF	(base 16)	Lï¿½cureux SA
 				Rue des Pres 137
 				Biel/Bienne BE 2503
 				SWITZERLAND
@@ -15102,10 +15099,10 @@ IAB Range    			Organization
 				Chiyoda-ku Tokyo 1020083
 				JAPAN
 
-00-50-C2	(hex)		Systèmes Pran
-973000-973FFF	(base 16)	Systèmes Pran
-				2245, Rue Léon Harmel
-				Québec  G1N4J6
+00-50-C2	(hex)		Systï¿½mes Pran
+973000-973FFF	(base 16)	Systï¿½mes Pran
+				2245, Rue Lï¿½on Harmel
+				Quï¿½bec  G1N4J6
 				CANADA
 
 00-50-C2	(hex)		EMAC, INC.
@@ -15260,7 +15257,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		MGM-Devices Oy
 98C000-98CFFF	(base 16)	MGM-Devices Oy
-				Länsikatu 15
+				Lï¿½nsikatu 15
 				Joensuu Pohjois-Karjala 80110
 				FINLAND
 
@@ -15313,10 +15310,10 @@ IAB Range    			Organization
 				Alkmaar NH 1800AC
 				NETHERLANDS
 
-00-50-C2	(hex)		Inter Control Hermann Köhler Elektrik GmbH&Co.KG
-995000-995FFF	(base 16)	Inter Control Hermann Köhler Elektrik GmbH&Co.KG
-				Schafhofstraße 30
-				Nürnberg Bavaria 90411
+00-50-C2	(hex)		Inter Control Hermann Kï¿½hler Elektrik GmbH&Co.KG
+995000-995FFF	(base 16)	Inter Control Hermann Kï¿½hler Elektrik GmbH&Co.KG
+				Schafhofstraï¿½e 30
+				Nï¿½rnberg Bavaria 90411
 				GERMANY
 
 00-50-C2	(hex)		Commercial Timesharing Inc.
@@ -15327,13 +15324,13 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Depro Electronique
 997000-997FFF	(base 16)	Depro Electronique
-				755 Curé-Boivin
+				755 Curï¿½-Boivin
 				Boisbriand Quebec J7G2J2
 				CANADA
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 998000-998FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -15481,7 +15478,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Ebru GmbH
 9B0000-9B0FFF	(base 16)	Ebru GmbH
 				In den Kreuzwiesen
-				Schönau  69250
+				Schï¿½nau  69250
 				GERMANY
 
 00-50-C2	(hex)		Bon Hora GmbH
@@ -15516,9 +15513,9 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ACTECH
 9B6000-9B6FFF	(base 16)	ACTECH
-				Parc d'activités Angers-Beaucouzé
+				Parc d'activitï¿½s Angers-Beaucouzï¿½
 				4, rue Olivier de Serres
-				Beaucouzé  49070
+				Beaucouzï¿½  49070
 				FRANCE
 
 00-50-C2	(hex)		St. Michael Strategies
@@ -15536,8 +15533,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ISA - Intelligent Sensing Anywhere, S.A.
 9B9000-9B9FFF	(base 16)	ISA - Intelligent Sensing Anywhere, S.A.
-				Estádio Cidade de Coimbra
-				Rua D. Manuel I, nº92
+				Estï¿½dio Cidade de Coimbra
+				Rua D. Manuel I, nï¿½92
 				Coimbra  3030-320
 				PORTUGAL
 
@@ -15556,7 +15553,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Vester Elektronik GmbH
 9BC000-9BCFFF	(base 16)	Vester Elektronik GmbH
 				Otto-Hahn-Strasse 14
-				Straubenhardt Baden Württemberg 75334
+				Straubenhardt Baden Wï¿½rttemberg 75334
 				GERMANY
 
 00-50-C2	(hex)		Sensitron Semiconductor
@@ -15613,7 +15610,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Scansonic MI GmbH
 9C5000-9C5FFF	(base 16)	Scansonic MI GmbH
-				Rudolf-Baschant-Straße 2
+				Rudolf-Baschant-Straï¿½e 2
 				Berlin  13086
 				GERMANY
 
@@ -15626,7 +15623,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		Kumera Drives Oy
 9C7000-9C7FFF	(base 16)	Kumera Drives Oy
 				Kumerankatu 2
-				Riihimäki Häme 11100
+				Riihimï¿½ki Hï¿½me 11100
 				FINLAND
 
 00-50-C2	(hex)		ethermetrics
@@ -15643,7 +15640,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		ESAB-ATAS GmbH
 9CA000-9CAFFF	(base 16)	ESAB-ATAS GmbH
-				Liebigstraße 16
+				Liebigstraï¿½e 16
 				Seligenstadt Hessen 63500
 				GERMANY
 
@@ -15679,8 +15676,8 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		J. DITTRICH ELEKTRONIC GmbH & Co. KG
 9D0000-9D0FFF	(base 16)	J. DITTRICH ELEKTRONIC GmbH & Co. KG
-				Bahnhofstraße 67
-				Baden-Baden / Haueneberstein Baden-Württemberg 76532
+				Bahnhofstraï¿½e 67
+				Baden-Baden / Haueneberstein Baden-Wï¿½rttemberg 76532
 				GERMANY
 
 00-50-C2	(hex)		Bladelius Design Group AB
@@ -15746,7 +15743,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Walter Grotkasten
 9DB000-9DBFFF	(base 16)	Walter Grotkasten
-				Grabäckerstr. 14
+				Grabï¿½ckerstr. 14
 				Schorndorf BW 73614
 				GERMANY
 
@@ -15822,7 +15819,7 @@ IAB Range    			Organization
 00-50-C2	(hex)		DORLET S.A.
 9E7000-9E7FFF	(base 16)	DORLET S.A.
 				Albert Einstein 34
-				Miñano Mayor
+				Miï¿½ano Mayor
 				Vitoria-gasteiz Alava 01510
 				SPAIN
 
@@ -15841,7 +15838,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		SISMODULAR - Engenharia, Lda
 9EA000-9EAFFF	(base 16)	SISMODULAR - Engenharia, Lda
-				Lrg. S. Paulo Nº13, 1º - E2
+				Lrg. S. Paulo Nï¿½13, 1ï¿½ - E2
 				Braga  4700-042
 				PORTUGAL
 
@@ -15948,7 +15945,7 @@ IAB Range    			Organization
 
 00-50-C2	(hex)		Villbau Kft.
 9FB000-9FBFFF	(base 16)	Villbau Kft.
-				Üllöi út 611.
+				ï¿½llï¿½i ï¿½t 611.
 				BUdapest  H-1182
 				HUNGARY
 
@@ -16018,7 +16015,7 @@ A05000-A05FFF	(base 16)	Adgil Design Inc.
 
 00-50-C2	(hex)		Cloos Schweisstechnik GmbH
 A06000-A06FFF	(base 16)	Cloos Schweisstechnik GmbH
-				Industriestraße 34-36
+				Industriestraï¿½e 34-36
 				Haiger Hessen 35708
 				GERMANY
 
@@ -16054,7 +16051,7 @@ A0B000-A0BFFF	(base 16)	I.D.S. Ingegneria Dei Sistemi  S.p.A.
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 A0C000-A0CFFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -16119,7 +16116,7 @@ A15000-A15FFF	(base 16)	Industrial Computing Ltd
 00-50-C2	(hex)		Baudisch Electronic GmbH
 A16000-A16FFF	(base 16)	Baudisch Electronic GmbH
 				Im Gewerbegebiet 7-9
-				Wäschenbeuren Baden Württemberg 73116
+				Wï¿½schenbeuren Baden Wï¿½rttemberg 73116
 				GERMANY
 
 00-50-C2	(hex)		Winners Satellite Electronics Corp.
@@ -16354,15 +16351,15 @@ A3B000-A3BFFF	(base 16)	IPcontrols GmbH
 				Marburg  35039
 				GERMANY
 
-00-50-C2	(hex)		BRÄHLER ICS Konferenztechnik AG
-A3C000-A3CFFF	(base 16)	BRÄHLER ICS Konferenztechnik AG
+00-50-C2	(hex)		BRï¿½HLER ICS Konferenztechnik AG
+A3C000-A3CFFF	(base 16)	BRï¿½HLER ICS Konferenztechnik AG
 				Auf der Alten Burg 6
 				Koenigswinter NRW 53639
 				GERMANY
 
 00-50-C2	(hex)		OWANDY
 A3D000-A3DFFF	(base 16)	OWANDY
-				6 Allée Kepler
+				6 Allï¿½e Kepler
 				Champs sur Marne  77420
 				FRANCE
 
@@ -16544,12 +16541,12 @@ A59000-A59FFF	(base 16)	GSP Sprachtechnologie GmbH
 00-50-C2	(hex)		ITAS A/S
 A5A000-A5AFFF	(base 16)	ITAS A/S
 				Klosterport 4A
-				Århus C  DK-8000
+				ï¿½rhus C  DK-8000
 				DENMARK
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 A5B000-A5BFFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -16783,7 +16780,7 @@ A7E000-A7EFFF	(base 16)	Independent Project Engineering Ltd
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 A7F000-A7FFFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -16920,7 +16917,7 @@ A94000-A94FFF	(base 16)	Par-Tech, Inc.
 
 00-50-C2	(hex)		INNOVACIONES MICROELECTRONICAS SL (AnaFocus)
 A95000-A95FFF	(base 16)	INNOVACIONES MICROELECTRONICAS SL (AnaFocus)
-				C/Isaac Newton, 4-Pabellon de Italia-7ªpl. Atico
+				C/Isaac Newton, 4-Pabellon de Italia-7ï¿½pl. Atico
 				Parque Tecnologico Isla de la Cartuja
 				Sevilla  41092
 				SPAIN
@@ -16965,8 +16962,8 @@ A9B000-A9BFFF	(base 16)	PDQ Manufacturing  Inc.
 
 00-50-C2	(hex)		Eberspaecher Electronics GmbH & Co. KG
 A9C000-A9CFFF	(base 16)	Eberspaecher Electronics GmbH & Co. KG
-				Robert-Bosch-Straße 6
-				Göppingen BW 73037
+				Robert-Bosch-Straï¿½e 6
+				Gï¿½ppingen BW 73037
 				GERMANY
 
 00-50-C2	(hex)		Joehl & Koeferli AG
@@ -17038,10 +17035,9 @@ AA7000-AA7FFF	(base 16)	Endeas Oy
 
 00-50-C2	(hex)		Nexans Cabling Solutions
 AA8000-AA8FFF	(base 16)	Nexans Cabling Solutions
-				Unit 2 Faraday Office Park
-				Faraday Road
-				Basingstoke Hampshire RG24 8QQ
-				UNITED KINGDOM
+				Alsembergsesteenweg 2 B3
+				Buizingen  1501
+				BELGIUM
 
 00-50-C2	(hex)		SAN GIORGIO S.E.I.N. srl
 AA9000-AA9FFF	(base 16)	SAN GIORGIO S.E.I.N. srl
@@ -17055,8 +17051,8 @@ AAA000-AAAFFF	(base 16)	Flexible Picture Systems
 				Richmond Hill Ontario L4B 1B4
 				CANADA
 
-00-50-C2	(hex)		BRS Sistemas Eletrônicos
-AAB000-AABFFF	(base 16)	BRS Sistemas Eletrônicos
+00-50-C2	(hex)		BRS Sistemas Eletrï¿½nicos
+AAB000-AABFFF	(base 16)	BRS Sistemas Eletrï¿½nicos
 				Rua Gomes de Freitas, 491 / 204
 				Porto Alegre RS 91380-000
 				BRAZIL
@@ -17075,7 +17071,7 @@ AAD000-AADFFF	(base 16)	Update Systems Inc.
 
 00-50-C2	(hex)		OUTLINE srl
 AAE000-AAEFFF	(base 16)	OUTLINE srl
-				VIA LEONARDO DA VINCI N°56
+				VIA LEONARDO DA VINCI Nï¿½56
 				FLERO BRESCIA 25020
 				ITALY
 
@@ -17103,9 +17099,9 @@ AB2000-AB2FFF	(base 16)	ProCom Systems, Inc.
 				Bettendorf IA 52722
 				UNITED STATES
 
-00-50-C2	(hex)		Compañia de Instrumentacion y control, S.L.
-AB3000-AB3FFF	(base 16)	Compañia de Instrumentacion y control, S.L.
-				C/Maria Auxiliadora 5, 1ºI
+00-50-C2	(hex)		Compaï¿½ia de Instrumentacion y control, S.L.
+AB3000-AB3FFF	(base 16)	Compaï¿½ia de Instrumentacion y control, S.L.
+				C/Maria Auxiliadora 5, 1ï¿½I
 				Madrid  28040
 				SPAIN
 
@@ -17125,7 +17121,7 @@ AB5000-AB5FFF	(base 16)	METTLER-TOLEDO HI-SPEED
 AB6000-AB6FFF	(base 16)	Gygax Embedded Engineering GEE.ch
 				Nuovo AG   -  Greuter Elektrotechnik
 				Bahnhofstr. 8
-				Rüti  CH-8630
+				Rï¿½ti  CH-8630
 				SWITZERLAND
 
 00-50-C2	(hex)		Twinfalls Technologies
@@ -17295,7 +17291,7 @@ AD0000-AD0FFF	(base 16)	Geonautics Australia Pty Ltd
 
 00-50-C2	(hex)		Phytec Messtechnik GmbH
 AD1000-AD1FFF	(base 16)	Phytec Messtechnik GmbH
-				Robert-Koch-Straße 39
+				Robert-Koch-Straï¿½e 39
 				Mainz Rheinland-Pfalz 55129
 				GERMANY
 
@@ -17358,8 +17354,8 @@ ADA000-ADAFFF	(base 16)	Essepie Srl
 
 00-50-C2	(hex)		GO engineering GmbH
 ADB000-ADBFFF	(base 16)	GO engineering GmbH
-				Stolzenbergstraße 13/IV
-				Baden-Württemberg 76532
+				Stolzenbergstraï¿½e 13/IV
+				Baden-Wï¿½rttemberg 76532
 				GERMANY
 
 00-50-C2	(hex)		Synthesechemie Dr. Penth GmbH
@@ -17392,7 +17388,7 @@ ADF000-ADFFFF	(base 16)	Altinex, Inc
 AE0000-AE0FFF	(base 16)	AT4 wireless.S.A
 				c/ Severo Ochoa 2
 				P.T.A
-				Campanillas Málaga 29590
+				Campanillas Mï¿½laga 29590
 				SPAIN
 
 00-50-C2	(hex)		EVERCARE
@@ -17594,7 +17590,7 @@ B00000-B00FFF	(base 16)	Saia-Burgess Controls AG
 00-50-C2	(hex)		HSR Harald L. Reuter
 B01000-B01FFF	(base 16)	HSR Harald L. Reuter
 				Entwicklung - Reparatur - Fertigung
-				Kammermühlenweg 24
+				Kammermï¿½hlenweg 24
 				Bielefeld NRW 33607
 				GERMANY
 
@@ -17703,7 +17699,7 @@ B11000-B11FFF	(base 16)	EXEL s.r.l
 00-50-C2	(hex)		CM Elektronik GmbH
 B12000-B12FFF	(base 16)	CM Elektronik GmbH
 				Im Kleinfeldele 17
-				Riegel a.K. Baden Württemberg 79359
+				Riegel a.K. Baden Wï¿½rttemberg 79359
 				GERMANY
 
 00-50-C2	(hex)		Measy Electronics Co., Ltd.
@@ -17755,4 +17751,1531 @@ B1A000-B1AFFF	(base 16)	ELCUS
 				Varshavskaia st. 5a, liter 'L'
 				St. Petersburg  196128
 				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		Integrated  Control Corp.
+B1B000-B1BFFF	(base 16)	Integrated  Control Corp.
+				748 Park Ave 
+				Huntington NY 11743
+				UNITED STATES
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+B1C000-B1CFFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straï¿½e 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Telegenix
+B1D000-B1DFFF	(base 16)	Telegenix
+				71 Indel Ave.
+				Rancocas NJ 08073
+				UNITED STATES
+
+00-50-C2	(hex)		Abbott Medical Optics
+B1E000-B1EFFF	(base 16)	Abbott Medical Optics
+				1700 East St. Andrew Place
+				Santa Ana CA 92705
+				UNITED STATES
+
+00-50-C2	(hex)		SCA Schucker GmbH &amp; Co.
+B1F000-B1FFFF	(base 16)	SCA Schucker GmbH &amp; Co.
+				Gewerbestrasse 52
+				Bretten-Gölshausen Baden Württemberg 75015
+				GERMANY
+
+00-50-C2	(hex)		FIVE9 NETWORK SYSTEMS LLC
+B20000-B20FFF	(base 16)	FIVE9 NETWORK SYSTEMS LLC
+				P.O.Box 853
+				Palo Alto CA 94302
+				UNITED STATES
+
+00-50-C2	(hex)		Phytron-Elektronik GmbH
+B21000-B21FFF	(base 16)	Phytron-Elektronik GmbH
+				Industriestr. 12
+				Grï¿½benzell Bavaria 82194
+				GERMANY
+
+00-50-C2	(hex)		FarSite Communications Limited
+B22000-B22FFF	(base 16)	FarSite Communications Limited
+				Tempus Business Centre
+				60 Kingsclere Road
+				Basingstoke Hampshire RG21 6XG
+				UNITED KINGDOM
+
+00-50-C2	(hex)		7 Marsyas Development a.s.
+B23000-B23FFF	(base 16)	7 Marsyas Development a.s.
+				Dï¿½lnickï¿½ 382/32
+				Ostrava Moravskoslezskï¿½ kraj 708 00
+				CZECH REPUBLIC
+
+00-50-C2	(hex)		Teledyne Defence Limited
+B24000-B24FFF	(base 16)	Teledyne Defence Limited
+				Airedale House, Acorn Park
+				Charlestown
+				Shipley West Yorkshire BD17 7SW
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Triax A/S
+B25000-B25FFF	(base 16)	Triax A/S
+				Bjï¿½rnkï¿½rvej 3
+				Hornsyld  DK-8783
+				DENMARK
+
+00-50-C2	(hex)		Elko Systems
+B26000-B26FFF	(base 16)	Elko Systems
+				11 clair road Lynnwood Glen
+				Pretoria Gauteng 0081
+				SOUTH AFRICA
+
+00-50-C2	(hex)		ATEME
+B27000-B27FFF	(base 16)	ATEME
+				26 BUROSPACE
+				Route de Gizy
+				BIEVRES CEDEX  91573
+				FRANCE
+
+00-50-C2	(hex)		Micromax Pty. Ltd.
+B28000-B28FFF	(base 16)	Micromax Pty. Ltd.
+				5 Orangegrove Ave
+				Unanderra NSW 2526
+				AUSTRALIA
+
+00-50-C2	(hex)		Integra LifeSciences (Ireland) Ltd
+B29000-B29FFF	(base 16)	Integra LifeSciences (Ireland) Ltd
+				Sragh Industrial Estate
+				Tullamore Co Offaly IRELAND
+				IRELAND
+
+00-50-C2	(hex)		Trench Austria GmbH
+B2A000-B2AFFF	(base 16)	Trench Austria GmbH
+				Paschinger Straï¿½e 49
+				Leonding Austria 4060
+				AUSTRIA
+
+00-50-C2	(hex)		CosmoData Informatica Ltda.
+B2B000-B2BFFF	(base 16)	CosmoData Informatica Ltda.
+				Rua Artur de Azevedo, 2103
+				Sï¿½o Paulo  05404-015
+				BRAZIL
+
+00-50-C2	(hex)		Concepteers, LLC
+B2C000-B2CFFF	(base 16)	Concepteers, LLC
+				880 Bergen Ave
+				Suite 403
+				Jersey City NJ 07306
+				UNITED STATES
+
+00-50-C2	(hex)		Datasat Digital Entertainment
+B2D000-B2DFFF	(base 16)	Datasat Digital Entertainment
+				9361 Topanga Cyn. Place
+				Chatsworth California 91311
+				UNITED STATES
+
+00-50-C2	(hex)		ACT
+B2E000-B2EFFF	(base 16)	ACT
+				Unit C1, South City Business Center
+				Tallaght
+				Dublin  
+				IRELAND
+
+00-50-C2	(hex)		IntelliVision Technologies, Corp
+B2F000-B2FFFF	(base 16)	IntelliVision Technologies, Corp
+				5225 Hellyer Ave, Suite 200
+				San Jose CA 95138
+				UNITED STATES
+
+00-50-C2	(hex)		Applied Micro Electronics "AME" BV
+B30000-B30FFF	(base 16)	Applied Micro Electronics "AME" BV
+				ESP 100
+				Eindhoven NoordBrabant 5633 AA
+				NETHERLANDS
+
+00-50-C2	(hex)		Shop Safe AG
+B31000-B31FFF	(base 16)	Shop Safe AG
+				Businesspark Giessenmatt 2
+				Sins AG CH-5643
+				SWITZERLAND
+
+00-50-C2	(hex)		Byres Security Inc
+B32000-B32FFF	(base 16)	Byres Security Inc
+				#5-7217 Lantzville Road
+				Lantzville BC V0R 2H0
+				CANADA
+
+00-50-C2	(hex)		Numcore Ltd
+B33000-B33FFF	(base 16)	Numcore Ltd
+				Microkatu 1
+				Kuopio  70211
+				FINLAND
+
+00-50-C2	(hex)		Meisol co.,ltd
+B34000-B34FFF	(base 16)	Meisol co.,ltd
+				NAKA-KU YAMASHITA-CHO 74-1
+				DAIWACHISYO.bld 1005
+				YOKOHAMA-SHI KANAGAWA-KEN 231-0023
+				JAPAN
+
+00-50-C2	(hex)		haneron
+B35000-B35FFF	(base 16)	haneron
+				2-22 ota
+				yao oosaka 581-0037
+				JAPAN
+
+00-50-C2	(hex)		CRDE
+B36000-B36FFF	(base 16)	CRDE
+				ZI DES GRANDS CAMPS
+				BP9
+				MERCUES  46090
+				FRANCE
+
+00-50-C2	(hex)		IAdea Corporation
+B37000-B37FFF	(base 16)	IAdea Corporation
+				3F, NO.33, Lane 77, Xing-ai Road,
+				Taipei  114
+				TAIWAN, REPUBLIC OF CHINA
+
+00-50-C2	(hex)		Grenmore Ltd
+B38000-B38FFF	(base 16)	Grenmore Ltd
+				Unit 12, Northpoint Business Park
+				New Mallow Road
+				Cork  
+				IRELAND
+
+00-50-C2	(hex)		siXis, Inc.
+B39000-B39FFF	(base 16)	siXis, Inc.
+				PO Box 14245
+				Research Triangle Park NC 27709-4245
+				UNITED STATES
+
+00-50-C2	(hex)		Nikon Systems Inc.
+B3A000-B3AFFF	(base 16)	Nikon Systems Inc.
+				16F Queen's Tower-B, 3-3
+				Minatomirai 2-chome,Nishi-ku
+				Yokohama Kanagawa 220-6116
+				JAPAN
+
+00-50-C2	(hex)		Sportvision Inc.
+B3B000-B3BFFF	(base 16)	Sportvision Inc.
+				1240 La Avenida
+				Mountain View CA 94043
+				UNITED STATES
+
+00-50-C2	(hex)		JanasCard
+B3C000-B3CFFF	(base 16)	JanasCard
+				1. pluku 12
+				Praha 8 CR 18600
+				CZECH REPUBLIC
+
+00-50-C2	(hex)		AMS
+B3D000-B3DFFF	(base 16)	AMS
+				2-4-3,Kikawahigashi,Yodogawaku
+				Osaka City  532-0012
+				JAPAN
+
+00-50-C2	(hex)		Sage Consultants
+B3E000-B3EFFF	(base 16)	Sage Consultants
+				Level 1, 169 Kelvin Grove Rd
+				Kelvin Grove QLD 4059
+				AUSTRALIA
+
+00-50-C2	(hex)		M-Tronic Design and Technology GmbH
+B3F000-B3FFFF	(base 16)	M-Tronic Design and Technology GmbH
+				Im Groï¿½en Gunterstal 8
+				Blieskastel Saarland 66440
+				GERMANY
+
+00-50-C2	(hex)		Tecnint HTE SRL
+B40000-B40FFF	(base 16)	Tecnint HTE SRL
+				Via della Tecnica 16/18
+				Osnago Lecco 23875
+				ITALY
+
+00-50-C2	(hex)		Tata Power Company, Strategic Electronics Division
+B41000-B41FFF	(base 16)	Tata Power Company, Strategic Electronics Division
+				42/43, Electronics City, 
+				Electronics City PO, Hosur Road, 
+				Bangalore Karnataka 560100
+				INDIA
+
+00-50-C2	(hex)		ETM Electromatic Incorporated
+B42000-B42FFF	(base 16)	ETM Electromatic Incorporated
+				35451 Dumbarton Court
+				NEWARK CA 94560
+				UNITED STATES
+
+00-50-C2	(hex)		J-Systems Inc.
+B43000-B43FFF	(base 16)	J-Systems Inc.
+				1S678 School Ave.
+				Lombard IL 60148
+				UNITED STATES
+
+00-50-C2	(hex)		Ampcontrol Pty Ltd
+B44000-B44FFF	(base 16)	Ampcontrol Pty Ltd
+				7 Billbrooke Close
+				Cameron Park NSW 2285
+				AUSTRALIA
+
+00-50-C2	(hex)		Efftronics Systems (P) Ltd
+B45000-B45FFF	(base 16)	Efftronics Systems (P) Ltd
+				40-15-9
+				Brundavan Colony
+				Vijayawada Andhra Pradesh 520010
+				INDIA
+
+00-50-C2	(hex)		Mobileye
+B46000-B46FFF	(base 16)	Mobileye
+				13 Hartom st.
+				Jerusalem  91450
+				ISRAEL
+
+00-50-C2	(hex)		MCS MICRONIC Computer Systeme GmbH
+B47000-B47FFF	(base 16)	MCS MICRONIC Computer Systeme GmbH
+				Ullsteinstr. 114, Turm C
+				Berlin  12109
+				GERMANY
+
+00-50-C2	(hex)		MTD GmbH
+B48000-B48FFF	(base 16)	MTD GmbH
+				Bahnhofstr. 24
+				Uffing am Staffelsee Bavaria 82449
+				GERMANY
+
+00-50-C2	(hex)		Aplex Technology Inc.
+B49000-B49FFF	(base 16)	Aplex Technology Inc.
+				2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
+				Shenzhen Guangdong 518054
+				CHINA
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+B4A000-B4AFFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		Chitose Co.,Ltd
+B4B000-B4BFFF	(base 16)	Chitose Co.,Ltd
+				Fiato202
+				5-1-1,Tenjin
+				Koga-City Fukuoka 8113101
+				JAPAN
+
+00-50-C2	(hex)		ElectroCom
+B4C000-B4CFFF	(base 16)	ElectroCom
+				Torvet 5
+				Svendborg Fyn 5700
+				DENMARK
+
+00-50-C2	(hex)		Troll Systems Corporation
+B4D000-B4DFFF	(base 16)	Troll Systems Corporation
+				24950 Anza Drive
+				Valencia CA 91355
+				UNITED STATES
+
+00-50-C2	(hex)		AixControl GmbH
+B4E000-B4EFFF	(base 16)	AixControl GmbH
+				Jaegerstr. 17-19
+				Aachen NRW 52066
+				GERMANY
+
+00-50-C2	(hex)		Sencon UK Ltd.
+B4F000-B4FFFF	(base 16)	Sencon UK Ltd.
+				Stonebridge Cross Business Park
+				Droitwich Worcestershire WR9 0LW
+				UNITED KINGDOM
+
+00-50-C2	(hex)		SELCO
+B50000-B50FFF	(base 16)	SELCO
+				ZI DU VAL D'OMBREE
+				COMBREE SA 49520
+				FRANCE
+
+00-50-C2	(hex)		Willtek Communications GmbH
+B51000-B51FFF	(base 16)	Willtek Communications GmbH
+				Gutenbergstrasse 2-4
+				Ismaning Bavaria 85737
+				GERMANY
+
+00-50-C2	(hex)		SMH Technologies
+B52000-B52FFF	(base 16)	SMH Technologies
+				Via Giovanni Agnelli, 1
+				Villotta di Chions Pordenone 33083
+				ITALY
+
+00-50-C2	(hex)		Prodco
+B53000-B53FFF	(base 16)	Prodco
+				4529 De castille
+				Montreal Quebec H1H 1Y3
+				CANADA
+
+00-50-C2	(hex)		APG Cash Drawer, LLC
+B54000-B54FFF	(base 16)	APG Cash Drawer, LLC
+				5250 Industrial Blvd NE
+				Minneapolis MN 55421
+				UNITED STATES
+
+00-50-C2	(hex)		SANYO ELECTRONIC INDUSTRIES CO.,LTD
+B55000-B55FFF	(base 16)	SANYO ELECTRONIC INDUSTRIES CO.,LTD
+				Nagaoka4-73,Nakaku
+				Okayama  703-8221
+				JAPAN
+
+00-50-C2	(hex)		SINOVIA SA
+B56000-B56FFF	(base 16)	SINOVIA SA
+				3 RUE DE CHEVILLY
+				FRESNES VAL DE MARNE 94260
+				FRANCE
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+B57000-B57FFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straï¿½e 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Real D
+B58000-B58FFF	(base 16)	Real D
+				5335 Sterling Drive
+				Boulder CO 80301
+				UNITED STATES
+
+00-50-C2	(hex)		SLICAN sp. z o.o.
+B59000-B59FFF	(base 16)	SLICAN sp. z o.o.
+				ul.M.Konopnickiej 18
+				Bydgoszcz Kujawsko-Pomorskie 85-124
+				POLAND
+
+00-50-C2	(hex)		GREEN Center s.r.o.
+B5A000-B5AFFF	(base 16)	GREEN Center s.r.o.
+				Zenklova 39
+				Praha 8  180 00
+				CZECH REPUBLIC
+
+00-50-C2	(hex)		Timberline Mfg Company
+B5B000-B5BFFF	(base 16)	Timberline Mfg Company
+				1050 Lyons Lane
+				Marion  IA 52302
+				UNITED STATES
+
+00-50-C2	(hex)		ADI Video Technologies
+B5C000-B5CFFF	(base 16)	ADI Video Technologies
+				13a Hamelacha st,
+				Lod  71520
+				ISRAEL
+
+00-50-C2	(hex)		Plitron Manufacturing Inc.
+B5D000-B5DFFF	(base 16)	Plitron Manufacturing Inc.
+				8-601 Magnetic Drive
+				Toronto Ontario M3J 3J2
+				CANADA
+
+00-50-C2	(hex)		Palgiken Co.,Ltd.
+B5E000-B5EFFF	(base 16)	Palgiken Co.,Ltd.
+				2217-2 Hayashicho
+				Takamatsu Kagawa 761-0301
+				JAPAN
+
+00-50-C2	(hex)		North Bridge Technologies
+B5F000-B5FFFF	(base 16)	North Bridge Technologies
+				Jean Ave 84
+				Centurion Gauteng 0157
+				SOUTH AFRICA
+
+00-50-C2	(hex)		OOO NPF ATIS
+B60000-B60FFF	(base 16)	OOO NPF ATIS
+				ul. Rangeva, 11-24
+				Kovrov Vladimir region 601916
+				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		Nayos LTD
+B61000-B61FFF	(base 16)	Nayos LTD
+				7 Golda Meir
+				Nes Ziona  74036
+				ISRAEL
+
+00-50-C2	(hex)		Measurement Technology NW
+B62000-B62FFF	(base 16)	Measurement Technology NW
+				4211 24th Avenue West
+				Seattle WA 98199
+				UNITED STATES
+
+00-50-C2	(hex)		RO.VE.R. Laboratories S.p.A
+B63000-B63FFF	(base 16)	RO.VE.R. Laboratories S.p.A
+				Via Parini 2
+				Sirmione BS 25019
+				ITALY
+
+00-50-C2	(hex)		FEW Bauer GmbH
+B64000-B64FFF	(base 16)	FEW Bauer GmbH
+				Silvanastr. 3
+				Muenchen Bayern D-81927
+				GERMANY
+
+00-50-C2	(hex)		Peek Traffic Corporation
+B65000-B65FFF	(base 16)	Peek Traffic Corporation
+				2906 Corporate Way
+				Palmetto Fl 34221
+				UNITED STATES
+
+00-50-C2	(hex)		Deuta-Werke GmbH
+B66000-B66FFF	(base 16)	Deuta-Werke GmbH
+				Paffrather Str. 140
+				Bergisch Gladbach Northrhine Westfalia 51465
+				GERMANY
+
+00-50-C2	(hex)		RC Systems Co. Inc.
+B67000-B67FFF	(base 16)	RC Systems Co. Inc.
+				8621 Hwy. 6
+				Hitchcock TX 77563
+				UNITED STATES
+
+00-50-C2	(hex)		Electronic Systems Protection, Inc.
+B68000-B68FFF	(base 16)	Electronic Systems Protection, Inc.
+				517 N. Industrial Dr.
+				Zebulon NC 27597
+				UNITED STATES
+
+00-50-C2	(hex)		Thetis S.p.A.
+B69000-B69FFF	(base 16)	Thetis S.p.A.
+				Castello, 2737/f
+				Venezia VE 30122
+				ITALY
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+B6A000-B6AFFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-koch-Straï¿½e 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+B6B000-B6BFFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straï¿½e 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Drinelec
+B6C000-B6CFFF	(base 16)	Drinelec
+				Les Chovets
+				Barbiï¿½res  26300
+				FRANCE
+
+00-50-C2	(hex)		Sound Metrics Corp
+B6D000-B6DFFF	(base 16)	Sound Metrics Corp
+				15029 Bothell Way NE
+				Suite 100
+				Lake Forest Park WA 98155
+				UNITED STATES
+
+00-50-C2	(hex)		PRIVATE
+B6E000-B6EFFF	(base 16)		 
+				 
+00-50-C2	(hex)		CT Company
+B6F000-B6FFFF	(base 16)	CT Company
+				Nizhni Krasnoselsky st., 35
+				Moscow Russia 140070
+				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		Nisshin Electronics co.,ltd.
+B70000-B70FFF	(base 16)	Nisshin Electronics co.,ltd.
+				2-1-7 Taiho 
+				Atsuta-ku
+				Nagoya-shi Aichi-ken 4560062
+				JAPAN
+
+00-50-C2	(hex)		Digitale Analoge COMponenten West Electronic Vertriebs GmbH
+B71000-B71FFF	(base 16)	Digitale Analoge COMponenten West Electronic Vertriebs GmbH
+				Schallbruch 19-21
+				Haan NRW 42781
+				GERMANY
+
+00-50-C2	(hex)		Advanced Desktop Systems Ltd
+B72000-B72FFF	(base 16)	Advanced Desktop Systems Ltd
+				36 Haldan Road
+				Highams Park
+				London  E4 9JJ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		ARKRAY, Inc.
+B73000-B73FFF	(base 16)	ARKRAY, Inc.
+				57 NISHI AKETA-CHO
+				HIGASHI-KUJO
+				KYOTO MINAMI-KU 601-8045
+				JAPAN
+
+00-50-C2	(hex)		AXED Jakubowski Wojciechowski sp.j.
+B74000-B74FFF	(base 16)	AXED Jakubowski Wojciechowski sp.j.
+				ul. Fredry 7
+				Poznaï¿½ Wielkopolska 61-701
+				POLAND
+
+00-50-C2	(hex)		Blankom
+B75000-B75FFF	(base 16)	Blankom
+				Hermann-Petersilge-Str. 1
+				Bad Blankenburg TH 07422
+				GERMANY
+
+00-50-C2	(hex)		ITF Frï¿½schl GmbH
+B76000-B76FFF	(base 16)	ITF Frï¿½schl GmbH
+				Hauserbachstr. 9
+				Walderbach Bavaria 93194
+				GERMANY
+
+00-50-C2	(hex)		KRISTECH
+B77000-B77FFF	(base 16)	KRISTECH
+				Porzeczkowa 12
+				Ustron Slaskie 43-450
+				POLAND
+
+00-50-C2	(hex)		Folink
+B78000-B78FFF	(base 16)	Folink
+				4F 647-39Deungchon-Dong Kangseo-Gu
+				Seoul  157-840
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		MITSUYA LABORATORIES INC.
+B79000-B79FFF	(base 16)	MITSUYA LABORATORIES INC.
+				6-31-18
+				KAMIASAO,ASAO-KU
+				KAWASAKI-CITY KANAGAWA 215-0021
+				JAPAN
+
+00-50-C2	(hex)		Schnoor Industrieelektronik GmbH & Co. KG
+B7A000-B7AFFF	(base 16)	Schnoor Industrieelektronik GmbH & Co. KG
+				Fehmarnstr. 6
+				Buedelsdorf Schleswig-Holstein 24782
+				GERMANY
+
+00-50-C2	(hex)		QUARTECH CORPORATION
+B7B000-B7BFFF	(base 16)	QUARTECH CORPORATION
+				15923 ANGELO DRIVE
+				MACOMB TWP. MI 48042-4050
+				UNITED STATES
+
+00-50-C2	(hex)		Bettini srl
+B7C000-B7CFFF	(base 16)	Bettini srl
+				Via Cesare Battisti 22
+				Cesano Maderno Milano 20031
+				ITALY
+
+00-50-C2	(hex)		ELETECH Srl
+B7D000-B7DFFF	(base 16)	ELETECH Srl
+				S.P.231 Km 3,500
+				BITONTO BARI 70032
+				ITALY
+
+00-50-C2	(hex)		NARETRENDS
+B7E000-B7EFFF	(base 16)	NARETRENDS
+				#406, Hyunhaetop B/D, 1144-4
+				JUNG-DONG, WONMI-GU
+				BUCHEON GYEONGGI-DO 420-852
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Enatel
+B7F000-B7FFFF	(base 16)	Enatel
+				321 Tuam Street
+				Christchurch  8032
+				NEW ZEALAND
+
+00-50-C2	(hex)		iScreen LLC
+B80000-B80FFF	(base 16)	iScreen LLC
+				3181 Poplar Avenue, Ste. 200
+				Memphis TN 38111-4717
+				UNITED STATES
+
+00-50-C2	(hex)		GHL GmbH &amp; Co.KG
+B81000-B81FFF	(base 16)	GHL GmbH &amp; Co.KG
+				Jung-Stilling-Str. 21
+				Kaiserslautern Rheinland-Pfalz 67663
+				GERMANY
+
+00-50-C2	(hex)		TANABIKI Inc.
+B82000-B82FFF	(base 16)	TANABIKI Inc.
+				1-4-6-305
+				Higashi
+				Kunitachi Tokyo 1860002
+				JAPAN
+
+00-50-C2	(hex)		Advanced Storage Concepts, Inc.
+B83000-B83FFF	(base 16)	Advanced Storage Concepts, Inc.
+				2200 Market Street
+				Suite 810
+				Galveston TX 77550
+				UNITED STATES
+
+00-50-C2	(hex)		Innovate Software Solutions Pvt Ltd
+B84000-B84FFF	(base 16)	Innovate Software Solutions Pvt Ltd
+				#333 ,18th G Main Road,6th Block
+				Bangalore Karnataka 560095
+				INDIA
+
+00-50-C2	(hex)		SilverNet
+B85000-B85FFF	(base 16)	SilverNet
+				16 Cochran Close
+				Crownhill
+				Milton Keynes Bucks MK8 0AJ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		ASTO
+B86000-B86FFF	(base 16)	ASTO
+				22 Mei Hwan Drive
+				Singapore  568357
+				SINGAPORE
+
+00-50-C2	(hex)		EMAC, Inc.
+B87000-B87FFF	(base 16)	EMAC, Inc.
+				2390 EMAC Way
+				Carbondale IL 62902
+				UNITED STATES
+
+00-50-C2	(hex)		GIgatronik  Kï¿½ln GmbH  
+B88000-B88FFF	(base 16)	GIgatronik  Kï¿½ln GmbH  
+				Ruth-Hallensleben-Straï¿½e 4
+				Kï¿½ln  50739
+				GERMANY
+
+00-50-C2	(hex)		ENTEC Electric & Electronic Co., LTD.
+B89000-B89FFF	(base 16)	ENTEC Electric & Electronic Co., LTD.
+				78-2 Buncheon-ri, Bongdam-eup
+				Hwaseong-city Gyungki-do 445-894
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		MicroPoise
+B8A000-B8AFFF	(base 16)	MicroPoise
+				1624 Englewood Ave
+				Akron Ohio 44305
+				UNITED STATES
+
+00-50-C2	(hex)		CSTI BV
+B8B000-B8BFFF	(base 16)	CSTI BV
+				Damzigt 17
+				de Meern  3454PS
+				NETHERLANDS
+
+00-50-C2	(hex)		Keith & Koep GmbH
+B8C000-B8CFFF	(base 16)	Keith & Koep GmbH
+				Uellendahler Str. 199
+				Wuppertal NRW 42109
+				GERMANY
+
+00-50-C2	(hex)		CEMSI
+B8D000-B8DFFF	(base 16)	CEMSI
+				780 Keezletown Road
+				Suite 102
+				Weyers Cave VA 24486
+				UNITED STATES
+
+00-50-C2	(hex)		WAC (Israel) Ltd.
+B8E000-B8EFFF	(base 16)	WAC (Israel) Ltd.
+				Shefa Tal 12
+				Tel-Aviv  61070
+				ISRAEL
+
+00-50-C2	(hex)		Gentec
+B8F000-B8FFFF	(base 16)	Gentec
+				2625 Dalton
+				Quebec  G1P 3S9
+				CANADA
+
+00-50-C2	(hex)		NAONWORKS Co., Ltd
+B90000-B90FFF	(base 16)	NAONWORKS Co., Ltd
+				Rm710, Byucksan Digitalvalley 3,
+				212-13, Guro-Dong, Guro-Gu
+				Seoul  152-775
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Finnet-Service Ltd.
+B91000-B91FFF	(base 16)	Finnet-Service Ltd.
+				Serebrianicheskyi per., b.2/5 str. 4.
+				Moscow  109028
+				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+B92000-B92FFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+				ABB Industrial Park Torch Hi-tech Development Zone,
+				Xiao Dong Shan,
+				Xiamen Fujian 361006
+				CHINA
+
+00-50-C2	(hex)		EMC PARTNER AG
+B93000-B93FFF	(base 16)	EMC PARTNER AG
+				Baselstrasse 160
+				Laufen Baselland 4242
+				SWITZERLAND
+
+00-50-C2	(hex)		Tritech International Ltd
+B94000-B94FFF	(base 16)	Tritech International Ltd
+				Morecambe Road
+				Ulverston Cumbria LA12 0BH
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Rx Monitoring Services
+B95000-B95FFF	(base 16)	Rx Monitoring Services
+				22A Eastman Ave
+				Bedford NH 03110
+				UNITED STATES
+
+00-50-C2	(hex)		Onix Electronic Systems Inc
+B96000-B96FFF	(base 16)	Onix Electronic Systems Inc
+				205 Travelers Rest Blvd
+				Summerville SC 29485
+				UNITED STATES
+
+00-50-C2	(hex)		ikerlan
+B97000-B97FFF	(base 16)	ikerlan
+				jm arizmendiarrieta, 2
+				mondragon guipuzcoa 20500
+				SPAIN
+
+00-50-C2	(hex)		Southwest Research Institute
+B98000-B98FFF	(base 16)	Southwest Research Institute
+				6220 Culebra Road
+				San Antonio TX 78238
+				UNITED STATES
+
+00-50-C2	(hex)		Greenlight Innovation Corp.
+B99000-B99FFF	(base 16)	Greenlight Innovation Corp.
+				Unit C, 4242 Phillips St.
+				Burnaby,  B.C. V5A 2X2
+				CANADA
+
+00-50-C2	(hex)		Talo, NV Inc
+B9A000-B9AFFF	(base 16)	Talo, NV Inc
+				1930 Village Center Cir #3 - 454
+				Las Vegas Nevada 89134
+				UNITED STATES
+
+00-50-C2	(hex)		Telventy Energia S.A.
+B9B000-B9BFFF	(base 16)	Telventy Energia S.A.
+				Valgrande, 6
+				Alcobendas Madrid 28108
+				SPAIN
+
+00-50-C2	(hex)		Dave srl
+B9C000-B9CFFF	(base 16)	Dave srl
+				Via Forniz 2
+				Porcia Pordenone 33080
+				ITALY
+
+00-50-C2	(hex)		W. Vershoven GmbH
+B9D000-B9DFFF	(base 16)	W. Vershoven GmbH
+				Riedinger Strasse 10
+				Essen  45141
+				GERMANY
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+B9E000-B9EFFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		AUDIOSCOPE 2K SRL
+B9F000-B9FFFF	(base 16)	AUDIOSCOPE 2K SRL
+				31, VIA CAIANELLO
+				ROMA  00177
+				ITALY
+
+00-50-C2	(hex)		txtr GmbH
+BA0000-BA0FFF	(base 16)	txtr GmbH
+				Rosenthaler Str. 13
+				Berlin  10119
+				GERMANY
+
+00-50-C2	(hex)		Transtechnik GmbH &amp; Co.KG
+BA1000-BA1FFF	(base 16)	Transtechnik GmbH &amp; Co.KG
+				Ohmstrasse 1
+				Holzkirchen Bavaria 83607
+				GERMANY
+
+00-50-C2	(hex)		Logical Tools s.r.l.
+BA2000-BA2FFF	(base 16)	Logical Tools s.r.l.
+				Via di Villa Belardi, 24
+				Rome  00154
+				ITALY
+
+00-50-C2	(hex)		DSP DESIGN LTD
+BA3000-BA3FFF	(base 16)	DSP DESIGN LTD
+				TAPTON PARK INNOVATION CENTRE
+				BRIMINGTON ROAD
+				CHESTERFIELD DERBYSHIRE S41 0TZ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		CUSTOS MOBILE S.L.
+BA4000-BA4FFF	(base 16)	CUSTOS MOBILE S.L.
+				SOCIEDAD DE CONDUENOS 21
+				ALCALA DE HENARES MADRID 28804
+				SPAIN
+
+00-50-C2	(hex)		InterCel Pty Ltd
+BA5000-BA5FFF	(base 16)	InterCel Pty Ltd
+				33 Glenvale Crescent
+				Mulgrave Victoria 3170
+				AUSTRALIA
+
+00-50-C2	(hex)		Jomitek
+BA6000-BA6FFF	(base 16)	Jomitek
+				Skovlytoften 22
+				Holte  DK-2840
+				DENMARK
+
+00-50-C2	(hex)		RaumComputer Entwicklungs- und Vertriebs GmbH
+BA7000-BA7FFF	(base 16)	RaumComputer Entwicklungs- und Vertriebs GmbH
+				Augartenstr. 1
+				Karlsruhe Baden-Wï¿½rttemberg 76137
+				GERMANY
+
+00-50-C2	(hex)		Peek Traffic Corporation
+BA8000-BA8FFF	(base 16)	Peek Traffic Corporation
+				2906 Corporate Way
+				Palmetto Fl 34221
+				UNITED STATES
+
+00-50-C2	(hex)		SISS Technology Inc.
+BA9000-BA9FFF	(base 16)	SISS Technology Inc.
+				601 Ace-Technotower, 684-1 Deungchon-dong, Gangseo-gu
+				Seoul  157-030
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		NetworkFX Communications, LLC
+BAA000-BAAFFF	(base 16)	NetworkFX Communications, LLC
+				95-1036 Auina St.
+				Mililani HI 96789
+				UNITED STATES
+
+00-50-C2	(hex)		iDeal Teknoloji Bilisim Cozumleri A.S.
+BAB000-BABFFF	(base 16)	iDeal Teknoloji Bilisim Cozumleri A.S.
+				Cumhuriyet Cad. Yeni Parseller Sok. B Blok Giris Kat KAVACIK
+				ISTANBUL  34805
+				TURKEY
+
+00-50-C2	(hex)		VITECO VNPT JSC
+BAC000-BACFFF	(base 16)	VITECO VNPT JSC
+				No35, Lane 61, lac Trung Streets
+				Ha Noi  10000
+				VIETNAM
+
+00-50-C2	(hex)		Prediktor AS
+BAD000-BADFFF	(base 16)	Prediktor AS
+				Habornveien 48B
+				Gamle Fredrikstad . 1630
+				NORWAY
+
+00-50-C2	(hex)		Fiber Connections Inc.
+BAE000-BAEFFF	(base 16)	Fiber Connections Inc.
+				5878 Highway # 9
+				Schomberg ON L0G 1T0
+				CANADA
+
+00-50-C2	(hex)		MangoDSP
+BAF000-BAFFFF	(base 16)	MangoDSP
+				Hartom 8
+				Jerusalem Israel 45116
+				ISRAEL
+
+00-50-C2	(hex)		Gainbrain
+BB0000-BB0FFF	(base 16)	Gainbrain
+				Auweg 32
+				Senden  89250
+				GERMANY
+
+00-50-C2	(hex)		Pro4tech
+BB1000-BB1FFF	(base 16)	Pro4tech
+				Kochav Yokneam bldg 5 floor 
+				Yokneam Illit  20692
+				ISRAEL
+
+00-50-C2	(hex)		St Michael Strategies Inc
+BB2000-BB2FFF	(base 16)	St Michael Strategies Inc
+				701 Salaberry suite 201
+				Chambly Quebec J3L 1R2
+				CANADA
+
+00-50-C2	(hex)		ClimateWell AB (publ)
+BB3000-BB3FFF	(base 16)	ClimateWell AB (publ)
+				Instrumentvagen 20
+				Hagersten  12653
+				SWEDEN
+
+00-50-C2	(hex)		JSC Electrical Equipment Factory
+BB4000-BB4FFF	(base 16)	JSC Electrical Equipment Factory
+				Otradnaya str, 6
+				Moscow  129626
+				RUSSIAN FEDERATION
+
+00-50-C2	(hex)		MROAD INFORMATION SYSTEM
+BB5000-BB5FFF	(base 16)	MROAD INFORMATION SYSTEM
+				3F, SUNGDO BD. 689-1
+				Bokjeong-dong,Sujeong-gu
+				Seongnam-si GYeongi-do 461-200
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Quarch Technology Ltd
+BB6000-BB6FFF	(base 16)	Quarch Technology Ltd
+				4C Dalfaber Industrial Estate
+				Aviemore Inverness-Shire PH22 1ST
+				UNITED KINGDOM
+
+00-50-C2	(hex)		General Dynamics C4 Systems
+BB7000-BB7FFF	(base 16)	General Dynamics C4 Systems
+				8220 East Roosevelt St.
+				MD: R1122
+				Scottsdale Arizona 85257
+				UNITED STATES
+
+00-50-C2	(hex)		MoeTronix
+BB8000-BB8FFF	(base 16)	MoeTronix
+				3342 Canary Trl
+				Duluth GA 30096
+				UNITED STATES
+
+00-50-C2	(hex)		Toptech Systems, Inc.
+BB9000-BB9FFF	(base 16)	Toptech Systems, Inc.
+				280 Hunt Park Cove
+				Longwood FL 32750
+				UNITED STATES
+
+00-50-C2	(hex)		Systemteq Limited
+BBA000-BBAFFF	(base 16)	Systemteq Limited
+				Unit B, Lynwood House
+				Sandown Road
+				Watford Hertfordshire WD24 7UF
+				UNITED KINGDOM
+
+00-50-C2	(hex)		GHL Systems Berhad
+BBB000-BBBFFF	(base 16)	GHL Systems Berhad
+				L5-E-7B, Enterprise 4
+				Technology Park Malaysia
+				Bukit Jalil Kuala Lumpur 57000
+				MALAYSIA
+
+00-50-C2	(hex)		ImpactSystems
+BBC000-BBCFFF	(base 16)	ImpactSystems
+				15-10-206 Satsukigaoka-Minami
+				Suita Osaka 565-0832
+				JAPAN
+
+00-50-C2	(hex)		ITS Telecom
+BBD000-BBDFFF	(base 16)	ITS Telecom
+				29 Hametzuda st.
+				Azur  58001
+				ISRAEL
+
+00-50-C2	(hex)		Onlinepizza Norden AB
+BBE000-BBEFFF	(base 16)	Onlinepizza Norden AB
+				Strandbergsgatan 61 
+				Stockholm  112 51
+				SWEDEN
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+BBF000-BBFFFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Strasse 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Galaxia Electronics
+BC0000-BC0FFF	(base 16)	Galaxia Electronics
+				#1307 Tech Center, SK Technopark
+				190-1 Sangdewondong, Jungwongu
+				Seongnamsi Gyeonggido 462-721
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Sentec Ltd
+BC1000-BC1FFF	(base 16)	Sentec Ltd
+				Brunswick House
+				61-69 Newmarket Rd
+				Cambridge Cambridgeshire CB5 8EG
+				UNITED KINGDOM
+
+00-50-C2	(hex)		XSLENT Energy Technologies LLC
+BC2000-BC2FFF	(base 16)	XSLENT Energy Technologies LLC
+				7428 Redwood Blvd Suite 102
+				Novato CA 94945
+				UNITED STATES
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+BC3000-BC3FFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Strasse 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Wheatstone Corporation
+BC4000-BC4FFF	(base 16)	Wheatstone Corporation
+				600 Industrial Drive
+				New Nern NC 28562
+				UNITED STATES
+
+00-50-C2	(hex)		Toptechnology SRL
+BC5000-BC5FFF	(base 16)	Toptechnology SRL
+				Guise 1774 2B
+				Ciudad de Buenos Aires Capital Federal C1425DPD
+				ARGENTINA
+
+00-50-C2	(hex)		MireroTack
+BC6000-BC6FFF	(base 16)	MireroTack
+				dodang-dong,wonmi-gu, bucheon-si, gyeonggi-do
+				A-1011 DAEWOO TECHNO PARK 187-7 
+				dodang-dong,wonmi-gu bucheon-si/gyeonggi-do 420-806
+				KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF
+
+00-50-C2	(hex)		PTS GmbH
+BC7000-BC7FFF	(base 16)	PTS GmbH
+				Gottfried-Schenker-Str. 2
+				Lichtenau Saxony 09244
+				GERMANY
+
+00-50-C2	(hex)		AGWTech Ltd
+BC8000-BC8FFF	(base 16)	AGWTech Ltd
+				22 Nederdale Close
+				Yarm Stockton-on-Tees TS15 9UE
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Nextmove Technologies
+BC9000-BC9FFF	(base 16)	Nextmove Technologies
+				38 Taylor Drive
+				Brookline New Hampshire 03033
+				UNITED STATES
+
+00-50-C2	(hex)		Aitecsystem Co.,Ltd.
+BCA000-BCAFFF	(base 16)	Aitecsystem Co.,Ltd.
+				1532,Shinohara-Cho,
+				Kouhoku-Ku,
+				Yokohama Kanagawa 222-0026
+				JAPAN
+
+00-50-C2	(hex)		ARTEIXO TELECOM
+BCB000-BCBFFF	(base 16)	ARTEIXO TELECOM
+				P.E. Penapurreira
+				As Pontes A Coruï¿½a 15320
+				SPAIN
+
+00-50-C2	(hex)		VVDN TECHNOLOGIES PVT. LTD.
+BCC000-BCCFFF	(base 16)	VVDN TECHNOLOGIES PVT. LTD.
+				1241/36,ATUL KATARIA CHOWK
+				OPP. PAYAL CINEMA
+				GURGAON HARYANA 122001
+				INDIA
+
+00-50-C2	(hex)		Highlight Parking Systems Ltd
+BCD000-BCDFFF	(base 16)	Highlight Parking Systems Ltd
+				14 Ullathorne Road
+				London  SW16 1SN
+				UNITED KINGDOM
+
+00-50-C2	(hex)		TV Portal Co., Ltd.
+BCE000-BCEFFF	(base 16)	TV Portal Co., Ltd.
+				5F TATENO, 6-4-13 Kiba Koto
+				Tokyo  135-0042
+				JAPAN
+
+00-50-C2	(hex)		Epiko, elektronski sistemi d.o.o.
+BCF000-BCFFFF	(base 16)	Epiko, elektronski sistemi d.o.o.
+				Izanska cesta 146a   
+				Ljubljana Slovenija 1108
+				SLOVENIA
+
+00-50-C2	(hex)		EDC wifi
+BD0000-BD0FFF	(base 16)	EDC wifi
+				Bao An Nan Lu
+				ShenZhen GuangDong 518001
+				CHINA
+
+00-50-C2	(hex)		Ariem Technologies Pvt Ltd
+BD1000-BD1FFF	(base 16)	Ariem Technologies Pvt Ltd
+				201/202, Trump Towers
+				5/2, Eagle Street, Langford Town
+				Bangalore Karnataka 560025
+				INDIA
+
+00-50-C2	(hex)		Percello Ltd.
+BD2000-BD2FFF	(base 16)	Percello Ltd.
+				14 Hatidhar St.
+				Raanana  43650
+				ISRAEL
+
+00-50-C2	(hex)		Postjet Systems Ltd
+BD3000-BD3FFF	(base 16)	Postjet Systems Ltd
+				6B Beechwood
+				Chineham Business Park, Chineham
+				Basingstoke Hants RG24 8WA
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Global Security Devices
+BD4000-BD4FFF	(base 16)	Global Security Devices
+				S12-S14 Synergy Centre
+				ITT Dublin, Tallaght
+				Dublin  D24
+				IRELAND
+
+00-50-C2	(hex)		RF-Embedded GmbH
+BD5000-BD5FFF	(base 16)	RF-Embedded GmbH
+				Salzburger Straï¿½e 60
+				Stephanskirchen Bayern 83071
+				GERMANY
+
+00-50-C2	(hex)		BG Systems, Inc.
+BD6000-BD6FFF	(base 16)	BG Systems, Inc.
+				931 Commercial St.
+				Palo Alto CA 94303
+				UNITED STATES
+
+00-50-C2	(hex)		SLAT 
+BD7000-BD7FFF	(base 16)	SLAT 
+				11 Rue Jean-Elysï¿½e DUPUY
+				Champagne au Mont d&#39;Or  Rhï¿½ne  69543
+				FRANCE
+
+00-50-C2	(hex)		b.a.b-technologie gmbh
+BD8000-BD8FFF	(base 16)	b.a.b-technologie gmbh
+				Rosemeyerstraï¿½e 14
+				Dortmund NRW 44139
+				GERMANY
+
+00-50-C2	(hex)		AMS Controls, Inc.
+BD9000-BD9FFF	(base 16)	AMS Controls, Inc.
+				12180 Prichard Farm Road
+				Maryland Heights MO 63043
+				UNITED STATES
+
+00-50-C2	(hex)		Digital Lumens
+BDA000-BDAFFF	(base 16)	Digital Lumens
+				129 Portland Street
+				4th Floor
+				Boston Massachusetts 02114
+				UNITED STATES
+
+00-50-C2	(hex)		GasTOPS Ltd.
+BDB000-BDBFFF	(base 16)	GasTOPS Ltd.
+				1011 Polytek Street
+				Ottawa Ontario K1J9J3
+				CANADA
+
+00-50-C2	(hex)		SS Systems LLC
+BDC000-BDCFFF	(base 16)	SS Systems LLC
+				104 Kurtner Ct
+				Morrisville NC 27560
+				UNITED STATES
+
+00-50-C2	(hex)		Evo-Teh d.o.o.
+BDE000-BDEFFF	(base 16)	Evo-Teh d.o.o.
+				Mariborska cesta 3
+				SI-2370 Dravograd
+				Dravograd Slovenija SI2370
+				SLOVENIA
+
+00-50-C2	(hex)		Euro-Konsult Sp. z o.o.
+BDF000-BDFFFF	(base 16)	Euro-Konsult Sp. z o.o.
+				Swidnicka 19/315
+				Wroclaw dolnoslaskie 50-066
+				POLAND
+
+00-50-C2	(hex)		Phaedrus Limited
+BE0000-BE0FFF	(base 16)	Phaedrus Limited
+				Unit 1, Darwen Enterprise Centre
+				Railway Road
+				Darwen Lancashire BB3 3EH
+				UNITED KINGDOM
+
+00-50-C2	(hex)		TATTILE SRL
+BE1000-BE1FFF	(base 16)	TATTILE SRL
+				VIA DONIZETTI 1/3/5
+				MAIRANO BRESCIA 25030
+				ITALY
+
+00-50-C2	(hex)		Convergent Bioscience Ltd.
+BE2000-BE2FFF	(base 16)	Convergent Bioscience Ltd.
+				27 Coronet Road
+				Toronto ON M8Z 2L8
+				CANADA
+
+00-50-C2	(hex)		Jiskoot Ltd
+BE3000-BE3FFF	(base 16)	Jiskoot Ltd
+				85 Goods Station Road
+				Tunbridge Wells Kent TN1 2DJ
+				UNITED KINGDOM
+
+00-50-C2	(hex)		GRUPO EPELSA S.L.
+BE4000-BE4FFF	(base 16)	GRUPO EPELSA S.L.
+				C/ Punto Net, 3
+				ALCALA DE HENARES MADRID 28005
+				SPAIN
+
+00-50-C2	(hex)		RF Code, Inc
+BE5000-BE5FFF	(base 16)	RF Code, Inc
+				9229 Waterford Centre
+				Suite 500
+				Austin TX 78758
+				UNITED STATES
+
+00-50-C2	(hex)		Docobo Ltd
+BE6000-BE6FFF	(base 16)	Docobo Ltd
+				The Old Granary
+				21 High Street
+				Bookham Surrey KT23 4AA
+				UNITED KINGDOM
+
+00-50-C2	(hex)		Genetec Inc.
+BE7000-BE7FFF	(base 16)	Genetec Inc.
+				2280 Alfred-Nobel Blvd., Suite 400
+				Saint-Laurent Quebec H4S 2A4
+				CANADA
+
+00-50-C2	(hex)		VEHICLE TESTING EQUIPMENT, S.L.
+BE8000-BE8FFF	(base 16)	VEHICLE TESTING EQUIPMENT, S.L.
+				C/ Conca de Barberï¿½ 19
+				Castellar del Vallï¿½s Barcelona 08211
+				SPAIN
+
+00-50-C2	(hex)		ZUCCHETTI SPA
+BE9000-BE9FFF	(base 16)	ZUCCHETTI SPA
+				Via San Martino, 92
+				Campoformido UDINE 33030
+				ITALY
+
+00-50-C2	(hex)		Daeyoung inc.
+BEA000-BEAFFF	(base 16)	Daeyoung inc.
+				596-1, Baegun-dong, Nam-gu
+				Gwang-Ju  503-300
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Peek Traffic Corporation
+BEB000-BEBFFF	(base 16)	Peek Traffic Corporation
+				2906 Corporate Way
+				Palmetto Fl 34221
+				UNITED STATES
+
+00-50-C2	(hex)		DRS Laruel Technologies
+BEC000-BECFFF	(base 16)	DRS Laruel Technologies
+				246 Airport Road
+				Johnstown Pa 15904
+				UNITED STATES
+
+00-50-C2	(hex)		Touch Revolution Inc.
+BED000-BEDFFF	(base 16)	Touch Revolution Inc.
+				101 California St.
+				Suite 4225
+				San Francisco CA 94065
+				UNITED STATES
+
+00-50-C2	(hex)		PRIVATE
+BEE000-BEEFFF	(base 16)		 
+				 
+00-50-C2	(hex)		SOCIEDAD IBERICA DE CONSTRUCCIONES ELECTRICAS, S.A. (SICE)
+BEF000-BEFFFF	(base 16)	SOCIEDAD IBERICA DE CONSTRUCCIONES ELECTRICAS, S.A. (SICE)
+				C/Sepulveda, 6
+				Poligono Industrial de Alcobendas
+				ALCOBENDAS MADRID 28108
+				SPAIN
+
+00-50-C2	(hex)		AIM
+BF0000-BF0FFF	(base 16)	AIM
+				21, avenue de la Plaine Fleurie
+				MEYLAN  38240
+				FRANCE
+
+00-50-C2	(hex)		Amatic Industries GmbH
+BF1000-BF1FFF	(base 16)	Amatic Industries GmbH
+				Traunsteinstrasse 12
+				Rutzenmoos Upper Austria 4845
+				AUSTRIA
+
+00-50-C2	(hex)		Saia-Burgess Controls AG
+BF2000-BF2FFF	(base 16)	Saia-Burgess Controls AG
+				Bahnhofstrasse 18
+				Murten FR 3280
+				SWITZERLAND
+
+00-50-C2	(hex)		Wanco Inc.
+BF3000-BF3FFF	(base 16)	Wanco Inc.
+				5870 Tennyson St.
+				Arvada CO 80003
+				UNITED STATES
+
+00-50-C2	(hex)		Monarch Innovative Technologies Pvt Ltd
+BF4000-BF4FFF	(base 16)	Monarch Innovative Technologies Pvt Ltd
+				Monarch House, Master Mind II,
+				Royal Palms, Aarey Colony, Goregaon(E),
+				Mumbai Maharashtra 400065
+				INDIA
+
+00-50-C2	(hex)		AILES ELECTRONICS CO., LTD.
+BF5000-BF5FFF	(base 16)	AILES ELECTRONICS CO., LTD.
+				840 ASSO
+				KAINAN CITY WAKAYAMA 642-0015
+				JAPAN
+
+00-50-C2	(hex)		NOLAM EMBEDDED SYSTEMS 
+BF6000-BF6FFF	(base 16)	NOLAM EMBEDDED SYSTEMS 
+				8 Rue d&#39;estienne d&#39;orves 
+				CRETEIL   94000
+				FRANCE
+
+00-50-C2	(hex)		Phytec Messtechnik GmbH
+BF7000-BF7FFF	(base 16)	Phytec Messtechnik GmbH
+				Robert-Koch-Straï¿½e 39
+				Mainz Rheinland-Pfalz 55129
+				GERMANY
+
+00-50-C2	(hex)		Crtiical Link
+BF8000-BF8FFF	(base 16)	Crtiical Link
+				6712 Brooklawn Parkway
+				Syracuse NY 13211
+				UNITED STATES
+
+00-50-C2	(hex)		Vitel Net
+BF9000-BF9FFF	(base 16)	Vitel Net
+				1951 Kidwell Drive
+				Suite 200
+				Vienna VA 22182
+				UNITED STATES
+
+00-50-C2	(hex)		TOPEX SA
+BFA000-BFAFFF	(base 16)	TOPEX SA
+				10 Feleacu street, district 1, 
+				Bucharest  014186
+				ROMANIA
+
+00-50-C2	(hex)		ecs srl
+BFB000-BFBFFF	(base 16)	ecs srl
+				via del candel 55/d
+				belluno  32100
+				ITALY
+
+00-50-C2	(hex)		Altronix Corporation
+BFC000-BFCFFF	(base 16)	Altronix Corporation
+				140 58th street 
+				Brooklyn NY 11220
+				UNITED STATES
+
+00-50-C2	(hex)		Ernemann Cine Tec GmbH
+BFD000-BFDFFF	(base 16)	Ernemann Cine Tec GmbH
+				Mecklenburger Str. 32 - 36
+				Kiel Schleswig Holstein 24106
+				GERMANY
+
+00-50-C2	(hex)		Ingeteam Paneles S.A.U.
+BFE000-BFEFFF	(base 16)	Ingeteam Paneles S.A.U.
+				Pol Ind El Juncarillo, nave 1
+				Sesma Navarra 31293
+				SPAIN
+
+00-50-C2	(hex)		I.S.A. S.r.l.
+BFF000-BFFFFF	(base 16)	I.S.A. S.r.l.
+				Via Prati Bassi ,22
+				TAINO VA 21020
+				ITALY
+
+00-50-C2	(hex)		ACD Elektronik GmbH
+C00000-C00FFF	(base 16)	ACD Elektronik GmbH
+				Engelberg 2
+				Achstetten BW 88480
+				GERMANY
+
+00-50-C2	(hex)		QUERCUS TECHNOLOGIES, S.L.
+C01000-C01FFF	(base 16)	QUERCUS TECHNOLOGIES, S.L.
+				Antoni Isern 4 baixos
+				Reus Tarragona 43205
+				SPAIN
+
+00-50-C2	(hex)		Hanning Elektro-Werke GmbH &amp; Co. KG
+C02000-C02FFF	(base 16)	Hanning Elektro-Werke GmbH &amp; Co. KG
+				Holter Strasse 90
+				Oerlinghausen NRW 33813
+				GERMANY
+
+00-50-C2	(hex)		Volumatic Limited.
+C03000-C03FFF	(base 16)	Volumatic Limited.
+				Taurus House
+				Endemere Road
+				Coventry West Midlands CV6 5PY
+				UNITED KINGDOM
+
+00-50-C2	(hex)		SoGEME
+C04000-C04FFF	(base 16)	SoGEME
+				7 rue de Monceaux
+				Hodenc En bray  60650
+				FRANCE
+
+00-50-C2	(hex)		Doppler Systems LLC
+C05000-C05FFF	(base 16)	Doppler Systems LLC
+				37202 N Bloody Basin Road
+				P.O. Box 2780
+				Carefree Arizona 85377
+				UNITED STATES
+
+00-50-C2	(hex)		ANALOG WAY
+C06000-C06FFF	(base 16)	ANALOG WAY
+				Parc du Moulin
+				33 Rue du Saule Trapu
+				Massy  91882 cedex
+				FRANCE
+
+00-50-C2	(hex)		CIO Informatique Industrielle
+C07000-C07FFF	(base 16)	CIO Informatique Industrielle
+				1 Rue de la Presse
+				BP 710 - Cedex 9
+				SAINT-ETIENNE LOIRE 42950
+				FRANCE
+
+00-50-C2	(hex)		juiceboss
+C08000-C08FFF	(base 16)	juiceboss
+				1946 Pescadero Creek Road
+				Pescadero CA 94060
+				UNITED STATES
+
+00-50-C2	(hex)		Globe Wireless
+C09000-C09FFF	(base 16)	Globe Wireless
+				1571 Robert J Conlan Blvd
+				Palm Bay Florida 32905
+				UNITED STATES
+
+00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+C0A000-C0AFFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+				ABB Industrial Park Torch Hi-tech Development Zone
+				Xiao Dong Shan, Xiamen
+				Xiamen Fujian 361006
+				CHINA
+
+00-50-C2	(hex)		ProSourcing GmbH
+C0B000-C0BFFF	(base 16)	ProSourcing GmbH
+				Dorfmatt 1
+				Muntelier Freiburg 3286
+				SWITZERLAND
+
+00-50-C2	(hex)		Altierre
+C0C000-C0CFFF	(base 16)	Altierre
+				1980 Concourse Drive
+				San Jose CA 95131
+				UNITED STATES
+
+00-50-C2	(hex)		Fr. SauterAG
+C0D000-C0DFFF	(base 16)	Fr. SauterAG
+				Im Surinam 55
+				Basel BS 4016
+				SWITZERLAND
+
+00-50-C2	(hex)		AVItronic GmbH
+C0E000-C0EFFF	(base 16)	AVItronic GmbH
+				Kreischaer Str. 1a
+				Bannewitz Sachsen 01728
+				GERMANY
+
+00-50-C2	(hex)		DYCEC, S.A.
+C0F000-C0FFFF	(base 16)	DYCEC, S.A.
+				Torres Quevedo, 1-P.T.M.
+				Tres Cantos Madrid 28760
+				SPAIN
+
+00-50-C2	(hex)		Keith & Koep GmbH
+C10000-C10FFF	(base 16)	Keith & Koep GmbH
+				Uellendahler Str. 199
+				Wuppertal NRW 42109
+				GERMANY
+
+00-50-C2	(hex)		ART Antriebs- und Regeltechnik GmbH
+C11000-C11FFF	(base 16)	ART Antriebs- und Regeltechnik GmbH
+				2.Industriestrasse 8
+				Hockenheim  69509
+				GERMANY
+
+00-50-C2	(hex)		OKI DENKI BOHSAI CO.,LTD.
+C12000-C12FFF	(base 16)	OKI DENKI BOHSAI CO.,LTD.
+				Oomori-Hinoshita 9-1
+				Fukushima-City Fukushima 960-1101
+				JAPAN
 

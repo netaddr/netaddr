@@ -79,7 +79,7 @@ nmap IP range iteration.
 >>> len(ip_list)
 14
 >>> for ip in ip_list:
-...     print ip
+...     print(ip)
 ...     
 192.0.2.1
 192.0.2.2
@@ -99,6 +99,6 @@ nmap IP range iteration.
 >>> list(iter_nmap_range('::'))
 Traceback (most recent call last):
 ...
-AddrFormatError: invalid nmap range: ::
+netaddr.core.AddrFormatError: invalid nmap range: ::
 
 }}}

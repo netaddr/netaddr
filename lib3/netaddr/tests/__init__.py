@@ -18,16 +18,16 @@ sys.path.insert(0, os.path.abspath(os.path.join(
 DEBUG = True
 
 #-----------------------------------------------------------------------------
-def test_suit_all():
+def test_suite_all():
 
     test_dirs = ['ip', 'eui', 'strategy', 'core']
 
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
     if DEBUG:
-        print
-        print 'module base path:', base_path
-        print
+        print()
+        print('module base path:', base_path)
+        print()
 
     #   Gather list of files containing tests.
     test_files = []
@@ -43,9 +43,9 @@ def test_suit_all():
     test_files = [t for t in test_files if os.path.basename(t) not in skiplist]
 
     if DEBUG:
-        print "doctest files to be processed :-"
-        print
-        print "\n".join(test_files)
+        print("doctest files to be processed :-")
+        print()
+        print("\n".join(test_files))
 
     #   Build and return a complete unittest test suite.
     suite = unittest.TestSuite()
@@ -57,6 +57,11 @@ def test_suit_all():
 
     return suite
 
-if __name__ == "__main__":
+#-----------------------------------------------------------------------------
+def run():
     runner = unittest.TextTestRunner()
-    runner.run(test_suit_all())
+    runner.run(test_suite_all())
+
+#-----------------------------------------------------------------------------
+if __name__ == "__main__":
+    run()

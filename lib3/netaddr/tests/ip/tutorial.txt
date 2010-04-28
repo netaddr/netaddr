@@ -224,8 +224,8 @@ IPAddress('::')
 >>> str(ip), ip.prefixlen, ip.version
 ('fe80::dead:beef/64', 64, 6)
 
->>> int(ip.ip)
-338288524927261089654018896845083623151L
+>>> int(ip.ip) == 338288524927261089654018896845083623151
+True
 
 >>> hex(ip.ip)
 '0xfe8000000000000000000000deadbeef'
@@ -390,7 +390,7 @@ Use of generators ensures working with large IP subnets is efficient.
 {{{
 
 >>> for ip in IPNetwork('192.0.2.0/23'):
-...    print '%s' % ip
+...    print('%s' % ip)
 ...
 192.0.2.0
 192.0.2.1
@@ -411,7 +411,7 @@ Here is the iterator provided for accessing these IP addresses :-
 {{{
 
 >>> for ip in IPNetwork('192.0.2.0/23').iter_hosts():
-...     print '%s' % ip
+...     print('%s' % ip)
 ...
 192.0.2.1
 192.0.2.2

@@ -55,7 +55,7 @@ class mac_eui48(object):
     word_size = 8
 
     #: The number of words in this address type.
-    num_words = width / word_size
+    num_words = width // word_size
 
     #: The maximum integer value for an individual word in this address type.
     max_word = 2 ** word_size - 1
@@ -72,7 +72,7 @@ class mac_eui48(object):
 class mac_unix(mac_eui48):
     """A UNIX-style MAC address dialect class."""
     word_size = 8
-    num_words = width / word_size
+    num_words = width // word_size
     word_sep  = ':'
     word_fmt  = '%x'
     word_base = 16
@@ -80,7 +80,7 @@ class mac_unix(mac_eui48):
 class mac_cisco(mac_eui48):
     """A Cisco 'triple hextet' MAC address dialect class."""
     word_size = 16
-    num_words = width / word_size
+    num_words = width // word_size
     word_sep  = '.'
     word_fmt  = '%.4x'
     word_base = 16
@@ -88,7 +88,7 @@ class mac_cisco(mac_eui48):
 class mac_bare(mac_eui48):
     """A bare (no delimiters) MAC address dialect class."""
     word_size = 48
-    num_words = width / word_size
+    num_words = width // word_size
     word_sep  = ''
     word_fmt  = '%.12X'
     word_base = 16
@@ -96,7 +96,7 @@ class mac_bare(mac_eui48):
 class mac_pgsql(mac_eui48):
     """A PostgreSQL style (2 x 24-bit words) MAC address dialect class."""
     word_size = 24
-    num_words = width / word_size
+    num_words = width // word_size
     word_sep  = ':'
     word_fmt  = '%.6x'
     word_base = 16

@@ -37,3 +37,29 @@ IPNetwork('192.0.2.0/24')
 IPNetwork('192.0.0.0/22')
 
 }}}
+
+Checking matches with varying IP address versions.
+
+{{{
+>>> all_matching_cidrs('192.0.2.0', ['192.0.2.0/24'])
+[IPNetwork('192.0.2.0/24')]
+
+>>> all_matching_cidrs('192.0.2.0', ['::/96'])
+[]
+
+>>> all_matching_cidrs('::ffff:192.0.2.1', ['::ffff:192.0.2.0/96'])
+[IPNetwork('::ffff:192.0.2.0/96')]
+
+>>> all_matching_cidrs('::192.0.2.1', ['::192.0.2.0/96'])
+[IPNetwork('::192.0.2.0/96')]
+
+>>> all_matching_cidrs('::192.0.2.1', ['192.0.2.0/23'])
+[]
+
+>>> all_matching_cidrs('::192.0.2.1', ['192.0.2.0/24', '::192.0.2.0/120'])
+[IPNetwork('::192.0.2.0/120')]
+
+>>> all_matching_cidrs('::192.0.2.1', [IPNetwork('192.0.2.0/24'), IPNetwork('::192.0.2.0/120')])
+[IPNetwork('::192.0.2.0/120')]
+
+}}}

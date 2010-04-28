@@ -16,28 +16,28 @@ include docs/epydoc.cfg
 include docs/epydoc.css
 recursive-include docs/api *
 
-include netaddr/__init__.py
-include netaddr/core.py
-include netaddr/fbsocket.py
+include lib*/netaddr/__init__.py
+include lib*/netaddr/core.py
+include lib*/netaddr/fbsocket.py
 
-recursive-include netaddr/eui *.py *.txt *.idx
+recursive-include lib*/netaddr/eui *.py *.txt *.idx
 
-recursive-include netaddr/ip *.py 
-include netaddr/ip/ipv4-address-space
-include netaddr/ip/ipv6-address-space
-include netaddr/ip/multicast-addresses
+recursive-include lib*/netaddr/ip *.py 
+include lib*/netaddr/ip/ipv4-address-space
+include lib*/netaddr/ip/ipv6-address-space
+include lib*/netaddr/ip/multicast-addresses
 
-recursive-include netaddr/strategy *.py
+recursive-include lib*/netaddr/strategy *.py
 
-include netaddr/tests/__init__.py
-include netaddr/tests/netaddr_coverage.sh
-include netaddr/tests/netaddr_coverage_report.txt
-recursive-include netaddr/tests/core *.txt
-recursive-include netaddr/tests/eui *.txt
-recursive-include netaddr/tests/ip *.txt
-recursive-include netaddr/tests/strategy *.txt
+include lib*/netaddr/tests/__init__.py
+include lib*/netaddr/tests/netaddr_coverage.sh
+include lib*/netaddr/tests/netaddr_coverage_report.txt
+recursive-include lib*/netaddr/tests/core *.txt
+recursive-include lib*/netaddr/tests/eui *.txt
+recursive-include lib*/netaddr/tests/ip *.txt
+recursive-include lib*/netaddr/tests/strategy *.txt
 
-include netaddr/tools/netaddr
+include lib*/netaddr/tools/netaddr
 
 global-exclude *.pyc
 global-exclude *.svn*

@@ -31,7 +31,7 @@ IPSet(['192.0.2.0/32'])
 IPSet(['192.0.2.0/24'])
 
 >>> for ip in IPSet(['192.0.2.0/28', '::192.0.2.0/124']):
-...     print ip
+...     print(ip)
 192.0.2.0
 192.0.2.1
 192.0.2.2
@@ -99,7 +99,7 @@ Set membership.
 >>> ipset = IPSet(['192.0.2.0/28'])
 
 >>> for ip in iprange:
-...     print ip, ip in ipset
+...     print(ip, ip in ipset)
 192.0.1.255 False
 192.0.2.0 True
 192.0.2.1 True
@@ -216,7 +216,7 @@ False
 >>> available = ipv4_addr_space ^ unavailable
 
 >>> for cidr in available.iter_cidrs():
-...     print cidr, cidr[0], cidr[-1]
+...     print(cidr, cidr[0], cidr[-1])
 0.0.0.0/5 0.0.0.0 7.255.255.255
 8.0.0.0/7 8.0.0.0 9.255.255.255
 11.0.0.0/8 11.0.0.0 11.255.255.255

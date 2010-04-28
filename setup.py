@@ -20,30 +20,36 @@ import release
 #-----------------------------------------------------------------------------
 def main():
     if sys.version_info[:2] < (2, 4):
-        print "netaddr requires Python version 2.4.x or higher."
+        sys.stderr.write("netaddr requires Python version 2.4 or higher.\n")
         sys.exit(1)
 
     if sys.argv[-1] == 'setup.py':
-        print "To install, run 'python setup.py install'"
-        print
+        sys.stdout.write("To install, run 'python setup.py install'\n\n")
 
-    setup(
-        name             = release.name,
-        version          = release.version,
-        description      = release.description,
-        keywords         = release.keywords,
-        download_url     = release.download_url,
+    setup_options = dict(
         author           = release.author,
         author_email     = release.author_email,
-        url              = release.url,
-        packages         = release.packages,
-        package_data     = release.package_data,
+        classifiers      = release.classifiers,
+        description      = release.description,
+        download_url     = release.download_url,
+        keywords         = release.keywords,
         license          = release.license,
         long_description = release.long_description,
-        scripts          = release.scripts,
+        name             = release.name,
+        package_data     = release.package_data,
+        package_dir      = release.package_dir,
+        packages         = release.packages,
         platforms        = release.platforms,
-        classifiers      = release.classifiers,
+        scripts          = release.scripts,
+        url              = release.url,
+        version          = release.version,
     )
+
+    #   IPython does not currently support Python 3.x so disable this.
+    if release.PYTHON_MAJOR_VERSION == 3:
+        del setup_options['scripts']
+
+    setup(**setup_options)
 
 #-----------------------------------------------------------------------------
 if __name__ == "__main__":

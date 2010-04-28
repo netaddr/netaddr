@@ -33,10 +33,11 @@ More details can be found at the following URLs :-
 """
 
 import os as _os
+import sys as _sys
 import os.path as _path
 import csv as _csv
 
-from netaddr.core import Subscriber, Publisher
+from netaddr.core import Subscriber, Publisher, dos2unix
 
 #-----------------------------------------------------------------------------
 
@@ -119,7 +120,7 @@ class OUIIndexParser(Publisher):
         if hasattr(ieee_file, 'readline') and hasattr(ieee_file, 'tell'):
             self.fh = ieee_file
         else:
-            self.fh = open(ieee_file, 'rb')
+            self.fh = open(ieee_file)
 
     def parse(self):
         """
@@ -198,7 +199,7 @@ class IABIndexParser(Publisher):
         if hasattr(ieee_file, 'readline') and hasattr(ieee_file, 'tell'):
             self.fh = ieee_file
         else:
-            self.fh = open(ieee_file, 'rb')
+            self.fh = open(ieee_file)
 
     def parse(self):
         """
@@ -248,7 +249,7 @@ class IABIndexParser(Publisher):
         self.notify(record)
 
 #-----------------------------------------------------------------------------
-def create_ieee_indices():
+def create_indices():
     """Create indices for OUI and IAB file based lookups"""
     oui_parser = OUIIndexParser(OUI_REGISTRY)
     oui_parser.attach(FileIndexer(OUI_METADATA))
@@ -259,7 +260,7 @@ def create_ieee_indices():
     iab_parser.parse()
 
 #-----------------------------------------------------------------------------
-def load_ieee_indices():
+def load_indices():
     """Load OUI and IAB lookup indices into memory"""
     for row in _csv.reader(open(OUI_METADATA)):
         (key, offset, size) = [int(_) for _ in row]
@@ -287,16 +288,19 @@ def get_latest_files():
         response = urllib2.urlopen(request)
         save_path = _path.dirname(__file__)
         filename = _path.join(save_path, _os.path.basename(response.geturl()))
-        fh = open(filename, 'wb')
+        fh = open(filename, 'w')
         fh.write(response.read())
         fh.close()
+
+        #   Make sure the line endings are consistent across platforms.
+        dos2unix(filename)
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
     get_latest_files()
-    create_ieee_indices()
+    create_indices()
 
 
 #   On module load read indices in memory to enable lookups.
-load_ieee_indices()
+load_indices()

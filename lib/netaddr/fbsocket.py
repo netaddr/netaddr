@@ -63,7 +63,7 @@ def inet_aton(ip_string):
             for token in tokens:
                 if (token >> 8) != 0:
                     raise invalid_addr
-                words.append(chr(token))
+                words.append(_pack('B', token))
             return ''.join(words)
         else:
             raise invalid_addr
@@ -99,7 +99,7 @@ def _compact_ipv6_tokens(tokens):
     #   Replace first longest run with an empty string.
     if len(positions) != 0:
         #   Locate longest, left-most run of zeros.
-        positions.sort(lambda x, y: cmp(x[1], y[1]))
+        positions.sort(key=lambda x: x[1])
         best_position = positions[0]
         for position in positions:
             if position[0] > best_position[0]:

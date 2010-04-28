@@ -118,7 +118,7 @@ class Publisher(object):
             interface.
         """
         if hasattr(subscriber, 'update') and \
-           callable(eval('subscriber.update')):
+           hasattr(eval('subscriber.update'), '__call__'):
             if subscriber not in self.subscribers:
                 self.subscribers.append(subscriber)
         else:
@@ -176,8 +176,25 @@ class DictDotLookup(object):
             return self.__dict__[name]
 
     def __iter__(self):
-        return iter(self.__dict__.keys())
+        return self.__dict__.keys()
 
     def __repr__(self):
         return _pprint.pformat(self.__dict__)
 
+#-----------------------------------------------------------------------------
+def dos2unix(filename):
+    """
+    Replace DOS line endings (CRLF) with UNIX line endings (LF) in file.
+
+    """
+    data = open(filename, "rb").read()
+    data.close()
+
+    if '\0' in data:
+        raise ValueError('file contains binary data: %s!' % filename)
+
+    newdata = data.replace(b"\r\n", b"\n")
+    if newdata != data:
+        f = open(filename, "wb")
+        f.write(newdata)
+        f.close()

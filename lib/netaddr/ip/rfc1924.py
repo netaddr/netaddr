@@ -30,9 +30,8 @@ def ipv6_to_base85(addr):
     remainder = []
     while int_val > 0:
         remainder.append(int_val % 85)
-        int_val /= 85
+        int_val //= 85
 
-    #print '-'.join([str(w) for w in reversed(remainder)])
     return ''.join([BASE_85[w] for w in reversed(remainder)])
 
 #-----------------------------------------------------------------------------

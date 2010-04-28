@@ -18,7 +18,7 @@ Uses TEST-NET references throughout, as described in RFC 3330.
 >>> i = 3221225985
 >>> t = (192, 0, 2, 1)
 >>> s = '192.0.2.1'
->>> p = '\xc0\x00\x02\x01'
+>>> p = b'\xc0\x00\x02\x01'
 >>> bin_val = '0b11000000000000000000001000000001'
 
 >>> bits_to_int(b) == 3221225985
@@ -34,7 +34,7 @@ True
 True
 
 >>> int_to_packed(i)
-'\xc0\x00\x02\x01'
+b'\xc0\x00\x02\x01'
 
 >>> int_to_bin(i)
 '0b11000000000000000000001000000001'

@@ -46,7 +46,7 @@ IP address and subnet sortability.
 ...     ip_list.extend([ip for ip in subnet])
 
 >>> for addr in sorted(ip_list):
-...     print '%r' % addr
+...     print('%r' % addr)
 IPNetwork('192.0.2.0/28')
 IPAddress('192.0.2.0')
 IPAddress('192.0.2.1')

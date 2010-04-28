@@ -24,7 +24,7 @@ EUI('00-1B-77-FF-FE-49-54-FD')
 True
 
 >>> eui.packed
-'\x00\x1bw\xff\xfeIT\xfd'
+b'\x00\x1bw\xff\xfeIT\xfd'
 
 >>> eui.bin  
 '0b11011011101111111111111111110010010010101010011111101'

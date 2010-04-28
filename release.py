@@ -4,6 +4,15 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 
+import sys
+
+PYTHON_MAJOR_VERSION = sys.version_info[0]
+
+if PYTHON_MAJOR_VERSION == 3:
+    sys.path.insert(0, 'lib3')
+else:
+    sys.path.insert(0, 'lib')
+
 import netaddr
 
 name = 'netaddr'
@@ -24,6 +33,10 @@ author = 'David P. D. Moss'
 author_email = 'drkjam@gmail.com'
 
 url = 'http://code.google.com/p/netaddr/'
+
+package_dir = {
+    '' : { 2 : 'lib', 3 : 'lib3'}[PYTHON_MAJOR_VERSION],
+}
 
 #   Required by distutils only.
 packages = [
@@ -91,7 +104,7 @@ For details on history changes and updates see the CHANGELOG :-
 
 platforms = 'OS Independent'
 
-scripts = ['netaddr/tools/netaddr']
+scripts = ['lib/netaddr/tools/netaddr']
 
 classifiers = [
     'Development Status :: 5 - Production/Stable',

@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(
 DEBUG = True
 
 #-----------------------------------------------------------------------------
-def test_suit_all():
+def test_suite_all():
 
     test_dirs = ['ip', 'eui', 'strategy', 'core']
 
@@ -57,6 +57,11 @@ def test_suit_all():
 
     return suite
 
-if __name__ == "__main__":
+#-----------------------------------------------------------------------------
+def run():
     runner = unittest.TextTestRunner()
-    runner.run(test_suit_all())
+    runner.run(test_suite_all())
+
+#-----------------------------------------------------------------------------
+if __name__ == "__main__":
+    run()

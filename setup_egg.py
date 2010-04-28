@@ -34,10 +34,13 @@ import release
 #-----------------------------------------------------------------------------
 def main():
     if sys.version_info[:2] < (2, 4):
-        print "netaddr requires Python version 2.4.x or higher."
+        sys.stderr.write("netaddr requires Python version 2.4 or higher.\n")
         sys.exit(1)
 
-    setup(
+    if sys.argv[-1] == 'setup_egg.py':
+        sys.stdout.write("To install, run 'python setup_egg.py install'\n\n")
+
+    setup_options = dict(
         author           = release.author,
         author_email     = release.author_email,
         classifiers      = release.classifiers,
@@ -51,16 +54,19 @@ def main():
 #   *** packages configured to be distutils compatible ***
 #DISABLED:         packages         = find_packages(),
 #DISABLED:         include_package_data = True,
+#----------------------------------------------------------
+        package_dir      = release.package_dir,
         packages         = release.packages,
         package_data     = release.package_data,
-#----------------------------------------------------------
         platforms        = release.platforms,
         scripts          = release.scripts,
+        test_suite       = 'netaddr.tests.test_suite_all',
         url              = release.url,
         version          = release.version,
         zip_safe         = False,   #   Package should always be extracted.
-        test_suite       = 'netaddr.tests.test_suit_all',
     )
+
+    setup(**setup_options)
 
 #-----------------------------------------------------------------------------
 if __name__ == "__main__":

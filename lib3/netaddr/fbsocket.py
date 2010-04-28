@@ -63,8 +63,8 @@ def inet_aton(ip_string):
             for token in tokens:
                 if (token >> 8) != 0:
                     raise invalid_addr
-                words.append(chr(token))
-            return ''.join(words)
+                words.append(_pack('B', token))
+            return b''.join(words)
         else:
             raise invalid_addr
 
@@ -99,7 +99,7 @@ def _compact_ipv6_tokens(tokens):
     #   Replace first longest run with an empty string.
     if len(positions) != 0:
         #   Locate longest, left-most run of zeros.
-        positions.sort(lambda x, y: cmp(x[1], y[1]))
+        positions.sort(key=lambda x: x[1])
         best_position = positions[0]
         for position in positions:
             if position[0] > best_position[0]:
@@ -169,7 +169,7 @@ def inet_pton(af, ip_string):
         if '::' in ip_string:
             if ip_string == '::':
                 #   Unspecified address.
-                return '\x00'*16
+                return b'\x00'*16
             #   IPv6 compact mode.
             try:
                 prefix, suffix = ip_string.split('::')
@@ -199,7 +199,7 @@ def inet_pton(af, ip_string):
             gap_size = 8 - ( len(l_prefix) + len(l_suffix) )
 
             values = [_pack('>H', int(i, 16)) for i in l_prefix] \
-                   + ['\x00\x00' for i in range(gap_size)] \
+                   + [b'\x00\x00' for i in range(gap_size)] \
                    + [_pack('>H', int(i, 16)) for i in l_suffix]
             try:
                 for token in l_prefix + l_suffix:
@@ -247,6 +247,6 @@ def inet_pton(af, ip_string):
             else:
                 raise invalid_addr
 
-        return ''.join(values)
+        return b''.join(values)
     else:
         raise ValueError('Unknown address family %d' % af)

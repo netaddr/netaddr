@@ -19,7 +19,7 @@ BASE_85 = chr_range('0', '9') + chr_range('A', 'Z') + chr_range('a', 'z') + \
      '?', '@', '^', '_','`', '{', '|', '}', '~']
 
 #: Base 85 digit to integer lookup table.
-BASE_85_DICT = dict(zip(BASE_85, range(0, 86)))
+BASE_85_DICT = dict(list(zip(BASE_85, list(range(0, 86)))))
 
 #-----------------------------------------------------------------------------
 def ipv6_to_base85(addr):
@@ -30,9 +30,8 @@ def ipv6_to_base85(addr):
     remainder = []
     while int_val > 0:
         remainder.append(int_val % 85)
-        int_val /= 85
+        int_val //= 85
 
-    #print '-'.join([str(w) for w in reversed(remainder)])
     return ''.join([BASE_85[w] for w in reversed(remainder)])
 
 #-----------------------------------------------------------------------------

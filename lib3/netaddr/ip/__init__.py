@@ -447,9 +447,9 @@ class IPAddress(BaseIP):
         """@return: the value of this IP address as an unsigned integer"""
         return self._value
 
-    def __hex__(self):
+    def __index__(self):
         """@return: a hexadecimal string representation of this IP address."""
-        return hex(self._value).rstrip('L').lower()
+        return self._value
 
     def bits(self, word_sep=None):
         """
@@ -591,7 +591,7 @@ class IPAddress(BaseIP):
         """
         return self.__class__(self._value >> numbits, self.version)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         @return: C{True} if the numerical value of this IP address is not zero,
             C{False} otherwise.
@@ -923,13 +923,13 @@ class IPNetwork(BaseIP):
     def __len__(self):
         """
         @return: the number of IP addresses in this L{IPNetwork}. Raises an
-            C{IndexError} if size > sys.maxint (a Python 2.x limitation).
+            C{IndexError} if size > sys.maxsize (a Python 2.x limitation).
             Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys.maxint:
-            raise IndexError("range contains more than %d (sys.maxint) " \
-                "IP addresses! Use the .size property instead." % _sys.maxint)
+        if size > _sys.maxsize:
+            raise IndexError("range contains more than %d (sys.maxsize) " \
+                "IP addresses! Use the .size property instead." % _sys.maxsize)
         return size
 
     def __contains__(self, other):
@@ -941,9 +941,11 @@ class IPNetwork(BaseIP):
         """
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             other = IPNetwork("%s/%d" % (other, other._module.width))
+        if self.version != other.version:
+            return False
         return other.first >= self.first and other.last <= self.last
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         IPNetwork objects always represent a sequence of at least one IP
         address and are therefore always True in the boolean context.
@@ -961,8 +963,9 @@ class IPNetwork(BaseIP):
         @return: A key tuple used to compare and sort this L{IPNetwork}
             correctly.
         """
-        skey = self._module.width - num_bits(self.size)
-        return self.version, self.first, skey
+        net_size_bits = self._module.width - num_bits(self.size)
+        host_bits = self._value - self.first
+        return self.version, self.first, net_size_bits, host_bits
 
     def ipv4(self):
         """
@@ -1085,7 +1088,7 @@ class IPNetwork(BaseIP):
 
         #   Calculate number of subnets to be returned.
         width = self._module.width
-        max_subnets = 2 ** (width - self.prefixlen) / 2 ** (width - prefixlen)
+        max_subnets = 2 ** (width - self.prefixlen) // 2 ** (width - prefixlen)
 
         if count is None:
             count = max_subnets
@@ -1095,7 +1098,7 @@ class IPNetwork(BaseIP):
 
         base_subnet = self._module.int_to_str(self.first)
 
-        for i in xrange(count):
+        for i in range(count):
             subnet = self.__class__('%s/%d' % (base_subnet, prefixlen),
                 self.version)
             subnet.value += (subnet.size * i)
@@ -1226,13 +1229,13 @@ class IPRange(BaseIP):
     def __len__(self):
         """
         @return: the number of IP addresses in this L{IPRange}. Raises an
-            C{IndexError} if size > sys.maxint (a Python 2.x limitation).
+            C{IndexError} if size > sys.maxsize (a Python 2.x limitation).
             Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys.maxint:
-            raise IndexError("range contains more than %d (sys.maxint) " \
-                "IP addresses! Use the .size property instead." % _sys.maxint)
+        if size > _sys.maxsize:
+            raise IndexError("range contains more than %d (sys.maxsize) " \
+                "IP addresses! Use the .size property instead." % _sys.maxsize)
         return size
 
     def __contains__(self, other):
@@ -1244,9 +1247,11 @@ class IPRange(BaseIP):
         """
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             other = IPNetwork("%s/%d" % (other, other._module.width))
+        if self.version != other.version:
+            return False
         return other.first >= self.first and other.last <= self.last
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         IPRange objects always represent a sequence of at least one IP
         address and are therefore always True in the boolean context.
@@ -1345,7 +1350,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
     tokens = []
     prefix = None
 
-    if isinstance(abbrev_cidr, (str, unicode)):
+    if isinstance(abbrev_cidr, str):
         if ':' in abbrev_cidr:
             return abbrev_cidr
     try:

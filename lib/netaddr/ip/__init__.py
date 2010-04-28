@@ -449,7 +449,7 @@ class IPAddress(BaseIP):
 
     def __hex__(self):
         """@return: a hexadecimal string representation of this IP address."""
-        return hex(self._value).rstrip('L').lower()
+        return '0x%x' % self._value
 
     def bits(self, word_sep=None):
         """
@@ -941,6 +941,8 @@ class IPNetwork(BaseIP):
         """
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             other = IPNetwork("%s/%d" % (other, other._module.width))
+        if self.version != other.version:
+            return False
         return other.first >= self.first and other.last <= self.last
 
     def __nonzero__(self):
@@ -961,8 +963,9 @@ class IPNetwork(BaseIP):
         @return: A key tuple used to compare and sort this L{IPNetwork}
             correctly.
         """
-        skey = self._module.width - num_bits(self.size)
-        return self.version, self.first, skey
+        net_size_bits = self._module.width - num_bits(self.size)
+        host_bits = self._value - self.first
+        return self.version, self.first, net_size_bits, host_bits
 
     def ipv4(self):
         """
@@ -1085,7 +1088,7 @@ class IPNetwork(BaseIP):
 
         #   Calculate number of subnets to be returned.
         width = self._module.width
-        max_subnets = 2 ** (width - self.prefixlen) / 2 ** (width - prefixlen)
+        max_subnets = 2 ** (width - self.prefixlen) // 2 ** (width - prefixlen)
 
         if count is None:
             count = max_subnets
@@ -1244,6 +1247,8 @@ class IPRange(BaseIP):
         """
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             other = IPNetwork("%s/%d" % (other, other._module.width))
+        if self.version != other.version:
+            return False
         return other.first >= self.first and other.last <= self.last
 
     def __nonzero__(self):

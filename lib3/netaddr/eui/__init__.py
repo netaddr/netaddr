@@ -48,7 +48,7 @@ class OUI(object):
             #TODO: Accept full MAC/EUI-48 addressses as well as XX-XX-XX
             #TODO: and just take /16 (see IAB for details)
             self.value = int(oui.replace('-', ''), 16)
-        elif isinstance(oui, (int, long)):
+        elif isinstance(oui, int):
             if 0 <= oui <= 0xffffff:
                 self.value = oui
             else:
@@ -58,7 +58,7 @@ class OUI(object):
 
         #   Discover offsets.
         if self.value in ieee.OUI_INDEX:
-            fh = open(ieee.OUI_REGISTRY, 'rb')
+            fh = open(ieee.OUI_REGISTRY)
             for (offset, size) in ieee.OUI_INDEX[self.value]:
                 fh.seek(offset)
                 data = fh.read(size)
@@ -80,7 +80,7 @@ class OUI(object):
 
         for line in data.split("\n"):
             line = line.strip()
-            if line == '':
+            if not line:
                 continue
 
             if '(hex)' in line:
@@ -103,12 +103,12 @@ class OUI(object):
         """@return: integer representation of this OUI"""
         return self.value
 
-    def __hex__(self):
+    def __index__(self):
         """
         @return: hexadecimal string representation of this OUI (in network byte
         order).
         """
-        return hex(self.value).rstrip('L').lower()
+        return self.value
 
     def registration(self, index=0):
         """
@@ -200,7 +200,7 @@ class IAB(object):
             int_val = int(iab.replace('-', ''), 16)
             (iab_int, user_int) = IAB.split_iab_mac(int_val, strict)
             self.value = iab_int
-        elif isinstance(iab, (int, long)):
+        elif isinstance(iab, int):
             (iab_int, user_int) = IAB.split_iab_mac(iab, strict)
             self.value = iab_int
         else:
@@ -208,7 +208,7 @@ class IAB(object):
 
         #   Discover offsets.
         if self.value in ieee.IAB_INDEX:
-            fh = open(ieee.IAB_REGISTRY, 'rb')
+            fh = open(ieee.IAB_REGISTRY)
             (offset, size) = ieee.IAB_INDEX[self.value][0]
             self.record['offset'] = offset
             self.record['size'] = size
@@ -223,7 +223,7 @@ class IAB(object):
         """Returns a dict record from raw IAB record data"""
         for line in data.split("\n"):
             line = line.strip()
-            if line == '':
+            if not line:
                 continue
 
             if '(hex)' in line:
@@ -239,12 +239,12 @@ class IAB(object):
         """@return: integer representation of this IAB"""
         return self.value
 
-    def __hex__(self):
+    def __index__(self):
         """
         @return: hexadecimal string representation of this IAB (in network
             byte order)
         """
-        return hex(self.value).rstrip('L').lower()
+        return self.value
 
     def registration(self):
         """ The IEEE registration details for this IAB"""
@@ -311,10 +311,11 @@ class EUI(object):
         else:
         #   Choose a default version when addr is an integer and version is
         #   not specified.
-            if 0 <= addr <= 0xffffffffffff:
-                self._module = _eui48
-            elif 0xffffffffffff < addr <= 0xffffffffffffffff:
-                self._module = _eui64
+            if isinstance(addr, int):
+                if 0 <= addr <= 0xffffffffffff:
+                    self._module = _eui48
+                elif 0xffffffffffff < addr <= 0xffffffffffffffff:
+                    self._module = _eui64
 
         self.value = addr
 
@@ -418,7 +419,7 @@ class EUI(object):
             of bounds. Also supports Python list slices for accessing
             word groups.
         """
-        if isinstance(idx, (int, long)):
+        if isinstance(idx, int):
             #   Indexing, including negative indexing goodness.
             num_words = self._dialect.num_words
             if not (-num_words) <= idx <= (num_words - 1):
@@ -436,13 +437,13 @@ class EUI(object):
             #   TODO - settable slices.
             raise NotImplementedError('settable slices are not supported!')
 
-        if not isinstance(idx, (int, long)):
+        if not isinstance(idx, int):
             raise TypeError('index not an integer!')
 
         if not 0 <= idx <= (self._dialect.num_words - 1):
             raise IndexError('index %d outside address type boundary!' % idx)
 
-        if not isinstance(value, (int, long)):
+        if not isinstance(value, int):
             raise TypeError('value not an integer!')
 
         if not 0 <= value <= self._dialect.max_word:
@@ -465,11 +466,11 @@ class EUI(object):
         """@return: value of this EUI object as an unsigned integer"""
         return self._value
 
-    def __hex__(self):
+    def __index__(self):
         """
         @return: hexadecimal string representation of this EUI identifier.
         """
-        return hex(self._value).rstrip('L').lower()
+        return self._value
 
     def __eq__(self, other):
         """
@@ -513,8 +514,8 @@ class EUI(object):
 
     def __gt__(self, other):
         """
-        @return: C{True} if this EUI object is numerically greater in value than
-            other, C{False} otherwise.
+        @return: C{True} if this EUI object is numerically greater in value
+            than other, C{False} otherwise.
         """
         try:
             return (self.version, self._value) > (other.version, other._value)
@@ -541,22 +542,21 @@ class EUI(object):
 
     @property
     def packed(self):
-        """@return: binary packed string of this address"""
+        """The value of this EUI address as a packed binary string."""
         return self._module.int_to_packed(self._value)
 
     @property
     def words(self):
-        """
-        A list of unsigned integer octets found in this EUI address.
-        """
+        """A list of unsigned integer octets found in this EUI address."""
         return self._module.int_to_words(self._value)
 
     @property
     def bin(self):
         """
-        @return: standard Python binary representation of this address. A back
-            port of the format provided by the builtin bin() type available in
-            Python 2.6.x and higher."""
+        The value of this EUI adddress in standard Python binary
+        representational form (0bxxx). A back port of the format provided by
+        the builtin bin() function found in Python 2.6.x and higher.
+        """
         return self._module.int_to_bin(self._value)
 
     def eui64(self):
