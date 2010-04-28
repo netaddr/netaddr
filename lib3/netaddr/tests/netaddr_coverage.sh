@@ -1,6 +1,6 @@
 #!/bin/bash
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
 #
 #   Checks unit test code coverage for the netaddr project.
 #-----------------------------------------------------------------------------

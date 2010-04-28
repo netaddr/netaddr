@@ -1,6 +1,6 @@
 =IP Address Tutorial=
 
-Copyright (c) 2008-2009, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
 
 This unit test serves as both testing of the netaddr API and an executable tutorial courtesy of the doctest and unittest modules in the Python standard library.
 
