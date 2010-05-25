@@ -69,32 +69,51 @@ num_words = width // word_size
 max_word = 2 ** word_size - 1
 
 #-----------------------------------------------------------------------------
-def valid_str(addr):
+def valid_str(addr, legacy_mode=True):
     """
     @param addr: An IPv4 address in presentation (string) format.
+
+    @param legacy_mode: decides which rules are applied to the interpretation
+        of addr value. If True this function uses inet_aton parsing rules
+         (more flexible), inet_ntop parsing rules (more strict) otherwise.
+        Default: True (use inet_aton - no change to existing behaviour).
 
     @return: C{True} if IPv4 address is valid, C{False} otherwise.
     """
     if addr == '':
         raise AddrFormatError('Empty strings are not supported!')
 
+    validity = True
     try:
-        _inet_aton(addr)
+        if legacy_mode:
+            _inet_aton(addr)
+        else:
+            _inet_pton(AF_INET, addr)
     except:
-        return False
-    return True
+        validity = False
+
+    return validity
 
 #-----------------------------------------------------------------------------
-def str_to_int(addr):
+def str_to_int(addr, legacy_mode=True):
     """
     @param addr: An IPv4 dotted decimal address in string form.
 
+    @param legacy_mode: decides which rules are applied to the interpretation
+        of addr value. If True this function uses inet_aton parsing rules
+         (more flexible), inet_ntop parsing rules (more strict) otherwise.
+        Default: True (use inet_aton - no change to existing behaviour).
+
     @return: The equivalent unsigned integer for a given IPv4 address.
     """
+    #print 'legacy mode:', legacy_mode
     if addr == '':
         raise AddrFormatError('Empty strings are not supported!')
     try:
-        return _struct.unpack('>I', _inet_aton(addr))[0]
+        if legacy_mode:
+            return _struct.unpack('>I', _inet_aton(addr))[0]
+        else:
+            return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
     except:
         #   Windows platform workaround.
         if hasattr(addr, 'lower') and _platform.system() == 'Windows':

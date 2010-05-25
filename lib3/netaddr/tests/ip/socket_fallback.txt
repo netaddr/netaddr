@@ -81,3 +81,49 @@ b'\x00\x00\x00\x00'
 b'\x08\x00\x00\x00'
 
 }}}
+
+Legacy mode enabled - using `socket.inet_aton()` - netaddr default
+
+{{{
+
+>>> import netaddr
+
+>>> from netaddr import IPAddress
+
+>>> IPAddress('012.0.0.001')
+IPAddress('10.0.0.1')
+
+}}}
+
+Legacy mode enabled - using `socket.inet_pton(AF_INET, ...)`
+
+{{{
+
+>>> import netaddr
+
+>>> netaddr.IPAddress('012.0.0.001', legacy_mode=False)
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: failed to detect IP version: '012.0.0.001'
+
+}}}
+
+Check IPv4 compatible/mapped IPv6 errors
+
+{{{
+>>> IPAddress('::012.0.0.001')
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: failed to detect IP version: '::012.0.0.001'
+
+>>> IPAddress('::ffff:012.0.0.001')
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: failed to detect IP version: '::ffff:012.0.0.001'
+
+>>> IPAddress('::ffff:012.0.0.0x7f')
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: failed to detect IP version: '::ffff:012.0.0.0x7f'
+
+}}}

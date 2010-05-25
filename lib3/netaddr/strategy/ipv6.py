@@ -97,9 +97,11 @@ class ipv6_verbose(ipv6_compact):
     compact = False
 
 #-----------------------------------------------------------------------------
-def valid_str(addr):
+def valid_str(addr, legacy_mode=True):
     """
     @param addr: An IPv6 address in presentation (string) format.
+
+    @param legacy_mode: no effect (for interface compatibility only).
 
     @return: C{True} if IPv6 address is valid, C{False} otherwise.
     """
@@ -113,9 +115,11 @@ def valid_str(addr):
     return True
 
 #-----------------------------------------------------------------------------
-def str_to_int(addr):
+def str_to_int(addr, legacy_mode=True):
     """
     @param addr: An IPv6 address in string form.
+
+    @param legacy_mode: no effect (for interface compatibility only).
 
     @return: The equivalent unsigned integer for a given IPv6 address.
     """

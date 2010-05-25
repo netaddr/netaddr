@@ -226,18 +226,23 @@ class IPAddress(BaseIP):
 
     To support these and other network based operations, see L{IPNetwork}.
     """
-    def __init__(self, addr, version=None):
+    def __init__(self, addr, version=None, legacy_mode=True):
         """
         Constructor.
 
-        @param addr: an IPv4 or IPv6 address. May be an IP address in
-            representation (string) format, an integer or another IPAddress
-            object (copy construction).
+        @param addr: an IPv4 or IPv6 address which may be represented in an
+            accepted string format, as an unsigned integer or as another
+            IPAddress object (copy construction).
 
-        @param version: (optional) the explict IP address version. Mainly
-            used to distinguish between IPv4 and IPv6 IPv4-compatible
-            addresses specified as integers (which may be numerically
-            equivalent).
+        @param version: (optional) optimizes version detection if specified
+            and distinguishes between IPv4 and IPv6 for addresses with an
+            equivalent integer value.
+
+        @param legacy_mode: (optional) decides which rules are applied to the
+            interpretation of valid IPv4 addresses. Has no effect for IPv6.
+            If True, netaddr internally uses inet_aton() parsing rules apply
+            (more flexible), inet_ntop(AF_INET, ...) parsing rules (more
+            strict) otherwise. Default: True (use inet_aton).
         """
         super(IPAddress, self).__init__()
 
@@ -248,6 +253,7 @@ class IPAddress(BaseIP):
                     'copy constructor!')
             self._value = addr._value
             self._module = addr._module
+            self._legacy_mode = addr._legacy_mode
         else:
             #   Explicit IP address version.
             if version is not None:
@@ -257,6 +263,8 @@ class IPAddress(BaseIP):
                     self._module = _ipv6
                 else:
                     raise ValueError('unsupported IP version %r' % version)
+
+            self._legacy_mode = legacy_mode
 
             #   Implicit IP address version.
             self.value = addr
@@ -275,7 +283,7 @@ class IPAddress(BaseIP):
             #   IP version is implicit, detect it from value.
             for module in (_ipv4, _ipv6):
                 try:
-                    self._value = module.str_to_int(value)
+                    self._value = module.str_to_int(value, self._legacy_mode)
                     self._module = module
                     break
                 except AddrFormatError:
@@ -294,7 +302,7 @@ class IPAddress(BaseIP):
             #   IP version is explicit.
             if has_upper:
                 try:
-                    self._value = self._module.str_to_int(value)
+                    self._value = self._module.str_to_int(value, self._legacy_mode)
                 except AddrFormatError:
                     raise AddrFormatError('base address %r is not IPv%d'
                         % (value, self._module.version))
@@ -651,7 +659,7 @@ class IPNetwork(BaseIP):
         x.x.x.0/y   -> 192.168.0.0/24
 
     """
-    def __init__(self, addr, implicit_prefix=False):
+    def __init__(self, addr, implicit_prefix=False, legacy_mode=True):
         """
         Constructor.
 
@@ -664,6 +672,12 @@ class IPNetwork(BaseIP):
             rules to select a default prefix when one is not provided.
             If False it uses the length of the IP address version.
             (default: False).
+
+        @param legacy_mode: (optional) decides which rules are applied to the
+            interpretation of valid IPv4 addresses. Has no effect for IPv6.
+            If True, netaddr internally uses inet_aton() parsing rules apply
+            (more flexible), inet_ntop(AF_INET, ...) parsing rules (more
+            strict) otherwise. Default: True (use inet_aton).
         """
         super(IPNetwork, self).__init__()
         self._prefixlen = None
@@ -673,11 +687,13 @@ class IPNetwork(BaseIP):
             self._value = addr._value
             self._prefixlen = addr._prefixlen
             self._module = addr._module
+            self._legacy_mode = addr._legacy_mode
         elif hasattr(addr, '_value'):
             #   Copy constructor - IPAddress.
             self._value = addr._value
             self._prefixlen = addr._module.width    # standard width.
             self._module = addr._module
+            self._legacy_mode = addr._legacy_mode
         else:
             #   Apply classful prefix length rules to IP addresses.
             if implicit_prefix:
@@ -688,6 +704,8 @@ class IPNetwork(BaseIP):
                 prefix, suffix = addr.split('/')
             except ValueError:
                 pass
+
+            self._legacy_mode = legacy_mode
 
             if prefix is not None:
                 self.value = prefix
@@ -705,7 +723,7 @@ class IPNetwork(BaseIP):
             #   IP version is implicit, detect it from value.
             for module in (_ipv4, _ipv6):
                 try:
-                    self._value = module.str_to_int(value)
+                    self._value = module.str_to_int(value, self._legacy_mode)
                     self._module = module
                     break
                 except AddrFormatError:
@@ -724,7 +742,7 @@ class IPNetwork(BaseIP):
             #   IP version is explicit.
             if hasattr(value, 'upper'):
                 try:
-                    self._value = self._module.str_to_int(value)
+                    self._value = self._module.str_to_int(value, self._legacy_mode)
                 except AddrFormatError:
                     raise AddrFormatError('base address %r is not IPv%d'
                         % (value, self._module.version))

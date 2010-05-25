@@ -13,7 +13,31 @@ import doctest
 sys.path.insert(0, os.path.abspath(os.path.join(
     os.path.dirname(__file__), '../..')))
 
-tests = ['ip/boundaries.txt']
+tests = [
+#    'core/pubsub.txt',
+#    'eui/eui.txt',
+#    'eui/eui64.txt',
+#    'eui/pubsub.txt',
+#    'eui/tutorial.txt',
+#    'ip/abbreviated.txt',
+#    'ip/boundaries.txt',
+#    'ip/cidr.txt',
+#    'ip/constructor.txt',
+#    'ip/functions.txt',
+#    'ip/intset.txt',
+#    'ip/ipglob.txt',
+#    'ip/matches.txt',
+#    'ip/multicast.txt',
+#    'ip/nmap.txt',
+#    'ip/rfc1924.txt',
+#    'ip/sets.txt',
+    'ip/socket_fallback.txt',
+#    'ip/subnet.txt',
+#    'ip/tutorial.txt',
+#    'strategy/eui48.txt',
+#    'strategy/ipv4.txt',
+#    'strategy/ipv6.txt',
+]
 
 for test in tests:
     suite = doctest.DocFileSuite(test, optionflags=doctest.ELLIPSIS)
