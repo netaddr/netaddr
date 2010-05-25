@@ -150,6 +150,40 @@ def inet_ntop(af, packed_ip):
         raise ValueError('unknown address family %d' % af)
 
 #-----------------------------------------------------------------------------
+def _inet_pton_af_inet(ip_string):
+    """
+    Convert an IP address in string format (123.45.67.89) to the 32-bit packed
+    binary format used in low-level network functions. Differs from inet_aton
+    by only support decimal octets. Using octal or hexadecimal values will
+    raise a ValueError exception.
+    """
+    if hasattr(ip_string, 'split'):
+        invalid_addr = ValueError('illegal IP address string %r' % ip_string)
+        #   Support for hexadecimal and octal octets.
+        tokens = ip_string.split('.')
+
+        #   Pack octets.
+        if len(tokens) == 4:
+            words = []
+            for token in tokens:
+                if token.startswith('0x') or \
+                  (token.startswith('0') and len(token) > 1):
+                    raise invalid_addr
+                try:
+                    octet = int(token)
+                except ValueError:
+                    raise invalid_addr
+
+                if (octet >> 8) != 0:
+                    raise invalid_addr
+                words.append(_pack('B', octet))
+            return ''.join(words)
+        else:
+            raise invalid_addr
+
+    raise ValueError('argument should be a string, not %s' % type(ip_string))
+
+#-----------------------------------------------------------------------------
 def inet_pton(af, ip_string):
     """
     Convert an IP address from string format to a packed string suitable for
@@ -157,7 +191,7 @@ def inet_pton(af, ip_string):
     """
     if af == AF_INET:
         #   IPv4.
-        return inet_aton(ip_string)
+        return _inet_pton_af_inet(ip_string)
     elif af == AF_INET6:
         invalid_addr = ValueError('illegal IP address string %r' % ip_string)
         #   IPv6.
@@ -187,7 +221,7 @@ def inet_pton(af, ip_string):
 
             #   IPv6 compact IPv4 compatibility mode.
             if len(l_suffix) and '.' in l_suffix[-1]:
-                ipv4_str = inet_aton(l_suffix.pop())
+                ipv4_str = _inet_pton_af_inet(l_suffix.pop())
                 l_suffix.append('%x' % _unpack('>H', ipv4_str[0:2])[0])
                 l_suffix.append('%x' % _unpack('>H', ipv4_str[2:4])[0])
 
@@ -225,7 +259,7 @@ def inet_pton(af, ip_string):
                     if len(tokens) != 7:
                         raise invalid_addr
 
-                    ipv4_str = inet_aton(tokens.pop())
+                    ipv4_str = _inet_pton_af_inet(tokens.pop())
                     tokens.append('%x' % _unpack('>H', ipv4_str[0:2])[0])
                     tokens.append('%x' % _unpack('>H', ipv4_str[2:4])[0])
 
