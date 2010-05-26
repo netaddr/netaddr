@@ -106,7 +106,6 @@ def str_to_int(addr, legacy_mode=True):
 
     @return: The equivalent unsigned integer for a given IPv4 address.
     """
-    #print 'legacy mode:', legacy_mode
     if addr == '':
         raise AddrFormatError('Empty strings are not supported!')
     try:
