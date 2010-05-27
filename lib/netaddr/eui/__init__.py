@@ -22,6 +22,8 @@ from netaddr.strategy import eui48 as _eui48, eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
 from netaddr.ip import IPAddress
 
+from netaddr.compat import _is_int, _is_str
+
 #-----------------------------------------------------------------------------
 class OUI(object):
     """
@@ -48,7 +50,7 @@ class OUI(object):
             #TODO: Accept full MAC/EUI-48 addressses as well as XX-XX-XX
             #TODO: and just take /16 (see IAB for details)
             self.value = int(oui.replace('-', ''), 16)
-        elif isinstance(oui, (int, long)):
+        elif _is_int(oui):
             if 0 <= oui <= 0xffffff:
                 self.value = oui
             else:
@@ -103,12 +105,29 @@ class OUI(object):
         """@return: integer representation of this OUI"""
         return self.value
 
+    def __oct__(self):
+        """
+        @return: octal string representation of this IAB (in network byte
+            order).
+        """
+        #   Python 2.x only.
+        return '0%o' % self._value
+
     def __hex__(self):
         """
         @return: hexadecimal string representation of this OUI (in network byte
-        order).
+            order).
         """
+        #   Python 2.x only
         return '0x%x' % self._value
+
+    def __index__(self):
+        """
+        @return: return the integer value of this OUI when called by hex(),
+            oct() or bin().
+        """
+        #   Python 3.x only
+        return self.value
 
     def registration(self, index=0):
         """
@@ -200,7 +219,7 @@ class IAB(object):
             int_val = int(iab.replace('-', ''), 16)
             (iab_int, user_int) = IAB.split_iab_mac(int_val, strict)
             self.value = iab_int
-        elif isinstance(iab, (int, long)):
+        elif _is_int(iab):
             (iab_int, user_int) = IAB.split_iab_mac(iab, strict)
             self.value = iab_int
         else:
@@ -239,12 +258,29 @@ class IAB(object):
         """@return: integer representation of this IAB"""
         return self.value
 
+    def __oct__(self):
+        """
+        @return: octal string representation of this IAB (in network
+            byte order).
+        """
+        #   Python 2.x only.
+        return '0%o' % self._value
+
     def __hex__(self):
         """
         @return: hexadecimal string representation of this IAB (in network
             byte order)
         """
+        #   Python 2.x only.
         return '0x%x' % self._value
+
+    def __index__(self):
+        """
+        @return: return the integer value of this IAB when called by hex(),
+            oct() or bin().
+        """
+        #   Python 3.x only.
+        return self.value
 
     def registration(self):
         """ The IEEE registration details for this IAB"""
@@ -311,10 +347,11 @@ class EUI(object):
         else:
         #   Choose a default version when addr is an integer and version is
         #   not specified.
-            if 0 <= addr <= 0xffffffffffff:
-                self._module = _eui48
-            elif 0xffffffffffff < addr <= 0xffffffffffffffff:
-                self._module = _eui64
+            if _is_int(addr):
+                if 0 <= addr <= 0xffffffffffff:
+                    self._module = _eui48
+                elif 0xffffffffffff < addr <= 0xffffffffffffffff:
+                    self._module = _eui64
 
         self.value = addr
 
@@ -418,7 +455,7 @@ class EUI(object):
             of bounds. Also supports Python list slices for accessing
             word groups.
         """
-        if isinstance(idx, (int, long)):
+        if _is_int(idx):
             #   Indexing, including negative indexing goodness.
             num_words = self._dialect.num_words
             if not (-num_words) <= idx <= (num_words - 1):
@@ -436,13 +473,13 @@ class EUI(object):
             #   TODO - settable slices.
             raise NotImplementedError('settable slices are not supported!')
 
-        if not isinstance(idx, (int, long)):
+        if not _is_int(idx):
             raise TypeError('index not an integer!')
 
         if not 0 <= idx <= (self._dialect.num_words - 1):
             raise IndexError('index %d outside address type boundary!' % idx)
 
-        if not isinstance(value, (int, long)):
+        if not _is_int(value):
             raise TypeError('value not an integer!')
 
         if not 0 <= value <= self._dialect.max_word:
@@ -465,11 +502,27 @@ class EUI(object):
         """@return: value of this EUI object as an unsigned integer"""
         return self._value
 
+    def __oct__(self):
+        """
+        @return: octal string representation of this EUI identifier.
+        """
+        #   Python 2.x only.
+        return '0%o' % self._value
+
     def __hex__(self):
         """
         @return: hexadecimal string representation of this EUI identifier.
         """
+        #   Python 2.x only.
         return '0x%x' % self._value
+
+    def __index__(self):
+        """
+        @return: return the integer value of this EUI when called by hex(),
+            oct() or bin().
+        """
+        #   Python 3.x only.
+        return self._value
 
     def __eq__(self, other):
         """

@@ -38,6 +38,8 @@ from netaddr.core import Publisher, Subscriber, PrettyPrinter
 from netaddr.ip import IPAddress, IPNetwork, IPRange, \
     cidr_abbrev_to_verbose, iprange_to_cidrs
 
+from netaddr.compat import _dict_items
+
 #-----------------------------------------------------------------------------
 
 #: Topic based lookup dictionary for IANA information.
@@ -363,13 +365,13 @@ def pprint_info(fh=None):
         fh = _sys.stdout
 
     for category in sorted(IANA_INFO):
-        print >> fh, '-' * len(category)
-        print >> fh, category
-        print >> fh, '-' * len(category)
+        fh.write('-' * len(category) + "\n")
+        fh.write(category + "\n")
+        fh.write('-' * len(category) + "\n")
         ipranges = IANA_INFO[category]
         for iprange in sorted(ipranges):
             details = ipranges[iprange]
-            print >> fh, '%-45r' % (iprange), details
+            fh.write('%-45r' % (iprange) + details + "\n")
 
 #-----------------------------------------------------------------------------
 def query(ip_addr):
@@ -390,19 +392,19 @@ def query(ip_addr):
         raise Exception('Unsupported IP range or address: %r!' % ip_range)
 
     if ip_addr.version == 4:
-        for cidr, record in IANA_INFO['IPv4'].items():
+        for cidr, record in _dict_items(IANA_INFO['IPv4']):
             if within_bounds(ip_addr, cidr):
                 info.setdefault('IPv4', [])
                 info['IPv4'].append(record)
 
         if ip_addr.is_multicast():
-            for iprange, record in IANA_INFO['multicast'].items():
+            for iprange, record in _dict_items(IANA_INFO['multicast']):
                 if within_bounds(ip_addr, iprange):
                     info.setdefault('Multicast', [])
                     info['Multicast'].append(record)
 
     elif ip_addr.version == 6:
-        for cidr, record in IANA_INFO['IPv6'].items():
+        for cidr, record in _dict_items(IANA_INFO['IPv6']):
             if within_bounds(ip_addr, cidr):
                 info.setdefault('IPv6', [])
                 info['IPv6'].append(record)
@@ -412,7 +414,12 @@ def query(ip_addr):
 #-----------------------------------------------------------------------------
 def get_latest_files():
     """Download the latest files from IANA"""
-    import urllib2
+    if _sys.version_info[0] == 3:
+        #   Python 3.x
+        from urllib.request import Request, urlopen
+    else:
+        #   Python 2.x
+        from urllib2 import Request, urlopen
 
     urls = [
         'http://www.iana.org/assignments/ipv4-address-space',
@@ -422,8 +429,8 @@ def get_latest_files():
 
     for url in urls:
         print 'downloading latest copy of %s' % url
-        request = urllib2.Request(url)
-        response = urllib2.urlopen(request)
+        request = Request(url)
+        response = urlopen(request)
         save_path = _path.dirname(__file__)
         basename = _os.path.basename(response.geturl().rstrip('/'))
         filename = _path.join(save_path, basename)

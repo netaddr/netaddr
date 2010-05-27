@@ -275,7 +275,12 @@ def load_indices():
 #-----------------------------------------------------------------------------
 def get_latest_files():
     """Download the latest files from the IEEE"""
-    import urllib2
+    if _sys.version_info[0] == 3:
+        #   Python 3.x
+        from urllib.request import Request, urlopen
+    else:
+        #   Python 2.x
+        from urllib2 import Request, urlopen
 
     urls = [
         'http://standards.ieee.org/regauth/oui/oui.txt',
@@ -283,9 +288,9 @@ def get_latest_files():
     ]
 
     for url in urls:
-        print 'downloading latest copy of %s' % url
-        request = urllib2.Request(url)
-        response = urllib2.urlopen(request)
+        _sys.stdout.write('downloading latest copy of %s\n' % url)
+        request = Request(url)
+        response = urlopen(request)
         save_path = _path.dirname(__file__)
         filename = _path.join(save_path, _os.path.basename(response.geturl()))
         fh = open(filename, 'w')
