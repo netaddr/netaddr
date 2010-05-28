@@ -25,7 +25,39 @@ from netaddr.ip import IPAddress
 from netaddr.compat import _is_int, _is_str
 
 #-----------------------------------------------------------------------------
-class OUI(object):
+class BaseIdentifier(object):
+    """Base class for all IEEE identifiers."""
+    def __init__(self):
+        self._value = None
+
+    def __int__(self):
+        """@return: integer value of this identifier"""
+        return self._value
+
+    def __long__(self):
+        """@return: integer value of this identifier"""
+        return self._value
+
+    def __oct__(self):
+        """@return: octal string representation of this identifier."""
+        #   Python 2.x only.
+        return '0%o' % self._value
+
+    def __hex__(self):
+        """@return: hexadecimal string representation of this identifier."""
+        #   Python 2.x only.
+        return '0x%x' % self._value
+
+    def __index__(self):
+        """
+        @return: return the integer value of this identifier when passed to
+            hex(), oct() or bin().
+        """
+        #   Python 3.x only.
+        return self._value
+
+#-----------------------------------------------------------------------------
+class OUI(BaseIdentifier):
     """
     An individual IEEE OUI (Organisationally Unique Identifier).
 
@@ -39,29 +71,30 @@ class OUI(object):
             Also accepts and parses full MAC/EUI-48 address strings (but not
             MAC/EUI-48 integers)!
         """
+        super(OUI, self).__init__()
+
         #   Lazy loading of IEEE data structures.
         from netaddr.eui import ieee
 
-        self.value = None
         self.records = []
 
         if isinstance(oui, str):
             #TODO: Improve string parsing here.
             #TODO: Accept full MAC/EUI-48 addressses as well as XX-XX-XX
             #TODO: and just take /16 (see IAB for details)
-            self.value = int(oui.replace('-', ''), 16)
+            self._value = int(oui.replace('-', ''), 16)
         elif _is_int(oui):
             if 0 <= oui <= 0xffffff:
-                self.value = oui
+                self._value = oui
             else:
                 raise ValueError('OUI int outside expected range: %r' % oui)
         else:
             raise TypeError('unexpected OUI format: %r' % oui)
 
         #   Discover offsets.
-        if self.value in ieee.OUI_INDEX:
+        if self._value in ieee.OUI_INDEX:
             fh = open(ieee.OUI_REGISTRY)
-            for (offset, size) in ieee.OUI_INDEX[self.value]:
+            for (offset, size) in ieee.OUI_INDEX[self._value]:
                 fh.seek(offset)
                 data = fh.read(size)
                 self._parse_data(data, offset, size)
@@ -86,7 +119,7 @@ class OUI(object):
                 continue
 
             if '(hex)' in line:
-                record['idx'] = self.value
+                record['idx'] = self._value
                 record['org'] = ' '.join(line.split()[2:])
                 record['oui'] = str(self)
             elif '(base 16)' in line:
@@ -100,34 +133,6 @@ class OUI(object):
     def reg_count(self):
         """Number of registered organisations with this OUI"""
         return len(self.records)
-
-    def __int__(self):
-        """@return: integer representation of this OUI"""
-        return self.value
-
-    def __oct__(self):
-        """
-        @return: octal string representation of this IAB (in network byte
-            order).
-        """
-        #   Python 2.x only.
-        return '0%o' % self._value
-
-    def __hex__(self):
-        """
-        @return: hexadecimal string representation of this OUI (in network byte
-            order).
-        """
-        #   Python 2.x only
-        return '0x%x' % self._value
-
-    def __index__(self):
-        """
-        @return: return the integer value of this OUI when called by hex(),
-            oct() or bin().
-        """
-        #   Python 3.x only
-        return self.value
 
     def registration(self, index=0):
         """
@@ -143,7 +148,7 @@ class OUI(object):
 
     def __str__(self):
         """@return: string representation of this OUI"""
-        int_val = self.value
+        int_val = self._value
         words = []
         for _ in range(3):
             word = int_val & 0xff
@@ -153,10 +158,10 @@ class OUI(object):
 
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object."""
-        return "%s('%s')" % (self.__class__.__name__, self)
+        return "OUI('%s')" % self
 
 #-----------------------------------------------------------------------------
-class IAB(object):
+class IAB(BaseIdentifier):
     """
     An individual IEEE IAB (Individual Address Block) identifier.
 
@@ -199,10 +204,11 @@ class IAB(object):
             IAB MAC/EUI-48 address are non-zero, ignores them otherwise.
             (Default: False)
         """
+        super(IAB, self).__init__()
+
         #   Lazy loading of IEEE data structures.
         from netaddr.eui import ieee
 
-        self.value = None
         self.record = {
             'idx': 0,
             'iab': '',
@@ -218,17 +224,17 @@ class IAB(object):
             #TODO: Should be '00-50-C2-00-00-00' (i.e. a full MAC/EUI-48)
             int_val = int(iab.replace('-', ''), 16)
             (iab_int, user_int) = IAB.split_iab_mac(int_val, strict)
-            self.value = iab_int
+            self._value = iab_int
         elif _is_int(iab):
             (iab_int, user_int) = IAB.split_iab_mac(iab, strict)
-            self.value = iab_int
+            self._value = iab_int
         else:
             raise TypeError('unexpected IAB format: %r!' % iab)
 
         #   Discover offsets.
-        if self.value in ieee.IAB_INDEX:
+        if self._value in ieee.IAB_INDEX:
             fh = open(ieee.IAB_REGISTRY)
-            (offset, size) = ieee.IAB_INDEX[self.value][0]
+            (offset, size) = ieee.IAB_INDEX[self._value][0]
             self.record['offset'] = offset
             self.record['size'] = size
             fh.seek(offset)
@@ -246,7 +252,7 @@ class IAB(object):
                 continue
 
             if '(hex)' in line:
-                self.record['idx'] = self.value
+                self.record['idx'] = self._value
                 self.record['org'] = ' '.join(line.split()[2:])
                 self.record['iab'] = str(self)
             elif '(base 16)' in line:
@@ -254,41 +260,13 @@ class IAB(object):
             else:
                 self.record['address'].append(line)
 
-    def __int__(self):
-        """@return: integer representation of this IAB"""
-        return self.value
-
-    def __oct__(self):
-        """
-        @return: octal string representation of this IAB (in network
-            byte order).
-        """
-        #   Python 2.x only.
-        return '0%o' % self._value
-
-    def __hex__(self):
-        """
-        @return: hexadecimal string representation of this IAB (in network
-            byte order)
-        """
-        #   Python 2.x only.
-        return '0x%x' % self._value
-
-    def __index__(self):
-        """
-        @return: return the integer value of this IAB when called by hex(),
-            oct() or bin().
-        """
-        #   Python 3.x only.
-        return self.value
-
     def registration(self):
         """ The IEEE registration details for this IAB"""
         return DictDotLookup(self.record)
 
     def __str__(self):
         """@return: string representation of this IAB"""
-        int_val = self.value << 12
+        int_val = self._value << 12
         words = []
         for _ in range(6):
             word = int_val & 0xff
@@ -298,10 +276,10 @@ class IAB(object):
 
     def __repr__(self):
         """@return: executable Python string to recreate equivalent object."""
-        return "%s('%s')" % (self.__class__.__name__, self)
+        return "IAB('%s')" % self
 
 #-----------------------------------------------------------------------------
-class EUI(object):
+class EUI(BaseIdentifier):
     """
     An IEEE EUI (Extended Unique Identifier).
 
@@ -324,7 +302,8 @@ class EUI(object):
         @param dialect: (optional) the mac_* dialect to be used to configure
             the formatting of EUI-48 (MAC) addresses.
         """
-        self._value = None
+        super(EUI, self).__init__()
+
         self._module = None
 
         if isinstance(addr, EUI):
@@ -494,36 +473,6 @@ class EUI(object):
         """@return: hash of this EUI object suitable for dict keys, sets etc"""
         return hash((self.version, self._value))
 
-    def __int__(self):
-        """@return: value of this EUI object as an unsigned integer"""
-        return self._value
-
-    def __long__(self):
-        """@return: value of this EUI object as an unsigned integer"""
-        return self._value
-
-    def __oct__(self):
-        """
-        @return: octal string representation of this EUI identifier.
-        """
-        #   Python 2.x only.
-        return '0%o' % self._value
-
-    def __hex__(self):
-        """
-        @return: hexadecimal string representation of this EUI identifier.
-        """
-        #   Python 2.x only.
-        return '0x%x' % self._value
-
-    def __index__(self):
-        """
-        @return: return the integer value of this EUI when called by hex(),
-            oct() or bin().
-        """
-        #   Python 3.x only.
-        return self._value
-
     def __eq__(self, other):
         """
         @return: C{True} if this EUI object is numerically the same as other,
@@ -662,5 +611,6 @@ class EUI(object):
         return self._module.int_to_str(self._value, self._dialect)
 
     def __repr__(self):
-        """@return: Python statement to create equivalent object"""
-        return "%s('%s')" % (self.__class__.__name__, self)
+        """@return: executable Python string to recreate equivalent object."""
+        return "EUI('%s')" % self
+
