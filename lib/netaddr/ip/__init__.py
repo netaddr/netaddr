@@ -987,7 +987,10 @@ class IPNetwork(BaseIP):
         IPNetwork objects always represent a sequence of at least one IP
         address and are therefore always True in the boolean context.
         """
+        #   Python 2.x.
         return True
+
+    __bool__ = __nonzero__  #   Python 3.x.
 
     def key(self):
         """
