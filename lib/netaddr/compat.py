@@ -11,9 +11,6 @@ All operations emulate 2.x behaviour where applicable.
 """
 import sys as _sys
 
-#: True if platform is natively big endian, False otherwise.
-BIG_ENDIAN_PLATFORM = _sys.byteorder == 'big'
-
 try:
     _bytes = bytes
 except NameError:
@@ -37,8 +34,7 @@ if _sys.version_info[0] == 3:
 
     _iter_dict_keys = lambda x: x.keys()
 
-    def _bytes_join(*args):
-        return _bytes().join(*args)
+    def _bytes_join(*args): return _bytes().join(*args)
 
     def _zip(*args): return list(zip(*args))
 
@@ -71,8 +67,7 @@ elif  _sys.version_info[0:2] > [2, 3]:
 
     _iter_dict_keys = lambda x: iter(x.keys())
 
-    def _bytes_join(*args):
-        return ''.join(*args)
+    def _bytes_join(*args): return ''.join(*args)
 
     def _zip(*args): return zip(*args)
 
