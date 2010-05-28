@@ -7,7 +7,7 @@
 
 from struct import unpack as _unpack, pack as _pack
 
-from netaddr.compat import _bytes_join, _bytes
+from netaddr.compat import _bytes_join
 
 AF_INET   =  2
 AF_INET6  = 10
@@ -205,7 +205,7 @@ def inet_pton(af, ip_string):
         if '::' in ip_string:
             if ip_string == '::':
                 #   Unspecified address.
-                return _bytes('\x00' * 16)
+                return '\x00'.encode() * 16
             #   IPv6 compact mode.
             try:
                 prefix, suffix = ip_string.split('::')
@@ -235,7 +235,7 @@ def inet_pton(af, ip_string):
             gap_size = 8 - ( len(l_prefix) + len(l_suffix) )
 
             values = [_pack('>H', int(i, 16)) for i in l_prefix] \
-                   + [_bytes('\x00\x00') for i in range(gap_size)] \
+                   + ['\x00\x00'.encode() for i in range(gap_size)] \
                    + [_pack('>H', int(i, 16)) for i in l_suffix]
             try:
                 for token in l_prefix + l_suffix:

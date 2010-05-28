@@ -11,16 +11,11 @@ All operations emulate 2.x behaviour where applicable.
 """
 import sys as _sys
 
-try:
-    _bytes = bytes
-except NameError:
-    _bytes = str
-
 if _sys.version_info[0] == 3:
     #   Python 3.x specific logic.
     _sys_maxint = _sys.maxsize
 
-    _is_str = lambda x: isinstance(x, (str, _bytes))
+    _is_str = lambda x: isinstance(x, (str, type(''.encode())))
 
     _is_int = lambda x: isinstance(x, int)
 
@@ -34,7 +29,7 @@ if _sys.version_info[0] == 3:
 
     _iter_dict_keys = lambda x: x.keys()
 
-    def _bytes_join(*args): return _bytes().join(*args)
+    def _bytes_join(*args): return ''.encode().join(*args)
 
     def _zip(*args): return list(zip(*args))
 
@@ -107,12 +102,12 @@ if __name__ == '__main__':
         #   Python 3.x
         #   cannot use b'' literals under Python 2.x so using ''.encode() here
         str_8bit = _bytes_join(['a'.encode(), 'b'.encode(), 'c'.encode()])
-        assert str_8bit == _bytes('abc'.encode())
+        assert str_8bit == 'abc'.encode()
         assert "b'abc'" == '%r' % str_8bit
     else:
         #   Python 2.x - 8 bit strings are just regular strings
         str_8bit = _bytes_join(['a', 'b', 'c'])
-        assert str_8bit == _bytes('abc')
+        assert str_8bit == 'abc'.encode()
         assert "'abc'" == '%r' % str_8bit
 
     #   dict operation tests.
@@ -153,4 +148,3 @@ if __name__ == '__main__':
     assert _callable(f2)
     assert _func_name(f1) == 'f1'
     assert _func_doc(f1) == 'docstring'
-
