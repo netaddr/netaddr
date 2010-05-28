@@ -6,34 +6,44 @@
 #-----------------------------------------------------------------------------
 """Runs all netaddr unit tests."""
 
-import os
+from os.path import abspath, basename, dirname, join as pathjoin
 import sys
 import glob
 import doctest
 import unittest
 
-sys.path.insert(0, os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '../..')))
+sys.path.insert(0, abspath(pathjoin(dirname(__file__), '..', '..')))
 
 #-----------------------------------------------------------------------------
 def test_suite_all():
 
-    test_dirs = ['ip', 'eui', 'strategy', 'core']
+    test_dirs = [
+        'ip',
+        'eui',
+        'strategy',
+        'core'
+    ]
 
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    base_path = abspath(pathjoin(dirname(__file__), '..'))
+
+    py_ver_dir = '2.x'
+    if sys.version_info[0] == 3:
+        py_ver_dir = '3.x'
 
     #   Gather list of files containing tests.
     test_files = []
     for entry in test_dirs:
-        test_path = os.path.join(base_path, "tests", entry, "*.txt")
+        test_path = pathjoin(base_path, "tests", py_ver_dir, entry, "*.txt")
         files = glob.glob(test_path)
         test_files.extend(files)
+
+    sys.stdout.write('testdir: %s\n' % '\n'.join(test_files))
 
     #   Add anything to the skiplist that we want to leave out.
     skiplist = []
 
     #   Exclude any entries from the skip list.
-    test_files = [t for t in test_files if os.path.basename(t) not in skiplist]
+    test_files = [t for t in test_files if basename(t) not in skiplist]
 
     #   Build and return a complete unittest test suite.
     suite = unittest.TestSuite()
