@@ -428,7 +428,7 @@ def get_latest_files():
     ]
 
     for url in urls:
-        print 'downloading latest copy of %s' % url
+        _sys.stdout.write('downloading latest copy of %s\n' % url)
         request = Request(url)
         response = urlopen(request)
         save_path = _path.dirname(__file__)
