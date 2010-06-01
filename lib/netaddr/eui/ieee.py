@@ -61,7 +61,8 @@ IAB_INDEX = {}
 #-----------------------------------------------------------------------------
 class FileIndexer(Subscriber):
     """
-    A concrete Subscriber that receives OUI record offset information that is written to an index data file as a set of comma separated records.
+    A concrete Subscriber that receives OUI record offset information that is
+    written to an index data file as a set of comma separated records.
     """
     def __init__(self, index_file):
         """
