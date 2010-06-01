@@ -2,6 +2,9 @@
 
 Integer set class.
 
+Copyright (C) 2010, David Moss.
+Ported to Python 3.x.
+
 Copyright (C) 2006, Heiko Wundram.
 Released under the MIT license:
 
@@ -39,6 +42,22 @@ __date__ = "2006-01-23"
 # Utility classes
 # ---------------
 
+import sys as _sys
+
+#   Not the most efficient way of dealing with the int/long issue in Python 3.x
+#   but it requires the least amount of code changes.
+
+#   number of code changes.
+if _sys.version_info[0] == 3:
+    #   Python 3.x
+    _long = int
+else:
+    #   Python 2.x
+    _long = long
+
+from netaddr.compat import _func_name, _func_doc
+
+#-----------------------------------------------------------------------------
 class _Infinity(object):
     """Internal type used to represent infinity values."""
 
@@ -48,51 +67,45 @@ class _Infinity(object):
         self._neg = neg
 
     def __lt__(self, value):
-        if not isinstance(value, (int, long, _Infinity)):
+        if not isinstance(value, (int, _long, _Infinity)):
             return NotImplemented
         return ( self._neg and
                  not ( isinstance(value, _Infinity) and value._neg ) )
 
     def __le__(self, value):
-        if not isinstance(value, (int, long, _Infinity)):
+        if not isinstance(value, (int, _long, _Infinity)):
             return NotImplemented
         return self._neg
 
     def __gt__(self, value):
-        if not isinstance(value, (int, long, _Infinity)):
+        if not isinstance(value, (int, _long, _Infinity)):
             return NotImplemented
         return not ( self._neg or
                      ( isinstance(value, _Infinity) and not value._neg ) )
 
     def __ge__(self, value):
-        if not isinstance(value, (int, long, _Infinity)):
+        if not isinstance(value, (int, _long, _Infinity)):
             return NotImplemented
         return not self._neg
 
     def __eq__(self, value):
-        if not isinstance(value, (int, long, _Infinity)):
+        if not isinstance(value, (int, _long, _Infinity)):
             return NotImplemented
         return isinstance(value, _Infinity) and self._neg == value._neg
 
     def __ne__(self, value):
-        if not isinstance(value, (int, long, _Infinity)):
+        if not isinstance(value, (int, _long, _Infinity)):
             return NotImplemented
-        return not isinstance(value, _Infinity) or self._neg <> value._neg
+        return not isinstance(value, _Infinity) or self._neg != value._neg
 
     def __repr__(self):
         return "None"
 
-
-# Constants
-# ---------
-
+#-----------------------------------------------------------------------------
 _MININF = _Infinity(True)
 _MAXINF = _Infinity(False)
 
-
-# Integer set class
-# -----------------
-
+#-----------------------------------------------------------------------------
 class IntSet(object):
     """Integer set class with efficient storage in a RLE format of ranges.
     Supports minus and plus infinity in the range."""
@@ -137,22 +150,22 @@ class IntSet(object):
         # Check keyword arguments.
         if kwargs:
             raise ValueError("Invalid keyword argument.")
-        if not ( isinstance(self._min, (int, long)) or self._min is _MININF ):
+        if not ( isinstance(self._min, (int, _long)) or self._min is _MININF ):
             raise TypeError("Invalid type of min argument.")
-        if not ( isinstance(self._max, (int, long)) or self._max is _MAXINF ):
+        if not ( isinstance(self._max, (int, _long)) or self._max is _MAXINF ):
             raise TypeError("Invalid type of max argument.")
         if ( self._min is not _MININF and self._max is not _MAXINF and
              self._min > self._max ):
             raise ValueError("Minimum is not smaller than maximum.")
-        if isinstance(self._max, (int, long)):
+        if isinstance(self._max, (int, _long)):
             self._max += 1
 
         # Process arguments.
         for arg in args:
-            if isinstance(arg, (int, long)):
+            if isinstance(arg, (int, _long)):
                 start, stop = arg, arg+1
             elif isinstance(arg, tuple):
-                if len(arg) <> 2:
+                if len(arg) != 2:
                     raise ValueError("Invalid tuple, must be (start,stop).")
 
                 # Process argument.
@@ -163,14 +176,14 @@ class IntSet(object):
                     stop = self._max
 
                 # Check arguments.
-                if not ( isinstance(start, (int, long)) or start is _MININF ):
+                if not ( isinstance(start, (int, _long)) or start is _MININF ):
                     raise TypeError("Invalid type of tuple start.")
-                if not ( isinstance(stop, (int, long)) or stop is _MAXINF ):
+                if not ( isinstance(stop, (int, _long)) or stop is _MAXINF ):
                     raise TypeError("Invalid type of tuple stop.")
                 if ( start is not _MININF and stop is not _MAXINF and
                      start > stop ):
                     continue
-                if isinstance(stop, (int, long)):
+                if isinstance(stop, (int, _long)):
                     stop += 1
             else:
                 raise TypeError("Invalid argument.")
@@ -231,7 +244,7 @@ class IntSet(object):
     def __coerce__(self, other):
         if isinstance(other, IntSet):
             return self, other
-        elif isinstance(other, (int, long, tuple)):
+        elif isinstance(other, (int, _long, tuple)):
             try:
                 return self, self.__class__(other)
             except TypeError:
@@ -303,8 +316,8 @@ class IntSet(object):
                 return found
         else:
             raise ValueError("Invalid type of function to create.")
-        f.func_name = name
-        f.func_doc = doc
+        _func_name(f, name)
+        _func_doc(f, doc)
         return f
 
     # Intersection.
@@ -453,8 +466,10 @@ class IntSet(object):
 
     def __nonzero__(self):
         """Returns true if this integer set contains at least one item."""
-
+        #   Python 2.x
         return bool(self._ranges)
+
+    __bool__ = __nonzero__  #   Python 3.x
 
     def __iter__(self):
         """Iterate over all values in this integer set. Iteration always starts
@@ -493,11 +508,11 @@ class IntSet(object):
 
         rv = []
         for start, stop in self._ranges:
-            if ( isinstance(start, (int, long)) and \
-                 isinstance(stop, (int, long))
+            if ( isinstance(start, (int, _long)) and \
+                 isinstance(stop, (int, _long))
                  and stop-start == 1 ):
                 rv.append("%r" % start)
-            elif isinstance(stop, (int, long)):
+            elif isinstance(stop, (int, _long)):
                 rv.append("(%r,%r)" % (start, stop-1))
             else:
                 rv.append("(%r,%r)" % (start, stop))

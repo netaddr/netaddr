@@ -7,6 +7,8 @@
 
 from struct import unpack as _unpack, pack as _pack
 
+from netaddr.compat import _bytes_join
+
 AF_INET   =  2
 AF_INET6  = 10
 
@@ -64,7 +66,7 @@ def inet_aton(ip_string):
                 if (token >> 8) != 0:
                     raise invalid_addr
                 words.append(_pack('B', token))
-            return ''.join(words)
+            return _bytes_join(words)
         else:
             raise invalid_addr
 
@@ -177,7 +179,7 @@ def _inet_pton_af_inet(ip_string):
                 if (octet >> 8) != 0:
                     raise invalid_addr
                 words.append(_pack('B', octet))
-            return ''.join(words)
+            return _bytes_join(words)
         else:
             raise invalid_addr
 
@@ -203,7 +205,7 @@ def inet_pton(af, ip_string):
         if '::' in ip_string:
             if ip_string == '::':
                 #   Unspecified address.
-                return '\x00'*16
+                return '\x00'.encode() * 16
             #   IPv6 compact mode.
             try:
                 prefix, suffix = ip_string.split('::')
@@ -233,7 +235,7 @@ def inet_pton(af, ip_string):
             gap_size = 8 - ( len(l_prefix) + len(l_suffix) )
 
             values = [_pack('>H', int(i, 16)) for i in l_prefix] \
-                   + ['\x00\x00' for i in range(gap_size)] \
+                   + ['\x00\x00'.encode() for i in range(gap_size)] \
                    + [_pack('>H', int(i, 16)) for i in l_suffix]
             try:
                 for token in l_prefix + l_suffix:
@@ -281,6 +283,6 @@ def inet_pton(af, ip_string):
             else:
                 raise invalid_addr
 
-        return ''.join(values)
+        return _bytes_join(values)
     else:
         raise ValueError('Unknown address family %d' % af)

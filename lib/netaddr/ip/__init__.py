@@ -13,6 +13,8 @@ from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
+from netaddr.compat import _sys_maxint, _iter_range, _is_str
+
 #-----------------------------------------------------------------------------
 #   Pre-compiled regexen used by cidr_merge() function.
 RE_CIDR_ADJACENT = _re.compile(r'^([01]+)0 \1[1]$')
@@ -455,9 +457,23 @@ class IPAddress(BaseIP):
         """@return: the value of this IP address as an unsigned integer"""
         return self._value
 
+    def __oct__(self):
+        """@return: an octal string representation of this IP address."""
+        #   Python 2.x
+        return '0%o' % self._value
+
     def __hex__(self):
         """@return: a hexadecimal string representation of this IP address."""
+        #   Python 2.x
         return '0x%x' % self._value
+
+    def __index__(self):
+        """
+        @return: return the integer value of this IP address when called
+            by hex(), oct() or bin().
+        """
+        #   Python 3.x
+        return self._value
 
     def bits(self, word_sep=None):
         """
@@ -604,7 +620,10 @@ class IPAddress(BaseIP):
         @return: C{True} if the numerical value of this IP address is not zero,
             C{False} otherwise.
         """
+        #   Python 2.x.
         return bool(self._value)
+
+    __bool__ = __nonzero__  #   Python 3.x.
 
     def __str__(self):
         """@return: IP address in representational format"""
@@ -941,13 +960,13 @@ class IPNetwork(BaseIP):
     def __len__(self):
         """
         @return: the number of IP addresses in this L{IPNetwork}. Raises an
-            C{IndexError} if size > sys.maxint (a Python 2.x limitation).
+            C{IndexError} if size > _sys_maxint (a Python 2.x limitation).
             Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys.maxint:
-            raise IndexError("range contains more than %d (sys.maxint) " \
-                "IP addresses! Use the .size property instead." % _sys.maxint)
+        if size > _sys_maxint:
+            raise IndexError(("range contains more than %d (index size max) "
+               "IP addresses! Use the .size property instead." % _sys_maxint))
         return size
 
     def __contains__(self, other):
@@ -968,7 +987,10 @@ class IPNetwork(BaseIP):
         IPNetwork objects always represent a sequence of at least one IP
         address and are therefore always True in the boolean context.
         """
+        #   Python 2.x.
         return True
+
+    __bool__ = __nonzero__  #   Python 3.x.
 
     def key(self):
         """
@@ -1116,7 +1138,7 @@ class IPNetwork(BaseIP):
 
         base_subnet = self._module.int_to_str(self.first)
 
-        for i in xrange(count):
+        for i in _iter_range(count):
             subnet = self.__class__('%s/%d' % (base_subnet, prefixlen),
                 self.version)
             subnet.value += (subnet.size * i)
@@ -1247,13 +1269,13 @@ class IPRange(BaseIP):
     def __len__(self):
         """
         @return: the number of IP addresses in this L{IPRange}. Raises an
-            C{IndexError} if size > sys.maxint (a Python 2.x limitation).
+            C{IndexError} if size > system max int (a Python 2.x limitation).
             Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys.maxint:
-            raise IndexError("range contains more than %d (sys.maxint) " \
-                "IP addresses! Use the .size property instead." % _sys.maxint)
+        if size > _sys_maxint:
+            raise IndexError(("range contains more than %d (index size max) "
+               "IP addresses! Use the .size property instead." % _sys_maxint))
         return size
 
     def __contains__(self, other):
@@ -1274,7 +1296,10 @@ class IPRange(BaseIP):
         IPRange objects always represent a sequence of at least one IP
         address and are therefore always True in the boolean context.
         """
+        #   Python 2.x
         return True
+
+    __bool__ = __nonzero__  #   Python 3.x.
 
     def key(self):
         """
@@ -1368,7 +1393,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
     tokens = []
     prefix = None
 
-    if isinstance(abbrev_cidr, (str, unicode)):
+    if _is_str(abbrev_cidr):
         if ':' in abbrev_cidr:
             return abbrev_cidr
     try:

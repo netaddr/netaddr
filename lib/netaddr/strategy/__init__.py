@@ -8,6 +8,8 @@ Shared logic for various address types.
 """
 import re as _re
 
+from netaddr.compat import _range
+
 #-----------------------------------------------------------------------------
 def bytes_to_bits():
     """
@@ -15,7 +17,7 @@ def bytes_to_bits():
         list index value is equivalent to its bit string value.
     """
     lookup = []
-    bits_per_byte = range(7, -1, -1)
+    bits_per_byte = _range(7, -1, -1)
     for num in range(256):
         bits = 8 * [None]
         for i in bits_per_byte:

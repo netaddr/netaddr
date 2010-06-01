@@ -13,6 +13,8 @@ from netaddr.ip.intset import IntSet as _IntSet
 from netaddr.ip import IPNetwork, IPAddress, cidr_merge, cidr_exclude, \
     iprange_to_cidrs
 
+from netaddr.compat import _zip, _sys_maxint, _dict_keys
+
 #-----------------------------------------------------------------------------
 def partition_ips(iterable):
     """
@@ -64,7 +66,7 @@ class IPSet(object):
         Compact internal list of L{IPNetwork} objects using a CIDR merge.
         """
         cidrs = cidr_merge(list(self._cidrs))
-        self._cidrs = dict(zip(cidrs, [True] * len(cidrs)))
+        self._cidrs = dict(_zip(cidrs, [True] * len(cidrs)))
 
     def __hash__(self):
         """
@@ -192,11 +194,11 @@ class IPSet(object):
 
         if hasattr(iterable, '_cidrs'):
             #   Another IP set.
-            for ip in cidr_merge(self._cidrs.keys() + iterable._cidrs.keys()):
+            for ip in cidr_merge(_dict_keys(self._cidrs) + _dict_keys(iterable._cidrs)):
                 self._cidrs[ip] = True
         else:
             #   An iterable contain IP addresses or subnets.
-            for ip in cidr_merge(self._cidrs.keys() + list(iterable)):
+            for ip in cidr_merge(_dict_keys(self._cidrs) + list(iterable)):
                 self._cidrs[ip] = True
 
         self.compact()
@@ -435,13 +437,13 @@ class IPSet(object):
     def __len__(self):
         """
         @return: the cardinality of this IP set (i.e. sum of individual IP
-            addresses). Raises C{IndexError} if size > sys.maxint (a Python
+            addresses). Raises C{IndexError} if size > maxint (a Python
             limitation). Use the .size property for subnets of any size.
         """
         size = self.size
         if size > _sys.maxint:
-            raise IndexError("range contains greater than %d (sys.maxint) " \
-                "IP addresses! Use the .size property instead." % _sys.maxint)
+            raise IndexError("range contains greater than %d (maxint) " \
+                "IP addresses! Use the .size property instead." % _sys_maxint)
         return size
 
     @property

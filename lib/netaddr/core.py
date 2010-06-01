@@ -9,6 +9,8 @@ import sys as _sys
 import struct as _struct
 import pprint as _pprint
 
+from netaddr.compat import _callable, _iter_dict_keys
+
 #: True if platform is natively big endian, False otherwise.
 BIG_ENDIAN_PLATFORM = _sys.byteorder == 'big'
 
@@ -118,7 +120,7 @@ class Publisher(object):
             interface.
         """
         if hasattr(subscriber, 'update') and \
-           callable(eval('subscriber.update')):
+           _callable(eval('subscriber.update')):
             if subscriber not in self.subscribers:
                 self.subscribers.append(subscriber)
         else:
@@ -176,7 +178,7 @@ class DictDotLookup(object):
             return self.__dict__[name]
 
     def __iter__(self):
-        return iter(self.__dict__.keys())
+        return _iter_dict_keys(self.__dict__)
 
     def __repr__(self):
         return _pprint.pformat(self.__dict__)
@@ -193,7 +195,7 @@ def dos2unix(filename):
     if '\0' in data:
         raise ValueError('file contains binary data: %s!' % filename)
 
-    newdata = data.replace("\r\n", "\n")
+    newdata = data.replace("\r\n".encode(), "\n".encode())
     if newdata != data:
         f = open(filename, "wb")
         f.write(newdata)
