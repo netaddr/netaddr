@@ -240,11 +240,10 @@ class IPAddress(BaseIP):
             and distinguishes between IPv4 and IPv6 for addresses with an
             equivalent integer value.
 
-        @param legacy_mode: (optional) decides which rules are applied to the
-            interpretation of valid IPv4 addresses. Has no effect for IPv6.
-            If True, netaddr internally uses inet_aton() parsing rules apply
-            (more flexible), inet_ntop(AF_INET, ...) parsing rules (more
-            strict) otherwise. Default: True (use inet_aton).
+        @param legacy_mode: (optional) a flag which selects the rules to be
+            applied to the interpretation of valid IPv4 addresses (has
+            no effect for IPv6). If True, inet_aton parsing rules are applied,
+            inet_ntop parsing rules otherwise. Default: True (inet_aton).
         """
         super(IPAddress, self).__init__()
 
@@ -692,11 +691,10 @@ class IPNetwork(BaseIP):
             If False it uses the length of the IP address version.
             (default: False).
 
-        @param legacy_mode: (optional) decides which rules are applied to the
-            interpretation of valid IPv4 addresses. Has no effect for IPv6.
-            If True, netaddr internally uses inet_aton() parsing rules apply
-            (more flexible), inet_ntop(AF_INET, ...) parsing rules (more
-            strict) otherwise. Default: True (use inet_aton).
+        @param legacy_mode: (optional) a flag which selects the rules to be
+            applied to the interpretation of valid IPv4 addresses (has
+            no effect for IPv6). If True, inet_aton parsing rules are applied,
+            inet_ntop parsing rules otherwise. Default: True (inet_aton).
         """
         super(IPNetwork, self).__init__()
         self._prefixlen = None
@@ -1194,7 +1192,7 @@ class IPRange(BaseIP):
     must match.
 
     """
-    def __init__(self, start, end):
+    def __init__(self, start, end, legacy_mode=True):
         """
         Constructor.
 
@@ -1203,10 +1201,16 @@ class IPRange(BaseIP):
 
         @param end: an IPv4 or IPv6 address that forms the upper
             boundary of this IP range.
+
+        @param legacy_mode: (optional) a flag which selects the rules to be
+            applied to the interpretation of valid IPv4 addresses (has
+            no effect for IPv6). If True, inet_aton parsing rules are applied,
+            inet_ntop parsing rules otherwise. Default: True (inet_aton).
         """
-        self._start = IPAddress(start)
+        self._start = IPAddress(start, legacy_mode=legacy_mode)
         self._module = self._start._module
-        self._end = IPAddress(end, self._module.version)
+        self._end = IPAddress(end, self._module.version,
+                              legacy_mode=legacy_mode)
         if int(self._start) > int(self._end):
             raise AddrFormatError('lower bound IP greater than upper bound!')
 
@@ -1942,4 +1946,3 @@ IPV6_RESERVED = (
     IPNetwork('E000::/4'), IPNetwork('F000::/5'),
     IPNetwork('F800::/6'), IPNetwork('FE00::/9'),
 )
-
