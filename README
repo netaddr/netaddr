@@ -41,7 +41,7 @@ DEPENDENCIES
 
 Requires Python 2.4 or higher.
 
-Python 3.x is not currently supported but is planned for future releases.
+Python 3.x support added in netaddr versions 0.7.5 and higher.
 
 
 INSTALLATION
