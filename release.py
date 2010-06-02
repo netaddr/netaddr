@@ -5,13 +5,7 @@
 #-----------------------------------------------------------------------------
 
 import sys
-
-PYTHON_MAJOR_VERSION = sys.version_info[0]
-
-if PYTHON_MAJOR_VERSION == 3:
-    sys.path.insert(0, 'lib3')
-else:
-    sys.path.insert(0, 'lib')
+sys.path.insert(0, 'lib')
 
 import netaddr
 
@@ -35,7 +29,7 @@ author_email = 'drkjam@gmail.com'
 url = 'http://code.google.com/p/netaddr/'
 
 package_dir = {
-    '' : { 2 : 'lib', 3 : 'lib3'}[PYTHON_MAJOR_VERSION],
+    '' : 'lib',
 }
 
 #   Required by distutils only.
@@ -65,6 +59,8 @@ package_data = {
         'strategy/*.txt',
     ],
 }
+
+scripts = ['lib/netaddr/tools/netaddr']
 
 license = 'BSD License'
 
@@ -103,8 +99,6 @@ For details on history changes and updates see the CHANGELOG :-
 """
 
 platforms = 'OS Independent'
-
-scripts = ['lib/netaddr/tools/netaddr']
 
 classifiers = [
     'Development Status :: 5 - Production/Stable',
