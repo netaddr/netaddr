@@ -75,7 +75,7 @@ def valid_str(addr, legacy_mode=True):
 
     @param legacy_mode: decides which rules are applied to the interpretation
         of addr value. If True this function uses inet_aton parsing rules
-         (more flexible), inet_ntop parsing rules (more strict) otherwise.
+        (more flexible), inet_ntop parsing rules (more strict) otherwise.
         Default: True (use inet_aton - no change to existing behaviour).
 
     @return: C{True} if IPv4 address is valid, C{False} otherwise.
@@ -101,7 +101,7 @@ def str_to_int(addr, legacy_mode=True):
 
     @param legacy_mode: decides which rules are applied to the interpretation
         of addr value. If True this function uses inet_aton parsing rules
-         (more flexible), inet_ntop parsing rules (more strict) otherwise.
+        (more flexible), inet_ntop parsing rules (more strict) otherwise.
         Default: True (use inet_aton - no change to existing behaviour).
 
     @return: The equivalent unsigned integer for a given IPv4 address.
