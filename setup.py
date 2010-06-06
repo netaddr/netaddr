@@ -37,7 +37,6 @@ def main():
         long_description = release.long_description,
         name             = release.name,
         package_data     = release.package_data,
-        package_dir      = release.package_dir,
         packages         = release.packages,
         platforms        = release.platforms,
         scripts          = release.scripts,
@@ -46,7 +45,7 @@ def main():
     )
 
     #   IPython does not currently support Python 3.x so disable this.
-    if release.PYTHON_MAJOR_VERSION == 3:
+    if sys.version_info[0] == 3:
         del setup_options['scripts']
 
     setup(**setup_options)

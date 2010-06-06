@@ -4,9 +4,6 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 
-import sys
-sys.path.insert(0, 'lib')
-
 import netaddr
 
 name = 'netaddr'
@@ -27,10 +24,6 @@ author = 'David P. D. Moss'
 author_email = 'drkjam@gmail.com'
 
 url = 'http://code.google.com/p/netaddr/'
-
-package_dir = {
-    '' : 'lib',
-}
 
 #   Required by distutils only.
 packages = [
@@ -60,7 +53,7 @@ package_data = {
     ],
 }
 
-scripts = ['lib/netaddr/tools/netaddr']
+scripts = ['netaddr/tools/netaddr']
 
 license = 'BSD License'
 

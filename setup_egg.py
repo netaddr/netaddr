@@ -55,7 +55,6 @@ def main():
 #DISABLED:         packages         = find_packages(),
 #DISABLED:         include_package_data = True,
 #----------------------------------------------------------
-        package_dir      = release.package_dir,
         packages         = release.packages,
         package_data     = release.package_data,
         platforms        = release.platforms,
