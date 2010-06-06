@@ -202,6 +202,10 @@ def inet_pton(af, ip_string):
         if not hasattr(ip_string, 'split'):
             raise invalid_addr
 
+        if 'x' in ip_string:
+            #   Don't accept hextets with the 0x prefix.
+            raise invalid_addr
+
         if '::' in ip_string:
             if ip_string == '::':
                 #   Unspecified address.
