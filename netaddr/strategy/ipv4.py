@@ -7,26 +7,31 @@
 IPv4 address logic.
 """
 import struct as _struct
-import platform as _platform
-
-OPT_IMPORTS = False
+import sys as _sys
+import socket as _socket
 
 #   Check whether we need to use fallback code or not.
-try:
-    import socket as _socket
-    #   Check for a common bug on Windows and socket modules on some other
-    #   platforms.
-    _socket.inet_aton('255.255.255.255')
-    from _socket import inet_aton as _inet_aton, \
-                        inet_ntoa as _inet_ntoa, \
-                        AF_INET
-    OPT_IMPORTS = True
-except:
-    from netaddr.fbsocket import inet_aton as _inet_aton, \
-                                 inet_ntoa as _inet_ntoa, \
-                                 AF_INET
+if _sys.platform in ('win32', 'cygwin'):
+    #   inet_pton() not available on Windows. inet_pton() under cygwin
+    #   behaves exactly like inet_aton() and is therefore highly unreliable.
+    from _socket import inet_aton as _inet_aton, inet_ntoa as _inet_ntoa
+    from netaddr.fbsocket import inet_pton as _inet_pton, AF_INET
+else:
+    #   All other cases, attempt to use all functions from the socket module.
+    try:
+        #   A common bug on older implementations of the socket module.
+        _socket.inet_aton('255.255.255.255')
+
+        from _socket import inet_aton as _inet_aton, inet_ntoa as _inet_ntoa, \
+                            inet_pton as _inet_pton, AF_INET
+    except:
+        #   Use the fallback socket code.
+        from netaddr.fbsocket import inet_aton as _inet_aton, \
+                                     inet_ntoa as _inet_ntoa, \
+                                     inet_pton as _inet_pton, AF_INET
 
 from netaddr.core import AddrFormatError
+
 from netaddr.strategy import valid_words  as _valid_words, \
     valid_bits   as _valid_bits, \
     bits_to_int  as _bits_to_int, \
@@ -114,11 +119,6 @@ def str_to_int(addr, legacy_mode=True):
         else:
             return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
     except:
-        #   Windows platform workaround.
-        if hasattr(addr, 'lower') and _platform.system() == 'Windows':
-            if addr.lower() == '0xffffffff':
-                return 0xffffffff
-
         raise AddrFormatError('%r is not a valid IPv4 address string!' \
             % addr)
 
