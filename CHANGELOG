@@ -1,3 +1,30 @@
+Release: 0.7.5
+Date: xxx Jun 2010
+
+Changes since 0.7.4
+-------------------
+
+* Added Python 3.x support.
+
+* Moved code hosting to github. All history ported thanks to the
+  excellent svn2git - http://github.com/nirvdrum/svn2git
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 52 - http://code.google.com/p/netaddr/issues/detail?id=52
+
+    - ipv6 cidr matches incorrectly match ipv4 [sic]
+
+* FIXED Issue 53 - http://code.google.com/p/netaddr/issues/detail?id=53
+
+    - Error in online documentation
+
+* FIXED Issue 55 - http://code.google.com/p/netaddr/issues/detail?id=55
+
+    - Support for Python 3.x
+
+---------------------------------------------------------------------
 Release: 0.7.4
 Date: 2nd Dec 2009
 
