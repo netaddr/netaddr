@@ -11,7 +11,7 @@ import unittest
 import doctest
 
 sys.path.insert(0, os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '../..')))
+    os.path.dirname(__file__), '..', '..')))
 
 tests = [
 #    'core/pubsub.txt',
@@ -24,14 +24,14 @@ tests = [
 #    'ip/cidr.txt',
 #    'ip/constructor.txt',
 #    'ip/functions.txt',
-    'ip/intset.txt',
+#    'ip/intset.txt',
 #    'ip/ipglob.txt',
 #    'ip/matches.txt',
 #    'ip/multicast.txt',
 #    'ip/nmap.txt',
 #    'ip/rfc1924.txt',
 #    'ip/sets.txt',
-#    'ip/socket_fallback.txt',
+    'ip/socket_fallback.txt',
 #    'ip/subnet.txt',
 #    'ip/tutorial.txt',
 #    'strategy/eui48.txt',
@@ -39,7 +39,13 @@ tests = [
 #    'strategy/ipv6.txt',
 ]
 
+py_ver_dir = '2.x'
+if sys.version_info[0] == 3:
+    py_ver_dir = '3.x'
+
 for test in tests:
+    test = os.path.abspath(os.path.join(py_ver_dir, test))
+    sys.stdout.write('%s\n' % test)
     suite = doctest.DocFileSuite(test, optionflags=doctest.ELLIPSIS)
     test_runner = unittest.TextTestRunner()
     test_runner.run(suite)
