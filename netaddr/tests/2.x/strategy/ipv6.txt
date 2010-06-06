@@ -254,3 +254,40 @@ IPv6 mapped and compatible IPv4 string formatting.
 '::ffff:0.0.0.0'
 
 }}}
+
+== str_to_int() Behavioural Tests (legacy_mode switch) ==
+
+The legacy_mode switch on str_to_int() is for interface compatibility only and should not effect the behaviour of this method whether set to True or False.
+
+{{{
+
+>>> str_to_int('::127', legacy_mode=False) == 295
+True
+
+>>> str_to_int('::0x7f', legacy_mode=False)
+Traceback (most recent call last):
+...
+AddrFormatError: '::0x7f' is not a valid IPv6 address string!
+
+>>> str_to_int('::0177', legacy_mode=False) == 375
+True
+
+>>> str_to_int('::127.1', legacy_mode=False)
+Traceback (most recent call last):
+...
+AddrFormatError: '::127.1' is not a valid IPv6 address string!
+
+>>> str_to_int('::0x7f.1', legacy_mode=False)
+Traceback (most recent call last):
+...
+AddrFormatError: '::0x7f.1' is not a valid IPv6 address string!
+
+>>> str_to_int('::0177.1', legacy_mode=False)
+Traceback (most recent call last):
+...
+AddrFormatError: '::0177.1' is not a valid IPv6 address string!
+
+>>> str_to_int('::127.0.0.1') == 2130706433
+True
+
+}}}

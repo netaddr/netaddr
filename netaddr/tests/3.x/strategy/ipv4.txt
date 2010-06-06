@@ -58,3 +58,73 @@ True
 True
 
 }}}
+
+== inet_aton() Behavioural Tests (legacy_mode: True) ==
+
+inet_aton() is a very old system call and is very permissive with regard to what is assume is a valid IPv4 address. Unfortunately, it is also the most widely used by system software used in software today, so netaddr supports this behaviour by default.
+
+{{{
+
+>>> str_to_int('127') == 127
+True
+
+>>> str_to_int('0x7f') == 127
+True
+
+>>> str_to_int('0177') == 127
+True
+
+>>> str_to_int('127.1') == 2130706433
+True
+
+>>> str_to_int('0x7f.1') == 2130706433
+True
+
+>>> str_to_int('0177.1') == 2130706433
+True
+
+>>> str_to_int('127.0.0.1') == 2130706433
+True
+
+}}}
+
+== inet_pton() Behavioural Tests (legacy_mode: False) ==
+
+inet_pton() is a newer system call that supports both IPv4 and IPv6. It is a lot more strict about what it deems to be a valid IPv4 address and doesn't support many of the features found in inet_aton() such as support for non- decimal octets, partial numbers of octets, etc.
+
+{{{
+
+>>> str_to_int('127', legacy_mode=False)
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: '127' is not a valid IPv4 address string!
+
+>>> str_to_int('0x7f', legacy_mode=False)
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: '0x7f' is not a valid IPv4 address string!
+
+>>> str_to_int('0177', legacy_mode=False)
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: '0177' is not a valid IPv4 address string!
+
+>>> str_to_int('127.1', legacy_mode=False)
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: '127.1' is not a valid IPv4 address string!
+
+>>> str_to_int('0x7f.1', legacy_mode=False)
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: '0x7f.1' is not a valid IPv4 address string!
+
+>>> str_to_int('0177.1', legacy_mode=False)
+Traceback (most recent call last):
+...
+netaddr.core.AddrFormatError: '0177.1' is not a valid IPv4 address string!
+
+>>> str_to_int('127.0.0.1') == 2130706433
+True
+
+}}}

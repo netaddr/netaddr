@@ -228,7 +228,7 @@ class IPAddress(BaseIP):
 
     To support these and other network based operations, see L{IPNetwork}.
     """
-    def __init__(self, addr, version=None, legacy_mode=True):
+    def __init__(self, addr, version=None):
         """
         Constructor.
 
@@ -239,11 +239,6 @@ class IPAddress(BaseIP):
         @param version: (optional) optimizes version detection if specified
             and distinguishes between IPv4 and IPv6 for addresses with an
             equivalent integer value.
-
-        @param legacy_mode: (optional) a flag which selects the rules to be
-            applied to the interpretation of valid IPv4 addresses (has
-            no effect for IPv6). If True, inet_aton parsing rules are applied,
-            inet_ntop parsing rules otherwise. Default: True (inet_aton).
         """
         super(IPAddress, self).__init__()
 
@@ -254,7 +249,6 @@ class IPAddress(BaseIP):
                     'copy constructor!')
             self._value = addr._value
             self._module = addr._module
-            self._legacy_mode = addr._legacy_mode
         else:
             #   Explicit IP address version.
             if version is not None:
@@ -264,8 +258,6 @@ class IPAddress(BaseIP):
                     self._module = _ipv6
                 else:
                     raise ValueError('unsupported IP version %r' % version)
-
-            self._legacy_mode = legacy_mode
 
             #   Implicit IP address version.
             self.value = addr
@@ -284,7 +276,7 @@ class IPAddress(BaseIP):
             #   IP version is implicit, detect it from value.
             for module in (_ipv4, _ipv6):
                 try:
-                    self._value = module.str_to_int(value, self._legacy_mode)
+                    self._value = module.str_to_int(value)
                     self._module = module
                     break
                 except AddrFormatError:
@@ -303,7 +295,7 @@ class IPAddress(BaseIP):
             #   IP version is explicit.
             if has_upper:
                 try:
-                    self._value = self._module.str_to_int(value, self._legacy_mode)
+                    self._value = self._module.str_to_int(value)
                 except AddrFormatError:
                     raise AddrFormatError('base address %r is not IPv%d'
                         % (value, self._module.version))
@@ -677,7 +669,7 @@ class IPNetwork(BaseIP):
         x.x.x.0/y   -> 192.168.0.0/24
 
     """
-    def __init__(self, addr, implicit_prefix=False, legacy_mode=True):
+    def __init__(self, addr, implicit_prefix=False):
         """
         Constructor.
 
@@ -690,11 +682,6 @@ class IPNetwork(BaseIP):
             rules to select a default prefix when one is not provided.
             If False it uses the length of the IP address version.
             (default: False).
-
-        @param legacy_mode: (optional) a flag which selects the rules to be
-            applied to the interpretation of valid IPv4 addresses (has
-            no effect for IPv6). If True, inet_aton parsing rules are applied,
-            inet_ntop parsing rules otherwise. Default: True (inet_aton).
         """
         super(IPNetwork, self).__init__()
         self._prefixlen = None
@@ -704,13 +691,11 @@ class IPNetwork(BaseIP):
             self._value = addr._value
             self._prefixlen = addr._prefixlen
             self._module = addr._module
-            self._legacy_mode = addr._legacy_mode
         elif hasattr(addr, '_value'):
             #   Copy constructor - IPAddress.
             self._value = addr._value
             self._prefixlen = addr._module.width    # standard width.
             self._module = addr._module
-            self._legacy_mode = addr._legacy_mode
         else:
             #   Apply classful prefix length rules to IP addresses.
             if implicit_prefix:
@@ -721,8 +706,6 @@ class IPNetwork(BaseIP):
                 prefix, suffix = addr.split('/')
             except ValueError:
                 pass
-
-            self._legacy_mode = legacy_mode
 
             if prefix is not None:
                 self.value = prefix
@@ -740,7 +723,7 @@ class IPNetwork(BaseIP):
             #   IP version is implicit, detect it from value.
             for module in (_ipv4, _ipv6):
                 try:
-                    self._value = module.str_to_int(value, self._legacy_mode)
+                    self._value = module.str_to_int(value)
                     self._module = module
                     break
                 except AddrFormatError:
@@ -759,7 +742,7 @@ class IPNetwork(BaseIP):
             #   IP version is explicit.
             if hasattr(value, 'upper'):
                 try:
-                    self._value = self._module.str_to_int(value, self._legacy_mode)
+                    self._value = self._module.str_to_int(value)
                 except AddrFormatError:
                     raise AddrFormatError('base address %r is not IPv%d'
                         % (value, self._module.version))
@@ -1192,7 +1175,7 @@ class IPRange(BaseIP):
     must match.
 
     """
-    def __init__(self, start, end, legacy_mode=True):
+    def __init__(self, start, end):
         """
         Constructor.
 
@@ -1201,16 +1184,10 @@ class IPRange(BaseIP):
 
         @param end: an IPv4 or IPv6 address that forms the upper
             boundary of this IP range.
-
-        @param legacy_mode: (optional) a flag which selects the rules to be
-            applied to the interpretation of valid IPv4 addresses (has
-            no effect for IPv6). If True, inet_aton parsing rules are applied,
-            inet_ntop parsing rules otherwise. Default: True (inet_aton).
         """
-        self._start = IPAddress(start, legacy_mode=legacy_mode)
+        self._start = IPAddress(start)
         self._module = self._start._module
-        self._end = IPAddress(end, self._module.version,
-                              legacy_mode=legacy_mode)
+        self._end = IPAddress(end, self._module.version)
         if int(self._start) > int(self._end):
             raise AddrFormatError('lower bound IP greater than upper bound!')
 
