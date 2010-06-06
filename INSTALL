@@ -84,6 +84,13 @@ command :-
 This will go to the Python Package Index and automatically find the 
 appropriate version of netaddr for your Python setup.
 
+Alternatively, you can use pip instead of easy_install.
+
+Just download the latest version of pip from PyPI found here -
+http://pypi.python.org/pypi/pip and run the following command :-
+
+    pip install netaddr
+
 
 Windows Install Packages
 ------------------------
