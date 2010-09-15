@@ -26,7 +26,9 @@ class BaseIP(object):
     """
     An abstract base class for common operations shared between various IP
     related subclasses.
+
     """
+    __slots__ = ('_value', '_module')
 
     def __init__(self):
         """Constructor."""
@@ -227,7 +229,10 @@ class IPAddress(BaseIP):
     An individual IPv4 or IPv6 address without a net mask or subnet prefix.
 
     To support these and other network based operations, see L{IPNetwork}.
+
     """
+    __slots__ = ()
+
     def __init__(self, addr, version=None):
         """
         Constructor.
@@ -261,6 +266,27 @@ class IPAddress(BaseIP):
 
             #   Implicit IP address version.
             self.value = addr
+
+    def __getstate__(self):
+        """@return: Pickled state of an C{IPAddress} object."""
+        return self._value, self._module.version
+
+    def __setstate__(self, state):
+        """
+        @param state: data used to unpickle a pickled C{IPAddress} object.
+
+        """
+        value, version = state
+
+        self._value = value
+
+        if version == 4:
+            self._module = _ipv4
+        elif version == 6:
+            self._module = _ipv6
+        else:
+            raise ValueError('unpickling failed for object state: %s' \
+                % str(state))
 
     def _get_value(self):
         return self._value
@@ -669,6 +695,8 @@ class IPNetwork(BaseIP):
         x.x.x.0/y   -> 192.168.0.0/24
 
     """
+    __slots__ = ('_prefixlen',)
+
     def __init__(self, addr, implicit_prefix=False):
         """
         Constructor.
@@ -714,6 +742,33 @@ class IPNetwork(BaseIP):
                 #   No prefix was found; use the address value default.
                 self.value = addr
                 self.prefixlen = self._module.width
+
+    def __getstate__(self):
+        """@return: Pickled state of an C{IPNetwork} object."""
+        return self._value, self._prefixlen, self._module.version
+
+    def __setstate__(self, state):
+        """
+        @param state: data used to unpickle a pickled C{IPNetwork} object.
+
+        """
+        value, prefixlen, version = state
+
+        self._value = value
+
+        if version == 4:
+            self._module = _ipv4
+        elif version == 6:
+            self._module = _ipv6
+        else:
+            raise ValueError('unpickling failed for object state %s' \
+                % str(state))
+
+        if 0 <= prefixlen <= self._module.width:
+            self._prefixlen = prefixlen
+        else:
+            raise ValueError('unpickling failed for object state %s' \
+                % str(state))
 
     def _get_value(self):
         return self._value
@@ -1175,6 +1230,8 @@ class IPRange(BaseIP):
     must match.
 
     """
+    __slots__ = ('_start', '_end')
+
     def __init__(self, start, end):
         """
         Constructor.
@@ -1190,6 +1247,21 @@ class IPRange(BaseIP):
         self._end = IPAddress(end, self._module.version)
         if int(self._start) > int(self._end):
             raise AddrFormatError('lower bound IP greater than upper bound!')
+
+    def __getstate__(self):
+        """@return: Pickled state of an C{IPRange} object."""
+        return self._start.value, self._end.value, self._module.version
+
+    def __setstate__(self, state):
+        """
+        @param state: data used to unpickle a pickled C{IPRange} object.
+
+        """
+        start, end, version = state
+
+        self._start = IPAddress(start, version)
+        self._module = self._start._module
+        self._end = IPAddress(end, version)
 
     @property
     def first(self):

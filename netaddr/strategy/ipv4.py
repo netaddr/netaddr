@@ -3,11 +3,10 @@
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
-"""
-IPv4 address logic.
-"""
-import struct as _struct
+"""IPv4 address logic."""
+
 import sys as _sys
+import struct as _struct
 import socket as _socket
 
 #   Check whether we need to use fallback code or not.
@@ -111,14 +110,14 @@ def str_to_int(addr, legacy_mode=True):
 
     @return: The equivalent unsigned integer for a given IPv4 address.
     """
-    if addr == '':
-        raise AddrFormatError('Empty strings are not supported!')
     try:
         if legacy_mode:
             return _struct.unpack('>I', _inet_aton(addr))[0]
         else:
             return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
     except:
+        if addr == '':
+            raise AddrFormatError('Empty strings are not supported!')
         raise AddrFormatError('%r is not a valid IPv4 address string!' \
             % addr)
 
@@ -133,7 +132,11 @@ def int_to_str(int_val, dialect=None):
         unsigned integer provided.
     """
     if 0 <= int_val <= max_int:
-        return _inet_ntoa(_struct.pack('>I', int_val))
+        return '%s.%s.%s.%s' % (
+             int_val >> 24,
+            (int_val >> 16) & 0xff,
+            (int_val >>  8) & 0xff,
+             int_val & 0xff)
     else:
         raise ValueError('%r is not a valid 32-bit unsigned integer!' \
             % int_val)
@@ -187,10 +190,10 @@ def int_to_words(int_val):
     if not 0 <= int_val <= max_int:
         raise ValueError('%r is not a valid integer value supported ' \
             'by this address type!' % int_val)
-    return ( (int_val >> 24),
-             (int_val >> 16 & 255),
-             (int_val >> 8 & 255),
-             (int_val & 255) )
+    return ( int_val >> 24,
+            (int_val >> 16) & 0xff,
+            (int_val >>  8) & 0xff,
+             int_val & 0xff)
 
 #-----------------------------------------------------------------------------
 def words_to_int(words):

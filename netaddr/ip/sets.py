@@ -48,7 +48,10 @@ class IPSet(object):
     """
     Represents an unordered collection (set) of unique IP addresses and
     subnets.
+
     """
+    __slots__ = ('_cidrs',)
+
     def __init__(self, iterable=None):
         """
         Constructor.
@@ -60,6 +63,36 @@ class IPSet(object):
         if iterable is not None:
             for ip in cidr_merge(iterable):
                 self._cidrs[ip] = True
+
+    def __getstate__(self):
+        """@return: Pickled state of an C{IPSet} object."""
+        return tuple([cidr.__getstate__() for cidr in self._cidrs])
+
+    def __setstate__(self, state):
+        """
+        @param state: data used to unpickle a pickled C{IPSet} object.
+
+        """
+        #TODO: this needs to be optimised.
+        self._cidrs = {}
+        for cidr_tuple in state:
+            value, prefixlen, version = cidr_tuple
+
+            if version == 4:
+                module = _ipv4
+            elif version == 6:
+                module = _ipv6
+            else:
+                raise ValueError('unpickling failed for object state %s' \
+                    % str(state))
+
+            if 0 <= prefixlen <= module.width:
+                cidr = IPNetwork('%s/%d' \
+                    % (module.int_to_str(value), prefixlen))
+                self._cidrs[cidr] = True
+            else:
+                raise ValueError('unpickling failed for object state %s' \
+                    % str(state))
 
     def compact(self):
         """

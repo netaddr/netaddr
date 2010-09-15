@@ -1,13 +1,18 @@
 Release: 0.7.5
-Date: xxx Jun 2010
+Date: 15th Sep 2010
 
 Changes since 0.7.4
 -------------------
 
-* Added Python 3.x support.
+* Added Python 3.x support. Please help with testing!
 
 * Moved code hosting to github. All history ported thanks to the
   excellent svn2git - http://github.com/nirvdrum/svn2git
+
+* Objects now use approx. 65% less memory due to the use of __slots__
+  in classes throughout the codebase.
+
+* Applied various optimisations to functions in the strategy.ipv4 module.
 
 Specific bug fixes addressed in this release
 --------------------------------------------
@@ -23,6 +28,14 @@ Specific bug fixes addressed in this release
 * FIXED Issue 55 - http://code.google.com/p/netaddr/issues/detail?id=55
 
     - Support for Python 3.x
+
+* FIXED Issue 57 - http://code.google.com/p/netaddr/issues/detail?id=57
+
+    - netaddr objects can't pickle
+
+* FIXED Issue 59 - http://code.google.com/p/netaddr/issues/detail?id=59
+
+    - netaddr fails to load when imported by a PowerDNS coprocess
 
 ---------------------------------------------------------------------
 Release: 0.7.4

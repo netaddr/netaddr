@@ -4,44 +4,10 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-Routines for IP glob-style address ranges.
+Routines and classes for supporting and expressing IP address ranges using a
+glob style syntax.
 
-Individual octets can be represented using the following shortcuts :
-
-    1. C{*} - the asterisk octet (represents values 0 through 255)
-    2. C{'x-y'} - the hyphenated octet (represents values x through y)
-
-A few basic rules also apply :
-
-    1. x must always be less than y, therefore :
-
-        - x can only be 0 through 254
-        - y can only be 1 through 255
-
-    2. only one hyphenated octet per IP glob is allowed
-    3. only asterisks are permitted after a hyphenated octet
-
-Example IP globs ::
-
-    '192.0.2.1'       #   a single address
-    '192.0.2.0-31'    #   32 addresses
-    '192.0.2.*'       #   256 addresses
-    '192.0.2-3.*'     #   512 addresses
-    '192.0-1.*.*'   #   131,072 addresses
-    '*.*.*.*'           #   the whole IPv4 address space
-
-Aside
-=====
-    I{IP glob ranges are not directly equivalent to CIDR blocks. They can
-    represent address ranges that do not fall on strict bit mask boundaries.
-    They are suitable for use in configuration files, being more obvious and
-    readable than their CIDR counterparts, especially for admins and end users
-    with little or no networking knowledge or experience.}
-
-    I{All CIDR addresses can always be represented as IP globs but the reverse
-    is not always true.}
 """
-
 from netaddr.core import AddrFormatError, AddrConversionError
 from netaddr.ip import IPRange, IPAddress, IPNetwork, iprange_to_cidrs
 
@@ -257,10 +223,58 @@ def cidr_to_glob(cidr):
 class IPGlob(IPRange):
     """
     Represents an IP address range using a glob-style syntax (x.x.x-y.*).
+
+    Individual octets can be represented using the following shortcuts :
+
+        1. C{*} - the asterisk octet (represents values 0 through 255)
+        2. C{'x-y'} - the hyphenated octet (represents values x through y)
+
+    A few basic rules also apply :
+
+        1. x must always be greater than y, therefore :
+
+            - x can only be 0 through 254
+            - y can only be 1 through 255
+
+        2. only one hyphenated octet per IP glob is allowed
+        3. only asterisks are permitted after a hyphenated octet
+
+    Example IP globs ::
+
+        '192.0.2.1'       #   a single address
+        '192.0.2.0-31'    #   32 addresses
+        '192.0.2.*'       #   256 addresses
+        '192.0.2-3.*'     #   512 addresses
+        '192.0-1.*.*'   #   131,072 addresses
+        '*.*.*.*'           #   the whole IPv4 address space
+
+    Aside
+    =====
+        I{IP glob ranges are not directly equivalent to CIDR blocks. They can
+        represent address ranges that do not fall on strict bit mask
+        boundaries. They are suitable for use in configuration files, being
+        more obvious and readable than their CIDR counterparts, especially for
+        admins and end users with little or no networking knowledge or
+        experience.}
+
+        I{All CIDR addresses can always be represented as IP globs but the
+        reverse is not always true.}
+
     """
+    __slots__ = ('_glob',)
+
     def __init__(self, ipglob):
         (start, end) = glob_to_iptuple(ipglob)
         super(IPGlob, self).__init__(start, end)
+        self.glob = iprange_to_globs(self._start, self._end)[0]
+
+    def __getstate__(self):
+        """@return: Pickled state of an C{IPGlob} object."""
+        return super(IPGlob, self).__getstate__()
+
+    def __setstate__(self, state):
+        """@param state: data used to unpickle a pickled C{IPGlob} object."""
+        super(IPGlob, self).__setstate__(state)
         self.glob = iprange_to_globs(self._start, self._end)[0]
 
     def _get_glob(self):
@@ -279,5 +293,4 @@ class IPGlob(IPRange):
 
     def __repr__(self):
         """@return: Python statement to create an equivalent object"""
-        return "%s('%s')" % (self.__class__.__name__,
-            self.glob)
+        return "%s('%s')" % (self.__class__.__name__, self.glob)

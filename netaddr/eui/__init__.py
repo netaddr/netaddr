@@ -27,6 +27,8 @@ from netaddr.compat import _is_int, _is_str
 #-----------------------------------------------------------------------------
 class BaseIdentifier(object):
     """Base class for all IEEE identifiers."""
+    __slots__ = ('_value',)
+
     def __init__(self):
         self._value = None
 
@@ -62,7 +64,10 @@ class OUI(BaseIdentifier):
     An individual IEEE OUI (Organisationally Unique Identifier).
 
     For online details see - U{http://standards.ieee.org/regauth/oui/}
+
     """
+    __slots__ = ('records',)
+
     def __init__(self, oui):
         """
         Constructor
@@ -166,7 +171,10 @@ class IAB(BaseIdentifier):
     An individual IEEE IAB (Individual Address Block) identifier.
 
     For online details see - U{http://standards.ieee.org/regauth/oui/}
+
     """
+    __slots__ = ('record',)
+
     @staticmethod
     def split_iab_mac(eui_int, strict=False):
         """
@@ -287,7 +295,10 @@ class EUI(BaseIdentifier):
 
     Input parsing for EUI-48 addresses is flexible, supporting many MAC
     variants.
+
     """
+    __slots__ = ('_module', '_dialect')
+
     def __init__(self, addr, version=None, dialect=None):
         """
         Constructor.
