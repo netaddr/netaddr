@@ -12,13 +12,13 @@ set DIST_DIR=..\builds\
 :OLD C:\python25\python setup.py bdist_wininst --dist-dir=%DIST_DIR%
 :OLD rmdir /S /Q .\build\
 
-c:\Python26\python.exe setup.py --skip-build --target-version 2.4 --dist-dir=%DIST_DIR% bdist_wininst
+c:\Python27\python.exe setup.py --skip-build --target-version 2.4 --dist-dir=%DIST_DIR% bdist_wininst
 rmdir /S /Q .\build\
-c:\Python26\python.exe setup.py --skip-build --target-version 2.5 --dist-dir=%DIST_DIR% bdist_wininst
+c:\Python27\python.exe setup.py --skip-build --target-version 2.5 --dist-dir=%DIST_DIR% bdist_wininst
 rmdir /S /Q .\build\
-c:\Python26\python.exe setup.py --skip-build --target-version 2.6 --dist-dir=%DIST_DIR% bdist_wininst
+c:\Python27\python.exe setup.py --skip-build --target-version 2.6 --dist-dir=%DIST_DIR% bdist_wininst
 rmdir /S /Q .\build\
-c:\Python26\python.exe setup.py --skip-build --target-version 2.7 --dist-dir=%DIST_DIR% bdist_wininst
+c:\Python27\python.exe setup.py --skip-build --target-version 2.7 --dist-dir=%DIST_DIR% bdist_wininst
 rmdir /S /Q .\build\
 c:\Python31\python.exe setup.py --skip-build --target-version 3.0 --dist-dir=%DIST_DIR% bdist_wininst
 rmdir /S /Q .\build\
