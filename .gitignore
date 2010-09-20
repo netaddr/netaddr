@@ -1,2 +1,4 @@
 *.py[co]
 *.bak
+netaddr/.coverage
+netaddr/tests/coverage/

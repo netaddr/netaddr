@@ -16,7 +16,7 @@ rm ./docs/netaddr.zip
 epydoc --config=docs/epydoc.cfg
 
 #   Run code coverage tests.
-./netaddr/tests/netaddr_coverage.sh
+./netaddr/tests/coverage.sh
 
 #   build source releases
 cd docs/api/

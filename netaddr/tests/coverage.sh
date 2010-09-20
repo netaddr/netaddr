@@ -16,16 +16,16 @@ cd $TEST_DIR
 SOURCE_GLOBS='*.py ip/*.py eui/*.py strategy/*.py'
 
 #   Erase existing coverage data
-/usr/bin/coverage -e
+coverage -e
 
 #   Gather coverage information including line numbers that were omitted
-/usr/bin/coverage -x -m tests/__init__.py
+coverage -x -m tests/__init__.py
 
 #   generate a coverage report, omitting Python libraries
-/usr/bin/coverage -r -m -i $SOURCE_GLOBS > tests/netaddr_coverage_report.txt
+coverage -r -m -i $SOURCE_GLOBS > tests/coverage_report.txt
 
 #   Generate HTML output
-/usr/bin/coverage -b -d tests/netaddr_coverage -i $SOURCE_GLOBS
+coverage -b -d tests/coverage -i $SOURCE_GLOBS
 
 #   Take us back to the user's original directory.
 cd $CWD
