@@ -12,10 +12,14 @@ Changes since 0.7.4
 * Objects now use approx. 65% less memory due to the use of __slots__
   in classes throughout the codebase.
 
-* Applied various optimisations to functions in the strategy.ipv4 module.
+* Applied various optimisations throughout.
 
 Specific bug fixes addressed in this release
 --------------------------------------------
+
+* FIXED Issue 49 - http://code.google.com/p/netaddr/issues/detail?id=49
+
+    - Incorrect IP range recognition on IPs with leading zeros
 
 * FIXED Issue 52 - http://code.google.com/p/netaddr/issues/detail?id=52
 
@@ -24,6 +28,10 @@ Specific bug fixes addressed in this release
 * FIXED Issue 53 - http://code.google.com/p/netaddr/issues/detail?id=53
 
     - Error in online documentation
+
+* FIXED Issue 54 - http://code.google.com/p/netaddr/issues/detail?id=54
+
+    - IP recognition failure 
 
 * FIXED Issue 55 - http://code.google.com/p/netaddr/issues/detail?id=55
 
