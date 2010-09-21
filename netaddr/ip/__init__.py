@@ -1242,7 +1242,7 @@ class IPRange(BaseIP):
     """
     __slots__ = ('_start', '_end')
 
-    def __init__(self, start, end):
+    def __init__(self, start, end, flags=0):
         """
         Constructor.
 
@@ -1251,10 +1251,16 @@ class IPRange(BaseIP):
 
         @param end: an IPv4 or IPv6 address that forms the upper
             boundary of this IP range.
+
+        @param flags: decides which rules are applied to the interpretation
+            of the start and end values. Supported constants are INET_PTON
+            and ZEROFILL. See the netaddr.core namespace documentation for
+            details.
+
         """
-        self._start = IPAddress(start)
+        self._start = IPAddress(start, flags=flags)
         self._module = self._start._module
-        self._end = IPAddress(end, self._module.version)
+        self._end = IPAddress(end, self._module.version, flags=flags)
         if int(self._start) > int(self._end):
             raise AddrFormatError('lower bound IP greater than upper bound!')
 
