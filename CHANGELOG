@@ -45,6 +45,13 @@ Specific bug fixes addressed in this release
 
     - netaddr fails to load when imported by a PowerDNS coprocess
 
+Miscellaneous
+-------------
+
+- Welcome back to standards.ieee.org which seems to have been down for weeks!
+
+- Goodbye Sun Microsystems + Merrill Lynch, hello Oracle + Bank of America ...
+
 ---------------------------------------------------------------------
 Release: 0.7.4
 Date: 2nd Dec 2009

@@ -306,7 +306,7 @@ if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
     get_latest_files()
     create_indices()
+else:
+    #   On module load read indices in memory to enable lookups.
+    load_indices()
 
-
-#   On module load read indices in memory to enable lookups.
-load_indices()
