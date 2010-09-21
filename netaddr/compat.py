@@ -15,6 +15,10 @@ if _sys.version_info[0] == 3:
     #   Python 3.x specific logic.
     _sys_maxint = _sys.maxsize
 
+    _int_type = int
+
+    _str_type = str
+
     _is_str = lambda x: isinstance(x, (str, type(''.encode())))
 
     _is_int = lambda x: isinstance(x, int)
@@ -48,6 +52,10 @@ if _sys.version_info[0] == 3:
 elif  _sys.version_info[0:2] > [2, 3]:
     #   Python 2.4 or higher.
     _sys_maxint = _sys.maxint
+
+    _int_type = (int, long)
+
+    _str_type = (str, unicode)
 
     # NB - not using basestring here for maximum 2.x compatibility.
     _is_str = lambda x: isinstance(x, (str, unicode))

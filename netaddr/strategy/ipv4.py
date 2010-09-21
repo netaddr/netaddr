@@ -29,7 +29,7 @@ else:
                                      inet_ntoa as _inet_ntoa, \
                                      inet_pton as _inet_pton, AF_INET
 
-from netaddr.core import AddrFormatError
+from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON
 
 from netaddr.strategy import valid_words  as _valid_words, \
     valid_bits   as _valid_bits, \
@@ -73,14 +73,13 @@ num_words = width // word_size
 max_word = 2 ** word_size - 1
 
 #-----------------------------------------------------------------------------
-def valid_str(addr, legacy_mode=True):
+def valid_str(addr, flags=0):
     """
     @param addr: An IPv4 address in presentation (string) format.
 
-    @param legacy_mode: decides which rules are applied to the interpretation
-        of addr value. If True this function uses inet_aton parsing rules
-        (more flexible), inet_ntop parsing rules (more strict) otherwise.
-        Default: True (use inet_aton - no change to existing behaviour).
+    @param flags: decides which rules are applied to the interpretation of the
+        addr value. Supported constants are INET_PTON and ZEROFILL. See the
+        netaddr.core namespace documentation for details.
 
     @return: C{True} if IPv4 address is valid, C{False} otherwise.
     """
@@ -88,38 +87,41 @@ def valid_str(addr, legacy_mode=True):
         raise AddrFormatError('Empty strings are not supported!')
 
     validity = True
+
+    if flags & ZEROFILL:
+        addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
+
     try:
-        if legacy_mode:
-            _inet_aton(addr)
-        else:
+        if flags & INET_PTON:
             _inet_pton(AF_INET, addr)
+        else:
+            _inet_aton(addr)
     except:
         validity = False
 
     return validity
 
 #-----------------------------------------------------------------------------
-def str_to_int(addr, legacy_mode=True):
+def str_to_int(addr, flags=0):
     """
     @param addr: An IPv4 dotted decimal address in string form.
 
-    @param legacy_mode: decides which rules are applied to the interpretation
-        of addr value. If True this function uses inet_aton parsing rules
-        (more flexible), inet_ntop parsing rules (more strict) otherwise.
-        Default: True (use inet_aton - no change to existing behaviour).
+    @param flags: decides which rules are applied to the interpretation of the
+        addr value. Supported constants are INET_PTON and ZEROFILL. See the
+        netaddr.core namespace documentation for details.
 
     @return: The equivalent unsigned integer for a given IPv4 address.
     """
+    if flags & ZEROFILL:
+        addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
+
     try:
-        if legacy_mode:
-            return _struct.unpack('>I', _inet_aton(addr))[0]
-        else:
+        if flags & INET_PTON:
             return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
+        else:
+            return _struct.unpack('>I', _inet_aton(addr))[0]
     except:
-        if addr == '':
-            raise AddrFormatError('Empty strings are not supported!')
-        raise AddrFormatError('%r is not a valid IPv4 address string!' \
-            % addr)
+        raise AddrFormatError('%r is not a valid IPv4 address string!' % addr)
 
 #-----------------------------------------------------------------------------
 def int_to_str(int_val, dialect=None):
@@ -132,7 +134,7 @@ def int_to_str(int_val, dialect=None):
         unsigned integer provided.
     """
     if 0 <= int_val <= max_int:
-        return '%s.%s.%s.%s' % (
+        return '%d.%d.%d.%d' % (
              int_val >> 24,
             (int_val >> 16) & 0xff,
             (int_val >>  8) & 0xff,
@@ -233,3 +235,4 @@ def int_to_bin(int_val):
 #-----------------------------------------------------------------------------
 def bin_to_int(bin_val):
     return _bin_to_int(bin_val, width)
+

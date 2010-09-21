@@ -97,11 +97,12 @@ class ipv6_verbose(ipv6_compact):
     compact = False
 
 #-----------------------------------------------------------------------------
-def valid_str(addr, legacy_mode=True):
+def valid_str(addr, flags=0):
     """
     @param addr: An IPv6 address in presentation (string) format.
 
-    @param legacy_mode: no effect (for interface compatibility only).
+    @param flags: decides which rules are applied to the interpretation of the
+        addr value. Future use - currently has no effect.
 
     @return: C{True} if IPv6 address is valid, C{False} otherwise.
     """
@@ -115,22 +116,20 @@ def valid_str(addr, legacy_mode=True):
     return True
 
 #-----------------------------------------------------------------------------
-def str_to_int(addr, legacy_mode=True):
+def str_to_int(addr, flags=0):
     """
     @param addr: An IPv6 address in string form.
 
-    @param legacy_mode: no effect (for interface compatibility only).
+    @param flags: decides which rules are applied to the interpretation of the
+        addr value. Future use - currently has no effect.
 
     @return: The equivalent unsigned integer for a given IPv6 address.
     """
-    if addr == '':
-        raise AddrFormatError('Empty strings are not supported!')
     try:
         packed_int = _inet_pton(AF_INET6, addr)
         return packed_to_int(packed_int)
     except Exception:
-        raise AddrFormatError('%r is not a valid IPv6 address string!' \
-            % addr)
+        raise AddrFormatError('%r is not a valid IPv6 address string!' % addr)
 
 #-----------------------------------------------------------------------------
 def int_to_str(int_val, dialect=None):

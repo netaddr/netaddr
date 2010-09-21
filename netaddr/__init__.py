@@ -14,7 +14,7 @@ VERSION = (0, 7, 5, '-pre', 0)
 __version__ = '%d.%d.%d%s' % VERSION[0:4] + str(VERSION[4] or '')
 
 from netaddr.core import AddrConversionError, AddrFormatError, \
-    NotRegisteredError
+    NotRegisteredError, ZEROFILL, Z, INET_PTON, P
 
 from netaddr.ip import IPAddress, IPNetwork, IPRange, all_matching_cidrs, \
     cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, iprange_to_cidrs, \
@@ -41,6 +41,9 @@ from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_cisco, \
     mac_bare, mac_pgsql, valid_str as valid_mac
 
 __all__ = [
+    #   Constants.
+    'ZEROFILL', 'Z', 'INET_PTON', 'P',
+
     #   Custom Exceptions.
     'AddrConversionError', 'AddrFormatError', 'NotRegisteredError',
 

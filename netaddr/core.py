@@ -14,6 +14,12 @@ from netaddr.compat import _callable, _iter_dict_keys
 #: True if platform is natively big endian, False otherwise.
 BIG_ENDIAN_PLATFORM = _sys.byteorder == 'big'
 
+#:  Use inet_pton() semantics instead of inet_aton() when parsing IPv4.
+P = INET_PTON = 1
+
+#:  Remove any preceding zeros from IPv4 address octets before parsing.
+Z = ZEROFILL = 2
+
 #-----------------------------------------------------------------------------
 #   Custom exceptions.
 #-----------------------------------------------------------------------------

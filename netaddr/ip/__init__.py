@@ -13,7 +13,7 @@ from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
-from netaddr.compat import _sys_maxint, _iter_range, _is_str
+from netaddr.compat import _sys_maxint, _iter_range, _is_str, _int_type
 
 #-----------------------------------------------------------------------------
 #   Pre-compiled regexen used by cidr_merge() function.
@@ -233,7 +233,7 @@ class IPAddress(BaseIP):
     """
     __slots__ = ()
 
-    def __init__(self, addr, version=None):
+    def __init__(self, addr, version=None, flags=0):
         """
         Constructor.
 
@@ -244,6 +244,11 @@ class IPAddress(BaseIP):
         @param version: (optional) optimizes version detection if specified
             and distinguishes between IPv4 and IPv6 for addresses with an
             equivalent integer value.
+
+        @param flags: decides which rules are applied to the interpretation
+            of the addr value. Supported constants are INET_PTON and ZEROFILL.
+            See the netaddr.core namespace documentation for details.
+
         """
         super(IPAddress, self).__init__()
 
@@ -264,8 +269,50 @@ class IPAddress(BaseIP):
                 else:
                     raise ValueError('unsupported IP version %r' % version)
 
-            #   Implicit IP address version.
-            self.value = addr
+            has_upper = hasattr(addr, 'upper')
+            if has_upper and '/' in addr:
+                raise ValueError('%s() does not support netmasks or subnet' \
+                    ' prefixes! See documentation for details.'
+                    % self.__class__.__name__)
+
+            if self._module is None:
+                #   IP version is implicit, detect it from addr.
+                if isinstance(addr, _int_type):
+                    try:
+                        if 0 <= int(addr) <= _ipv4.max_int:
+                            self._value = int(addr)
+                            self._module = _ipv4
+                        elif _ipv4.max_int < int(addr) <= _ipv6.max_int:
+                            self._value = int(addr)
+                            self._module = _ipv6
+                    except ValueError:
+                        pass
+                else:
+                    for module in _ipv4, _ipv6:
+                        try:
+                            self._value = module.str_to_int(addr, flags)
+                        except:
+                            continue
+                        else:
+                            self._module = module
+                            break
+
+                if self._module is None:
+                    raise AddrFormatError('failed to detect a valid IP ' \
+                        'address from %r' % addr)
+            else:
+                #   IP version is explicit.
+                if has_upper:
+                    try:
+                        self._value = self._module.str_to_int(addr, flags)
+                    except AddrFormatError:
+                        raise AddrFormatError('base address %r is not IPv%d'
+                            % (addr, self._module.version))
+                else:
+                    if 0 <= int(addr) <= self._module.max_int:
+                        self._value = int(addr)
+                    else:
+                        raise AddrFormatError('bad address format: %r' % addr)
 
     def __getstate__(self):
         """@return: Pickled state of an C{IPAddress} object."""
@@ -292,44 +339,7 @@ class IPAddress(BaseIP):
         return self._value
 
     def _set_value(self, value):
-        has_upper = hasattr(value, 'upper')
-        if has_upper and '/' in value:
-            raise ValueError('%s() does not support netmasks or subnet' \
-                ' prefixes! See documentation for details.'
-                % self.__class__.__name__)
-
-        if self._module is None:
-            #   IP version is implicit, detect it from value.
-            for module in (_ipv4, _ipv6):
-                try:
-                    self._value = module.str_to_int(value)
-                    self._module = module
-                    break
-                except AddrFormatError:
-                    try:
-                        if 0 <= int(value) <= module.max_int:
-                            self._value = int(value)
-                            self._module = module
-                            break
-                    except ValueError:
-                        pass
-
-            if self._module is None:
-                raise AddrFormatError('failed to detect IP version: %r'
-                    % value)
-        else:
-            #   IP version is explicit.
-            if has_upper:
-                try:
-                    self._value = self._module.str_to_int(value)
-                except AddrFormatError:
-                    raise AddrFormatError('base address %r is not IPv%d'
-                        % (value, self._module.version))
-            else:
-                if 0 <= int(value) <= self._module.max_int:
-                    self._value = int(value)
-                else:
-                    raise AddrFormatError('bad address format: %r' % value)
+        self._value = value
 
     value = property(_get_value, _set_value, None,
         'a positive integer representing the value of this IP address.')
