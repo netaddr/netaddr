@@ -1022,10 +1022,10 @@ class IPNetwork(BaseIP):
         @return: C{True} if other falls within the boundary of this one,
             C{False} otherwise.
         """
-        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
-            other = IPNetwork("%s/%d" % (other, other._module.width))
         if self.version != other.version:
             return False
+        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
+            return other._value >= self.first and other._value <= self.last
         return other.first >= self.first and other.last <= self.last
 
     def __nonzero__(self):
@@ -1354,10 +1354,10 @@ class IPRange(BaseIP):
         @return: C{True} if other falls within the boundary of this one,
             C{False} otherwise.
         """
-        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
-            other = IPNetwork("%s/%d" % (other, other._module.width))
         if self.version != other.version:
             return False
+        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
+            return other._value >= self.first and other._value <= self.last
         return other.first >= self.first and other.last <= self.last
 
     def __nonzero__(self):
