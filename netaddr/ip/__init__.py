@@ -662,7 +662,11 @@ class IPAddress(BaseIP):
 
 #-----------------------------------------------------------------------------
 class IPListMixin(object):
+    """
+    A mixin class providing shared list-like functionality to classes
+    representing groups of IP addresses.
 
+    """
     def __iter__(self):
         """
         @return: An iterator providing access to all L{IPAddress} objects
