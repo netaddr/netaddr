@@ -22,7 +22,8 @@ epydoc --config=docs/epydoc.cfg
 cd docs/api/
 zip ../netaddr.zip *
 cd ../..
-python2.4 setup_egg.py bdist_egg
-python2.5 setup_egg.py bdist_egg
-python2.6 setup_egg.py bdist_egg
+#python2.4 setup_egg.py bdist_egg
+#python2.5 setup_egg.py bdist_egg
+#python2.6 setup_egg.py bdist_egg
+#python2.7 setup_egg.py bdist_egg
 python setup.py sdist --no-defaults --formats=gztar,zip --dist-dir=../builds/

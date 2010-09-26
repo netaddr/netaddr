@@ -17,13 +17,13 @@ keywords = [
     'IPv4', 'IPv6', 'CIDR', 'EUI', 'MAC', 'MAC-48', 'EUI-48', 'EUI-64'
 ]
 
-download_url = 'http://code.google.com/p/netaddr/downloads/list'
+download_url = 'http://github.com/drkjam/netaddr/downloads'
 
 author = 'David P. D. Moss'
 
 author_email = 'drkjam@gmail.com'
 
-url = 'http://code.google.com/p/netaddr/'
+url = 'http://github.com/drkjam/netaddr/'
 
 #   Required by distutils only.
 packages = [
@@ -57,6 +57,7 @@ scripts = ['netaddr/tools/netaddr']
 
 license = 'BSD License'
 
+#------------------------------------------------------------------------
 #   NB - keep this text around 74 characters wide so it is viewable
 #        in various fixed window sizes.
 long_description = """
@@ -64,31 +65,28 @@ A pure Python network address representation and manipulation library.
 
 netaddr provides a Pythonic way of working with :-
 
-- IPv4 and IPv6 addresses and subnets (including CIDR notation)
-- MAC (Media Access Control) addresses in multiple formats
-- IEEE EUI-64, OUI and IAB identifiers
-- a user friendly IP glob-style format
+- IPv4 and IPv6 addresses and subnets
+- MAC addresses, OUI and IAB identifiers, IEEE EUI-64 identifiers
+- arbitrary (non-aligned) IP address ranges and IP address sets
+- various non-CIDR IP range formats such as nmap and glob-style formats
 
 Included are routines for :-
 
-- generating, sorting and summarizing IP addresses
-- converting IP addresses and ranges between various different formats
-- performing set based operations on groups of IP addresses and subnets
-- arbitrary IP address range calculations and conversions
-- querying IEEE OUI and IAB organisational information
-- querying of IP standards related data from key IANA data sources
+- generating, sorting and summarizing IP addresses and networks
+- performing easy conversions between address notations and formats
+- detecting, parsing and formatting network address representations
+- performing set-based operations on groups of IP addresses and subnets
+- working with arbitrary IP address ranges and formats
+- accessing OUI and IAB organisational information published by IEEE
+- accessing IP address and block information published by IANA
 
-For examples please visit the example wiki pages :-
+For details on the latest updates and changes, see :-
 
-    http://code.google.com/p/netaddr/wiki/NetAddrExamples
+    http://github.com/drkjam/netaddr/blob/rel-0.7.x/CHANGELOG
 
-Complete API documentation for the latest release is available online :-
+API documentation for the latest release is available here :-
 
     http://packages.python.org/netaddr/
-
-For details on history changes and updates see the CHANGELOG :-
-
-    http://code.google.com/p/netaddr/wiki/CHANGELOG
 """
 
 platforms = 'OS Independent'
@@ -96,7 +94,6 @@ platforms = 'OS Independent'
 classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Console',
-    'Environment :: Plugins',
     'Intended Audience :: Developers',
     'Intended Audience :: Education',
     'Intended Audience :: Information Technology',
@@ -108,18 +105,49 @@ classifiers = [
     'Natural Language :: English',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
+    'Programming Language :: Python :: 2',
+    'Programming Language :: Python :: 2.4',
+    'Programming Language :: Python :: 2.5',
+    'Programming Language :: Python :: 2.6',
+    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.0',
+    'Programming Language :: Python :: 3.1',
+    'Topic :: Communications',
+    'Topic :: Documentation',
+    'Topic :: Education',
     'Topic :: Education :: Testing',
     'Topic :: Home Automation',
     'Topic :: Internet',
     'Topic :: Internet :: Log Analysis',
     'Topic :: Internet :: Name Service (DNS)',
+    'Topic :: Internet :: Proxy Servers',
+    'Topic :: Internet :: WWW/HTTP',
+    'Topic :: Internet :: WWW/HTTP :: Indexing/Search',
+    'Topic :: Internet :: WWW/HTTP :: Site Management',
+    'Topic :: Security',
     'Topic :: Software Development',
+    'Topic :: Software Development :: Libraries',
     'Topic :: Software Development :: Libraries :: Python Modules',
+    'Topic :: Software Development :: Quality Assurance',
+    'Topic :: Software Development :: Testing',
+    'Topic :: Software Development :: Testing :: Traffic Generation',
+    'Topic :: System :: Benchmark',
+    'Topic :: System :: Clustering',
+    'Topic :: System :: Distributed Computing',
+    'Topic :: System :: Installation/Setup',
+    'Topic :: System :: Logging',
+    'Topic :: System :: Monitoring',
     'Topic :: System :: Networking',
     'Topic :: System :: Networking :: Firewalls',
     'Topic :: System :: Networking :: Monitoring',
-    'Topic :: System :: Operating System',
+    'Topic :: System :: Networking :: Time Synchronization',
+    'Topic :: System :: Recovery Tools',
     'Topic :: System :: Shells',
+    'Topic :: System :: Software Distribution',
     'Topic :: System :: Systems Administration',
+    'Topic :: System :: System Shells',
+    'Topic :: Text Processing',
+    'Topic :: Text Processing :: Filters',
     'Topic :: Utilities',
 ]

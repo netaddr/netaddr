@@ -6,27 +6,29 @@ A pure Python network address representation and manipulation library.
 
 netaddr provides a Pythonic way of working with :-
 
-- IPv4 and IPv6 addresses and subnets (including CIDR notation)
-- MAC (Media Access Control) addresses in multiple presentation formats
-- IEEE EUI-64, OUI and IAB identifiers
-- a user friendly IP glob-style format
+- IPv4 and IPv6 addresses and subnets
+- MAC addresses, OUI and IAB identifiers, IEEE EUI-64 identifiers
+- arbitrary (non-aligned) IP address ranges and IP address sets
+- various non-CIDR IP range formats such as nmap and glob-style formats
 
 Included are routines for :-
 
-- generating, sorting and summarizing IP addresses
-- converting IP addresses and ranges between various different formats
-- performing set based operations on groups of IP addresses and subnets
-- arbitrary IP address range calculations and conversions
-- querying IEEE OUI and IAB organisational information
-- querying of IP standards related data from key IANA data sources
+- generating, sorting and summarizing IP addresses and networks
+- performing easy conversions between address notations and formats
+- detecting, parsing and formatting network address representations
+- performing set-based operations on groups of IP addresses and subnets
+- working with arbitrary IP address ranges and formats
+- accessing OUI and IAB organisational information published by IEEE
+- accessing IP address and block information published by IANA
 
-For examples please visit the example wiki pages :-
+For details on the latest updates and changes, see :-
 
-    http://code.google.com/p/netaddr/wiki/NetAddrExamples
+    http://github.com/drkjam/netaddr/blob/rel-0.7.x/CHANGELOG
 
-Complete API documentation for the latest release is available online :-
+API documentation for the latest release is available here :-
 
     http://packages.python.org/netaddr/
+
 
 LICENSE
 -------
@@ -70,13 +72,6 @@ The docstrings contain a lot of detail. See these if you require information
 on specific aspects of netaddr's API via an interactive Python interpreter
 session or your favourite text editor.
 
-- online wiki
-
-A set of basic HOWTO code samples are available on the code hosting site's
-wiki at the following URL :-
-
-    http://code.google.com/p/netaddr/w/list
-
 
 CHANGE HISTORY
 --------------
@@ -107,8 +102,8 @@ Or if you are partial to setuptools :-
 
 Tests are expected to run through without error. If any do fail, *please* help
 the project's user base by filing bug reports at the following URL :-
-    
-    http://code.google.com/p/netaddr/issues/list
+
+	http://github.com/drkjam/netaddr/issues
 
 *IMPORTANT*
 
