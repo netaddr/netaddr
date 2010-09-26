@@ -661,7 +661,98 @@ class IPAddress(BaseIP):
         return "%s('%s')" % (self.__class__.__name__, self)
 
 #-----------------------------------------------------------------------------
-class IPNetwork(BaseIP):
+class IPListMixin(object):
+
+    def __iter__(self):
+        """
+        @return: An iterator providing access to all L{IPAddress} objects
+            within range represented by this ranged IP object.
+        """
+        start_ip = IPAddress(self.first, self.version)
+        end_ip = IPAddress(self.last, self.version)
+        return iter_iprange(start_ip, end_ip)
+
+    @property
+    def size(self):
+        """
+        The total number of IP addresses within this ranged IP object.
+        """
+        return int(self.last - self.first + 1)
+
+    def __len__(self):
+        """
+        @return: the number of IP addresses in this ranged IP object. Raises
+            an C{IndexError} if size > system max int (a Python 2.x
+            limitation). Use the .size property for subnets of any size.
+        """
+        size = self.size
+        if size > _sys_maxint:
+            raise IndexError(("range contains more than %d (index size max) "
+               "IP addresses! Use the .size property instead." % _sys_maxint))
+        return size
+
+    def __getitem__(self, index):
+        """
+        @return: The IP address(es) in this L{IPNetwork} object referenced by
+            index or slice. As slicing can produce large sequences of objects
+            an iterator is returned instead of the more usual C{list}.
+        """
+        item = None
+
+        if hasattr(index, 'indices'):
+            if self._module.version == 6:
+                raise TypeError('IPv6 slices are not supported!')
+
+            (start, stop, step) = index.indices(self.size)
+
+            if (start + step < 0) or (step > stop):
+                #   step value exceeds start and stop boundaries.
+                item = iter([IPAddress(self.first, self.version)])
+            else:
+                start_ip = IPAddress(self.first + start, self.version)
+                end_ip = IPAddress(self.first + stop - step, self.version)
+                item = iter_iprange(start_ip, end_ip, step)
+        else:
+            try:
+                index = int(index)
+                if (- self.size) <= index < 0:
+                    #   negative index.
+                    item = IPAddress(self.last + index + 1, self.version)
+                elif 0 <= index <= (self.size - 1):
+                    #   Positive index or zero index.
+                    item = IPAddress(self.first + index, self.version)
+                else:
+                    raise IndexError('index out range for address range size!')
+            except ValueError:
+                raise TypeError('unsupported index type %r!' % index)
+
+        return item
+
+    def __contains__(self, other):
+        """
+        @param other: an L{IPAddress} or ranged IP object.
+
+        @return: C{True} if other falls within the boundary of this one,
+            C{False} otherwise.
+        """
+        if self.version != other.version:
+            return False
+        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
+            return other._value >= self.first and other._value <= self.last
+        return other.first >= self.first and other.last <= self.last
+
+    def __nonzero__(self):
+        """
+        Ranged IP objects always represent a sequence of at least one IP
+        address and are therefore always True in the boolean context.
+        """
+        #   Python 2.x.
+        return True
+
+    __bool__ = __nonzero__  #   Python 3.x.
+
+#-----------------------------------------------------------------------------
+class IPNetwork(BaseIP, IPListMixin):
     """
     An IPv4 or IPv6 network or subnet. A combination of an IP address and a
     network mask.
@@ -908,13 +999,6 @@ class IPNetwork(BaseIP):
         cidr = IPNetwork("%s/%d" % (ip, self.prefixlen))
         return cidr
 
-    @property
-    def size(self):
-        """
-        The total number of IP addresses within this L{IPNetwork} object.
-        """
-        return int(self.last - self.first + 1)
-
     def __iadd__(self, num):
         """
         Increases the value of this L{IPNetwork} object by the current size
@@ -956,87 +1040,6 @@ class IPNetwork(BaseIP):
 
         self._value = new_value
         return self
-
-    def __iter__(self):
-        """
-        @return: An iterator providing access to all IPAddress objects within
-            range represented by this IPNetwork object.
-        """
-        start_ip = IPAddress(self.first, self.version)
-        end_ip = IPAddress(self.last, self.version)
-        return iter_iprange(start_ip, end_ip)
-
-    def __getitem__(self, index):
-        """
-        @return: The IP address(es) in this L{IPNetwork} object referenced by
-            index or slice. As slicing can produce large sequences of objects
-            an iterator is returned instead of the more usual C{list}.
-        """
-        item = None
-
-        if hasattr(index, 'indices'):
-            if self._module.version == 6:
-                raise TypeError('IPv6 slices are not supported!')
-
-            (start, stop, step) = index.indices(self.size)
-
-            if (start + step < 0) or (step > stop):
-                #   step value exceeds start and stop boundaries.
-                item = iter([IPAddress(self.first, self.version)])
-            else:
-                start_ip = IPAddress(self.first + start, self.version)
-                end_ip = IPAddress(self.first + stop - step, self.version)
-                item = iter_iprange(start_ip, end_ip, step)
-        else:
-            try:
-                index = int(index)
-                if (- self.size) <= index < 0:
-                    #   negative index.
-                    item = IPAddress(self.last + index + 1, self.version)
-                elif 0 <= index <= (self.size - 1):
-                    #   Positive index or zero index.
-                    item = IPAddress(self.first + index, self.version)
-                else:
-                    raise IndexError('index out range for address range size!')
-            except ValueError:
-                raise TypeError('unsupported index type %r!' % index)
-
-        return item
-
-    def __len__(self):
-        """
-        @return: the number of IP addresses in this L{IPNetwork}. Raises an
-            C{IndexError} if size > _sys_maxint (a Python 2.x limitation).
-            Use the .size property for subnets of any size.
-        """
-        size = self.size
-        if size > _sys_maxint:
-            raise IndexError(("range contains more than %d (index size max) "
-               "IP addresses! Use the .size property instead." % _sys_maxint))
-        return size
-
-    def __contains__(self, other):
-        """
-        @param other: an L{IPAddress} or L{IPNetwork} object.
-
-        @return: C{True} if other falls within the boundary of this one,
-            C{False} otherwise.
-        """
-        if self.version != other.version:
-            return False
-        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
-            return other._value >= self.first and other._value <= self.last
-        return other.first >= self.first and other.last <= self.last
-
-    def __nonzero__(self):
-        """
-        IPNetwork objects always represent a sequence of at least one IP
-        address and are therefore always True in the boolean context.
-        """
-        #   Python 2.x.
-        return True
-
-    __bool__ = __nonzero__  #   Python 3.x.
 
     def key(self):
         """
@@ -1231,7 +1234,7 @@ class IPNetwork(BaseIP):
         return "%s('%s')" % (self.__class__.__name__, self)
 
 #-----------------------------------------------------------------------------
-class IPRange(BaseIP):
+class IPRange(BaseIP, IPListMixin):
     """
     An arbitrary IPv4 or IPv6 address range.
 
@@ -1289,87 +1292,6 @@ class IPRange(BaseIP):
         """The integer value of last IP address in this L{IPRange} object."""
         return int(self._end)
 
-    def __iter__(self):
-        """
-        @return: An iterator providing access to all L{IPAddress} objects
-            within range represented by this L{IPRange} object.
-        """
-        start_ip = IPAddress(self.first, self.version)
-        end_ip = IPAddress(self.last, self.version)
-        return iter_iprange(start_ip, end_ip)
-
-    def __getitem__(self, index):
-        """
-        @return: The IP address(es) in this L{IPRange} object referenced by
-            index or slice. As slicing can produce large sequences of objects
-            an iterator is returned instead of the more usual C{list}.
-        """
-        item = None
-
-        if hasattr(index, 'indices'):
-            if self._module.version == 6:
-                raise TypeError('IPv6 slices are not supported!')
-
-            (start, stop, step) = index.indices(self.size)
-
-            if (start + step < 0) or (step > stop):
-                #   step value exceeds start and stop boundaries.
-                item = iter([IPAddress(self.first, self.version)])
-            else:
-                start_ip = IPAddress(self.first + start, self.version)
-                end_ip = IPAddress(self.first + stop - step, self.version)
-                item = iter_iprange(start_ip, end_ip, step)
-        else:
-            try:
-                index = int(index)
-                if (-self.size) <= index < 0:
-                    #   negative index.
-                    item = IPAddress(self.last + index + 1, self.version)
-                elif 0 <= index <= (self.size - 1):
-                    #   Positive index or zero index.
-                    item = IPAddress(self.first + index, self.version)
-                else:
-                    raise IndexError('index out range for address range size!')
-            except ValueError:
-                raise TypeError('unsupported index type %r!' % index)
-
-        return item
-
-    def __len__(self):
-        """
-        @return: the number of IP addresses in this L{IPRange}. Raises an
-            C{IndexError} if size > system max int (a Python 2.x limitation).
-            Use the .size property for subnets of any size.
-        """
-        size = self.size
-        if size > _sys_maxint:
-            raise IndexError(("range contains more than %d (index size max) "
-               "IP addresses! Use the .size property instead." % _sys_maxint))
-        return size
-
-    def __contains__(self, other):
-        """
-        @param other: an L{IPAddress}, L{IPNetwork} or L{IPRange} object.
-
-        @return: C{True} if other falls within the boundary of this one,
-            C{False} otherwise.
-        """
-        if self.version != other.version:
-            return False
-        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
-            return other._value >= self.first and other._value <= self.last
-        return other.first >= self.first and other.last <= self.last
-
-    def __nonzero__(self):
-        """
-        IPRange objects always represent a sequence of at least one IP
-        address and are therefore always True in the boolean context.
-        """
-        #   Python 2.x
-        return True
-
-    __bool__ = __nonzero__  #   Python 3.x.
-
     def key(self):
         """
         @return: A key tuple used to uniquely identify this L{IPRange}.
@@ -1390,11 +1312,6 @@ class IPRange(BaseIP):
         addresses of this L{IPRange}.
         """
         return iprange_to_cidrs(self._start, self._end)
-
-    @property
-    def size(self):
-        """The number of IP addresses within this L{IPRange}."""
-        return int(self._end) - int(self._start) + 1
 
     def __str__(self):
         """@return: this L{IPRange} in a common representational format."""
