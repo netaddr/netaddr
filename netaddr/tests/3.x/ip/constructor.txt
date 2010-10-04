@@ -192,3 +192,20 @@ IPNetwork('231.192.0.15/4')
 IPNetwork('10.0.0.0/8')
 
 }}}
+
+Optional flags for tweaking IPNetwork constructor behaviour.
+
+{{{
+
+>>> IPNetwork('172.24.200')
+IPNetwork('172.24.200.0/32')
+
+>>> IPNetwork('172.24.200', implicit_prefix=True)
+IPNetwork('172.24.200.0/16')
+
+#	Truncate the host bits so we get a pure network.
+>>> IPNetwork('172.24.200', implicit_prefix=True, flags=NOHOST)
+IPNetwork('172.24.0.0/16')
+
+
+}}}

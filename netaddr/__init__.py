@@ -15,7 +15,7 @@ if _sys.version_info[0:2] < (2, 4):
     raise RuntimeError('Python 2.4.x or higher is required!')
 
 from netaddr.core import AddrConversionError, AddrFormatError, \
-    NotRegisteredError, ZEROFILL, Z, INET_PTON, P
+    NotRegisteredError, ZEROFILL, Z, INET_PTON, P, NOHOST, N
 
 from netaddr.ip import IPAddress, IPNetwork, IPRange, all_matching_cidrs, \
     cidr_abbrev_to_verbose, cidr_exclude, cidr_merge, iprange_to_cidrs, \
@@ -43,7 +43,7 @@ from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_cisco, \
 
 __all__ = [
     #   Constants.
-    'ZEROFILL', 'Z', 'INET_PTON', 'P',
+    'ZEROFILL', 'Z', 'INET_PTON', 'P', 'NOHOST', 'N',
 
     #   Custom Exceptions.
     'AddrConversionError', 'AddrFormatError', 'NotRegisteredError',

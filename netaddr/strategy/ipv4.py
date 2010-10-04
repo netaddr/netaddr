@@ -39,6 +39,8 @@ from netaddr.strategy import valid_words  as _valid_words, \
     int_to_bin   as _int_to_bin, \
     bin_to_int   as _bin_to_int
 
+from netaddr.compat import _str_type
+
 #: The width (in bits) of this address type.
 width = 32
 
@@ -72,6 +74,22 @@ num_words = width // word_size
 #: The maximum integer value for an individual word in this address type.
 max_word = 2 ** word_size - 1
 
+#: A dictionary mapping IPv4 CIDR prefixes to the equivalent netmasks.
+prefix_to_netmask = dict(
+    [(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width+1)])
+
+#: A dictionary mapping IPv4 netmasks to their equivalent CIDR prefixes.
+netmask_to_prefix = dict(
+    [(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width+1)])
+
+#: A dictionary mapping IPv4 CIDR prefixes to the equivalent hostmasks.
+prefix_to_hostmask = dict(
+    [(i, (2 ** (width - i) - 1)) for i in range(0, width+1)])
+
+#: A dictionary mapping IPv4 hostmasks to their equivalent CIDR prefixes.
+hostmask_to_prefix = dict(
+    [((2 ** (width - i) - 1), i) for i in range(0, width+1)])
+
 #-----------------------------------------------------------------------------
 def valid_str(addr, flags=0):
     """
@@ -79,7 +97,7 @@ def valid_str(addr, flags=0):
 
     @param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core namespace documentation for details.
+        netaddr.core docs for details.
 
     @return: C{True} if IPv4 address is valid, C{False} otherwise.
     """
@@ -108,7 +126,7 @@ def str_to_int(addr, flags=0):
 
     @param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core namespace documentation for details.
+        netaddr.core docs for details.
 
     @return: The equivalent unsigned integer for a given IPv4 address.
     """
@@ -235,4 +253,42 @@ def int_to_bin(int_val):
 #-----------------------------------------------------------------------------
 def bin_to_int(bin_val):
     return _bin_to_int(bin_val, width)
+
+#-----------------------------------------------------------------------------
+def expand_partial_address(addr):
+    """
+    Expands a partial IPv4 address into a full 4-octet version.
+
+    @param addr: an partial or abbreviated IPv4 address
+
+    @return: an expanded IP address in presentation format (x.x.x.x)
+
+    """
+    tokens = []
+
+    error = AddrFormatError('invalid partial IPv4 address: %r!' % addr)
+
+    if isinstance(addr, _str_type):
+        if ':' in addr:
+            #   Ignore IPv6 ...
+            raise error
+
+        if '.' in addr:
+            tokens = ['%d' % int(o) for o in addr.split('.')]
+        else:
+            try:
+                tokens = ['%d' % int(addr)]
+            except ValueError:
+                raise error
+
+        if 1 <= len(tokens) <= 4:
+            for i in range(4 - len(tokens)):
+                tokens.append('0')
+        else:
+            raise error
+
+    if not tokens:
+        raise error
+
+    return '%s.%s.%s.%s' % tuple(tokens)
 

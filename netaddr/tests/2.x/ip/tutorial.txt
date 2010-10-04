@@ -162,7 +162,7 @@ It is possible to adjust the IP address value and the CIDR prefix after object i
 >>> ip
 IPNetwork('0.0.0.0/0')
 
->>> ip.value = '192.0.2.1'
+>>> ip.value = 3221225985
 
 >>> ip
 IPNetwork('192.0.2.1/0')
@@ -288,6 +288,12 @@ IPNetwork('::192.0.2.1/119')
 ===IPv6 to IPv4===
 
 {{{
+
+>>> IPNetwork('::ffff:192.0.2.1/119').ipv6()
+IPNetwork('::ffff:192.0.2.1/119')
+
+>>> IPNetwork('::ffff:192.0.2.1/119').ipv6(ipv4_compatible=True)
+IPNetwork('::192.0.2.1/119')
 
 >>> IPNetwork('::ffff:192.0.2.1/119').ipv4()
 IPNetwork('192.0.2.1/23')
@@ -464,7 +470,7 @@ You can just as easily sort IP subnets at the same time, including combinations 
 
 >>> pprint.pprint(ip_list)
 [IPAddress('10.0.0.1'),
- IPNetwork('172.0.0.24/12'),
+ IPNetwork('172.24.0.0/12'),
  IPNetwork('192.0.2.0/24'),
  IPNetwork('192.0.2.128/28'),
  IPAddress('192.0.2.130'),

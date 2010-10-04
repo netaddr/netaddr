@@ -69,6 +69,22 @@ num_words = width // word_size
 #: The maximum integer value for an individual word in this address type.
 max_word = 2 ** word_size - 1
 
+#: A dictionary mapping IPv6 CIDR prefixes to the equivalent netmasks.
+prefix_to_netmask = dict(
+    [(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width+1)])
+
+#: A dictionary mapping IPv6 netmasks to their equivalent CIDR prefixes.
+netmask_to_prefix = dict(
+    [(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width+1)])
+
+#: A dictionary mapping IPv6 CIDR prefixes to the equivalent hostmasks.
+prefix_to_hostmask = dict(
+    [(i, (2 ** (width - i) - 1)) for i in range(0, width+1)])
+
+#: A dictionary mapping IPv6 hostmasks to their equivalent CIDR prefixes.
+hostmask_to_prefix = dict(
+    [((2 ** (width - i) - 1), i) for i in range(0, width+1)])
+
 #-----------------------------------------------------------------------------
 #   Dialect classes.
 #-----------------------------------------------------------------------------

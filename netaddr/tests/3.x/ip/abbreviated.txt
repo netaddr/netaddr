@@ -160,14 +160,43 @@ ValueError: prefixlen in address '192.0.2.0/33' out of range for IPv4!
 
 }}}
 
-Negative testing.
+IPv4 octet expansion routine.
 
 {{{
 
->>> IPNetwork('192.168/16', True)
+>>> from netaddr.strategy import ipv4
+
+>>> ipv4.expand_partial_address('10')
+'10.0.0.0'
+
+>>> ipv4.expand_partial_address('10.1')
+'10.1.0.0'
+
+>>> ipv4.expand_partial_address('192.168.1')
+'192.168.1.0'
+
+}}}
+
+IPNetwork constructor testing.
+
+{{{
+
+>>> IPNetwork('192.168/16')
 IPNetwork('192.168.0.0/16')
 
->>> IPNetwork('192.168/16', False)
-IPNetwork('192.0.0.168/16')
+>>> IPNetwork('192.168.0.15')
+IPNetwork('192.168.0.15/32')
+
+>>> IPNetwork('192.168')
+IPNetwork('192.168.0.0/32')
+
+>>> IPNetwork('192.168', implicit_prefix=True)
+IPNetwork('192.168.0.0/24')
+
+>>> IPNetwork('192.168', True)
+IPNetwork('192.168.0.0/24')
+
+>>> IPNetwork('10.0.0.1', True)
+IPNetwork('10.0.0.1/8')
 
 }}}

@@ -9,11 +9,12 @@ import sys as _sys
 import re as _re
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
-    DictDotLookup
+    DictDotLookup, NOHOST, N, INET_PTON, P, ZEROFILL, Z
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
-from netaddr.compat import _sys_maxint, _iter_range, _is_str, _int_type
+from netaddr.compat import _sys_maxint, _iter_range, _is_str, _int_type, \
+    _str_type
 
 #-----------------------------------------------------------------------------
 #   Pre-compiled regexen used by cidr_merge() function.
@@ -34,6 +35,17 @@ class BaseIP(object):
         """Constructor."""
         self._value = None
         self._module = None
+
+    def _set_value(self, value):
+        if not isinstance(value, _int_type):
+            raise TypeError('int argument expected, not %s' % type(value))
+        if not 0 <= value <= self._module.max_int:
+            raise AddrFormatError('value out of bounds for an %s address!' \
+                % self._module.family_name)
+        self._value = value
+
+    value = property(lambda self: self._value, _set_value,
+        doc='a positive integer representing the value of IP address/subnet.')
 
     def key(self):
         """
@@ -245,9 +257,10 @@ class IPAddress(BaseIP):
             and distinguishes between IPv4 and IPv6 for addresses with an
             equivalent integer value.
 
-        @param flags: decides which rules are applied to the interpretation
-            of the addr value. Supported constants are INET_PTON and ZEROFILL.
-            See the netaddr.core namespace documentation for details.
+        @param flags: (optional) decides which rules are applied to the
+            interpretation of the addr value. Supported constants are
+            INET_PTON and ZEROFILL. See the netaddr.core docs for further
+            details.
 
         """
         super(IPAddress, self).__init__()
@@ -334,41 +347,6 @@ class IPAddress(BaseIP):
         else:
             raise ValueError('unpickling failed for object state: %s' \
                 % str(state))
-
-    def _get_value(self):
-        return self._value
-
-    def _set_value(self, value):
-        self._value = value
-
-    value = property(_get_value, _set_value, None,
-        'a positive integer representing the value of this IP address.')
-
-    def netmask_bits(self):
-        """
-        @return: If this IP is a valid netmask, the number of non-zero
-            bits are returned, otherwise it returns the width in bits for
-            the IP address version.
-        """
-        if not self.is_netmask():
-            return self._module.width
-
-        i_val = self._value
-        numbits = 0
-
-        while i_val > 0:
-            if i_val & 1 == 1:
-                break
-            numbits += 1
-            i_val >>= 1
-
-        mask_length = self._module.width - numbits
-
-        if not 0 <= mask_length <= self._module.width:
-            raise ValueError('Unexpected mask length %d for address type!' \
-                % mask_length)
-
-        return mask_length
 
     def is_hostmask(self):
         """
@@ -653,7 +631,7 @@ class IPAddress(BaseIP):
     __bool__ = __nonzero__  #   Python 3.x.
 
     def __str__(self):
-        """@return: IP address in representational format"""
+        """@return: IP address in presentational format"""
         return self._module.int_to_str(self._value)
 
     def __repr__(self):
@@ -756,6 +734,80 @@ class IPListMixin(object):
     __bool__ = __nonzero__  #   Python 3.x.
 
 #-----------------------------------------------------------------------------
+def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
+    if isinstance(addr, tuple):
+        #   CIDR integer tuple
+        try:
+            val1, val2 = addr
+        except ValueError:
+            raise AddrFormatError('invalid %s tuple!' % module.family_name)
+
+        if 0 <= val1 <= module.max_int:
+            value = val1
+            if 0 <= val2 <= module.width:
+                prefixlen = val2
+            else:
+                raise AddrFormatError('invalid prefix for %s tuple!' \
+                    % module.family_name)
+        else:
+            raise AddrFormatError('invalid address value for %s tuple!' \
+                % module.family_name)
+    elif isinstance(addr, _str_type):
+        #   CIDR-like string subnet
+        if implicit_prefix:
+            #TODO: deprecate this option in netaddr 0.8.x
+            addr = cidr_abbrev_to_verbose(addr)
+        try:
+            if '/' in addr:
+                val1, val2 = addr.split('/', 1)
+            else:
+                val1 = addr
+                val2 = None
+        except ValueError:
+            raise AddrFormatError('invalid IPNetwork address %s!' % addr)
+
+        #TODO: perhaps some regex parsing would be a good idea here ...
+        try:
+            ip = IPAddress(val1, module.version, flags=INET_PTON)
+        except AddrFormatError:
+            if module.version == 4:
+                #   Try a partial IPv4 network address...
+                expanded_addr = _ipv4.expand_partial_address(val1)
+                ip = IPAddress(expanded_addr, module.version, flags=INET_PTON)
+        value = ip._value
+
+        try:
+            #   Integer CIDR prefix.
+            prefixlen = int(val2)
+        except TypeError:
+            if val2 is None:
+                #   No prefix was specified.
+                prefixlen = module.width
+        except ValueError:
+            #   Not an integer prefix, try a netmask/hostmask prefix.
+            mask = IPAddress(val2, module.version, flags=INET_PTON)
+            if mask.is_netmask():
+                prefixlen = module.netmask_to_prefix[mask._value]
+            elif mask.is_hostmask():
+                prefixlen = module.hostmask_to_prefix[mask._value]
+            else:
+                raise AddrFormatError('addr %r is not a valid IPNetwork!' \
+                    % addr)
+
+        if not 0 <= prefixlen <= module.width:
+            raise AddrFormatError('invalid prefix for %s address!' \
+                % module.family_name)
+    else:
+        raise ValueError('expected type for addr arg: %s' % type(addr))
+
+    if flags & NOHOST:
+        #   Remove host bits.
+        netmask = module.prefix_to_netmask[prefixlen]
+        value = value & netmask
+
+    return value, prefixlen
+
+#-----------------------------------------------------------------------------
 class IPNetwork(BaseIP, IPListMixin):
     """
     An IPv4 or IPv6 network or subnet. A combination of an IP address and a
@@ -802,51 +854,71 @@ class IPNetwork(BaseIP, IPListMixin):
     """
     __slots__ = ('_prefixlen',)
 
-    def __init__(self, addr, implicit_prefix=False):
+    def __init__(self, addr, implicit_prefix=False, version=None, flags=0):
         """
         Constructor.
 
         @param addr: an IPv4 or IPv6 address with optional CIDR prefix,
-            netmask or hostmask. May be an IP address in representation
-            (string) format, an integer or another IP object (copy
+            netmask or hostmask. May be an IP address in presentation
+            (string) format, an tuple containing and integer address and a
+            network prefix, or another IPAddress/IPNetwork object (copy
             construction).
 
-        @param implicit_prefix: if True, the constructor uses classful IPv4
-            rules to select a default prefix when one is not provided.
-            If False it uses the length of the IP address version.
-            (default: False).
+        @param implicit_prefix: (optional) if True, the constructor uses
+            classful IPv4 rules to select a default prefix when one is not
+            provided. If False it uses the length of the IP address version.
+            (default: False)
+
+        @param version: (optional) optimizes version detection if specified
+            and distinguishes between IPv4 and IPv6 for addresses with an
+            equivalent integer value.
+
+        @param flags: (optional) decides which rules are applied to the
+            interpretation of the addr value. Currently only supports the
+            NOHOST option. See the netaddr.core docs for further details.
+
         """
         super(IPNetwork, self).__init__()
-        self._prefixlen = None
+
+        value, prefixlen, module = None, None, None
 
         if hasattr(addr, '_prefixlen'):
-            #   Copy constructor - IPNetwork.
-            self._value = addr._value
-            self._prefixlen = addr._prefixlen
-            self._module = addr._module
+            #   IPNetwork object copy constructor
+            value = addr._value
+            module = addr._module
+            prefixlen = addr._prefixlen
         elif hasattr(addr, '_value'):
-            #   Copy constructor - IPAddress.
-            self._value = addr._value
-            self._prefixlen = addr._module.width    # standard width.
-            self._module = addr._module
+            #   IPAddress object copy constructor
+            value = addr._value
+            module = addr._module
+            prefixlen = module.width
+        elif version == 4:
+            value, prefixlen = parse_ip_network(_ipv4, addr,
+                implicit_prefix=implicit_prefix, flags=flags)
+            module = _ipv4
+        elif version == 6:
+            value, prefixlen = parse_ip_network(_ipv6, addr,
+                implicit_prefix=implicit_prefix, flags=flags)
+            module = _ipv6
         else:
-            #   Apply classful prefix length rules to IP addresses.
-            if implicit_prefix:
-                addr = cidr_abbrev_to_verbose(addr)
-
-            prefix, suffix = None, None
             try:
-                prefix, suffix = addr.split('/')
-            except ValueError:
-                pass
+                module = _ipv4
+                value, prefixlen = parse_ip_network(module, addr,
+                    implicit_prefix, flags)
+            except AddrFormatError:
+                try:
+                    module = _ipv6
+                    value, prefixlen = parse_ip_network(module, addr,
+                        implicit_prefix, flags)
+                except AddrFormatError:
+                    pass
 
-            if prefix is not None:
-                self.value = prefix
-                self.prefixlen = suffix
-            else:
-                #   No prefix was found; use the address value default.
-                self.value = addr
-                self.prefixlen = self._module.width
+                if value is None:
+                    raise AddrFormatError('invalid IPNetwork %s' % addr)
+
+        self._value = value
+        self._prefixlen = prefixlen
+        self._module = module
 
     def __getstate__(self):
         """@return: Pickled state of an C{IPNetwork} object."""
@@ -875,75 +947,16 @@ class IPNetwork(BaseIP, IPListMixin):
             raise ValueError('unpickling failed for object state %s' \
                 % str(state))
 
-    def _get_value(self):
-        return self._value
-
-    def _set_value(self, value):
-        if self._module is None:
-            #   IP version is implicit, detect it from value.
-            for module in (_ipv4, _ipv6):
-                try:
-                    self._value = module.str_to_int(value)
-                    self._module = module
-                    break
-                except AddrFormatError:
-                    try:
-                        if 0 <= int(value) <= module.max_int:
-                            self._value = int(value)
-                            self._module = module
-                            break
-                    except ValueError:
-                        pass
-
-            if self._module is None:
-                raise AddrFormatError('failed to detect IP version: %r'
-                    % value)
-        else:
-            #   IP version is explicit.
-            if hasattr(value, 'upper'):
-                try:
-                    self._value = self._module.str_to_int(value)
-                except AddrFormatError:
-                    raise AddrFormatError('base address %r is not IPv%d'
-                        % (value, self._module.version))
-            else:
-                if 0 <= int(value) <= self._module.max_int:
-                    self._value = int(value)
-                else:
-                    raise AddrFormatError('bad address format: %r' % value)
-
-    value = property(_get_value, _set_value, None,
-        'a positive integer representing the value of this IP address.')
-
-    def _get_prefixlen(self):
-        return self._prefixlen
-
     def _set_prefixlen(self, value):
-        try:
-            #   Integer CIDR prefix?
-            if 0 <= int(value) <= self._module.width:
-                self._prefixlen = int(value)
-            else:
-                raise AddrFormatError('CIDR prefix /%d out of range for ' \
-                    'IPv%d!' % (int(value), self._module.version))
-        except ValueError:
-            #   Netmask or hostmask (ACL) style CIDR prefix.
-            version = self._module.version
-            addr = IPAddress(value, version)
+        if not isinstance(value, _int_type):
+            raise TypeError('int argument expected, not %s' % type(value))
+        if not 0 <= value <= self._module.width:
+            raise AddrFormatError('invalid prefix for an %s address!' \
+                % self._module.family_name)
+        self._prefixlen = value
 
-            if addr.is_netmask():
-                self._prefixlen = addr.netmask_bits()
-            elif addr.is_hostmask():
-                #   prefixlen is an ACL (hostmask) address.
-                netmask = IPAddress(addr._module.max_int ^ int(addr), version)
-                self._prefixlen = netmask.netmask_bits()
-            else:
-                #   Enforce this for now unless users want it changed.
-                raise ValueError('CIDR prefix mask %r is invalid!' % addr)
-
-    prefixlen = property(_get_prefixlen, _set_prefixlen, None,
-        "size of the bitmask used to indentify and separate the network " \
-        "identifier\nfrom the host identifier in this IP address.")
+    prefixlen = property(lambda self: self._prefixlen, _set_prefixlen,
+        doc='size of the bitmask used to separate the network from the host bits')
 
     @property
     def ip(self):
@@ -1259,9 +1272,9 @@ class IPRange(BaseIP, IPListMixin):
         @param end: an IPv4 or IPv6 address that forms the upper
             boundary of this IP range.
 
-        @param flags: decides which rules are applied to the interpretation
-            of the start and end values. Supported constants are INET_PTON
-            and ZEROFILL. See the netaddr.core namespace documentation for
+        @param flags: (optional) decides which rules are applied to the
+            interpretation of the start and end values. Supported constants
+            are INET_PTON and ZEROFILL. See the netaddr.core docs for further
             details.
 
         """

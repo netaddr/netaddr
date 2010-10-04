@@ -20,6 +20,9 @@ P = INET_PTON = 1
 #:  Remove any preceding zeros from IPv4 address octets before parsing.
 Z = ZEROFILL = 2
 
+#:  Remove any host bits found to the right of an applied CIDR prefix.
+N = NOHOST = 4
+
 #-----------------------------------------------------------------------------
 #   Custom exceptions.
 #-----------------------------------------------------------------------------

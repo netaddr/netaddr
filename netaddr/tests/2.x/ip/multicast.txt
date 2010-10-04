@@ -11,10 +11,7 @@ Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
 >>> ip.is_multicast()
 True
 
->>> ip = IPAddress(3221225984L)
-
->>> ip.value = '231.192.0.1'
-
+>>> ip = IPAddress(3221225984)
 
 >>> ip = IPAddress('224.0.1.173')
 
