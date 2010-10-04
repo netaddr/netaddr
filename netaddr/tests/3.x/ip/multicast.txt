@@ -13,9 +13,6 @@ True
 
 >>> ip = IPAddress(3221225984)
 
->>> ip.value = '231.192.0.1'
-
-
 >>> ip = IPAddress('224.0.1.173')
 
 >>> ip.info.IPv4[0].designation

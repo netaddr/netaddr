@@ -61,11 +61,11 @@ Indexing and slicing tests.
 >>> len(iprange)
 254
 
->>> iprange.first
-3221225985
+>>> iprange.first == 3221225985
+True
 
->>> iprange.last
-3221226238
+>>> iprange.last == 3221226238
+True
 
 >>> iprange[0]
 IPAddress('192.0.2.1')
