@@ -43,6 +43,8 @@ class BaseIdentifier(object):
     def __oct__(self):
         """@return: octal string representation of this identifier."""
         #   Python 2.x only.
+        if self._value == 0:
+            return '0'
         return '0%o' % self._value
 
     def __hex__(self):

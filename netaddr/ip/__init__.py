@@ -465,6 +465,8 @@ class IPAddress(BaseIP):
     def __oct__(self):
         """@return: an octal string representation of this IP address."""
         #   Python 2.x
+        if self._value == 0:
+            return '0'
         return '0%o' % self._value
 
     def __hex__(self):
@@ -551,7 +553,11 @@ class IPAddress(BaseIP):
         klass = self.__class__
 
         if self.version == 6:
-            ip = klass(self._value, 6)
+            if ipv4_compatible and \
+                (0xffff00000000 <= self._value <= 0xffffffffffff):
+                ip = klass(self._value - 0xffff00000000, 6)
+            else:
+                ip = klass(self._value, 6)
         elif self.version == 4:
             #   IPv4-Compatible IPv6 address
             ip = klass(self._value, 6)
@@ -1111,15 +1117,20 @@ class IPNetwork(BaseIP, IPListMixin):
         klass = self.__class__
 
         if self.version == 6:
-            ip = klass('%s/%d' % (self.ip, self.prefixlen))
+            if ipv4_compatible and \
+                (0xffff00000000 <= self._value <= 0xffffffffffff):
+                ip = klass((self._value - 0xffff00000000, self._prefixlen),
+                    version=6)
+            else:
+                ip = klass((self._value, self._prefixlen), version=6)
         elif self.version == 4:
             if ipv4_compatible:
                 #   IPv4-Compatible IPv6 address
-                addr = _ipv6.int_to_str(self._value)
+                ip = klass((self._value, self._prefixlen + 96), version=6)
             else:
                 #   IPv4-Mapped IPv6 address
-                addr = _ipv6.int_to_str(0xffff00000000 + self._value)
-            ip = klass('%s/%d' % (addr, self.prefixlen + 96))
+                ip = klass((0xffff00000000 + self._value,
+                            self._prefixlen + 96), version=6)
 
         return ip
 
