@@ -44,5 +44,5 @@ recursive-include netaddr/tests/3.x/strategy *.txt
 
 include netaddr/tools/netaddr
 
-global-exclude *.pyc
 global-exclude *.svn*
+global-exclude *.git*
