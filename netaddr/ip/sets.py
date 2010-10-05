@@ -98,8 +98,7 @@ class IPSet(object):
                     % str(state))
 
             if 0 <= prefixlen <= module.width:
-                cidr = IPNetwork('%s/%d' \
-                    % (module.int_to_str(value), prefixlen))
+                cidr = IPNetwork((value, prefixlen), version=module.version)
                 self._cidrs[cidr] = True
             else:
                 raise ValueError('unpickling failed for object state %s' \

@@ -1574,8 +1574,8 @@ def cidr_merge(ip_addrs):
             return IPAddress(module.int_to_str(0), module.version)
         else:
             bits = bits + '0' * (module.width - num_bits)
-            ip = module.int_to_str(module.bits_to_int(bits))
-            return IPNetwork('%s/%d' % (ip, num_bits), module.version)
+            return IPNetwork((module.bits_to_int(bits), num_bits),
+                version=module.version)
 
     #   Reduce and format lists of reduced CIDRs.
     for bits in _reduce_bit_cidrs(list(ipv4_bit_cidrs)):
@@ -1617,10 +1617,8 @@ def cidr_exclude(target, exclude):
         i_lower = target.first
         i_upper = target.first + (2 ** (target._module.width - new_prefixlen))
 
-        lower = IPNetwork('%s/%d' % (target._module.int_to_str(i_lower),
-            new_prefixlen))
-        upper = IPNetwork('%s/%d' % (target._module.int_to_str(i_upper),
-            new_prefixlen))
+        lower = IPNetwork((i_lower, new_prefixlen))
+        upper = IPNetwork((i_upper, new_prefixlen))
 
         while exclude.prefixlen >= new_prefixlen:
             if exclude in lower:
@@ -1634,8 +1632,7 @@ def cidr_exclude(target, exclude):
                 cidrs.append(target.cidr)
                 break
 
-            ip = IPNetwork('%s/%d' % (target._module.int_to_str(unmatched),
-                new_prefixlen))
+            ip = IPNetwork((unmatched, new_prefixlen))
 
             cidrs.append(ip)
 
@@ -1647,10 +1644,8 @@ def cidr_exclude(target, exclude):
             i_lower = matched
             i_upper = matched + (2 ** (target._module.width - new_prefixlen))
 
-            lower = IPNetwork('%s/%d' % (target._module.int_to_str(i_lower),
-                new_prefixlen))
-            upper = IPNetwork('%s/%d' % (target._module.int_to_str(i_upper),
-                new_prefixlen))
+            lower = IPNetwork((i_lower, new_prefixlen))
+            upper = IPNetwork((i_upper, new_prefixlen))
 
     cidrs.sort()
 
