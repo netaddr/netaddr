@@ -159,6 +159,7 @@ def _inet_pton_af_inet(ip_string):
     by only support decimal octets. Using octal or hexadecimal values will
     raise a ValueError exception.
     """
+    #TODO: optimise this ... use inet_aton with mods if available ...
     if hasattr(ip_string, 'split'):
         invalid_addr = ValueError('illegal IP address string %r' % ip_string)
         #   Support for hexadecimal and octal octets.
