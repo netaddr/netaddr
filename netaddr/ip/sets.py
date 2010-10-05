@@ -13,7 +13,7 @@ from netaddr.ip.intset import IntSet as _IntSet
 from netaddr.ip import IPNetwork, IPAddress, cidr_merge, cidr_exclude, \
     iprange_to_cidrs
 
-from netaddr.compat import _zip, _sys_maxint, _dict_keys
+from netaddr.compat import _zip, _sys_maxint, _dict_keys, _int_type
 
 #-----------------------------------------------------------------------------
 def partition_ips(iterable):
@@ -52,17 +52,28 @@ class IPSet(object):
     """
     __slots__ = ('_cidrs',)
 
-    def __init__(self, iterable=None):
+    def __init__(self, iterable=None, flags=0):
         """
         Constructor.
 
         @param iterable: (optional) an iterable containing IP addresses and
             subnets.
+
+        @param flags: decides which rules are applied to the interpretation
+            of the addr value. See the netaddr.core namespace documentation
+            for supported constant values.
+
         """
         self._cidrs = {}
         if iterable is not None:
-            for ip in cidr_merge(iterable):
-                self._cidrs[ip] = True
+            mergeable = []
+            for addr in iterable:
+                if isinstance(addr, _int_type):
+                    addr = IPAddress(addr, flags=flags)
+                mergeable.append(addr)
+
+            for cidr in cidr_merge(mergeable):
+                self._cidrs[cidr] = True
 
     def __getstate__(self):
         """@return: Pickled state of an C{IPSet} object."""
@@ -133,7 +144,7 @@ class IPSet(object):
         """
         return sorted(self._cidrs)
 
-    def add(self, ip):
+    def add(self, addr, flags=0):
         """
         Adds an IP address or subnet to this IP set. Has no effect if it is
         already present.
@@ -141,12 +152,21 @@ class IPSet(object):
         Note that where possible the IP address or subnet is merged with other
         members of the set to form more concise CIDR blocks.
 
-        @param ip: An IP address or subnet.
+        @param addr: An IP address or subnet.
+
+        @param flags: decides which rules are applied to the interpretation
+            of the addr value. See the netaddr.core namespace documentation
+            for supported constant values.
+
         """
-        self._cidrs[IPNetwork(ip)] = True
+        if isinstance(addr, _int_type):
+            addr = IPAddress(addr, flags=flags)
+        else:
+            addr = IPNetwork(addr)
+        self._cidrs[addr] = True
         self.compact()
 
-    def remove(self, ip):
+    def remove(self, addr, flags=0):
         """
         Removes an IP address or subnet from this IP set. Does nothing if it
         is not already a member.
@@ -158,9 +178,17 @@ class IPSet(object):
         individual IP addresses as individual set members using IPNetwork
         objects.
 
-        @param ip: An IP address or subnet.
+        @param addr: An IP address or subnet.
+
+        @param flags: decides which rules are applied to the interpretation
+            of the addr value. See the netaddr.core namespace documentation
+            for supported constant values.
+
         """
-        ip = IPNetwork(ip)
+        if isinstance(addr, _int_type):
+            addr = IPAddress(addr, flags=flags)
+        else:
+            addr = IPNetwork(addr)
 
         #   This add() is required for address blocks provided that are larger
         #   than blocks found within the set but have overlaps. e.g. :-
@@ -168,15 +196,15 @@ class IPSet(object):
         #   >>> IPSet(['192.0.2.0/24']).remove('192.0.2.0/23')
         #   IPSet([])
         #
-        self.add(ip)
+        self.add(addr)
 
         remainder = None
         matching_cidr = None
 
         #   Search for a matching CIDR and exclude IP from it.
         for cidr in self._cidrs:
-            if ip in cidr:
-                remainder = cidr_exclude(cidr, ip)
+            if addr in cidr:
+                remainder = cidr_exclude(cidr, addr)
                 matching_cidr = cidr
                 break
 
@@ -215,24 +243,36 @@ class IPSet(object):
         obj_copy._cidrs.update(self._cidrs)
         return obj_copy
 
-    def update(self, iterable):
+    def update(self, iterable, flags=0):
         """
         Update the contents of this IP set with the union of itself and
         other IP set.
 
         @param iterable: an iterable containing IP addresses and subnets.
+
+        @param flags: decides which rules are applied to the interpretation
+            of the addr value. See the netaddr.core namespace documentation
+            for supported constant values.
+
         """
         if not hasattr(iterable, '__iter__'):
             raise TypeError('an iterable was expected!')
 
         if hasattr(iterable, '_cidrs'):
             #   Another IP set.
-            for ip in cidr_merge(_dict_keys(self._cidrs) + _dict_keys(iterable._cidrs)):
+            for ip in cidr_merge(_dict_keys(self._cidrs)
+                               + _dict_keys(iterable._cidrs)):
                 self._cidrs[ip] = True
         else:
             #   An iterable contain IP addresses or subnets.
-            for ip in cidr_merge(_dict_keys(self._cidrs) + list(iterable)):
-                self._cidrs[ip] = True
+            mergeable = []
+            for addr in iterable:
+                if isinstance(addr, _int_type):
+                    addr = IPAddress(addr, flags=flags)
+                mergeable.append(addr)
+
+            for cidr in cidr_merge(_dict_keys(self._cidrs) + mergeable):
+                self._cidrs[cidr] = True
 
         self.compact()
 
