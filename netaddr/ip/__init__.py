@@ -280,7 +280,7 @@ class IPAddress(BaseIP):
                 elif version == 6:
                     self._module = _ipv6
                 else:
-                    raise ValueError('unsupported IP version %r' % version)
+                    raise ValueError('%r is an invalid IP version!' % version)
 
             has_upper = hasattr(addr, 'upper')
             if has_upper and '/' in addr:
@@ -772,7 +772,6 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
         except ValueError:
             raise AddrFormatError('invalid IPNetwork address %s!' % addr)
 
-        #TODO: perhaps some regex parsing would be a good idea here ...
         try:
             ip = IPAddress(val1, module.version, flags=INET_PTON)
         except AddrFormatError:
@@ -804,7 +803,7 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
             raise AddrFormatError('invalid prefix for %s address!' \
                 % module.family_name)
     else:
-        raise ValueError('expected type for addr arg: %s' % type(addr))
+        raise TypeError('unexpected type %s for addr arg' % type(addr))
 
     if flags & NOHOST:
         #   Remove host bits.
@@ -907,6 +906,8 @@ class IPNetwork(BaseIP, IPListMixin):
                 implicit_prefix=implicit_prefix, flags=flags)
             module = _ipv6
         else:
+            if version is not None:
+                raise ValueError('%r is an invalid IP version!' % version)
             try:
                 module = _ipv4
                 value, prefixlen = parse_ip_network(module, addr,
