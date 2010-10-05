@@ -1,18 +1,29 @@
 Release: 0.7.5
-Date: xxx Sep 2010
+Date: 5th Oct 2010
 
 Changes since 0.7.4
 -------------------
 
-* Added Python 3.x support. Please help with testing!
+* Python 3.x is now fully supported. The paint is still drying on this so
+  please help with testing and raise bug tickets when you find any issues!
 
-* Moved code hosting to github. All history ported thanks to the
-  excellent svn2git - http://github.com/nirvdrum/svn2git
+* Moved code hosting to github. All history ported thanks to the most
+  excellent tool, svn2git (http://github.com/nirvdrum/svn2git).
 
-* Objects now use approx. 65% less memory due to the use of __slots__
-  in classes throughout the codebase.
+* All netaddr objects now use approx. 65% less memory due to the use of
+  __slots__ in classes throughout the codebase. Thanks to Stefan Nordhausen
+  and his Python guru for this suggestion!
 
-* Applied various optimisations throughout.
+* Applied many optimisations and speedups throughout the codebase.
+
+* Fixed the behaviour of the IPNetwork constructor so it now behaves in
+  a much more sensible and expected way (i.e. no longer uses inet_aton
+  semantics which is just plain odd for network addresses).
+
+* One minor change to behaviour in this version is that the .value property
+  on IPAddress and IPNetwork objects no longer support assignment using a
+  string IP address. Only integer value assignments are now valid. The impact
+  of this change should be minimal for the majority of users.
 
 Specific bug fixes addressed in this release
 --------------------------------------------
@@ -20,6 +31,10 @@ Specific bug fixes addressed in this release
 * FIXED Issue 49 - http://code.google.com/p/netaddr/issues/detail?id=49
 
     - Incorrect IP range recognition on IPs with leading zeros
+
+* FIXED Issue 50 - http://code.google.com/p/netaddr/issues/detail?id=50
+
+    - CIDR block parsing
 
 * FIXED Issue 52 - http://code.google.com/p/netaddr/issues/detail?id=52
 
@@ -37,9 +52,17 @@ Specific bug fixes addressed in this release
 
     - Support for Python 3.x
 
+* FIXED Issue 56 - http://code.google.com/p/netaddr/issues/detail?id=56
+
+    - checking IPAddress in IPNetwork
+
 * FIXED Issue 57 - http://code.google.com/p/netaddr/issues/detail?id=57
 
     - netaddr objects can't pickle
+
+* FIXED Issue 58 - http://code.google.com/p/netaddr/issues/detail?id=58
+
+    - IPSet operations should accept the same arguments as IPAddress
 
 * FIXED Issue 59 - http://code.google.com/p/netaddr/issues/detail?id=59
 
