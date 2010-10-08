@@ -6,9 +6,10 @@ Changes since 0.7.4
 
 * Python 3.x is now fully supported. The paint is still drying on this so
   please help with testing and raise bug tickets when you find any issues!
+  New Issue Tracker - http://github.com/drkjam/netaddr/issues
 
-* Moved code hosting to github. All history ported thanks to the most
-  excellent tool, svn2git (http://github.com/nirvdrum/svn2git).
+* Moved code hosting to github. History ported thanks to svn2git.
+  - (http://github.com/nirvdrum/svn2git)
 
 * All netaddr objects now use approx. 65% less memory due to the use of
   __slots__ in classes throughout the codebase. Thanks to Stefan Nordhausen
@@ -68,8 +69,8 @@ Specific bug fixes addressed in this release
 
     - netaddr fails to load when imported by a PowerDNS coprocess
 
-Miscellaneous
--------------
+Miscellanea
+-----------
 
 - Welcome back to standards.ieee.org which seems to have been down for weeks!
 
