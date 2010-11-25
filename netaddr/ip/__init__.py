@@ -779,6 +779,8 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
                 #   Try a partial IPv4 network address...
                 expanded_addr = _ipv4.expand_partial_address(val1)
                 ip = IPAddress(expanded_addr, module.version, flags=INET_PTON)
+            else:
+                raise AddrFormatError('invalid IPNetwork address %s!' % addr)
         value = ip._value
 
         try:

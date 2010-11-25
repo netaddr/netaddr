@@ -209,3 +209,14 @@ IPNetwork('172.24.0.0/16')
 
 
 }}}
+
+Negative testing
+
+{{{
+
+>>> IPNetwork('foo')
+Traceback (most recent call last):
+...
+AddrFormatError: invalid IPNetwork foo
+
+}}}
