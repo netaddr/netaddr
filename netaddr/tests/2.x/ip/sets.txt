@@ -432,3 +432,16 @@ IPSet(['0.0.0.1/32', '0.0.0.2/31', ..., '64.0.0.0/2', '128.0.0.0/1'])
 IPSet(['0.0.0.0/0'])
 
 }}}
+
+Pickling of IPSet objects
+
+{{{
+
+>>> import pickle
+>>> ip_data = IPSet(['10.0.0.0/16', 'fe80::/64'])
+>>> buf = pickle.dumps(ip_data)
+>>> ip_data_unpickled = pickle.loads(buf)
+>>> ip_data == ip_data_unpickled
+True
+
+}}}

@@ -8,6 +8,7 @@
 import sys as _sys
 import itertools as _itertools
 
+from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 from netaddr.ip.intset import IntSet as _IntSet
 
 from netaddr.ip import IPNetwork, IPAddress, cidr_merge, cidr_exclude, \
