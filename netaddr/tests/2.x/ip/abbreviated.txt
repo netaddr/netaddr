@@ -15,12 +15,12 @@ Abbreviation tests.
 >>> ranges = (
 ... (IPAddress('::'), IPAddress('::')),
 ... (IPAddress('0.0.0.0'), IPAddress('255.255.255.255')),
-... (IPAddress('::'), IPAddress('::FFFF')),
+... (IPAddress('::'), IPAddress('::255.255.255.255')),
 ... (IPAddress('0.0.0.0'), IPAddress('0.0.0.0')),
 ... )
 
 >>> sorted(ranges)
-[(IPAddress('0.0.0.0'), IPAddress('0.0.0.0')), (IPAddress('0.0.0.0'), IPAddress('255.255.255.255')), (IPAddress('::'), IPAddress('::')), (IPAddress('::'), IPAddress('::ffff'))]
+[(IPAddress('0.0.0.0'), IPAddress('0.0.0.0')), (IPAddress('0.0.0.0'), IPAddress('255.255.255.255')), (IPAddress('::'), IPAddress('::')), (IPAddress('::'), IPAddress('::255.255.255.255'))]
 
 #   Integer values.
 >>> cidr_abbrev_to_verbose(-1)

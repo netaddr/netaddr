@@ -206,9 +206,6 @@ IPv6 mapped and compatible IPv4 string formatting.
 
 {{{
 
->>> int_to_str(0xffff)
-'::ffff'
-
 >>> int_to_str(0xffffff)
 '::0.255.255.255'
 >>> int_to_str(0xffffffff)

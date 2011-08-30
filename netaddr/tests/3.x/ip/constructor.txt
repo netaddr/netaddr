@@ -117,12 +117,6 @@ IPAddress constructor - zero filled octets.
 >>> IPAddress('010.000.000.001')
 IPAddress('8.0.0.1')
 
-#   Sadly, inet_pton cannot help us here ...
->>> IPAddress('010.000.000.001', flags=INET_PTON)
-Traceback (most recent call last):
-...
-netaddr.core.AddrFormatError: failed to detect a valid IP address from '010.000.000.001'
-
 #   So, we need this!
 >>> IPAddress('010.000.000.001', flags=ZEROFILL)
 IPAddress('10.0.0.1')

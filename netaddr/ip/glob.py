@@ -176,6 +176,11 @@ def iprange_to_globs(start, end):
     try:
         #   IP range can be represented by a single glob.
         ipglob = _iprange_to_glob(start, end)
+        if not valid_glob(ipglob):
+            #TODO: this is a workaround, it is produces non-optimal but valid
+            #TODO: glob conversions. Fix inner function so that is always
+            #TODO: produces a valid glob.
+            raise AddrConversionError('invalid ip glob created')
         globs.append(ipglob)
     except AddrConversionError:
         #   Break IP range up into CIDRs before conversion to globs.
