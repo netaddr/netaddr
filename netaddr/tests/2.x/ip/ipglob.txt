@@ -53,3 +53,20 @@ IP Glob tests.
 
 }}}
 
+Validity tests.
+
+{{{
+
+>>> valid_glob('1.1.1.a')
+False
+
+>>> valid_glob('1.1.1.1/32')
+False
+
+>>> valid_glob('1.1.1.a-b')
+False
+
+>>> valid_glob('1.1.a-b.*')
+False
+
+}}}

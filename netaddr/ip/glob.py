@@ -41,7 +41,10 @@ def valid_glob(ipglob):
             if seen_asterisk:
                 #   Asterisks cannot precede hyphenated octets.
                 return False
-            (octet1, octet2) = [int(i) for i in octet.split('-')]
+            try:
+                (octet1, octet2) = [int(i) for i in octet.split('-')]
+            except ValueError:
+                return False
             if octet1 >= octet2:
                 return False
             if not 0 <= octet1 <= 254:
@@ -55,9 +58,11 @@ def valid_glob(ipglob):
                 return False
             if seen_asterisk is True:
                 return False
-            if not 0 <= int(octet) <= 255:
+            try:
+                if not 0 <= int(octet) <= 255:
+                    return False
+            except ValueError:
                 return False
-
     return True
 
 #-----------------------------------------------------------------------------
