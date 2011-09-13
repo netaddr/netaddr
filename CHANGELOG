@@ -9,9 +9,9 @@ Purely a bug fix release.
 Specific bug fixes addressed in this release
 --------------------------------------------
 
-* FIXED Issue 14 - http://github.com/drkjam/netaddr/issues/14
+* FIXED Issue 15 - http://github.com/drkjam/netaddr/issues/15
 
-    - Convert list of IP CIDR strings to a human-readable glob
+    - Incorrect and invalid glob produced when last octet is not *
 
 * FIXED Issue 13 - http://github.com/drkjam/netaddr/issues/13
 
