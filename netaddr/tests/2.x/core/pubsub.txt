@@ -1,6 +1,6 @@
 =Publish / Subscribe DP Tests=
 
-Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 
 Basic Publisher and Subscriber object tests.
 
