@@ -4,6 +4,8 @@ Date: 13th Sep 2011
 Changes since 0.7.5
 -------------------
 
+Refreshed 3rd party data caches.
+
 Purely a bug fix release.
 
 Specific bug fixes addressed in this release
@@ -28,6 +30,11 @@ Specific bug fixes addressed in this release
 * FIXED Issue 2 - http://github.com/drkjam/netaddr/issues/2
 
     - UnboundLocalError raised in IPNetwork constructor. Thanks keesbos
+
+Miscellanea
+-----------
+
+- Has a famous soft drink company started making it own NICs?
 
 ---------------------------------------------------------------------
 Release: 0.7.5
