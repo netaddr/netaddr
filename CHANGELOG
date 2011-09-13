@@ -4,9 +4,14 @@ Date: 13th Sep 2011
 Changes since 0.7.5
 -------------------
 
-Refreshed 3rd party data caches.
+* A bug fix point release
 
-Purely a bug fix release.
+* Refreshed 3rd party data caches
+
+* Tested against Python 3.2.x and PyPy 1.6.x
+
+* Fixed unit tests under for Mac OSX
+
 
 Specific bug fixes addressed in this release
 --------------------------------------------
