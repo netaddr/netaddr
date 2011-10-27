@@ -1520,7 +1520,7 @@ def cidr_merge(ip_addrs):
         while 1:
             finished = True
             while (cidrs):
-                if len(new_cidrs) == 0:
+                if not new_cidrs:
                     new_cidrs.append(cidrs.pop(0))
                 if not cidrs:
                     break
