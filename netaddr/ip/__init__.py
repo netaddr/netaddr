@@ -1519,10 +1519,10 @@ def cidr_merge(ip_addrs):
         #   Multiple passes are required to obtain precise results.
         while 1:
             finished = True
-            while len(cidrs) > 0:
+            while (cidrs):
                 if len(new_cidrs) == 0:
                     new_cidrs.append(cidrs.pop(0))
-                if len(cidrs) == 0:
+                if not cidrs:
                     break
                 #   lhs and rhs are same size and adjacent.
                 (new_cidr, subs) = RE_CIDR_ADJACENT.subn(
