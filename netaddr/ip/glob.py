@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -41,7 +41,10 @@ def valid_glob(ipglob):
             if seen_asterisk:
                 #   Asterisks cannot precede hyphenated octets.
                 return False
-            (octet1, octet2) = [int(i) for i in octet.split('-')]
+            try:
+                (octet1, octet2) = [int(i) for i in octet.split('-')]
+            except ValueError:
+                return False
             if octet1 >= octet2:
                 return False
             if not 0 <= octet1 <= 254:
@@ -55,9 +58,11 @@ def valid_glob(ipglob):
                 return False
             if seen_asterisk is True:
                 return False
-            if not 0 <= int(octet) <= 255:
+            try:
+                if not 0 <= int(octet) <= 255:
+                    return False
+            except ValueError:
                 return False
-
     return True
 
 #-----------------------------------------------------------------------------
@@ -176,6 +181,11 @@ def iprange_to_globs(start, end):
     try:
         #   IP range can be represented by a single glob.
         ipglob = _iprange_to_glob(start, end)
+        if not valid_glob(ipglob):
+            #TODO: this is a workaround, it is produces non-optimal but valid
+            #TODO: glob conversions. Fix inner function so that is always
+            #TODO: produces a valid glob.
+            raise AddrConversionError('invalid ip glob created')
         globs.append(ipglob)
     except AddrConversionError:
         #   Break IP range up into CIDRs before conversion to globs.

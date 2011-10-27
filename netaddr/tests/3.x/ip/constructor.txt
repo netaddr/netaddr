@@ -1,6 +1,6 @@
 =IP Constructor Stress Tests=
 
-Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 
 {{{
 
@@ -116,12 +116,6 @@ IPAddress constructor - zero filled octets.
 #   This takes a lot of people by surprise ...
 >>> IPAddress('010.000.000.001')
 IPAddress('8.0.0.1')
-
-#   Sadly, inet_pton cannot help us here ...
->>> IPAddress('010.000.000.001', flags=INET_PTON)
-Traceback (most recent call last):
-...
-netaddr.core.AddrFormatError: failed to detect a valid IP address from '010.000.000.001'
 
 #   So, we need this!
 >>> IPAddress('010.000.000.001', flags=ZEROFILL)

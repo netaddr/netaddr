@@ -1,6 +1,6 @@
 =IEEE EUI-48 Strategy Module=
 
-Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 
 {{{
 

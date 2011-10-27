@@ -1,6 +1,6 @@
 =IP version 6 Strategy Module=
 
-Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 
 {{{
 
@@ -205,9 +205,6 @@ True
 IPv6 mapped and compatible IPv4 string formatting.
 
 {{{
-
->>> int_to_str(0xffff)
-'::ffff'
 
 >>> int_to_str(0xffffff)
 '::0.255.255.255'

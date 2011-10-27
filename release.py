@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -113,6 +113,7 @@ classifiers = [
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.0',
     'Programming Language :: Python :: 3.1',
+    'Programming Language :: Python :: 3.2',
     'Topic :: Communications',
     'Topic :: Documentation',
     'Topic :: Education',

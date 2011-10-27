@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -26,6 +26,7 @@ def test_suite_all():
 
     base_path = abspath(pathjoin(dirname(__file__), '..'))
 
+    #   Select tests based on the version of the Python interpreter.
     py_ver_dir = '2.x'
     if sys.version_info[0] == 3:
         py_ver_dir = '3.x'
@@ -41,6 +42,12 @@ def test_suite_all():
 
     #   Add anything to the skiplist that we want to leave out.
     skiplist = []
+
+    #   Drop platform specific tests for other platforms.
+    platform_tests = ['platform_darwin.txt', 'platform_linux2.txt', 'platform_win32.txt']
+    for platform_test in platform_tests:
+        if not sys.platform in platform_test:
+            skiplist.append(platform_test)
 
     #   Exclude any entries from the skip list.
     test_files = [t for t in test_files if basename(t) not in skiplist]

@@ -1,3 +1,47 @@
+Release: 0.7.6
+Date: 13th Sep 2011
+
+Changes since 0.7.5
+-------------------
+
+* A bug fix point release
+
+* Refreshed 3rd party data caches
+
+* Tested against Python 3.2.x and PyPy 1.6.x
+
+* Fixed unit tests under for Mac OSX
+
+
+Specific bug fixes addressed in this release
+--------------------------------------------
+
+* FIXED Issue 15 - http://github.com/drkjam/netaddr/issues/15
+
+    - Incorrect and invalid glob produced when last octet is not *
+
+* FIXED Issue 13 - http://github.com/drkjam/netaddr/issues/13
+
+    - Added support for IPython 0.11 API changes. Thanks juliantaylor
+
+* FIXED Issue 11 - http://github.com/drkjam/netaddr/issues/11
+
+    - Calling valid_glob on cidr raises ValueError. Thanks radicand
+
+* FIXED Issue 7 - http://github.com/drkjam/netaddr/issues/7
+
+    - Unpickling Bug in IPSet. Thanks LuizOz and labeneator
+
+* FIXED Issue 2 - http://github.com/drkjam/netaddr/issues/2
+
+    - UnboundLocalError raised in IPNetwork constructor. Thanks keesbos
+
+Miscellanea
+-----------
+
+- Has a famous soft drink company started making it own NICs?
+
+---------------------------------------------------------------------
 Release: 0.7.5
 Date: 5th Oct 2010
 

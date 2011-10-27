@@ -1,12 +1,12 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """A Python library for manipulating IP and EUI network addresses."""
 
 #: Version info (major, minor, maintenance, status)
-VERSION = (0, 7, 5)
+VERSION = (0, 7, 6)
 STATUS = ''
 __version__ = '%d.%d.%d' % VERSION[0:3] + STATUS
 

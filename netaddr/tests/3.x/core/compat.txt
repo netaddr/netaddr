@@ -1,6 +1,6 @@
 =Python 2.x and 3.x compatibility tests=
 
-Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 
 {{{
 

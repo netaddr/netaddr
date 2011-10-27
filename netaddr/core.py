@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2010, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -198,8 +198,9 @@ def dos2unix(filename):
     Replace DOS line endings (CRLF) with UNIX line endings (LF) in file.
 
     """
-    data = open(filename, "rb").read()
-    data.close()
+    fh = open(filename, "rb")
+    data = fh.read()
+    fh.close()
 
     if '\0' in data:
         raise ValueError('file contains binary data: %s!' % filename)
