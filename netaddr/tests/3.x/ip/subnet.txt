@@ -33,6 +33,12 @@ Incrementing IP objects.
 '192.0.2.224/28'
 '192.0.2.240/28'
 
+>>> ip = IPNetwork('2001:470:1f04::/48')
+>>> for i in ip.subnet(128):
+...     print (i)
+...     break
+2001:470:1f04::/128
+
 }}}
 
 IP address and subnet sortability.

@@ -1217,12 +1217,13 @@ class IPNetwork(BaseIP, IPListMixin):
             raise ValueError('count outside of current IP subnet boundary!')
 
         base_subnet = self._module.int_to_str(self.first)
-
-        for i in _iter_range(count):
+        i = 0
+        while(i < count):
             subnet = self.__class__('%s/%d' % (base_subnet, prefixlen),
                 self.version)
             subnet.value += (subnet.size * i)
             subnet.prefixlen = prefixlen
+            i += 1
             yield subnet
 
     def iter_hosts(self):
@@ -1519,10 +1520,10 @@ def cidr_merge(ip_addrs):
         #   Multiple passes are required to obtain precise results.
         while 1:
             finished = True
-            while len(cidrs) > 0:
-                if len(new_cidrs) == 0:
+            while (cidrs):
+                if not new_cidrs:
                     new_cidrs.append(cidrs.pop(0))
-                if len(cidrs) == 0:
+                if not cidrs:
                     break
                 #   lhs and rhs are same size and adjacent.
                 (new_cidr, subs) = RE_CIDR_ADJACENT.subn(
