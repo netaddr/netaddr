@@ -75,7 +75,7 @@ class BaseIP(object):
         """
         try:
             return self.key() == other.key()
-        except AttributeError:
+        except (AttributeError, TypeError):
             return NotImplemented
 
     def __ne__(self, other):
@@ -87,7 +87,7 @@ class BaseIP(object):
         """
         try:
             return self.key() != other.key()
-        except AttributeError:
+        except (AttributeError, TypeError):
             return NotImplemented
 
     def __lt__(self, other):
@@ -99,7 +99,7 @@ class BaseIP(object):
         """
         try:
             return self.sort_key() < other.sort_key()
-        except AttributeError:
+        except (AttributeError, TypeError):
             return NotImplemented
 
     def __le__(self, other):
@@ -111,7 +111,7 @@ class BaseIP(object):
         """
         try:
             return self.sort_key() <= other.sort_key()
-        except AttributeError:
+        except (AttributeError, TypeError):
             return NotImplemented
 
     def __gt__(self, other):
@@ -123,7 +123,7 @@ class BaseIP(object):
         """
         try:
             return self.sort_key() > other.sort_key()
-        except AttributeError:
+        except (AttributeError, TypeError):
             return NotImplemented
 
     def __ge__(self, other):
@@ -135,7 +135,7 @@ class BaseIP(object):
         """
         try:
             return self.sort_key() >= other.sort_key()
-        except AttributeError:
+        except (AttributeError, TypeError):
             return NotImplemented
 
     def is_unicast(self):
