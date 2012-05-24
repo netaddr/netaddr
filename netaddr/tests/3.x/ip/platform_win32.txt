@@ -82,7 +82,7 @@ IPNetwork('::255.255.255.254/128')
 >>> IPAddress('010.000.000.001', flags=INET_PTON)
 Traceback (most recent call last):
 ...
-AddrFormatError: failed to detect a valid IP address from '010.000.000.001'
+netaddr.core.AddrFormatError: failed to detect a valid IP address from '010.000.000.001'
 
 >>> from netaddr.strategy.ipv6 import int_to_str
 >>> int_to_str(0xffff)
