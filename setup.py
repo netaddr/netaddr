@@ -1,9 +1,7 @@
 #!/usr/bin/env python
-#-----------------------------------------------------------------------------
 #   Copyright (c) 2008-2011, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
 """
 A distutils Python setup file. For setuptools support see setup_egg.py.
 """
@@ -17,7 +15,6 @@ if os.path.exists('MANIFEST'):
 
 import release
 
-#-----------------------------------------------------------------------------
 def main():
     if sys.version_info[:2] < (2, 4):
         sys.stderr.write("netaddr requires Python version 2.4 or higher.\n")
@@ -42,6 +39,7 @@ def main():
         scripts          = release.scripts,
         url              = release.url,
         version          = release.version,
+        install_requires = release.install_requires,
     )
 
     #   IPython does not currently support Python 3.x so disable this.
@@ -50,6 +48,5 @@ def main():
 
     setup(**setup_options)
 
-#-----------------------------------------------------------------------------
 if __name__ == "__main__":
     main()

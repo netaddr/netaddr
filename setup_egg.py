@@ -63,6 +63,7 @@ def main():
         url              = release.url,
         version          = release.version,
         zip_safe         = False,   #   Package should always be extracted.
+        install_requires = release.install_requires,
     )
 
     setup(**setup_options)

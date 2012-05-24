@@ -152,3 +152,7 @@ classifiers = [
     'Topic :: Text Processing :: Filters',
     'Topic :: Utilities',
 ]
+
+install_requires = [
+    'IPython',
+]
