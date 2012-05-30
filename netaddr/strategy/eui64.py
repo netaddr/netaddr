@@ -64,9 +64,9 @@ RE_EUI64_FORMAT = _re.compile('^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$',
 #-----------------------------------------------------------------------------
 def valid_str(addr):
     """
-    @param addr: An IEEE EUI-64 indentifier in string form.
+    :param addr: An IEEE EUI-64 indentifier in string form.
 
-    @return: C{True} if EUI-64 indentifier is valid, C{False} otherwise.
+    :return: C{True} if EUI-64 indentifier is valid, C{False} otherwise.
     """
     try:
         match_result = RE_EUI64_FORMAT.findall(addr)
@@ -80,9 +80,9 @@ def valid_str(addr):
 #-----------------------------------------------------------------------------
 def str_to_int(addr):
     """
-    @param addr: An IEEE EUI-64 indentifier in string form.
+    :param addr: An IEEE EUI-64 indentifier in string form.
 
-    @return: An unsigned integer that is equivalent to value represented
+    :return: An unsigned integer that is equivalent to value represented
         by EUI-64 string identifier.
     """
     words = []
@@ -105,12 +105,12 @@ def str_to_int(addr):
 #-----------------------------------------------------------------------------
 def int_to_str(int_val, dialect=None):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @param dialect: (optional) a Python class defining formatting options
+    :param dialect: (optional) a Python class defining formatting options
         (Please Note - not currently in use).
 
-    @return: An IEEE EUI-64 identifier that is equivalent to unsigned integer.
+    :return: An IEEE EUI-64 identifier that is equivalent to unsigned integer.
     """
     words = int_to_words(int_val)
     tokens = [word_fmt % i for i in words]
@@ -120,9 +120,9 @@ def int_to_str(int_val, dialect=None):
 #-----------------------------------------------------------------------------
 def int_to_packed(int_val):
     """
-    @param int_val: the integer to be packed.
+    :param int_val: the integer to be packed.
 
-    @return: a packed string that is equivalent to value represented by an
+    :return: a packed string that is equivalent to value represented by an
     unsigned integer.
     """
     words = int_to_words(int_val)
@@ -131,10 +131,10 @@ def int_to_packed(int_val):
 #-----------------------------------------------------------------------------
 def packed_to_int(packed_int):
     """
-    @param packed_int: a packed string containing an unsigned integer.
+    :param packed_int: a packed string containing an unsigned integer.
         It is assumed that string is packed in network byte order.
 
-    @return: An unsigned integer equivalent to value of network address
+    :return: An unsigned integer equivalent to value of network address
         represented by packed binary string.
     """
     words = list(_struct.unpack('>8B', packed_int))

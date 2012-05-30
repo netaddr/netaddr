@@ -13,7 +13,7 @@ from netaddr.compat import _range
 #-----------------------------------------------------------------------------
 def bytes_to_bits():
     """
-    @return: A 256 element list containing 8-bit binary digit strings. The
+    :return: A 256 element list containing 8-bit binary digit strings. The
         list index value is equivalent to its bit string value.
     """
     lookup = []
@@ -32,13 +32,13 @@ BYTES_TO_BITS = bytes_to_bits()
 #-----------------------------------------------------------------------------
 def valid_words(words, word_size, num_words):
     """
-    @param words: A sequence of unsigned integer word values.
+    :param words: A sequence of unsigned integer word values.
 
-    @param word_size: Width (in bits) of each unsigned integer word value.
+    :param word_size: Width (in bits) of each unsigned integer word value.
 
-    @param num_words: Number of unsigned integer words expected.
+    :param num_words: Number of unsigned integer words expected.
 
-    @return: C{True} if word sequence is valid for this address type,
+    :return: C{True} if word sequence is valid for this address type,
         C{False} otherwise.
     """
     if not hasattr(words, '__iter__'):
@@ -58,13 +58,13 @@ def valid_words(words, word_size, num_words):
 #-----------------------------------------------------------------------------
 def int_to_words(int_val, word_size, num_words):
     """
-    @param int_val: Unsigned integer to be divided into words of equal size.
+    :param int_val: Unsigned integer to be divided into words of equal size.
 
-    @param word_size: Width (in bits) of each unsigned integer word value.
+    :param word_size: Width (in bits) of each unsigned integer word value.
 
-    @param num_words: Number of unsigned integer words expected.
+    :param num_words: Number of unsigned integer words expected.
 
-    @return: A tuple contain unsigned integer word values split according
+    :return: A tuple contain unsigned integer word values split according
         to provided arguments.
     """
     max_int = 2 ** (num_words * word_size) - 1
@@ -85,13 +85,13 @@ def int_to_words(int_val, word_size, num_words):
 #-----------------------------------------------------------------------------
 def words_to_int(words, word_size, num_words):
     """
-    @param words: A sequence of unsigned integer word values.
+    :param words: A sequence of unsigned integer word values.
 
-    @param word_size: Width (in bits) of each unsigned integer word value.
+    :param word_size: Width (in bits) of each unsigned integer word value.
 
-    @param num_words: Number of unsigned integer words expected.
+    :param num_words: Number of unsigned integer words expected.
 
-    @return: An unsigned integer that is equivalent to value represented
+    :return: An unsigned integer that is equivalent to value represented
         by word sequence.
     """
     if not valid_words(words, word_size, num_words):
@@ -108,15 +108,15 @@ def words_to_int(words, word_size, num_words):
 #-----------------------------------------------------------------------------
 def valid_bits(bits, width, word_sep=''):
     """
-    @param bits: A network address in a delimited binary string format.
+    :param bits: A network address in a delimited binary string format.
 
-    @param width: Maximum width (in bits) of a network address (excluding
+    :param width: Maximum width (in bits) of a network address (excluding
         delimiters).
 
-    @param word_sep: (optional) character or string used to delimit word
+    :param word_sep: (optional) character or string used to delimit word
         groups (default: '', no separator).
 
-    @return: C{True} if network address is valid, C{False} otherwise.
+    :return: C{True} if network address is valid, C{False} otherwise.
     """
     if not hasattr(bits, 'replace'):
         return False
@@ -140,15 +140,15 @@ def valid_bits(bits, width, word_sep=''):
 #-----------------------------------------------------------------------------
 def bits_to_int(bits, width, word_sep=''):
     """
-    @param bits: A network address in a delimited binary string format.
+    :param bits: A network address in a delimited binary string format.
 
-    @param width: Maximum width (in bits) of a network address (excluding
+    :param width: Maximum width (in bits) of a network address (excluding
         delimiters).
 
-    @param word_sep: (optional) character or string used to delimit word
+    :param word_sep: (optional) character or string used to delimit word
         groups (default: '', no separator).
 
-    @return: An unsigned integer that is equivalent to value represented
+    :return: An unsigned integer that is equivalent to value represented
         by network address in readable binary form.
     """
     if not valid_bits(bits, width, word_sep):
@@ -162,16 +162,16 @@ def bits_to_int(bits, width, word_sep=''):
 #-----------------------------------------------------------------------------
 def int_to_bits(int_val, word_size, num_words, word_sep=''):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @param word_size: Width (in bits) of each unsigned integer word value.
+    :param word_size: Width (in bits) of each unsigned integer word value.
 
-    @param num_words: Number of unsigned integer words expected.
+    :param num_words: Number of unsigned integer words expected.
 
-    @param word_sep: (optional) character or string used to delimit word
+    :param word_sep: (optional) character or string used to delimit word
         groups (default: '', no separator).
 
-    @return: A network address in a delimited binary string format that is
+    :return: A network address in a delimited binary string format that is
         equivalent in value to unsigned integer.
     """
     bit_words = []
@@ -196,13 +196,13 @@ def int_to_bits(int_val, word_size, num_words, word_sep=''):
 #-----------------------------------------------------------------------------
 def valid_bin(bin_val, width):
     """
-    @param bin_val: A network address in Python's binary representation format
+    :param bin_val: A network address in Python's binary representation format
         ('0bxxx').
 
-    @param width: Maximum width (in bits) of a network address (excluding
+    :param width: Maximum width (in bits) of a network address (excluding
         delimiters).
 
-    @return: C{True} if network address is valid, C{False} otherwise.
+    :return: C{True} if network address is valid, C{False} otherwise.
     """
     if not hasattr(bin_val, 'startswith'):
         return False
@@ -228,11 +228,11 @@ def valid_bin(bin_val, width):
 #-----------------------------------------------------------------------------
 def int_to_bin(int_val, width):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @param width: Maximum allowed width (in bits) of a unsigned integer.
+    :param width: Maximum allowed width (in bits) of a unsigned integer.
 
-    @return: Equivalent string value in Python's binary representation format
+    :return: Equivalent string value in Python's binary representation format
         ('0bxxx').
     """
     bin_tokens = []
@@ -259,12 +259,12 @@ def int_to_bin(int_val, width):
 #-----------------------------------------------------------------------------
 def bin_to_int(bin_val, width):
     """
-    @param bin_val: A string containing an unsigned integer in Python's binary
+    :param bin_val: A string containing an unsigned integer in Python's binary
         representation format ('0bxxx').
 
-    @param width: Maximum allowed width (in bits) of a unsigned integer.
+    :param width: Maximum allowed width (in bits) of a unsigned integer.
 
-    @return: An unsigned integer that is equivalent to value represented
+    :return: An unsigned integer that is equivalent to value represented
         by Python binary string format.
     """
     if not valid_bin(bin_val, width):

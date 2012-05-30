@@ -14,9 +14,9 @@ from netaddr.ip import IPRange, IPAddress, IPNetwork, iprange_to_cidrs
 #-----------------------------------------------------------------------------
 def valid_glob(ipglob):
     """
-    @param ipglob: An IP address range in a glob-style format.
+    :param ipglob: An IP address range in a glob-style format.
 
-    @return: C{True} if IP range glob is valid, C{False} otherwise.
+    :return: C{True} if IP range glob is valid, C{False} otherwise.
     """
     #TODO: Add support for abbreviated ipglobs.
     #TODO: e.g. 192.0.*.* == 192.0.*
@@ -71,9 +71,9 @@ def glob_to_iptuple(ipglob):
     A function that accepts a glob-style IP range and returns the component
     lower and upper bound IP address.
 
-    @param ipglob: an IP address range in a glob-style format.
+    :param ipglob: an IP address range in a glob-style format.
 
-    @return: a tuple contain lower and upper bound IP objects.
+    :return: a tuple contain lower and upper bound IP objects.
     """
     if not valid_glob(ipglob):
         raise AddrFormatError('not a recognised IP glob range: %r!' % ipglob)
@@ -101,9 +101,9 @@ def glob_to_iprange(ipglob):
     A function that accepts a glob-style IP range and returns the equivalent
     IP range.
 
-    @param ipglob: an IP address range in a glob-style format.
+    :param ipglob: an IP address range in a glob-style format.
 
-    @return: an IPRange object.
+    :return: an IPRange object.
     """
     if not valid_glob(ipglob):
         raise AddrFormatError('not a recognised IP glob range: %r!' % ipglob)
@@ -131,11 +131,11 @@ def iprange_to_globs(start, end):
     A function that accepts an arbitrary start and end IP address or subnet
     and returns one or more glob-style IP ranges.
 
-    @param start: the start IP address or subnet.
+    :param start: the start IP address or subnet.
 
-    @param end: the end IP address or subnet.
+    :param end: the end IP address or subnet.
 
-    @return: a list containing one or more IP globs.
+    :return: a list containing one or more IP globs.
     """
     start = IPAddress(start)
     end = IPAddress(end)
@@ -205,9 +205,9 @@ def glob_to_cidrs(ipglob):
     A function that accepts a glob-style IP range and returns a list of one
     or more IP CIDRs that exactly matches it.
 
-    @param ipglob: an IP address range in a glob-style format.
+    :param ipglob: an IP address range in a glob-style format.
 
-    @return: a list of one or more IP objects.
+    :return: a list of one or more IP objects.
     """
     return iprange_to_cidrs(*glob_to_iptuple(ipglob))
 
@@ -217,9 +217,9 @@ def cidr_to_glob(cidr):
     A function that accepts an IP subnet in a glob-style format and returns
     a list of CIDR subnets that exactly matches the specified glob.
 
-    @param cidr: an IP object CIDR subnet.
+    :param cidr: an IP object CIDR subnet.
 
-    @return: a list of one or more IP addresses and subnets.
+    :return: a list of one or more IP addresses and subnets.
     """
     ip = IPNetwork(cidr)
     globs = iprange_to_globs(ip[0], ip[-1])
@@ -232,44 +232,49 @@ def cidr_to_glob(cidr):
 #-----------------------------------------------------------------------------
 class IPGlob(IPRange):
     """
-    Represents an IP address range using a glob-style syntax (x.x.x-y.*).
+    Represents an IP address range using a glob-style syntax ``x.x.x-y.*``
 
     Individual octets can be represented using the following shortcuts :
 
-        1. C{*} - the asterisk octet (represents values 0 through 255)
-        2. C{'x-y'} - the hyphenated octet (represents values x through y)
+        1. ``*`` - the asterisk octet (represents values ``0`` through ``255``)
+        2. ``x-y`` - the hyphenated octet (represents values ``x`` through ``y``)
 
     A few basic rules also apply :
 
-        1. x must always be greater than y, therefore :
+        1. ``x`` must always be greater than ``y``, therefore :
 
-            - x can only be 0 through 254
-            - y can only be 1 through 255
+        - ``x`` can only be ``0`` through ``254``
+        - ``y`` can only be ``1`` through ``255``
 
         2. only one hyphenated octet per IP glob is allowed
         3. only asterisks are permitted after a hyphenated octet
 
-    Example IP globs ::
+    Examples:
 
-        '192.0.2.1'       #   a single address
-        '192.0.2.0-31'    #   32 addresses
-        '192.0.2.*'       #   256 addresses
-        '192.0.2-3.*'     #   512 addresses
-        '192.0-1.*.*'   #   131,072 addresses
-        '*.*.*.*'           #   the whole IPv4 address space
+    +------------------+------------------------------+
+    | IP glob          | Description                  |
+    +==================+==============================+
+    | ``192.0.2.1``    | a single address             |
+    +------------------+------------------------------+
+    | ``192.0.2.0-31`` | 32 addresses                 |
+    +------------------+------------------------------+
+    | ``192.0.2.*``    | 256 addresses                |
+    +------------------+------------------------------+
+    | ``192.0.2-3.*``  | 512 addresses                |
+    +------------------+------------------------------+
+    | ``192.0-1.*.*``  | 131,072 addresses            |
+    +------------------+------------------------------+
+    | ``*.*.*.*``      | the whole IPv4 address space |
+    +------------------+------------------------------+
 
-    Aside
-    =====
-        I{IP glob ranges are not directly equivalent to CIDR blocks. They can
-        represent address ranges that do not fall on strict bit mask
-        boundaries. They are suitable for use in configuration files, being
-        more obvious and readable than their CIDR counterparts, especially for
-        admins and end users with little or no networking knowledge or
-        experience.}
-
-        I{All CIDR addresses can always be represented as IP globs but the
-        reverse is not always true.}
-
+    .. note :: \
+    IP glob ranges are not directly equivalent to CIDR blocks. \
+    They can represent address ranges that do not fall on strict bit mask \
+    boundaries. They are suitable for use in configuration files, being \
+    more obvious and readable than their CIDR counterparts, especially for \
+    admins and end users with little or no networking knowledge or \
+    experience. All CIDR addresses can always be represented as IP globs \
+    but the reverse is not always true.
     """
     __slots__ = ('_glob',)
 
@@ -279,11 +284,11 @@ class IPGlob(IPRange):
         self.glob = iprange_to_globs(self._start, self._end)[0]
 
     def __getstate__(self):
-        """@return: Pickled state of an C{IPGlob} object."""
+        """:return: Pickled state of an C{IPGlob} object."""
         return super(IPGlob, self).__getstate__()
 
     def __setstate__(self, state):
-        """@param state: data used to unpickle a pickled C{IPGlob} object."""
+        """:param state: data used to unpickle a pickled C{IPGlob} object."""
         super(IPGlob, self).__setstate__(state)
         self.glob = iprange_to_globs(self._start, self._end)[0]
 
@@ -298,9 +303,9 @@ class IPGlob(IPRange):
         'an arbitrary IP address range in glob format.')
 
     def __str__(self):
-        """@return: IP glob in common representational format."""
+        """:return: IP glob in common representational format."""
         return "%s" % self.glob
 
     def __repr__(self):
-        """@return: Python statement to create an equivalent object"""
+        """:return: Python statement to create an equivalent object"""
         return "%s('%s')" % (self.__class__.__name__, self.glob)

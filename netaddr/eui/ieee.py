@@ -68,7 +68,7 @@ class FileIndexer(Subscriber):
         """
         Constructor.
 
-        @param index_file: a file-like object or name of index file where
+        :param index_file: a file-like object or name of index file where
             index records will be written.
         """
         if hasattr(index_file, 'readline') and hasattr(index_file, 'tell'):
@@ -82,7 +82,7 @@ class FileIndexer(Subscriber):
         """
         Receives and writes index data to a CSV data file.
 
-        @param data: record containing offset record information.
+        :param data: record containing offset record information.
         """
         self.writer.writerow(data)
 
@@ -112,7 +112,7 @@ class OUIIndexParser(Publisher):
         """
         Constructor.
 
-        @param ieee_file: a file-like object or name of file containing OUI
+        :param ieee_file: a file-like object or name of file containing OUI
             records. When using a file-like object always open it in binary
             mode otherwise offsets will probably misbehave.
         """
@@ -191,7 +191,7 @@ class IABIndexParser(Publisher):
         """
         Constructor.
 
-        @param ieee_file: a file-like object or name of file containing IAB
+        :param ieee_file: a file-like object or name of file containing IAB
             records. When using a file-like object always open it in binary
             mode otherwise offsets will probably misbehave.
         """

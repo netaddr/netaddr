@@ -93,13 +93,13 @@ hostmask_to_prefix = dict(
 #-----------------------------------------------------------------------------
 def valid_str(addr, flags=0):
     """
-    @param addr: An IPv4 address in presentation (string) format.
+    :param addr: An IPv4 address in presentation (string) format.
 
-    @param flags: decides which rules are applied to the interpretation of the
+    :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
         netaddr.core docs for details.
 
-    @return: C{True} if IPv4 address is valid, C{False} otherwise.
+    :return: C{True} if IPv4 address is valid, C{False} otherwise.
     """
     if addr == '':
         raise AddrFormatError('Empty strings are not supported!')
@@ -122,13 +122,13 @@ def valid_str(addr, flags=0):
 #-----------------------------------------------------------------------------
 def str_to_int(addr, flags=0):
     """
-    @param addr: An IPv4 dotted decimal address in string form.
+    :param addr: An IPv4 dotted decimal address in string form.
 
-    @param flags: decides which rules are applied to the interpretation of the
+    :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
         netaddr.core docs for details.
 
-    @return: The equivalent unsigned integer for a given IPv4 address.
+    :return: The equivalent unsigned integer for a given IPv4 address.
     """
     if flags & ZEROFILL:
         addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
@@ -144,11 +144,11 @@ def str_to_int(addr, flags=0):
 #-----------------------------------------------------------------------------
 def int_to_str(int_val, dialect=None):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @param dialect: (unused) Any value passed in is ignored.
+    :param dialect: (unused) Any value passed in is ignored.
 
-    @return: The IPv4 presentation (string) format address equivalent to the
+    :return: The IPv4 presentation (string) format address equivalent to the
         unsigned integer provided.
     """
     if 0 <= int_val <= max_int:
@@ -164,9 +164,9 @@ def int_to_str(int_val, dialect=None):
 #-----------------------------------------------------------------------------
 def int_to_arpa(int_val):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @return: The reverse DNS lookup for an IPv4 address in network byte
+    :return: The reverse DNS lookup for an IPv4 address in network byte
         order integer form.
     """
     words = ["%d" % i for i in int_to_words(int_val)]
@@ -177,9 +177,9 @@ def int_to_arpa(int_val):
 #-----------------------------------------------------------------------------
 def int_to_packed(int_val):
     """
-    @param int_val: the integer to be packed.
+    :param int_val: the integer to be packed.
 
-    @return: a packed string that is equivalent to value represented by an
+    :return: a packed string that is equivalent to value represented by an
     unsigned integer.
     """
     return _struct.pack('>I', int_val)
@@ -187,10 +187,10 @@ def int_to_packed(int_val):
 #-----------------------------------------------------------------------------
 def packed_to_int(packed_int):
     """
-    @param packed_int: a packed string containing an unsigned integer.
+    :param packed_int: a packed string containing an unsigned integer.
         It is assumed that string is packed in network byte order.
 
-    @return: An unsigned integer equivalent to value of network address
+    :return: An unsigned integer equivalent to value of network address
         represented by packed binary string.
     """
     return _struct.unpack('>I', packed_int)[0]
@@ -202,9 +202,9 @@ def valid_words(words):
 #-----------------------------------------------------------------------------
 def int_to_words(int_val):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @return: An integer word (octet) sequence that is equivalent to value
+    :return: An integer word (octet) sequence that is equivalent to value
         represented by an unsigned integer.
     """
     if not 0 <= int_val <= max_int:
@@ -218,9 +218,9 @@ def int_to_words(int_val):
 #-----------------------------------------------------------------------------
 def words_to_int(words):
     """
-    @param words: A list or tuple containing integer octets.
+    :param words: A list or tuple containing integer octets.
 
-    @return: An unsigned integer that is equivalent to value represented
+    :return: An unsigned integer that is equivalent to value represented
         by word (octet) sequence.
     """
     if not valid_words(words):
@@ -259,9 +259,9 @@ def expand_partial_address(addr):
     """
     Expands a partial IPv4 address into a full 4-octet version.
 
-    @param addr: an partial or abbreviated IPv4 address
+    :param addr: an partial or abbreviated IPv4 address
 
-    @return: an expanded IP address in presentation format (x.x.x.x)
+    :return: an expanded IP address in presentation format (x.x.x.x)
 
     """
     tokens = []

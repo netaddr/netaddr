@@ -22,9 +22,9 @@ def partition_ips(iterable):
     Takes a sequence of IP addresses and networks splitting them into two
     separate sequences by IP version.
 
-    @param iterable: a sequence or iterator contain IP addresses and networks.
+    :param iterable: a sequence or iterator contain IP addresses and networks.
 
-    @return: a two element tuple (ipv4_list, ipv6_list).
+    :return: a two element tuple (ipv4_list, ipv6_list).
     """
     #   Start off using set as we'll remove any duplicates at the start.
     if not hasattr(iterable, '__iter__'):
@@ -57,10 +57,10 @@ class IPSet(object):
         """
         Constructor.
 
-        @param iterable: (optional) an iterable containing IP addresses and
+        :param iterable: (optional) an iterable containing IP addresses and
             subnets.
 
-        @param flags: decides which rules are applied to the interpretation
+        :param flags: decides which rules are applied to the interpretation
             of the addr value. See the netaddr.core namespace documentation
             for supported constant values.
 
@@ -77,12 +77,12 @@ class IPSet(object):
                 self._cidrs[cidr] = True
 
     def __getstate__(self):
-        """@return: Pickled state of an C{IPSet} object."""
+        """:return: Pickled state of an C{IPSet} object."""
         return tuple([cidr.__getstate__() for cidr in self._cidrs])
 
     def __setstate__(self, state):
         """
-        @param state: data used to unpickle a pickled C{IPSet} object.
+        :param state: data used to unpickle a pickled C{IPSet} object.
 
         """
         #TODO: this needs to be optimised.
@@ -122,9 +122,9 @@ class IPSet(object):
 
     def __contains__(self, ip):
         """
-        @param ip: An IP address or subnet.
+        :param ip: An IP address or subnet.
 
-        @return: C{True} if IP address or subnet is a member of this IP set.
+        :return: C{True} if IP address or subnet is a member of this IP set.
         """
         ip = IPNetwork(ip)
         for cidr in self._cidrs:
@@ -134,13 +134,13 @@ class IPSet(object):
 
     def __iter__(self):
         """
-        @return: an iterator over the IP addresses within this IP set.
+        :return: an iterator over the IP addresses within this IP set.
         """
         return _itertools.chain(*sorted(self._cidrs))
 
     def iter_cidrs(self):
         """
-        @return: an iterator over individual IP subnets within this IP set.
+        :return: an iterator over individual IP subnets within this IP set.
         """
         return sorted(self._cidrs)
 
@@ -152,9 +152,9 @@ class IPSet(object):
         Note that where possible the IP address or subnet is merged with other
         members of the set to form more concise CIDR blocks.
 
-        @param addr: An IP address or subnet.
+        :param addr: An IP address or subnet.
 
-        @param flags: decides which rules are applied to the interpretation
+        :param flags: decides which rules are applied to the interpretation
             of the addr value. See the netaddr.core namespace documentation
             for supported constant values.
 
@@ -178,9 +178,9 @@ class IPSet(object):
         individual IP addresses as individual set members using IPNetwork
         objects.
 
-        @param addr: An IP address or subnet.
+        :param addr: An IP address or subnet.
 
-        @param flags: decides which rules are applied to the interpretation
+        :param flags: decides which rules are applied to the interpretation
             of the addr value. See the netaddr.core namespace documentation
             for supported constant values.
 
@@ -220,15 +220,15 @@ class IPSet(object):
         Removes and returns an arbitrary IP address or subnet from this IP
         set.
 
-        @return: An IP address or subnet.
+        :return: An IP address or subnet.
         """
         return self._cidrs.popitem()[0]
 
     def isdisjoint(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: C{True} if this IP set has no elements (IP addresses
+        :return: C{True} if this IP set has no elements (IP addresses
             or subnets) in common with other. Intersection *must* be an
             empty set.
         """
@@ -238,7 +238,7 @@ class IPSet(object):
         return False
 
     def copy(self):
-        """@return: a shallow copy of this IP set."""
+        """:return: a shallow copy of this IP set."""
         obj_copy = self.__class__()
         obj_copy._cidrs.update(self._cidrs)
         return obj_copy
@@ -248,9 +248,9 @@ class IPSet(object):
         Update the contents of this IP set with the union of itself and
         other IP set.
 
-        @param iterable: an iterable containing IP addresses and subnets.
+        :param iterable: an iterable containing IP addresses and subnets.
 
-        @param flags: decides which rules are applied to the interpretation
+        :param flags: decides which rules are applied to the interpretation
             of the addr value. See the netaddr.core namespace documentation
             for supported constant values.
 
@@ -282,9 +282,9 @@ class IPSet(object):
 
     def __eq__(self, other):
         """
-        @param other: an IP set
+        :param other: an IP set
 
-        @return: C{True} if this IP set is equivalent to the C{other} IP set,
+        :return: C{True} if this IP set is equivalent to the C{other} IP set,
             C{False} otherwise.
         """
         try:
@@ -294,9 +294,9 @@ class IPSet(object):
 
     def __ne__(self, other):
         """
-        @param other: an IP set
+        :param other: an IP set
 
-        @return: C{False} if this IP set is equivalent to the C{other} IP set,
+        :return: C{False} if this IP set is equivalent to the C{other} IP set,
             C{True} otherwise.
         """
         try:
@@ -306,9 +306,9 @@ class IPSet(object):
 
     def __lt__(self, other):
         """
-        @param other: an IP set
+        :param other: an IP set
 
-        @return: C{True} if this IP set is less than the C{other} IP set,
+        :return: C{True} if this IP set is less than the C{other} IP set,
             C{False} otherwise.
         """
         if not hasattr(other, '_cidrs'):
@@ -318,9 +318,9 @@ class IPSet(object):
 
     def issubset(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: C{True} if every IP address and subnet in this IP set
+        :return: C{True} if every IP address and subnet in this IP set
             is found within C{other}.
         """
         if not hasattr(other, '_cidrs'):
@@ -344,9 +344,9 @@ class IPSet(object):
 
     def __gt__(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: C{True} if this IP set is greater than the C{other} IP set,
+        :return: C{True} if this IP set is greater than the C{other} IP set,
             C{False} otherwise.
         """
         if not hasattr(other, '_cidrs'):
@@ -356,9 +356,9 @@ class IPSet(object):
 
     def issuperset(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: C{True} if every IP address and subnet in other IP set
+        :return: C{True} if every IP address and subnet in other IP set
             is found within this one.
         """
         if not hasattr(other, '_cidrs'):
@@ -382,9 +382,9 @@ class IPSet(object):
 
     def union(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: the union of this IP set and another as a new IP set
+        :return: the union of this IP set and another as a new IP set
             (combines IP addresses and subnets from both sets).
         """
         ip_set = self.copy()
@@ -396,9 +396,9 @@ class IPSet(object):
 
     def intersection(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: the intersection of this IP set and another as a new IP set.
+        :return: the intersection of this IP set and another as a new IP set.
             (IP addresses and subnets common to both sets).
         """
         cidr_list = []
@@ -433,9 +433,9 @@ class IPSet(object):
 
     def symmetric_difference(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: the symmetric difference of this IP set and another as a new
+        :return: the symmetric difference of this IP set and another as a new
             IP set (all IP addresses and subnets that are in exactly one
             of the sets).
         """
@@ -471,9 +471,9 @@ class IPSet(object):
 
     def difference(self, other):
         """
-        @param other: an IP set.
+        :param other: an IP set.
 
-        @return: the difference between this IP set and another as a new IP
+        :return: the difference between this IP set and another as a new IP
             set (all IP addresses and subnets that are in this IP set but
             not found in the other.)
         """
@@ -509,9 +509,7 @@ class IPSet(object):
 
     def __len__(self):
         """
-        @return: the cardinality of this IP set (i.e. sum of individual IP
-            addresses). Raises C{IndexError} if size > maxint (a Python
-            limitation). Use the .size property for subnets of any size.
+        :return: the cardinality of this IP set (i.e. sum of individual IP addresses). Raises C{IndexError} if size > maxint (a Python limitation). Use the .size property for subnets of any size.
         """
         size = self.size
         if size > _sys.maxint:
@@ -528,7 +526,7 @@ class IPSet(object):
         return sum([cidr.size for cidr in self._cidrs])
 
     def __repr__(self):
-        """@return: Python statement to create an equivalent object"""
+        """:return: Python statement to create an equivalent object"""
         return 'IPSet(%r)' % [str(c) for c in sorted(self._cidrs)]
 
     __str__ = __repr__

@@ -1,0 +1,5 @@
+=========
+Copyright
+=========
+
+.. include:: ../../COPYRIGHT

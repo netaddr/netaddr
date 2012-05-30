@@ -51,9 +51,9 @@ class NotRegisteredError(Exception):
 #-----------------------------------------------------------------------------
 def num_bits(int_val):
     """
-    @param int_val: an unsigned integer.
+    :param int_val: an unsigned integer.
 
-    @return: the minimum number of bits needed to represent value provided.
+    :return: the minimum number of bits needed to represent value provided.
     """
     int_val = abs(int_val)
     numbits = 0
@@ -72,7 +72,7 @@ class Subscriber(object):
         A callback method used by a Publisher to notify this Subscriber about
         updates.
 
-        @param data: a Python object containing data provided by Publisher.
+        :param data: a Python object containing data provided by Publisher.
         """
         raise NotImplementedError('cannot invoke virtual method!')
 
@@ -89,11 +89,11 @@ class PrettyPrinter(Subscriber):
         """
         Constructor.
 
-        @param fh: a file-like object to write updates to.
+        :param fh: a file-like object to write updates to.
             Default: sys.stdout.
 
 
-        @param write_eol: if C{True} this object will write newlines to
+        :param write_eol: if C{True} this object will write newlines to
             output, if C{False} it will not.
         """
         self.fh = fh
@@ -104,7 +104,7 @@ class PrettyPrinter(Subscriber):
         A callback method used by a Publisher to notify this Subscriber about
         updates.
 
-        @param data: a Python object containing data provided by Publisher.
+        :param data: a Python object containing data provided by Publisher.
         """
         self.fh.write(_pprint.pformat(data))
         if self.write_eol:
@@ -125,7 +125,7 @@ class Publisher(object):
         """
         Add a new subscriber.
 
-        @param subscriber: a new object that implements the Subscriber object
+        :param subscriber: a new object that implements the Subscriber object
             interface.
         """
         if hasattr(subscriber, 'update') and \
@@ -140,7 +140,7 @@ class Publisher(object):
         """
         Remove an existing subscriber.
 
-        @param subscriber: a new object that implements the Subscriber object
+        :param subscriber: a new object that implements the Subscriber object
             interface.
         """
         try:
@@ -152,7 +152,7 @@ class Publisher(object):
         """
         Send update data to to all registered Subscribers.
 
-        @param data: the data to be passed to each registered Subscriber.
+        :param data: the data to be passed to each registered Subscriber.
         """
         for subscriber in self.subscribers:
             subscriber.update(data)

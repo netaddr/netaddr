@@ -30,9 +30,9 @@ from netaddr.ip import IPAddress
 #-----------------------------------------------------------------------------
 def valid_nmap_range(iprange):
     """
-    @param iprange: an nmap-style IP address range.
+    :param iprange: an nmap-style IP address range.
 
-    @return: C{True} if IP range is valid, C{False} otherwise.
+    :return: C{True} if IP range is valid, C{False} otherwise.
     """
     status = True
     if not hasattr(iprange, 'split'):
@@ -78,9 +78,9 @@ def iter_nmap_range(iprange):
     hyphenated octets. This generator provides iterators yielding IP addresses
     according to this rule set.
 
-    @param iprange: an nmap-style IP address range.
+    :param iprange: an nmap-style IP address range.
 
-    @return: an iterator producing IPAddress objects for each IP in the range.
+    :return: an iterator producing IPAddress objects for each IP in the range.
     """
     if not valid_nmap_range(iprange):
         raise AddrFormatError('invalid nmap range: %s' % iprange)

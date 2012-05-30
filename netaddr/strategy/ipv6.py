@@ -115,12 +115,12 @@ class ipv6_verbose(ipv6_compact):
 #-----------------------------------------------------------------------------
 def valid_str(addr, flags=0):
     """
-    @param addr: An IPv6 address in presentation (string) format.
+    :param addr: An IPv6 address in presentation (string) format.
 
-    @param flags: decides which rules are applied to the interpretation of the
+    :param flags: decides which rules are applied to the interpretation of the
         addr value. Future use - currently has no effect.
 
-    @return: C{True} if IPv6 address is valid, C{False} otherwise.
+    :return: C{True} if IPv6 address is valid, C{False} otherwise.
     """
     if addr == '':
         raise AddrFormatError('Empty strings are not supported!')
@@ -134,12 +134,12 @@ def valid_str(addr, flags=0):
 #-----------------------------------------------------------------------------
 def str_to_int(addr, flags=0):
     """
-    @param addr: An IPv6 address in string form.
+    :param addr: An IPv6 address in string form.
 
-    @param flags: decides which rules are applied to the interpretation of the
+    :param flags: decides which rules are applied to the interpretation of the
         addr value. Future use - currently has no effect.
 
-    @return: The equivalent unsigned integer for a given IPv6 address.
+    :return: The equivalent unsigned integer for a given IPv6 address.
     """
     try:
         packed_int = _inet_pton(AF_INET6, addr)
@@ -150,11 +150,11 @@ def str_to_int(addr, flags=0):
 #-----------------------------------------------------------------------------
 def int_to_str(int_val, dialect=None):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @param dialect: (optional) a Python class defining formatting options.
+    :param dialect: (optional) a Python class defining formatting options.
 
-    @return: The IPv6 presentation (string) format address equivalent to the
+    :return: The IPv6 presentation (string) format address equivalent to the
         unsigned integer provided.
     """
     if dialect is None:
@@ -181,9 +181,9 @@ def int_to_str(int_val, dialect=None):
 #-----------------------------------------------------------------------------
 def int_to_arpa(int_val):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @return: The reverse DNS lookup for an IPv6 address in network byte
+    :return: The reverse DNS lookup for an IPv6 address in network byte
         order integer form.
     """
     addr = int_to_str(int_val, ipv6_verbose)
@@ -196,9 +196,9 @@ def int_to_arpa(int_val):
 #-----------------------------------------------------------------------------
 def int_to_packed(int_val):
     """
-    @param int_val: the integer to be packed.
+    :param int_val: the integer to be packed.
 
-    @return: a packed string that is equivalent to value represented by an
+    :return: a packed string that is equivalent to value represented by an
     unsigned integer.
     """
     words = int_to_words(int_val, 4, 32)
@@ -207,10 +207,10 @@ def int_to_packed(int_val):
 #-----------------------------------------------------------------------------
 def packed_to_int(packed_int):
     """
-    @param packed_int: a packed string containing an unsigned integer.
+    :param packed_int: a packed string containing an unsigned integer.
         It is assumed that string is packed in network byte order.
 
-    @return: An unsigned integer equivalent to value of network address
+    :return: An unsigned integer equivalent to value of network address
         represented by packed binary string.
     """
     words = list(_struct.unpack('>4I', packed_int))

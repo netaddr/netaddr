@@ -1,5 +1,6 @@
+netaddr is written and maintained by David P. D. Moss
 
-netaddr was written by David P. D. Moss and release under the BSD License.
+It is released under the BSD License.
 
 Many people further contributed to netaddr by reporting problems, suggesting
 various improvements or submitting actual code. Here is a list of these people
@@ -41,12 +42,6 @@ a) Python Cookbook recipe 18.11: "Formatting Integers as Binary Strings"
 b) ASPN Cookbook Recipe 466286: "Integer set type" by Heiko Wundram
 
     http://code.activestate.com/recipes/466286/
-
-c) Modules that have great assisted in netaddr's development
-
-    epydoc - http://epydoc.sourceforge.net/
-
-    coverage - http://pypi.python.org/pypi/coverage/
 
 And last but not least, thanks to Guido van Rossum for his encouraging words
 and for giving us all Python.

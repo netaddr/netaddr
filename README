@@ -1,17 +1,13 @@
+`netaddr` is a Python library fore representing and manipulating network addresses.
 
-INTRODUCTION
-============
-
-A pure Python network address representation and manipulation library.
-
-netaddr provides a Pythonic way of working with :-
+It support the ability to work and interact with the following:
 
 - IPv4 and IPv6 addresses and subnets
 - MAC addresses, OUI and IAB identifiers, IEEE EUI-64 identifiers
 - arbitrary (non-aligned) IP address ranges and IP address sets
 - various non-CIDR IP range formats such as nmap and glob-style formats
 
-Included are routines for :-
+There are routines that allow :
 
 - generating, sorting and summarizing IP addresses and networks
 - performing easy conversions between address notations and formats
@@ -21,66 +17,48 @@ Included are routines for :-
 - accessing OUI and IAB organisational information published by IEEE
 - accessing IP address and block information published by IANA
 
-For details on the latest updates and changes, see :-
+-------
+Changes
+-------
 
-    http://github.com/drkjam/netaddr/blob/rel-0.7.x/CHANGELOG
+For details on the latest updates and changes, see :doc:`changes`
 
-API documentation for the latest release is available here :-
-
-    http://packages.python.org/netaddr/
-
-
-LICENSE
+-------
+License
 -------
 
 This software is released under the liberal BSD license.
 
-See the LICENSE file for full text and copyright notice.
+See the :doc:`license` and :doc:`copyright` for full text.
 
-
-DEPENDENCIES
+------------
+Dependencies
 ------------
 
-Requires Python 2.4 or higher.
+Python 2.4 or higher.
 
 Python 3.x support available from netaddr version 0.7.5 onwards.
 
+Required IPython for the interactive netaddr shell.
 
-INSTALLATION
+------------
+Installation
 ------------
 
-See the INSTALL file for details.
+See :doc:`installation` for details.
 
-
-DOCUMENTATION
+-------------
+Documentation
 -------------
 
-You can access various levels of documentation to suit your needs :-
+The code contains thorough docstrings as well as detailed tutorials and
+API documentation can be found here:
 
-- API documentation
+http://packages.python.org/netaddr
 
-The API is fully documented and is automatically generated for each release
-using epydoc - http://epydoc.sourceforge.net/. 
-
-It can be found in the docs/api/ directory where you extracted the source 
-tarball/zip file or checked out the code. Open the index.html file with 
-the HTML browser of your choice.
-
-- Python docstrings
-
-The docstrings contain a lot of detail. See these if you require information
-on specific aspects of netaddr's API via an interactive Python interpreter
-session or your favourite text editor.
-
-
-CHANGE HISTORY
---------------
-
-Please see the CHANGELOG for details.
-
-
-UNIT TESTS
-----------
+----------------------
+Running The Test Suite
+----------------------
 
 No code can ever be deemed truly complete or trustworthy without reasonable
 unit test coverage. Full coverage for netaddr is the certainly the ultimate
@@ -96,7 +74,7 @@ using your Python interpreter :-
 
     python tests/__init__.py
 
-Or if you are partial to setuptools :-
+Or if you are partial to distribute (nee setuptools) :
 
     python setup_egg.py test
 
@@ -105,8 +83,6 @@ the project's user base by filing bug reports at the following URL :-
 
 	http://github.com/drkjam/netaddr/issues
 
-*IMPORTANT*
-
 Efforts have been made to ensure this code works equally well on both big and 
 little endian architectures. However, the project does not own or have access
 to any big endian hardware (e.g. SPARC or PowerPC) for continual regression 
@@ -114,109 +90,8 @@ testing. If you happen to work on big endian architectures with Python and wish
 to use netaddr *PLEASE* ensure you run the unit tests before you using it in a 
 production setting just to make sure everything is functioning as expected.
 
-
-REFERENCES
-----------
-
-The following lists the main external references that have not only guided the 
-implementation of netaddr's features and capabilities but also provide data
-that is exposed via its API.
-
-IPv4 RFCs
-
-    RFC 791 - Internet Protocol
-        http://www.ietf.org/rfc/rfc791
-
-    RFC 1918 - Address Allocation for Private Internets
-        http://www.ietf.org/rfc/rfc1918
-
-    RFC 3330 - Special-Use IPv4 Addresses
-        http://www.ietf.org/rfc/rfc3330
-
-    RFC 3927 - Dynamic Configuration of IPv4 Link-Local Addresses
-        http://www.ietf.org/rfc/rfc3927
-
-Multicast (IPv4) RFCs
-
-    RFC 2365 - Administratively Scoped IP Multicast
-        http://www.ietf.org/rfc/rfc2365
-
-    RFC 3171 - IANA IPv4 Multicast Guidelines
-        http://www.ietf.org/rfc/rfc3171
-
-    RFC 3927 - Dynamic Configuration of IPv4 Link-Local Addresses
-        http://www.ietf.org/rfc/rfc3927
-
-IPv6 RFCs
-
-    RFC 3330 - Special-Use IPv4 Addresses
-        http://www.ietf.org/rfc/rfc3330
-
-    RFC 4291 - IPv6 Addressing Architecture
-        http://www.ietf.org/rfc/rfc4291
-
-    RFC 3306 - Unicast-Prefix-based IPv6 Multicast
-        http://www.ietf.org/rfc/rfc3306
-
-    RFC 3956 - The RP Address in IPv6 Multicast Address
-        http://www.ietf.org/rfc/rfc3956
-
-    RFC 3879 - Deprecating Site Local Addresses
-        http://www.ietf.org/rfc/rfc3879
-
-    RFC 4193 - Unique Local IPv6 Unicast Addresses
-        http://www.ietf.org/rfc/rfc4193
-
-    RFC 4941 - Privacy Extensions for Stateless Address
-        http://www.ietf.org/rfc/rfc4941
-
-    RFC 1924 - A Compact Representation of IPv6 Addresses
-        http://www.ietf.org/rfc/rfc1924
-
-CIDR RFCs
-
-    RFC 1338 - Supernetting: an Address Assignment and Aggregation Strategy
-        http://www.ietf.org/rfc/rfc1338
-
-    RFC 4632 - Classless Inter-domain Routing (CIDR): The Internet Address 
-               Assignment and Aggregation Plan
-        http://www.ietf.org/rfc/rfc4632
-
-IANA online resources
-
-    IANA Protocol Registry
-        http://www.iana.org/protocols/
-
-    IPv4 Address Space
-        http://www.iana.org/assignments/ipv4-address-space
-
-    IPv6 Address Space
-        http://www.iana.org/assignments/ipv6-address-space
-
-    Multicast Registrations
-        http://www.iana.org/assignments/multicast-addresses
-
-IEEE online resources
-
-    IEEE Organisation Registry
-        http://standards.ieee.org/regauth/oui/index.shtml
-
-    OUI (Organisationally Unique Identifier) Registrations
-        http://standards.ieee.org/regauth/oui/oui.txt
-
-    IAB (Individual Address Block) Registrations
-        http://standards.ieee.org/regauth/oui/iab.txt
-
-
-AUTHORS
--------
-
-See the AUTHORS file for details.
-
-
-THANKS
-------
-
-See the THANKS file for details.
+--------------
+And finally...
+--------------
 
 Share and enjoy!

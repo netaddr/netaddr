@@ -33,28 +33,28 @@ class BaseIdentifier(object):
         self._value = None
 
     def __int__(self):
-        """@return: integer value of this identifier"""
+        """:return: integer value of this identifier"""
         return self._value
 
     def __long__(self):
-        """@return: integer value of this identifier"""
+        """:return: integer value of this identifier"""
         return self._value
 
     def __oct__(self):
-        """@return: octal string representation of this identifier."""
+        """:return: octal string representation of this identifier."""
         #   Python 2.x only.
         if self._value == 0:
             return '0'
         return '0%o' % self._value
 
     def __hex__(self):
-        """@return: hexadecimal string representation of this identifier."""
+        """:return: hexadecimal string representation of this identifier."""
         #   Python 2.x only.
         return '0x%x' % self._value
 
     def __index__(self):
         """
-        @return: return the integer value of this identifier when passed to
+        :return: return the integer value of this identifier when passed to
             hex(), oct() or bin().
         """
         #   Python 3.x only.
@@ -74,8 +74,8 @@ class OUI(BaseIdentifier):
         """
         Constructor
 
-        @param oui: an OUI string C{XX-XX-XX} or an unsigned integer.
-            Also accepts and parses full MAC/EUI-48 address strings (but not
+        :param oui: an OUI string C{XX-XX-XX} or an unsigned integer. \
+            Also accepts and parses full MAC/EUI-48 address strings (but not \
             MAC/EUI-48 integers)!
         """
         super(OUI, self).__init__()
@@ -145,16 +145,16 @@ class OUI(BaseIdentifier):
         """
         The IEEE registration details for this OUI.
 
-        @param index: the index of record (may contain multiple registrations)
+        :param index: the index of record (may contain multiple registrations)
             (Default: 0 - first registration)
 
-        @return: Objectified Python data structure containing registration
+        :return: Objectified Python data structure containing registration
             details.
         """
         return DictDotLookup(self.records[index])
 
     def __str__(self):
-        """@return: string representation of this OUI"""
+        """:return: string representation of this OUI"""
         int_val = self._value
         words = []
         for _ in range(3):
@@ -164,7 +164,7 @@ class OUI(BaseIdentifier):
         return '-'.join(reversed(words)).upper()
 
     def __repr__(self):
-        """@return: executable Python string to recreate equivalent object."""
+        """:return: executable Python string to recreate equivalent object."""
         return "OUI('%s')" % self
 
 #-----------------------------------------------------------------------------
@@ -180,9 +180,9 @@ class IAB(BaseIdentifier):
     @staticmethod
     def split_iab_mac(eui_int, strict=False):
         """
-        @param eui_int: a MAC IAB as an unsigned integer.
+        :param eui_int: a MAC IAB as an unsigned integer.
 
-        @param strict: If True, raises a ValueError if the last 12 bits of
+        :param strict: If True, raises a ValueError if the last 12 bits of
             IAB MAC/EUI-48 address are non-zero, ignores them otherwise.
             (Default: False)
         """
@@ -206,12 +206,12 @@ class IAB(BaseIdentifier):
         """
         Constructor
 
-        @param iab: an IAB string C{00-50-C2-XX-X0-00} or an unsigned integer.
-            This address looks like an EUI-48 but it should not have any
-            non-zero bits in the last 3 bytes.
+        :param iab: an IAB string C{00-50-C2-XX-X0-00} or an unsigned \
+            integer. This address looks like an EUI-48 but it should not \
+            have any non-zero bits in the last 3 bytes.
 
-        @param strict: If True, raises a ValueError if the last 12 bits of
-            IAB MAC/EUI-48 address are non-zero, ignores them otherwise.
+        :param strict: If True, raises a ValueError if the last 12 bits \
+            of IAB MAC/EUI-48 address are non-zero, ignores them otherwise. \
             (Default: False)
         """
         super(IAB, self).__init__()
@@ -275,7 +275,7 @@ class IAB(BaseIdentifier):
         return DictDotLookup(self.record)
 
     def __str__(self):
-        """@return: string representation of this IAB"""
+        """:return: string representation of this IAB"""
         int_val = self._value << 12
         words = []
         for _ in range(6):
@@ -285,7 +285,7 @@ class IAB(BaseIdentifier):
         return '-'.join(reversed(words)).upper()
 
     def __repr__(self):
-        """@return: executable Python string to recreate equivalent object."""
+        """:return: executable Python string to recreate equivalent object."""
         return "IAB('%s')" % self
 
 #-----------------------------------------------------------------------------
@@ -305,14 +305,15 @@ class EUI(BaseIdentifier):
         """
         Constructor.
 
-        @param addr: an EUI-48 (MAC) or EUI-64 address in string format or an
-        unsigned integer. May also be another EUI object (copy construction).
+        :param addr: an EUI-48 (MAC) or EUI-64 address in string format or \
+            an unsigned integer. May also be another EUI object (copy \
+            construction).
 
-        @param version: (optional) the explict EUI address version. Mainly
-            used to distinguish between EUI-48 and EUI-64 identifiers
+        :param version: (optional) the explict EUI address version. Mainly \
+            used to distinguish between EUI-48 and EUI-64 identifiers \
             specified as integers which may be numerically equivalent.
 
-        @param dialect: (optional) the mac_* dialect to be used to configure
+        :param dialect: (optional) the mac_* dialect to be used to configure \
             the formatting of EUI-48 (MAC) addresses.
         """
         super(EUI, self).__init__()
@@ -423,7 +424,7 @@ class EUI(BaseIdentifier):
             return '-'.join(["%02x" % i for i in self[3:8]]).upper()
 
     def is_iab(self):
-        """@return: True if this EUI is an IAB address, False otherwise"""
+        """:return: True if this EUI is an IAB address, False otherwise"""
         return 0x50c2000 <= (self._value >> 12) <= 0x50c2fff
 
     @property
@@ -442,9 +443,9 @@ class EUI(BaseIdentifier):
 
     def __getitem__(self, idx):
         """
-        @return: The integer value of the word referenced by index (both
-            positive and negative). Raises C{IndexError} if index is out
-            of bounds. Also supports Python list slices for accessing
+        :return: The integer value of the word referenced by index (both \
+            positive and negative). Raises C{IndexError} if index is out \
+            of bounds. Also supports Python list slices for accessing \
             word groups.
         """
         if _is_int(idx):
@@ -483,12 +484,12 @@ class EUI(BaseIdentifier):
         self._value = self._module.words_to_int(words)
 
     def __hash__(self):
-        """@return: hash of this EUI object suitable for dict keys, sets etc"""
+        """:return: hash of this EUI object suitable for dict keys, sets etc"""
         return hash((self.version, self._value))
 
     def __eq__(self, other):
         """
-        @return: C{True} if this EUI object is numerically the same as other,
+        :return: C{True} if this EUI object is numerically the same as other, \
             C{False} otherwise.
         """
         try:
@@ -498,7 +499,7 @@ class EUI(BaseIdentifier):
 
     def __ne__(self, other):
         """
-        @return: C{False} if this EUI object is numerically the same as the
+        :return: C{False} if this EUI object is numerically the same as the \
             other, C{True} otherwise.
         """
         try:
@@ -508,7 +509,7 @@ class EUI(BaseIdentifier):
 
     def __lt__(self, other):
         """
-        @return: C{True} if this EUI object is numerically lower in value than
+        :return: C{True} if this EUI object is numerically lower in value than \
             other, C{False} otherwise.
         """
         try:
@@ -518,7 +519,7 @@ class EUI(BaseIdentifier):
 
     def __le__(self, other):
         """
-        @return: C{True} if this EUI object is numerically lower or equal in
+        :return: C{True} if this EUI object is numerically lower or equal in \
             value to other, C{False} otherwise.
         """
         try:
@@ -528,7 +529,7 @@ class EUI(BaseIdentifier):
 
     def __gt__(self, other):
         """
-        @return: C{True} if this EUI object is numerically greater in value
+        :return: C{True} if this EUI object is numerically greater in value \
             than other, C{False} otherwise.
         """
         try:
@@ -538,8 +539,8 @@ class EUI(BaseIdentifier):
 
     def __ge__(self, other):
         """
-        @return: C{True} if this EUI object is numerically greater or equal in
-            value to other, C{False} otherwise.
+        :return: C{True} if this EUI object is numerically greater or equal \
+            in value to other, C{False} otherwise.
         """
         try:
             return(self.version, self._value) >= (other.version, other._value)
@@ -548,10 +549,11 @@ class EUI(BaseIdentifier):
 
     def bits(self, word_sep=None):
         """
-        @param word_sep: (optional) the separator to insert between words.
+        :param word_sep: (optional) the separator to insert between words. \
             Default: None - use default separator for address type.
 
-        @return: human-readable binary digit string of this address"""
+        :return: human-readable binary digit string of this address.
+        """
         return self._module.int_to_bits(self._value, word_sep)
 
     @property
@@ -575,11 +577,12 @@ class EUI(BaseIdentifier):
 
     def eui64(self):
         """
-        @return: The value of this EUI object as a new 64-bit EUI object.
-            - If this object represents an EUI-48 it is converted to EUI-64
-                as per the standard.
-            - If this object is already and EUI-64, it just returns a new,
-                numerically equivalent object is returned instead.
+        - If this object represents an EUI-48 it is converted to EUI-64 \
+            as per the standard.
+        - If this object is already and EUI-64, it just returns a new, \
+            numerically equivalent object is returned instead.
+
+        :return: The value of this EUI object as a new 64-bit EUI object.
         """
         if self.version == 48:
             eui64_words = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
@@ -591,9 +594,9 @@ class EUI(BaseIdentifier):
 
     def ipv6_link_local(self):
         """
-        @return: new link local IPv6 L{IPAddress} object based on this L{EUI}
-            using the technique described in RFC 4291. B{Please Note:} this
-            poses security risks in certain scenarios. Please read RFC 4941 for
+        :return: new link local IPv6 L{IPAddress} object based on this L{EUI} \
+            using the technique described in RFC 4291. B{Please Note:} this \
+            poses security risks in certain scenarios. Please read RFC 4941 for \
             details. Reference: RFCs 4291 and 4941.
         """
         int_val = 0xfe800000000000000200000000000000
@@ -620,10 +623,10 @@ class EUI(BaseIdentifier):
         return DictDotLookup(data)
 
     def __str__(self):
-        """@return: EUI in representational format"""
+        """:return: EUI in representational format"""
         return self._module.int_to_str(self._value, self._dialect)
 
     def __repr__(self):
-        """@return: executable Python string to recreate equivalent object."""
+        """:return: executable Python string to recreate equivalent object."""
         return "EUI('%s')" % self
 

@@ -131,9 +131,9 @@ RE_MAC_FORMATS = [_re.compile(_, _re.IGNORECASE) for _ in RE_MAC_FORMATS]
 #-----------------------------------------------------------------------------
 def valid_str(addr):
     """
-    @param addr: An IEEE EUI-48 (MAC) address in string form.
+    :param addr: An IEEE EUI-48 (MAC) address in string form.
 
-    @return: C{True} if MAC address string is valid, C{False} otherwise.
+    :return: C{True} if MAC address string is valid, C{False} otherwise.
     """
     for regexp in RE_MAC_FORMATS:
         try:
@@ -148,9 +148,9 @@ def valid_str(addr):
 #-----------------------------------------------------------------------------
 def str_to_int(addr):
     """
-    @param addr: An IEEE EUI-48 (MAC) address in string form.
+    :param addr: An IEEE EUI-48 (MAC) address in string form.
 
-    @return: An unsigned integer that is equivalent to value represented
+    :return: An unsigned integer that is equivalent to value represented
         by EUI-48/MAC string address formatted according to the dialect
         settings.
     """
@@ -194,11 +194,11 @@ def str_to_int(addr):
 #-----------------------------------------------------------------------------
 def int_to_str(int_val, dialect=None):
     """
-    @param int_val: An unsigned integer.
+    :param int_val: An unsigned integer.
 
-    @param dialect: (optional) a Python class defining formatting options.
+    :param dialect: (optional) a Python class defining formatting options.
 
-    @return: An IEEE EUI-48 (MAC) address string that is equivalent to
+    :return: An IEEE EUI-48 (MAC) address string that is equivalent to
         unsigned integer formatted according to the dialect settings.
     """
     if dialect is None:
@@ -213,9 +213,9 @@ def int_to_str(int_val, dialect=None):
 #-----------------------------------------------------------------------------
 def int_to_packed(int_val):
     """
-    @param int_val: the integer to be packed.
+    :param int_val: the integer to be packed.
 
-    @return: a packed string that is equivalent to value represented by an
+    :return: a packed string that is equivalent to value represented by an
     unsigned integer.
     """
     return _struct.pack(">HI", int_val >> 32, int_val & 0xffffffff)
@@ -223,10 +223,10 @@ def int_to_packed(int_val):
 #-----------------------------------------------------------------------------
 def packed_to_int(packed_int):
     """
-    @param packed_int: a packed string containing an unsigned integer.
+    :param packed_int: a packed string containing an unsigned integer.
         It is assumed that string is packed in network byte order.
 
-    @return: An unsigned integer equivalent to value of network address
+    :return: An unsigned integer equivalent to value of network address
         represented by packed binary string.
     """
     words = list(_struct.unpack('>6B', packed_int))

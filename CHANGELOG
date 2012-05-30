@@ -1,8 +1,44 @@
+--------------
+Release: 0.7.7
+--------------
+Date: 30th May 2012
+
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.6
+^^^^^^^^^^^^^^^^^^^
+
+* Comprehensive documentation update! It's only taken 4 years
+  to get around to using Sphinx and I can confirm it is
+  **TOTALLY AWESOME!**
+
+* Various bug fixes
+
+* Refreshed IEEE OUI and IAB data
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 24 - http://github.com/drkjam/netaddr/issues/24
+
+    - Fixed TypeError when comparing BaseIP instance with non-BaseIP objects. Thanks pvaret
+
+FIXED Issue 17 - http://github.com/drkjam/netaddr/issues/17
+
+    - For large ipv6 networks the .subnet() method fails. Thanks daveyss
+
+FIXED Issue 20 - http://github.com/drkjam/netaddr/issues/20
+
+    - Test failure with Python 3. Thanks Arfrever
+
+--------------
 Release: 0.7.6
+--------------
 Date: 13th Sep 2011
 
+^^^^^^^^^^^^^^^^^^^
 Changes since 0.7.5
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 * A bug fix point release
 
@@ -12,41 +48,45 @@ Changes since 0.7.5
 
 * Fixed unit tests under for Mac OSX
 
-
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 15 - http://github.com/drkjam/netaddr/issues/15
+FIXED Issue 15 - http://github.com/drkjam/netaddr/issues/15
 
     - Incorrect and invalid glob produced when last octet is not *
 
-* FIXED Issue 13 - http://github.com/drkjam/netaddr/issues/13
+FIXED Issue 13 - http://github.com/drkjam/netaddr/issues/13
 
     - Added support for IPython 0.11 API changes. Thanks juliantaylor
 
-* FIXED Issue 11 - http://github.com/drkjam/netaddr/issues/11
+FIXED Issue 11 - http://github.com/drkjam/netaddr/issues/11
 
     - Calling valid_glob on cidr raises ValueError. Thanks radicand
 
-* FIXED Issue 7 - http://github.com/drkjam/netaddr/issues/7
+FIXED Issue 7 - http://github.com/drkjam/netaddr/issues/7
 
     - Unpickling Bug in IPSet. Thanks LuizOz and labeneator
 
-* FIXED Issue 2 - http://github.com/drkjam/netaddr/issues/2
+FIXED Issue 2 - http://github.com/drkjam/netaddr/issues/2
 
     - UnboundLocalError raised in IPNetwork constructor. Thanks keesbos
 
+^^^^^^^^^^^
 Miscellanea
------------
+^^^^^^^^^^^
 
 - Has a famous soft drink company started making it own NICs?
 
----------------------------------------------------------------------
+--------------
 Release: 0.7.5
+--------------
+
 Date: 5th Oct 2010
 
+^^^^^^^^^^^^^^^^^^^
 Changes since 0.7.4
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 * Python 3.x is now fully supported. The paint is still drying on this so
   please help with testing and raise bug tickets when you find any issues!
@@ -70,62 +110,66 @@ Changes since 0.7.4
   string IP address. Only integer value assignments are now valid. The impact
   of this change should be minimal for the majority of users.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 49 - http://code.google.com/p/netaddr/issues/detail?id=49
+FIXED Issue 49 - http://code.google.com/p/netaddr/issues/detail?id=49
 
     - Incorrect IP range recognition on IPs with leading zeros
 
-* FIXED Issue 50 - http://code.google.com/p/netaddr/issues/detail?id=50
+FIXED Issue 50 - http://code.google.com/p/netaddr/issues/detail?id=50
 
     - CIDR block parsing
 
-* FIXED Issue 52 - http://code.google.com/p/netaddr/issues/detail?id=52
+FIXED Issue 52 - http://code.google.com/p/netaddr/issues/detail?id=52
 
     - ipv6 cidr matches incorrectly match ipv4 [sic]
 
-* FIXED Issue 53 - http://code.google.com/p/netaddr/issues/detail?id=53
+FIXED Issue 53 - http://code.google.com/p/netaddr/issues/detail?id=53
 
     - Error in online documentation
 
-* FIXED Issue 54 - http://code.google.com/p/netaddr/issues/detail?id=54
+FIXED Issue 54 - http://code.google.com/p/netaddr/issues/detail?id=54
 
     - IP recognition failure 
 
-* FIXED Issue 55 - http://code.google.com/p/netaddr/issues/detail?id=55
+FIXED Issue 55 - http://code.google.com/p/netaddr/issues/detail?id=55
 
     - Support for Python 3.x
 
-* FIXED Issue 56 - http://code.google.com/p/netaddr/issues/detail?id=56
+FIXED Issue 56 - http://code.google.com/p/netaddr/issues/detail?id=56
 
     - checking IPAddress in IPNetwork
 
-* FIXED Issue 57 - http://code.google.com/p/netaddr/issues/detail?id=57
+FIXED Issue 57 - http://code.google.com/p/netaddr/issues/detail?id=57
 
     - netaddr objects can't pickle
 
-* FIXED Issue 58 - http://code.google.com/p/netaddr/issues/detail?id=58
+FIXED Issue 58 - http://code.google.com/p/netaddr/issues/detail?id=58
 
     - IPSet operations should accept the same arguments as IPAddress
 
-* FIXED Issue 59 - http://code.google.com/p/netaddr/issues/detail?id=59
+FIXED Issue 59 - http://code.google.com/p/netaddr/issues/detail?id=59
 
     - netaddr fails to load when imported by a PowerDNS coprocess
 
+^^^^^^^^^^^
 Miscellanea
------------
+^^^^^^^^^^^
 
 - Welcome back to standards.ieee.org which seems to have been down for weeks!
 
 - Goodbye Sun Microsystems + Merrill Lynch, hello Oracle + Bank of America ...
 
----------------------------------------------------------------------
+--------------
 Release: 0.7.4
+--------------
 Date: 2nd Dec 2009
 
+^^^^^^^^^^^^^^^^^^^
 Changes since 0.7.3
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 * Applied speed patches by S. Nordhausen
 
@@ -133,12 +177,14 @@ Changes since 0.7.3
   EUI.packed and EUI.bin properties (previously methods) and added a
   words() property.
 
----------------------------------------------------------------------
+--------------
 Release: 0.7.3
+--------------
 Date: 14th Sep 2009
 
+^^^^^^^^^^^^^^^^^^^
 Changes since 0.7.2
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 * Added __add__, __radd__, __sub__, __rsub__ operators to the IPAddress class.
 
@@ -147,29 +193,32 @@ Changes since 0.7.2
 
 * Removed some unused constants from fallback socket module.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 44 - http://code.google.com/p/netaddr/issues/detail?id=44
+FIXED Issue 44 - http://code.google.com/p/netaddr/issues/detail?id=44
 
     - int/long type error
 
-* FIXED Issue 46 - http://code.google.com/p/netaddr/issues/detail?id=46
+FIXED Issue 46 - http://code.google.com/p/netaddr/issues/detail?id=46
 
     - Question about IPv4 ranges
 
-* FIXED Issue 47 - http://code.google.com/p/netaddr/issues/detail?id=47
+FIXED Issue 47 - http://code.google.com/p/netaddr/issues/detail?id=47
 
     - IPNetwork cannot be evaluated as a boolean when it has a large size
 
----------------------------------------------------------------------
+--------------
 Release: 0.7.2
+--------------
 Date: 20th Aug 2009
 
+^^^^^^^^^^^^^^^^^^^
 Changes since 0.7.1
--------------------
+^^^^^^^^^^^^^^^^^^^
 
-* Fixed a boundary problem with the iter_iprange() generator function
+FIXED a boundary problem with the iter_iprange() generator function
   and all associated calls to it throughout the codebase, including
   unit test coverage and adjustments.
 
@@ -178,20 +227,22 @@ Changes since 0.7.1
 
 * Adjustments to README raised by John Eckersberg.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 43 - http://code.google.com/p/netaddr/issues/detail?id=43
+FIXED Issue 43 - http://code.google.com/p/netaddr/issues/detail?id=43
 
     - IPNetwork('0.0.0.0/0') not usable in for loop
 
----------------------------------------------------------------------
-
+--------------
 Release: 0.7.1
+--------------
 Date: 14th Aug 2009
 
+^^^^^^^^^^^^^^^^^
 Changes since 0.7
------------------
+^^^^^^^^^^^^^^^^^
 
 * Renamed the netaddr shell script from 'nash' to plain 'netaddr'. This
   is to avoid a potentially nasty clash with an important Linux tool
@@ -201,21 +252,22 @@ Changes since 0.7
 
 * Updated IANA and IEEE data files with latest versions.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 42 - http://code.google.com/p/netaddr/issues/detail?id=42
+FIXED Issue 42 - http://code.google.com/p/netaddr/issues/detail?id=42
 
     - Bug in cidr_merge() function when passed the CIDRs 0.0.0.0/0 and/or ::/0
 
----------------------------------------------------------------------
-
+------------
 Release: 0.7
+------------
 Date: 11th Aug 2009
 
-
+^^^^^^^^^^^^^^^^^^^
 Changes since 0.6.x
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Please Note - This release represents a major overhaul of netaddr. It breaks
 backward compatibility with previous releases. See the API documentation for
@@ -277,47 +329,47 @@ Some highlights of what has changed :-
 
 * Support for RFC 1924 added ;-)
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 13 - http://code.google.com/p/netaddr/issues/detail?id=13
+FIXED Issue 13 - http://code.google.com/p/netaddr/issues/detail?id=13
 
     - Searching for a match in a list of CIDR objects
 
-* FIXED Issue 26 - http://code.google.com/p/netaddr/issues/detail?id=26
+FIXED Issue 26 - http://code.google.com/p/netaddr/issues/detail?id=26
 
     - Refactor out use of isinstance()
 
-* FIXED Issue 28 - http://code.google.com/p/netaddr/issues/detail?id=28
+FIXED Issue 28 - http://code.google.com/p/netaddr/issues/detail?id=28
 
     - Add support for network block operations
 
-* FIXED Issue 34 - http://code.google.com/p/netaddr/issues/detail?id=34
+FIXED Issue 34 - http://code.google.com/p/netaddr/issues/detail?id=34
 
     - Addition issue?
 
----------------------------------------------------------------------
-
+--------------
 Release: 0.6.4
+--------------
 Date: 11th Aug 2009
 
-Major changes since 0.6.3
--------------------------
-
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 40 - http://code.google.com/p/netaddr/issues/detail?id=40
+FIXED Issue 40 - http://code.google.com/p/netaddr/issues/detail?id=40
 
     - Building RPM wth "python setup.py bdist_rpm" fails, multiple errors
 
-------------------------------------------------------------------------------
-
+--------------
 Release: 0.6.3
+--------------
 Date: 23rd Jun 2009
 
-Major changes since 0.6.2
--------------------------
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.6.2
+^^^^^^^^^^^^^^^^^^^
 
 * Fixed line endings in a number of new files created under Windows.
 
@@ -328,41 +380,43 @@ Major changes since 0.6.2
 
 * Added a number of unit tests to improve code coverage.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 33 - http://code.google.com/p/netaddr/issues/detail?id=33
+FIXED Issue 33 - http://code.google.com/p/netaddr/issues/detail?id=33
 
     - CIDR subtraction is broken for out-of-range CIDR objects
 
-* FIXED Issue 35 - http://code.google.com/p/netaddr/issues/detail?id=35
+FIXED Issue 35 - http://code.google.com/p/netaddr/issues/detail?id=35
 
     - install error (on Python interpreters where socket.has_ipv6 is False)
 
-* FIXED Issue 36 - http://code.google.com/p/netaddr/issues/detail?id=36
+FIXED Issue 36 - http://code.google.com/p/netaddr/issues/detail?id=36
 
     - netaddr.CIDR fails to parse default route CIDR
 
-* FIXED Issue 37 - http://code.google.com/p/netaddr/issues/detail?id=37
+FIXED Issue 37 - http://code.google.com/p/netaddr/issues/detail?id=37
 
     - Bug in bitwise AND operator for IP addresses
 
-* FIXED Issue 38 - http://code.google.com/p/netaddr/issues/detail?id=38
+FIXED Issue 38 - http://code.google.com/p/netaddr/issues/detail?id=38
 
     - Feature request: Addr.__nonzero__
 
-* FIXED Issue 39 - http://code.google.com/p/netaddr/issues/detail?id=39
+FIXED Issue 39 - http://code.google.com/p/netaddr/issues/detail?id=39
 
     - CIDR.abbrev_to_verbose() not applying implicit classful netmask
       rules consistently
 
-------------------------------------------------------------------------------
-
+--------------
 Release: 0.6.2
+--------------
 Date: 13th Apr 2009
 
-Major changes since 0.6.1
--------------------------
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.6.1
+^^^^^^^^^^^^^^^^^^^
 
 * Refreshed IEEE and IANA data files with latest revisions from their 
   respective URLs.
@@ -376,20 +430,22 @@ Major changes since 0.6.1
 * Added get_latest_files() functions to both the netaddr.eui and 
   netaddr.ip modules to assist in automating release builds.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 32 - http://code.google.com/p/netaddr/issues/detail?id=32
+FIXED Issue 32 - http://code.google.com/p/netaddr/issues/detail?id=32
 
     - Addr.__ne__ returns wrong answer
 
-------------------------------------------------------------------------------
-
+--------------
 Release: 0.6.1
+--------------
 Date: 6th Apr 2009
 
-Major changes since 0.6
------------------------
+^^^^^^^^^^^^^^^^^
+Changes since 0.6
+^^^^^^^^^^^^^^^^^
 
 * Added COPYRIGHT file with details and attribution for all 3rd party files
   bundled with netaddr.
@@ -447,36 +503,38 @@ Major changes since 0.6
   as this behaviour can be easily replicated using the word_fmt option 
   instead and requires less code (word_fmt='%X').
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* FIXED Issue 23 - http://code.google.com/p/netaddr/issues/detail?id=23
+FIXED Issue 23 - http://code.google.com/p/netaddr/issues/detail?id=23
 
     - Improve IPv6 IPv4 mapped/compatible address formatting
 
-* FIXED Issue 24 - http://code.google.com/p/netaddr/issues/detail?id=24
+FIXED Issue 24 - http://code.google.com/p/netaddr/issues/detail?id=24
 
     - bug in CIDR.subnet() when using the fmt argument
 
-* FIXED Issue 29 - http://code.google.com/p/netaddr/issues/detail?id=29
+FIXED Issue 29 - http://code.google.com/p/netaddr/issues/detail?id=29
 
     - CIDR.subnet method's count argument isn't working as documented
 
-* FIXED Issue 30 - http://code.google.com/p/netaddr/issues/detail?id=30
+FIXED Issue 30 - http://code.google.com/p/netaddr/issues/detail?id=30
 
     - not compatible with Python 2.3
 
-* FIXED Issue 31 - http://code.google.com/p/netaddr/issues/detail?id=31
+FIXED Issue 31 - http://code.google.com/p/netaddr/issues/detail?id=31
 
     - byte order in documentation confusing or wrong
 
-------------------------------------------------------------------------------
-
+------------
 Release: 0.6
+------------
 Date: 20th Jan 2009
 
-Major changes since 0.5.x
--------------------------
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.5.x
+^^^^^^^^^^^^^^^^^^^
 
 * Namespace changes
 
@@ -610,9 +668,9 @@ Major changes since 0.5.x
   - Improvements to both EUI and IP classes. They now accept many more valid
     address formats than previously. Thanks for all the bugs tickets raised.
 
-* __repr__() method behaviour change
+* ``__repr__()`` method behaviour change
 
-  - Using repr() now assume that you have performed a 'from netaddr import *'
+  - Using ``repr()`` now assume that you have performed a ``from netaddr import *``
     before you execute them. They no longer specify the originating namespace
     of objects which is a bit unnecessary and a lot to read on-screen.They 
     will also be moving around within the namespace shortly anyway so its
@@ -638,15 +696,17 @@ Major changes since 0.5.x
 
   - Help is need to test this as it is not something I use personally.
 
-Significant bug fixes
----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Finally fixed the IPv6 string address compression algorithm so that it 
   is now compliant with the socket modules inet_ntop() and inet_pton() calls.
   (not available on all platforms).
 
-EXPERIMENTAL FEATURES
----------------------
+^^^^^^^^^^^^^^^^^^^^^
+Experimental Features
+^^^^^^^^^^^^^^^^^^^^^
 
 * added bitwise operators to the IP class
 
@@ -662,13 +722,14 @@ EXPERIMENTAL FEATURES
   - lots more work to do here. Please raise bugs and feature requests against
     this as you find them. Improvements to this are coming in 0.7.
 
-------------------------------------------------------------------------------
-
+--------------
 Release: 0.5.2
+--------------
 Date: 29th Sep 2008
 
-Bug fixes for 0.5 - release 2
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Fixed Issue 15 in bug tracker. Bad validation and conversion of IPv4 
   mapped IPv6 address values in IPv6Strategy class. Covered with unit
@@ -680,13 +741,14 @@ Bug fixes for 0.5 - release 2
 
 * IP.hostname() method returns None when DNS lookup fails.
 
-------------------------------------------------------------------------------
-
+--------------
 Release: 0.5.1
+--------------
 Date: 23rd Sep 2008
 
-Bug fixes for 0.5 - release 1
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * CIDR constructor was throwing a TypeError for valid unicode string addresses
   which worked in previous releases. Fixed and covered with a unit test case.
@@ -694,51 +756,51 @@ Bug fixes for 0.5 - release 1
 * The methods CIDR.netmask() and CIDR.hostmask() contained code errors that
   were causing them to fail. Problem fixed and covered with unit test case.
 
-------------------------------------------------------------------------------
-
+------------
 Release: 0.5
+------------
 Date: 19th Sep 2008
 
-Major changes since 0.4.x
--------------------------
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.4.x
+^^^^^^^^^^^^^^^^^^^
 
-General changes
----------------
+**General**
 
-* access to all important object attributes in all netaddr classes now takes
+* Access to all important object attributes in all netaddr classes now takes
   place via custom Python descriptor protocol classes. This has greatly 
   simplified internal class logic and made external attributes changes much
   safer and less error prone. It has also made aggregate classes such as CIDR
   and Wildcard effectively read-write rather than read-only which they have 
   been up until this release.
 
-* ammended the way sort order is calculated for Addr and AddrRange (sub)class
+* Ammended the way sort order is calculated for Addr and AddrRange (sub)class
   instances so that the address type is taken into account as well as as the 
   numerical value of the address or address range. The ascending sort order 
   is IPv4, IPv6, EUI-48 and EUI-64. Sequences of AddrRange (sub)class 
   instances now sort correctly! 
   
-* comparisons between instances of Addr and AddrRange (sub)classes now return 
+* Comparisons between instances of Addr and AddrRange (sub)classes now return 
   False, rather than raising an AttributeError. 
   
-* added checks and workaround code for Python runtime environments that suffer
+* Added checks and workaround code for Python runtime environments that suffer
   from the infamous socket module inet_aton('255.255.255.255') bug. This was
   discovered recently in Python 2.4.x on PowerPC under MacOS X. The fix also
   applies in cases where the socket module is not available (e.g. on Google
   App Engine).
 
-* all general Exception raising in the strategy module has now been replaced 
+* All general Exception raising in the strategy module has now been replaced 
   with more specific exceptions, mainly ValueError (these were unintentionally
   missed out of the 0.4 release).
 
-* implemented __hash__() operations for the Addr and AddrStrategy classes. This 
+* Implemented __hash__() operations for the Addr and AddrStrategy classes. This 
   allows you to use IP, CIDR and Wildcard objects as keys in dictionaries and
   as elements in sets. Please note - this is currently an experimental feature
   which may change in future releases.
 
-* added __ne__() operation to Addr and AddrRange classes.
+* Added __ne__() operation to Addr and AddrRange classes.
 
-* obeying the 'Law of Demeter', the address type of Addr and AddrRange 
+* Obeying the 'Law of Demeter', the address type of Addr and AddrRange 
   (sub)class instances can be accessed using the property directly :-
   
     obj.addr_type  # 0.5 onwards
@@ -747,45 +809,42 @@ General changes
   
     obj.strategy.addr_type  # 0.4 and earlier
 
-* renamed the AT_DESCR lookup dictionary to AT_NAMES. Removed invalid and 
+* Renamed the AT_DESCR lookup dictionary to AT_NAMES. Removed invalid and 
   duplicated imports from all modules.
 
-Addr class changes
-------------------
+**Addr class changes**
 
-* removed the setvalue() method from the Addr class and replaced all uses of 
+* Removed the setvalue() method from the Addr class and replaced all uses of 
   __setattr__() replaced by custom descriptors throughout.
 
-IP class changes
-----------------
+**IP class changes**
 
-* removed the ambiguity with masklen and prefixlen attributes in the IP class.
+* Removed the ambiguity with masklen and prefixlen attributes in the IP class.
   prefixlen now denotes the number of bits that define the netmask for an IP
   address. The new method netmask_bits() returns the number of non-zero bits 
   in an IP object if the is_netmask() method returns True. A prefixlen value
   other than /32 for an address where is_netmask() returns True is invalid 
   and will raise a ValueError exception.
 
-* removed the family() method from the IP class. It duplicates information
+* Removed the family() method from the IP class. It duplicates information
   now provided by the prefixlen property.
 
 * IP class has several new methods. is_multicast() and is_unicast() quickly 
   tell you what category of IP address you have and while ipv4() and ipv6() 
   act as IPv4 <-> IPv6 conversions or copy constructors depending on context.
   
-* reverse DNS lookup entries now contain a trailing, top-level period (.)
+* Reverse DNS lookup entries now contain a trailing, top-level period (.)
   character appended to them.
   
-* added the hostname() method to IP instances which performs a reverse DNS
+* Added the hostname() method to IP instances which performs a reverse DNS
 
-* the IP class __str__() method now omits the subnet prefix is now implicit 
+* The IP class __str__() method now omits the subnet prefix is now implicit 
   for IPv4 addresses that are /32 and IPv6 addresses that are /128. Subnet
   prefix is maintained in return value for all other values.
 
-AddrRange class changes
------------------------
+**AddrRange class changes**
 
-* the AddrRange class no longer stores instances of Addr (sub)classes for the 
+* The AddrRange class no longer stores instances of Addr (sub)classes for the 
   first and last address in the range. The instance variables self.start_addr
   and self.stop_addr have been renamed to self.first and self.last and the 
   methods obj.first() and obj.last() have been removed.
@@ -802,50 +861,49 @@ AddrRange class changes
   decrement, __isub__(), operators. This allows you to 'slide' CIDRs and 
   Wildcards upwards and downwards based on their block sizes.
 
-* the _retval() method has now been renamed data_flavour() - yes, the UK 
+* The _retval() method has now been renamed data_flavour() - yes, the UK 
   spelling ;-) You shouldn't really care much about this as it mostly for 
   internal use. I gave it a decent name as I didn't see any real need to hide
   the functionality if users wanted it.
 
-CIDR class changes
-------------------
+**CIDR class changes**
 
-* the strictness of the CIDR class constructor in relation to non-zero bits
+* The strictness of the CIDR class constructor in relation to non-zero bits
   once the prefix bitmask has been applied can be disabled use the optional
   argument strict_bitmask=False. It is True (strictness enabled) by default.
 
-* fixed a bug in abbreviated CIDR conversion. Subnet prefix for multicast 
+* Fixed a bug in abbreviated CIDR conversion. Subnet prefix for multicast 
   address 224.0.0.0 is now /4 instead of /8.
 
-* the CIDR class now supports subtraction between two CIDR objects, returning
+* The CIDR class now supports subtraction between two CIDR objects, returning
   a list of the remainder. Please note that the bigger of the two CIDR objects
   must be on the left hand side of the the expression, otherwise an empty list
   is return. Sorry, you are not allowed to create negative CIDRs ;-)
 
-* the function abbrev_to_cidr() has been renamed to and turned into the static 
+* The function abbrev_to_cidr() has been renamed to and turned into the static 
   method CIDR.abbrev_to_verbose(). No major changes to the logic have been
   made.
   
-Wildcard class changes
-----------------------
+**Wildcard class changes**
 
-* the Wildcard class now defines a static method Wildcard.is_valid() that 
+* The Wildcard class now defines a static method Wildcard.is_valid() that 
   allows you to perform validity tests on wildcard strings without fully 
   instantiation a Wildcard object.
 
-------------------------------------------------------------------------------
-
+------------
 Release: 0.4
+------------
 Date: 7th Aug 2008
 
-Major changes since 0.3.x
--------------------------
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.3.x
+^^^^^^^^^^^^^^^^^^^
 
-* all general Exception raising has been replaced with more specific 
+* All general Exception raising has been replaced with more specific 
   exceptions such as TypeError and ValueError and with the addition of two 
   custom exception classes, AddrFormatError and AddrConversionError.
 
-* the IP class now accepts a subnet prefix. It is *NOT* strict about non-zero
+* The IP class now accepts a subnet prefix. It is *NOT* strict about non-zero
   bits to the right of implied subnet mask, unlike the CIDR class (see below).
 
 * The CIDR class is now completely strict about non-zero bits to the right of 
@@ -853,7 +911,7 @@ Major changes since 0.3.x
   handy hint as to the correct CIDR to be used based on the supplied subnet 
   prefix.
 
-* the CIDR class now also supports abbreviated CIDR ranges and uses older
+* The CIDR class now also supports abbreviated CIDR ranges and uses older
   classful network address rules to decided on a subnet prefix if one is not
   explicitly provided. Supported forms now include 10, 10/8 and 192.168/16.
   Currently only supports these options for IPv4 CIDR address ranges.
@@ -868,26 +926,25 @@ Major changes since 0.3.x
     * CIDR -> Wildcard
     * Wildcard -> CIDR
     
+^^^^^^^^^^^^^^^^^^^^
 Housekeeping Changes
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
-* massive docstring review and tidy up with the inclusino of epydoc specific 
+* Massive docstring review and tidy up with the inclusino of epydoc specific 
   syntax to spruce up auto-generated API documentation.
 
-* thorough review of code using pylint.
+* Thorough review of code using pylint.
 
-* netaddr module now has the special __version__ variable defined which is 
+* Netaddr module now has the special __version__ variable defined which is 
   also referenced by setup.py.
 
-* some minor changes to setup.py and MANIFEST.in.
+* Some minor changes to setup.py and MANIFEST.in.
 
-* constants and custom Exception classes have been moved to __init__.py from
+* Constants and custom Exception classes have been moved to __init__.py from
   strategy.py
   
-* an import * friendly __all__ has been defined for the netaddr namespace
+* An import * friendly __all__ has been defined for the netaddr namespace
   which should remove the need to delve too much into the address and strategy
   submodules.
   
-* fixed a number of line-ending issues in several files.
-
-------------------------------------------------------------------------------
+* Fixed a number of line-ending issues in several files.
