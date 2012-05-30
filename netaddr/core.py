@@ -93,8 +93,8 @@ class PrettyPrinter(Subscriber):
             Default: sys.stdout.
 
 
-        :param write_eol: if C{True} this object will write newlines to
-            output, if C{False} it will not.
+        :param write_eol: if ``True`` this object will write newlines to
+            output, if ``False`` it will not.
         """
         self.fh = fh
         self.write_eol = write_eol

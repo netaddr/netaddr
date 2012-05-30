@@ -13,7 +13,7 @@
 #   Engineers) is subject to copyright. See the following URL for
 #   details :-
 #
-#    U{http://www.ieee.org/web/publications/rights/legal.html}
+#       - http://www.ieee.org/web/publications/rights/legal.html
 #
 #   IEEE data files included with netaddr are not modified in any way but are
 #   parsed and made available to end users through an API. There is no
@@ -28,8 +28,8 @@ Provides access to public OUI and IAB registration data published by the IEEE.
 
 More details can be found at the following URLs :-
 
-    - IEEE Home Page - U{http://www.ieee.org/}
-    - Registration Authority Home Page - U{http://standards.ieee.org/regauth/}
+    - IEEE Home Page - http://www.ieee.org/
+    - Registration Authority Home Page - http://standards.ieee.org/regauth/
 """
 
 import os as _os
@@ -98,7 +98,7 @@ class OUIIndexParser(Publisher):
 
     The file processed by this parser is available online from this URL :-
 
-        - U{http://standards.ieee.org/regauth/oui/oui.txt}
+        - http://standards.ieee.org/regauth/oui/oui.txt
 
     This is a sample of the record structure expected::
 
@@ -177,7 +177,7 @@ class IABIndexParser(Publisher):
 
     The file processed by this parser is available online from this URL :-
 
-        - U{http://standards.ieee.org/regauth/oui/iab.txt}
+        - http://standards.ieee.org/regauth/oui/iab.txt
 
     This is a sample of the record structure expected::
 

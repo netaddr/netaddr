@@ -133,7 +133,7 @@ def valid_str(addr):
     """
     :param addr: An IEEE EUI-48 (MAC) address in string form.
 
-    :return: C{True} if MAC address string is valid, C{False} otherwise.
+    :return: ``True`` if MAC address string is valid, ``False`` otherwise.
     """
     for regexp in RE_MAC_FORMATS:
         try:

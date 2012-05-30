@@ -55,7 +55,7 @@ class BaseIP(object):
 
     def sort_key(self):
         """
-        :return: A key tuple used to compare and sort this L{IPAddress}
+        :return: A key tuple used to compare and sort this `IPAddress`
             correctly.
         """
         return NotImplemented
@@ -68,10 +68,10 @@ class BaseIP(object):
 
     def __eq__(self, other):
         """
-        :param other: an L{IPAddress} or L{IPNetwork} object.
+        :param other: an `IPAddress` or `IPNetwork` object.
 
-        :return: C{True} if this L{IPAddress} or L{IPNetwork} object is
-            equivalent to C{other}, C{False} otherwise.
+        :return: ``True`` if this `IPAddress` or `IPNetwork` object is
+            equivalent to ``other``, ``False`` otherwise.
         """
         try:
             return self.key() == other.key()
@@ -80,10 +80,10 @@ class BaseIP(object):
 
     def __ne__(self, other):
         """
-        :param other: an L{IPAddress} or L{IPNetwork} object.
+        :param other: an `IPAddress` or `IPNetwork` object.
 
-        :return: C{True} if this L{IPAddress} or L{IPNetwork} object is
-            not equivalent to C{other}, C{False} otherwise.
+        :return: ``True`` if this `IPAddress` or `IPNetwork` object is
+            not equivalent to ``other``, ``False`` otherwise.
         """
         try:
             return self.key() != other.key()
@@ -92,10 +92,10 @@ class BaseIP(object):
 
     def __lt__(self, other):
         """
-        :param other: an L{IPAddress} or L{IPNetwork} object.
+        :param other: an `IPAddress` or `IPNetwork` object.
 
-        :return: C{True} if this L{IPAddress} or L{IPNetwork} object is
-            less than C{other}, C{False} otherwise.
+        :return: ``True`` if this `IPAddress` or `IPNetwork` object is
+            less than ``other``, ``False`` otherwise.
         """
         try:
             return self.sort_key() < other.sort_key()
@@ -104,10 +104,10 @@ class BaseIP(object):
 
     def __le__(self, other):
         """
-        :param other: an L{IPAddress} or L{IPNetwork} object.
+        :param other: an `IPAddress` or `IPNetwork` object.
 
-        :return: C{True} if this L{IPAddress} or L{IPNetwork} object is
-            less than or equal to C{other}, C{False} otherwise.
+        :return: ``True`` if this `IPAddress` or `IPNetwork` object is
+            less than or equal to ``other``, ``False`` otherwise.
         """
         try:
             return self.sort_key() <= other.sort_key()
@@ -116,10 +116,10 @@ class BaseIP(object):
 
     def __gt__(self, other):
         """
-        :param other: an L{IPAddress} or L{IPNetwork} object.
+        :param other: an `IPAddress` or `IPNetwork` object.
 
-        :return: C{True} if this L{IPAddress} or L{IPNetwork} object is
-            greater than C{other}, C{False} otherwise.
+        :return: ``True`` if this `IPAddress` or `IPNetwork` object is
+            greater than ``other``, ``False`` otherwise.
         """
         try:
             return self.sort_key() > other.sort_key()
@@ -128,10 +128,10 @@ class BaseIP(object):
 
     def __ge__(self, other):
         """
-        :param other: an L{IPAddress} or L{IPNetwork} object.
+        :param other: an `IPAddress` or `IPNetwork` object.
 
-        :return: C{True} if this L{IPAddress} or L{IPNetwork} object is
-            greater than or equal to C{other}, C{False} otherwise.
+        :return: ``True`` if this `IPAddress` or `IPNetwork` object is
+            greater than or equal to ``other``, ``False`` otherwise.
         """
         try:
             return self.sort_key() >= other.sort_key()
@@ -139,11 +139,11 @@ class BaseIP(object):
             return NotImplemented
 
     def is_unicast(self):
-        """:return: C{True} if this IP is unicast, C{False} otherwise"""
+        """:return: ``True`` if this IP is unicast, ``False`` otherwise"""
         return not self.is_multicast()
 
     def is_multicast(self):
-        """:return: C{True} if this IP is multicast, C{False} otherwise"""
+        """:return: ``True`` if this IP is multicast, ``False`` otherwise"""
         if self._module == _ipv4:
             return self in IPV4_MULTICAST
         elif self._module == _ipv6:
@@ -151,8 +151,8 @@ class BaseIP(object):
 
     def is_loopback(self):
         """
-        :return: C{True} if this IP is loopback address (not for network
-            transmission), C{False} otherwise.
+        :return: ``True`` if this IP is loopback address (not for network
+            transmission), ``False`` otherwise.
             References: RFC 3330 and 4291.
         """
         if self.version == 4:
@@ -162,8 +162,8 @@ class BaseIP(object):
 
     def is_private(self):
         """
-        :return: C{True} if this IP is for internal/private use only
-            (i.e. non-public), C{False} otherwise. Reference: RFCs 1918,
+        :return: ``True`` if this IP is for internal/private use only
+            (i.e. non-public), ``False`` otherwise. Reference: RFCs 1918,
             3330, 4193, 3879 and 2365.
         """
         if self.version == 4:
@@ -182,7 +182,7 @@ class BaseIP(object):
 
     def is_link_local(self):
         """
-        :return: C{True} if this IP is link-local address C{False} otherwise.
+        :return: ``True`` if this IP is link-local address ``False`` otherwise.
             Reference: RFCs 3927 and 4291.
         """
         if self.version == 4:
@@ -192,7 +192,7 @@ class BaseIP(object):
 
     def is_reserved(self):
         """
-        :return: C{True} if this IP is in IANA reserved range, C{False}
+        :return: ``True`` if this IP is in IANA reserved range, ``False``
             otherwise. Reference: RFCs 3330 and 3171.
         """
         if self.version == 4:
@@ -207,14 +207,14 @@ class BaseIP(object):
 
     def is_ipv4_mapped(self):
         """
-        :return: C{True} if this IP is IPv4-compatible IPv6 address, C{False}
+        :return: ``True`` if this IP is IPv4-compatible IPv6 address, ``False``
             otherwise.
         """
         return self.version == 6 and (self._value >> 32) == 0xffff
 
     def is_ipv4_compat(self):
         """
-        :return: C{True} if this IP is IPv4-mapped IPv6 address, C{False}
+        :return: ``True`` if this IP is IPv4-mapped IPv6 address, ``False``
             otherwise.
         """
         return self.version == 6 and (self._value >> 32) == 0
@@ -240,7 +240,7 @@ class IPAddress(BaseIP):
     """
     An individual IPv4 or IPv6 address without a net mask or subnet prefix.
 
-    To support these and other network based operations, see L{IPNetwork}.
+    To support these and other network based operations, see `IPNetwork`.
 
     """
     __slots__ = ()
@@ -248,7 +248,7 @@ class IPAddress(BaseIP):
     def __init__(self, addr, version=None, flags=0):
         """
         Constructor.
-        
+
         :param addr: an IPv4 or IPv6 address which may be represented in an
             accepted string format, as an unsigned integer or as another
             IPAddress object (copy construction).
@@ -328,12 +328,12 @@ class IPAddress(BaseIP):
                         raise AddrFormatError('bad address format: %r' % addr)
 
     def __getstate__(self):
-        """:returns: Pickled state of an C{IPAddress} object."""
+        """:returns: Pickled state of an `IPAddress` object."""
         return self._value, self._module.version
 
     def __setstate__(self, state):
         """
-        :param state: data used to unpickle a pickled C{IPAddress} object.
+        :param state: data used to unpickle a pickled `IPAddress` object.
 
         """
         value, version = state
@@ -350,14 +350,14 @@ class IPAddress(BaseIP):
 
     def is_hostmask(self):
         """
-        :return: C{True} if this IP address host mask, C{False} otherwise.
+        :return: ``True`` if this IP address host mask, ``False`` otherwise.
         """
         int_val = self._value + 1
         return (int_val & (int_val - 1) == 0)
 
     def is_netmask(self):
         """
-        :return: C{True} if this IP address network mask, C{False} otherwise.
+        :return: ``True`` if this IP address network mask, ``False`` otherwise.
         """
         int_val = (self._value ^ self._module.max_int) + 1
         return (int_val & (int_val - 1) == 0)
@@ -446,7 +446,7 @@ class IPAddress(BaseIP):
         return self.version, self._value
 
     def sort_key(self):
-        """:return: A key tuple used to compare and sort this L{IPAddress} correctly."""
+        """:return: A key tuple used to compare and sort this `IPAddress` correctly."""
         return self.version, self._value, self._module.width
 
     def __int__(self):
@@ -514,10 +514,10 @@ class IPAddress(BaseIP):
 
     def ipv4(self):
         """
-        Raises an L{AddrConversionError} if IPv6 address cannot be converted
+        Raises an `AddrConversionError` if IPv6 address cannot be converted
         to IPv4.
-        
-        :return: A numerically equivalent version 4 L{IPAddress} object.
+
+        :return: A numerically equivalent version 4 `IPAddress` object.
         """
         ip = None
         klass = self.__class__
@@ -536,14 +536,14 @@ class IPAddress(BaseIP):
 
     def ipv6(self, ipv4_compatible=False):
         """
-        B{Please Note:} the IPv4-mapped IPv6 address format is now considered
-        deprecated. See RFC 4291 or later for details.
+        .. note:: The IPv4-mapped IPv6 address format is now considered \
+            deprecated. See RFC 4291 or later for details.
 
-        :param ipv4_compatible: If C{True} returns an IPv4-mapped address
+        :param ipv4_compatible: If ``True`` returns an IPv4-mapped address
             (::ffff:x.x.x.x), an IPv4-compatible (::x.x.x.x) address
             otherwise. Default: False (IPv4-mapped).
 
-        :return: A numerically equivalent version 6 L{IPAddress} object.
+        :return: A numerically equivalent version 6 `IPAddress` object.
         """
         ip = None
         klass = self.__class__
@@ -579,28 +579,28 @@ class IPAddress(BaseIP):
 
     def __or__(self, other):
         """
-        :param other: An L{IPAddress} object (or other int-like object).
+        :param other: An `IPAddress` object (or other int-like object).
 
         :return: bitwise OR (x | y) between the integer value of this IP
-            address and C{other}.
+            address and ``other``.
         """
         return self.__class__(self._value | int(other), self.version)
 
     def __and__(self, other):
         """
-        :param other: An L{IPAddress} object (or other int-like object).
+        :param other: An `IPAddress` object (or other int-like object).
 
         :return: bitwise AND (x & y) between the integer value of this IP
-            address and C{other}.
+            address and ``other``.
         """
         return self.__class__(self._value & int(other), self.version)
 
     def __xor__(self, other):
         """
-        :param other: An L{IPAddress} object (or other int-like object).
+        :param other: An `IPAddress` object (or other int-like object).
 
         :return: bitwise exclusive OR (x ^ y) between the integer value of
-            this IP address and C{other}.
+            this IP address and ``other``.
         """
         return self.__class__(self._value ^ int(other), self.version)
 
@@ -608,8 +608,8 @@ class IPAddress(BaseIP):
         """
         :param numbits: size of bitwise shift.
 
-        :return: an L{IPAddress} object based on this one with its integer
-            value left shifted by C{numbits}.
+        :return: an `IPAddress` object based on this one with its integer
+            value left shifted by ``numbits``.
         """
         return self.__class__(self._value << numbits, self.version)
 
@@ -617,14 +617,14 @@ class IPAddress(BaseIP):
         """
         :param numbits: size of bitwise shift.
 
-        :return: an L{IPAddress} object based on this one with its integer
-            value right shifted by C{numbits}.
+        :return: an `IPAddress` object based on this one with its integer
+            value right shifted by ``numbits``.
         """
         return self.__class__(self._value >> numbits, self.version)
 
     def __nonzero__(self):
-        """:return: C{True} if the numerical value of this IP address is not \
-            zero, C{False} otherwise."""
+        """:return: ``True`` if the numerical value of this IP address is not \
+            zero, ``False`` otherwise."""
         #   Python 2.x.
         return bool(self._value)
 
@@ -647,7 +647,7 @@ class IPListMixin(object):
     """
     def __iter__(self):
         """
-        :return: An iterator providing access to all L{IPAddress} objects
+        :return: An iterator providing access to all `IPAddress` objects
             within range represented by this ranged IP object.
         """
         start_ip = IPAddress(self.first, self.version)
@@ -664,7 +664,7 @@ class IPListMixin(object):
     def __len__(self):
         """
         :return: the number of IP addresses in this ranged IP object. Raises
-            an C{IndexError} if size > system max int (a Python 2.x
+            an `IndexError` if size > system max int (a Python 2.x
             limitation). Use the .size property for subnets of any size.
         """
         size = self.size
@@ -675,9 +675,9 @@ class IPListMixin(object):
 
     def __getitem__(self, index):
         """
-        :return: The IP address(es) in this L{IPNetwork} object referenced by
+        :return: The IP address(es) in this `IPNetwork` object referenced by
             index or slice. As slicing can produce large sequences of objects
-            an iterator is returned instead of the more usual C{list}.
+            an iterator is returned instead of the more usual `list`.
         """
         item = None
 
@@ -712,10 +712,10 @@ class IPListMixin(object):
 
     def __contains__(self, other):
         """
-        :param other: an L{IPAddress} or ranged IP object.
+        :param other: an `IPAddress` or ranged IP object.
 
-        :return: C{True} if other falls within the boundary of this one,
-            C{False} otherwise.
+        :return: ``True`` if other falls within the boundary of this one,
+            ``False`` otherwise.
         """
         if self.version != other.version:
             return False
@@ -812,7 +812,7 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
 class IPNetwork(BaseIP, IPListMixin):
     """
     An IPv4 or IPv6 network or subnet.
-    
+
     A combination of an IP address and a network mask.
 
     Accepts CIDR and several related variants :
@@ -835,7 +835,7 @@ class IPNetwork(BaseIP, IPListMixin):
         x::/y:: -> fe80::/3f:ffff:ffff:ffff:ffff:ffff:ffff:ffff
 
     d) Abbreviated CIDR format (as of netaddr 0.7.x this requires the \
-       optional constructor argument C{implicit_prefix=True})::
+       optional constructor argument ``implicit_prefix=True``)::
 
         x       -> 192
         x/y     -> 10/8
@@ -921,12 +921,12 @@ class IPNetwork(BaseIP, IPListMixin):
         self._module = module
 
     def __getstate__(self):
-        """:return: Pickled state of an C{IPNetwork} object."""
+        """:return: Pickled state of an `IPNetwork` object."""
         return self._value, self._prefixlen, self._module.version
 
     def __setstate__(self, state):
         """
-        :param state: data used to unpickle a pickled C{IPNetwork} object.
+        :param state: data used to unpickle a pickled `IPNetwork` object.
 
         """
         value, prefixlen, version = state
@@ -961,7 +961,7 @@ class IPNetwork(BaseIP, IPListMixin):
     @property
     def ip(self):
         """
-        The IP address of this L{IPNetwork} object. This is may or may not be
+        The IP address of this `IPNetwork` object. This is may or may not be
         the same as the network IP address which varies according to the value
         of the CIDR subnet prefix.
         """
@@ -969,18 +969,18 @@ class IPNetwork(BaseIP, IPListMixin):
 
     @property
     def network(self):
-        """The network address of this L{IPNetwork} object."""
+        """The network address of this `IPNetwork` object."""
         return IPAddress(self._value & int(self.netmask), self.version)
 
     @property
     def broadcast(self):
-        """The broadcast address of this L{IPNetwork} object"""
+        """The broadcast address of this `IPNetwork` object"""
         return IPAddress(self._value | self.hostmask._value, self.version)
 
     @property
     def first(self):
         """
-        The integer value of first IP address found within this L{IPNetwork}
+        The integer value of first IP address found within this `IPNetwork`
         object.
         """
         return self._value & (self._module.max_int ^ self.hostmask._value)
@@ -988,7 +988,7 @@ class IPNetwork(BaseIP, IPListMixin):
     @property
     def last(self):
         """
-        The integer value of last IP address found within this L{IPNetwork}
+        The integer value of last IP address found within this `IPNetwork`
         object.
         """
         hostmask = (1 << (self._module.width - self._prefixlen)) - 1
@@ -996,20 +996,20 @@ class IPNetwork(BaseIP, IPListMixin):
 
     @property
     def netmask(self):
-        """The subnet mask of this L{IPNetwork} object."""
+        """The subnet mask of this `IPNetwork` object."""
         netmask = self._module.max_int ^ self.hostmask._value
         return IPAddress(netmask, self.version)
 
     @property
     def hostmask(self):
-        """The host mask of this L{IPNetwork} object."""
+        """The host mask of this `IPNetwork` object."""
         hostmask = (1 << (self._module.width - self._prefixlen)) - 1
         return IPAddress(hostmask, self.version)
 
     @property
     def cidr(self):
         """
-        The true CIDR address for this L{IPNetwork} object which omits any
+        The true CIDR address for this `IPNetwork` object which omits any
         host bits to the right of the CIDR subnet prefix.
         """
         ip = IPAddress(self._value & int(self.netmask), self.version)
@@ -1018,13 +1018,13 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def __iadd__(self, num):
         """
-        Increases the value of this L{IPNetwork} object by the current size
-        multiplied by C{num}.
+        Increases the value of this `IPNetwork` object by the current size
+        multiplied by ``num``.
 
-        An C{IndexError} is raised if result exceeds maximum IP address value
+        An `IndexError` is raised if result exceeds maximum IP address value
         or is less than zero.
 
-        :param num: (optional) number of L{IPNetwork} blocks to increment \
+        :param num: (optional) number of `IPNetwork` blocks to increment \
             this IPNetwork's value by.
         """
         new_value = int(self.network) + (self.size * num)
@@ -1039,13 +1039,13 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def __isub__(self, num):
         """
-        Decreases the value of this L{IPNetwork} object by the current size
-        multiplied by C{num}.
+        Decreases the value of this `IPNetwork` object by the current size
+        multiplied by ``num``.
 
-        An C{IndexError} is raised if result is less than zero or exceeds
+        An `IndexError` is raised if result is less than zero or exceeds
         maximum IP address value.
 
-        :param num: (optional) number of L{IPNetwork} blocks to decrement \
+        :param num: (optional) number of `IPNetwork` blocks to decrement \
             this IPNetwork's value by.
         """
         new_value = int(self.network) - (self.size * num)
@@ -1060,13 +1060,13 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def key(self):
         """
-        :return: A key tuple used to uniquely identify this L{IPNetwork}.
+        :return: A key tuple used to uniquely identify this `IPNetwork`.
         """
         return self.version, self.first, self.last
 
     def sort_key(self):
         """
-        :return: A key tuple used to compare and sort this L{IPNetwork} correctly.
+        :return: A key tuple used to compare and sort this `IPNetwork` correctly.
         """
         net_size_bits = self._module.width - num_bits(self.size)
         host_bits = self._value - self.first
@@ -1074,8 +1074,8 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def ipv4(self):
         """
-        :return: A numerically equivalent version 4 L{IPNetwork} object. \
-            Raises an L{AddrConversionError} if IPv6 address cannot be \
+        :return: A numerically equivalent version 4 `IPNetwork` object. \
+            Raises an `AddrConversionError` if IPv6 address cannot be \
             converted to IPv4.
         """
         ip = None
@@ -1097,14 +1097,14 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def ipv6(self, ipv4_compatible=False):
         """
-        B{Please Note:} the IPv4-mapped IPv6 address format is now considered
+        .. note:: the IPv4-mapped IPv6 address format is now considered \
         deprecated. See RFC 4291 or later for details.
 
-        :param ipv4_compatible: If C{True} returns an IPv4-mapped address
+        :param ipv4_compatible: If ``True`` returns an IPv4-mapped address
             (::ffff:x.x.x.x), an IPv4-compatible (::x.x.x.x) address
             otherwise. Default: False (IPv4-mapped).
 
-        :return: A numerically equivalent version 6 L{IPNetwork} object.
+        :return: A numerically equivalent version 6 `IPNetwork` object.
         """
         ip = None
         klass = self.__class__
@@ -1129,10 +1129,10 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def previous(self, step=1):
         """
-        :param step: the number of IP subnets between this L{IPNetwork} object
+        :param step: the number of IP subnets between this `IPNetwork` object
             and the expected subnet. Default: 1 (the previous IP subnet).
 
-        :return: The adjacent subnet preceding this L{IPNetwork} object.
+        :return: The adjacent subnet preceding this `IPNetwork` object.
         """
         ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
             self.version)
@@ -1141,10 +1141,10 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def next(self, step=1):
         """
-        :param step: the number of IP subnets between this L{IPNetwork} object
+        :param step: the number of IP subnets between this `IPNetwork` object
             and the expected subnet. Default: 1 (the next IP subnet).
 
-        :return: The adjacent subnet succeeding this L{IPNetwork} object.
+        :return: The adjacent subnet succeeding this `IPNetwork` object.
         """
         ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
             self.version)
@@ -1153,13 +1153,13 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def supernet(self, prefixlen=0):
         """
-        Provides a list of supernets for this L{IPNetwork} object between the
+        Provides a list of supernets for this `IPNetwork` object between the
         size of the current prefix and (if specified) an endpoint prefix.
 
         :param prefixlen: (optional) a CIDR prefix for the maximum supernet.
             Default: 0 - returns all possible supernets.
 
-        :return: a tuple of supernet L{IPNetwork} objects.
+        :return: a tuple of supernet `IPNetwork` objects.
         """
         if not 0 <= prefixlen <= self._module.width:
             raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
@@ -1220,13 +1220,13 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         An generator that provides all the IP addresses that can be assigned
         to hosts within the range of this IP object's subnet.
-        
+
         - for IPv4, the network and broadcast addresses are always excluded. \
           Any subnet that contains less than 4 IP addresses yields an empty list.
-        
+
         - for IPv6, only the unspecified address '::' is excluded from any \
           yielded IP addresses.
-    
+
         :return: an IPAddress iterator
         """
         it_hosts = iter([])
@@ -1293,12 +1293,12 @@ class IPRange(BaseIP, IPListMixin):
             raise AddrFormatError('lower bound IP greater than upper bound!')
 
     def __getstate__(self):
-        """:return: Pickled state of an C{IPRange} object."""
+        """:return: Pickled state of an `IPRange` object."""
         return self._start.value, self._end.value, self._module.version
 
     def __setstate__(self, state):
         """
-        :param state: data used to unpickle a pickled C{IPRange} object.
+        :param state: data used to unpickle a pickled `IPRange` object.
         """
         start, end, version = state
 
@@ -1308,23 +1308,23 @@ class IPRange(BaseIP, IPListMixin):
 
     @property
     def first(self):
-        """The integer value of first IP address in this L{IPRange} object."""
+        """The integer value of first IP address in this `IPRange` object."""
         return int(self._start)
 
     @property
     def last(self):
-        """The integer value of last IP address in this L{IPRange} object."""
+        """The integer value of last IP address in this `IPRange` object."""
         return int(self._end)
 
     def key(self):
         """
-        :return: A key tuple used to uniquely identify this L{IPRange}.
+        :return: A key tuple used to uniquely identify this `IPRange`.
         """
         return self.version, self.first, self.last
 
     def sort_key(self):
         """
-        :return: A key tuple used to compare and sort this L{IPRange} correctly.
+        :return: A key tuple used to compare and sort this `IPRange` correctly.
         """
         skey = self._module.width - num_bits(self.size)
         return self.version, self.first, skey
@@ -1332,12 +1332,12 @@ class IPRange(BaseIP, IPListMixin):
     def cidrs(self):
         """
         The list of CIDR addresses found within the lower and upper bound
-        addresses of this L{IPRange}.
+        addresses of this `IPRange`.
         """
         return iprange_to_cidrs(self._start, self._end)
 
     def __str__(self):
-        """:return: this L{IPRange} in a common representational format."""
+        """:return: this `IPRange` in a common representational format."""
         return "%s-%s" % (self._start, self._end)
 
     def __repr__(self):
@@ -1470,7 +1470,7 @@ def cidr_merge(ip_addrs):
 
     :param ip_addrs: an iterable sequence of IP addresses and subnets.
 
-    :return: a summarized list of L{IPNetwork} objects.
+    :return: a summarized list of `IPNetwork` objects.
     """
     if not hasattr(ip_addrs, '__iter__') or hasattr(ip_addrs, 'keys'):
         raise ValueError('A sequence or iterator is expected!')
@@ -1589,7 +1589,7 @@ def cidr_exclude(target, exclude):
 
     :param exclude: the IP address or subnet to be removed from target.
 
-    :return: list of L{IPNetwork} objects remaining after exclusion.
+    :return: list of `IPNetwork` objects remaining after exclusion.
     """
     cidrs = []
 
@@ -1649,12 +1649,12 @@ def cidr_exclude(target, exclude):
 def spanning_cidr(ip_addrs):
     """
     Function that accepts a sequence of IP addresses and subnets returning
-    a single L{IPNetwork} subnet that is large enough to span the lower and
+    a single `IPNetwork` subnet that is large enough to span the lower and
     upper bound IP addresses with a possible overlap on either end.
 
     :param ip_addrs: sequence of IP addresses and subnets.
 
-    :return: a single spanning L{IPNetwork} subnet.
+    :return: a single spanning `IPNetwork` subnet.
     """
     sorted_ips = sorted(
         [IPNetwork(ip) for ip in ip_addrs])
@@ -1691,7 +1691,7 @@ def iter_iprange(start, end, step=1):
 
     :param step: (optional) size of step between IP addresses. Default: 1
 
-    :return: an iterator of one or more L{IPAddress} objects.
+    :return: an iterator of one or more `IPAddress` objects.
     """
     start = IPAddress(start)
     end = IPAddress(end)

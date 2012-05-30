@@ -99,7 +99,7 @@ def valid_str(addr, flags=0):
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
         netaddr.core docs for details.
 
-    :return: C{True} if IPv4 address is valid, C{False} otherwise.
+    :return: ``True`` if IPv4 address is valid, ``False`` otherwise.
     """
     if addr == '':
         raise AddrFormatError('Empty strings are not supported!')

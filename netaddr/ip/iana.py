@@ -25,8 +25,8 @@ Authority).
 
 More details can be found at the following URLs :-
 
-    - IANA Home Page - U{http://www.iana.org/}
-    - IEEE Protocols Information Home Page - U{http://www.iana.org/protocols/}
+    - IANA Home Page - http://www.iana.org/
+    - IEEE Protocols Information Home Page - http://www.iana.org/protocols/
 """
 
 import os as _os
@@ -138,7 +138,7 @@ class IPv4Parser(LineRecordParser):
 
     It can be found online here :-
 
-        - U{http://www.iana.org/assignments/ipv4-address-space}
+        - http://www.iana.org/assignments/ipv4-address-space
     """
     def __init__(self, fh, **kwargs):
         """
@@ -193,7 +193,7 @@ class IPv6Parser(LineRecordParser):
 
     It can be found online here :-
 
-        - U{http://www.iana.org/assignments/ipv6-address-space}
+        - http://www.iana.org/assignments/ipv6-address-space
     """
     def __init__(self, fh, **kwargs):
         """
@@ -240,7 +240,7 @@ class MulticastParser(LineRecordParser):
 
     It can be found online here :-
 
-        - U{http://www.iana.org/assignments/multicast-addresses}
+        - http://www.iana.org/assignments/multicast-addresses
     """
     def __init__(self, fh, **kwargs):
         """

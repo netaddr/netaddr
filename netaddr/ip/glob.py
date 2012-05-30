@@ -16,7 +16,7 @@ def valid_glob(ipglob):
     """
     :param ipglob: An IP address range in a glob-style format.
 
-    :return: C{True} if IP range glob is valid, C{False} otherwise.
+    :return: ``True`` if IP range glob is valid, ``False`` otherwise.
     """
     #TODO: Add support for abbreviated ipglobs.
     #TODO: e.g. 192.0.*.* == 192.0.*
@@ -284,11 +284,11 @@ class IPGlob(IPRange):
         self.glob = iprange_to_globs(self._start, self._end)[0]
 
     def __getstate__(self):
-        """:return: Pickled state of an C{IPGlob} object."""
+        """:return: Pickled state of an `IPGlob` object."""
         return super(IPGlob, self).__getstate__()
 
     def __setstate__(self, state):
-        """:param state: data used to unpickle a pickled C{IPGlob} object."""
+        """:param state: data used to unpickle a pickled `IPGlob` object."""
         super(IPGlob, self).__setstate__(state)
         self.glob = iprange_to_globs(self._start, self._end)[0]
 

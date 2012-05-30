@@ -38,8 +38,8 @@ def valid_words(words, word_size, num_words):
 
     :param num_words: Number of unsigned integer words expected.
 
-    :return: C{True} if word sequence is valid for this address type,
-        C{False} otherwise.
+    :return: ``True`` if word sequence is valid for this address type,
+        ``False`` otherwise.
     """
     if not hasattr(words, '__iter__'):
         return False
@@ -116,7 +116,7 @@ def valid_bits(bits, width, word_sep=''):
     :param word_sep: (optional) character or string used to delimit word
         groups (default: '', no separator).
 
-    :return: C{True} if network address is valid, C{False} otherwise.
+    :return: ``True`` if network address is valid, ``False`` otherwise.
     """
     if not hasattr(bits, 'replace'):
         return False
@@ -202,7 +202,7 @@ def valid_bin(bin_val, width):
     :param width: Maximum width (in bits) of a network address (excluding
         delimiters).
 
-    :return: C{True} if network address is valid, C{False} otherwise.
+    :return: ``True`` if network address is valid, ``False`` otherwise.
     """
     if not hasattr(bin_val, 'startswith'):
         return False

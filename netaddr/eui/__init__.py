@@ -65,7 +65,7 @@ class OUI(BaseIdentifier):
     """
     An individual IEEE OUI (Organisationally Unique Identifier).
 
-    For online details see - U{http://standards.ieee.org/regauth/oui/}
+    For online details see - http://standards.ieee.org/regauth/oui/
 
     """
     __slots__ = ('records',)
@@ -74,7 +74,7 @@ class OUI(BaseIdentifier):
         """
         Constructor
 
-        :param oui: an OUI string C{XX-XX-XX} or an unsigned integer. \
+        :param oui: an OUI string ``XX-XX-XX`` or an unsigned integer. \
             Also accepts and parses full MAC/EUI-48 address strings (but not \
             MAC/EUI-48 integers)!
         """
@@ -172,7 +172,7 @@ class IAB(BaseIdentifier):
     """
     An individual IEEE IAB (Individual Address Block) identifier.
 
-    For online details see - U{http://standards.ieee.org/regauth/oui/}
+    For online details see - http://standards.ieee.org/regauth/oui/
 
     """
     __slots__ = ('record',)
@@ -206,7 +206,7 @@ class IAB(BaseIdentifier):
         """
         Constructor
 
-        :param iab: an IAB string C{00-50-C2-XX-X0-00} or an unsigned \
+        :param iab: an IAB string ``00-50-C2-XX-X0-00`` or an unsigned \
             integer. This address looks like an EUI-48 but it should not \
             have any non-zero bits in the last 3 bytes.
 
@@ -431,7 +431,7 @@ class EUI(BaseIdentifier):
     def iab(self):
         """
         If is_iab() is True, the IAB (Individual Address Block) is returned,
-        C{None} otherwise.
+        ``None`` otherwise.
         """
         if self.is_iab():
             return IAB(self._value >> 12)
@@ -444,7 +444,7 @@ class EUI(BaseIdentifier):
     def __getitem__(self, idx):
         """
         :return: The integer value of the word referenced by index (both \
-            positive and negative). Raises C{IndexError} if index is out \
+            positive and negative). Raises ``IndexError`` if index is out \
             of bounds. Also supports Python list slices for accessing \
             word groups.
         """
@@ -489,8 +489,8 @@ class EUI(BaseIdentifier):
 
     def __eq__(self, other):
         """
-        :return: C{True} if this EUI object is numerically the same as other, \
-            C{False} otherwise.
+        :return: ``True`` if this EUI object is numerically the same as other, \
+            ``False`` otherwise.
         """
         try:
             return(self.version, self._value) == (other.version, other._value)
@@ -499,8 +499,8 @@ class EUI(BaseIdentifier):
 
     def __ne__(self, other):
         """
-        :return: C{False} if this EUI object is numerically the same as the \
-            other, C{True} otherwise.
+        :return: ``False`` if this EUI object is numerically the same as the \
+            other, ``True`` otherwise.
         """
         try:
             return(self.version, self._value) != (other.version, other._value)
@@ -509,8 +509,8 @@ class EUI(BaseIdentifier):
 
     def __lt__(self, other):
         """
-        :return: C{True} if this EUI object is numerically lower in value than \
-            other, C{False} otherwise.
+        :return: ``True`` if this EUI object is numerically lower in value than \
+            other, ``False`` otherwise.
         """
         try:
             return (self.version, self._value) < (other.version, other._value)
@@ -519,8 +519,8 @@ class EUI(BaseIdentifier):
 
     def __le__(self, other):
         """
-        :return: C{True} if this EUI object is numerically lower or equal in \
-            value to other, C{False} otherwise.
+        :return: ``True`` if this EUI object is numerically lower or equal in \
+            value to other, ``False`` otherwise.
         """
         try:
             return(self.version, self._value) <= (other.version, other._value)
@@ -529,8 +529,8 @@ class EUI(BaseIdentifier):
 
     def __gt__(self, other):
         """
-        :return: C{True} if this EUI object is numerically greater in value \
-            than other, C{False} otherwise.
+        :return: ``True`` if this EUI object is numerically greater in value \
+            than other, ``False`` otherwise.
         """
         try:
             return (self.version, self._value) > (other.version, other._value)
@@ -539,8 +539,8 @@ class EUI(BaseIdentifier):
 
     def __ge__(self, other):
         """
-        :return: C{True} if this EUI object is numerically greater or equal \
-            in value to other, C{False} otherwise.
+        :return: ``True`` if this EUI object is numerically greater or equal \
+            in value to other, ``False`` otherwise.
         """
         try:
             return(self.version, self._value) >= (other.version, other._value)
@@ -594,10 +594,11 @@ class EUI(BaseIdentifier):
 
     def ipv6_link_local(self):
         """
-        :return: new link local IPv6 L{IPAddress} object based on this L{EUI} \
-            using the technique described in RFC 4291. B{Please Note:} this \
-            poses security risks in certain scenarios. Please read RFC 4941 for \
-            details. Reference: RFCs 4291 and 4941.
+        .. note:: This poses security risks in certain scenarios. \
+            Please read RFC 4941 for details. Reference: RFCs 4291 and 4941.
+
+        :return: new link local IPv6 `IPAddress` object based on this `EUI` \
+            using the technique described in RFC 4291.
         """
         int_val = 0xfe800000000000000200000000000000
 

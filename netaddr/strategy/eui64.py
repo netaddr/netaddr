@@ -66,7 +66,7 @@ def valid_str(addr):
     """
     :param addr: An IEEE EUI-64 indentifier in string form.
 
-    :return: C{True} if EUI-64 indentifier is valid, C{False} otherwise.
+    :return: ``True`` if EUI-64 indentifier is valid, ``False`` otherwise.
     """
     try:
         match_result = RE_EUI64_FORMAT.findall(addr)

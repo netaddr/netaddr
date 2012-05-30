@@ -77,12 +77,12 @@ class IPSet(object):
                 self._cidrs[cidr] = True
 
     def __getstate__(self):
-        """:return: Pickled state of an C{IPSet} object."""
+        """:return: Pickled state of an ``IPSet`` object."""
         return tuple([cidr.__getstate__() for cidr in self._cidrs])
 
     def __setstate__(self, state):
         """
-        :param state: data used to unpickle a pickled C{IPSet} object.
+        :param state: data used to unpickle a pickled ``IPSet`` object.
 
         """
         #TODO: this needs to be optimised.
@@ -107,16 +107,17 @@ class IPSet(object):
 
     def compact(self):
         """
-        Compact internal list of L{IPNetwork} objects using a CIDR merge.
+        Compact internal list of `IPNetwork` objects using a CIDR merge.
         """
         cidrs = cidr_merge(list(self._cidrs))
         self._cidrs = dict(_zip(cidrs, [True] * len(cidrs)))
 
     def __hash__(self):
         """
-        B{Please Note}: IPSet objects are not hashable and cannot be used as
-        dictionary keys or as members of other sets. Raises C{TypeError} if
-        this method is called.
+        Raises ``TypeError`` if this method is called.
+
+        .. note:: IPSet objects are not hashable and cannot be used as \
+            dictionary keys or as members of other sets. \
         """
         raise TypeError('IP sets are unhashable!')
 
@@ -124,7 +125,7 @@ class IPSet(object):
         """
         :param ip: An IP address or subnet.
 
-        :return: C{True} if IP address or subnet is a member of this IP set.
+        :return: ``True`` if IP address or subnet is a member of this IP set.
         """
         ip = IPNetwork(ip)
         for cidr in self._cidrs:
@@ -228,7 +229,7 @@ class IPSet(object):
         """
         :param other: an IP set.
 
-        :return: C{True} if this IP set has no elements (IP addresses
+        :return: ``True`` if this IP set has no elements (IP addresses
             or subnets) in common with other. Intersection *must* be an
             empty set.
         """
@@ -284,8 +285,8 @@ class IPSet(object):
         """
         :param other: an IP set
 
-        :return: C{True} if this IP set is equivalent to the C{other} IP set,
-            C{False} otherwise.
+        :return: ``True`` if this IP set is equivalent to the ``other`` IP set,
+            ``False`` otherwise.
         """
         try:
             return self._cidrs == other._cidrs
@@ -296,8 +297,8 @@ class IPSet(object):
         """
         :param other: an IP set
 
-        :return: C{False} if this IP set is equivalent to the C{other} IP set,
-            C{True} otherwise.
+        :return: ``False`` if this IP set is equivalent to the ``other`` IP set,
+            ``True`` otherwise.
         """
         try:
             return self._cidrs != other._cidrs
@@ -308,8 +309,8 @@ class IPSet(object):
         """
         :param other: an IP set
 
-        :return: C{True} if this IP set is less than the C{other} IP set,
-            C{False} otherwise.
+        :return: ``True`` if this IP set is less than the ``other`` IP set,
+            ``False`` otherwise.
         """
         if not hasattr(other, '_cidrs'):
             return NotImplemented
@@ -320,8 +321,8 @@ class IPSet(object):
         """
         :param other: an IP set.
 
-        :return: C{True} if every IP address and subnet in this IP set
-            is found within C{other}.
+        :return: ``True`` if every IP address and subnet in this IP set
+            is found within ``other``.
         """
         if not hasattr(other, '_cidrs'):
             return NotImplemented
@@ -346,8 +347,8 @@ class IPSet(object):
         """
         :param other: an IP set.
 
-        :return: C{True} if this IP set is greater than the C{other} IP set,
-            C{False} otherwise.
+        :return: ``True`` if this IP set is greater than the ``other`` IP set,
+            ``False`` otherwise.
         """
         if not hasattr(other, '_cidrs'):
             return NotImplemented
@@ -358,7 +359,7 @@ class IPSet(object):
         """
         :param other: an IP set.
 
-        :return: C{True} if every IP address and subnet in other IP set
+        :return: ``True`` if every IP address and subnet in other IP set
             is found within this one.
         """
         if not hasattr(other, '_cidrs'):
@@ -509,7 +510,9 @@ class IPSet(object):
 
     def __len__(self):
         """
-        :return: the cardinality of this IP set (i.e. sum of individual IP addresses). Raises C{IndexError} if size > maxint (a Python limitation). Use the .size property for subnets of any size.
+        :return: the cardinality of this IP set (i.e. sum of individual IP \
+            addresses). Raises ``IndexError`` if size > maxint (a Python \
+            limitation). Use the .size property for subnets of any size.
         """
         size = self.size
         if size > _sys.maxint:

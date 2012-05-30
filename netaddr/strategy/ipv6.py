@@ -120,7 +120,7 @@ def valid_str(addr, flags=0):
     :param flags: decides which rules are applied to the interpretation of the
         addr value. Future use - currently has no effect.
 
-    :return: C{True} if IPv6 address is valid, C{False} otherwise.
+    :return: ``True`` if IPv6 address is valid, ``False`` otherwise.
     """
     if addr == '':
         raise AddrFormatError('Empty strings are not supported!')

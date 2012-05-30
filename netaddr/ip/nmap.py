@@ -12,7 +12,7 @@ blocks depending on the range specified.
 Each octets can be represented with hyphenated range sets according to the
 following rules:
 
-    1. * C{'x-y'} - the hyphenated octet (represents values x through y)
+    1. * ``x-y`` - the hyphenated octet (represents values x through y)
     2. x must be less than or equal to y
     3. x and y must be values between 0 through 255
 
@@ -32,7 +32,7 @@ def valid_nmap_range(iprange):
     """
     :param iprange: an nmap-style IP address range.
 
-    :return: C{True} if IP range is valid, C{False} otherwise.
+    :return: ``True`` if IP range is valid, ``False`` otherwise.
     """
     status = True
     if not hasattr(iprange, 'split'):
