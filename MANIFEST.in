@@ -1,20 +1,19 @@
 include AUTHORS
 include CHANGELOG
 include COPYRIGHT
+include README
+include REFERENCES
+include THANKS
 include INSTALL
 include LICENSE
+include Makefile
 include MANIFEST.in
-include README
-include THANKS
 include release.py
 include setup.cfg
 include setup.py
 include setup_egg.py
-include ez_setup.py
 
-include docs/epydoc.cfg
-include docs/epydoc.css
-recursive-include docs/api *
+recursive-include docs/source *
 
 include netaddr/__init__.py
 include netaddr/core.py
@@ -23,7 +22,7 @@ include netaddr/fbsocket.py
 
 recursive-include netaddr/eui *.py *.txt *.idx
 
-recursive-include netaddr/ip *.py 
+recursive-include netaddr/ip *.py *.xml
 include netaddr/ip/ipv4-address-space
 include netaddr/ip/ipv6-address-space
 include netaddr/ip/multicast-addresses
@@ -31,8 +30,6 @@ include netaddr/ip/multicast-addresses
 recursive-include netaddr/strategy *.py
 
 include netaddr/tests/__init__.py
-include netaddr/tests/coverage.sh
-include netaddr/tests/coverage_report.txt
 recursive-include netaddr/tests/2.x/core *.txt
 recursive-include netaddr/tests/2.x/eui *.txt
 recursive-include netaddr/tests/2.x/ip *.txt
