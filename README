@@ -54,7 +54,7 @@ Documentation
 The code contains thorough docstrings as well as detailed tutorials and
 API documentation can be found here:
 
-http://packages.python.org/netaddr
+http://readthedocs.org/docs/netaddr/en/latest/
 
 ----------------------
 Running The Test Suite
