@@ -40,6 +40,7 @@ def main():
         url              = release.url,
         version          = release.version,
         install_requires = release.install_requires,
+        setup_requires   = release.setup_requires,
     )
 
     #   IPython does not currently support Python 3.x so disable this.
