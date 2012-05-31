@@ -155,4 +155,5 @@ classifiers = [
 
 install_requires = [
     'IPython',
+    'Sphinx',
 ]
