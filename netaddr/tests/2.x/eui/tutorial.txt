@@ -1,5 +1,7 @@
 First of all you need to pull the various MAC related classes and functions into your namespace.
 
+.. note:: Do this for the purpose of this tutorial only. In your own code, you should be explicit about the classes, functions and constants you import to avoid name clashes.
+
 >>> from netaddr import *
 
 You can reasonably safely import everything from the netaddr namespace as care has been taken to only export the necessary classes, functions and constants. 
