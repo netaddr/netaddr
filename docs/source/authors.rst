@@ -1,6 +1,6 @@
-=========
-Author(s)
-=========
+=======
+Authors
+=======
 
 David P. D. Moss (owner and maintainer)
 

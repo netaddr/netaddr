@@ -1,15 +1,11 @@
-=============================
-netaddr library documentation
-=============================
+============================
+netaddr v0.7.7 documentation
+============================
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     introduction
-    authors
-    contributors
-    license
-    copyright
     installation
     tutorial_01
     tutorial_02
@@ -17,12 +13,15 @@ netaddr library documentation
     api
     changes
     references
+    authors
+    contributors
+    license
+    copyright
 
-==================
+------------------
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
