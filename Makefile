@@ -1,5 +1,10 @@
+#-----------------------------------------------------------------------------
+#   Copyright (c) 2008-2012, David P. D. Moss. All rights reserved.
 #
-# Build for netaddr
+#   Released under the BSD license. See the LICENSE file for details.
+#-----------------------------------------------------------------------------
+#
+# Unified build script for the netaddr library
 #
 SHELL = /bin/bash
 
@@ -12,6 +17,7 @@ clean:
 	@echo 'cleaning up temporary files'
 	rm -rf dist/
 	rm -rf build/
+	rm -rf netaddr.egg-info/
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
