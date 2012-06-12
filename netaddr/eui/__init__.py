@@ -168,6 +168,58 @@ class OUI(BaseIdentifier):
         return "OUI('%s')" % self
 
 #-----------------------------------------------------------------------------
+
+RAW_PROTOCOL_ADDRESSES_DATABASE = {
+    'FF-FF-FF-FF-FF-FF': 'Broadcast',
+    '01-00-0C-CC-CC-CC': 'Cisco Discovery Protocol',
+    '01-00-0C-CC-CC-CD': 'Cisco Shared STP',
+    '01-00-0C-CD-CD-CD': 'UplinkFast',
+    '01-00-0C-CD-CD-CE': 'Inter-VLAN bridging',
+    '01-00-0C-DD-DD-DD': 'Cisco Group Management Protocol',
+    '01-00-0C-EE-EE-EE': 'Cisco Sync',
+    '01-80-C2-00-00-00': 'Spanning Tree Protocol',
+    '01-80-C2-00-00-08': 'Spanning Tree Protocol',
+    '01-80-C2-00-00-02': 'Ethernet OAM Protocol',
+    '33-33':             'IPv6 Multicast',
+    '01-00-5E':          'IPv4 Multicast',
+    '00-00-0C-07-AC':    'HSRP',
+    '00-00-5E-00-01':    'VRRP',
+}
+
+
+def get_protocol_mac(mac_str):
+    for address in RAW_PROTOCOL_ADDRESSES_DATABASE:
+        if mac_str.startswith(address):
+            return address
+
+
+class ProtocolMacAddress(BaseIdentifier):
+    """
+    Some MAC address are reserved for some level2 protocols.
+    """
+
+    __slots__ = ('record',)
+
+    def __init__(self, mac_str):
+        super(ProtocolMacAddress, self).__init__()
+
+        address = get_protocol_mac(mac_str)
+        if address is None:
+            raise TypeError("Cannot create ProtocolMacAddress with addresss '%s'" % mac_str)
+
+        self._value = EUI(mac_str)
+        self.record = {
+            'pattern': address,
+            'protocol': RAW_PROTOCOL_ADDRESSES_DATABASE[address],
+            }
+
+    def __str__(self):
+        return str(self._value)
+
+    def __repr__(self):
+        return "ProtocolMacAddress('%s')" % self
+
+
 class IAB(BaseIdentifier):
     """
     An individual IEEE IAB (Individual Address Block) identifier.
@@ -435,6 +487,13 @@ class EUI(BaseIdentifier):
         """
         if self.is_iab():
             return IAB(self._value >> 12)
+
+    @property
+    def protocol(self):
+        try:
+            return ProtocolMacAddress(str(self))
+        except TypeError:
+            return
 
     @property
     def version(self):

@@ -167,3 +167,29 @@ Sortability
 ('00-01-00-00-00-00-00-00', 64)
 
 }}}
+
+Special protocols
+
+
+Try to get a non registered protocol:
+
+{{{
+
+>>> eui = EUI('ff-00-00-00-00-00')
+>>> str(eui.protocol)
+'None'
+
+}}}
+
+But with a real protocol, we will get a ProtocolMacAddress object:
+
+{{{
+
+>>> eui = EUI('33-33-00-00-00-00')
+>>> eui.protocol
+ProtocolMacAddress('33-33-00-00-00-00')
+
+>>> eui.protocol.record
+{'pattern': '33-33', 'protocol': 'IPv6 Multicast'}
+
+}}}
