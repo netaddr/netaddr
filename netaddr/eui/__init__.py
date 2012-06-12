@@ -600,7 +600,7 @@ class EUI(BaseIdentifier):
         :return: new link local IPv6 `IPAddress` object based on this `EUI` \
             using the technique described in RFC 4291.
         """
-        int_val = 0xfe800000000000000200000000000000
+        int_val = 0xfe800000000000000000000000000000
 
         if self.version == 48:
             eui64_tokens = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
@@ -608,6 +608,14 @@ class EUI(BaseIdentifier):
             int_val += int(''.join(eui64_tokens), 16)
         else:
             int_val += self._value
+        
+        # Modified EUI-64 format interface identifiers are formed by inverting
+        # the "u" bit (universal/local bit in IEEE EUI-64 terminology) when
+        # forming the interface identifier from IEEE EUI-64 identifiers.  In
+        # the resulting Modified EUI-64 format, the "u" bit is set to one (1)
+        # to indicate universal scope, and it is set to zero (0) to indicate
+        # local scope.
+        int_val ^= 0x00000000000000000200000000000000
 
         return IPAddress(int_val, 6)
 
