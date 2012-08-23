@@ -3,7 +3,8 @@
 <?oxygen RNGSchema="multicast-addresses.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2012-05-23</updated>
+  <updated>2012-08-23</updated>
+  <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
 support multicasting.  The multicast addresses are in the range
@@ -296,8 +297,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>AllJoyn</description>
       <xref type="person" data="Craig_Dowell"/>
     </record>
+    <record date="2012-06-12">
+      <addr>224.0.0.114</addr>
+      <description>Inter RFID Reader Protocol</description>
+      <xref type="person" data="Wayne_Wenyu_Liu"/>
+    </record>
     <record>
-      <addr>224.0.0.114-224.0.0.250</addr>
+      <addr>224.0.0.115-224.0.0.250</addr>
       <description>Unassigned</description>
       <xref type="person" data="Jon_Postel"/>
     </record>
@@ -2049,8 +2055,24 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Deutsche Boerse</description>
       <xref type="person" data="Jan_Drwal"/>
     </record>
+    <record date="2012-06-12">
+      <addr>224.0.115.0-224.0.115.255</addr>
+      <description>TMX</description>
+      <xref type="person" data="Michael_Caravetta"/>
+      <xref type="person" data="Boris_Garber"/>
+    </record>
+    <record date="2012-06-19">
+      <addr>224.0.116.0-224.0.116.255</addr>
+      <description>Ido Rosen</description>
+      <xref type="person" data="Ido_Rosen"/>
+    </record>
+    <record date="2012-07-12">
+      <addr>224.0.117.0-224.0.119.255</addr>
+      <description>ISE</description>
+      <xref type="person" data="Fabrice_Albert"/>
+    </record>
     <record>
-      <addr>224.0.115.0-224.0.249.255</addr>
+      <addr>224.0.120.0-224.0.249.255</addr>
       <description>Unassigned</description>
     </record>
     
@@ -2262,6 +2284,7 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
       <description>MCAST-TEST-NET</description>
       <xref type="person" data="IANA"/>
       <xref type="rfc" data="rfc5771"/>
+      <xref type="rfc" data="rfc6676"/>
       <reviewed>2010-01-20</reviewed>
     </record>
     <record date="2010-08-12">
@@ -2407,7 +2430,12 @@ low-order bits of the IP Multicast address are placed in the low-order
       <xref type="person" data="UPnP_Forum"/>
     </record>
     <record>
-      <relative>10-252</relative>
+      <relative>10</relative>
+      <description>MCAST-TEST-NET-2</description>
+      <xref type="rfc" data="rfc6676"/>
+    </record>
+    <record>
+      <relative>11-252</relative>
       <description>Reserved - To be assigned by the IANA</description>
     </record>
     <record>
@@ -2601,7 +2629,7 @@ low-order bits of the IP Multicast address are placed in the low-order
     <person id="Boris_Garber">
       <name>Boris Garber</name>
       <uri>mailto:Boris.Garber&amp;tsx.com</uri>
-      <updated>2011-06-16</updated>
+      <updated>2012-06-12</updated>
     </person>
     <person id="Brendan_Eic">
       <name>Brendan Eic</name>
@@ -2825,7 +2853,7 @@ low-order bits of the IP Multicast address are placed in the low-order
     <person id="Fabrice_Albert">
       <name>Fabrice Albert</name>
       <uri>mailto:falbert&amp;ise.com</uri>
-      <updated>2010-08-24</updated>
+      <updated>2012-07-12</updated>
     </person>
     <person id="Frank_Castillo">
       <name>Frank Castillo</name>
@@ -2923,6 +2951,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Ian Wilson</name>
       <uri>mailto:iwilson&amp;cisco.com</uri>
       <updated>2001-12-01</updated>
+    </person>
+    <person id="Ido_Rosen">
+      <name>Ido Rosen</name>
+      <uri>mailto:iana&amp;idorosen.com</uri>
+      <updated>2012-06-19</updated>
     </person>
     <person id="Ishan_Wu">
       <name>Ishan Wu</name>
@@ -3174,7 +3207,7 @@ low-order bits of the IP Multicast address are placed in the low-order
     <person id="Michael_Caravetta">
       <name>Michael Caravetta</name>
       <uri>mailto:Michael.Caravetta&amp;tsx.com</uri>
-      <updated>2011-06-20</updated>
+      <updated>2012-06-15</updated>
     </person>
     <person id="Michael_DeMoney">
       <name>Michael DeMoney</name>
@@ -3645,6 +3678,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Wayne Carr</name>
       <uri>mailto:Wayne_Carr&amp;ccm.intel.com</uri>
       <updated>1997-12-01</updated>
+    </person>
+    <person id="Wayne_Wenyu_Liu">
+      <name>Wayne Wenyu Liu</name>
+      <uri>mailto:wayne.wenyu.liu&amp;gmail.com</uri>
+      <updated>2012-06-12</updated>
     </person>
     <person id="Wenjie_Peng">
       <name>Wenjie Peng</name>
