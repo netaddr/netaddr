@@ -128,7 +128,8 @@ class LineRecordParser(Publisher):
                 record = self.parse_line(line)
 
                 #   notify subscribers of final record details.
-                self.notify(record)
+                if record is not None:
+                    self.notify(record)
 
 #-----------------------------------------------------------------------------
 class IPv4Parser(LineRecordParser):
