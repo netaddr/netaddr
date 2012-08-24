@@ -23,9 +23,6 @@ include netaddr/fbsocket.py
 recursive-include netaddr/eui *.py *.txt *.idx
 
 recursive-include netaddr/ip *.py *.xml
-include netaddr/ip/ipv4-address-space
-include netaddr/ip/ipv6-address-space
-include netaddr/ip/multicast-addresses
 
 recursive-include netaddr/strategy *.py
 
