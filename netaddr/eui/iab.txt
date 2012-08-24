@@ -25331,3 +25331,47 @@ FE2000-FE2FFF	(base 16)	Pulsotronic Anlagentechnik GmbH
 00-50-C2	(hex)		PRIVATE
 FE3000-FE3FFF	(base 16)		 
 				 
+00-50-C2	(hex)		RTT Mobile Interpretation
+FE4000-FE4FFF	(base 16)	RTT Mobile Interpretation
+				1107 Hazeltine Blvd.
+				Suite 535
+				Chaska MN 55318
+				UNITED STATES
+
+00-50-C2	(hex)		Scandinova Systems AB
+FE5000-FE5FFF	(base 16)	Scandinova Systems AB
+				Ulltunaallen 2A
+				UPPSALA 75651
+				SWEDEN
+
+00-50-C2	(hex)		Exibea AB
+FE6000-FE6FFF	(base 16)	Exibea AB
+				Ekmansgatan 3
+				Gothenburg Sweden 411 32
+				SWEDEN
+
+00-50-C2	(hex)		Erhardt+Leimer GmbH
+FE7000-FE7FFF	(base 16)	Erhardt+Leimer GmbH
+				Albert-Leimer-Platz 1
+				Stadtbergen  86391
+				GERMANY
+
+00-50-C2	(hex)		Mango DSP, Inc.
+FE8000-FE8FFF	(base 16)	Mango DSP, Inc.
+				83 East Ave.
+				Suite#115
+				Norwalk CT 06877
+				UNITED STATES
+
+00-50-C2	(hex)		MB Connect Line GmbH
+FE9000-FE9FFF	(base 16)	MB Connect Line GmbH
+				Winnettener Stra�e 5
+				Dinkelsb�hl Bavaria 91550
+				GERMANY
+
+00-50-C2	(hex)		Brunel GmbH Section Communications
+FEA000-FEAFFF	(base 16)	Brunel GmbH Section Communications
+				Daimlerring 9
+				Hildesheim Niedersachsen 31135
+				GERMANY
+

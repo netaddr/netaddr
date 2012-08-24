@@ -83871,6 +83871,12 @@ company_id			Organization
 				London  EC1Y 1AX
 				UNITED KINGDOM
 
+18-D9-49   (hex)		Qvis Labs, LLC
+18D949     (base 16)		Qvis Labs, LLC
+				3204 Rustic River Cove
+				Austin TX 78746-2001
+				UNITED STATES
+
 18-E2-88   (hex)		STT Condigi
 18E288     (base 16)		STT Condigi
 				Agnesfridsvagen 113 A
@@ -84167,6 +84173,12 @@ company_id			Organization
 				2283 ARGENTIA RD.- UNIT # 10
 				MISSISSAUGA ON. L5N 5Z2
 				CANADA
+
+1C-95-9F   (hex)		Veethree Electronics And Marine LLC
+1C959F     (base 16)		Veethree Electronics And Marine LLC
+				2050 47th Terrace East
+				Bradenton Florida 34203
+				UNITED STATES
 
 1C-97-3D   (hex)		PRICOM Design
 1C973D     (base 16)		PRICOM Design
@@ -90244,6 +90256,12 @@ company_id			Organization
 				Taipei Hsien  221
 				TAIWAN, REPUBLIC OF CHINA
 
+60-0F-77   (hex)		SilverPlus, Inc
+600F77     (base 16)		SilverPlus, Inc
+				18 Technology Dr, #143
+				Irvine CA 92618
+				UNITED STATES
+
 60-11-99   (hex)		Data-Tester Inc.
 601199     (base 16)		Data-Tester Inc.
 				450 St-Pierre, suite 300
@@ -90538,6 +90556,12 @@ company_id			Organization
 				Dr.G�nter-Henle-Str. 8
 				M�ndersbach Rheinland Pfalz 56271
 				GERMANY
+
+60-BD-91   (hex)		Move Innovation
+60BD91     (base 16)		Move Innovation
+				Generatorvej 8B,st
+				Herlev DK 2730
+				DENMARK
 
 60-C5-47   (hex)		Apple, Inc.
 60C547     (base 16)		Apple, Inc.
@@ -91313,6 +91337,12 @@ company_id			Organization
 				31 Lupi Ct
 				Suite 150
 				Palm Coast Florida 32137
+				UNITED STATES
+
+68-51-B7   (hex)		PowerCloud Systems, Inc.
+6851B7     (base 16)		PowerCloud Systems, Inc.
+				3333 Coyote Hill Rd
+				Palo Alto CA 94304
 				UNITED STATES
 
 68-54-F5   (hex)		enLighted Inc
@@ -99722,6 +99752,12 @@ BC15A6     (base 16)		Taiwan Jantek Electronics,Ltd.
 				6F-1,No.1 Wu-Chuan 1St. Rd,Wu-Ku Industrial Park,
 				Sinchwang City Taipei Hsien 24892
 				TAIWAN, REPUBLIC OF CHINA
+
+BC-20-A4   (hex)		Samsung Electronics
+BC20A4     (base 16)		Samsung Electronics
+				#94-1, Imsoo-Dong
+				Gumi Gyeongbuk 730-350
+				KOREA, REPUBLIC OF
 
 BC-20-BA   (hex)		Inspur (Shandong) Electronic Information Co., Ltd
 BC20BA     (base 16)		Inspur (Shandong) Electronic Information Co., Ltd
