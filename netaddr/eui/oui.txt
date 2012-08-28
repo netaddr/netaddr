@@ -80983,6 +80983,12 @@ company_id			Organization
 				Boulder CO 80301-2350
 				UNITED STATES
 
+04-E9-E5   (hex)		PJRC.COM, LLC
+04E9E5     (base 16)		PJRC.COM, LLC
+				14723 SW Brooke Ct
+				Sherwood Oregon 97140
+				UNITED STATES
+
 04-EE-91   (hex)		x-fabric GmbH
 04EE91     (base 16)		x-fabric GmbH
 				Nachodstr. 7
@@ -83166,6 +83172,12 @@ company_id			Organization
 				Woburn MA  01801
 				UNITED STATES
 
+10-F4-9A   (hex)		T3 Innovation
+10F49A     (base 16)		T3 Innovation
+				808 Calle Plano
+				Camarillo CA 93012
+				UNITED STATES
+
 10-F9-6F   (hex)		LG Electronics
 10F96F     (base 16)		LG Electronics
 				60-39 , Kasan-dong, Gumcheon-gu
@@ -83177,6 +83189,13 @@ company_id			Organization
 				Yrttipellontie 6
 				Oulu Ou 90230
 				FINLAND
+
+10-FB-F0   (hex)		KangSheng LTD.
+10FBF0     (base 16)		KangSheng LTD.
+				2F., No.11, 
+				Wuquan 6th Rd., Wugu Dist.
+				New Taipei City  24889
+				TAIWAN, PROVINCE OF CHINA
 
 10-FC-54   (hex)		Shany Electronic Co., Ltd. 
 10FC54     (base 16)		Shany Electronic Co., Ltd. 
@@ -84052,6 +84071,12 @@ company_id			Organization
 				P.O.B 1500
 				Pardes Hanna  3700
 				ISRAEL
+
+1C-5A-3E   (hex)		Samsung Eletronics Co., Ltd (Visual Display Divison)
+1C5A3E     (base 16)		Samsung Eletronics Co., Ltd (Visual Display Divison)
+				416, Maetan 3dong, Yeongtong-Gu
+				Suwon Gyeonggi-Do 443742
+				KOREA, REPUBLIC OF
 
 1C-5C-55   (hex)		PRIMA Cinema, Inc
 1C5C55     (base 16)		PRIMA Cinema, Inc
@@ -86997,6 +87022,12 @@ company_id			Organization
 				Svendborg South Denmark 5700
 				DENMARK
 
+3C-57-BD   (hex)		Kessler Crane Inc.
+3C57BD     (base 16)		Kessler Crane Inc.
+				602 East Jefferson St
+				Plymouth Indidana 46563
+				UNITED STATES
+
 3C-5A-37   (hex)		Samsung Electronics
 3C5A37     (base 16)		Samsung Electronics
 				#94-1, Imsoo-Dong
@@ -88269,6 +88300,12 @@ company_id			Organization
 				OULU  90590
 				FINLAND
 
+48-52-61   (hex)		SOREEL
+485261     (base 16)		SOREEL
+				18 Rue de la Gï¿½tine
+				CHOLET FRANCE 44000
+				FRANCE
+
 48-5B-39   (hex)		ASUSTek COMPUTER INC.
 485B39     (base 16)		ASUSTek COMPUTER INC.
 				15,Li-Te Rd.,Peitou, 
@@ -89311,6 +89348,13 @@ company_id			Organization
 				San Jose CA 95134
 				UNITED STATES
 
+54-78-1A   (hex)		Cisco
+54781A     (base 16)		Cisco
+				170 West Tasman Drive
+				SJCM/2
+				San Jose CA 95134
+				UNITED STATES
+
 54-7F-54   (hex)		INGENICO
 547F54     (base 16)		INGENICO
 				1 rue Claude Chappe, BP 346
@@ -89611,6 +89655,13 @@ company_id			Organization
 				Jyllandsgade 28
 				Sønderborg  DK-6400
 				DENMARK
+
+58-65-E6   (hex)		INFOMARK CO., LTD.
+5865E6     (base 16)		INFOMARK CO., LTD.
+				#801, KINS TOWER, JEONGJA-DONG
+				BUNDANG-GU
+				SEONGNAM GYOUNGGI 463-847
+				KOREA, REPUBLIC OF
 
 58-66-BA   (hex)		Hangzhou H3C Technologies Co., Limited
 5866BA     (base 16)		Hangzhou H3C Technologies Co., Limited
@@ -95177,6 +95228,12 @@ company_id			Organization
 				Hsinchu Science Park,
 				Hsinchu City   30078
 				TAIWAN, REPUBLIC OF CHINA
+
+8C-E0-81   (hex)		zte corporation
+8CE081     (base 16)		zte corporation
+				12/F.,R&D building,kejinan Road
+				Shenzhen Guangdong 518057
+				CHINA
 
 8C-E7-48   (hex)		PRIVATE
 8CE748     (base 16)		 
@@ -103909,6 +103966,13 @@ E4-CE-8F   (hex)		Apple, Inc.
 E4CE8F     (base 16)		Apple, Inc.
 				1 Infinite Loop
 				Cupertino  CA 95014
+				UNITED STATES
+
+E4-D3-F1   (hex)		Cisco
+E4D3F1     (base 16)		Cisco
+				170 West Tasman Drive
+				SJCM/2
+				San Jose CA 95134
 				UNITED STATES
 
 E4-D5-3D   (hex)		Hon Hai Precision Ind. Co.,Ltd. 

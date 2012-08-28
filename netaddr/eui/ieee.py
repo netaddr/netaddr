@@ -37,7 +37,7 @@ import sys as _sys
 import os.path as _path
 import csv as _csv
 
-from netaddr.core import Subscriber, Publisher, dos2unix
+from netaddr.core import Subscriber, Publisher
 
 #-----------------------------------------------------------------------------
 
@@ -274,39 +274,9 @@ def load_indices():
         IAB_INDEX[key].append((offset, size))
 
 #-----------------------------------------------------------------------------
-def get_latest_files():
-    """Download the latest files from the IEEE"""
-    if _sys.version_info[0] == 3:
-        #   Python 3.x
-        from urllib.request import Request, urlopen
-    else:
-        #   Python 2.x
-        from urllib2 import Request, urlopen
-
-    urls = [
-        'http://standards.ieee.org/regauth/oui/oui.txt',
-        'http://standards.ieee.org/regauth/oui/iab.txt',
-    ]
-
-    for url in urls:
-        _sys.stdout.write('downloading latest copy of %s\n' % url)
-        request = Request(url)
-        response = urlopen(request)
-        save_path = _path.dirname(__file__)
-        filename = _path.join(save_path, _os.path.basename(response.geturl()))
-        fh = open(filename, 'w')
-        fh.write(response.read())
-        fh.close()
-
-        #   Make sure the line endings are consistent across platforms.
-        dos2unix(filename)
-
-#-----------------------------------------------------------------------------
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
-    get_latest_files()
     create_indices()
 else:
     #   On module load read indices in memory to enable lookups.
     load_indices()
-

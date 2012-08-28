@@ -25375,3 +25375,41 @@ FEA000-FEAFFF	(base 16)	Brunel GmbH Section Communications
 				Hildesheim Niedersachsen 31135
 				GERMANY
 
+00-50-C2	(hex)		Axible Technologies
+FEB000-FEBFFF	(base 16)	Axible Technologies
+				425 Rue Jean Rostand
+				Lab�ge  31670
+				FRANCE
+
+00-50-C2	(hex)		First System Technology Co., Ltd.
+FEC000-FECFFF	(base 16)	First System Technology Co., Ltd.
+				1F., No.8, Alley 6, Lane 19, Fuhe Rd
+				Yonghe Dist.
+				New Taipei City  23449
+				TAIWAN, PROVINCE OF CHINA
+
+00-50-C2	(hex)		LOGISOL Kft.
+FED000-FEDFFF	(base 16)	LOGISOL Kft.
+				Bocskai u. 21.
+				Tinnye Pest-megye H-2086
+				HUNGARY
+
+00-50-C2	(hex)		Sparks Instruments SA
+FEE000-FEEFFF	(base 16)	Sparks Instruments SA
+				Bodematta 12
+				Heitenried FR 1714
+				SWITZERLAND
+
+00-50-C2	(hex)		Task Sistemas de Computacao
+FEF000-FEFFFF	(base 16)	Task Sistemas de Computacao
+				Rua Visconde de Ouro Preto, 5
+				oitavo andar
+				Rio de Janeiro RJ 22250-180
+				BRAZIL
+
+00-50-C2	(hex)		GENERAL DYNAMICS C4 SYSTEMS
+FF0000-FF0FFF	(base 16)	GENERAL DYNAMICS C4 SYSTEMS
+				8220 EAST ROOSEVELT ST
+				SCOTTSDALE AZ 85257
+				UNITED STATES
+
