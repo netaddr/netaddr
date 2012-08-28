@@ -60,6 +60,17 @@ class BaseIdentifier(object):
         #   Python 3.x only.
         return self._value
 
+    def __eq__(self, other):
+        """
+        :return: ``True`` if this BaseIdentifier object is numerically the
+            same as other, ``False`` otherwise.
+        """
+        try:
+            return (self.__class__, self._value) == (other.__class__, other._value)
+        except AttributeError:
+            return NotImplemented
+
+
 #-----------------------------------------------------------------------------
 class OUI(BaseIdentifier):
     """
@@ -108,6 +119,14 @@ class OUI(BaseIdentifier):
             fh.close()
         else:
             raise NotRegisteredError('OUI %r not registered!' % oui)
+
+    def __getstate__(self):
+        """:returns: Pickled state of an `OUI` object."""
+        return self._value, self.records
+
+    def __setstate__(self, state):
+        """:param state: data used to unpickle a pickled `OUI` object."""
+        self._value, self.records = state
 
     def _parse_data(self, data, offset, size):
         """Returns a dict record from raw OUI record data"""
@@ -254,6 +273,14 @@ class IAB(BaseIdentifier):
         else:
             raise NotRegisteredError('IAB %r not unregistered!' % iab)
 
+    def __getstate__(self):
+        """:returns: Pickled state of an `IAB` object."""
+        return self._value, self.record
+
+    def __setstate__(self, state):
+        """:param state: data used to unpickle a pickled `IAB` object."""
+        self._value, self.record = state
+
     def _parse_data(self, data, offset, size):
         """Returns a dict record from raw IAB record data"""
         for line in data.split("\n"):
@@ -349,6 +376,29 @@ class EUI(BaseIdentifier):
         self.value = addr
 
         #   Choose a dialect for MAC formatting.
+        self.dialect = dialect
+
+    def __getstate__(self):
+        """:returns: Pickled state of an `EUI` object."""
+        return self._value, self._module.version, self.dialect
+
+    def __setstate__(self, state):
+        """
+        :param state: data used to unpickle a pickled `EUI` object.
+
+        """
+        value, version, dialect = state
+
+        self._value = value
+
+        if version == 48:
+            self._module = _eui48
+        elif version == 64:
+            self._module = _eui64
+        else:
+            raise ValueError('unpickling failed for object state: %s' \
+                % str(state))
+
         self.dialect = dialect
 
     def _get_value(self):
