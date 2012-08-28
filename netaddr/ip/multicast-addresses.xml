@@ -3,7 +3,7 @@
 <?oxygen RNGSchema="multicast-addresses.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2012-08-23</updated>
+  <updated>2012-08-28</updated>
   <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
@@ -1840,8 +1840,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>CalAmp WCP</description>
       <xref type="person" data="Pierre_Oliver"/>
     </record>
+    <record date="2012-08-28">
+      <addr>224.0.23.177</addr>
+      <description>AES discovery</description>
+      <xref type="person" data="Kevin_Gross_2"/>
+    </record>
     <record>
-      <addr>224.0.23.177-224.0.23.191</addr>
+      <addr>224.0.23.178-224.0.23.191</addr>
       <description>Unassigned</description>
     </record>
     <record date="2008-08-12">
@@ -3104,6 +3109,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Kevin Gross</name>
       <uri>mailto:kvng&amp;ieee.org</uri>
       <updated>2010-03-12</updated>
+    </person>
+    <person id="Kevin_Gross_2">
+      <name>Kevin Gross</name>
+      <uri>mailto:kevin.gross&amp;avanw.com</uri>
+      <updated>2012-08-28</updated>
     </person>
     <person id="KPN_IP_Office">
       <name>KPN IP Office</name>
