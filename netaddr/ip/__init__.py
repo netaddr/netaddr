@@ -1910,7 +1910,6 @@ IPV4_MULTICAST = IPNetwork('224.0.0.0/4')
 IPV4_6TO4 = IPNetwork('192.88.99.0/24')    #   6to4 Relay Anycast
 
 IPV4_RESERVED = (
-    IPNetwork('39.0.0.0/8'),        #   Reserved but subject to allocation
     IPNetwork('128.0.0.0/16'),      #   Reserved but subject to allocation
     IPNetwork('191.255.0.0/16'),    #   Reserved but subject to allocation
     IPNetwork('192.0.0.0/24'),      #   Reserved but subject to allocation

@@ -34,7 +34,9 @@ import os.path as _path
 import sys as _sys
 import re as _re
 
-from netaddr.core import Publisher, Subscriber, PrettyPrinter
+from xml.sax import make_parser, handler
+
+from netaddr.core import Publisher, Subscriber, PrettyPrinter, dos2unix
 from netaddr.ip import IPAddress, IPNetwork, IPRange, \
     cidr_abbrev_to_verbose, iprange_to_cidrs
 
@@ -50,212 +52,196 @@ IANA_INFO = {
 }
 
 #-----------------------------------------------------------------------------
-class LineRecordParser(Publisher):
+
+class SaxRecordParser(handler.ContentHandler):
+
+    def __init__(self, callback=None):
+        self._level = 0
+        self._is_active = False
+        self._record = None
+        self._tag_level = None
+        self._tag_payload = None
+        self._tag_feeding = None
+        self._callback = callback
+
+    def startElement(self, name, attrs):
+        self._level += 1
+
+        if self._is_active is False:
+            if name == 'record':
+                self._is_active = True
+                self._tag_level = self._level
+                self._record = {}
+                if 'date' in attrs:
+                    self._record['date'] = attrs['date']
+        elif self._level == self._tag_level + 1:
+            if name == 'xref':
+                if 'type' in attrs and 'data' in attrs:
+                    l = self._record.setdefault(attrs['type'], [])
+                    l.append(attrs['data'])
+            else:
+                self._tag_payload = []
+                self._tag_feeding = True
+        else:
+            self._tag_feeding = False
+
+    def endElement(self, name):
+        if self._is_active is True:
+            if name == 'record' and self._tag_level == self._level:
+                self._is_active = False
+                self._tag_level = None
+                if callable(self._callback):
+                    self._callback(self._record)
+                self._record = None
+            elif self._level == self._tag_level + 1:
+                if name != 'xref':
+                    self._record[name] = ''.join(self._tag_payload)
+                    self._tag_payload = None
+                    self._tag_feeding = False
+
+        self._level -= 1
+
+    def characters(self, content):
+        if self._tag_feeding is True:
+            self._tag_payload.append(content)
+
+
+class XMLRecordParser(Publisher):
     """
-    A configurable Parser that understands how to parse line based records.
+    A configurable Parser that understands how to parse XML based records.
     """
     def __init__(self, fh, **kwargs):
         """
         Constructor.
 
-        fh - a valid, open file handle to line based record data.
+        fh - a valid, open file handle to XML based record data.
         """
-        super(LineRecordParser, self).__init__()
+        super(XMLRecordParser, self).__init__()
+
+        self.xmlparser = make_parser()
+        self.xmlparser.setContentHandler(SaxRecordParser(self.consume_record))
+
         self.fh = fh
 
         self.__dict__.update(kwargs)
 
-        #   Regex used to identify start of lines of interest.
-        if 're_start' not in self.__dict__:
-            self.re_start = r'^.*$'
-
-        #   Regex used to identify line to be parsed within block of interest.
-        if 're_parse_line' not in self.__dict__:
-            self.re_parse_line = r'^.*$'
-
-        #   Regex used to identify end of lines of interest.
-        if 're_stop' not in self.__dict__:
-            self.re_stop = r'^.*$'
-
-        #   If enabled, skips blank lines after being stripped.
-        if 'skip_blank_lines' not in self.__dict__:
-            self.skip_blank_lines = False
-
-    def parse_line(self, line):
+    def process_record(self, rec):
         """
-        This is the callback method invoked for every line considered valid by
-        the line parser's settings. It is usually over-ridden by base classes
-        to provide specific line parsing and line skipping logic.
+        This is the callback method invoked for every record. It is usually
+        over-ridden by base classes to provide specific record-based logic.
 
-        Any line can be vetoed (not passed to registered Subscriber objects)
+        Any record can be vetoed (not passed to registered Subscriber objects)
         by simply returning None.
         """
-        return line
+        return rec
+
+    def consume_record(self, rec):
+        record = self.process_record(rec)
+        if record is not None:
+            self.notify(record)
 
     def parse(self):
         """
         Parse and normalises records, notifying registered subscribers with
         record data as it is encountered.
         """
-        record = None
-        section_start = False
-        section_end = False
-
-        for line in self.fh:
-            line = line.strip()
-
-            #   Skip blank lines if required.
-            if self.skip_blank_lines and line == '':
-                continue
-
-            #   Entered record section.
-            if not section_start and len(_re.findall(self.re_start, line)) > 0:
-                section_start = True
-
-            #   Exited record section.
-            if section_start and len(_re.findall(self.re_stop, line)) > 0:
-                section_end = True
-
-            #   Stop parsing.
-            if section_end:
-                break
-
-            #   Is this a line of interest?
-            if section_start and len(_re.findall(self.re_parse_line, line)) == 0:
-                continue
-
-            if section_start:
-                record = self.parse_line(line)
-
-                #   notify subscribers of final record details.
-                self.notify(record)
+        self.xmlparser.parse(self.fh)
 
 #-----------------------------------------------------------------------------
-class IPv4Parser(LineRecordParser):
+class IPv4Parser(XMLRecordParser):
     """
-    A LineRecordParser that understands how to parse and retrieve data records
+    A XMLRecordParser that understands how to parse and retrieve data records
     from the IANA IPv4 address space file.
 
     It can be found online here :-
 
-        - http://www.iana.org/assignments/ipv4-address-space
+        - http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
     """
     def __init__(self, fh, **kwargs):
         """
         Constructor.
 
-        fh - a valid, open file handle to an OUI Registry data file.
+        fh - a valid, open file handle to an IANA IPv4 address space file.
 
         kwargs - additional parser options.
-
         """
-        super(IPv4Parser, self).__init__(fh,
-            re_start=r'^Prefix',
-            re_parse_line=r'^\d{3}\/\d',
-            re_stop=r'^Notes\s*$',
-            skip_blank_lines=True,
-        )
+        super(IPv4Parser, self).__init__(fh)
 
-        self.record_widths = (
-            ('prefix', 0, 8),
-            ('designation', 8, 49),
-            ('date', 57, 10),
-            ('whois', 67, 20),
-            ('status', 87, 19),
-        )
-
-    def parse_line(self, line):
+    def process_record(self, rec):
         """
-        Callback method invoked for every line considered valid by the line
-        parser's settings.
+        Callback method invoked for every record.
 
         See base class method for more details.
         """
+
         record = {}
-        for (key, start, width) in self.record_widths:
-            value = line[start:start+width]
-            record[key] = value.strip()
+        for key in ('prefix', 'designation', 'date', 'whois', 'status'):
+            record[key] = str(rec.get(key, '')).strip()
 
         #   Strip leading zeros from octet.
         if '/' in record['prefix']:
             (octet, prefix) = record['prefix'].split('/')
-            record['prefix'] = "%d/%d" % (int(octet), int(prefix))
+            record['prefix'] = '%d/%d' % (int(octet), int(prefix))
 
         record['status'] = record['status'].capitalize()
 
         return record
 
 #-----------------------------------------------------------------------------
-class IPv6Parser(LineRecordParser):
+class IPv6Parser(XMLRecordParser):
     """
-    A LineRecordParser that understands how to parse and retrieve data records
+    A XMLRecordParser that understands how to parse and retrieve data records
     from the IANA IPv6 address space file.
 
     It can be found online here :-
 
-        - http://www.iana.org/assignments/ipv6-address-space
+        - http://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
     """
     def __init__(self, fh, **kwargs):
         """
         Constructor.
 
-        fh - a valid, open file handle to an OUI Registry data file.
+        fh - a valid, open file handle to an IANA IPv6 address space file.
 
         kwargs - additional parser options.
-
         """
-        super(IPv6Parser, self).__init__(fh,
-        re_start=r'^IPv6 Prefix',
-        re_parse_line=r'^[A-F0-9]+::\/\d+',
-        re_stop=r'^Notes:\s*$',
-            skip_blank_lines=True)
+        super(IPv6Parser, self).__init__(fh)
 
-        self.record_widths = (
-            ('prefix', 0, 22),
-            ('allocation', 22, 24),
-            ('reference', 46, 15))
-
-    def parse_line(self, line):
+    def process_record(self, rec):
         """
-        Callback method invoked for every line considered valid by the line
-        parser's settings.
+        Callback method invoked for every record.
 
         See base class method for more details.
         """
-        record = {}
-        for (key, start, width) in self.record_widths:
-            value = line[start:start+width]
-            record[key] = value.strip()
 
-            #   Remove square brackets from reference field.
-            record[key] = record[key].lstrip('[')
-            record[key] = record[key].rstrip(']')
+        record = {
+                'prefix':       str(rec.get('prefix', '')).strip(),
+                'allocation':   str(rec.get('description', '')).strip(),
+                'reference':    str(rec.get('rfc', [''])[0]).strip(),
+            }
+
         return record
 
 #-----------------------------------------------------------------------------
-class MulticastParser(LineRecordParser):
+class MulticastParser(XMLRecordParser):
     """
-    A LineParser that knows how to process the IANA IPv4 multicast address
+    A XMLRecordParser that knows how to process the IANA IPv4 multicast address
     allocation file.
 
     It can be found online here :-
 
-        - http://www.iana.org/assignments/multicast-addresses
+        - http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
     """
     def __init__(self, fh, **kwargs):
         """
         Constructor.
 
-        fh - a valid, open file handle to an OUI Registry data file.
+        fh - a valid, open file handle to an IANA IPv4 multicast address
+             allocation file.
 
         kwargs - additional parser options.
-
         """
-        super(MulticastParser, self).__init__(fh,
-        re_start=r'^Registry:',
-        re_parse_line=r'^\d+\.\d+\.\d+\.\d+',
-        re_stop=r'^Relative',
-            skip_blank_lines=True)
+        super(MulticastParser, self).__init__(fh)
 
     def normalise_addr(self, addr):
         """
@@ -265,29 +251,25 @@ class MulticastParser(LineRecordParser):
             (a1, a2) = addr.split('-')
             o1 = a1.strip().split('.')
             o2 = a2.strip().split('.')
-            return "%s-%s" % ('.'.join([str(int(i)) for i in o1]),
+            return '%s-%s' % ('.'.join([str(int(i)) for i in o1]),
                               '.'.join([str(int(i)) for i in o2]))
         else:
             o1 = addr.strip().split('.')
             return '.'.join([str(int(i)) for i in o1])
 
-    def parse_line(self, line):
+    def process_record(self, rec):
         """
-        Callback method invoked for every line considered valid by the line
-        parser's settings.
+        Callback method invoked for every record.
 
         See base class method for more details.
         """
-        index = line.find('[')
-        if index != -1:
-            line = line[0:index].strip()
-        (addr, descr) = [i.strip() for i in _re.findall(
-            r'^([\d.]+(?:\s*-\s*[\d.]+)?)\s+(.+)$', line)[0]]
-        addr = self.normalise_addr(addr)
-        descr = ' '.join(descr.split())
-        descr = descr.replace('Date registered' , '').rstrip()
 
-        return dict(address=addr, descr=descr)
+        if 'addr' in rec:
+            record = {
+                    'address': self.normalise_addr(str(rec['addr'])),
+                    'descr': str(rec.get('description', '')),
+                }
+            return record
 
 #-----------------------------------------------------------------------------
 class DictUpdater(Subscriber):
@@ -344,15 +326,15 @@ def load_info():
     """
     PATH = _path.dirname(__file__)
 
-    ipv4 = IPv4Parser(open(_path.join(PATH, 'ipv4-address-space')))
+    ipv4 = IPv4Parser(open(_path.join(PATH, 'ipv4-address-space.xml')))
     ipv4.attach(DictUpdater(IANA_INFO['IPv4'], 'IPv4', 'prefix'))
     ipv4.parse()
 
-    ipv6 = IPv6Parser(open(_path.join(PATH, 'ipv6-address-space')))
+    ipv6 = IPv6Parser(open(_path.join(PATH, 'ipv6-address-space.xml')))
     ipv6.attach(DictUpdater(IANA_INFO['IPv6'], 'IPv6', 'prefix'))
     ipv6.parse()
 
-    mcast = MulticastParser(open(_path.join(PATH, 'multicast-addresses')))
+    mcast = MulticastParser(open(_path.join(PATH, 'multicast-addresses.xml')))
     mcast.attach(DictUpdater(IANA_INFO['multicast'], 'multicast', 'address'))
     mcast.parse()
 
@@ -422,9 +404,9 @@ def get_latest_files():
         from urllib2 import Request, urlopen
 
     urls = [
-        'http://www.iana.org/assignments/ipv4-address-space',
-        'http://www.iana.org/assignments/ipv6-address-space',
-        'http://www.iana.org/assignments/multicast-addresses',
+        'http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml',
+        'http://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml',
+        'http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml',
     ]
 
     for url in urls:
@@ -437,6 +419,9 @@ def get_latest_files():
         fh = open(filename, 'wb')
         fh.write(response.read())
         fh.close()
+
+        #   Make sure the line endings are consistent across platforms.
+        dos2unix(filename)
 
 
 #-----------------------------------------------------------------------------

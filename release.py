@@ -37,9 +37,9 @@ packages = [
 #   Required by distutils only.
 package_data = {
     'netaddr.ip': [
-        'ipv4-address-space',
-        'ipv6-address-space',
-        'multicast-addresses'
+        'ipv4-address-space.xml',
+        'ipv6-address-space.xml',
+        'multicast-addresses.xml'
     ],
     'netaddr.eui': [
         '*.txt',
