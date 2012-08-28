@@ -17,6 +17,7 @@ clean:
 	@echo 'cleaning up temporary files'
 	rm -rf dist/
 	rm -rf build/
+	rm -rf docs/build/
 	rm -rf netaddr.egg-info/
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
