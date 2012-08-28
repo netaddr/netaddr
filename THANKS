@@ -28,6 +28,8 @@ various improvements or submitting actual code. Here is a list of these people
 
     Victor Stinner <victor DOT stinner AT haypocalc.com>
 
+    Andrew Stromnov <stromnov AT gmail.com>
+
 Thanks to everyone on the netaddr mailing list, those who raised bug reports
 and to all those who have, directly and indirectly, guided and influenced the 
 development and distribution of this library.

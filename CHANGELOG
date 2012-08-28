@@ -1,4 +1,37 @@
 --------------
+Release: 0.7.8
+--------------
+Date: 28th Aug 2012
+
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.7
+^^^^^^^^^^^^^^^^^^^
+
+* New SAX parser for IANA data source files (contributed by Andrew Stromnov)
+
+* Fixed pickling failures with EUI, OUI and IAB classes.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 31 - http://github.com/drkjam/netaddr/issues/31
+
+    - Exclude '39.0.0.0/8' network from reserved set. Thanks Andrew Stromnov
+
+FIXED Issue 28 - http://github.com/drkjam/netaddr/issues/28
+
+    - Fix algorithm in ipv6_link_local to fully conform to rfc4291. Thanks Philipp Wollermann
+
+FIXED Issue 25 - http://github.com/drkjam/netaddr/issues/25
+
+    - install_requires is too aggressive? Thanks Adam Lindsay and commenters.
+
+FIXED Issue 21 - http://github.com/drkjam/netaddr/issues/21
+
+    - deepcopy for EUI fails. Thanks Ryan Nowakowski.
+
+--------------
 Release: 0.7.7
 --------------
 Date: 30th May 2012
