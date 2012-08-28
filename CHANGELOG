@@ -1,4 +1,15 @@
 --------------
+Release: 0.7.9
+--------------
+Date: 28th Aug 2012
+
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.8
+^^^^^^^^^^^^^^^^^^^
+
+* Re-release to fix build removing Sphinx dependency.
+
+--------------
 Release: 0.7.8
 --------------
 Date: 28th Aug 2012

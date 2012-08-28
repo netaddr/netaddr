@@ -157,5 +157,4 @@ install_requires = [
 ]
 
 setup_requires = [
-    'Sphinx',
 ]
