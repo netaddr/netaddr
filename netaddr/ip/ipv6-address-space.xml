@@ -3,10 +3,10 @@
 <?oxygen RNGSchema="ipv6-address-space.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv6-address-space">
   <title>Internet Protocol Version 6 Address Space</title>
-  <updated>2010-10-29</updated>
+  <updated>2012-08-02</updated>
   <note>The IPv6 address management function was formally delegated to
     IANA in December 1995 <xref type="rfc" data="rfc1881"/>. The registration procedure
-    was confirmed with the IETF Chair in march 2010.</note>
+    was confirmed with the IETF Chair in March 2010.</note>
 <registry id="ipv6-address-space-1">
   <registration_rule>IESG Approval</registration_rule>
   <record>
@@ -21,6 +21,7 @@
     <prefix>0100::/8</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <xref type="note" data="8"/>
   </record>
   <record>
     <prefix>0200::/7</prefix>
@@ -114,6 +115,7 @@
     <prefix>FF00::/8</prefix>
     <description>Multicast</description>
     <xref type="rfc" data="rfc4291"/>
+    <xref type="note" data="7"/>
   </record>
   <footnote anchor="1">The "unspecified address", the "loopback address", and the IPv6 
 Addresses with Embedded IPv4 Addresses are assigned out of the 
@@ -134,6 +136,9 @@ address" prefix.  This definition has been deprecated by <xref type="rfc" data="
   <footnote anchor="6">The "Well Known Prefix" 64:ff9b::/96 used in an algorithmic
 mapping between IPv4 to IPv6 addresses is defined out of the
 0000::/8 address block, per <xref type="rfc" data="rfc6052"/>.</footnote>
+  <footnote anchor="7">IANA assignments from this block are registered 
+    in the IPv6 Multicast Address Space Registry: <xref type="registry" data="ipv6-multicast-addresses"/>.</footnote>
+  <footnote anchor="8">0100::/64 is assigned as a Discard-Only Prefix for remote triggered blackhole routing as per <xref type="rfc" data="rfc6666"/>.</footnote>
   <people/>
 </registry>
  </registry>
