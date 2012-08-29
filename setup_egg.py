@@ -9,5 +9,6 @@ A Python setup file for distribute - http://packages.python.org/distribute/
 """
 
 from setuptools import setup
-execfile('setup.py')
+filename = 'setup.py'
+exec(compile(open(filename).read(), filename, 'exec'))
 
