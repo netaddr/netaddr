@@ -31,7 +31,7 @@ try:
         from IPython.Shell import IPShellEmbed
         ipshell = IPShellEmbed(argv, banner, exit_msg, rc_override)
 except ImportError:
-    sys.stderr.write('IPython (http://ipython.scipy.org/) not found!')
+    sys.stderr.write('IPython (http://ipython.scipy.org/) not found!\n')
     sys.exit(1)
 
 ipshell()
