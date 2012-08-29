@@ -43,10 +43,6 @@ def main():
         setup_requires   = release.setup_requires,
     )
 
-    #   IPython does not currently support Python 3.x so disable this.
-    if sys.version_info[0] == 3:
-        del setup_options['scripts']
-
     setup(**setup_options)
 
 if __name__ == "__main__":
