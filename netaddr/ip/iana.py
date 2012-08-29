@@ -40,7 +40,7 @@ from netaddr.core import Publisher, Subscriber, PrettyPrinter, dos2unix
 from netaddr.ip import IPAddress, IPNetwork, IPRange, \
     cidr_abbrev_to_verbose, iprange_to_cidrs
 
-from netaddr.compat import _dict_items
+from netaddr.compat import _dict_items, _callable
 
 #-----------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ class SaxRecordParser(handler.ContentHandler):
             if name == 'record' and self._tag_level == self._level:
                 self._is_active = False
                 self._tag_level = None
-                if callable(self._callback):
+                if _callable(self._callback):
                     self._callback(self._record)
                 self._record = None
             elif self._level == self._tag_level + 1:
