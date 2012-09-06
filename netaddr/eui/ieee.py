@@ -263,15 +263,23 @@ def create_indices():
 #-----------------------------------------------------------------------------
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
-    for row in _csv.reader(open(OUI_METADATA)):
-        (key, offset, size) = [int(_) for _ in row]
-        OUI_INDEX.setdefault(key, [])
-        OUI_INDEX[key].append((offset, size))
+    fp = open(OUI_METADATA)
+    try:
+        for row in _csv.reader(fp):
+            (key, offset, size) = [int(_) for _ in row]
+            OUI_INDEX.setdefault(key, [])
+            OUI_INDEX[key].append((offset, size))
+    finally:
+        fp.close()
 
-    for row in _csv.reader(open(IAB_METADATA)):
-        (key, offset, size) = [int(_) for _ in row]
-        IAB_INDEX.setdefault(key, [])
-        IAB_INDEX[key].append((offset, size))
+    fp = open(IAB_METADATA)
+    try:
+        for row in _csv.reader(fp):
+            (key, offset, size) = [int(_) for _ in row]
+            IAB_INDEX.setdefault(key, [])
+            IAB_INDEX[key].append((offset, size))
+    finally:
+        fp.close()
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
