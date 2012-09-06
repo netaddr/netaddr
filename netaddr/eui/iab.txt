@@ -25413,3 +25413,72 @@ FF0000-FF0FFF	(base 16)	GENERAL DYNAMICS C4 SYSTEMS
 				SCOTTSDALE AZ 85257
 				UNITED STATES
 
+00-50-C2	(hex)		DiTEST FAHRZEUGDIAGNOSE GMBH
+FF1000-FF1FFF	(base 16)	DiTEST FAHRZEUGDIAGNOSE GMBH
+				ALTE POSTSTRASSE 152
+				GRAZ STEIERMARK 8020
+				AUSTRIA
+
+00-50-C2	(hex)		GLOBALCOM ENGINEERING SRL
+FF2000-FF2FFF	(base 16)	GLOBALCOM ENGINEERING SRL
+				Via Volta 9
+				MORNAGO VA 21020
+				ITALY
+
+00-50-C2	(hex)		CONTROL SYSTEMS Srl
+FF3000-FF3FFF	(base 16)	CONTROL SYSTEMS Srl
+				Via del Brolo, 14
+				Cremona CR 26100
+				ITALY
+
+00-50-C2	(hex)		Burk Technology
+FF4000-FF4FFF	(base 16)	Burk Technology
+				7 Beaver Brook Road
+				Littleton MA 01460
+				UNITED STATES
+
+00-50-C2	(hex)		Flexkom Internet Pazarlama Bilipim ve Eoitim Hiz.Inp.Mim.Muh.Oto.Enerji San. Tic. A.p.
+FF5000-FF5FFF	(base 16)	Flexkom Internet Pazarlama Bilipim ve Eoitim Hiz.Inp.Mim.Muh.Oto.Enerji San. Tic. A.p.
+				A�kan Mh. Atakent Sk. No:15 Meram
+				Konya  42090
+				TURKEY
+
+00-50-C2	(hex)		Booyco Electronics
+FF6000-FF6FFF	(base 16)	Booyco Electronics
+				Unit 9, Innes Park
+				38 Jansen Road
+				Jetpark Ext 14 Gauteng 1549
+				SOUTH AFRICA
+
+00-50-C2	(hex)		Human Intech
+FF7000-FF7FFF	(base 16)	Human Intech
+				#1213 JnK Dijital Tower, 222-3
+				Guro-dong, Guro-gu Seoul 152-053
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		KST technology
+FF8000-FF8FFF	(base 16)	KST technology
+				Bangi-dong, songpa-gu
+				kst b/d 164-1
+				Seoul 138-050
+				KOREA, REPUBLIC OF
+
+00-50-C2	(hex)		Penttech AB
+FF9000-FF9FFF	(base 16)	Penttech AB
+				Vadursgatan 6
+				Goteborg Vastra gotaland 412 50
+				SWEDEN
+
+00-50-C2	(hex)		Nupoint Systems Inc.
+FFA000-FFAFFF	(base 16)	Nupoint Systems Inc.
+				4821 Colbrook Court
+				Burnaby BC V5G 3Y3
+				CANADA
+
+00-50-C2	(hex)		SEFRAM
+FFB000-FFBFFF	(base 16)	SEFRAM
+				32 rue E MARTEL
+				BP 55
+				SAINT-ETIENNE FRANCE 42009
+				FRANCE
+

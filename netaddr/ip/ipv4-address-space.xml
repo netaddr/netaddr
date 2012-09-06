@@ -3,7 +3,7 @@
 <?oxygen RNGSchema="ipv4-address-space.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
-  <updated>2012-04-23</updated>
+  <updated>2012-08-29</updated>
   <description>The allocation of Internet Protocol version 4 (IPv4) address space to various registries is listed
 here. Originally, all the IPv4 address spaces was managed directly by the IANA. Later parts of the
 address space were allocated to various other registries to manage for particular purposes or
@@ -1792,6 +1792,7 @@ It was recovered in February 2008 and was subsequently allocated to APNIC in Apr
   <footnote anchor="8">172.16.0.0/12 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/></footnote>
   <footnote anchor="9">192.0.2.0/24  reserved for TEST-NET-1 <xref type="rfc" data="rfc5737"/>
 192.88.99.0/24 reserved for 6to4 Relay Anycast <xref type="rfc" data="rfc3068"/>
+192.88.99.2/32 reserved for 6a44 Relay Anycast <xref type="draft" data="RFC-despres-6a44"/> (possibly collocated with 6to4 Relay at 192.88.99.1/32 - <xref type="rfc" data="3068"/> section 2.4)
 192.168.0.0/16 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/></footnote>
   <footnote anchor="10">192.0.0.0/24 reserved for IANA IPv4 Special Purpose Address Registry <xref type="rfc" data="rfc5736"/></footnote>
   <footnote anchor="11">198.18.0.0/15 reserved for Network Interconnect Device Benchmark Testing <xref type="rfc" data="rfc5735"/>
