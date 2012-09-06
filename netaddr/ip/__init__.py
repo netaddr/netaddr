@@ -1867,7 +1867,7 @@ def all_matching_cidrs(ip, cidrs):
     Matches an IP address or subnet against a given sequence of IP addresses
     and subnets.
 
-    :param ip: a single IP address or subnet.
+    :param ip: a single IP address.
 
     :param cidrs: a sequence of IP addresses and/or subnets.
 
