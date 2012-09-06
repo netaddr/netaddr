@@ -15,8 +15,8 @@ netaddr 0.7.10 documentation
     references
     authors
     contributors
-    license
     copyright
+    license
 
 ------------------
 Indices and tables
