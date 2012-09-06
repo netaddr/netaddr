@@ -1,3 +1,44 @@
+---------------
+Release: 0.7.10
+---------------
+Date: 6th Sep 2012
+
+^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.9
+^^^^^^^^^^^^^^^^^^^
+
+* A bunch of Python 3.x bug fixes. Thanks Arfrever.
+
+* Extended nmap support to cover full target specification.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 36 - http://github.com/drkjam/netaddr/issues/36
+
+    - ResourceWarnings with Python >=3.2
+
+FIXED Issue 35 - http://github.com/drkjam/netaddr/issues/35
+
+- netaddr-0.7.9: Test failure with Python 3
+
+FIXED Issue 34 - http://github.com/drkjam/netaddr/issues/34
+
+- netaddr.ip.iana.SaxRecordParser.endElement() incompatible with Python 3.1
+
+FIXED Issue 33 - http://github.com/drkjam/netaddr/issues/33
+
+- netaddr script not installed with Python 3
+
+FIXED Issue 23 - http://github.com/drkjam/netaddr/issues/23
+
+- valid_nmap_range() does not validate nmap format case.
+
+FIXED Issue 22 - http://github.com/drkjam/netaddr/issues/22
+
+- all_matching_cidrs: documentation incorrect
+
 --------------
 Release: 0.7.9
 --------------

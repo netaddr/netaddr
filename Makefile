@@ -8,7 +8,7 @@
 #
 SHELL = /bin/bash
 
-.PHONY = all clean build docs download
+.PHONY = all clean build documentation download
 
 all:
 	@echo 'default target does nothing. try clean'
@@ -22,7 +22,7 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-build:
+build: clean download
 	@echo 'build netaddr release'
 	python setup_egg.py develop
 	python setup.py sdist --formats=gztar,zip
@@ -44,3 +44,8 @@ download:
 	cd netaddr/ip/ && wget -N http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
 	cd netaddr/ip/ && wget -N http://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
 	cd netaddr/ip/ && wget -N http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
+
+register:
+	@echo 'releasing netaddr'
+	python setup_egg.py register
+
