@@ -24,6 +24,12 @@ True
 >>> valid_nmap_range('0-255.0-255.0-255.0-255')
 True
 
+>>> valid_nmap_range('192.168.3-5,7.1')
+True
+
+>>> valid_nmap_range('192.168.3-5,7,10-12,13,14.1')
+True
+
 >>> valid_nmap_range(1)
 False
 
@@ -78,6 +84,10 @@ nmap IP range iteration.
 >>> ip_list = list(iter_nmap_range('192.0.2-3.1-7'))
 >>> len(ip_list)
 14
+
+>>> list(iter_nmap_range('192.0.2.1-3,5,7-9'))
+[IPAddress('192.0.2.1'), IPAddress('192.0.2.2'), IPAddress('192.0.2.3'), IPAddress('192.0.2.5'), IPAddress('192.0.2.7'), IPAddress('192.0.2.8'), IPAddress('192.0.2.9')]
+
 >>> for ip in ip_list:
 ...     print(ip)
 ...     

@@ -6,98 +6,96 @@
 """
 Routines for dealing with nmap-style IPv4 address ranges.
 
-The nmap range specification represents between 1 and 4 contiguous IP address
-blocks depending on the range specified.
+Based on nmap's Target Specification :-
 
-Each octets can be represented with hyphenated range sets according to the
-following rules:
-
-    1. * ``x-y`` - the hyphenated octet (represents values x through y)
-    2. x must be less than or equal to y
-    3. x and y must be values between 0 through 255
-
-Example nmap ranges ::
-
-    '192.0.2.1'                 #   one IP address
-    '192.0.2.0-31'              #   one block with 32 IP addresses.
-    '192.0.2-3.1-254'           #   two blocks with 254 IP addresses.
-    '0-255.0-255.0-255.0-255'   #   the whole IPv4 address space
+    http://nmap.org/book/man-target-specification.html
 """
 
 from netaddr.core import AddrFormatError
 from netaddr.ip import IPAddress
+from netaddr.compat import _iter_range, _is_str
 
 #-----------------------------------------------------------------------------
-def valid_nmap_range(iprange):
-    """
-    :param iprange: an nmap-style IP address range.
+def _nmap_octet_target_values(spec):
+    #   Generates sequence of values for an individual octet as defined in the
+    #   nmap Target Specification.
+    values = set()
 
-    :return: ``True`` if IP range is valid, ``False`` otherwise.
-    """
-    status = True
-    if not hasattr(iprange, 'split'):
-        status = False
-    else:
-        tokens = iprange.split('.')
-        if len(tokens) != 4:
-            status = False
+    for element in spec.split(','):
+        if '-' in element:
+            left, right = element.split('-', 1)
+            if not left:
+                left = 0
+            if not right:
+                right = 255
+            low = int(left)
+            high = int(right)
+            if not ((0 <= low <= 255) and (0 <= high <= 255)):
+                raise ValueError('octet value overflow for spec %s!' % spec)
+            if low > high:
+                raise ValueError('left side of hyphen must be < right %r' % element)
+            for octet in _iter_range(low, high + 1):
+                values.add(octet)
         else:
-            for token in tokens:
-                if '-' in token:
-                    octets = token.split('-')
-                    if len(octets) not in (1, 2):
-                        status = False
-                        break
-                    try:
-                        if not 0 <= int(octets[0]) <= 255:
-                            status = False
-                            break
-                        if not 0 <= int(octets[1]) <= 255:
-                            status = False
-                            break
-                    except ValueError:
-                        status = False
-                        break
-                    if int(octets[0]) > int(octets[1]):
-                        status = False
-                        break
-                else:
-                    try:
-                        if not 0 <= int(token) <= 255:
-                            status = False
-                            break
-                    except ValueError:
-                        status = False
-                        break
-    return status
+            octet = int(element)
+            if not (0 <= octet <= 255):
+                raise ValueError('octet value overflow for spec %s!' % spec)
+            values.add(octet)
+
+    return sorted(values)
 
 #-----------------------------------------------------------------------------
-def iter_nmap_range(iprange):
+def _generate_nmap_octet_ranges(nmap_target_spec):
+    #   Generate 4 lists containing all octets defined by a given nmap Target
+    #   specification.
+    if not _is_str(nmap_target_spec):
+        raise TypeError('string expected, not %s' % type(nmap_target_spec))
+
+    if not nmap_target_spec:
+        raise ValueError('nmap target specification cannot be blank!')
+
+    tokens = nmap_target_spec.split('.')
+
+    if len(tokens) != 4:
+        raise AddrFormatError('invalid nmap range: %s' % nmap_target_spec)
+
+    if tokens[0] == '-':
+        raise AddrFormatError('first octet cannot be a sole hyphen!')
+
+    return (_nmap_octet_target_values(tokens[0]),
+            _nmap_octet_target_values(tokens[1]),
+            _nmap_octet_target_values(tokens[2]),
+            _nmap_octet_target_values(tokens[3]))
+
+#-----------------------------------------------------------------------------
+def valid_nmap_range(nmap_target_spec):
+    """
+    :param nmap_target_spec: an nmap-style IP range target specification.
+
+    :return: ``True`` if IP range target spec is valid, ``False`` otherwise.
+    """
+    try:
+        _generate_nmap_octet_ranges(nmap_target_spec)
+        return True
+    except (TypeError, ValueError, AddrFormatError):
+        pass
+    return False
+
+#-----------------------------------------------------------------------------
+def iter_nmap_range(nmap_target_spec):
     """
     The nmap security tool supports a custom type of IPv4 range using multiple
     hyphenated octets. This generator provides iterators yielding IP addresses
     according to this rule set.
 
-    :param iprange: an nmap-style IP address range.
+    :param nmap_target_spec: an nmap-style IP range target specification.
 
     :return: an iterator producing IPAddress objects for each IP in the range.
     """
-    if not valid_nmap_range(iprange):
-        raise AddrFormatError('invalid nmap range: %s' % iprange)
-
-    matrix = []
-    tokens = iprange.split('.')
-
-    for token in tokens:
-        if '-' in token:
-            octets = token.split('-', 1)
-            pair = (int(octets[0]), int(octets[1]))
-        else:
-            pair = (int(token), int(token))
-        matrix.append(pair)
-
-    for w in range(matrix[0][0], matrix[0][1]+1):
-        for x in range(matrix[1][0], matrix[1][1]+1):
-            for y in range(matrix[2][0], matrix[2][1]+1):
-                for z in range(matrix[3][0], matrix[3][1]+1):
+    octet_ranges = _generate_nmap_octet_ranges(nmap_target_spec)
+    for w in octet_ranges[0]:
+        for x in octet_ranges[1]:
+            for y in octet_ranges[2]:
+                for z in octet_ranges[3]:
                     yield IPAddress("%d.%d.%d.%d" % (w, x, y, z))
+
