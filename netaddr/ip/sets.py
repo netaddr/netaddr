@@ -109,8 +109,8 @@ class IPSet(object):
         """
         Compact internal list of `IPNetwork` objects using a CIDR merge.
         """
-        cidrs = cidr_merge(list(self._cidrs))
-        self._cidrs = dict(_zip(cidrs, [True] * len(cidrs)))
+        cidrs = cidr_merge(self._cidrs)
+        self._cidrs = dict.fromkeys(cidrs, True)
 
     def __hash__(self):
         """

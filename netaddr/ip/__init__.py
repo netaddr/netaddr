@@ -1472,7 +1472,7 @@ def cidr_merge(ip_addrs):
 
     :return: a summarized list of `IPNetwork` objects.
     """
-    if not hasattr(ip_addrs, '__iter__') or hasattr(ip_addrs, 'keys'):
+    if not hasattr(ip_addrs, '__iter__'):
         raise ValueError('A sequence or iterator is expected!')
 
     #   Start off using set as we'll remove any duplicates at the start.
