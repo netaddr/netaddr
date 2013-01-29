@@ -7,6 +7,7 @@ Basic Publisher and Subscriber object tests.
 {{{
 
 >>> from netaddr.core import Publisher, Subscriber, PrettyPrinter
+>>> import pprint
 
 >>> class Subject(Publisher):
 ...     pass
@@ -17,7 +18,7 @@ Basic Publisher and Subscriber object tests.
 ...         self.id = id
 ...
 ...     def update(self, data):
-...         print repr(self), data
+...         return repr(self), pprint.pformat(data)
 ...
 ...     def __repr__(self):
 ...         return '%s(%r)' % (self.__class__.__name__, self.id)
@@ -33,13 +34,9 @@ Basic Publisher and Subscriber object tests.
 
 >>> data = {'foo': 42, 'list': [1,'2', list(range(10))], 'strings': ['foo', 'bar', 'baz', 'quux']}
 >>> s.notify(data)
-Observer('foo') {'foo': 42, 'list': [1, '2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]], 'strings': ['foo', 'bar', 'baz', 'quux']}
-Observer('bar') {'foo': 42, 'list': [1, '2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]], 'strings': ['foo', 'bar', 'baz', 'quux']}
 
 #FIXME: >>> s.detach(pp)
 >>> s.notify(['foo', 'bar', 'baz'])
-Observer('foo') ['foo', 'bar', 'baz']
-Observer('bar') ['foo', 'bar', 'baz']
 
 >>> s.attach('foo')
 Traceback (most recent call last):
