@@ -128,6 +128,32 @@ Now, let's iterate over the IP addresses in the arbitrary IP address range and s
 192.0.2.15 True
 192.0.2.16 False
 
+More exotic IPSets
+
+>>> bigone = IPSet(['0.0.0.0/0'])
+>>> IPAddress("10.0.0.1") in bigone
+True
+>>> IPAddress("0.0.0.0") in bigone
+True
+>>> IPAddress("255.255.255") in bigone
+True
+>>> IPNetwork("10.0.0.0/24") in bigone
+True
+>>> IPAddress("::1") in bigone
+False
+
+>>> smallone = IPSet(["10.0.0.42/32"])
+>>> IPAddress("10.0.0.42") in smallone
+True
+>>> IPAddress("10.0.0.41") in smallone
+False
+>>> IPAddress("10.0.0.43") in smallone
+False
+>>> IPNetwork("10.0.0.42/32") in smallone
+True
+>>> IPNetwork("10.0.0.42/31") in smallone
+False
+
 -------------------------------------
 Unions, intersections and differences
 -------------------------------------
