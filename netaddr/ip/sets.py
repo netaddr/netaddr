@@ -14,7 +14,7 @@ from netaddr.ip.intset import IntSet as _IntSet
 from netaddr.ip import IPNetwork, IPAddress, IPRange, cidr_merge, \
     cidr_exclude, iprange_to_cidrs
 
-from netaddr.compat import _zip, _sys_maxint, _dict_keys, _int_type
+from netaddr.compat import _sys_maxint, _dict_keys, _int_type
 
 #-----------------------------------------------------------------------------
 def partition_ips(iterable):
@@ -136,8 +136,14 @@ class IPSet(object):
         :return: ``True`` if IP address or subnet is a member of this IP set.
         """
         ip = IPNetwork(ip)
-        for cidr in self._cidrs:
-            if ip in cidr:
+        # Iterating over self._cidrs is an O(n) operation: 1000 items in
+        # self._cidrs would mean 1000 loops. Iterating over all possible
+        # supernets loops at most 32 times for IPv4 or 128 times for IPv6,
+        # no matter how many CIDRs this object contains.
+        if ip in self._cidrs:
+            return True
+        for cidr in ip.supernet():
+            if cidr in self._cidrs:
                 return True
         return False
 
