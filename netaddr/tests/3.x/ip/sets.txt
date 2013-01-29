@@ -30,6 +30,12 @@ IPSet(['192.0.2.0/32'])
 >>> IPSet([IPNetwork('192.0.2.0/24')])
 IPSet(['192.0.2.0/24'])
 
+>>> IPSet(IPSet(['192.0.2.0/32']))
+IPSet(['192.0.2.0/32'])
+
+>>> IPSet(IPRange("10.0.0.0", "10.0.1.31"))
+IPSet(['10.0.0.0/24', '10.0.1.0/27'])
+
 >>> for ip in IPSet(['192.0.2.0/28', '::192.0.2.0/124']):
 ...     print(ip)
 192.0.2.0
@@ -84,6 +90,16 @@ IPSet(['192.0.2.0/32'])
 IPSet([])
 
 >>> s1.remove('192.0.2.0')
+>>> s1
+IPSet([])
+
+>>> s1.add(IPRange("10.0.0.0", "10.0.0.255"))
+>>> s1
+IPSet(['10.0.0.0/24'])
+
+>>> s1.remove(IPRange("10.0.0.128", "10.10.10.10"))
+>>> s1
+IPSet(['10.0.0.0/25'])
 
 }}}
 
@@ -118,6 +134,30 @@ Set membership.
 192.0.2.14 True
 192.0.2.15 True
 192.0.2.16 False
+
+>>> bigone = IPSet(['0.0.0.0/0'])
+>>> IPAddress("10.0.0.1") in bigone
+True
+>>> IPAddress("0.0.0.0") in bigone
+True
+>>> IPAddress("255.255.255") in bigone
+True
+>>> IPNetwork("10.0.0.0/24") in bigone
+True
+>>> IPAddress("::1") in bigone
+False
+
+>>> smallone = IPSet(["10.0.0.42/32"])
+>>> IPAddress("10.0.0.42") in smallone
+True
+>>> IPAddress("10.0.0.41") in smallone
+False
+>>> IPAddress("10.0.0.43") in smallone
+False
+>>> IPNetwork("10.0.0.42/32") in smallone
+True
+>>> IPNetwork("10.0.0.42/31") in smallone
+False
 
 }}}
 
