@@ -31,10 +31,10 @@ Basic Publisher and Subscriber object tests.
 #FIXME: >>> pp = PrettyPrinter()
 #FIXME: >>> s.attach(pp)
 
->>> data = {'foo': 42, 'list': [1,'2', list(range(10))], 'strings': ['foo', 'bar', 'baz', 'quux']}
+>>> data = [{'foo': 42}, {'list': [1,'2', list(range(10))]}, {'strings': ['foo', 'bar', 'baz', 'quux']}]
 >>> s.notify(data)
-Observer('foo') {'foo': 42, 'list': [1, '2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]], 'strings': ['foo', 'bar', 'baz', 'quux']}
-Observer('bar') {'foo': 42, 'list': [1, '2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]], 'strings': ['foo', 'bar', 'baz', 'quux']}
+Observer('foo') [{'foo': 42}, {'list': [1, '2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]}, {'strings': ['foo', 'bar', 'baz', 'quux']}]
+Observer('bar') [{'foo': 42}, {'list': [1, '2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]}, {'strings': ['foo', 'bar', 'baz', 'quux']}]
 
 #FIXME: >>> s.detach(pp)
 >>> s.notify(['foo', 'bar', 'baz'])
