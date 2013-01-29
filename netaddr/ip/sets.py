@@ -11,10 +11,10 @@ import itertools as _itertools
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 from netaddr.ip.intset import IntSet as _IntSet
 
-from netaddr.ip import IPNetwork, IPAddress, cidr_merge, cidr_exclude, \
-    iprange_to_cidrs
+from netaddr.ip import IPNetwork, IPAddress, IPRange, cidr_merge, \
+    cidr_exclude, iprange_to_cidrs
 
-from netaddr.compat import _zip, _sys_maxint, _dict_keys, _int_type
+from netaddr.compat import _sys_maxint, _dict_keys, _int_type
 
 #-----------------------------------------------------------------------------
 def partition_ips(iterable):
@@ -65,16 +65,24 @@ class IPSet(object):
             for supported constant values.
 
         """
-        self._cidrs = {}
-        if iterable is not None:
-            mergeable = []
-            for addr in iterable:
-                if isinstance(addr, _int_type):
-                    addr = IPAddress(addr, flags=flags)
-                mergeable.append(addr)
+        if isinstance(iterable, IPNetwork):
+            self._cidrs = {IPNetwork(iterable): True}
+        elif isinstance(iterable, IPRange):
+            self._cidrs = dict.fromkeys(
+                    iprange_to_cidrs(iterable[0], iterable[-1]), True)
+        elif isinstance(iterable, IPSet):
+            self._cidrs = dict.fromkeys(iterable.iter_cidrs(), True)
+        else:
+            self._cidrs = {}
+            if iterable is not None:
+                mergeable = []
+                for addr in iterable:
+                    if isinstance(addr, _int_type):
+                        addr = IPAddress(addr, flags=flags)
+                    mergeable.append(addr)
 
-            for cidr in cidr_merge(mergeable):
-                self._cidrs[cidr] = True
+                for cidr in cidr_merge(mergeable):
+                    self._cidrs[cidr] = True
 
     def __getstate__(self):
         """:return: Pickled state of an ``IPSet`` object."""
@@ -109,8 +117,8 @@ class IPSet(object):
         """
         Compact internal list of `IPNetwork` objects using a CIDR merge.
         """
-        cidrs = cidr_merge(list(self._cidrs))
-        self._cidrs = dict(_zip(cidrs, [True] * len(cidrs)))
+        cidrs = cidr_merge(self._cidrs)
+        self._cidrs = dict.fromkeys(cidrs, True)
 
     def __hash__(self):
         """
@@ -128,8 +136,14 @@ class IPSet(object):
         :return: ``True`` if IP address or subnet is a member of this IP set.
         """
         ip = IPNetwork(ip)
-        for cidr in self._cidrs:
-            if ip in cidr:
+        # Iterating over self._cidrs is an O(n) operation: 1000 items in
+        # self._cidrs would mean 1000 loops. Iterating over all possible
+        # supernets loops at most 32 times for IPv4 or 128 times for IPv6,
+        # no matter how many CIDRs this object contains.
+        if ip in self._cidrs:
+            return True
+        for cidr in ip.supernet():
+            if cidr in self._cidrs:
                 return True
         return False
 
@@ -147,19 +161,27 @@ class IPSet(object):
 
     def add(self, addr, flags=0):
         """
-        Adds an IP address or subnet to this IP set. Has no effect if it is
-        already present.
+        Adds an IP address or subnet or IPRange to this IP set. Has no effect if
+        it is already present.
 
         Note that where possible the IP address or subnet is merged with other
         members of the set to form more concise CIDR blocks.
 
-        :param addr: An IP address or subnet.
+        :param addr: An IP address or subnet in either string or object form, or
+            an IPRange object.
 
         :param flags: decides which rules are applied to the interpretation
             of the addr value. See the netaddr.core namespace documentation
             for supported constant values.
 
         """
+        if isinstance(addr, IPRange):
+            new_cidrs = dict.fromkeys(
+                    iprange_to_cidrs(addr[0], addr[-1]), True)
+            self._cidrs.update(new_cidrs)
+            self.compact()
+            return
+
         if isinstance(addr, _int_type):
             addr = IPAddress(addr, flags=flags)
         else:
@@ -169,8 +191,8 @@ class IPSet(object):
 
     def remove(self, addr, flags=0):
         """
-        Removes an IP address or subnet from this IP set. Does nothing if it
-        is not already a member.
+        Removes an IP address or subnet or IPRange from this IP set. Does
+        nothing if it is not already a member.
 
         Note that this method behaves more like discard() found in regular
         Python sets because it doesn't raise KeyError exceptions if the
@@ -179,13 +201,19 @@ class IPSet(object):
         individual IP addresses as individual set members using IPNetwork
         objects.
 
-        :param addr: An IP address or subnet.
+        :param addr: An IP address or subnet, or an IPRange.
 
         :param flags: decides which rules are applied to the interpretation
             of the addr value. See the netaddr.core namespace documentation
             for supported constant values.
 
         """
+        if isinstance(addr, IPRange):
+            cidrs = iprange_to_cidrs(addr[0], addr[-1])
+            for cidr in cidrs:
+                self.remove(cidr)
+            return
+
         if isinstance(addr, _int_type):
             addr = IPAddress(addr, flags=flags)
         else:
