@@ -214,3 +214,21 @@ Traceback (most recent call last):
 netaddr.core.AddrFormatError: invalid IPNetwork foo
 
 }}}
+
+Netmasks
+
+{{{
+
+>>> IPAddress('1.1.1.1').netmask_bits()
+32
+
+>>> IPAddress('255.255.255.254').netmask_bits()
+31
+
+>>> IPAddress('255.255.255.0').netmask_bits()
+24
+
+>>> IPAddress('::').netmask_bits()
+128
+
+}}}
