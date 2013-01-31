@@ -32,7 +32,7 @@ Basic Publisher and Subscriber object tests.
 #FIXME: >>> pp = PrettyPrinter()
 #FIXME: >>> s.attach(pp)
 
->>> data = {'foo': 42, 'list': [1,'2', list(range(10))], 'strings': ['foo', 'bar', 'baz', 'quux']}
+>>> data = [{'foo': 42}, {'list': [1,'2', list(range(10))]}, {'strings': ['foo', 'bar', 'baz', 'quux']}]
 >>> s.notify(data)
 
 #FIXME: >>> s.detach(pp)
