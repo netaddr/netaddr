@@ -292,8 +292,11 @@ class IPSet(object):
             for ip in cidr_merge(_dict_keys(self._cidrs)
                                + _dict_keys(iterable._cidrs)):
                 self._cidrs[ip] = True
+        elif isinstance(iterable, IPNetwork) or isinstance(iterable, IPRange):
+            self.add(iterable)
+            return
         else:
-            #   An iterable contain IP addresses or subnets.
+            #   An iterable containing IP addresses or subnets.
             mergeable = []
             for addr in iterable:
                 if isinstance(addr, _int_type):
