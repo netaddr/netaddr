@@ -1099,7 +1099,7 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         :return: A key tuple used to compare and sort this `IPNetwork` correctly.
         """
-        net_size_bits = self._module.width - num_bits(self.size)
+        net_size_bits = self._prefixlen - 1
         host_bits = self._value - self.first
         return self._module.version, self.first, net_size_bits, host_bits
 
