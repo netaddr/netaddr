@@ -496,7 +496,6 @@ class IPSet(object):
         """
         ip_set = self.copy()
         ip_set.update(other)
-        ip_set.compact()
         return ip_set
 
     __or__ = union
