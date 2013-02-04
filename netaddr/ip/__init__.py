@@ -1094,6 +1094,27 @@ class IPNetwork(BaseIP, IPListMixin):
         self._value = new_value
         return self
 
+    def __contains__(self, other):
+        """
+        :param other: an `IPAddress` or ranged IP object.
+
+        :return: ``True`` if other falls within the boundary of this one,
+            ``False`` otherwise.
+        """
+        if self._module.version != other._module.version:
+            return False
+        if isinstance(other, IPRange):
+            # IPRange has no _value.
+            return (self.first <= other._start._value) and (self.last >= other._end._value)
+
+        shiftwidth = self._module.width - self._prefixlen
+        other_val = other._value >> shiftwidth
+        self_val = self._value >> shiftwidth
+        if isinstance(other, IPAddress):
+            return other_val == self_val
+        # Must be IPNetwork
+        return self_val == other_val and self._prefixlen <= other._prefixlen
+
     def key(self):
         """
         :return: A key tuple used to uniquely identify this `IPNetwork`.
@@ -1104,7 +1125,7 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         :return: A key tuple used to compare and sort this `IPNetwork` correctly.
         """
-        net_size_bits = self._module.width - num_bits(self.size)
+        net_size_bits = self._prefixlen - 1
         host_bits = self._value - self.first
         return self._module.version, self.first, net_size_bits, host_bits
 
