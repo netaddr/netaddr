@@ -155,9 +155,9 @@ class BaseIP(object):
             transmission), ``False`` otherwise.
             References: RFC 3330 and 4291.
         """
-        if self.version == 4:
+        if self._module.version == 4:
             return self in IPV4_LOOPBACK
-        elif self.version == 6:
+        elif self._module.version == 6:
             return self == IPV6_LOOPBACK
 
     def is_private(self):
@@ -166,11 +166,11 @@ class BaseIP(object):
             (i.e. non-public), ``False`` otherwise. Reference: RFCs 1918,
             3330, 4193, 3879 and 2365.
         """
-        if self.version == 4:
+        if self._module.version == 4:
             for cidr in IPV4_PRIVATE:
                 if self in cidr:
                     return True
-        elif self.version == 6:
+        elif self._module.version == 6:
             for cidr in IPV6_PRIVATE:
                 if self in cidr:
                     return True
@@ -185,9 +185,9 @@ class BaseIP(object):
         :return: ``True`` if this IP is link-local address ``False`` otherwise.
             Reference: RFCs 3927 and 4291.
         """
-        if self.version == 4:
+        if self._module.version == 4:
             return self in IPV4_LINK_LOCAL
-        elif self.version == 6:
+        elif self._module.version == 6:
             return self in IPV6_LINK_LOCAL
 
     def is_reserved(self):
@@ -195,11 +195,11 @@ class BaseIP(object):
         :return: ``True`` if this IP is in IANA reserved range, ``False``
             otherwise. Reference: RFCs 3330 and 3171.
         """
-        if self.version == 4:
+        if self._module.version == 4:
             for cidr in IPV4_RESERVED:
                 if self in cidr:
                     return True
-        elif self.version == 6:
+        elif self._module.version == 6:
             for cidr in IPV6_RESERVED:
                 if self in cidr:
                     return True
@@ -210,14 +210,14 @@ class BaseIP(object):
         :return: ``True`` if this IP is IPv4-compatible IPv6 address, ``False``
             otherwise.
         """
-        return self.version == 6 and (self._value >> 32) == 0xffff
+        return self._module.version == 6 and (self._value >> 32) == 0xffff
 
     def is_ipv4_compat(self):
         """
         :return: ``True`` if this IP is IPv4-mapped IPv6 address, ``False``
             otherwise.
         """
-        return self.version == 6 and (self._value >> 32) == 0
+        return self._module.version == 6 and (self._value >> 32) == 0
 
     @property
     def info(self):
@@ -429,7 +429,7 @@ class IPAddress(BaseIP):
         """
         new_value = self._value + num
         if 0 <= new_value <= self._module.max_int:
-            return self.__class__(new_value, self.version)
+            return self.__class__(new_value, self._module.version)
         raise IndexError('result outside valid IP address boundary!')
 
     __radd__ = __add__
@@ -445,7 +445,7 @@ class IPAddress(BaseIP):
         """
         new_value = self._value - num
         if 0 <= new_value <= self._module.max_int:
-            return self.__class__(new_value, self.version)
+            return self.__class__(new_value, self._module.version)
         raise IndexError('result outside valid IP address boundary!')
 
     def __rsub__(self, num):
@@ -459,7 +459,7 @@ class IPAddress(BaseIP):
         """
         new_value = num - self._value
         if 0 <= new_value <= self._module.max_int:
-            return self.__class__(new_value, self.version)
+            return self.__class__(new_value, self._module.version)
         raise IndexError('result outside valid IP address boundary!')
 
     def key(self):
@@ -469,11 +469,11 @@ class IPAddress(BaseIP):
         #   NB - we return the value here twice because this IP Address may
         #   be sorted with a list of networks and it should still end up
         #   in the expected order.
-        return self.version, self._value
+        return self._module.version, self._value
 
     def sort_key(self):
         """:return: A key tuple used to compare and sort this `IPAddress` correctly."""
-        return self.version, self._value, self._module.width
+        return self._module.version, self._value, self._module.width
 
     def __int__(self):
         """:return: the value of this IP address as an unsigned integer"""
@@ -548,9 +548,9 @@ class IPAddress(BaseIP):
         ip = None
         klass = self.__class__
 
-        if self.version == 4:
+        if self._module.version == 4:
             ip = klass(self._value, 4)
-        elif self.version == 6:
+        elif self._module.version == 6:
             if 0 <= self._value <= _ipv4.max_int:
                 ip = klass(self._value, 4)
             elif _ipv4.max_int <= self._value <= 0xffffffffffff:
@@ -574,13 +574,13 @@ class IPAddress(BaseIP):
         ip = None
         klass = self.__class__
 
-        if self.version == 6:
+        if self._module.version == 6:
             if ipv4_compatible and \
                 (0xffff00000000 <= self._value <= 0xffffffffffff):
                 ip = klass(self._value - 0xffff00000000, 6)
             else:
                 ip = klass(self._value, 6)
-        elif self.version == 4:
+        elif self._module.version == 4:
             #   IPv4-Compatible IPv6 address
             ip = klass(self._value, 6)
             if not ipv4_compatible:
@@ -610,7 +610,7 @@ class IPAddress(BaseIP):
         :return: bitwise OR (x | y) between the integer value of this IP
             address and ``other``.
         """
-        return self.__class__(self._value | int(other), self.version)
+        return self.__class__(self._value | int(other), self._module.version)
 
     def __and__(self, other):
         """
@@ -619,7 +619,7 @@ class IPAddress(BaseIP):
         :return: bitwise AND (x & y) between the integer value of this IP
             address and ``other``.
         """
-        return self.__class__(self._value & int(other), self.version)
+        return self.__class__(self._value & int(other), self._module.version)
 
     def __xor__(self, other):
         """
@@ -628,7 +628,7 @@ class IPAddress(BaseIP):
         :return: bitwise exclusive OR (x ^ y) between the integer value of
             this IP address and ``other``.
         """
-        return self.__class__(self._value ^ int(other), self.version)
+        return self.__class__(self._value ^ int(other), self._module.version)
 
     def __lshift__(self, numbits):
         """
@@ -637,7 +637,7 @@ class IPAddress(BaseIP):
         :return: an `IPAddress` object based on this one with its integer
             value left shifted by ``numbits``.
         """
-        return self.__class__(self._value << numbits, self.version)
+        return self.__class__(self._value << numbits, self._module.version)
 
     def __rshift__(self, numbits):
         """
@@ -646,7 +646,7 @@ class IPAddress(BaseIP):
         :return: an `IPAddress` object based on this one with its integer
             value right shifted by ``numbits``.
         """
-        return self.__class__(self._value >> numbits, self.version)
+        return self.__class__(self._value >> numbits, self._module.version)
 
     def __nonzero__(self):
         """:return: ``True`` if the numerical value of this IP address is not \
@@ -676,8 +676,8 @@ class IPListMixin(object):
         :return: An iterator providing access to all `IPAddress` objects
             within range represented by this ranged IP object.
         """
-        start_ip = IPAddress(self.first, self.version)
-        end_ip = IPAddress(self.last, self.version)
+        start_ip = IPAddress(self.first, self._module.version)
+        end_ip = IPAddress(self.last, self._module.version)
         return iter_iprange(start_ip, end_ip)
 
     @property
@@ -715,20 +715,20 @@ class IPListMixin(object):
 
             if (start + step < 0) or (step > stop):
                 #   step value exceeds start and stop boundaries.
-                item = iter([IPAddress(self.first, self.version)])
+                item = iter([IPAddress(self.first, self._module.version)])
             else:
-                start_ip = IPAddress(self.first + start, self.version)
-                end_ip = IPAddress(self.first + stop - step, self.version)
+                start_ip = IPAddress(self.first + start, self._module.version)
+                end_ip = IPAddress(self.first + stop - step, self._module.version)
                 item = iter_iprange(start_ip, end_ip, step)
         else:
             try:
                 index = int(index)
                 if (- self.size) <= index < 0:
                     #   negative index.
-                    item = IPAddress(self.last + index + 1, self.version)
+                    item = IPAddress(self.last + index + 1, self._module.version)
                 elif 0 <= index <= (self.size - 1):
                     #   Positive index or zero index.
-                    item = IPAddress(self.first + index, self.version)
+                    item = IPAddress(self.first + index, self._module.version)
                 else:
                     raise IndexError('index out range for address range size!')
             except ValueError:
@@ -743,7 +743,7 @@ class IPListMixin(object):
         :return: ``True`` if other falls within the boundary of this one,
             ``False`` otherwise.
         """
-        if self.version != other.version:
+        if self._module.version != other.version:
             return False
         if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
             return other._value >= self.first and other._value <= self.last
@@ -991,17 +991,17 @@ class IPNetwork(BaseIP, IPListMixin):
         the same as the network IP address which varies according to the value
         of the CIDR subnet prefix.
         """
-        return IPAddress(self._value, self.version)
+        return IPAddress(self._value, self._module.version)
 
     @property
     def network(self):
         """The network address of this `IPNetwork` object."""
-        return IPAddress(self._value & int(self.netmask), self.version)
+        return IPAddress(self._value & self._netmask_int, self._module.version)
 
     @property
     def broadcast(self):
         """The broadcast address of this `IPNetwork` object"""
-        return IPAddress(self._value | self.hostmask._value, self.version)
+        return IPAddress(self._value | self._hostmask_int, self._module.version)
 
     @property
     def first(self):
@@ -1009,7 +1009,7 @@ class IPNetwork(BaseIP, IPListMixin):
         The integer value of first IP address found within this `IPNetwork`
         object.
         """
-        return self._value & (self._module.max_int ^ self.hostmask._value)
+        return self._value & (self._module.max_int ^ self._hostmask_int)
 
     @property
     def last(self):
@@ -1023,14 +1023,24 @@ class IPNetwork(BaseIP, IPListMixin):
     @property
     def netmask(self):
         """The subnet mask of this `IPNetwork` object."""
-        netmask = self._module.max_int ^ self.hostmask._value
-        return IPAddress(netmask, self.version)
+        netmask = self._module.max_int ^ self._hostmask_int
+        return IPAddress(netmask, self._module.version)
+
+    @property
+    def _netmask_int(self):
+        """Same as self.netmask, but in integer format"""
+        return self._module.max_int ^ self._hostmask_int
 
     @property
     def hostmask(self):
         """The host mask of this `IPNetwork` object."""
         hostmask = (1 << (self._module.width - self._prefixlen)) - 1
-        return IPAddress(hostmask, self.version)
+        return IPAddress(hostmask, self._module.version)
+
+    @property
+    def _hostmask_int(self):
+        """Same as self.hostmask, but in integer format"""
+        return (1 << (self._module.width - self._prefixlen)) - 1
 
     @property
     def cidr(self):
@@ -1038,9 +1048,9 @@ class IPNetwork(BaseIP, IPListMixin):
         The true CIDR address for this `IPNetwork` object which omits any
         host bits to the right of the CIDR subnet prefix.
         """
-        ip = IPAddress(self._value & int(self.netmask), self.version)
-        cidr = IPNetwork("%s/%d" % (ip, self.prefixlen))
-        return cidr
+        return IPNetwork(
+                (self._value & self._netmask_int, self._prefixlen),
+                version=self._module.version)
 
     def __iadd__(self, num):
         """
@@ -1084,19 +1094,40 @@ class IPNetwork(BaseIP, IPListMixin):
         self._value = new_value
         return self
 
+    def __contains__(self, other):
+        """
+        :param other: an `IPAddress` or ranged IP object.
+
+        :return: ``True`` if other falls within the boundary of this one,
+            ``False`` otherwise.
+        """
+        if self._module.version != other._module.version:
+            return False
+        if isinstance(other, IPRange):
+            # IPRange has no _value.
+            return (self.first <= other._start._value) and (self.last >= other._end._value)
+
+        shiftwidth = self._module.width - self._prefixlen
+        other_val = other._value >> shiftwidth
+        self_val = self._value >> shiftwidth
+        if isinstance(other, IPAddress):
+            return other_val == self_val
+        # Must be IPNetwork
+        return self_val == other_val and self._prefixlen <= other._prefixlen
+
     def key(self):
         """
         :return: A key tuple used to uniquely identify this `IPNetwork`.
         """
-        return self.version, self.first, self.last
+        return self._module.version, self.first, self.last
 
     def sort_key(self):
         """
         :return: A key tuple used to compare and sort this `IPNetwork` correctly.
         """
-        net_size_bits = self._module.width - num_bits(self.size)
+        net_size_bits = self._prefixlen - 1
         host_bits = self._value - self.first
-        return self.version, self.first, net_size_bits, host_bits
+        return self._module.version, self.first, net_size_bits, host_bits
 
     def ipv4(self):
         """
@@ -1107,9 +1138,9 @@ class IPNetwork(BaseIP, IPListMixin):
         ip = None
         klass = self.__class__
 
-        if self.version == 4:
+        if self._module.version == 4:
             ip = klass('%s/%d' % (self.ip, self.prefixlen))
-        elif self.version == 6:
+        elif self._module.version == 6:
             if 0 <= self._value <= _ipv4.max_int:
                 addr = _ipv4.int_to_str(self._value)
                 ip = klass('%s/%d' % (addr, self.prefixlen - 96))
@@ -1135,14 +1166,14 @@ class IPNetwork(BaseIP, IPListMixin):
         ip = None
         klass = self.__class__
 
-        if self.version == 6:
+        if self._module.version == 6:
             if ipv4_compatible and \
                 (0xffff00000000 <= self._value <= 0xffffffffffff):
                 ip = klass((self._value - 0xffff00000000, self._prefixlen),
                     version=6)
             else:
                 ip = klass((self._value, self._prefixlen), version=6)
-        elif self.version == 4:
+        elif self._module.version == 4:
             if ipv4_compatible:
                 #   IPv4-Compatible IPv6 address
                 ip = klass((self._value, self._prefixlen + 96), version=6)
@@ -1161,7 +1192,7 @@ class IPNetwork(BaseIP, IPListMixin):
         :return: The adjacent subnet preceding this `IPNetwork` object.
         """
         ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
-            self.version)
+            self._module.version)
         ip_copy -= step
         return ip_copy
 
@@ -1173,7 +1204,7 @@ class IPNetwork(BaseIP, IPListMixin):
         :return: The adjacent subnet succeeding this `IPNetwork` object.
         """
         ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
-            self.version)
+            self._module.version)
         ip_copy += step
         return ip_copy
 
@@ -1189,7 +1220,7 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         if not 0 <= prefixlen <= self._module.width:
             raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
-                % (prefixlen, self.version))
+                % (prefixlen, self._module.version))
 
         supernets = []
         # Use a copy of self as we'll be editing it.
@@ -1215,7 +1246,7 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         if not 0 <= self.prefixlen <= self._module.width:
             raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
-                % (prefixlen, self.version))
+                % (prefixlen, self._module.version))
 
         if not self.prefixlen <= prefixlen:
             #   Don't return anything.
@@ -1235,7 +1266,7 @@ class IPNetwork(BaseIP, IPListMixin):
         i = 0
         while(i < count):
             subnet = self.__class__('%s/%d' % (base_subnet, prefixlen),
-                self.version)
+                self._module.version)
             subnet.value += (subnet.size * i)
             subnet.prefixlen = prefixlen
             i += 1
@@ -1256,19 +1287,20 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         it_hosts = iter([])
 
-        if self.version == 4:
+        if self._module.version == 4:
             #   IPv4 logic.
             if self.size >= 4:
-                it_hosts = iter_iprange(IPAddress(self.first+1, self.version),
-                                        IPAddress(self.last-1, self.version))
+                it_hosts = iter_iprange(
+                        IPAddress(self.first+1, self._module.version),
+                        IPAddress(self.last-1, self._module.version))
         else:
             #   IPv6 logic.
             if self.first == 0:
                 if self.size != 1:
                     #   Don't return '::'.
                     it_hosts = iter_iprange(
-                        IPAddress(self.first+1, self.version),
-                        IPAddress(self.last, self.version))
+                        IPAddress(self.first + 1, self._module.version),
+                        IPAddress(self.last, self._module.version))
             else:
                 it_hosts = iter(self)
 
@@ -1345,14 +1377,14 @@ class IPRange(BaseIP, IPListMixin):
         """
         :return: A key tuple used to uniquely identify this `IPRange`.
         """
-        return self.version, self.first, self.last
+        return self._module.version, self.first, self.last
 
     def sort_key(self):
         """
         :return: A key tuple used to compare and sort this `IPRange` correctly.
         """
         skey = self._module.width - num_bits(self.size)
-        return self.version, self.first, skey
+        return self._module.version, self.first, skey
 
     def cidrs(self):
         """
@@ -1514,6 +1546,7 @@ def cidr_merge(ip_addrs):
 
         if cidr.version == 4:
             if bits == '':
+                # This is the /0 network, that includes all IPv4 addresses.
                 ipv4_match_all_found = True
                 ipv4_bit_cidrs = set([''])  # Clear all other IPv4 values.
 
@@ -1521,6 +1554,7 @@ def cidr_merge(ip_addrs):
                 ipv4_bit_cidrs.add(bits)
         else:
             if bits == '':
+                # This is the /0 network, that includes all IPv6 addresses.
                 ipv6_match_all_found = True
                 ipv6_bit_cidrs = set([''])  # Clear all other IPv6 values.
 
@@ -1616,7 +1650,6 @@ def cidr_exclude(target, exclude):
 
     :return: list of `IPNetwork` objects remaining after exclusion.
     """
-    cidrs = []
 
     target = IPNetwork(target)
     exclude = IPNetwork(exclude)
@@ -1630,14 +1663,18 @@ def cidr_exclude(target, exclude):
         #   subnet's upper bound.
         return [target.cidr]
 
+    cidrs = []
     new_prefixlen = target.prefixlen + 1
+    # Some @properties that are expensive to get and don't change below.
+    target_module_width = target._module.width
+    if new_prefixlen <= target_module_width:
+        target_first = target.first
+        version = exclude.version
+        i_lower = target_first
+        i_upper = target_first + (2 ** (target_module_width - new_prefixlen))
 
-    if new_prefixlen <= target._module.width:
-        i_lower = target.first
-        i_upper = target.first + (2 ** (target._module.width - new_prefixlen))
-
-        lower = IPNetwork((i_lower, new_prefixlen))
-        upper = IPNetwork((i_upper, new_prefixlen))
+        lower = IPNetwork((i_lower, new_prefixlen), version=version)
+        upper = IPNetwork((i_upper, new_prefixlen), version=version)
 
         while exclude.prefixlen >= new_prefixlen:
             if exclude in lower:
@@ -1651,20 +1688,20 @@ def cidr_exclude(target, exclude):
                 cidrs.append(target.cidr)
                 break
 
-            ip = IPNetwork((unmatched, new_prefixlen))
+            ip = IPNetwork((unmatched, new_prefixlen), version=version)
 
             cidrs.append(ip)
 
             new_prefixlen += 1
 
-            if new_prefixlen > target._module.width:
+            if new_prefixlen > target_module_width:
                 break
 
             i_lower = matched
-            i_upper = matched + (2 ** (target._module.width - new_prefixlen))
+            i_upper = matched + (2 ** (target_module_width - new_prefixlen))
 
-            lower = IPNetwork((i_lower, new_prefixlen))
-            upper = IPNetwork((i_upper, new_prefixlen))
+            lower = IPNetwork((i_lower, new_prefixlen), version=version)
+            upper = IPNetwork((i_upper, new_prefixlen), version=version)
 
     cidrs.sort()
 

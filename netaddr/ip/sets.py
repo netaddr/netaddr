@@ -113,6 +113,80 @@ class IPSet(object):
                 raise ValueError('unpickling failed for object state %s' \
                     % str(state))
 
+    def _compact_single_network(self, added_network):
+        """
+        Same as compact(), but assume that added_network is the only change and
+        that this IPSet was properly compacted before added_network was added.
+        This allows to perform compaction much faster. added_network must
+        already be present in self._cidrs.
+        """
+        added_first = added_network.first
+        added_last = added_network.last
+        added_version = added_network.version
+
+        # Check for supernets and subnets of added_network.
+        if added_network._prefixlen == added_network._module.width:
+            # This is a single IP address, i.e. /32 for IPv4 or /128 for IPv6.
+            # It does not have any subnets, so we only need to check for its
+            # potential supernets.
+            for potential_supernet in added_network.supernet():
+                if potential_supernet in self._cidrs:
+                    del self._cidrs[added_network]
+                    return
+        else:
+            # IPNetworks from self._cidrs that are subnets of added_network.
+            to_remove = []
+            for cidr in self._cidrs:
+                if (cidr._module.version != added_version or cidr == added_network):
+                    # We found added_network or some network of a different version.
+                    continue
+                first = cidr.first
+                last = cidr.last
+                if first >= added_first and last <= added_last:
+                    # cidr is a subnet of added_network. Remember to remove it.
+                    to_remove.append(cidr)
+                elif first <= added_first and last >= added_last:
+                    # cidr is a supernet of acced_network. Remove added_network.
+                    del self._cidrs[added_network]
+                    # This IPSet was properly compacted before. Since added_network
+                    # is removed now, it must again be properly compacted -> done.
+                    assert(not to_remove)
+                    return
+            for item in to_remove:
+                del self._cidrs[item]
+
+        # Check if added_network can be merged with another network.
+
+        # Note that merging can only happen between networks of the same
+        # prefixlen. This just leaves 2 candidates: The IPNetworks just before
+        # and just after the added_network.
+        # This can be reduced to 1 candidate: 10.0.0.0/24 and 10.0.1.0/24 can
+        # be merged into into 10.0.0.0/23. But 10.0.0.1/24 and 10.0.0.2/24
+        # cannot be merged. With only 1 candidate, we might as well make a
+        # dictionary lookup.
+        shift_width = added_network._module.width - added_network.prefixlen
+        while added_network.prefixlen != 0:
+            # figure out if the least significant bit of the network part is 0 or 1.
+            the_bit = (added_network._value >> shift_width) & 1
+            if the_bit:
+                candidate = added_network.previous()
+            else:
+                candidate = added_network.next()
+
+            if candidate not in self._cidrs:
+                # The only possible merge does not work -> merge done
+                return
+            # Remove added_network&candidate, add merged network.
+            del self._cidrs[candidate]
+            del self._cidrs[added_network]
+            added_network.prefixlen -= 1
+            # Be sure that we set the host bits to 0 when we move the prefixlen.
+            # Otherwise, adding 255.255.255.255/32 will result in a merged
+            # 255.255.255.255/24 network, but we want 255.255.255.0/24.
+            shift_width += 1
+            added_network._value = (added_network._value >> shift_width) << shift_width
+            self._cidrs[added_network] = True
+
     def compact(self):
         """
         Compact internal list of `IPNetwork` objects using a CIDR merge.
@@ -183,11 +257,12 @@ class IPSet(object):
             return
 
         if isinstance(addr, _int_type):
-            addr = IPAddress(addr, flags=flags)
+            addr = IPNetwork(IPAddress(addr, flags=flags))
         else:
             addr = IPNetwork(addr)
+
         self._cidrs[addr] = True
-        self.compact()
+        self._compact_single_network(addr)
 
     def remove(self, addr, flags=0):
         """
@@ -242,7 +317,8 @@ class IPSet(object):
             del self._cidrs[matching_cidr]
             for cidr in remainder:
                 self._cidrs[cidr] = True
-            self.compact()
+        # No call to self.compact() is needed. Removing an IPNetwork cannot
+        # create mergable networks.
 
     def pop(self):
         """
@@ -292,8 +368,11 @@ class IPSet(object):
             for ip in cidr_merge(_dict_keys(self._cidrs)
                                + _dict_keys(iterable._cidrs)):
                 self._cidrs[ip] = True
+        elif isinstance(iterable, IPNetwork) or isinstance(iterable, IPRange):
+            self.add(iterable)
+            return
         else:
-            #   An iterable contain IP addresses or subnets.
+            #   An iterable containing IP addresses or subnets.
             mergeable = []
             for addr in iterable:
                 if isinstance(addr, _int_type):
@@ -418,7 +497,6 @@ class IPSet(object):
         """
         ip_set = self.copy()
         ip_set.update(other)
-        ip_set.compact()
         return ip_set
 
     __or__ = union
