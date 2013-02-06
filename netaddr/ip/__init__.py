@@ -717,11 +717,16 @@ class IPListMixin(object):
         :return: ``True`` if other falls within the boundary of this one,
             ``False`` otherwise.
         """
-        if self._module.version != other.version:
-            return False
-        if hasattr(other, '_value') and not hasattr(other, '_prefixlen'):
-            return other._value >= self.first and other._value <= self.last
-        return other.first >= self.first and other.last <= self.last
+        if isinstance(other, BaseIP):
+            if self._module.version != other._module.version:
+                return False
+            if isinstance(other, IPAddress):
+                return other._value >= self.first and other._value <= self.last
+            # Assume that we (and the other) provide .first and .last.
+            return other.first >= self.first and other.last <= self.last
+
+        # Whatever it is, try to interpret it as IPAddress.
+        return IPAddress(other) in self
 
     def __nonzero__(self):
         """
@@ -1075,19 +1080,28 @@ class IPNetwork(BaseIP, IPListMixin):
         :return: ``True`` if other falls within the boundary of this one,
             ``False`` otherwise.
         """
-        if self._module.version != other._module.version:
-            return False
-        if isinstance(other, IPRange):
-            # IPRange has no _value.
-            return (self.first <= other._start._value) and (self.last >= other._end._value)
+        if isinstance(other, BaseIP):
+            if self._module.version != other._module.version:
+                return False
 
-        shiftwidth = self._module.width - self._prefixlen
-        other_val = other._value >> shiftwidth
-        self_val = self._value >> shiftwidth
-        if isinstance(other, IPAddress):
-            return other_val == self_val
-        # Must be IPNetwork
-        return self_val == other_val and self._prefixlen <= other._prefixlen
+            # self_net will contain only the network bits.
+            shiftwidth = self._module.width - self._prefixlen
+            self_net = self._value >> shiftwidth
+            if isinstance(other, IPRange):
+                # IPRange has no _value.
+                # (self_net+1)<<shiftwidth is not our last address, but the one
+                # after the last one.
+                return ((self_net << shiftwidth) <= other._start._value and
+                        (((self_net + 1) << shiftwidth) > other._end._value))
+
+            other_net = other._value >> shiftwidth
+            if isinstance(other, IPAddress):
+                return other_net == self_net
+            if isinstance(other, IPNetwork):
+                return self_net == other_net and self._prefixlen <= other._prefixlen
+
+        # Whatever it is, try to interpret it as IPAddress.
+        return IPAddress(other) in self
 
     def key(self):
         """
@@ -1336,6 +1350,28 @@ class IPRange(BaseIP, IPListMixin):
         self._start = IPAddress(start, version)
         self._module = self._start._module
         self._end = IPAddress(end, version)
+
+    def __contains__(self, other):
+        if isinstance(other, BaseIP):
+            if self._module.version != other._module.version:
+                return False
+            if isinstance(other, IPAddress):
+                return (self._start._value <= other._value and
+                        self._end._value >= other._value)
+            if isinstance(other, IPRange):
+                return (self._start._value <= other._start._value and
+                        self._end._value >= other._end._value)
+            if isinstance(other, IPNetwork):
+                shiftwidth = other._module.width - other._prefixlen
+                other_start = (other._value >> shiftwidth) << shiftwidth
+                # Start of the next network after other
+                other_next_start = other_start + (1 << shiftwidth)
+
+                return (self._start._value <= other_start and
+                        self._end._value > other_next_start)
+
+        # Whatever it is, try to interpret it as IPAddress.
+        return IPAddress(other) in self
 
     @property
     def first(self):
