@@ -1114,8 +1114,9 @@ class IPNetwork(BaseIP, IPListMixin):
         :return: A key tuple used to compare and sort this `IPNetwork` correctly.
         """
         net_size_bits = self._prefixlen - 1
-        host_bits = self._value - self.first
-        return self._module.version, self.first, net_size_bits, host_bits
+        first = self._value & (self._module.max_int ^ self._hostmask_int)
+        host_bits = self._value - first
+        return self._module.version, first, net_size_bits, host_bits
 
     def ipv4(self):
         """
@@ -1394,7 +1395,7 @@ class IPRange(BaseIP, IPListMixin):
         :return: A key tuple used to compare and sort this `IPRange` correctly.
         """
         skey = self._module.width - num_bits(self.size)
-        return self._module.version, self.first, skey
+        return self._module.version, self._start._value, skey
 
     def cidrs(self):
         """
