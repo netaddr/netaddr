@@ -431,22 +431,10 @@ class IPSet(object):
         :return: ``True`` if every IP address and subnet in this IP set
             is found within ``other``.
         """
-        if not hasattr(other, '_cidrs'):
-            return NotImplemented
-
-        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
-        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
-
-        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
-        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
-
-        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
-        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
-
-        ipv4 = l_ipv4_iset.issubset(r_ipv4_iset)
-        ipv6 = l_ipv6_iset.issubset(r_ipv6_iset)
-
-        return ipv4 and ipv6
+        for cidr in self._cidrs:
+            if cidr not in other:
+                return False
+        return True
 
     __le__ = issubset
 
@@ -472,19 +460,10 @@ class IPSet(object):
         if not hasattr(other, '_cidrs'):
             return NotImplemented
 
-        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
-        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
-
-        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
-        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
-
-        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
-        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
-
-        ipv4 = l_ipv4_iset.issuperset(r_ipv4_iset)
-        ipv6 = l_ipv6_iset.issuperset(r_ipv6_iset)
-
-        return ipv4 and ipv6
+        for cidr in other._cidrs:
+            if cidr not in self:
+                return False
+        return True
 
     __ge__ = issuperset
 
@@ -520,7 +499,7 @@ class IPSet(object):
 
         ipv4_result = l_ipv4_iset & r_ipv4_iset
 
-        for start, end in list(ipv4_result._ranges):
+        for start, end in ipv4_result._ranges:
             cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
             cidr_list.extend(cidrs)
 
@@ -530,11 +509,14 @@ class IPSet(object):
 
         ipv6_result = l_ipv6_iset & r_ipv6_iset
 
-        for start, end in list(ipv6_result._ranges):
+        for start, end in ipv6_result._ranges:
             cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
             cidr_list.extend(cidrs)
 
-        return IPSet(cidr_list)
+        result = IPSet()
+        # None of these CIDRs can be compacted, so skip that operation.
+        result._cidrs = dict.fromkeys(cidr_list, True)
+        return result
 
     __and__ = intersection
 
@@ -558,7 +540,7 @@ class IPSet(object):
 
         ipv4_result = l_ipv4_iset ^ r_ipv4_iset
 
-        for start, end in list(ipv4_result._ranges):
+        for start, end in ipv4_result._ranges:
             cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
             cidr_list.extend(cidrs)
 
@@ -568,11 +550,14 @@ class IPSet(object):
 
         ipv6_result = l_ipv6_iset ^ r_ipv6_iset
 
-        for start, end in list(ipv6_result._ranges):
+        for start, end in ipv6_result._ranges:
             cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
             cidr_list.extend(cidrs)
 
-        return IPSet(cidr_list)
+        result = IPSet()
+        # None of these CIDRs can be compacted, so skip that operation.
+        result._cidrs = dict.fromkeys(cidr_list, True)
+        return result
 
     __xor__ = symmetric_difference
 
@@ -596,7 +581,7 @@ class IPSet(object):
 
         ipv4_result = l_ipv4_iset - r_ipv4_iset
 
-        for start, end in list(ipv4_result._ranges):
+        for start, end in ipv4_result._ranges:
             cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
             cidr_list.extend(cidrs)
 
@@ -606,11 +591,14 @@ class IPSet(object):
 
         ipv6_result = l_ipv6_iset - r_ipv6_iset
 
-        for start, end in list(ipv6_result._ranges):
+        for start, end in ipv6_result._ranges:
             cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
             cidr_list.extend(cidrs)
 
-        return IPSet(cidr_list)
+        result = IPSet()
+        # None of these CIDRs can be compacted, so skip that operation.
+        result._cidrs = dict.fromkeys(cidr_list, True)
+        return result
 
     __sub__ = difference
 
