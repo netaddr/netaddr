@@ -627,3 +627,34 @@ class IPSet(object):
         return 'IPSet(%r)' % [str(c) for c in sorted(self._cidrs)]
 
     __str__ = __repr__
+
+    def iscontiguous(self):
+        """
+        Note this method depends on ``iter_cidrs`` being sorted.
+
+        :return: ``True`` if the ``IPSet`` object is contiguous.
+        """
+        previous = self.iter_cidrs()[0][0]
+        for cidr in self.iter_cidrs():
+            if cidr[0] != previous:
+                # This isn't contiguous
+                return False
+            previous = cidr[-1] + 1
+        return True
+
+    def getRange(self):
+        """
+        Get the starting and ending IP of this set, assuming it is 
+        contiguous.
+        Note this method depends on ``iter_cidrs`` being sorted.
+        
+        Raises ``ValueError`` if the set is not contiguous.
+
+        :return: An ``IPRange`` if the IPSet is contiguous.
+        
+        """
+        if self.iscontiguous():
+            cidrs = self.iter_cidrs()
+            return IPRange(cidrs[0][0], cidrs[-1][-1])
+        else:
+            raise ValueError("IPSet is not contiguous")
