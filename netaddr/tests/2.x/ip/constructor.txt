@@ -1,6 +1,6 @@
 =IP Constructor Stress Tests=
 
-Copyright (c) 2008-2012, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2013, David P. D. Moss. All rights reserved.
 
 {{{
 
