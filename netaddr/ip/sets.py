@@ -630,31 +630,34 @@ class IPSet(object):
 
     def iscontiguous(self):
         """
-        Note this method depends on ``iter_cidrs`` being sorted.
-
+        Returns True if the members of the set form a contiguous IP
+        address range (with no gaps), False otherwise.
+        
         :return: ``True`` if the ``IPSet`` object is contiguous.
         """
-        previous = self.iter_cidrs()[0][0]
-        for cidr in self.iter_cidrs():
-            if cidr[0] != previous:
-                # This isn't contiguous
-                return False
-            previous = cidr[-1] + 1
+        cidrs = self.iter_cidrs()
+        if len(cidrs) > 1:
+            previous = cidrs[0]
+            for cidr in cidrs:
+                if cidr[0] != previous:
+                    return False
+                previous = cidr
         return True
 
-    def getRange(self):
+    def iprange(self):
         """
-        Get the starting and ending IP of this set, assuming it is 
-        contiguous.
-        Note this method depends on ``iter_cidrs`` being sorted.
+        Generates an IPRange for this IPSet, if all its members
+        form a single contiguous sequence.
         
         Raises ``ValueError`` if the set is not contiguous.
 
-        :return: An ``IPRange`` if the IPSet is contiguous.
+        :return: An ``IPRange`` for all IPs in the IPSet.
         
         """
         if self.iscontiguous():
             cidrs = self.iter_cidrs()
+            if not cidrs:
+                return None
             return IPRange(cidrs[0][0], cidrs[-1][-1])
         else:
             raise ValueError("IPSet is not contiguous")

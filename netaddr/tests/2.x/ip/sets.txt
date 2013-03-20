@@ -441,12 +441,13 @@ IPSet(['0.0.0.0/0'])
 Convert an IP set to an IP Range
 --------------------------------
 Sometimes you may want to convert an IPSet back to an IPRange.
->>> s1 = IPSet(['10.0.0.0/25', '10.0.0.128/25'])
 
->>> s1.getRange()
+>>> s1 = IPSet(['10.0.0.0/25', '10.0.0.128/25'])
+>>> s1.iprange()
 IPRange('10.0.0.0', '10.0.0.255')
 
 This only works if the IPSet is contiguous
+
 >>> s1.iscontiguous()
 True
 >>> s1.remove('10.0.0.16')
@@ -454,10 +455,21 @@ True
 IPSet(['10.0.0.0/28', '10.0.0.17/32', '10.0.0.18/31', '10.0.0.20/30', '10.0.0.24/29', '10.0.0.32/27', '10.0.0.64/26', '10.0.0.128/25'])
 >>> s1.iscontiguous()
 False
->>> s1.getRange()
+>>> s1.iprange()
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 ValueError: IPSet is not contiguous
+
+>>> s2 = IPSet(['0.0.0.0/0'])
+>>> s2.iscontiguous()
+True
+>>> s2.iprange()
+IPRange('0.0.0.0', '255.255.255.255')
+
+>>> s3 = IPSet()
+>>> s3.iscontiguous()
+True
+>>> s3.iprange()
 
 ----------------------
 Pickling IPSet objects
