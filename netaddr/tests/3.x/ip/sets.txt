@@ -485,3 +485,24 @@ Pickling of IPSet objects
 True
 
 }}}
+
+Convert an IP set to an IP Range                                                
+
+{{{
+
+>>> s1 = IPSet(['10.0.0.0/25', '10.0.0.128/25'])                                 
+>>> s1.getRange()                                                                
+IPRange('10.0.0.0', '10.0.0.255')
+>>> s1.iscontiguous()                                                            
+True
+>>> s1.remove('10.0.0.16')                                                       
+>>> s1                                                                           
+IPSet(['10.0.0.0/28', '10.0.0.17/32', '10.0.0.18/31', '10.0.0.20/30', '10.0.0.24/29', '10.0.0.32/27', '10.0.0.64/26', '10.0.0.128/25'])
+>>> s1.iscontiguous()                                                            
+False
+>>> s1.getRange()
+Traceback (most recent call last):
+    ...
+ValueError: IPSet is not contiguous
+
+}}}
