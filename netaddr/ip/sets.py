@@ -609,7 +609,7 @@ class IPSet(object):
             limitation). Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys.maxint:
+        if size > _sys_maxint:
             raise IndexError("range contains greater than %d (maxint) " \
                 "IP addresses! Use the .size property instead." % _sys_maxint)
         return size

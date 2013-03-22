@@ -16,6 +16,8 @@ An empty set.
 IPSet([])
 >>> IPSet([])
 IPSet([])
+>>> len(IPSet([]))
+0
 
 You can specify either IP addresses and networks as strings. Alternatively, you
 can use IPAddress, IPNetwork, IPRange or other IPSet objects.
