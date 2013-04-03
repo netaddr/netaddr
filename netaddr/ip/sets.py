@@ -338,7 +338,7 @@ class IPSet(object):
             empty set.
         """
         result = self.intersection(other)
-        if result == IPSet():
+        if result == self.__class__():
             return True
         return False
 
@@ -513,7 +513,7 @@ class IPSet(object):
             cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
             cidr_list.extend(cidrs)
 
-        result = IPSet()
+        result = self.__class__()
         # None of these CIDRs can be compacted, so skip that operation.
         result._cidrs = dict.fromkeys(cidr_list, True)
         return result
@@ -554,7 +554,7 @@ class IPSet(object):
             cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
             cidr_list.extend(cidrs)
 
-        result = IPSet()
+        result = self.__class__()
         # None of these CIDRs can be compacted, so skip that operation.
         result._cidrs = dict.fromkeys(cidr_list, True)
         return result
@@ -595,7 +595,7 @@ class IPSet(object):
             cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
             cidr_list.extend(cidrs)
 
-        result = IPSet()
+        result = self.__class__()
         # None of these CIDRs can be compacted, so skip that operation.
         result._cidrs = dict.fromkeys(cidr_list, True)
         return result
@@ -637,11 +637,11 @@ class IPSet(object):
         """
         cidrs = self.iter_cidrs()
         if len(cidrs) > 1:
-            previous = cidrs[0]
+            previous = cidrs[0][0]
             for cidr in cidrs:
                 if cidr[0] != previous:
                     return False
-                previous = cidr
+                previous = cidr[-1] + 1
         return True
 
     def iprange(self):
