@@ -473,6 +473,10 @@ IPRange('0.0.0.0', '255.255.255.255')
 True
 >>> s3.iprange()
 
+>>> s4 = IPSet(IPRange('10.0.0.0', '10.0.0.8'))
+>>> s4.iscontiguous()
+True
+
 ----------------------
 Pickling IPSet objects
 ----------------------
