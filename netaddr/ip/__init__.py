@@ -6,7 +6,6 @@
 """Routines for IPv4 and IPv6 addresses, subnets and ranges."""
 
 import sys as _sys
-import re as _re
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
     DictDotLookup, NOHOST, N, INET_PTON, P, ZEROFILL, Z
@@ -15,12 +14,6 @@ from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
 from netaddr.compat import _sys_maxint, _iter_range, _is_str, _int_type, \
     _str_type
-
-#-----------------------------------------------------------------------------
-#   Pre-compiled regexen used by cidr_merge() function.
-RE_CIDR_ADJACENT = _re.compile(r'^([01]+)0 \1[1]$')
-RE_CIDR_WITHIN = _re.compile(r'^([01]+) \1[10]+$')
-RE_VALID_CIDR_BITS = _re.compile('^[01]+$')
 
 #-----------------------------------------------------------------------------
 class BaseIP(object):
@@ -1566,115 +1559,39 @@ def cidr_merge(ip_addrs):
 
     :return: a summarized list of `IPNetwork` objects.
     """
+    # The algorithm is quite simple: For each CIDR we create an IP range.
+    # Sort them and merge when possible.  Afterwars split them again
+    # optimally.
     if not hasattr(ip_addrs, '__iter__'):
         raise ValueError('A sequence or iterator is expected!')
 
-    #   Start off using set as we'll remove any duplicates at the start.
-    ipv4_bit_cidrs = set()
-    ipv6_bit_cidrs = set()
-
-    #   Convert IP addresses and subnets into their CIDR bit strings.
-    ipv4_match_all_found = False
-    ipv6_match_all_found = False
+    ranges = []
 
     for ip in ip_addrs:
         cidr = IPNetwork(ip)
-        bits = cidr.network.bits(word_sep='')[0:cidr.prefixlen]
+        # Since non-overlapping ranges are the common case, remember the original
+        ranges.append( (cidr.version, cidr.first, cidr.last, cidr) )
 
-        if cidr.version == 4:
-            if bits == '':
-                # This is the /0 network, that includes all IPv4 addresses.
-                ipv4_match_all_found = True
-                ipv4_bit_cidrs = set([''])  # Clear all other IPv4 values.
-
-            if not ipv4_match_all_found:
-                ipv4_bit_cidrs.add(bits)
+    ranges.sort()
+    i = 1
+    while i < len(ranges):
+        if ranges[i][0] == ranges[i-1][0] and ranges[i][1]-1 <= ranges[i-1][2]:
+            ranges[i-1] = (ranges[i][0],
+                                 ranges[i-1][1],
+                                 max(ranges[i-1][2],
+                                     ranges[i][2]))
+            del ranges[i]
         else:
-            if bits == '':
-                # This is the /0 network, that includes all IPv6 addresses.
-                ipv6_match_all_found = True
-                ipv6_bit_cidrs = set([''])  # Clear all other IPv6 values.
+            i += 1
 
-            if not ipv6_match_all_found:
-                ipv6_bit_cidrs.add(bits)
-
-    #   Merge binary CIDR addresses where possible.
-    def _reduce_bit_cidrs(cidrs):
-        new_cidrs = []
-
-        cidrs.sort()
-
-        #   Multiple passes are required to obtain precise results.
-        while 1:
-            finished = True
-            while (cidrs):
-                if not new_cidrs:
-                    new_cidrs.append(cidrs.pop(0))
-                if not cidrs:
-                    break
-                #   lhs and rhs are same size and adjacent.
-                (new_cidr, subs) = RE_CIDR_ADJACENT.subn(
-                    r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
-                if subs:
-                    #   merge lhs with rhs.
-                    new_cidrs[-1] = new_cidr
-                    cidrs.pop(0)
-                    finished = False
-                else:
-                    #   lhs contains rhs.
-                    (new_cidr, subs) = RE_CIDR_WITHIN.subn(
-                        r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
-                    if subs:
-                        #   keep lhs, discard rhs.
-                        new_cidrs[-1] = new_cidr
-                        cidrs.pop(0)
-                        finished = False
-                    else:
-                        #   no matches - accept rhs.
-                        new_cidrs.append(cidrs.pop(0))
-            if finished:
-                break
-            else:
-                #   still seeing matches, reset.
-                cidrs = new_cidrs
-                new_cidrs = []
-
-        if new_cidrs == ['0', '1']:
-            #   Special case where summary CIDR result is '0.0.0.0/0' or
-            #   '::/0' i.e. the whole IPv4 or IPv6 address space.
-            new_cidrs = ['']
-
-        return new_cidrs
-
-    new_cidrs = []
-
-    def _bits_to_cidr(bits, module):
-        if bits == '':
-            if module.version == 4:
-                return IPNetwork('0.0.0.0/0', 4)
-            else:
-                return IPNetwork('::/0', 6)
-
-        if RE_VALID_CIDR_BITS.match(bits) is None:
-            raise ValueError('%r is an invalid bit string!' % bits)
-
-        num_bits = len(bits)
-
-        if bits == '':
-            return IPAddress(module.int_to_str(0), module.version)
+    cidrs = []
+    for range in ranges:
+        # If this range wasn't merged we can simply use the old cidr.
+        if len(range) == 4:
+            cidrs.append(range[3])
         else:
-            bits = bits + '0' * (module.width - num_bits)
-            return IPNetwork((module.bits_to_int(bits), num_bits),
-                version=module.version)
-
-    #   Reduce and format lists of reduced CIDRs.
-    for bits in _reduce_bit_cidrs(list(ipv4_bit_cidrs)):
-        new_cidrs.append(_bits_to_cidr(bits, _ipv4))
-
-    for bits in _reduce_bit_cidrs(list(ipv6_bit_cidrs)):
-        new_cidrs.append(_bits_to_cidr(bits, _ipv6))
-
-    return new_cidrs
+            cidrs.extend( iprange_to_cidrs( IPAddress(range[1], version=range[0]), IPAddress(range[2], version=range[0]) ) )
+    return cidrs
 
 #-----------------------------------------------------------------------------
 def cidr_exclude(target, exclude):
