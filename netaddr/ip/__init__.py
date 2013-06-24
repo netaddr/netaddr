@@ -1769,61 +1769,17 @@ def iprange_to_cidrs(start, end):
 
     #   Get spanning CIDR covering both addresses.
     cidr_span = spanning_cidr([start, end])
+    width = start._module.width
 
-    if cidr_span.first == iprange[0] and cidr_span.last == iprange[-1]:
-        #   Spanning CIDR matches start and end exactly.
-        cidr_list = [cidr_span]
-    elif cidr_span.last == iprange[-1]:
-        #   Spanning CIDR matches end exactly.
-        ip = IPAddress(start)
-        first_int_val = int(ip)
-        ip -= 1
-        cidr_remainder = cidr_exclude(cidr_span, ip)
-
-        first_found = False
-        for cidr in cidr_remainder:
-            if cidr.first == first_int_val:
-                first_found = True
-            if first_found:
-                cidr_list.append(cidr)
-    elif cidr_span.first == iprange[0]:
-        #   Spanning CIDR matches start exactly.
-        ip = IPAddress(end)
-        last_int_val = int(ip)
-        ip += 1
-        cidr_remainder = cidr_exclude(cidr_span, ip)
-
-        last_found = False
-        for cidr in cidr_remainder:
-            cidr_list.append(cidr)
-            if cidr.last == last_int_val:
-                break
-    elif cidr_span.first <= iprange[0] and cidr_span.last >= iprange[-1]:
-        #   Spanning CIDR overlaps start and end.
-        ip = IPAddress(start)
-        first_int_val = int(ip)
-        ip -= 1
-        cidr_remainder = cidr_exclude(cidr_span, ip)
-
-        #   Fix start.
-        first_found = False
-        for cidr in cidr_remainder:
-            if cidr.first == first_int_val:
-                first_found = True
-            if first_found:
-                cidr_list.append(cidr)
-
-        #   Fix end.
-        ip = IPAddress(end)
-        last_int_val = int(ip)
-        ip += 1
-        cidr_remainder = cidr_exclude(cidr_list.pop(), ip)
-
-        last_found = False
-        for cidr in cidr_remainder:
-            cidr_list.append(cidr)
-            if cidr.last == last_int_val:
-                break
+    if cidr_span.first < iprange[0]:
+        exclude = IPNetwork((iprange[0]-1, width), version=start.version)
+        cidr_list = cidr_partition(cidr_span, exclude)[2]
+        cidr_span = cidr_list.pop()
+    if cidr_span.last > iprange[1]:
+        exclude = IPNetwork((iprange[1]+1, width), version=start.version)
+        cidr_list += cidr_partition(cidr_span, exclude)[0]
+    else:
+        cidr_list.append(cidr_span)
 
     return cidr_list
 
