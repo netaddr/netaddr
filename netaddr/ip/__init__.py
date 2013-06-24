@@ -1604,6 +1604,22 @@ def cidr_exclude(target, exclude):
 
     :return: list of `IPNetwork` objects remaining after exclusion.
     """
+    left, _, right = cidr_partition(target, exclude)
+
+    return left + right
+
+def cidr_partition(target, exclude):
+    """
+    Partitions a target IP subnet on an exclude IP address.
+
+    :param target: the target IP address or subnet to be divided up.
+
+    :param exclude: the IP address or subnet to partition on
+
+    :return: list of `IPNetwork` objects before, the partition and after, sorted.
+
+    Adding the three lists returns the equivalent of the original subnet.
+    """
 
     target = IPNetwork(target)
     exclude = IPNetwork(exclude)
@@ -1611,55 +1627,45 @@ def cidr_exclude(target, exclude):
     if exclude.last < target.first:
         #   Exclude subnet's upper bound address less than target
         #   subnet's lower bound.
-        return [target.cidr]
+        return [], [], [target.cidr]
     elif target.last < exclude.first:
         #   Exclude subnet's lower bound address greater than target
         #   subnet's upper bound.
-        return [target.cidr]
+        return [target.cidr], [], []
 
-    cidrs = []
+    if target.prefixlen >= exclude.prefixlen:
+        # Exclude contains the target
+        return [], [target], []
+
+    left = []
+    right = []
+
     new_prefixlen = target.prefixlen + 1
     # Some @properties that are expensive to get and don't change below.
     target_module_width = target._module.width
-    if new_prefixlen <= target_module_width:
-        target_first = target.first
-        version = exclude.version
-        i_lower = target_first
-        i_upper = target_first + (2 ** (target_module_width - new_prefixlen))
 
-        lower = IPNetwork((i_lower, new_prefixlen), version=version)
-        upper = IPNetwork((i_upper, new_prefixlen), version=version)
+    target_first = target.first
+    version = exclude.version
+    i_lower = target_first
+    i_upper = target_first + (2 ** (target_module_width - new_prefixlen))
 
-        while exclude.prefixlen >= new_prefixlen:
-            if exclude in lower:
-                matched = i_lower
-                unmatched = i_upper
-            elif exclude in upper:
-                matched = i_upper
-                unmatched = i_lower
-            else:
-                #   Exclude subnet not within target subnet.
-                cidrs.append(target.cidr)
-                break
+    while exclude.prefixlen >= new_prefixlen:
+        if exclude.first >= i_upper:
+            left.append( IPNetwork((i_lower, new_prefixlen), version=version) )
+            matched = i_upper
+        else:
+            right.append( IPNetwork((i_upper, new_prefixlen), version=version) )
+            matched = i_lower
 
-            ip = IPNetwork((unmatched, new_prefixlen), version=version)
+        new_prefixlen += 1
 
-            cidrs.append(ip)
+        if new_prefixlen > target_module_width:
+            break
 
-            new_prefixlen += 1
+        i_lower = matched
+        i_upper = matched + (2 ** (target_module_width - new_prefixlen))
 
-            if new_prefixlen > target_module_width:
-                break
-
-            i_lower = matched
-            i_upper = matched + (2 ** (target_module_width - new_prefixlen))
-
-            lower = IPNetwork((i_lower, new_prefixlen), version=version)
-            upper = IPNetwork((i_upper, new_prefixlen), version=version)
-
-    cidrs.sort()
-
-    return cidrs
+    return left, [exclude], right[::-1]
 
 #-----------------------------------------------------------------------------
 def spanning_cidr(ip_addrs):
