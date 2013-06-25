@@ -1690,15 +1690,16 @@ def spanning_cidr(ip_addrs):
     if lowest_ip.version != highest_ip.version:
         raise TypeError('IP sequence cannot contain both IPv4 and IPv6!')
 
-    ip = highest_ip.cidr
+    ipnum = highest_ip.last
+    prefixlen = highest_ip.prefixlen
+    lowest_ipnum = lowest_ip.first
+    width = highest_ip._module.width
 
-    while ip.prefixlen > 0:
-        if highest_ip in ip and lowest_ip not in ip:
-            ip.prefixlen -= 1
-        else:
-            break
+    while prefixlen > 0 and ipnum > lowest_ipnum:
+        prefixlen -= 1
+        ipnum &= -(1<<(width-prefixlen))
 
-    return ip.cidr
+    return IPNetwork( (ipnum, prefixlen), version=lowest_ip.version )
 
 #-----------------------------------------------------------------------------
 def iter_iprange(start, end, step=1):
