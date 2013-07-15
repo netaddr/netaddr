@@ -1984,7 +1984,7 @@ def all_matching_cidrs(ip, cidrs):
         if ip in cidr:
             matches.append(cidr)
         else:
-            if matches and cidr.first not in matches[0]:
+            if matches and cidr.first not in matches[-1]:
                 break
 
     return matches
