@@ -485,3 +485,16 @@ As with all other netaddr classes, you can use ``pickle`` to persist IP sets for
 >>> ip_data_unpickled = pickle.loads(buf)
 >>> ip_data == ip_data_unpickled
 True
+
+----------------------
+Compare IPSet objects
+----------------------
+
+>>> x = IPSet(['fc00::/2'])
+>>> y = IPSet(['fc00::/3'])
+
+>>> x > y
+True
+
+>>> x < y
+False
