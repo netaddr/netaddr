@@ -273,13 +273,13 @@ def expand_partial_address(addr):
             #   Ignore IPv6 ...
             raise error
 
-        if '.' in addr:
-            tokens = ['%d' % int(o) for o in addr.split('.')]
-        else:
-            try:
+        try:
+            if '.' in addr:
+                tokens = ['%d' % int(o) for o in addr.split('.')]
+            else:
                 tokens = ['%d' % int(addr)]
-            except ValueError:
-                raise error
+        except ValueError:
+            raise error
 
         if 1 <= len(tokens) <= 4:
             for i in range(4 - len(tokens)):
