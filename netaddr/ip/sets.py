@@ -422,7 +422,7 @@ class IPSet(object):
         if not hasattr(other, '_cidrs'):
             return NotImplemented
 
-        return len(self) < len(other) and self.issubset(other)
+        return self.size < other.size and self.issubset(other)
 
     def issubset(self, other):
         """
@@ -448,7 +448,7 @@ class IPSet(object):
         if not hasattr(other, '_cidrs'):
             return NotImplemented
 
-        return len(self) > len(other) and self.issuperset(other)
+        return self.size > other.size and self.issuperset(other)
 
     def issuperset(self, other):
         """
