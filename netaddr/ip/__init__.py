@@ -6,7 +6,6 @@
 """Routines for IPv4 and IPv6 addresses, subnets and ranges."""
 
 import sys as _sys
-import re as _re
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
     DictDotLookup, NOHOST, N, INET_PTON, P, ZEROFILL, Z
@@ -15,12 +14,6 @@ from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
 from netaddr.compat import _sys_maxint, _iter_range, _is_str, _int_type, \
     _str_type
-
-#-----------------------------------------------------------------------------
-#   Pre-compiled regexen used by cidr_merge() function.
-RE_CIDR_ADJACENT = _re.compile(r'^([01]+)0 \1[1]$')
-RE_CIDR_WITHIN = _re.compile(r'^([01]+) \1[10]+$')
-RE_VALID_CIDR_BITS = _re.compile('^[01]+$')
 
 #-----------------------------------------------------------------------------
 class BaseIP(object):
@@ -1566,115 +1559,39 @@ def cidr_merge(ip_addrs):
 
     :return: a summarized list of `IPNetwork` objects.
     """
+    # The algorithm is quite simple: For each CIDR we create an IP range.
+    # Sort them and merge when possible.  Afterwars split them again
+    # optimally.
     if not hasattr(ip_addrs, '__iter__'):
         raise ValueError('A sequence or iterator is expected!')
 
-    #   Start off using set as we'll remove any duplicates at the start.
-    ipv4_bit_cidrs = set()
-    ipv6_bit_cidrs = set()
-
-    #   Convert IP addresses and subnets into their CIDR bit strings.
-    ipv4_match_all_found = False
-    ipv6_match_all_found = False
+    ranges = []
 
     for ip in ip_addrs:
         cidr = IPNetwork(ip)
-        bits = cidr.network.bits(word_sep='')[0:cidr.prefixlen]
+        # Since non-overlapping ranges are the common case, remember the original
+        ranges.append( (cidr.version, cidr.first, cidr.last, cidr) )
 
-        if cidr.version == 4:
-            if bits == '':
-                # This is the /0 network, that includes all IPv4 addresses.
-                ipv4_match_all_found = True
-                ipv4_bit_cidrs = set([''])  # Clear all other IPv4 values.
-
-            if not ipv4_match_all_found:
-                ipv4_bit_cidrs.add(bits)
+    ranges.sort()
+    i = 1
+    while i < len(ranges):
+        if ranges[i][0] == ranges[i-1][0] and ranges[i][1]-1 <= ranges[i-1][2]:
+            ranges[i-1] = (ranges[i][0],
+                                 ranges[i-1][1],
+                                 max(ranges[i-1][2],
+                                     ranges[i][2]))
+            del ranges[i]
         else:
-            if bits == '':
-                # This is the /0 network, that includes all IPv6 addresses.
-                ipv6_match_all_found = True
-                ipv6_bit_cidrs = set([''])  # Clear all other IPv6 values.
+            i += 1
 
-            if not ipv6_match_all_found:
-                ipv6_bit_cidrs.add(bits)
-
-    #   Merge binary CIDR addresses where possible.
-    def _reduce_bit_cidrs(cidrs):
-        new_cidrs = []
-
-        cidrs.sort()
-
-        #   Multiple passes are required to obtain precise results.
-        while 1:
-            finished = True
-            while (cidrs):
-                if not new_cidrs:
-                    new_cidrs.append(cidrs.pop(0))
-                if not cidrs:
-                    break
-                #   lhs and rhs are same size and adjacent.
-                (new_cidr, subs) = RE_CIDR_ADJACENT.subn(
-                    r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
-                if subs:
-                    #   merge lhs with rhs.
-                    new_cidrs[-1] = new_cidr
-                    cidrs.pop(0)
-                    finished = False
-                else:
-                    #   lhs contains rhs.
-                    (new_cidr, subs) = RE_CIDR_WITHIN.subn(
-                        r'\1', '%s %s' % (new_cidrs[-1], cidrs[0]))
-                    if subs:
-                        #   keep lhs, discard rhs.
-                        new_cidrs[-1] = new_cidr
-                        cidrs.pop(0)
-                        finished = False
-                    else:
-                        #   no matches - accept rhs.
-                        new_cidrs.append(cidrs.pop(0))
-            if finished:
-                break
-            else:
-                #   still seeing matches, reset.
-                cidrs = new_cidrs
-                new_cidrs = []
-
-        if new_cidrs == ['0', '1']:
-            #   Special case where summary CIDR result is '0.0.0.0/0' or
-            #   '::/0' i.e. the whole IPv4 or IPv6 address space.
-            new_cidrs = ['']
-
-        return new_cidrs
-
-    new_cidrs = []
-
-    def _bits_to_cidr(bits, module):
-        if bits == '':
-            if module.version == 4:
-                return IPNetwork('0.0.0.0/0', 4)
-            else:
-                return IPNetwork('::/0', 6)
-
-        if RE_VALID_CIDR_BITS.match(bits) is None:
-            raise ValueError('%r is an invalid bit string!' % bits)
-
-        num_bits = len(bits)
-
-        if bits == '':
-            return IPAddress(module.int_to_str(0), module.version)
+    cidrs = []
+    for range in ranges:
+        # If this range wasn't merged we can simply use the old cidr.
+        if len(range) == 4:
+            cidrs.append(range[3])
         else:
-            bits = bits + '0' * (module.width - num_bits)
-            return IPNetwork((module.bits_to_int(bits), num_bits),
-                version=module.version)
-
-    #   Reduce and format lists of reduced CIDRs.
-    for bits in _reduce_bit_cidrs(list(ipv4_bit_cidrs)):
-        new_cidrs.append(_bits_to_cidr(bits, _ipv4))
-
-    for bits in _reduce_bit_cidrs(list(ipv6_bit_cidrs)):
-        new_cidrs.append(_bits_to_cidr(bits, _ipv6))
-
-    return new_cidrs
+            cidrs.extend( iprange_to_cidrs( IPAddress(range[1], version=range[0]), IPAddress(range[2], version=range[0]) ) )
+    return cidrs
 
 #-----------------------------------------------------------------------------
 def cidr_exclude(target, exclude):
@@ -1687,6 +1604,22 @@ def cidr_exclude(target, exclude):
 
     :return: list of `IPNetwork` objects remaining after exclusion.
     """
+    left, _, right = cidr_partition(target, exclude)
+
+    return left + right
+
+def cidr_partition(target, exclude):
+    """
+    Partitions a target IP subnet on an exclude IP address.
+
+    :param target: the target IP address or subnet to be divided up.
+
+    :param exclude: the IP address or subnet to partition on
+
+    :return: list of `IPNetwork` objects before, the partition and after, sorted.
+
+    Adding the three lists returns the equivalent of the original subnet.
+    """
 
     target = IPNetwork(target)
     exclude = IPNetwork(exclude)
@@ -1694,55 +1627,45 @@ def cidr_exclude(target, exclude):
     if exclude.last < target.first:
         #   Exclude subnet's upper bound address less than target
         #   subnet's lower bound.
-        return [target.cidr]
+        return [], [], [target.cidr]
     elif target.last < exclude.first:
         #   Exclude subnet's lower bound address greater than target
         #   subnet's upper bound.
-        return [target.cidr]
+        return [target.cidr], [], []
 
-    cidrs = []
+    if target.prefixlen >= exclude.prefixlen:
+        # Exclude contains the target
+        return [], [target], []
+
+    left = []
+    right = []
+
     new_prefixlen = target.prefixlen + 1
     # Some @properties that are expensive to get and don't change below.
     target_module_width = target._module.width
-    if new_prefixlen <= target_module_width:
-        target_first = target.first
-        version = exclude.version
-        i_lower = target_first
-        i_upper = target_first + (2 ** (target_module_width - new_prefixlen))
 
-        lower = IPNetwork((i_lower, new_prefixlen), version=version)
-        upper = IPNetwork((i_upper, new_prefixlen), version=version)
+    target_first = target.first
+    version = exclude.version
+    i_lower = target_first
+    i_upper = target_first + (2 ** (target_module_width - new_prefixlen))
 
-        while exclude.prefixlen >= new_prefixlen:
-            if exclude in lower:
-                matched = i_lower
-                unmatched = i_upper
-            elif exclude in upper:
-                matched = i_upper
-                unmatched = i_lower
-            else:
-                #   Exclude subnet not within target subnet.
-                cidrs.append(target.cidr)
-                break
+    while exclude.prefixlen >= new_prefixlen:
+        if exclude.first >= i_upper:
+            left.append( IPNetwork((i_lower, new_prefixlen), version=version) )
+            matched = i_upper
+        else:
+            right.append( IPNetwork((i_upper, new_prefixlen), version=version) )
+            matched = i_lower
 
-            ip = IPNetwork((unmatched, new_prefixlen), version=version)
+        new_prefixlen += 1
 
-            cidrs.append(ip)
+        if new_prefixlen > target_module_width:
+            break
 
-            new_prefixlen += 1
+        i_lower = matched
+        i_upper = matched + (2 ** (target_module_width - new_prefixlen))
 
-            if new_prefixlen > target_module_width:
-                break
-
-            i_lower = matched
-            i_upper = matched + (2 ** (target_module_width - new_prefixlen))
-
-            lower = IPNetwork((i_lower, new_prefixlen), version=version)
-            upper = IPNetwork((i_upper, new_prefixlen), version=version)
-
-    cidrs.sort()
-
-    return cidrs
+    return left, [exclude], right[::-1]
 
 #-----------------------------------------------------------------------------
 def spanning_cidr(ip_addrs):
@@ -1767,15 +1690,16 @@ def spanning_cidr(ip_addrs):
     if lowest_ip.version != highest_ip.version:
         raise TypeError('IP sequence cannot contain both IPv4 and IPv6!')
 
-    ip = highest_ip.cidr
+    ipnum = highest_ip.last
+    prefixlen = highest_ip.prefixlen
+    lowest_ipnum = lowest_ip.first
+    width = highest_ip._module.width
 
-    while ip.prefixlen > 0:
-        if highest_ip in ip and lowest_ip not in ip:
-            ip.prefixlen -= 1
-        else:
-            break
+    while prefixlen > 0 and ipnum > lowest_ipnum:
+        prefixlen -= 1
+        ipnum &= -(1<<(width-prefixlen))
 
-    return ip.cidr
+    return IPNetwork( (ipnum, prefixlen), version=lowest_ip.version )
 
 #-----------------------------------------------------------------------------
 def iter_iprange(start, end, step=1):
@@ -1846,61 +1770,17 @@ def iprange_to_cidrs(start, end):
 
     #   Get spanning CIDR covering both addresses.
     cidr_span = spanning_cidr([start, end])
+    width = start._module.width
 
-    if cidr_span.first == iprange[0] and cidr_span.last == iprange[-1]:
-        #   Spanning CIDR matches start and end exactly.
-        cidr_list = [cidr_span]
-    elif cidr_span.last == iprange[-1]:
-        #   Spanning CIDR matches end exactly.
-        ip = IPAddress(start)
-        first_int_val = int(ip)
-        ip -= 1
-        cidr_remainder = cidr_exclude(cidr_span, ip)
-
-        first_found = False
-        for cidr in cidr_remainder:
-            if cidr.first == first_int_val:
-                first_found = True
-            if first_found:
-                cidr_list.append(cidr)
-    elif cidr_span.first == iprange[0]:
-        #   Spanning CIDR matches start exactly.
-        ip = IPAddress(end)
-        last_int_val = int(ip)
-        ip += 1
-        cidr_remainder = cidr_exclude(cidr_span, ip)
-
-        last_found = False
-        for cidr in cidr_remainder:
-            cidr_list.append(cidr)
-            if cidr.last == last_int_val:
-                break
-    elif cidr_span.first <= iprange[0] and cidr_span.last >= iprange[-1]:
-        #   Spanning CIDR overlaps start and end.
-        ip = IPAddress(start)
-        first_int_val = int(ip)
-        ip -= 1
-        cidr_remainder = cidr_exclude(cidr_span, ip)
-
-        #   Fix start.
-        first_found = False
-        for cidr in cidr_remainder:
-            if cidr.first == first_int_val:
-                first_found = True
-            if first_found:
-                cidr_list.append(cidr)
-
-        #   Fix end.
-        ip = IPAddress(end)
-        last_int_val = int(ip)
-        ip += 1
-        cidr_remainder = cidr_exclude(cidr_list.pop(), ip)
-
-        last_found = False
-        for cidr in cidr_remainder:
-            cidr_list.append(cidr)
-            if cidr.last == last_int_val:
-                break
+    if cidr_span.first < iprange[0]:
+        exclude = IPNetwork((iprange[0]-1, width), version=start.version)
+        cidr_list = cidr_partition(cidr_span, exclude)[2]
+        cidr_span = cidr_list.pop()
+    if cidr_span.last > iprange[1]:
+        exclude = IPNetwork((iprange[1]+1, width), version=start.version)
+        cidr_list += cidr_partition(cidr_span, exclude)[0]
+    else:
+        cidr_list.append(cidr_span)
 
     return cidr_list
 
