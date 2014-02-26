@@ -146,7 +146,7 @@ class IPSet(object):
                     # cidr is a subnet of added_network. Remember to remove it.
                     to_remove.append(cidr)
                 elif first <= added_first and last >= added_last:
-                    # cidr is a supernet of acced_network. Remove added_network.
+                    # cidr is a supernet of added_network. Remove added_network.
                     del self._cidrs[added_network]
                     # This IPSet was properly compacted before. Since added_network
                     # is removed now, it must again be properly compacted -> done.
@@ -161,7 +161,7 @@ class IPSet(object):
         # prefixlen. This just leaves 2 candidates: The IPNetworks just before
         # and just after the added_network.
         # This can be reduced to 1 candidate: 10.0.0.0/24 and 10.0.1.0/24 can
-        # be merged into into 10.0.0.0/23. But 10.0.0.1/24 and 10.0.0.2/24
+        # be merged into into 10.0.0.0/23. But 10.0.1.0/24 and 10.0.2.0/24
         # cannot be merged. With only 1 candidate, we might as well make a
         # dictionary lookup.
         shift_width = added_network._module.width - added_network.prefixlen
