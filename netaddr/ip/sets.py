@@ -363,11 +363,11 @@ class IPSet(object):
         if not hasattr(iterable, '__iter__'):
             raise TypeError('an iterable was expected!')
 
-        if hasattr(iterable, '_cidrs'):
-            #   Another IP set.
-            for ip in cidr_merge(_dict_keys(self._cidrs)
-                               + _dict_keys(iterable._cidrs)):
-                self._cidrs[ip] = True
+        if isinstance(iterable, IPSet):
+            self._cidrs = dict.fromkeys(
+                    (ip for ip in cidr_merge(_dict_keys(self._cidrs)
+                        + _dict_keys(iterable._cidrs))), True)
+            return
         elif isinstance(iterable, IPNetwork) or isinstance(iterable, IPRange):
             self.add(iterable)
             return
