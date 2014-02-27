@@ -338,9 +338,7 @@ class IPSet(object):
             empty set.
         """
         result = self.intersection(other)
-        if result == self.__class__():
-            return True
-        return False
+        return not result
 
     def copy(self):
         """:return: a shallow copy of this IP set."""
