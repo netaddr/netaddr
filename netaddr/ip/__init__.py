@@ -1808,7 +1808,7 @@ def smallest_matching_cidr(ip, cidrs):
         if ip in cidr:
             match = cidr
         else:
-            if match is not None:
+            if match is not None and cidr.network not in match:
                 break
 
     return match
@@ -1864,7 +1864,7 @@ def all_matching_cidrs(ip, cidrs):
         if ip in cidr:
             matches.append(cidr)
         else:
-            if matches:
+            if matches and cidr.network not in matches[-1]:
                 break
 
     return matches
