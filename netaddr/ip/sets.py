@@ -17,32 +17,75 @@ from netaddr.ip import IPNetwork, IPAddress, IPRange, cidr_merge, \
 from netaddr.compat import _sys_maxint, _dict_keys, _int_type
 
 #-----------------------------------------------------------------------------
-def partition_ips(iterable):
+def _subtract(supernet, subnets, subnet_idx, ranges):
+    """Calculate IPSet([supernet]) - IPSet(subnets).
+
+    Assumptions: subnets is sorted, subnet_idx points to the first
+    element in subnets that is a subnet of supernet.
+
+    Results are appended to the ranges parameter as tuples of in format
+    (version, first, last). Return value is the first subnet_idx that
+    does not point to a subnet of supernet (or len(subnets) if all
+    subsequents items are a subnet of supernet).
     """
-    Takes a sequence of IP addresses and networks splitting them into two
-    separate sequences by IP version.
+    version = supernet._module.version
+    subnet = subnets[subnet_idx]
+    if subnet.first > supernet.first:
+        ranges.append((version, supernet.first, subnet.first - 1))
 
-    :param iterable: a sequence or iterator contain IP addresses and networks.
+    subnet_idx += 1
+    prev_subnet = subnet
+    while subnet_idx < len(subnets):
+        cur_subnet = subnets[subnet_idx]
 
-    :return: a two element tuple (ipv4_list, ipv6_list).
-    """
-    #   Start off using set as we'll remove any duplicates at the start.
-    if not hasattr(iterable, '__iter__'):
-        raise ValueError('A sequence or iterator is expected!')
-
-    ipv4 = []
-    ipv6 = []
-
-    for ip in iterable:
-        if not hasattr(ip, 'version'):
-            raise TypeError('IPAddress or IPNetwork expected!')
-
-        if ip.version == 4:
-            ipv4.append(ip)
+        if cur_subnet not in supernet:
+            break
+        if prev_subnet.last + 1 == cur_subnet.first:
+            # two adjacent, non-mergable IPNetworks
+            pass
         else:
-            ipv6.append(ip)
+            ranges.append((version, prev_subnet.last + 1, cur_subnet.first - 1))
 
-    return ipv4, ipv6
+        subnet_idx += 1
+        prev_subnet = cur_subnet
+
+    first = prev_subnet.last + 1
+    last = supernet.last
+    if first <= last:
+        ranges.append((version, first, last))
+
+    return subnet_idx
+
+def _iter_merged_ranges(sorted_ranges):
+    """Iterate over sorted_ranges, merging where possible
+
+    Sorted ranges must be a sorted iterable of (version, first, last) tuples.
+    Merging occurs for pairs like [(4, 10, 42), (4, 43, 100)] which is merged
+    into (4, 10, 100), and leads to return value
+    ( IPAddress(10, 4), IPAddress(100, 4) ), which is suitable input for the
+    iprange_to_cidrs function.
+    """
+    if not sorted_ranges:
+        return
+    if len(sorted_ranges) == 1:
+        version, first, last = sorted_ranges[0]
+        yield IPAddress(first, version), IPAddress(last, version)
+        return
+    current_version, current_start, current_stop = sorted_ranges[0]
+
+    for next_version, next_start, next_stop in sorted_ranges[1:]:
+        if next_start == current_stop + 1 and next_version == current_version:
+            # Can be merged.
+            current_stop = next_stop
+            continue
+        # Cannot be merged.
+        yield (IPAddress(current_start, current_version),
+                IPAddress(current_stop, current_version))
+        current_start = next_start
+        current_stop = next_stop
+        current_version = next_version
+    yield (IPAddress(current_start, current_version),
+            IPAddress(current_stop, current_version))
 
 #-----------------------------------------------------------------------------
 class IPSet(object):
@@ -530,35 +573,62 @@ class IPSet(object):
             IP set (all IP addresses and subnets that are in exactly one
             of the sets).
         """
-        cidr_list = []
+        # In contrast to intersection() and difference(), we cannot construct
+        # the result_cidrs easily. Some cidrs may have to be merged, e.g. for
+        # IPSet(["10.0.0.0/32"]).symmetric_difference(IPSet(["10.0.0.1/32"])).
+        result_ranges = []
 
-        #   Separate IPv4 from IPv6.
-        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
-        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
+        own_nets = sorted(self._cidrs)
+        other_nets = sorted(other._cidrs)
+        own_idx = 0
+        other_idx = 0
+        own_len = len(own_nets)
+        other_len = len(other_nets)
+        while own_idx < own_len and other_idx < other_len:
+            own_cur = own_nets[own_idx]
+            other_cur = other_nets[other_idx]
 
-        #   Process IPv4.
-        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
-        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+            if own_cur == other_cur:
+                own_idx += 1
+                other_idx += 1
+            elif own_cur in other_cur:
+                own_idx = _subtract(other_cur, own_nets, own_idx, result_ranges)
+                other_idx += 1
+            elif other_cur in own_cur:
+                other_idx = _subtract(own_cur, other_nets, other_idx, result_ranges)
+                own_idx += 1
+            else:
+                # own_cur and other_cur have nothing in common
+                if own_cur < other_cur:
+                    result_ranges.append( (own_cur._module.version,
+                            own_cur.first, own_cur.last) )
+                    own_idx += 1
+                else:
+                    result_ranges.append( (other_cur._module.version,
+                            other_cur.first, other_cur.last) )
+                    other_idx += 1
 
-        ipv4_result = l_ipv4_iset ^ r_ipv4_iset
+        # If the above loop terminated because it processed all cidrs of
+        # "other", then any remaining cidrs in self must be part of the result.
+        while own_idx < own_len:
+            own_cur = own_nets[own_idx]
+            result_ranges.append((own_cur._module.version,
+                    own_cur.first, own_cur.last))
+            own_idx += 1
 
-        for start, end in ipv4_result._ranges:
-            cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
-            cidr_list.extend(cidrs)
+        # If the above loop terminated because it processed all cidrs of
+        # self, then any remaining cidrs in "other" must be part of the result.
+        while other_idx < other_len:
+            other_cur = other_nets[other_idx]
+            result_ranges.append((other_cur._module.version,
+                    other_cur.first, other_cur.last))
+            other_idx += 1
 
-        #   Process IPv6.
-        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
-        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
-
-        ipv6_result = l_ipv6_iset ^ r_ipv6_iset
-
-        for start, end in ipv6_result._ranges:
-            cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
-            cidr_list.extend(cidrs)
-
-        result = self.__class__()
-        # None of these CIDRs can be compacted, so skip that operation.
-        result._cidrs = dict.fromkeys(cidr_list, True)
+        result = IPSet()
+        for start, stop in _iter_merged_ranges(result_ranges):
+            cidrs = iprange_to_cidrs(start, stop)
+            for cidr in cidrs:
+                result._cidrs[cidr] = True
         return result
 
     __xor__ = symmetric_difference
@@ -571,35 +641,48 @@ class IPSet(object):
             set (all IP addresses and subnets that are in this IP set but
             not found in the other.)
         """
-        cidr_list = []
+        result_ranges = []
+        result_cidrs = {}
 
-        #   Separate IPv4 from IPv6.
-        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
-        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
+        own_nets = sorted(self._cidrs)
+        other_nets = sorted(other._cidrs)
+        own_idx = 0
+        other_idx = 0
+        own_len = len(own_nets)
+        other_len = len(other_nets)
+        while own_idx < own_len and other_idx < other_len:
+            own_cur = own_nets[own_idx]
+            other_cur = other_nets[other_idx]
 
-        #   Process IPv4.
-        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
-        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+            if own_cur == other_cur:
+                own_idx += 1
+                other_idx += 1
+            elif own_cur in other_cur:
+                own_idx += 1
+            elif other_cur in own_cur:
+                other_idx = _subtract(own_cur, other_nets, other_idx,
+                        result_ranges)
+                own_idx += 1
+            else:
+                # own_cur and other_cur have nothing in common
+                if own_cur < other_cur:
+                    result_cidrs[own_cur] = True
+                    own_idx += 1
+                else:
+                    other_idx += 1
 
-        ipv4_result = l_ipv4_iset - r_ipv4_iset
+        # If the above loop terminated because it processed all cidrs of
+        # "other", then any remaining cidrs in self must be part of the result.
+        while own_idx < own_len:
+            result_cidrs[own_nets[own_idx]] = True
+            own_idx += 1
 
-        for start, end in ipv4_result._ranges:
-            cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
-            cidr_list.extend(cidrs)
+        for start, stop in _iter_merged_ranges(result_ranges):
+            for cidr in iprange_to_cidrs(start, stop):
+                result_cidrs[cidr] = True
 
-        #   Process IPv6.
-        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
-        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
-
-        ipv6_result = l_ipv6_iset - r_ipv6_iset
-
-        for start, end in ipv6_result._ranges:
-            cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
-            cidr_list.extend(cidrs)
-
-        result = self.__class__()
-        # None of these CIDRs can be compacted, so skip that operation.
-        result._cidrs = dict.fromkeys(cidr_list, True)
+        result = IPSet()
+        result._cidrs = result_cidrs
         return result
 
     __sub__ = difference
