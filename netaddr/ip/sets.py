@@ -485,35 +485,39 @@ class IPSet(object):
         :return: the intersection of this IP set and another as a new IP set.
             (IP addresses and subnets common to both sets).
         """
-        cidr_list = []
+        result_cidrs = {}
 
-        #   Separate IPv4 from IPv6.
-        l_ipv4, l_ipv6 = partition_ips(self._cidrs)
-        r_ipv4, r_ipv6 = partition_ips(other._cidrs)
+        own_nets = sorted(self._cidrs)
+        other_nets = sorted(other._cidrs)
+        own_idx = 0
+        other_idx = 0
+        own_len = len(own_nets)
+        other_len = len(other_nets)
+        while own_idx < own_len and other_idx < other_len:
+            own_cur = own_nets[own_idx]
+            other_cur = other_nets[other_idx]
 
-        #   Process IPv4.
-        l_ipv4_iset = _IntSet(*[(c.first, c.last) for c in l_ipv4])
-        r_ipv4_iset = _IntSet(*[(c.first, c.last) for c in r_ipv4])
+            if own_cur == other_cur:
+                result_cidrs[own_cur] = True
+                own_idx += 1
+                other_idx += 1
+            elif own_cur in other_cur:
+                result_cidrs[own_cur] = True
+                own_idx += 1
+            elif other_cur in own_cur:
+                result_cidrs[other_cur] = True
+                other_idx += 1
+            else:
+                # own_cur and other_cur have nothing in common
+                if own_cur < other_cur:
+                    own_idx += 1
+                else:
+                    other_idx += 1
 
-        ipv4_result = l_ipv4_iset & r_ipv4_iset
-
-        for start, end in ipv4_result._ranges:
-            cidrs = iprange_to_cidrs(IPAddress(start, 4), IPAddress(end-1, 4))
-            cidr_list.extend(cidrs)
-
-        #   Process IPv6.
-        l_ipv6_iset = _IntSet(*[(c.first, c.last) for c in l_ipv6])
-        r_ipv6_iset = _IntSet(*[(c.first, c.last) for c in r_ipv6])
-
-        ipv6_result = l_ipv6_iset & r_ipv6_iset
-
-        for start, end in ipv6_result._ranges:
-            cidrs = iprange_to_cidrs(IPAddress(start, 6), IPAddress(end-1, 6))
-            cidr_list.extend(cidrs)
-
-        result = self.__class__()
-        # None of these CIDRs can be compacted, so skip that operation.
-        result._cidrs = dict.fromkeys(cidr_list, True)
+        # We ran out of networks in own_nets or other_nets. Either way, there
+        # can be no further result_cidrs.
+        result = IPSet()
+        result._cidrs = result_cidrs
         return result
 
     __and__ = intersection
