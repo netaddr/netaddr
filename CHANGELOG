@@ -21,7 +21,7 @@ Changes since 0.7.10
 
 * Re-added the IPAddress.netmask_bits() method that was accidently removed.
 
-* Various bug fixes contributed by Wilfred Hughes and 2*yo.
+* Various bug fixes contributed by Wilfred Hughes, 2*yo and Adam Goodman..
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
@@ -38,6 +38,10 @@ FIXED Issue 57: https://github.com/drkjam/netaddr/issues/57
 FIXED Issue 56: https://github.com/drkjam/netaddr/issues/56
 
     - Fix comparison with large IPSet()
+
+FIXED Issue 55: https://github.com/drkjam/netaddr/pull/55
+
+    - Fix smallest_matching_cidr and all_matching_cidrs
 
 FIXED Issue 51: https://github.com/drkjam/netaddr/issues/51
 
