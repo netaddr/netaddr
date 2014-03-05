@@ -26,6 +26,14 @@ Traceback (most recent call last):
 ...
 IndexError: result outside valid IP address boundary!
 
+>>> ip = IPAddress('10.0.0.1')
+>>> ip += 1
+>>> ip
+IPAddress('10.0.0.2')
+>>> ip -= 1
+>>> ip
+IPAddress('10.0.0.1')
+
 }}}
 
 ==Binary operations==
@@ -40,5 +48,8 @@ IPAddress('255.255.255.255')
 
 >>> IPAddress('255.255.0.0') ^ IPAddress('255.0.0.0')
 IPAddress('0.255.0.0')
+
+>>> IPAddress('1.2.3.4').packed
+'\x01\x02\x03\x04'
 
 }}}

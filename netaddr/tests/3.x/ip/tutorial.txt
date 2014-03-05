@@ -263,12 +263,18 @@ Here are a couple of methods that help achieve this.
 >>> IPAddress('192.0.2.15').ipv4()
 IPAddress('192.0.2.15')
 
->>> IPAddress('192.0.2.15').ipv6()
+>>> ip = IPAddress('192.0.2.15').ipv6()
+>>> ip
 IPAddress('::ffff:192.0.2.15')
+>>> ip.is_ipv4_mapped()
+True
+>>> ip.is_ipv4_compat()
+False
 
 >>> IPAddress('192.0.2.15').ipv6(ipv4_compatible=True)
 IPAddress('::192.0.2.15')
-
+>>> IPAddress('192.0.2.15').ipv6(ipv4_compatible=True).is_ipv4_compat()
+True
 >>> IPAddress('192.0.2.15').ipv6(True)
 IPAddress('::192.0.2.15')
 
@@ -657,6 +663,9 @@ True
 True
 
 >>> IPAddress('192.168.0.1').is_private()
+True
+
+>>> IPAddress('fc00::1').is_private()
 True
 
 }}}

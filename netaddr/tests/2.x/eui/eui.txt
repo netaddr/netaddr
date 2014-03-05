@@ -29,6 +29,8 @@ EUI('00-1B-77-FF-FE-49-54-FD')
 >>> ip = mac.ipv6_link_local()
 >>> ip
 IPAddress('fe80::20f:1fff:fe12:e733')
+>>> ip.is_link_local()
+True
 
 >>> mac.eui64()
 EUI('00-0F-1F-FF-FE-12-E7-33')

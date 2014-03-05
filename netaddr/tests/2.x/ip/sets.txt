@@ -28,12 +28,16 @@ IPSet(['192.0.2.0/32'])
 IPSet(['192.0.2.0/32'])
 >>> IPSet([IPNetwork('192.0.2.0')])
 IPSet(['192.0.2.0/32'])
+>>> IPSet(IPNetwork('1234::/32'))
+IPSet(['1234::/32'])
 >>> IPSet([IPNetwork('192.0.2.0/24')])
 IPSet(['192.0.2.0/24'])
 >>> IPSet(IPSet(['192.0.2.0/32']))
 IPSet(['192.0.2.0/32'])
 >>> IPSet(IPRange("10.0.0.0", "10.0.1.31"))
 IPSet(['10.0.0.0/24', '10.0.1.0/27'])
+>>> IPSet(IPRange('0.0.0.0', '255.255.255.255'))
+IPSet(['0.0.0.0/0'])
 
 You can interate over all the IP addresses that are members of the IP set.
 
@@ -89,6 +93,11 @@ IPSet(['10.0.0.0/24'])
 >>> s1.remove(IPRange("10.0.0.128", "10.10.10.10"))
 >>> s1
 IPSet(['10.0.0.0/25'])
+
+This hits a special case in IPSet._compact_single_network()
+>>> s1.add('10.0.0.0/24')
+>>> s1
+IPSet(['10.0.0.0/24'])
 
 --------------
 Set membership
@@ -423,6 +432,14 @@ IPSet(['192.0.2.0/24'])
 >>> s1
 IPSet(['192.0.0.0/22'])
 
+>>> s2 = IPSet(['10.0.0.0/16'])
+>>> s2.update(IPRange('10.1.0.0', '10.1.255.255'))
+>>> s2
+IPSet(['10.0.0.0/15'])
+
+>>> s2.clear()
+>>> s2
+IPSet([])
 
 --------------------------------
 Removing elements from an IP set
@@ -557,3 +574,6 @@ True
 
 >>> x < y
 False
+
+>>> x != y
+True
