@@ -50,6 +50,6 @@ IPAddress('255.255.255.255')
 IPAddress('0.255.0.0')
 
 >>> IPAddress('1.2.3.4').packed
-'\x01\x02\x03\x04'
+b'\x01\x02\x03\x04'
 
 }}}
