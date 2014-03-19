@@ -3,7 +3,7 @@
 <?oxygen RNGSchema="multicast-addresses.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2012-08-28</updated>
+  <updated>2014-03-05</updated>
   <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
@@ -310,7 +310,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record date="2000-04-01">
       <addr>224.0.0.251</addr>
       <description>mDNS</description>
-      <xref type="draft" data="RFC-cheshire-dnsext-multicastdns-15"/>
+      <xref type="rfc" data="rfc6762"/>
     </record>
     <record>
       <addr>224.0.0.252</addr>
@@ -1277,9 +1277,14 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <addr>224.0.1.186</addr>
       <description>SL-MANET-ROUTERS</description>
       <xref type="rfc" data="rfc6621"/>
+    </record>    
+    <record date="2013-07-25">
+      <addr>224.0.1.187</addr>
+      <description>All CoAP Nodes</description>
+      <xref type="draft" data="RFC-ietf-core-coap-18"/>
     </record>
     <record>
-      <addr>224.0.1.187-224.0.1.255</addr>
+      <addr>224.0.1.188-224.0.1.255</addr>
       <description>Unassigned</description>
     </record>
   </registry>
@@ -1321,14 +1326,19 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>BitSend MediaStreams</description>
       <xref type="person" data="Carl-Johan_Sjöberg"/>
     </record>
+    <record date="2012-11-19">
+      <addr>224.0.2.7-224.0.2.8</addr>
+      <description>rxWARN</description>
+      <xref type="person" data="Caleb_Bell"/>
+    </record>
     <record>
-      <addr>224.0.2.7-224.0.2.63</addr>
+      <addr>224.0.2.9-224.0.2.63</addr>
       <description>Unassigned</description>
     </record>
     <record date="1996-04">
       <addr>224.0.2.64-224.0.2.95</addr>
-      <description>Amex MDD Service</description>
-      <xref type="person" data="Nabeel_Madry"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
       <reviewed>2007-07</reviewed>
     </record>
     <record date="1997-07-01">
@@ -1343,8 +1353,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="1997-02-01">
       <addr>224.0.2.192-224.0.2.255</addr>
-      <description>SIAC MDD Market Service</description>
-      <xref type="person" data="Mike_Lamberg"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record>
       <addr>224.0.3.0-224.0.3.255</addr>
@@ -1363,13 +1373,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="1998-10-01">
       <addr>224.0.5.128-224.0.5.191</addr>
-      <description>SIAC Market Service</description>
-      <xref type="person" data="Joan_Cho"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2001-08-01">
       <addr>224.0.5.192-224.0.5.255</addr>
-      <description>SIAC NYSE Order PDP protocol</description>
-      <xref type="person" data="Helen_Chan"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record>
       <addr>224.0.6.0-224.0.6.127</addr>
@@ -1397,7 +1407,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="1998-04-01">
       <addr>224.0.9.0-224.0.9.255</addr>
-      <description>Invisible Worlds</description>
+      <description>The Thing System</description>
       <xref type="person" data="Carl_Malamud"/>
     </record>
     <record date="1996-04-01">
@@ -1467,8 +1477,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="1997-10">
       <addr>224.0.19.96-224.0.19.127</addr>
-      <description>Amex Market Service</description>
-      <xref type="person" data="Nabeel_Madry"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
       <reviewed>2007-07</reviewed>
     </record>
     <record date="1997-12-01">
@@ -1673,8 +1683,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2006-08-11">
       <addr>224.0.23.52</addr>
-      <description>Amex Market Data</description>
-      <xref type="person" data="Nabeel_Madry"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2006-11-30">
       <addr>224.0.23.53</addr>
@@ -1844,9 +1854,14 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <addr>224.0.23.177</addr>
       <description>AES discovery</description>
       <xref type="person" data="Kevin_Gross_2"/>
+    </record>    
+    <record date="2013-02-08">
+      <addr>224.0.23.178</addr>
+      <description>JDP Java Discovery Protocol</description>
+      <xref type="person" data="Florian_Weimer"/>
     </record>
     <record>
-      <addr>224.0.23.178-224.0.23.191</addr>
+      <addr>224.0.23.179-224.0.23.191</addr>
       <description>Unassigned</description>
     </record>
     <record date="2008-08-12">
@@ -1895,8 +1910,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2007-11-28">
       <addr>224.0.41.0-224.0.41.255</addr>
-      <description>NYSE-EURONEXT</description>
-      <xref type="person" data="Pankaj_Gupta"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
       <reviewed>2011-02-15</reviewed>
     </record>
     <record date="2008-01-15">
@@ -1916,8 +1931,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2008-07-23">
       <addr>224.0.52.0-224.0.53.255</addr>
-      <description>NYSE-EURONEXT</description>
-      <xref type="person" data="Ian_Stevenson"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2008-08-20">
       <addr>224.0.54.0-224.0.57.255</addr>
@@ -1926,8 +1941,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2008-08-27">
       <addr>224.0.58.0-224.0.61.255</addr>
-      <description>NYSE-AMEX_L1_L2</description>
-      <xref type="person" data="Frank_Castillo"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2008-12-24">
       <addr>224.0.62.0-224.0.62.255</addr>
@@ -1942,7 +1957,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record date="2009-03-13">
       <addr>224.0.64.0-224.0.67.255</addr>
       <description>NYSE Euronext</description>
-      <xref type="person" data="Pankaj_Gupta_2"/>
+      <xref type="person" data="RIR_Admin"/>
       <reviewed>2011-02-15</reviewed>
     </record>
     <record date="2009-05-12">
@@ -1952,8 +1967,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2009-06-16">
       <addr>224.0.70.0-224.0.71.255</addr>
-      <description>NYSE-AB-UTP</description>
-      <xref type="person" data="Sam_Serrano"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
       <reviewed>2011-03-01</reviewed>
     </record>
     <record date="2009-08-28">
@@ -1974,14 +1989,14 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2010-02-26">
       <addr>224.0.76.0-224.0.76.255</addr>
-      <description>NYSE-XDP</description>
-      <xref type="person" data="Sam_Serrano"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
       <reviewed>2011-03-01</reviewed>
     </record>
     <record date="2010-02-26">
       <addr>224.0.77.0-224.0.77.255</addr>
-      <description>MD_NYSEEURONEXT</description>
-      <xref type="person" data="Pankaj_Gupta_2"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2010-03-12">
       <addr>224.0.78.0-224.0.78.255</addr>
@@ -2000,13 +2015,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2011-02-10">
       <addr>224.0.86.0-224.0.101.255</addr>
-      <description>NYSE NMS OPRA</description>
-      <xref type="person" data="Anthony_Aste"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2011-04-13">
       <addr>224.0.102.0-224.0.102.127</addr>
-      <description>NYSE SYNTHETIC FEEDS</description>
-      <xref type="person" data="Anthony_Aste"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     
     <record>
@@ -2016,8 +2031,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record date="2011-04-20">
       <addr>224.0.103.0-224.0.104.255</addr>
       <description>MVS-IPTV</description>
-      <xref type="person" data="Andrew_Hoyos"/>
       <xref type="person" data="Adam_DeMinter"/>
+      <xref type="person" data="Andrew_Hoyos"/>
     </record>
     <record date="2011-06-06">
       <addr>224.0.105.0-224.0.105.127</addr>
@@ -2076,8 +2091,44 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>ISE</description>
       <xref type="person" data="Fabrice_Albert"/>
     </record>
+    <record date="2013-01-15">
+      <addr>224.0.120.0-224.0.120.255</addr>
+      <description>czechbone iptv</description>
+      <xref type="person" data="Jan_Vitek"/>
+    </record>    
+    <record date="2013-05-13">
+      <addr>224.0.121.0-224.0.121.255</addr>
+      <description>AQUIS-EXCHANGE</description>
+      <xref type="person" data="Mark_Chester"/>
+    </record>    
+    <record date="2013-05-25">
+      <addr>224.0.122.0-224.0.123.255</addr>
+      <description>DNS:NET TV</description>
+      <xref type="person" data="Marlon_Berlin"/>
+    </record>    
+    <record date="2013-05-30">
+      <addr>224.0.124.0-224.0.124.255</addr>
+      <description>Boston Options Exchange</description>
+      <xref type="person" data="David_Wilson"/>
+      <xref type="person" data="Michael_Caravetta_2"/>
+    </record>    
+    <record date="2013-09-05">
+      <addr>224.0.125.0-224.0.125.255</addr>
+      <description>Hanweck Associates</description>
+      <xref type="person" data="Richard_Tang"/>
+    </record>
+    <record date="2013-10-31">
+      <addr>224.0.126.0-224.0.129.255</addr>
+      <description>ICE market data</description>
+      <xref type="person" data="Chad_Myers"/>
+    </record>
+    <record date="2014-03-05">
+      <addr>224.0.130.0-224.0.131.255</addr>
+      <description>BATS Trading</description>
+      <xref type="person" data="Andrew_Brown"/>
+    </record>
     <record>
-      <addr>224.0.120.0-224.0.249.255</addr>
+      <addr>224.0.132.0-224.0.249.255</addr>
       <description>Unassigned</description>
     </record>
     
@@ -2112,6 +2163,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <reviewed>2011-02-22</reviewed>
     </record>
   </registry>
+  
   <registry id="multicast-addresses-4">
     <title>RESERVED (224.1.0.0-224.1.255.255 (224.1/16))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2133,8 +2185,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2006-02-17">
       <addr>224.1.2.0-224.1.2.255</addr>
-      <description>arca-ex</description>
-      <xref type="person" data="Dave_Andrews"/>
+      <description>NYSE Euronext</description>
+      <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2006-05-22">
       <addr>224.1.3.0-224.1.4.255</addr>
@@ -2147,6 +2199,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="person" data="IANA"/>
     </record>
   </registry>
+  
   <registry id="multicast-addresses-5">
     <title>SDP/SAP Block (224.2.0.0-224.2.255.255 (224.2/16))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2171,6 +2224,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="person" data="Steve_Casner"/>
     </record>
   </registry>
+  
   <registry id="multicast-addresses-6">
     <title>AD-HOC Block II (224.3.0.0-224.4.255.255 (224.3/16, 224.4/16))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2231,6 +2285,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="person" data="IANA"/>
     </record>
   </registry>
+  
   <registry id="multicast-addresses-7">
   <title>RESERVED (224.5.0.0-224.251.255.255 (251 /16s))</title>
   <xref type="rfc" data="rfc5771"/>
@@ -2240,6 +2295,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
   <xref type="person" data="IANA"/>
   </record>
   </registry>
+  
   <registry id="multicast-addresses-8">
     <title>DIS Transient Groups 224.252.0.0-224.255.255.255 (224.252/14))</title>
    <xref type="rfc" data="rfc2365"/>
@@ -2259,6 +2315,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
        <xref type="person" data="IANA"/>
     </record>
   </registry>
+  
   <registry id="multicast-addresses-10">
     <title>Source-Specific Multicast Block (232.0.0.0-232.255.255.255 (232/8))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2280,6 +2337,17 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
       <xref type="rfc" data="rfc4607"/>
     </record>
   </registry>
+  
+ <registry id="glop">
+    <title>GLOP Block</title>
+    <xref type="rfc" data="rfc3180"/>
+    <record>
+      <addr>233.0.0.0-233.251.255.255</addr>
+      <description>GLOP Block</description>
+      <xref type="rfc" data="rfc3180"/>
+    </record>
+  </registry>
+  
   <registry id="multicast-addresses-11">
     <title>AD-HOC Block III (233.252.0.0-233.255.255.255 (233.252/14))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2321,26 +2389,6 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
       <addr>233.252.124.0-233.255.255.255</addr>
       <description>Unassigned</description>
       <xref type="person" data="IANA"/>
-    </record>
-  </registry>
-  
-  <registry id="glop">
-    <title>GLOP Block</title>
-    <xref type="rfc" data="rfc3180"/>
-    <record>
-      <addr>233.0.0.0-233.251.255.255</addr>
-      <description>GLOP Block</description>
-      <xref type="rfc" data="rfc3180"/>
-    </record>
-  </registry>
-  
-  <registry id="ad-hoc-iii">
-    <title>AD-HOC Block III</title>
-    <xref type="rfc" data="rfc5771"/>
-    <record>
-      <addr>233.252.0.0-233.255.255.255</addr>
-      <description>AD-HOC Block III</description>
-      <xref type="rfc" data="rfc5771"/>
     </record>
   </registry>
   
@@ -2506,7 +2554,7 @@ low-order bits of the IP Multicast address are placed in the low-order
     <person id="Andrew_Brown">
       <name>Andrew Brown</name>
       <uri>mailto:abrown&amp;batstrading.com</uri>
-      <updated>2008-12-24</updated>
+      <updated>2014-03-05</updated>
     </person>
     <person id="Andrew_Cherenson">
       <name>Andrew Cherenson</name>
@@ -2531,11 +2579,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Andy Crick</name>
       <uri>mailto:acrick&amp;haascnc.com</uri>
       <updated>2008-01-14</updated>
-    </person>
-    <person id="Anthony_Aste">
-      <name>Anthony Aste</name>
-      <uri>mailto:aaste&amp;nyx.com</uri>
-      <updated>2011-02-10</updated>
     </person>
     <person id="Anthony_Daga">
       <name>Anthony Daga</name>
@@ -2669,6 +2712,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:protocols&amp;pewla.us.pewg.panasonic.com</uri>
       <updated>2006-06-16</updated>
     </person>
+    <person id="Caleb_Bell">
+      <name>Caleb Bell</name>
+      <uri>mailto:cbell&amp;rxnetworks.com</uri>
+      <updated>2012-11-19</updated>
+    </person>
     <person id="Carl-Johan_Sjöberg">
       <name>Carl-Johan Sjöberg</name>
       <uri>mailto:cjs&amp;bitsend.se</uri>
@@ -2676,8 +2724,13 @@ low-order bits of the IP Multicast address are placed in the low-order
     </person>
     <person id="Carl_Malamud">
       <name>Carl Malamud</name>
-      <uri>mailto:carl&amp;invisible.net</uri>
-      <updated>1998-04-01</updated>
+      <uri>mailto:carl&amp;media.org</uri>
+      <updated>2014-01-03</updated>
+    </person>    
+    <person id="Chad_Myers">
+      <name>Chad Myers</name>
+      <uri>mailto:chad.myers&amp;theice.com</uri>
+      <updated>2013-10-31</updated>
     </person>
     <person id="Charles_Tewiah">
       <name>Charles Tewiah</name>
@@ -2757,11 +2810,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:darrells&amp;truesolutions.net</uri>
       <updated>1999-06-01</updated>
     </person>
-    <person id="Dave_Andrews">
-      <name>Dave Andrews</name>
-      <uri>mailto:DAndrews&amp;archipelago.com</uri>
-      <updated>2006-02-17</updated>
-    </person>
     <person id="Dave_Cheriton">
       <name>Dave Cheriton</name>
       <uri>mailto:cheriton&amp;dsg.stanford.edu</uri>
@@ -2799,6 +2847,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>David Rubin</name>
       <uri>mailto:drubin&amp;ncc.net</uri>
       <updated>1996-08-01</updated>
+    </person>    
+    <person id="David_Wilson">
+      <name>David Wilson</name>
+      <uri>mailto:dwilson&amp;m-x.ca</uri>
+      <updated>2013-05-30</updated>
     </person>
     <person id="Dean_Blackketter">
       <name>Dean Blackketter</name>
@@ -2860,10 +2913,10 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:falbert&amp;ise.com</uri>
       <updated>2012-07-12</updated>
     </person>
-    <person id="Frank_Castillo">
-      <name>Frank Castillo</name>
-      <uri>mailto:fcastillo&amp;nyx.com</uri>
-      <updated>2008-08-27</updated>
+    <person id="Florian_Weimer">
+      <name>Florian Weimer</name>
+      <uri>mailto:fweimer&amp;redhat.com</uri>
+      <updated>2013-02-08</updated>
     </person>
     <person id="Fred_Baker">
       <name>Fred Baker</name>
@@ -2914,11 +2967,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:hwr&amp;xlink.net</uri>
       <updated>1997-01-01</updated>
     </person>
-    <person id="Helen_Chan">
-      <name>Helen Chan</name>
-      <uri>mailto:hchan&amp;siac.com</uri>
-      <updated>2001-08-01</updated>
-    </person>
     <person id="Henri_Moelard">
       <name>Henri Moelard</name>
       <uri>mailto:HMOELARD&amp;wcnd.nl.lucent.com</uri>
@@ -2936,11 +2984,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Ian Armitage</name>
       <uri>mailto:ian&amp;coactive.com</uri>
       <updated>1999-08-01</updated>
-    </person>
-    <person id="Ian_Stevenson">
-      <name>Ian Stevenson</name>
-      <uri>mailto:ian.stevenson&amp;aems.net</uri>
-      <updated>2008-07-23</updated>
     </person>
     <person id="Ian_Stewart">
       <name>Ian Stewart</name>
@@ -2987,6 +3030,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:jee&amp;alcom.ax</uri>
       <updated>2010-03-12</updated>
     </person>
+    <person id="Jan_Vitek">
+      <name>Jan Vitek</name>
+      <uri>mailto:vitek&amp;selfservis.cz</uri>
+      <updated>2013-01-15</updated>
+    </person>
     <person id="Javier_Landin">
       <name>Javier Landin</name>
       <uri>mailto:jlandin&amp;directedge.com</uri>
@@ -3021,11 +3069,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Jim Toga</name>
       <uri>mailto:jtoga&amp;ibeam.jf.intel.com</uri>
       <updated>1996-05-01</updated>
-    </person>
-    <person id="Joan_Cho">
-      <name>Joan Cho</name>
-      <uri>mailto:jcho&amp;siac.com</uri>
-      <updated>1998-10-01</updated>
     </person>
     <person id="Joel_Lynch">
       <name>Joel Lynch</name>
@@ -3122,8 +3165,8 @@ low-order bits of the IP Multicast address are placed in the low-order
     </person>
     <person id="Kristian_A_Bognaes">
       <name>Kristian A. Bognaes</name>
-      <uri>mailto:kbo&amp;norman.no</uri>
-      <updated>2004-02-01</updated>
+      <uri>mailto:kristian.bognaes&amp;norman.com</uri>
+      <updated>2014-01-08</updated>
     </person>
     <person id="Liming_Wei">
       <name>Liming Wei</name>
@@ -3164,6 +3207,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Mark Bakke</name>
       <uri>mailto:mbakke&amp;cisco.com</uri>
       <updated>2001-12-01</updated>
+    </person>    
+    <person id="Mark_Chester">
+      <name>Mark Chester</name>
+      <uri>mailto:networks&amp;aquis.eu</uri>
+      <updated>2013-05-13</updated>
     </person>
     <person id="Mark_Hamilton">
       <name>Mark Hamilton</name>
@@ -3184,6 +3232,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Mark Lipford</name>
       <uri>mailto:mark.a.lipford&amp;sprint.com</uri>
       <updated>2006-07-11</updated>
+    </person>    
+    <person id="Marlon_Berlin">
+      <name>Marlon Berlin</name>
+      <uri>mailto:marlon.berlin&amp;dns-net.de</uri>
+      <updated>2013-05-25</updated>
     </person>
     <person id="Martin_Forssen">
       <name>Martin Forssen</name>
@@ -3218,6 +3271,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Michael Caravetta</name>
       <uri>mailto:Michael.Caravetta&amp;tsx.com</uri>
       <updated>2012-06-15</updated>
+    </person>    
+    <person id="Michael_Caravetta_2">
+      <name>Michael Caravetta</name>
+      <uri>mailto:Network_Reps&amp;tsx.com</uri>
+      <updated>2013-06-03</updated>
     </person>
     <person id="Michael_DeMoney">
       <name>Michael DeMoney</name>
@@ -3254,11 +3312,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:msu&amp;xingtech.com</uri>
       <updated>1997-04-01</updated>
     </person>
-    <person id="Mike_Lamberg">
-      <name>Mike Lamberg</name>
-      <uri>mailto:mlamberg&amp;siac.com</uri>
-      <updated>1997-02-01</updated>
-    </person>
     <person id="Mike_Rodbell">
       <name>Mike Rodbell</name>
       <uri>mailto:mrodbell&amp;ciena.com</uri>
@@ -3288,11 +3341,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Morteza Kalhour</name>
       <uri>mailto:morteza.kalhour&amp;nokia.com</uri>
       <updated>2002-10-01</updated>
-    </person>
-    <person id="Nabeel_Madry">
-      <name>Nabeel Madry</name>
-      <uri>mailto:nabeel.madry&amp;amex.com</uri>
-      <updated>2007-07-05</updated>
     </person>
     <person id="Nadine_Guillaume">
       <name>Nadine Guillaume</name>
@@ -3327,16 +3375,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Oyvind H. Olsen</name>
       <uri>mailto:oyvind-hollup.olsen&amp;canaldigital.com</uri>
       <updated>2007-09-12</updated>
-    </person>
-    <person id="Pankaj_Gupta">
-      <name>Pankaj Gupta</name>
-      <uri>mailto:pgupta&amp;nyse.com</uri>
-      <updated>2007-11-28</updated>
-    </person>
-    <person id="Pankaj_Gupta_2">
-      <name>Pankaj Gupta</name>
-      <uri>mailto:pgupta&amp;nyx.com</uri>
-      <updated>2010-02-26</updated>
     </person>
     <person id="Paolo_Strazzera">
       <name>Paolo Strazzera</name>
@@ -3426,12 +3464,17 @@ low-order bits of the IP Multicast address are placed in the low-order
     <person id="Richard_Tang">
       <name>Richard Tang</name>
       <uri>mailto:rtang&amp;hanweckassoc.com</uri>
-      <updated>2011-10-25</updated>
+      <updated>2013-09-05</updated>
     </person>
     <person id="Richard_Zulch">
       <name>Richard Zulch</name>
       <uri>mailto:richard_zulch&amp;dantz.com</uri>
       <updated>2004-05-01</updated>
+    </person>
+    <person id="RIR_Admin">
+      <name>RIR Admin</name>
+      <uri>mailto:riradmin&amp;nyx.com</uri>
+      <updated>2013-10-29</updated>
     </person>
     <person id="Rob_Janssen">
       <name>Rob Janssen</name>
@@ -3482,11 +3525,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Sakon Kittivatcharapong</name>
       <uri>mailto:sakonk&amp;cscoms.net</uri>
       <updated>2000-05-01</updated>
-    </person>
-    <person id="Sam_Serrano">
-      <name>Sam Serrano</name>
-      <uri>mailto:sserrano&amp;nyx.com</uri>
-      <updated>2010-02-26</updated>
     </person>
     <person id="Sarunas_Brakauskas">
       <name>Sarunas Brakauskas</name>

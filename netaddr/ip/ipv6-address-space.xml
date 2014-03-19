@@ -3,142 +3,173 @@
 <?oxygen RNGSchema="ipv6-address-space.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv6-address-space">
   <title>Internet Protocol Version 6 Address Space</title>
-  <updated>2012-08-02</updated>
+  <updated>2013-02-15</updated>
   <note>The IPv6 address management function was formally delegated to
-    IANA in December 1995 <xref type="rfc" data="rfc1881"/>. The registration procedure
-    was confirmed with the IETF Chair in March 2010.</note>
+IANA in December 1995 <xref type="rfc" data="rfc1881"/>. The registration procedure
+was confirmed with the IETF Chair in March 2010.</note>
 <registry id="ipv6-address-space-1">
   <registration_rule>IESG Approval</registration_rule>
   <record>
     <prefix>0000::/8</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes>
     <xref type="note" data="1"/>
+    <xref type="note" data="2"/>
+    <xref type="note" data="3"/>
+    <xref type="note" data="4"/>
     <xref type="note" data="5"/>
-    <xref type="note" data="6"/>
+    </notes>
   </record>
   <record>
     <prefix>0100::/8</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
-    <xref type="note" data="8"/>
+    <notes>0100::/64 reserved for Discard-Only Address Block <xref type="rfc" data="rfc6666"/>. 
+Complete registration details are found in <xref type="registry" data="iana-ipv6-special-registry"/>.</notes>
   </record>
   <record>
     <prefix>0200::/7</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4048"/>
-    <xref type="note" data="2"/>
+    <notes>Deprecated as of December 2004 <xref type="rfc" data="rfc4048"/>. 
+Formerly an OSI NSAP-mapped prefix set <xref type="rfc" data="rfc4548"/>.</notes>
   </record>
   <record>
     <prefix>0400::/6</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
     <prefix>0800::/5</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
     <prefix>1000::/4</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
     <prefix>2000::/3</prefix>
     <description>Global Unicast</description>
     <xref type="rfc" data="rfc4291"/>
-    <xref type="note" data="3"/>
+    <notes>The IPv6 Unicast space encompasses the entire IPv6 address range 
+with the exception of ff00::/8, per <xref type="rfc" data="rfc4291"/>. IANA unicast address 
+assignments are currently limited to the IPv6 unicast address 
+range of 2000::/3. IANA assignments from this block are registered 
+in <xref type="registry" data="ipv6-unicast-address-assignments"/>.
+      <xref type="note" data="6"/>    
+      <xref type="note" data="7"/>    
+      <xref type="note" data="8"/>      
+      <xref type="note" data="9"/>      
+      <xref type="note" data="10"/>      
+      <xref type="note" data="11"/>
+    </notes>
   </record>
   <record>
     <prefix>4000::/3</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
     <prefix>6000::/3</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
     <prefix>8000::/3</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
-    <prefix>A000::/3</prefix>
+    <prefix>a000::/3</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
-    <prefix>C000::/3</prefix>
+    <prefix>c000::/3</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
-    <prefix>E000::/4</prefix>
+    <prefix>e000::/4</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
-    <prefix>F000::/5</prefix>
+    <prefix>f000::/5</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
-    <prefix>F800::/6</prefix>
+    <prefix>f800::/6</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
-    <prefix>FC00::/7</prefix>
+    <prefix>fc00::/7</prefix>
     <description>Unique Local Unicast</description>
     <xref type="rfc" data="rfc4193"/>
+    <notes>For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</notes>
   </record>
   <record>
-    <prefix>FE00::/9</prefix>
+    <prefix>fe00::/9</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes/>
   </record>
   <record>
-    <prefix>FE80::/10</prefix>
-    <description>Link Local Unicast</description>
+    <prefix>fe80::/10</prefix>
+    <description>Link-Scoped Unicast</description>
     <xref type="rfc" data="rfc4291"/>
+    <notes>Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv6-special-registry"/>.</notes>
   </record>
   <record>
-    <prefix>FEC0::/10</prefix>
+    <prefix>fec0::/10</prefix>
     <description>Reserved by IETF</description>
     <xref type="rfc" data="rfc3879"/>
-    <xref type="note" data="4"/>
+    <notes>Deprecated by <xref type="rfc" data="rfc3879"/> in September 2004. Formerly a Site-Local scoped address prefix.</notes>
   </record>
   <record>
-    <prefix>FF00::/8</prefix>
+    <prefix>ff00::/8</prefix>
     <description>Multicast</description>
     <xref type="rfc" data="rfc4291"/>
-    <xref type="note" data="7"/>
+    <notes>IANA assignments from this block are registered in <xref type="registry" data="ipv6-multicast-addresses"/>.</notes>
   </record>
-  <footnote anchor="1">The "unspecified address", the "loopback address", and the IPv6 
-Addresses with Embedded IPv4 Addresses are assigned out of the 
-0000::/8 address block.</footnote>
-  <footnote anchor="2">0200::/7 was previously defined as an OSI NSAP-mapped prefix set 
-<xref type="rfc" data="rfc4548"/>. This definition has been deprecated as of December 
-2004 <xref type="rfc" data="rfc4048"/>.</footnote>
-  <footnote anchor="3">The IPv6 Unicast space encompasses the entire IPv6 address range 
-with the exception of FF00::/8. <xref type="rfc" data="rfc4291"/> IANA unicast address 
-assignments are currently limited to the IPv6 unicast address 
-range of 2000::/3. IANA assignments from this block are registered 
-in the IANA registry: <xref type="registry" data="ipv6-unicast-address-assignments"/>.</footnote>
-  <footnote anchor="4">FEC0::/10 was previously defined as a Site-Local scoped address 
-prefix. This definition has been deprecated as of September 2004
-<xref type="rfc" data="rfc3879"/>.</footnote>
-  <footnote anchor="5">0000::/96 was previously defined as the "IPv4-compatible IPv6 
-address" prefix.  This definition has been deprecated by <xref type="rfc" data="rfc4291"/>.</footnote>
-  <footnote anchor="6">The "Well Known Prefix" 64:ff9b::/96 used in an algorithmic
-mapping between IPv4 to IPv6 addresses is defined out of the
-0000::/8 address block, per <xref type="rfc" data="rfc6052"/>.</footnote>
-  <footnote anchor="7">IANA assignments from this block are registered 
-    in the IPv6 Multicast Address Space Registry: <xref type="registry" data="ipv6-multicast-addresses"/>.</footnote>
-  <footnote anchor="8">0100::/64 is assigned as a Discard-Only Prefix for remote triggered blackhole routing as per <xref type="rfc" data="rfc6666"/>.</footnote>
+  <footnote anchor="1">::1/128 reserved for Loopback Address <xref type="rfc" data="rfc4291"/>. 
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>
+  <footnote anchor="2">::/128 reserved for Unspecified Address <xref type="rfc" data="rfc4291"/>. 
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>
+  <footnote anchor="3">::ffff:0:0/96 reserved for IPv4-mapped Address <xref type="rfc" data="rfc4291"/>. 
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>
+  <footnote anchor="4">0000::/96 deprecated by <xref type="rfc" data="rfc4291"/>. Formerly defined as the "IPv4-compatible IPv6 address" prefix.</footnote>
+  <footnote anchor="5">The "Well Known Prefix" 64:ff9b::/96 is used in an algorithmic mapping between IPv4 to IPv6 addresses <xref type="rfc" data="rfc6052"/>.</footnote>  
+  <footnote anchor="6">2001:0000::/23 reserved for IETF Protocol Assignments <xref type="rfc" data="rfc2928"/>. 
+For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>  
+  <footnote anchor="7">2001:0000::/32 reserved for TEREDO <xref type="rfc" data="rfc4380"/>. 
+For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>  
+  <footnote anchor="8">2001:0002::/48 reserved for Benchmarking <xref type="rfc" data="rfc5180"/>. 
+For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>  
+  <footnote anchor="9">2001:db8::/32 reserved for Documentation <xref type="rfc" data="rfc3849"/>. 
+For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>  
+  <footnote anchor="10">2001:10::/28 reserved for ORCHID <xref type="rfc" data="rfc4843"/>. 
+For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>  
+  <footnote anchor="11">2002::/16 reserved for 6to4 <xref type="rfc" data="rfc3056"/>. 
+For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</footnote>
+
+
   <people/>
 </registry>
  </registry>

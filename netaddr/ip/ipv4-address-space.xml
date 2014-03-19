@@ -3,7 +3,11 @@
 <?oxygen RNGSchema="ipv4-address-space.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
-  <updated>2012-08-29</updated>
+  <category>Internet Protocol version 4 (IPv4) Address Space</category>
+  <updated>2014-03-19</updated>
+  <xref type="draft" data="RFC-housley-number-registries-04"/>
+  <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
+All other assignments require IETF Review.</registration_rule>
   <description>The allocation of Internet Protocol version 4 (IPv4) address space to various registries is listed
 here. Originally, all the IPv4 address spaces was managed directly by the IANA. Later parts of the
 address space were allocated to various other registries to manage for particular purposes or
@@ -33,12 +37,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>003/8</prefix>
     <designation>General Electric Company</designation>
     <date>1994-05</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>004/8</prefix>
     <designation>Level 3 Communications, Inc.</designation>
     <date>1992-12</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -65,12 +71,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>008/8</prefix>
     <designation>Level 3 Communications, Inc.</designation>
     <date>1992-12</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>009/8</prefix>
     <designation>IBM</designation>
     <date>1992-08</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -90,12 +98,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>012/8</prefix>
     <designation>AT&amp;T Bell Laboratories</designation>
     <date>1995-06</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>013/8</prefix>
     <designation>Xerox Corporation</designation>
     <date>1991-09</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -110,36 +120,42 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>015/8</prefix>
     <designation>Hewlett-Packard Company</designation>
     <date>1994-07</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>016/8</prefix>
     <designation>Digital Equipment Corporation</designation>
     <date>1994-11</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>017/8</prefix>
     <designation>Apple Computer Inc.</designation>
     <date>1992-07</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>018/8</prefix>
     <designation>MIT</designation>
     <date>1994-01</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>019/8</prefix>
     <designation>Ford Motor Company</designation>
     <date>1995-05</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>020/8</prefix>
     <designation>Computer Sciences Corporation</designation>
     <date>1994-10</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -217,6 +233,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>032/8</prefix>
     <designation>AT&amp;T Global Network Services</designation>
     <date>1994-06</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -229,12 +246,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>034/8</prefix>
     <designation>Halliburton Company</designation>
     <date>1993-03</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>035/8</prefix>
-    <designation>MERIT Computer Network</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-04</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -255,6 +274,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>038/8</prefix>
     <designation>PSINet, Inc.</designation>
     <date>1994-09</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -266,13 +286,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>040/8</prefix>
-    <designation>Eli Lily &amp; Company</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-06</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>041/8</prefix>
-    <designation>AfriNIC</designation>
+    <designation>AFRINIC</designation>
     <date>2005-04</date>
     <whois>whois.afrinic.net</whois>
     <status>ALLOCATED</status>
@@ -288,12 +309,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>043/8</prefix>
     <designation>Administered by APNIC</designation>
     <date>1991-01</date>
+    <whois>whois.apnic.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>044/8</prefix>
     <designation>Amateur Radio Digital Communications</designation>
     <date>1992-07</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -312,14 +335,16 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>047/8</prefix>
-    <designation>Bell-Northern Research</designation>
+    <designation>Administered by ARIN</designation>
     <date>1991-01</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>048/8</prefix>
     <designation>Prudential Securities Inc.</designation>
     <date>1995-05</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -347,6 +372,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>052/8</prefix>
     <designation>E.I. duPont de Nemours and Co., Inc.</designation>
     <date>1991-12</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -357,8 +383,9 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>054/8</prefix>
-    <designation>Merck and Co., Inc.</designation>
+    <designation>Administered by ARIN</designation>
     <date>1992-03</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -371,6 +398,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>056/8</prefix>
     <designation>US Postal Service</designation>
     <date>1994-06</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -690,7 +718,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>102/8</prefix>
-    <designation>AfriNIC</designation>
+    <designation>AFRINIC</designation>
     <date>2011-02</date>
     <whois>whois.afrinic.net</whois>
     <status>ALLOCATED</status>
@@ -711,7 +739,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>105/8</prefix>
-    <designation>AfriNIC</designation>
+    <designation>AFRINIC</designation>
     <date>2010-11</date>
     <whois>whois.afrinic.net</whois>
     <status>ALLOCATED</status>
@@ -1054,7 +1082,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>154/8</prefix>
-    <designation>Administered by AfriNIC</designation>
+    <designation>Administered by AFRINIC</designation>
     <date>1993-05</date>
     <whois>whois.afrinic.net</whois>
     <status>LEGACY</status>
@@ -1352,14 +1380,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>196/8</prefix>
-    <designation>Administered by AfriNIC</designation>
+    <designation>Administered by AFRINIC</designation>
     <date>1993-05</date>
     <whois>whois.afrinic.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>197/8</prefix>
-    <designation>AfriNIC</designation>
+    <designation>AFRINIC</designation>
     <date>2008-10</date>
     <whois>whois.afrinic.net</whois>
     <status>ALLOCATED</status>
@@ -1774,34 +1802,49 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <xref type="note" data="17"/>
   </record>
   <footnote anchor="1">Indicates the status of address blocks as follows:
-RESERVED: designated by the IETF for specific non-unicast purposes as noted.
+RESERVED: designated by the IETF for specific non-global-unicast purposes as noted.
 LEGACY: allocated by the central Internet Registry (IR) prior to the Regional Internet Registries
 (RIRs). This address space is now administered by individual RIRs as noted, including maintenance
 of WHOIS Directory and reverse DNS records. Assignments from these blocks are distributed globally
 on a regional basis.
 ALLOCATED: delegated entirely to specific RIR as indicated.
 UNALLOCATED: not yet allocated or reserved.</footnote>
-  <footnote anchor="2">0.0.0.0/8 reserved for self-identification <xref type="rfc" data="rfc5735"/></footnote>
-  <footnote anchor="3">Reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/></footnote>
-  <footnote anchor="4">This was reserved for Public Data Networks <xref type="rfc" data="rfc1356"/>
-See: http://www.iana.org/assignments/public-data-network-numbers
-It was recovered in February 2008 and was subsequently allocated to APNIC in April 2010</footnote>
-  <footnote anchor="5">100.64.0.0/10 is reserved for Shared Address Space <xref type="rfc" data="rfc6598"/></footnote>
-  <footnote anchor="6">127.0.0.0/8 is reserved for Loopback <xref type="rfc" data="rfc5735"/></footnote>
-  <footnote anchor="7">169.254.0.0/16 reserved for Link Local <xref type="rfc" data="rfc5735"/></footnote>
-  <footnote anchor="8">172.16.0.0/12 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/></footnote>
-  <footnote anchor="9">192.0.2.0/24  reserved for TEST-NET-1 <xref type="rfc" data="rfc5737"/>
+  <footnote anchor="2">0.0.0.0/8 reserved for self-identification <xref type="rfc" data="rfc1122"/>, section 3.2.1.3. 
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="3">Reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>.
+Complete registration details for 10.0.0.0/8 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="4">This was reserved for Public Data Networks <xref type="rfc" data="rfc1356"/>. See <xref type="registry" data="public-data-network-numbers"/>.
+It was recovered in February 2008 and was subsequently allocated to APNIC in April 2010.</footnote>
+  <footnote anchor="5">100.64.0.0/10 reserved for Shared Address Space <xref type="rfc" data="rfc6598"/>. 
+Complete registration details for 100.64.0.0/10 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="6">127.0.0.0/8 reserved for Loopback <xref type="rfc" data="rfc1122"/>, section 3.2.1.3. 
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="7">169.254.0.0/16 reserved for Link Local <xref type="rfc" data="rfc3927"/>.
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="8">172.16.0.0/12 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>. 
+Complete registration details are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="9">192.0.2.0/24  reserved for TEST-NET-1 <xref type="rfc" data="rfc5737"/>. 
+Complete registration details for 192.0.2.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
 192.88.99.0/24 reserved for 6to4 Relay Anycast <xref type="rfc" data="rfc3068"/>
-192.88.99.2/32 reserved for 6a44 Relay Anycast <xref type="draft" data="RFC-despres-6a44"/> (possibly collocated with 6to4 Relay at 192.88.99.1/32 - <xref type="rfc" data="3068"/> section 2.4)
-192.168.0.0/16 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/></footnote>
-  <footnote anchor="10">192.0.0.0/24 reserved for IANA IPv4 Special Purpose Address Registry <xref type="rfc" data="rfc5736"/></footnote>
-  <footnote anchor="11">198.18.0.0/15 reserved for Network Interconnect Device Benchmark Testing <xref type="rfc" data="rfc5735"/>
-198.51.100.0/24 reserved for TEST-NET-2 <xref type="rfc" data="rfc5737"/></footnote>
-  <footnote anchor="12">203.0.113.0/24 reserved for TEST-NET-3 <xref type="rfc" data="rfc5737"/></footnote>
-  <footnote anchor="13">Multicast (formerly "Class D") <xref type="rfc" data="rfc5771"/> registed in http://www.iana.org/assignments/multicast-addresses</footnote>
+Complete registration details for 192.88.99.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
+192.88.99.2/32 reserved for 6a44 Relay Anycast <xref type="rfc" data="rfc6751"/> (possibly collocated with 6to4 Relay 
+at 192.88.99.1/32 - see <xref type="rfc" data="rfc3068"/> section 2.4)
+192.168.0.0/16 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>. 
+Complete registration details for 192.168.0.0/16 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="10">192.0.0.0/24 reserved for IANA IPv4 Special Purpose Address Registry <xref type="rfc" data="rfc5736"/>. 
+Complete registration details for 192.0.0.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="11">198.18.0.0/15 reserved for Network Interconnect Device Benchmark Testing <xref type="rfc" data="rfc2544"/>. 
+Complete registration details for 198.18.0.0/15 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
+198.51.100.0/24 reserved for TEST-NET-2 <xref type="rfc" data="rfc5737"/>. 
+Complete registration details for 198.51.100.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="12">203.0.113.0/24 reserved for TEST-NET-3 <xref type="rfc" data="rfc5737"/>. 
+Complete registration details for 203.0.113.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="13">Multicast (formerly "Class D") <xref type="rfc" data="rfc5771"/> registered in <xref type="registry" data="multicast-addresses"/></footnote>
   <footnote anchor="14">Unicast-Prefix-Based IPv4 Multicast Addresses <xref type="rfc" data="rfc6034"/></footnote>
   <footnote anchor="15">Administratively Scoped IP Multicast <xref type="rfc" data="rfc2365"/></footnote>
-  <footnote anchor="16">Reserved for future use (formerly "Class E") <xref type="rfc" data="rfc1112"/></footnote>
-  <footnote anchor="17">255.255.255.255 is reserved for "limited broadcast" destination address <xref type="rfc" data="rfc0919"/> and <xref type="rfc" data="rfc0922"/> </footnote>
+  <footnote anchor="16">Reserved for future use (formerly "Class E") <xref type="rfc" data="rfc1112"/>.
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="17">255.255.255.255 is reserved for "limited broadcast" destination address <xref type="rfc" data="rfc919"/> and <xref type="rfc" data="rfc922"/>.
+Complete registration details for 255.255.255.255/32 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
   <people/>
 </registry>
