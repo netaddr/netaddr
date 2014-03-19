@@ -1,6 +1,6 @@
 =IP version 4 Strategy Module=
 
-Copyright (c) 2008-2013, David P. D. Moss. All rights reserved.
+Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
 
 Uses TEST-NET references throughout, as described in RFC 3330.
 

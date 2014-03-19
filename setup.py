@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#   Copyright (c) 2008-2013, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 """
