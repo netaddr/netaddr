@@ -1575,11 +1575,8 @@ def cidr_merge(ip_addrs):
     ranges.sort()
     i = 1
     while i < len(ranges):
-        if ranges[i][0] == ranges[i-1][0] and ranges[i][1]-1 <= ranges[i-1][2]:
-            ranges[i-1] = (ranges[i][0],
-                                 ranges[i-1][1],
-                                 max(ranges[i-1][2],
-                                     ranges[i][2]))
+        if ranges[i][0] == ranges[i - 1][0] and ranges[i][1] - 1 <= ranges[i - 1][2]:
+            ranges[i - 1] = (ranges[i][0], ranges[i - 1][1], max(ranges[i - 1][2], ranges[i][2]))
             del ranges[i]
         else:
             i += 1
@@ -1590,7 +1587,7 @@ def cidr_merge(ip_addrs):
         if len(range) == 4:
             cidrs.append(range[3])
         else:
-            cidrs.extend( iprange_to_cidrs( IPAddress(range[1], version=range[0]), IPAddress(range[2], version=range[0]) ) )
+            cidrs.extend(iprange_to_cidrs(IPAddress(range[1], version=range[0]), IPAddress(range[2], version=range[0])))
     return cidrs
 
 #-----------------------------------------------------------------------------
@@ -1651,10 +1648,10 @@ def cidr_partition(target, exclude):
 
     while exclude.prefixlen >= new_prefixlen:
         if exclude.first >= i_upper:
-            left.append( IPNetwork((i_lower, new_prefixlen), version=version) )
+            left.append(IPNetwork((i_lower, new_prefixlen), version=version))
             matched = i_upper
         else:
-            right.append( IPNetwork((i_upper, new_prefixlen), version=version) )
+            right.append(IPNetwork((i_upper, new_prefixlen), version=version))
             matched = i_lower
 
         new_prefixlen += 1
