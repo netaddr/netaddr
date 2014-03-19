@@ -180,9 +180,9 @@ True
 >>> iab
 IAB('00-50-C2-00-00-00')
 >>> iab.registration()
-{'address': ['2101 Superior Avenue', 'Cleveland OH 44114', 'UNITED STATES'],
+{'address': ['1241 Superieor Ave E', 'Cleveland OH 44114', 'UNITED STATES'],
  'iab': '00-50-C2-00-00-00',
  ...
- 'offset': 68,
+ 'offset': 80,
  'org': 'T.L.S. Corp.',
- 'size': 133}
+ 'size': 139}
