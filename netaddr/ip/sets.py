@@ -762,4 +762,5 @@ class IPSet(object):
                     first = x
                 else:
                     ipList.append(IPRange(cidrs[x][0],cidrs[x][-1]))
+        return ipList
 
