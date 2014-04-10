@@ -745,3 +745,22 @@ class IPSet(object):
             return IPRange(cidrs[0][0], cidrs[-1][-1])
         else:
             raise ValueError("IPSet is not contiguous")
+    def ipranges(self):
+        """
+        Generate a list of IPRange for this IPSet.
+
+        :return: A ``list`` of IPRange
+
+        """
+        cidrs = self.iter_cidrs()
+        ipList = []
+        first = 0
+        for x in range(1,len(cidrs)):
+            if cidrs[x][0] != (cidrs[x-1][-1] +1):
+                ipList.append(IPRange(cidrs[first][0],cidrs[x-1][-1]))
+                if x != len(cidrs) -1:
+                    first = x
+                else:
+                    ipList.append(IPRange(cidrs[x][0],cidrs[x][-1]))
+        return ipList
+
