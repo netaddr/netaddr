@@ -388,7 +388,7 @@ IPSet([])
 Removing elements from an IP set
 --------------------------------
 
-Removing an IP address from an IPSet will the CIDR subnets within it into their constituent parts.
+Removing an IP address from an IPSet will split the CIDR subnets within it into their constituent parts.
 
 Here we create a set representing the entire IPv4 address space.
 
@@ -476,6 +476,10 @@ False
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 ValueError: IPSet is not contiguous
+
+If it is not contiguous, you can still convert the IPSet, but you will get multiple IPRanges.
+>>> list(s1.iter_ipranges())
+[IPRange('10.0.0.0', '10.0.0.15'), IPRange('10.0.0.17', '10.0.0.255')]
 
 >>> s2 = IPSet(['0.0.0.0/0'])
 >>> s2.iscontiguous()

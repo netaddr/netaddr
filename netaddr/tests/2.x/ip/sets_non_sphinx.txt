@@ -90,3 +90,21 @@ IPSet(['0.0.0.1/32', '10.0.0.64/32', '10.0.0.66/32', '255.255.255.1/32'])
 >>> s5 ^ s3
 IPSet(['0.0.0.1/32', '10.0.0.64/32', '10.0.0.66/32', '255.255.255.1/32'])
 
+--------------------------------
+Convert an IP set to an IP Range
+--------------------------------
+>>> list(IPSet().iter_ipranges())
+[]
+
+>>> list(IPSet([IPAddress('10.0.0.1')]).iter_ipranges())
+[IPRange('10.0.0.1', '10.0.0.1')]
+
+Adjacent, non-mergable CIDRs must be merged by iter_ipranges().
+>>> list(IPSet([IPAddress('10.0.0.1'), IPAddress('10.0.0.2')]).iter_ipranges())
+[IPRange('10.0.0.1', '10.0.0.2')]
+
+IPv4 and IPv6 addresses must not be merged.
+>>> list(IPSet([IPAddress(42, 4), IPAddress(43, 6)]).iter_ipranges())
+[IPRange('0.0.0.42', '0.0.0.42'), IPRange('::2b', '::2b')]
+
+

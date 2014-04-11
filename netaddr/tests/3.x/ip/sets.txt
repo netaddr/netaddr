@@ -569,6 +569,23 @@ Traceback (most recent call last):
     ...
 ValueError: IPSet is not contiguous
 
+>>> list(s1.iter_ipranges())
+[IPRange('10.0.0.0', '10.0.0.15'), IPRange('10.0.0.17', '10.0.0.255')]
+
+>>> list(IPSet().iter_ipranges())
+[]
+
+>>> list(IPSet([IPAddress('10.0.0.1')]).iter_ipranges())
+[IPRange('10.0.0.1', '10.0.0.1')]
+
+Adjacent, non-mergable CIDRs must be merged by iter_ipranges().
+>>> list(IPSet([IPAddress('10.0.0.1'), IPAddress('10.0.0.2')]).iter_ipranges())
+[IPRange('10.0.0.1', '10.0.0.2')]
+
+IPv4 and IPv6 addresses must not be merged.
+>>> list(IPSet([IPAddress(42, 4), IPAddress(43, 6)]).iter_ipranges())
+[IPRange('0.0.0.42', '0.0.0.42'), IPRange('::2b', '::2b')]
+
 >>> s2 = IPSet(['0.0.0.0/0'])
 >>> s2.iscontiguous()
 True
