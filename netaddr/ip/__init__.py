@@ -688,7 +688,7 @@ class IPListMixin(object):
         """
         size = self.size
         if size > _sys_maxint:
-            raise IndexError(("range contains more than %d (index size max) "
+            raise IndexError(("range contains more than %d (sys.maxint) "
                "IP addresses! Use the .size property instead." % _sys_maxint))
         return size
 

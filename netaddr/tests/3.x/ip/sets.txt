@@ -21,6 +21,19 @@ IPSet([])
 >>> len(IPSet([]))
 0
 
+len() fails when the IPSet is longer than sys.maxint, which is most likely with IPv6.
+>>> from netaddr.compat import _sys_maxint
+>>> s = IPSet(IPRange(IPAddress("::0"), IPAddress(_sys_maxint, 6)))
+>>> len(s)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  ...
+IndexError: range contains more than ...
+
+>>> s = IPSet(IPRange(IPAddress("::0"), IPAddress(_sys_maxint - 1, 6)))
+>>> len(s) == _sys_maxint
+True
+
 >>> IPSet(['192.0.2.0'])
 IPSet(['192.0.2.0/32'])
 

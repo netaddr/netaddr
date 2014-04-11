@@ -691,7 +691,7 @@ class IPSet(object):
         """
         size = self.size
         if size > _sys_maxint:
-            raise IndexError("range contains greater than %d (maxint) " \
+            raise IndexError("range contains more than %d (sys.maxint) " \
                 "IP addresses! Use the .size property instead." % _sys_maxint)
         return size
 
