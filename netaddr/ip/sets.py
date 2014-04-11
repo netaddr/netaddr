@@ -66,10 +66,7 @@ def _iter_merged_ranges(sorted_ranges):
     """
     if not sorted_ranges:
         return
-    if len(sorted_ranges) == 1:
-        version, first, last = sorted_ranges[0]
-        yield IPAddress(first, version), IPAddress(last, version)
-        return
+
     current_version, current_start, current_stop = sorted_ranges[0]
 
     for next_version, next_start, next_stop in sorted_ranges[1:]:
@@ -716,7 +713,7 @@ class IPSet(object):
         """
         Returns True if the members of the set form a contiguous IP
         address range (with no gaps), False otherwise.
-        
+
         :return: ``True`` if the ``IPSet`` object is contiguous.
         """
         cidrs = self.iter_cidrs()
@@ -732,11 +729,10 @@ class IPSet(object):
         """
         Generates an IPRange for this IPSet, if all its members
         form a single contiguous sequence.
-        
+
         Raises ``ValueError`` if the set is not contiguous.
 
         :return: An ``IPRange`` for all IPs in the IPSet.
-        
         """
         if self.iscontiguous():
             cidrs = self.iter_cidrs()
