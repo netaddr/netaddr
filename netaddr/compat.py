@@ -12,7 +12,7 @@ All operations emulate 2.x behaviour where applicable.
 import sys as _sys
 
 if _sys.version_info[0] == 3:
-    #   Python 3.x specific logic.
+    # Python 3.x specific logic.
     _sys_maxint = _sys.maxsize
 
     _int_type = int
@@ -50,15 +50,14 @@ if _sys.version_info[0] == 3:
         else: return f.__doc__
 
 elif  _sys.version_info[0:2] > [2, 3]:
-    #   Python 2.4 or higher.
+    # Python 2.4 or higher.
     _sys_maxint = _sys.maxint
 
     _int_type = (int, long)
 
-    _str_type = (str, unicode)
+    _str_type = basestring
 
-    # NB - not using basestring here for maximum 2.x compatibility.
-    _is_str = lambda x: isinstance(x, (str, unicode))
+    _is_str = lambda x: isinstance(x, basestring)
 
     _is_int = lambda x: isinstance(x, (int, long))
 
@@ -87,7 +86,7 @@ elif  _sys.version_info[0:2] > [2, 3]:
         else: return f.func_doc
 
 else:
-    #   Unsupported versions.
+    # Unsupported versions.
     raise RuntimeError(
         'this module only supports Python 2.4.x or higher (including 3.x)!')
 
