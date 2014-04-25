@@ -105,7 +105,7 @@ def valid_str(addr, flags=0):
             _inet_pton(AF_INET, addr)
         else:
             _inet_aton(addr)
-    except:
+    except Exception:
         validity = False
 
     return validity
@@ -129,7 +129,7 @@ def str_to_int(addr, flags=0):
             return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
         else:
             return _struct.unpack('>I', _inet_aton(addr))[0]
-    except:
+    except Exception:
         raise AddrFormatError('%r is not a valid IPv4 address string!' % addr)
 
 #-----------------------------------------------------------------------------

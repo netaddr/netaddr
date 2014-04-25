@@ -22,7 +22,7 @@ try:
                         inet_ntop as _inet_ntop, \
                         AF_INET6
     OPT_IMPORTS = True
-except:
+except Exception:
     from netaddr.fbsocket import inet_pton as _inet_pton, \
                                  inet_ntop as _inet_ntop, \
                                  AF_INET6
