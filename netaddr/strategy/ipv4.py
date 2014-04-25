@@ -16,18 +16,9 @@ if _sys.platform in ('win32', 'cygwin'):
     from _socket import inet_aton as _inet_aton, inet_ntoa as _inet_ntoa
     from netaddr.fbsocket import inet_pton as _inet_pton, AF_INET
 else:
-    #   All other cases, attempt to use all functions from the socket module.
-    try:
-        #   A common bug on older implementations of the socket module.
-        _socket.inet_aton('255.255.255.255')
-
-        from _socket import inet_aton as _inet_aton, inet_ntoa as _inet_ntoa, \
-                            inet_pton as _inet_pton, AF_INET
-    except:
-        #   Use the fallback socket code.
-        from netaddr.fbsocket import inet_aton as _inet_aton, \
-                                     inet_ntoa as _inet_ntoa, \
-                                     inet_pton as _inet_pton, AF_INET
+    #   All other cases, use all functions from the socket module.
+    from _socket import inet_aton as _inet_aton, inet_ntoa as _inet_ntoa, \
+            inet_pton as _inet_pton, AF_INET
 
 from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON
 
