@@ -275,8 +275,7 @@ class IPAddress(BaseIP):
                 else:
                     raise ValueError('%r is an invalid IP version!' % version)
 
-            has_upper = hasattr(addr, 'upper')
-            if has_upper and '/' in addr:
+            if _is_str(addr) and '/' in addr:
                 raise ValueError('%s() does not support netmasks or subnet' \
                     ' prefixes! See documentation for details.'
                     % self.__class__.__name__)
@@ -308,7 +307,7 @@ class IPAddress(BaseIP):
                         'address from %r' % addr)
             else:
                 #   IP version is explicit.
-                if has_upper:
+                if _is_str(addr):
                     try:
                         self._value = self._module.str_to_int(addr, flags)
                     except AddrFormatError:

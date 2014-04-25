@@ -8,7 +8,7 @@ Shared logic for various address types.
 """
 import re as _re
 
-from netaddr.compat import _range
+from netaddr.compat import _range, _is_str
 
 #-----------------------------------------------------------------------------
 def bytes_to_bits():
@@ -118,7 +118,7 @@ def valid_bits(bits, width, word_sep=''):
 
     :return: ``True`` if network address is valid, ``False`` otherwise.
     """
-    if not hasattr(bits, 'replace'):
+    if not _is_str(bits):
         return False
 
     if word_sep != '':
@@ -188,7 +188,7 @@ def int_to_bits(int_val, word_size, num_words, word_sep=''):
 
     if word_sep is not '':
         #   Check custom separator.
-        if not hasattr(word_sep, 'join'):
+        if not _is_str(word_sep):
             raise ValueError('word separator is not a string: %r!' % word_sep)
 
     return word_sep.join(bit_words)
@@ -204,7 +204,7 @@ def valid_bin(bin_val, width):
 
     :return: ``True`` if network address is valid, ``False`` otherwise.
     """
-    if not hasattr(bin_val, 'startswith'):
+    if not _is_str(bin_val):
         return False
 
     if not bin_val.startswith('0b'):

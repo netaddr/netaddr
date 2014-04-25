@@ -426,7 +426,7 @@ class EUI(BaseIdentifier):
                     % value)
         else:
             #   EUI version is explicit.
-            if hasattr(value, 'upper'):
+            if _is_str(value):
                 try:
                     self._value = self._module.str_to_int(value)
                 except AddrFormatError:

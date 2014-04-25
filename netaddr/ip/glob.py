@@ -10,6 +10,7 @@ glob style syntax.
 """
 from netaddr.core import AddrFormatError, AddrConversionError
 from netaddr.ip import IPRange, IPAddress, IPNetwork, iprange_to_cidrs
+from netaddr.compat import _is_str
 
 #-----------------------------------------------------------------------------
 def valid_glob(ipglob):
@@ -22,7 +23,7 @@ def valid_glob(ipglob):
     #TODO: e.g. 192.0.*.* == 192.0.*
     #TODO:      *.*.*.*     == *
     #TODO: Add strict flag to enable verbose ipglob checking.
-    if not hasattr(ipglob, 'split'):
+    if not _is_str(ipglob):
         return False
 
     seen_hyphen = False

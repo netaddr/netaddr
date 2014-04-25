@@ -29,6 +29,7 @@ from netaddr.strategy import BYTES_TO_BITS as _BYTES_TO_BITS, \
     valid_bin    as _valid_bin, \
     int_to_bin   as _int_to_bin, \
     bin_to_int   as _bin_to_int
+from netaddr.compat import _is_str
 
 #: The width (in bits) of this address type.
 width = 48
@@ -155,7 +156,7 @@ def str_to_int(addr):
         settings.
     """
     words = []
-    if hasattr(addr, 'upper'):
+    if _is_str(addr):
         found_match = False
         for regexp in RE_MAC_FORMATS:
             match_result = regexp.findall(addr)
