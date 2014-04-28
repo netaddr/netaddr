@@ -7,18 +7,16 @@
 
 import sys as _sys
 import struct as _struct
-import socket as _socket
 
+from socket import inet_aton as _inet_aton
 #   Check whether we need to use fallback code or not.
 if _sys.platform in ('win32', 'cygwin'):
     #   inet_pton() not available on Windows. inet_pton() under cygwin
     #   behaves exactly like inet_aton() and is therefore highly unreliable.
-    from _socket import inet_aton as _inet_aton, inet_ntoa as _inet_ntoa
     from netaddr.fbsocket import inet_pton as _inet_pton, AF_INET
 else:
     #   All other cases, use all functions from the socket module.
-    from _socket import inet_aton as _inet_aton, inet_ntoa as _inet_ntoa, \
-            inet_pton as _inet_pton, AF_INET
+    from socket import inet_pton as _inet_pton, AF_INET
 
 from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON
 
