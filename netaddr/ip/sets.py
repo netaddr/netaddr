@@ -5,7 +5,6 @@
 #-----------------------------------------------------------------------------
 """Set based operations for IP addresses and subnets."""
 
-import sys as _sys
 import itertools as _itertools
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6

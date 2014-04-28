@@ -19,7 +19,7 @@ except ImportError:
     AF_LINK = 48
 
 from netaddr.core import AddrFormatError
-from netaddr.strategy import BYTES_TO_BITS as _BYTES_TO_BITS, \
+from netaddr.strategy import \
     valid_words  as _valid_words, \
     int_to_words as _int_to_words, \
     words_to_int as _words_to_int, \

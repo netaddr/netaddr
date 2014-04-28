@@ -32,13 +32,11 @@ More details can be found at the following URLs :-
 import os as _os
 import os.path as _path
 import sys as _sys
-import re as _re
 
 from xml.sax import make_parser, handler
 
-from netaddr.core import Publisher, Subscriber, PrettyPrinter, dos2unix
-from netaddr.ip import IPAddress, IPNetwork, IPRange, \
-    cidr_abbrev_to_verbose, iprange_to_cidrs
+from netaddr.core import Publisher, Subscriber, dos2unix
+from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
 
 from netaddr.compat import _dict_items, _callable
 
