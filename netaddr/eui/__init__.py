@@ -8,14 +8,6 @@ Classes and functions for dealing with MAC addresses, EUI-48, EUI-64, OUI, IAB
 identifiers.
 """
 
-import sys as _sys
-import os as _os
-import os.path as _path
-import re as _re
-import csv as _csv
-
-import pprint as _pprint
-
 from netaddr.core import NotRegisteredError, AddrFormatError, \
     AddrConversionError, Subscriber, Publisher, DictDotLookup
 from netaddr.strategy import eui48 as _eui48, eui64 as _eui64

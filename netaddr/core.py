@@ -6,7 +6,6 @@
 """Common code shared between various netaddr sub modules"""
 
 import sys as _sys
-import struct as _struct
 import pprint as _pprint
 
 from netaddr.compat import _callable, _iter_dict_keys

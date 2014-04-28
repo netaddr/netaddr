@@ -32,8 +32,6 @@ More details can be found at the following URLs :-
     - Registration Authority Home Page - http://standards.ieee.org/regauth/
 """
 
-import os as _os
-import sys as _sys
 import os.path as _path
 import csv as _csv
 
