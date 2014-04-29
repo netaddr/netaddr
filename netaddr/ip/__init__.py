@@ -1580,14 +1580,17 @@ def cidr_merge(ip_addrs):
         else:
             i += 1
 
-    cidrs = []
-    for range in ranges:
+    merged = []
+    for range_tuple in ranges:
         # If this range wasn't merged we can simply use the old cidr.
-        if len(range) == 4:
-            cidrs.append(range[3])
+        if len(range_tuple) == 4:
+            merged.append(range_tuple[3])
         else:
-            cidrs.extend(iprange_to_cidrs(IPAddress(range[1], version=range[0]), IPAddress(range[2], version=range[0])))
-    return cidrs
+            version = range_tuple[0]
+            range_start = IPAddress(range_tuple[1], version=version)
+            range_stop = IPAddress(range_tuple[2], version=version)
+            merged.extend(iprange_to_cidrs(range_start, range_stop))
+    return merged
 
 #-----------------------------------------------------------------------------
 def cidr_exclude(target, exclude):
