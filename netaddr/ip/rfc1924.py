@@ -34,7 +34,9 @@ def ipv6_to_base85(addr):
         remainder.append(int_val % 85)
         int_val //= 85
 
-    return ''.join([BASE_85[w] for w in reversed(remainder)])
+    encoded = ''.join([BASE_85[w] for w in reversed(remainder)])
+    leading_zeroes = (20 - len(encoded)) * "0"
+    return leading_zeroes + encoded
 
 #-----------------------------------------------------------------------------
 def base85_to_ipv6(addr):
@@ -44,7 +46,7 @@ def base85_to_ipv6(addr):
     tokens = list(addr)
 
     if len(tokens) != 20:
-        raise AddrFormatError('Invalid base 85 IPv6 addess: %r' % addr)
+        raise AddrFormatError('Invalid base 85 IPv6 address: %r' % addr)
 
     result = 0
     for i, num in enumerate(reversed(tokens)):

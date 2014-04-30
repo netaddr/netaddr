@@ -18,6 +18,10 @@ The example from the RFC.
 >>> base85
 '4)+k&C#VzJ4br>0wv%Yp'
 
+RFC specifies that "leading zeroes are never omitted"
+>>> ipv6_to_base85("::1")
+'00000000000000000001'
+
 >>> base85_to_ipv6(base85)
 '1080::8:800:200c:417a'
 
