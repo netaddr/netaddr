@@ -111,4 +111,8 @@ Traceback (most recent call last):
 ...
 netaddr.core.AddrFormatError: invalid nmap range: ::
 
+Remove duplicates, just like nmap does.
+>>> list(iter_nmap_range('10.0.0.42,42-42'))
+[IPAddress('10.0.0.42')]
+
 }}}
