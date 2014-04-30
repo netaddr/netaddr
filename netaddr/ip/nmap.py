@@ -33,7 +33,7 @@ def _nmap_octet_target_values(spec):
             if not ((0 <= low <= 255) and (0 <= high <= 255)):
                 raise ValueError('octet value overflow for spec %s!' % spec)
             if low > high:
-                raise ValueError('left side of hyphen must be < right %r' % element)
+                raise ValueError('left side of hyphen must be <= right %r' % element)
             for octet in _iter_range(low, high + 1):
                 values.add(octet)
         else:
@@ -58,9 +58,6 @@ def _generate_nmap_octet_ranges(nmap_target_spec):
 
     if len(tokens) != 4:
         raise AddrFormatError('invalid nmap range: %s' % nmap_target_spec)
-
-    if tokens[0] == '-':
-        raise AddrFormatError('first octet cannot be a sole hyphen!')
 
     return (_nmap_octet_target_values(tokens[0]),
             _nmap_octet_target_values(tokens[1]),
@@ -97,5 +94,5 @@ def iter_nmap_range(nmap_target_spec):
         for x in octet_ranges[1]:
             for y in octet_ranges[2]:
                 for z in octet_ranges[3]:
-                    yield IPAddress("%d.%d.%d.%d" % (w, x, y, z))
+                    yield IPAddress("%d.%d.%d.%d" % (w, x, y, z), 4)
 
