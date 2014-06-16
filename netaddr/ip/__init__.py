@@ -1302,8 +1302,7 @@ class IPNetwork(BaseIP, IPListMixin):
                         IPAddress(self.last-1, self._module.version))
         else:
             #   IPv6 logic.
-            if self.first == 0:
-                if self.size != 1:
+            if self.first == self.value and self.size != 1:
                     #   Don't return '::'.
                     it_hosts = iter_iprange(
                         IPAddress(self.first + 1, self._module.version),
