@@ -34,6 +34,13 @@ IndexError: range contains more than ...
 >>> len(s) == _sys_maxint
 True
 
+IPSets must be usable in boolean context, even when they are very large.
+>>> s6 = IPSet(['2405:8100::/32'])
+>>> bool(s6)
+True
+>>> bool(IPSet())
+False
+
 >>> IPSet(['192.0.2.0'])
 IPSet(['192.0.2.0/32'])
 

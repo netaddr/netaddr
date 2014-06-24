@@ -31,6 +31,13 @@ IPNetwork('10.0.0.64/30') is the same as IPRange('10.0.0.64', '10.0.0.67')
 
 The documentation show various "s1 <operator> s2" examples. Tests below check that "s2 <operator> s1" also works. Additionally, operations on s3, s4... are performed.
 
+IPSets must be usable in boolean context, even when they are very large.
+>>> s6 = IPSet(['2405:8100::/32'])
+>>> bool(s6)
+True
+>>> bool(IPSet())
+False
+
 ^^^^^^^^^^^^^^^^
 set intersection
 ^^^^^^^^^^^^^^^^
@@ -119,3 +126,4 @@ IndexError: range contains more than ...
 >>> s = IPSet(IPRange(IPAddress("::0"), IPAddress(_sys_maxint - 1, 6)))
 >>> len(s) == _sys_maxint
 True
+

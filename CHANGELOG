@@ -8,7 +8,15 @@ Changes since 0.7.11
 ^^^^^^^^^^^^^^^^^^^^
 
 * Added method IPSet.iter_ipranges().
+* bool(IPSet()) works now for large IPSets, e.g. IPSet(['2405:8100::/32']).
 
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 69: https://github.com/drkjam/netaddr/issues/69
+    - Add __nonzero__ method to IPSet
 
 ---------------
 Release: 0.7.11
