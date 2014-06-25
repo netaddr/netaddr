@@ -9,6 +9,7 @@ Changes since 0.7.11
 
 * Added method IPSet.iter_ipranges().
 * bool(IPSet()) works now for large IPSets, e.g. IPSet(['2405:8100::/32']).
+* IPNetwork.iter_hosts now skips the subnet-router anycast address for IPv6.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -17,6 +18,8 @@ Specific bug fixes addressed in this release
 
 FIXED Issue 69: https://github.com/drkjam/netaddr/issues/69
     - Add __nonzero__ method to IPSet
+FIXED Pull Request 68: https://github.com/drkjam/netaddr/pull/68
+    - Fixed a bug related to allowing ::0 during iter_hosts for v6
 
 ---------------
 Release: 0.7.11

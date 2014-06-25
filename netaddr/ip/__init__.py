@@ -1287,8 +1287,8 @@ class IPNetwork(BaseIP, IPListMixin):
         - for IPv4, the network and broadcast addresses are always excluded. \
           Any subnet that contains less than 4 IP addresses yields an empty list.
 
-        - for IPv6, only the unspecified address '::' is excluded from any \
-          yielded IP addresses.
+        - for IPv6, only the unspecified address '::' or Subnet-Router anycast \
+          address (first address in the network) is excluded.
 
         :return: an IPAddress iterator
         """
@@ -1298,19 +1298,17 @@ class IPNetwork(BaseIP, IPListMixin):
             #   IPv4 logic.
             if self.size >= 4:
                 it_hosts = iter_iprange(
-                        IPAddress(self.first+1, self._module.version),
-                        IPAddress(self.last-1, self._module.version))
+                        IPAddress(self.first + 1, self._module.version),
+                        IPAddress(self.last - 1, self._module.version))
         else:
             #   IPv6 logic.
-            if self.first == 0:
-                if self.size != 1:
-                    #   Don't return '::'.
-                    it_hosts = iter_iprange(
-                        IPAddress(self.first + 1, self._module.version),
-                        IPAddress(self.last, self._module.version))
-            else:
-                it_hosts = iter(self)
-
+            # RFC 4291 section 2.6.1 says that the first IP in the network is
+            # the Subnet-Router anycast address. This address cannot be
+            # assigned to a host, so use self.first+1.
+            if self.size >= 2:
+                it_hosts = iter_iprange(
+                    IPAddress(self.first + 1, self._module.version),
+                    IPAddress(self.last, self._module.version))
         return it_hosts
 
     def __str__(self):
