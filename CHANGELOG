@@ -20,6 +20,8 @@ FIXED Issue 69: https://github.com/drkjam/netaddr/issues/69
     - Add __nonzero__ method to IPSet
 FIXED Pull Request 68: https://github.com/drkjam/netaddr/pull/68
     - Fixed a bug related to allowing ::0 during iter_hosts for v6
+FIXED Pull Request 66: https://github.com/drkjam/netaddr/pull/66
+    - Added Function to create list of IPRange for non-contiguous IPSet
 
 ---------------
 Release: 0.7.11
