@@ -74,12 +74,6 @@ Traceback (most recent call last):
 ...
 ValueError: invalid length of packed IP address string
 
->>> inet_aton('0x0')
-b'\x00\x00\x00\x00'
-
->>> inet_aton('010')
-b'\x08\x00\x00\x00'
-
 }}}
 
 IPv6 failure tests.
