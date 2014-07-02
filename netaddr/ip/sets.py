@@ -402,27 +402,26 @@ class IPSet(object):
             for supported constant values.
 
         """
-        if not hasattr(iterable, '__iter__'):
-            raise TypeError('an iterable was expected!')
-
         if isinstance(iterable, IPSet):
             self._cidrs = dict.fromkeys(
                     (ip for ip in cidr_merge(_dict_keys(self._cidrs)
                         + _dict_keys(iterable._cidrs))), True)
             return
-        elif isinstance(iterable, IPNetwork) or isinstance(iterable, IPRange):
+        elif isinstance(iterable, (IPNetwork, IPRange)):
             self.add(iterable)
             return
-        else:
-            #   An iterable containing IP addresses or subnets.
-            mergeable = []
-            for addr in iterable:
-                if isinstance(addr, _int_type):
-                    addr = IPAddress(addr, flags=flags)
-                mergeable.append(addr)
 
-            for cidr in cidr_merge(_dict_keys(self._cidrs) + mergeable):
-                self._cidrs[cidr] = True
+        if not hasattr(iterable, '__iter__'):
+            raise TypeError('an iterable was expected!')
+        #   An iterable containing IP addresses or subnets.
+        mergeable = []
+        for addr in iterable:
+            if isinstance(addr, _int_type):
+                addr = IPAddress(addr, flags=flags)
+            mergeable.append(addr)
+
+        for cidr in cidr_merge(_dict_keys(self._cidrs) + mergeable):
+            self._cidrs[cidr] = True
 
         self.compact()
 
