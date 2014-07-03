@@ -26,53 +26,6 @@ def inet_ntoa(packed_ip):
     return '%d.%d.%d.%d' % _unpack('4B', packed_ip)
 
 #-----------------------------------------------------------------------------
-def inet_aton(ip_string):
-    """
-    Convert an IP address in string format (123.45.67.89) to the 32-bit packed
-    binary format used in low-level network functions.
-    """
-    if _is_str(ip_string):
-        invalid_addr = ValueError('illegal IP address string %r' % ip_string)
-        #   Support for hexadecimal and octal octets.
-        tokens = []
-
-        base = 10
-        for token in ip_string.split('.'):
-            if token.startswith('0x'):
-                base = 16
-            elif token.startswith('0') and len(token) > 1:
-                base = 8
-            elif token == '':
-                continue
-            try:
-                tokens.append(int(token, base))
-            except ValueError:
-                raise invalid_addr
-
-        #   Zero fill missing octets.
-        num_tokens = len(tokens)
-        if num_tokens < 4:
-            fill_tokens = [0] * (4 - num_tokens)
-            if num_tokens > 1:
-                end_token = tokens.pop()
-                tokens = tokens + fill_tokens + [end_token]
-            else:
-                tokens = tokens + fill_tokens
-
-        #   Pack octets.
-        if len(tokens) == 4:
-            words = []
-            for token in tokens:
-                if (token >> 8) != 0:
-                    raise invalid_addr
-                words.append(_pack('B', token))
-            return _bytes_join(words)
-        else:
-            raise invalid_addr
-
-    raise ValueError('argument should be a string, not %s' % type(ip_string))
-
-#-----------------------------------------------------------------------------
 def _compact_ipv6_tokens(tokens):
     new_tokens = []
 
