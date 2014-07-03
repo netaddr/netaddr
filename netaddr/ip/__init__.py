@@ -760,20 +760,15 @@ class IPListMixin(object):
 def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
     if isinstance(addr, tuple):
         #   CIDR integer tuple
-        try:
-            val1, val2 = addr
-        except ValueError:
+        if len(addr) != 2:
             raise AddrFormatError('invalid %s tuple!' % module.family_name)
+        value, prefixlen = addr
 
-        if 0 <= val1 <= module.max_int:
-            value = val1
-            if 0 <= val2 <= module.width:
-                prefixlen = val2
-            else:
-                raise AddrFormatError('invalid prefix for %s tuple!' \
-                    % module.family_name)
-        else:
-            raise AddrFormatError('invalid address value for %s tuple!' \
+        if not(0 <= value <= module.max_int):
+            raise AddrFormatError('invalid address value for %s tuple!'
+                % module.family_name)
+        if not(0 <= prefixlen <= module.width):
+            raise AddrFormatError('invalid prefix for %s tuple!' \
                 % module.family_name)
     elif isinstance(addr, _str_type):
         #   CIDR-like string subnet
