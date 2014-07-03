@@ -131,25 +131,10 @@ class IPSet(object):
         :param state: data used to unpickle a pickled ``IPSet`` object.
 
         """
-        #TODO: this needs to be optimised.
-        self._cidrs = {}
-        for cidr_tuple in state:
-            value, prefixlen, version = cidr_tuple
-
-            if version == 4:
-                module = _ipv4
-            elif version == 6:
-                module = _ipv6
-            else:
-                raise ValueError('unpickling failed for object state %s' \
-                    % str(state))
-
-            if 0 <= prefixlen <= module.width:
-                cidr = IPNetwork((value, prefixlen), version=module.version)
-                self._cidrs[cidr] = True
-            else:
-                raise ValueError('unpickling failed for object state %s' \
-                    % str(state))
+        self._cidrs = dict.fromkeys(
+                (IPNetwork((value, prefixlen), version=version)
+                    for value, prefixlen, version in state),
+                True)
 
     def _compact_single_network(self, added_network):
         """
