@@ -775,14 +775,12 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
         if implicit_prefix:
             #TODO: deprecate this option in netaddr 0.8.x
             addr = cidr_abbrev_to_verbose(addr)
-        try:
-            if '/' in addr:
-                val1, val2 = addr.split('/', 1)
-            else:
-                val1 = addr
-                val2 = None
-        except ValueError:
-            raise AddrFormatError('invalid IPNetwork address %s!' % addr)
+
+        if '/' in addr:
+            val1, val2 = addr.split('/', 1)
+        else:
+            val1 = addr
+            val2 = None
 
         try:
             ip = IPAddress(val1, module.version, flags=INET_PTON)
