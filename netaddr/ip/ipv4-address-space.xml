@@ -4,8 +4,8 @@
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
   <category>Internet Protocol version 4 (IPv4) Address Space</category>
-  <updated>2014-03-19</updated>
-  <xref type="draft" data="RFC-housley-number-registries-04"/>
+  <updated>2014-05-20</updated>
+  <xref type="rfc" data="rfc7249"/>
   <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
 All other assignments require IETF Review.</registration_rule>
   <description>The allocation of Internet Protocol version 4 (IPv4) address space to various registries is listed
@@ -58,6 +58,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>006/8</prefix>
     <designation>Army Information Systems Center</designation>
     <date>1994-02</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -92,6 +93,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>011/8</prefix>
     <designation>DoD Intel Information Systems</designation>
     <date>1993-05</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -162,12 +164,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>021/8</prefix>
     <designation>DDN-RVN</designation>
     <date>1991-07</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>022/8</prefix>
     <designation>Defense Information Systems Agency</designation>
     <date>1993-05</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -195,6 +199,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>026/8</prefix>
     <designation>Defense Information Systems Agency</designation>
     <date>1995-05</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -208,18 +213,21 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>028/8</prefix>
     <designation>DSI-North</designation>
     <date>1992-07</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>029/8</prefix>
     <designation>Defense Information Systems Agency</designation>
     <date>1991-07</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>030/8</prefix>
     <designation>Defense Information Systems Agency</designation>
     <date>1991-07</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -240,6 +248,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>033/8</prefix>
     <designation>DLA Systems Automation Center</designation>
     <date>1991-01</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -392,6 +401,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>055/8</prefix>
     <designation>DoD Network Information Center</designation>
     <date>1995-04</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -1510,12 +1520,14 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <prefix>214/8</prefix>
     <designation>US-DOD</designation>
     <date>1998-03</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
     <prefix>215/8</prefix>
     <designation>US-DOD</designation>
     <date>1998-03</date>
+    <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
   <record>

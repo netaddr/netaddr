@@ -1,4 +1,5 @@
-  
+  Generated: Sun, 06 Jul 2014 05:00:02 -0400
+
   OUI     			Organization
   IAB Range    			Organization
   				Address
@@ -1692,8 +1693,8 @@
   00-50-C2	(hex)		QuesCom
   110000-110FFF	(base 16)	QuesCom
   				Arche des Dolines
-				7 rue Soutrane
-				06560 Valbonne  
+				79 Rue de Sevres
+				 92100 Boulogne Billancourt  
 				FRANCE
 
   00-50-C2	(hex)		Endusis Limited
@@ -13496,10 +13497,10 @@
 				Schweitenkirchen Bayern 85301
 				GERMANY
 
-  00-50-C2	(hex)		Oliotalo - Objecthouse Oy
-  872000-872FFF	(base 16)	Oliotalo - Objecthouse Oy
-  				Lämmittäjänkatu 4 B
-				Helsinki Uusimaa 00880
+  00-50-C2	(hex)		Oliotalo Oy
+  872000-872FFF	(base 16)	Oliotalo Oy
+  				Sinikalliontie 18 B
+				02630 Espoo  
 				FINLAND
 
   00-50-C2	(hex)		XRONET Corporation
@@ -14499,9 +14500,10 @@
 				Richardson TX 75080
 				UNITED STATES
 
-  00-50-C2	(hex)		Selex Sensors & Airborne Systems
-  913000-913FFF	(base 16)	Selex Sensors & Airborne Systems
-  				Christopher Martin Road
+  00-50-C2	(hex)		Selex Ex Ltd
+  913000-913FFF	(base 16)	Selex Ex Ltd
+  				A Finmeccanica Company
+				Christopher Martin Road
 				Basildon Essex SS14 3EL
 				UNITED KINGDOM
 

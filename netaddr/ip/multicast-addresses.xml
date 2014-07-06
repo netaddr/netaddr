@@ -3,7 +3,7 @@
 <?oxygen RNGSchema="multicast-addresses.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2014-03-05</updated>
+  <updated>2014-07-01</updated>
   <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
@@ -302,8 +302,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Inter RFID Reader Protocol</description>
       <xref type="person" data="Wayne_Wenyu_Liu"/>
     </record>
+    <record date="2014-07-01">
+      <addr>224.0.0.115</addr>
+      <description>JSDP</description>
+      <xref type="person" data="J._Ryan_Stinnett"/>
+    </record>
     <record>
-      <addr>224.0.0.115-224.0.0.250</addr>
+      <addr>224.0.0.116-224.0.0.250</addr>
       <description>Unassigned</description>
       <xref type="person" data="Jon_Postel"/>
     </record>
@@ -1281,7 +1286,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record date="2013-07-25">
       <addr>224.0.1.187</addr>
       <description>All CoAP Nodes</description>
-      <xref type="draft" data="RFC-ietf-core-coap-18"/>
+      <xref type="rfc" data="rfc7252"/>
     </record>
     <record>
       <addr>224.0.1.188-224.0.1.255</addr>
@@ -1860,8 +1865,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>JDP Java Discovery Protocol</description>
       <xref type="person" data="Florian_Weimer"/>
     </record>
+    <record date="2014-06-04">
+      <addr>224.0.23.179</addr>
+      <description>PixelPusher</description>
+      <xref type="person" data="Jasmine_Strong"/>
+    </record>
     <record>
-      <addr>224.0.23.179-224.0.23.191</addr>
+      <addr>224.0.23.180-224.0.23.191</addr>
       <description>Unassigned</description>
     </record>
     <record date="2008-08-12">
@@ -2023,10 +2033,10 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>NYSE Euronext</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
-    
-    <record>
+    <record date="2014-06-12">
       <addr>224.0.102.128-224.0.102.255</addr>
-      <description>Unassigned</description>
+      <description>MVS-IPTV-2</description>
+      <xref type="person" data="Andrew_Hoyos"/>
     </record>
     <record date="2011-04-20">
       <addr>224.0.103.0-224.0.104.255</addr>
@@ -2127,8 +2137,18 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>BATS Trading</description>
       <xref type="person" data="Andrew_Brown"/>
     </record>
+    <record date="2014-04-12">
+      <addr>224.0.132.0-224.0.135.255</addr>
+      <description>Net By Net Holding IPTV</description>
+      <xref type="person" data="Lev_V._Cherednikov"/>
+    </record>
+    <record date="2014-05-16">
+      <addr>224.0.136.0-224.0.139.255</addr>
+      <description>Aequitas Innovations Inc.</description>
+      <xref type="person" data="Zaklina_Petkovic_2"/>
+    </record>
     <record>
-      <addr>224.0.132.0-224.0.249.255</addr>
+      <addr>224.0.140.0-224.0.249.255</addr>
       <description>Unassigned</description>
     </record>
     
@@ -3015,6 +3035,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:itamar&amp;arootz.com</uri>
       <updated>2007-08-31</updated>
     </person>
+    <person id="J._Ryan_Stinnett">
+      <name>J. Ryan Stinnett</name>
+      <uri>mailto:jryans&amp;mozilla.com</uri>
+      <updated>2014-07-01</updated>
+    </person>
     <person id="James_Crawford">
       <name>James Crawford</name>
       <uri>mailto:jcrawford&amp;metropol.net</uri>
@@ -3034,6 +3059,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Jan Vitek</name>
       <uri>mailto:vitek&amp;selfservis.cz</uri>
       <updated>2013-01-15</updated>
+    </person>
+    <person id="Jasmine_Strong">
+      <name>Jasmine Strong</name>
+      <uri>mailto:jasmine&amp;heroicrobotics.com</uri>
+      <updated>2014-06-04</updated>
     </person>
     <person id="Javier_Landin">
       <name>Javier Landin</name>
@@ -3167,6 +3197,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Kristian A. Bognaes</name>
       <uri>mailto:kristian.bognaes&amp;norman.com</uri>
       <updated>2014-01-08</updated>
+    </person>
+    <person id="Lev_V._Cherednikov">
+      <name>Lev V. Cherednikov</name>
+      <uri>mailto:lev.cherednikov&amp;nbn-holding.ru</uri>
+      <updated>2014-04-12</updated>
     </person>
     <person id="Liming_Wei">
       <name>Liming Wei</name>
@@ -3766,6 +3801,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Zaklina Petkovic</name>
       <uri>mailto:zaklina.petkovic&amp;alphatradingsystems.ca</uri>
       <updated>2011-07-13</updated>
+    </person>
+    <person id="Zaklina_Petkovic_2">
+      <name>Zaklina Petkovic</name>
+      <uri>mailto:zaklina.petkovic&amp;aequin.com</uri>
+      <updated>2014-05-16</updated>
     </person>
     <person id="Zia_Bhatti">
       <name>Zia Bhatti</name>
