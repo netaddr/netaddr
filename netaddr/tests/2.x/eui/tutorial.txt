@@ -183,6 +183,6 @@ IAB('00-50-C2-00-00-00')
 {'address': ['1241 Superieor Ave E', 'Cleveland OH 44114', 'UNITED STATES'],
  'iab': '00-50-C2-00-00-00',
  ...
- 'offset': 80,
+ 'offset': 123,
  'org': 'T.L.S. Corp.',
  'size': 139}
