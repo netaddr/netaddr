@@ -1,5 +1,5 @@
 ============================
-netaddr 0.7.11 documentation
+netaddr 0.7.12 documentation
 ============================
 
 .. toctree::
