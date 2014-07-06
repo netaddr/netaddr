@@ -603,8 +603,8 @@ Adjacent, non-mergable CIDRs must be merged by iter_ipranges().
 [IPRange('10.0.0.1', '10.0.0.2')]
 
 IPv4 and IPv6 addresses must not be merged.
->>> list(IPSet([IPAddress(42, 4), IPAddress(43, 6)]).iter_ipranges())
-[IPRange('0.0.0.42', '0.0.0.42'), IPRange('::2b', '::2b')]
+>>> list(IPSet([IPAddress(1, 4), IPAddress(1, 6)]).iter_ipranges())
+[IPRange('0.0.0.1', '0.0.0.1'), IPRange('::1', '::1')]
 
 >>> s2 = IPSet(['0.0.0.0/0'])
 >>> s2.iscontiguous()
