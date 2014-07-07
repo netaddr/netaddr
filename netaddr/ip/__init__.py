@@ -1509,10 +1509,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             except ValueError:
                 return abbrev_cidr
 
-        if '.' in part_addr:
-            tokens = part_addr.split('.')
-        else:
-            tokens = [part_addr]
+        tokens = part_addr.split('.')
 
         if 1 <= len(tokens) <= 4:
             for i in range(4 - len(tokens)):
