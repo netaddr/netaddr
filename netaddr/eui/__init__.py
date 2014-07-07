@@ -293,13 +293,14 @@ class IAB(BaseIdentifier):
 
     def __str__(self):
         """:return: string representation of this IAB"""
-        int_val = self._value << 12
-        words = []
-        for _ in range(6):
-            word = int_val & 0xff
-            words.append('%02x' % word)
-            int_val >>= 8
-        return '-'.join(reversed(words)).upper()
+        int_val = self._value << 4
+
+        return "%02X-%02X-%02X-%02X-%02X-00" % (
+                (int_val >> 32) & 0xff,
+                (int_val >> 24) & 0xff,
+                (int_val >> 16) & 0xff,
+                (int_val >> 8) & 0xff,
+                int_val & 0xff)
 
     def __repr__(self):
         """:return: executable Python string to recreate equivalent object."""
