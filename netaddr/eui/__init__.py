@@ -242,10 +242,11 @@ class IAB(BaseIdentifier):
             #TODO: '00-50-C2' is actually invalid.
             #TODO: Should be '00-50-C2-00-00-00' (i.e. a full MAC/EUI-48)
             int_val = int(iab.replace('-', ''), 16)
-            (iab_int, user_int) = IAB.split_iab_mac(int_val, strict)
+            iab_int, user_int = self.split_iab_mac(int_val,
+                    strict=strict)
             self._value = iab_int
         elif _is_int(iab):
-            (iab_int, user_int) = IAB.split_iab_mac(iab, strict)
+            iab_int, user_int = self.split_iab_mac(iab, strict=strict)
             self._value = iab_int
         else:
             raise TypeError('unexpected IAB format: %r!' % iab)
