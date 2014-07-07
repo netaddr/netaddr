@@ -138,7 +138,7 @@ class OUI(BaseIdentifier):
 
             if '(hex)' in line:
                 record['idx'] = self._value
-                record['org'] = ' '.join(line.split()[2:])
+                record['org'] = line.split(None, 2)[2]
                 record['oui'] = str(self)
             elif '(base 16)' in line:
                 continue
@@ -280,7 +280,7 @@ class IAB(BaseIdentifier):
 
             if '(hex)' in line:
                 self.record['idx'] = self._value
-                self.record['org'] = ' '.join(line.split()[2:])
+                self.record['org'] = line.split(None, 2)[2]
                 self.record['iab'] = str(self)
             elif '(base 16)' in line:
                 continue
