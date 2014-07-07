@@ -671,3 +671,25 @@ False
 True
 
 }}}
+
+Various exceptions
+
+{{{
+
+>>> s1 = IPSet(['10.0.0.1'])
+
+>>> hash(s1)
+Traceback (most recent call last):
+TypeError: IP sets are unhashable!
+
+>>> s1.update(42)
+Traceback (most recent call last):
+TypeError: an iterable was expected!
+
+In the following cases, the exceptions are caught and translated to booleans.
+>>> s1 == 42
+False
+>>> s1 != 42
+True
+
+}}}
