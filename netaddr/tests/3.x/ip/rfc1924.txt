@@ -25,4 +25,9 @@ RFC specifies that "leading zeroes are never omitted"
 >>> base85_to_ipv6(base85)
 '1080::8:800:200c:417a'
 
+Invalid length for a base85 encoded IPv6 address
+>>> base85_to_ipv6('not 20 chars')
+Traceback (most recent call last):
+netaddr.core.AddrFormatError: Invalid base 85 IPv6 address: 'not 20 chars'
+
 }}}
