@@ -461,9 +461,9 @@ class EUI(BaseIdentifier):
     def ei(self):
         """The EI (Extension Identifier) for this EUI"""
         if self._module == _eui48:
-            return '-'.join(["%02x" % i for i in self[3:6]]).upper()
+            return '%02X-%02X-%02X' % tuple(self[3:6])
         elif self._module == _eui64:
-            return '-'.join(["%02x" % i for i in self[3:8]]).upper()
+            return '%02X-%02X-%02X-%02X-%02X' % tuple(self[3:8])
 
     def is_iab(self):
         """:return: True if this EUI is an IAB address, False otherwise"""
