@@ -643,12 +643,13 @@ class EUI(BaseIdentifier):
         int_val = 0xfe800000000000000000000000000000
 
         if self.version == 48:
-            eui64_tokens = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
-                ["%02x" % i for i in self[3:6]]
-            int_val += int(''.join(eui64_tokens), 16)
+            # Convert 11:22:33:44:55:66 into 11:22:33:FF:FE:44:55:66.
+            first_three = self._value >> 24
+            last_three = self._value & 0xffffff
+            int_val += (first_three << 40) | 0xfffe000000 | last_three
         else:
             int_val += self._value
-        
+
         # Modified EUI-64 format interface identifiers are formed by inverting
         # the "u" bit (universal/local bit in IEEE EUI-64 terminology) when
         # forming the interface identifier from IEEE EUI-64 identifiers.  In
@@ -657,7 +658,7 @@ class EUI(BaseIdentifier):
         # local scope.
         int_val ^= 0x00000000000000000200000000000000
 
-        return IPAddress(int_val, 6)
+        return IPAddress(int_val, version=6)
 
     @property
     def info(self):
