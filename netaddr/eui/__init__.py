@@ -288,7 +288,7 @@ class IAB(BaseIdentifier):
                 self.record['address'].append(line)
 
     def registration(self):
-        """ The IEEE registration details for this IAB"""
+        """The IEEE registration details for this IAB"""
         return DictDotLookup(self.record)
 
     def __str__(self):
@@ -326,8 +326,8 @@ class EUI(BaseIdentifier):
             an unsigned integer. May also be another EUI object (copy \
             construction).
 
-        :param version: (optional) the explict EUI address version. Mainly \
-            used to distinguish between EUI-48 and EUI-64 identifiers \
+        :param version: (optional) the explicit EUI address version, either \
+            48 or 64. Mainly used to distinguish EUI-48 and EUI-64 identifiers \
             specified as integers which may be numerically equivalent.
 
         :param dialect: (optional) the mac_* dialect to be used to configure \
@@ -501,7 +501,7 @@ class EUI(BaseIdentifier):
             raise TypeError('unsupported type %r!' % idx)
 
     def __setitem__(self, idx, value):
-        """Sets the value of the word referenced by index in this address"""
+        """Set the value of the word referenced by index in this address"""
         if isinstance(idx, slice):
             #   TODO - settable slices.
             raise NotImplementedError('settable slices are not supported!')
@@ -619,8 +619,8 @@ class EUI(BaseIdentifier):
         """
         - If this object represents an EUI-48 it is converted to EUI-64 \
             as per the standard.
-        - If this object is already and EUI-64, it just returns a new, \
-            numerically equivalent object is returned instead.
+        - If this object is already an EUI-64, a new, numerically \
+            equivalent object is returned instead.
 
         :return: The value of this EUI object as a new 64-bit EUI object.
         """
