@@ -625,10 +625,11 @@ class EUI(BaseIdentifier):
         :return: The value of this EUI object as a new 64-bit EUI object.
         """
         if self.version == 48:
-            eui64_words = ["%02x" % i for i in self[0:3]] + ['ff', 'fe'] + \
-                     ["%02x" % i for i in self[3:6]]
-
-            return self.__class__('-'.join(eui64_words))
+            # Convert 11:22:33:44:55:66 into 11:22:33:FF:FE:44:55:66.
+            first_three = self._value >> 24
+            last_three = self._value & 0xffffff
+            new_value = (first_three << 40) | 0xfffe000000 | last_three
+            return self.__class__(new_value, version=64)
         else:
             return EUI(str(self))
 
