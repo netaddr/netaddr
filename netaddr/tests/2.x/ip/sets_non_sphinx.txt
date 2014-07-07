@@ -13,6 +13,23 @@ This hits a special case in IPSet._compact_single_network()
 >>> s1
 IPSet(['10.0.0.0/24'])
 
+Various places must also accept integers.
+>>> integer1 = int(IPAddress('10.0.0.1'))
+>>> integer2 = int(IPAddress('fe80::'))
+>>> integer3 = int(IPAddress('10.0.0.2'))
+>>> s2 = IPSet([integer1, integer2])
+>>> s2
+IPSet(['10.0.0.1/32', 'fe80::/128'])
+>>> s2.add(integer3)
+>>> s2
+IPSet(['10.0.0.1/32', '10.0.0.2/32', 'fe80::/128'])
+>>> s2.remove(integer2)
+>>> s2
+IPSet(['10.0.0.1/32', '10.0.0.2/32'])
+>>> s2.update([integer2])
+>>> s2
+IPSet(['10.0.0.1/32', '10.0.0.2/32', 'fe80::/128'])
+
 ------------------------------
 Combined IPv4 and IPv6 support
 ------------------------------
