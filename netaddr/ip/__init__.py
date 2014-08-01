@@ -1456,7 +1456,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
         192.168             - 192.168.0.0/16
 
     :return: A verbose CIDR from an abbreviated CIDR or old-style classful \
-        network address, The original value if it was not recognised as a \
+        network address. The original value if it was not recognised as a \
         supported abbreviation.
     """
     #   Internal function that returns a prefix value based on the old IPv4
@@ -1475,8 +1475,6 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             return 4
         return 32                   #   Default.
 
-    start = ''
-    tokens = []
     prefix = None
 
     if _is_str(abbrev_cidr):
@@ -1485,13 +1483,11 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
     try:
         #   Single octet partial integer or string address.
         i = int(abbrev_cidr)
-        tokens = [str(i), '0', '0', '0']
-        return "%s%s/%s" % (start, '.'.join(tokens), classful_prefix(i))
+        return "%s.0.0.0/%s" % (i, classful_prefix(i))
 
     except ValueError:
         #   Multi octet partial string address with optional prefix.
         part_addr = abbrev_cidr
-        tokens = []
 
         if part_addr == '':
             #   Not a recognisable format.
@@ -1524,7 +1520,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             except ValueError:
                 return abbrev_cidr
 
-        return "%s%s/%s" % (start, '.'.join(tokens), prefix)
+        return "%s/%s" % ('.'.join(tokens), prefix)
 
     except TypeError:
         pass
