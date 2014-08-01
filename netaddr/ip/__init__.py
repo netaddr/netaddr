@@ -1475,44 +1475,36 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             return 4
         return 32                   #   Default.
 
-    prefix = None
-
     if _is_str(abbrev_cidr):
-        if ':' in abbrev_cidr:
+        if ':' in abbrev_cidr or abbrev_cidr == '':
             return abbrev_cidr
+
     try:
         #   Single octet partial integer or string address.
         i = int(abbrev_cidr)
         return "%s.0.0.0/%s" % (i, classful_prefix(i))
-
     except ValueError:
         #   Multi octet partial string address with optional prefix.
-        part_addr = abbrev_cidr
+        if '/' in abbrev_cidr:
+            part_addr, prefix = abbrev_cidr.split('/', 1)
 
-        if part_addr == '':
-            #   Not a recognisable format.
-            return abbrev_cidr
-
-        if '/' in part_addr:
-            (part_addr, prefix) = part_addr.split('/', 1)
-
-        #   Check prefix for validity.
-        if prefix is not None:
+            #   Check prefix for validity.
             try:
                 if not 0 <= int(prefix) <= 32:
                     raise ValueError('prefixlen in address %r out of range' \
                         ' for IPv4!' % abbrev_cidr)
             except ValueError:
                 return abbrev_cidr
+        else:
+            part_addr = abbrev_cidr
+            prefix = None
 
         tokens = part_addr.split('.')
-
-        if 1 <= len(tokens) <= 4:
-            for i in range(4 - len(tokens)):
-                tokens.append('0')
-        else:
+        if len(tokens) > 4:
             #   Not a recognisable format.
             return abbrev_cidr
+        for i in range(4 - len(tokens)):
+            tokens.append('0')
 
         if prefix is None:
             try:
@@ -1521,14 +1513,10 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
                 return abbrev_cidr
 
         return "%s/%s" % ('.'.join(tokens), prefix)
+    except (TypeError, IndexError):
+        #   Not a recognisable format.
+        return abbrev_cidr
 
-    except TypeError:
-        pass
-    except IndexError:
-        pass
-
-    #   Not a recognisable format.
-    return abbrev_cidr
 
 #-----------------------------------------------------------------------------
 def cidr_merge(ip_addrs):
