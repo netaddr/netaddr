@@ -65,8 +65,9 @@ def test_suite_all():
 #-----------------------------------------------------------------------------
 def run():
     runner = unittest.TextTestRunner()
-    runner.run(test_suite_all())
+    return runner.run(test_suite_all())
 
 #-----------------------------------------------------------------------------
 if __name__ == "__main__":
-    run()
+    result = run()
+    sys.exit(not result.wasSuccessful())
