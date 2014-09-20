@@ -636,6 +636,35 @@ class EUI(BaseIdentifier):
             new_value = self._value
         return self.__class__(new_value, version=64)
 
+    def modified_eui64(self):
+        """
+        - create a new EUI object with a modified EUI-64 as described in RFC 4291 section 2.5.1
+
+        :return: a new and modified 64-bit EUI object.
+        """
+        # Modified EUI-64 format interface identifiers are formed by inverting
+        # the "u" bit (universal/local bit in IEEE EUI-64 terminology) when
+        # forming the interface identifier from IEEE EUI-64 identifiers.  In
+        # the resulting Modified EUI-64 format, the "u" bit is set to one (1)
+        # to indicate universal scope, and it is set to zero (0) to indicate
+        # local scope.
+        eui64 = self.eui64()
+        eui64._value ^= 0x00000000000000000200000000000000
+        return eui64
+
+    def ipv6(self, prefix):
+        """
+        .. note:: This poses security risks in certain scenarios. \
+            Please read RFC 4941 for details. Reference: RFCs 4291 and 4941.
+
+        :param prefix: ipv6 prefix
+
+        :return: new IPv6 `IPAddress` object based on this `EUI` \
+            using the technique described in RFC 4291.
+        """
+        int_val = int(prefix) + int(self.modified_eui64())
+        return IPAddress(int_val, version=6)
+
     def ipv6_link_local(self):
         """
         .. note:: This poses security risks in certain scenarios. \
@@ -644,25 +673,7 @@ class EUI(BaseIdentifier):
         :return: new link local IPv6 `IPAddress` object based on this `EUI` \
             using the technique described in RFC 4291.
         """
-        int_val = 0xfe800000000000000000000000000000
-
-        if self.version == 48:
-            # Convert 11:22:33:44:55:66 into 11:22:33:FF:FE:44:55:66.
-            first_three = self._value >> 24
-            last_three = self._value & 0xffffff
-            int_val += (first_three << 40) | 0xfffe000000 | last_three
-        else:
-            int_val += self._value
-
-        # Modified EUI-64 format interface identifiers are formed by inverting
-        # the "u" bit (universal/local bit in IEEE EUI-64 terminology) when
-        # forming the interface identifier from IEEE EUI-64 identifiers.  In
-        # the resulting Modified EUI-64 format, the "u" bit is set to one (1)
-        # to indicate universal scope, and it is set to zero (0) to indicate
-        # local scope.
-        int_val ^= 0x00000000000000000200000000000000
-
-        return IPAddress(int_val, version=6)
+        return self.ipv6(0xfe800000000000000000000000000000)
 
     @property
     def info(self):
