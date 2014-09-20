@@ -631,9 +631,10 @@ class EUI(BaseIdentifier):
             first_three = self._value >> 24
             last_three = self._value & 0xffffff
             new_value = (first_three << 40) | 0xfffe000000 | last_three
-            return self.__class__(new_value, version=64)
         else:
-            return EUI(str(self))
+            # is already a EUI64
+            new_value = self._value
+        return self.__class__(new_value, version=64)
 
     def ipv6_link_local(self):
         """
