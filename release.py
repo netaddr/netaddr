@@ -17,13 +17,13 @@ keywords = [
     'IPv4', 'IPv6', 'CIDR', 'EUI', 'MAC', 'MAC-48', 'EUI-48', 'EUI-64'
 ]
 
-download_url = 'http://github.com/drkjam/netaddr/downloads'
+download_url = 'https://github.com/drkjam/netaddr/downloads'
 
 author = 'David P. D. Moss'
 
 author_email = 'drkjam@gmail.com'
 
-url = 'http://github.com/drkjam/netaddr/'
+url = 'https://github.com/drkjam/netaddr/'
 
 #   Required by distutils only.
 packages = [
@@ -82,11 +82,11 @@ Included are routines for :-
 
 For details on the latest updates and changes, see :-
 
-    http://github.com/drkjam/netaddr/blob/rel-0.7.x/CHANGELOG
+    https://github.com/drkjam/netaddr/blob/rel-0.7.x/CHANGELOG
 
 API documentation for the latest release is available here :-
 
-    http://packages.python.org/netaddr/
+    https://pythonhosted.org/netaddr/
 """
 
 platforms = 'OS Independent'
@@ -114,6 +114,8 @@ classifiers = [
     'Programming Language :: Python :: 3.0',
     'Programming Language :: Python :: 3.1',
     'Programming Language :: Python :: 3.2',
+    'Programming Language :: Python :: 3.3',
+    'Programming Language :: Python :: 3.4',
     'Topic :: Communications',
     'Topic :: Documentation',
     'Topic :: Education',
