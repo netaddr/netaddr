@@ -20,6 +20,9 @@ EUI('00-1B-77-49-54-FD')
 >>> eui
 EUI('00-1B-77-FF-FE-49-54-FD')
 
+>>> eui.eui64()
+EUI('00-1B-77-FF-FE-49-54-FD')
+
 >>> int(eui) == 7731765737772285
 True
 
@@ -48,8 +51,17 @@ EUI('00-1B-77-49-54-FD')
 >>> eui
 EUI('00-1B-77-FF-FE-49-54-FD')
 
+>>> mac.modified_eui64()
+EUI('02-1B-77-FF-FE-49-54-FD')
+
 >>> mac.ipv6_link_local()
 IPAddress('fe80::21b:77ff:fe49:54fd')
 
 >>> eui.ipv6_link_local()
 IPAddress('fe80::21b:77ff:fe49:54fd')
+
+>>> mac.ipv6(0x12340000000000000000000000000000)
+IPAddress('1234::21b:77ff:fe49:54fd')
+
+>>> eui.ipv6(0x12340000000000000000000000000000)
+IPAddress('1234::21b:77ff:fe49:54fd')
