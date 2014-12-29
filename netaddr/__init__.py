@@ -39,8 +39,8 @@ from netaddr.strategy.ipv4 import valid_str as valid_ipv4
 from netaddr.strategy.ipv6 import valid_str as valid_ipv6, ipv6_compact, \
     ipv6_full, ipv6_verbose
 
-from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_cisco, \
-    mac_bare, mac_pgsql, valid_str as valid_mac
+from netaddr.strategy.eui48 import mac_eui48, mac_unix, mac_unix_expanded, \
+        mac_cisco, mac_bare, mac_pgsql, valid_str as valid_mac
 
 __all__ = [
     #   Constants.
@@ -72,6 +72,7 @@ __all__ = [
 
     #   EUI-48 (MAC) dialect classes.
     'mac_bare', 'mac_cisco', 'mac_eui48', 'mac_pgsql', 'mac_unix',
+    'mac_unix_expanded',
 
     #   Validation functions.
     'valid_ipv4', 'valid_ipv6', 'valid_glob', 'valid_mac',

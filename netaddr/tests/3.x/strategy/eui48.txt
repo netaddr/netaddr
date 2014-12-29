@@ -66,6 +66,9 @@ True
 >>> int_to_str(i, mac_unix)
 '0:f:1f:12:e7:33'
 
+>>> int_to_str(i, mac_unix_expanded)
+'00:0f:1f:12:e7:33'
+
 >>> int_to_str(i, mac_cisco)
 '000f.1f12.e733'
 

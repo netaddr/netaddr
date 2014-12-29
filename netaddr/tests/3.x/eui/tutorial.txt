@@ -131,6 +131,10 @@ EUI('00-1B-77-49-54-FD')
 >>> mac
 EUI('0:1b:77:49:54:fd')
 
+>>> mac.dialect = mac_unix_expanded
+>>> mac
+EUI('00:1b:77:49:54:fd')
+
 >>> mac.dialect = mac_cisco
 >>> mac
 EUI('001b.7749.54fd')

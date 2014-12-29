@@ -78,6 +78,10 @@ class mac_unix(mac_eui48):
     word_fmt  = '%x'
     word_base = 16
 
+class mac_unix_expanded(mac_unix):
+    """A UNIX-style MAC address dialect class with leading zeroes."""
+    word_fmt  = '%.2x'
+
 class mac_cisco(mac_eui48):
     """A Cisco 'triple hextet' MAC address dialect class."""
     word_size = 16
