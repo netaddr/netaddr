@@ -72,6 +72,9 @@ True
 >>> int_to_str(i, mac_unix)
 '0:f:1f:12:e7:33'
 
+>>> int_to_str(i, mac_unix_expanded)
+'00:0f:1f:12:e7:33'
+
 >>> int_to_words(i, mac_unix)
 (0, 15, 31, 18, 231, 51)
 
