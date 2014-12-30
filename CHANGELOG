@@ -7,8 +7,14 @@ Date: 31st Dec 2014
 Changes since 0.7.12
 ^^^^^^^^^^^^^^^^^^^^
 
+* IPAddresses can now be added to/subtracted from each other
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+FIXED Issue 73: https://github.com/drkjam/netaddr/issues/73
+    - Adding IP Addresses
 
 ---------------
 Release: 0.7.12

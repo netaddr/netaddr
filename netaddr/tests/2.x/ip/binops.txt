@@ -8,7 +8,7 @@ Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
 
 }}}
 
-==Addition and Subtraction with integers ==
+==Addition and Subtraction ==
 
 {{{
 
@@ -20,6 +20,12 @@ IPAddress('192.0.2.1')
 
 >>> IPAddress('192.0.2.1') - 1
 IPAddress('192.0.2.0')
+
+>>> IPAddress('192.0.0.0') + IPAddress('0.0.0.42')
+IPAddress('192.0.0.42')
+
+>>> IPAddress('192.0.0.42') - IPAddress('0.0.0.42')
+IPAddress('192.0.0.0')
 
 >>> 1 - IPAddress('192.0.2.1')
 Traceback (most recent call last):
@@ -33,6 +39,12 @@ IPAddress('10.0.0.2')
 >>> ip -= 1
 >>> ip
 IPAddress('10.0.0.1')
+>>> ip += IPAddress('0.0.0.42')
+>>> ip
+IPAddress('10.0.0.43')
+>>> ip -= IPAddress('0.0.0.43')
+>>> ip
+IPAddress('10.0.0.0')
 
 }}}
 

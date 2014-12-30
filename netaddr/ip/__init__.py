@@ -389,7 +389,7 @@ class IPAddress(BaseIP):
 
         :param num: size of IP address increment.
         """
-        new_value = self._value + num
+        new_value = int(self._value + num)
         if 0 <= new_value <= self._module.max_int:
             self._value = new_value
             return self
@@ -404,7 +404,7 @@ class IPAddress(BaseIP):
 
         :param num: size of IP address decrement.
         """
-        new_value = self._value - num
+        new_value = int(self._value - num)
         if 0 <= new_value <= self._module.max_int:
             self._value = new_value
             return self
@@ -419,7 +419,7 @@ class IPAddress(BaseIP):
 
         :return: a new IPAddress object with its numerical value increased by num.
         """
-        new_value = self._value + num
+        new_value = int(self._value + num)
         if 0 <= new_value <= self._module.max_int:
             return self.__class__(new_value, self._module.version)
         raise IndexError('result outside valid IP address boundary!')
@@ -435,7 +435,7 @@ class IPAddress(BaseIP):
 
         :return: a new IPAddress object with its numerical value decreased by num.
         """
-        new_value = self._value - num
+        new_value = int(self._value - num)
         if 0 <= new_value <= self._module.max_int:
             return self.__class__(new_value, self._module.version)
         raise IndexError('result outside valid IP address boundary!')
@@ -449,7 +449,7 @@ class IPAddress(BaseIP):
 
         :return: a new IPAddress object with its numerical value decreased by num.
         """
-        new_value = num - self._value
+        new_value = int(num - self._value)
         if 0 <= new_value <= self._module.max_int:
             return self.__class__(new_value, self._module.version)
         raise IndexError('result outside valid IP address boundary!')
