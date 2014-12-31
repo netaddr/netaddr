@@ -4,7 +4,7 @@
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
   <category>Internet Protocol version 4 (IPv4) Address Space</category>
-  <updated>2014-05-20</updated>
+  <updated>2014-10-14</updated>
   <xref type="rfc" data="rfc7249"/>
   <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
 All other assignments require IETF Review.</registration_rule>
@@ -384,10 +384,11 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
-  <record>
+  <record updated="2014-10-14">
     <prefix>053/8</prefix>
-    <designation>Cap Debis CCS</designation>
+    <designation>Daimler AG</designation>
     <date>1993-10</date>
+    <whois>whois.ripe.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
@@ -411,10 +412,11 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <whois>whois.arin.net</whois>
     <status>LEGACY</status>
   </record>
-  <record>
+  <record updated="2014-10-14">
     <prefix>057/8</prefix>
-    <designation>SITA</designation>
+    <designation>Societe Internationale de Telecommunications Aeronautiques S.C.R.L.</designation>
     <date>1995-05</date>
+    <whois>whois.ripe.net</whois>
     <status>LEGACY</status>
   </record>
   <record>
