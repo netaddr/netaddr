@@ -8,7 +8,7 @@
 #
 SHELL = /bin/bash
 
-.PHONY = all clean build documentation download
+.PHONY = all clean dist docs download
 
 all:
 	@echo 'default target does nothing. try clean'
@@ -22,14 +22,21 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-build: clean download
-	@echo 'build netaddr release'
+dist: clean download docs
+	@echo 'building netaddr release'
 	python setup_egg.py develop
+	@echo 'building source distributions'
 	python setup.py sdist --formats=gztar,zip
+	@echo 'building egg package'
 	python setup_egg.py bdist_egg
+	@echo 'building wheel package'
+	pip install --upgrade pip
+	pip install wheel
+	python setup_egg.py bdist_wheel --universal
 
-documentation:
+docs:
 	@echo 'building documentation'
+	pip install sphinx
 	python setup_egg.py develop
 	cd docs/ && $(MAKE) -f Makefile clean html
 	cd docs/build/html && zip -r ../netaddr.zip *
@@ -48,4 +55,3 @@ download:
 register:
 	@echo 'releasing netaddr'
 	python setup_egg.py register
-
