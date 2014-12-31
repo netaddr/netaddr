@@ -7,7 +7,7 @@ Date: 31st Dec 2014
 Changes since 0.7.12
 ^^^^^^^^^^^^^^^^^^^^
 
-* IPAddresses can now be added to/subtracted from each other
+* IPAddress objects can now be added to/subtracted from each other
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
@@ -15,6 +15,12 @@ Specific bug fixes addressed in this release
 
 FIXED Issue 73: https://github.com/drkjam/netaddr/issues/73
     - Adding IP Addresses
+
+FIXED Issue 74: https://github.com/drkjam/netaddr/issues/74
+    - compute static global ipv6 addr from the net prefix and mac address
+
+FIXED Issue 75: https://github.com/drkjam/netaddr/issues/75
+    - add classifiers for python 3.3 and 3.4 support
 
 ---------------
 Release: 0.7.12
