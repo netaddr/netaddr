@@ -59,7 +59,7 @@ try:
         :return: the minimum number of bits needed to represent value provided.
         """
         return int_val.bit_length()
-except Exception:
+except AttributeError:
     # a.bit_length() excepted, must be an older Python version.
     def num_bits(int_val):
         """
