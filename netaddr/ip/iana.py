@@ -40,7 +40,7 @@ from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
 
 from netaddr.compat import _dict_items, _callable
 
-#-----------------------------------------------------------------------------
+
 
 #: Topic based lookup dictionary for IANA information.
 IANA_INFO = {
@@ -49,7 +49,7 @@ IANA_INFO = {
     'multicast' : {},
 }
 
-#-----------------------------------------------------------------------------
+
 
 class SaxRecordParser(handler.ContentHandler):
 
@@ -145,7 +145,7 @@ class XMLRecordParser(Publisher):
         """
         self.xmlparser.parse(self.fh)
 
-#-----------------------------------------------------------------------------
+
 class IPv4Parser(XMLRecordParser):
     """
     A XMLRecordParser that understands how to parse and retrieve data records
@@ -185,7 +185,7 @@ class IPv4Parser(XMLRecordParser):
 
         return record
 
-#-----------------------------------------------------------------------------
+
 class IPv6Parser(XMLRecordParser):
     """
     A XMLRecordParser that understands how to parse and retrieve data records
@@ -220,7 +220,7 @@ class IPv6Parser(XMLRecordParser):
 
         return record
 
-#-----------------------------------------------------------------------------
+
 class MulticastParser(XMLRecordParser):
     """
     A XMLRecordParser that knows how to process the IANA IPv4 multicast address
@@ -269,7 +269,7 @@ class MulticastParser(XMLRecordParser):
                 }
             return record
 
-#-----------------------------------------------------------------------------
+
 class DictUpdater(Subscriber):
     """
     Concrete Subscriber that inserts records received from a Publisher into a
@@ -316,7 +316,7 @@ class DictUpdater(Subscriber):
                 iprange = IPAddress(data_id)
             self.dct[iprange] = data
 
-#-----------------------------------------------------------------------------
+
 def load_info():
     """
     Parse and load internal IANA data lookups with the latest information from
@@ -336,7 +336,7 @@ def load_info():
     mcast.attach(DictUpdater(IANA_INFO['multicast'], 'multicast', 'address'))
     mcast.parse()
 
-#-----------------------------------------------------------------------------
+
 def pprint_info(fh=None):
     """
     Pretty prints IANA information to filehandle.
@@ -353,7 +353,7 @@ def pprint_info(fh=None):
             details = ipranges[iprange]
             fh.write('%-45r' % (iprange) + details + "\n")
 
-#-----------------------------------------------------------------------------
+
 def query(ip_addr):
     """
     Returns informational data specific to this IP address.
@@ -391,7 +391,7 @@ def query(ip_addr):
 
     return info
 
-#-----------------------------------------------------------------------------
+
 def get_latest_files():
     """Download the latest files from IANA"""
     if _sys.version_info[0] == 3:
@@ -422,7 +422,6 @@ def get_latest_files():
         dos2unix(filename)
 
 
-#-----------------------------------------------------------------------------
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
     get_latest_files()

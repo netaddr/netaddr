@@ -10,7 +10,7 @@ from netaddr.ip import IPAddress
 
 from netaddr.compat import _zip
 
-#-----------------------------------------------------------------------------
+
 def chr_range(low, high):
     """Returns all characters between low and high chars."""
     return [chr(i) for i in range(ord(low), ord(high)+1)]
@@ -23,7 +23,7 @@ BASE_85 = chr_range('0', '9') + chr_range('A', 'Z') + chr_range('a', 'z') + \
 #: Base 85 digit to integer lookup table.
 BASE_85_DICT = dict(_zip(BASE_85, range(0, 86)))
 
-#-----------------------------------------------------------------------------
+
 def ipv6_to_base85(addr):
     """Convert a regular IPv6 address to base 85."""
     ip = IPAddress(addr)
@@ -38,7 +38,7 @@ def ipv6_to_base85(addr):
     leading_zeroes = (20 - len(encoded)) * "0"
     return leading_zeroes + encoded
 
-#-----------------------------------------------------------------------------
+
 def base85_to_ipv6(addr):
     """
     Convert a base 85 IPv6 address to its hexadecimal format.

@@ -12,7 +12,7 @@ from netaddr.core import AddrFormatError, AddrConversionError
 from netaddr.ip import IPRange, IPAddress, IPNetwork, iprange_to_cidrs
 from netaddr.compat import _is_str
 
-#-----------------------------------------------------------------------------
+
 def valid_glob(ipglob):
     """
     :param ipglob: An IP address range in a glob-style format.
@@ -66,7 +66,7 @@ def valid_glob(ipglob):
                 return False
     return True
 
-#-----------------------------------------------------------------------------
+
 def glob_to_iptuple(ipglob):
     """
     A function that accepts a glob-style IP range and returns the component
@@ -96,7 +96,7 @@ def glob_to_iptuple(ipglob):
 
     return IPAddress('.'.join(start_tokens)), IPAddress('.'.join(end_tokens))
 
-#-----------------------------------------------------------------------------
+
 def glob_to_iprange(ipglob):
     """
     A function that accepts a glob-style IP range and returns the equivalent
@@ -126,7 +126,7 @@ def glob_to_iprange(ipglob):
 
     return IPRange('.'.join(start_tokens), '.'.join(end_tokens))
 
-#-----------------------------------------------------------------------------
+
 def iprange_to_globs(start, end):
     """
     A function that accepts an arbitrary start and end IP address or subnet
@@ -200,7 +200,7 @@ def iprange_to_globs(start, end):
 
     return globs
 
-#-----------------------------------------------------------------------------
+
 def glob_to_cidrs(ipglob):
     """
     A function that accepts a glob-style IP range and returns a list of one
@@ -212,7 +212,7 @@ def glob_to_cidrs(ipglob):
     """
     return iprange_to_cidrs(*glob_to_iptuple(ipglob))
 
-#-----------------------------------------------------------------------------
+
 def cidr_to_glob(cidr):
     """
     A function that accepts an IP subnet in a glob-style format and returns
@@ -230,7 +230,7 @@ def cidr_to_glob(cidr):
         raise AddrConversionError('bad CIDR to IP glob conversion!')
     return globs[0]
 
-#-----------------------------------------------------------------------------
+
 class IPGlob(IPRange):
     """
     Represents an IP address range using a glob-style syntax ``x.x.x-y.*``

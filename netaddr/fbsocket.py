@@ -12,7 +12,7 @@ from netaddr.compat import _bytes_join, _is_str
 AF_INET   =  2
 AF_INET6  = 10
 
-#-----------------------------------------------------------------------------
+
 def inet_ntoa(packed_ip):
     """
     Convert an IP address from 32-bit packed binary format to string format.
@@ -25,7 +25,7 @@ def inet_ntoa(packed_ip):
 
     return '%d.%d.%d.%d' % _unpack('4B', packed_ip)
 
-#-----------------------------------------------------------------------------
+
 def _compact_ipv6_tokens(tokens):
     new_tokens = []
 
@@ -73,7 +73,7 @@ def _compact_ipv6_tokens(tokens):
 
     return new_tokens
 
-#-----------------------------------------------------------------------------
+
 def inet_ntop(af, packed_ip):
     """Convert an packed IP address of the given family to string format."""
     if af == AF_INET:
@@ -104,7 +104,7 @@ def inet_ntop(af, packed_ip):
     else:
         raise ValueError('unknown address family %d' % af)
 
-#-----------------------------------------------------------------------------
+
 def _inet_pton_af_inet(ip_string):
     """
     Convert an IP address in string format (123.45.67.89) to the 32-bit packed
@@ -139,7 +139,7 @@ def _inet_pton_af_inet(ip_string):
 
     raise ValueError('argument should be a string, not %s' % type(ip_string))
 
-#-----------------------------------------------------------------------------
+
 def inet_pton(af, ip_string):
     """
     Convert an IP address from string format to a packed string suitable for

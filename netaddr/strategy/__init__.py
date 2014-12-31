@@ -10,7 +10,7 @@ import re as _re
 
 from netaddr.compat import _range, _is_str
 
-#-----------------------------------------------------------------------------
+
 def bytes_to_bits():
     """
     :return: A 256 element list containing 8-bit binary digit strings. The
@@ -29,7 +29,7 @@ def bytes_to_bits():
 #: A lookup table of 8-bit integer values to their binary digit bit strings.
 BYTES_TO_BITS = bytes_to_bits()
 
-#-----------------------------------------------------------------------------
+
 def valid_words(words, word_size, num_words):
     """
     :param words: A sequence of unsigned integer word values.
@@ -55,7 +55,7 @@ def valid_words(words, word_size, num_words):
 
     return True
 
-#-----------------------------------------------------------------------------
+
 def int_to_words(int_val, word_size, num_words):
     """
     :param int_val: Unsigned integer to be divided into words of equal size.
@@ -82,7 +82,7 @@ def int_to_words(int_val, word_size, num_words):
 
     return tuple(reversed(words))
 
-#-----------------------------------------------------------------------------
+
 def words_to_int(words, word_size, num_words):
     """
     :param words: A sequence of unsigned integer word values.
@@ -105,7 +105,7 @@ def words_to_int(words, word_size, num_words):
 
     return int_val
 
-#-----------------------------------------------------------------------------
+
 def valid_bits(bits, width, word_sep=''):
     """
     :param bits: A network address in a delimited binary string format.
@@ -137,7 +137,7 @@ def valid_bits(bits, width, word_sep=''):
 
     return False
 
-#-----------------------------------------------------------------------------
+
 def bits_to_int(bits, width, word_sep=''):
     """
     :param bits: A network address in a delimited binary string format.
@@ -159,7 +159,7 @@ def bits_to_int(bits, width, word_sep=''):
 
     return int(bits, 2)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bits(int_val, word_size, num_words, word_sep=''):
     """
     :param int_val: An unsigned integer.
@@ -193,7 +193,7 @@ def int_to_bits(int_val, word_size, num_words, word_sep=''):
 
     return word_sep.join(bit_words)
 
-#-----------------------------------------------------------------------------
+
 def valid_bin(bin_val, width):
     """
     :param bin_val: A network address in Python's binary representation format
@@ -225,7 +225,7 @@ def valid_bin(bin_val, width):
 
     return False
 
-#-----------------------------------------------------------------------------
+
 def int_to_bin(int_val, width):
     """
     :param int_val: An unsigned integer.
@@ -256,7 +256,7 @@ def int_to_bin(int_val, width):
 
     return bin_val
 
-#-----------------------------------------------------------------------------
+
 def bin_to_int(bin_val, width):
     """
     :param bin_val: A string containing an unsigned integer in Python's binary

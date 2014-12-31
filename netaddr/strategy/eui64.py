@@ -61,7 +61,7 @@ max_word = 2 ** word_size - 1
 RE_EUI64_FORMAT = _re.compile('^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$',
     _re.IGNORECASE)
 
-#-----------------------------------------------------------------------------
+
 def valid_str(addr):
     """
     :param addr: An IEEE EUI-64 indentifier in string form.
@@ -77,7 +77,7 @@ def valid_str(addr):
 
     return False
 
-#-----------------------------------------------------------------------------
+
 def str_to_int(addr):
     """
     :param addr: An IEEE EUI-64 indentifier in string form.
@@ -102,7 +102,7 @@ def str_to_int(addr):
 
     return int(''.join(['%.2x' % int(w, 16) for w in words]), 16)
 
-#-----------------------------------------------------------------------------
+
 def int_to_str(int_val, dialect=None):
     """
     :param int_val: An unsigned integer.
@@ -117,7 +117,7 @@ def int_to_str(int_val, dialect=None):
     addr = word_sep.join(tokens)
     return addr
 
-#-----------------------------------------------------------------------------
+
 def int_to_packed(int_val):
     """
     :param int_val: the integer to be packed.
@@ -128,7 +128,7 @@ def int_to_packed(int_val):
     words = int_to_words(int_val)
     return _struct.pack('>8B', *words)
 
-#-----------------------------------------------------------------------------
+
 def packed_to_int(packed_int):
     """
     :param packed_int: a packed string containing an unsigned integer.
@@ -147,38 +147,38 @@ def packed_to_int(packed_int):
 
     return int_val
 
-#-----------------------------------------------------------------------------
+
 def valid_words(words, dialect=None):
     return _valid_words(words, word_size, num_words)
 
-#-----------------------------------------------------------------------------
+
 def int_to_words(int_val, dialect=None):
     return _int_to_words(int_val, word_size, num_words)
 
-#-----------------------------------------------------------------------------
+
 def words_to_int(words, dialect=None):
     return _words_to_int(words, word_size, num_words)
 
-#-----------------------------------------------------------------------------
+
 def valid_bits(bits, dialect=None):
     return _valid_bits(bits, width, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def bits_to_int(bits, dialect=None):
     return _bits_to_int(bits, width, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bits(int_val, dialect=None):
     return _int_to_bits(int_val, word_size, num_words, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def valid_bin(bin_val):
     return _valid_bin(bin_val, width)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bin(int_val):
     return _int_to_bin(int_val, width)
 
-#-----------------------------------------------------------------------------
+
 def bin_to_int(bin_val):
     return _bin_to_int(bin_val, width)

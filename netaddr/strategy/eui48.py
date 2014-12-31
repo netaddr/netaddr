@@ -133,7 +133,7 @@ RE_MAC_FORMATS = (
 #   counterpart.
 RE_MAC_FORMATS = [_re.compile(_, _re.IGNORECASE) for _ in RE_MAC_FORMATS]
 
-#-----------------------------------------------------------------------------
+
 def valid_str(addr):
     """
     :param addr: An IEEE EUI-48 (MAC) address in string form.
@@ -150,7 +150,7 @@ def valid_str(addr):
 
     return False
 
-#-----------------------------------------------------------------------------
+
 def str_to_int(addr):
     """
     :param addr: An IEEE EUI-48 (MAC) address in string form.
@@ -196,7 +196,7 @@ def str_to_int(addr):
 
     return int_val
 
-#-----------------------------------------------------------------------------
+
 def int_to_str(int_val, dialect=None):
     """
     :param int_val: An unsigned integer.
@@ -215,7 +215,7 @@ def int_to_str(int_val, dialect=None):
 
     return addr
 
-#-----------------------------------------------------------------------------
+
 def int_to_packed(int_val):
     """
     :param int_val: the integer to be packed.
@@ -225,7 +225,7 @@ def int_to_packed(int_val):
     """
     return _struct.pack(">HI", int_val >> 32, int_val & 0xffffffff)
 
-#-----------------------------------------------------------------------------
+
 def packed_to_int(packed_int):
     """
     :param packed_int: a packed string containing an unsigned integer.
@@ -244,53 +244,53 @@ def packed_to_int(packed_int):
 
     return int_val
 
-#-----------------------------------------------------------------------------
+
 def valid_words(words, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _valid_words(words, dialect.word_size, dialect.num_words)
 
-#-----------------------------------------------------------------------------
+
 def int_to_words(int_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _int_to_words(int_val, dialect.word_size, dialect.num_words)
 
-#-----------------------------------------------------------------------------
+
 def words_to_int(words, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _words_to_int(words, dialect.word_size, dialect.num_words)
 
-#-----------------------------------------------------------------------------
+
 def valid_bits(bits, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _valid_bits(bits, width, dialect.word_sep)
 
-#-----------------------------------------------------------------------------
+
 def bits_to_int(bits, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _bits_to_int(bits, width, dialect.word_sep)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bits(int_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _int_to_bits(int_val, dialect.word_size, dialect.num_words,
         dialect.word_sep)
 
-#-----------------------------------------------------------------------------
+
 def valid_bin(bin_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _valid_bin(bin_val, width)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bin(int_val):
     return _int_to_bin(int_val, width)
 
-#-----------------------------------------------------------------------------
+
 def bin_to_int(bin_val):
     return _bin_to_int(bin_val, width)

@@ -15,7 +15,7 @@ from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 from netaddr.compat import _sys_maxint, _iter_range, _is_str, _int_type, \
     _str_type
 
-#-----------------------------------------------------------------------------
+
 class BaseIP(object):
     """
     An abstract base class for common operations shared between various IP
@@ -228,7 +228,7 @@ class BaseIP(object):
         return self._module.version
 
 
-#-----------------------------------------------------------------------------
+
 class IPAddress(BaseIP):
     """
     An individual IPv4 or IPv6 address without a net mask or subnet prefix.
@@ -656,7 +656,7 @@ class IPAddress(BaseIP):
         """:return: Python statement to create an equivalent object"""
         return "%s('%s')" % (self.__class__.__name__, self)
 
-#-----------------------------------------------------------------------------
+
 class IPListMixin(object):
     """
     A mixin class providing shared list-like functionality to classes
@@ -756,7 +756,7 @@ class IPListMixin(object):
 
     __bool__ = __nonzero__  #   Python 3.x.
 
-#-----------------------------------------------------------------------------
+
 def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
     if isinstance(addr, tuple):
         #   CIDR integer tuple
@@ -824,7 +824,7 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
 
     return value, prefixlen
 
-#-----------------------------------------------------------------------------
+
 class IPNetwork(BaseIP, IPListMixin):
     """
     An IPv4 or IPv6 network or subnet.
@@ -1313,7 +1313,7 @@ class IPNetwork(BaseIP, IPListMixin):
         """:return: Python statement to create an equivalent object"""
         return "%s('%s')" % (self.__class__.__name__, self)
 
-#-----------------------------------------------------------------------------
+
 class IPRange(BaseIP, IPListMixin):
     """
     An arbitrary IPv4 or IPv6 address range.
@@ -1422,7 +1422,7 @@ class IPRange(BaseIP, IPListMixin):
         return "%s('%s', '%s')" % (self.__class__.__name__,
             self._start, self._end)
 
-#-----------------------------------------------------------------------------
+
 def iter_unique_ips(*args):
     """
     :param args: A list of IP addresses and subnets passed in as arguments.
@@ -1434,7 +1434,7 @@ def iter_unique_ips(*args):
         for ip in cidr:
             yield ip
 
-#-----------------------------------------------------------------------------
+
 def cidr_abbrev_to_verbose(abbrev_cidr):
     """
     A function that converts abbreviated IPv4 CIDRs to their more verbose
@@ -1518,7 +1518,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
         return abbrev_cidr
 
 
-#-----------------------------------------------------------------------------
+
 def cidr_merge(ip_addrs):
     """
     A function that accepts an iterable sequence of IP addresses and subnets
@@ -1564,7 +1564,7 @@ def cidr_merge(ip_addrs):
             merged.extend(iprange_to_cidrs(range_start, range_stop))
     return merged
 
-#-----------------------------------------------------------------------------
+
 def cidr_exclude(target, exclude):
     """
     Removes an exclude IP address or subnet from target IP subnet.
@@ -1638,7 +1638,7 @@ def cidr_partition(target, exclude):
 
     return left, [exclude], right[::-1]
 
-#-----------------------------------------------------------------------------
+
 def spanning_cidr(ip_addrs):
     """
     Function that accepts a sequence of IP addresses and subnets returning
@@ -1672,7 +1672,7 @@ def spanning_cidr(ip_addrs):
 
     return IPNetwork( (ipnum, prefixlen), version=lowest_ip.version )
 
-#-----------------------------------------------------------------------------
+
 def iter_iprange(start, end, step=1):
     """
     A generator that produces IPAddress objects between an arbitrary start
@@ -1719,7 +1719,7 @@ def iter_iprange(start, end, step=1):
         yield IPAddress(index, version)
 
 
-#-----------------------------------------------------------------------------
+
 def iprange_to_cidrs(start, end):
     """
     A function that accepts an arbitrary start and end IP address or subnet
@@ -1755,7 +1755,7 @@ def iprange_to_cidrs(start, end):
 
     return cidr_list
 
-#-----------------------------------------------------------------------------
+
 def smallest_matching_cidr(ip, cidrs):
     """
     Matches an IP address or subnet against a given sequence of IP addresses
@@ -1784,7 +1784,7 @@ def smallest_matching_cidr(ip, cidrs):
 
     return match
 
-#-----------------------------------------------------------------------------
+
 def largest_matching_cidr(ip, cidrs):
     """
     Matches an IP address or subnet against a given sequence of IP addresses
@@ -1811,7 +1811,7 @@ def largest_matching_cidr(ip, cidrs):
 
     return match
 
-#-----------------------------------------------------------------------------
+
 def all_matching_cidrs(ip, cidrs):
     """
     Matches an IP address or subnet against a given sequence of IP addresses

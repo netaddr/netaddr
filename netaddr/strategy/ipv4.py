@@ -79,7 +79,7 @@ prefix_to_hostmask = dict(
 hostmask_to_prefix = dict(
     [((2 ** (width - i) - 1), i) for i in range(0, width+1)])
 
-#-----------------------------------------------------------------------------
+
 def valid_str(addr, flags=0):
     """
     :param addr: An IPv4 address in presentation (string) format.
@@ -108,7 +108,7 @@ def valid_str(addr, flags=0):
 
     return validity
 
-#-----------------------------------------------------------------------------
+
 def str_to_int(addr, flags=0):
     """
     :param addr: An IPv4 dotted decimal address in string form.
@@ -130,7 +130,7 @@ def str_to_int(addr, flags=0):
     except Exception:
         raise AddrFormatError('%r is not a valid IPv4 address string!' % addr)
 
-#-----------------------------------------------------------------------------
+
 def int_to_str(int_val, dialect=None):
     """
     :param int_val: An unsigned integer.
@@ -150,7 +150,7 @@ def int_to_str(int_val, dialect=None):
         raise ValueError('%r is not a valid 32-bit unsigned integer!' \
             % int_val)
 
-#-----------------------------------------------------------------------------
+
 def int_to_arpa(int_val):
     """
     :param int_val: An unsigned integer.
@@ -163,7 +163,7 @@ def int_to_arpa(int_val):
     words.extend(['in-addr', 'arpa', ''])
     return '.'.join(words)
 
-#-----------------------------------------------------------------------------
+
 def int_to_packed(int_val):
     """
     :param int_val: the integer to be packed.
@@ -173,7 +173,7 @@ def int_to_packed(int_val):
     """
     return _struct.pack('>I', int_val)
 
-#-----------------------------------------------------------------------------
+
 def packed_to_int(packed_int):
     """
     :param packed_int: a packed string containing an unsigned integer.
@@ -184,11 +184,11 @@ def packed_to_int(packed_int):
     """
     return _struct.unpack('>I', packed_int)[0]
 
-#-----------------------------------------------------------------------------
+
 def valid_words(words):
     return _valid_words(words, word_size, num_words)
 
-#-----------------------------------------------------------------------------
+
 def int_to_words(int_val):
     """
     :param int_val: An unsigned integer.
@@ -204,7 +204,7 @@ def int_to_words(int_val):
             (int_val >>  8) & 0xff,
              int_val & 0xff)
 
-#-----------------------------------------------------------------------------
+
 def words_to_int(words):
     """
     :param words: A list or tuple containing integer octets.
@@ -217,33 +217,33 @@ def words_to_int(words):
             'address!' % words)
     return _struct.unpack('>I', _struct.pack('4B', *words))[0]
 
-#-----------------------------------------------------------------------------
+
 def valid_bits(bits):
     return _valid_bits(bits, width, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def bits_to_int(bits):
     return _bits_to_int(bits, width, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bits(int_val, word_sep=None):
     if word_sep is None:
         word_sep = globals()['word_sep']
     return _int_to_bits(int_val, word_size, num_words, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def valid_bin(bin_val):
     return _valid_bin(bin_val, width)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bin(int_val):
     return _int_to_bin(int_val, width)
 
-#-----------------------------------------------------------------------------
+
 def bin_to_int(bin_val):
     return _bin_to_int(bin_val, width)
 
-#-----------------------------------------------------------------------------
+
 def expand_partial_address(addr):
     """
     Expands a partial IPv4 address into a full 4-octet version.

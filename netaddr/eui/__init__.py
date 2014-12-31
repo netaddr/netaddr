@@ -16,7 +16,7 @@ from netaddr.ip import IPAddress
 
 from netaddr.compat import _is_int, _is_str
 
-#-----------------------------------------------------------------------------
+
 class BaseIdentifier(object):
     """Base class for all IEEE identifiers."""
     __slots__ = ('_value',)
@@ -63,7 +63,7 @@ class BaseIdentifier(object):
             return NotImplemented
 
 
-#-----------------------------------------------------------------------------
+
 class OUI(BaseIdentifier):
     """
     An individual IEEE OUI (Organisationally Unique Identifier).
@@ -176,7 +176,7 @@ class OUI(BaseIdentifier):
         """:return: executable Python string to recreate equivalent object."""
         return "OUI('%s')" % self
 
-#-----------------------------------------------------------------------------
+
 class IAB(BaseIdentifier):
     """
     An individual IEEE IAB (Individual Address Block) identifier.
@@ -307,7 +307,7 @@ class IAB(BaseIdentifier):
         """:return: executable Python string to recreate equivalent object."""
         return "IAB('%s')" % self
 
-#-----------------------------------------------------------------------------
+
 class EUI(BaseIdentifier):
     """
     An IEEE EUI (Extended Unique Identifier).

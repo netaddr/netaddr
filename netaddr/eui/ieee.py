@@ -37,7 +37,6 @@ import csv as _csv
 
 from netaddr.core import Subscriber, Publisher
 
-#-----------------------------------------------------------------------------
 
 #: Path to local copy of IEEE OUI Registry data file.
 OUI_REGISTRY = _path.join(_path.dirname(__file__), 'oui.txt')
@@ -56,7 +55,7 @@ IAB_METADATA = _path.join(_path.dirname(__file__), 'iab.idx')
 #: IAB index lookup dictionary.
 IAB_INDEX = {}
 
-#-----------------------------------------------------------------------------
+
 class FileIndexer(Subscriber):
     """
     A concrete Subscriber that receives OUI record offset information that is
@@ -84,7 +83,7 @@ class FileIndexer(Subscriber):
         """
         self.writer.writerow(data)
 
-#-----------------------------------------------------------------------------
+
 class OUIIndexParser(Publisher):
     """
     A concrete Publisher that parses OUI (Organisationally Unique Identifier)
@@ -163,7 +162,7 @@ class OUIIndexParser(Publisher):
         record.append(size)
         self.notify(record)
 
-#-----------------------------------------------------------------------------
+
 class IABIndexParser(Publisher):
     """
     A concrete Publisher that parses IAB (Individual Address Block) records
@@ -247,7 +246,7 @@ class IABIndexParser(Publisher):
         record.append(size)
         self.notify(record)
 
-#-----------------------------------------------------------------------------
+
 def create_indices():
     """Create indices for OUI and IAB file based lookups"""
     oui_parser = OUIIndexParser(OUI_REGISTRY)
@@ -258,7 +257,7 @@ def create_indices():
     iab_parser.attach(FileIndexer(IAB_METADATA))
     iab_parser.parse()
 
-#-----------------------------------------------------------------------------
+
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
     fp = open(OUI_METADATA)
@@ -279,7 +278,7 @@ def load_indices():
     finally:
         fp.close()
 
-#-----------------------------------------------------------------------------
+
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
     create_indices()

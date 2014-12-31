@@ -14,7 +14,7 @@ import unittest
 
 sys.path.insert(0, abspath(pathjoin(dirname(__file__), '..', '..')))
 
-#-----------------------------------------------------------------------------
+
 def test_suite_all():
 
     test_dirs = [
@@ -62,12 +62,12 @@ def test_suite_all():
 
     return suite
 
-#-----------------------------------------------------------------------------
+
 def run():
     runner = unittest.TextTestRunner()
     return runner.run(test_suite_all())
 
-#-----------------------------------------------------------------------------
+
 if __name__ == "__main__":
     result = run()
     sys.exit(not result.wasSuccessful())

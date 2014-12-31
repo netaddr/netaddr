@@ -15,7 +15,7 @@ from netaddr.core import AddrFormatError
 from netaddr.ip import IPAddress
 from netaddr.compat import _iter_range, _is_str
 
-#-----------------------------------------------------------------------------
+
 def _nmap_octet_target_values(spec):
     #   Generates sequence of values for an individual octet as defined in the
     #   nmap Target Specification.
@@ -44,7 +44,7 @@ def _nmap_octet_target_values(spec):
 
     return sorted(values)
 
-#-----------------------------------------------------------------------------
+
 def _generate_nmap_octet_ranges(nmap_target_spec):
     #   Generate 4 lists containing all octets defined by a given nmap Target
     #   specification.
@@ -64,7 +64,7 @@ def _generate_nmap_octet_ranges(nmap_target_spec):
             _nmap_octet_target_values(tokens[2]),
             _nmap_octet_target_values(tokens[3]))
 
-#-----------------------------------------------------------------------------
+
 def valid_nmap_range(nmap_target_spec):
     """
     :param nmap_target_spec: an nmap-style IP range target specification.
@@ -78,7 +78,7 @@ def valid_nmap_range(nmap_target_spec):
         pass
     return False
 
-#-----------------------------------------------------------------------------
+
 def iter_nmap_range(nmap_target_spec):
     """
     The nmap security tool supports a custom type of IPv4 range using multiple

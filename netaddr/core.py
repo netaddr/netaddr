@@ -31,7 +31,7 @@ class AddrFormatError(Exception):
     """
     pass
 
-#-----------------------------------------------------------------------------
+
 class AddrConversionError(Exception):
     """
     An Exception indicating a failure to convert between address types or
@@ -39,7 +39,7 @@ class AddrConversionError(Exception):
     """
     pass
 
-#-----------------------------------------------------------------------------
+
 class NotRegisteredError(Exception):
     """
     An Exception indicating that an OUI or IAB was not found in the IEEE
@@ -47,7 +47,7 @@ class NotRegisteredError(Exception):
     """
     pass
 
-#-----------------------------------------------------------------------------
+
 try:
     a = 42
     a.bit_length()
@@ -73,7 +73,7 @@ except Exception:
             int_val >>= 1
         return numbits
 
-#-----------------------------------------------------------------------------
+
 class Subscriber(object):
     """
     An abstract class defining the interface expected by a Publisher.
@@ -87,7 +87,7 @@ class Subscriber(object):
         """
         raise NotImplementedError('cannot invoke virtual method!')
 
-#-----------------------------------------------------------------------------
+
 class PrettyPrinter(Subscriber):
     """
     A concrete Subscriber that employs the pprint in the standard library to
@@ -121,7 +121,7 @@ class PrettyPrinter(Subscriber):
         if self.write_eol:
             self.fh.write("\n")
 
-#-----------------------------------------------------------------------------
+
 class Publisher(object):
     """
     A 'push' Publisher that maintains a list of Subscriber objects notifying
@@ -168,7 +168,7 @@ class Publisher(object):
         for subscriber in self.subscribers:
             subscriber.update(data)
 
-#-----------------------------------------------------------------------------
+
 class DictDotLookup(object):
     """
     Creates objects that behave much like a dictionaries, but allow nested
@@ -203,7 +203,7 @@ class DictDotLookup(object):
     def __repr__(self):
         return _pprint.pformat(self.__dict__)
 
-#-----------------------------------------------------------------------------
+
 def dos2unix(filename):
     """
     Replace DOS line endings (CRLF) with UNIX line endings (LF) in file.
