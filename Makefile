@@ -8,7 +8,7 @@
 #
 SHELL = /bin/bash
 
-.PHONY = all clean dist docs download
+.PHONY = all clean dist doc download
 
 all:
 	@echo 'default target does nothing. try clean'
@@ -22,7 +22,7 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-dist: clean download docs
+dist: clean download doc
 	@echo 'building netaddr release'
 	python setup_egg.py develop
 	@echo 'building source distributions'
@@ -34,7 +34,7 @@ dist: clean download docs
 	pip install wheel
 	python setup_egg.py bdist_wheel --universal
 
-docs:
+doc:
 	@echo 'building documentation'
 	pip install sphinx
 	python setup_egg.py develop
