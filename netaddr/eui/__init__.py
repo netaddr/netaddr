@@ -55,12 +55,37 @@ class BaseIdentifier(object):
     def __eq__(self, other):
         """
         :return: ``True`` if this BaseIdentifier object is numerically the
-            same as other, ``False`` otherwise.
+                  same as other or is an equivalent representation of it,
+                 ``False`` otherwise.
+
         """
-        try:
-            return (self.__class__, self._value) == (other.__class__, other._value)
-        except AttributeError:
-            return NotImplemented
+
+        if not isinstance(other, self.__class__):
+            # Check whether the object is a representation of the HW
+            # address and wrap it by an appropriate class.
+            try:
+                other = self.__class__(other)
+            except Exception as e:
+                msg = ('{obj} is not a valid representation of a '
+                      'hardware identifier.\n{exc}')
+
+                raise ValueError(msg.format(obj=other, exc=e))
+
+        attr_to_compare = ('__class__', 'version', '_value')
+        comparable = lambda obj: [getattr(obj, attr)
+                                  for attr in attr_to_compare
+                                  if hasattr(obj, attr)]
+
+        return comparable(self) == comparable(other)
+
+    def __ne__(self, other):
+        """
+        :return: ``True`` if this BaseIdentifier object is not numerically
+                 the same as other or is not an equivalent representation
+                 of it, ``False`` otherwise.
+
+        """
+        return not self.__eq__(other)
 
 
 
@@ -528,26 +553,6 @@ class EUI(BaseIdentifier):
     def __hash__(self):
         """:return: hash of this EUI object suitable for dict keys, sets etc"""
         return hash((self.version, self._value))
-
-    def __eq__(self, other):
-        """
-        :return: ``True`` if this EUI object is numerically the same as other, \
-            ``False`` otherwise.
-        """
-        try:
-            return(self.version, self._value) == (other.version, other._value)
-        except AttributeError:
-            return NotImplemented
-
-    def __ne__(self, other):
-        """
-        :return: ``False`` if this EUI object is numerically the same as the \
-            other, ``True`` otherwise.
-        """
-        try:
-            return(self.version, self._value) != (other.version, other._value)
-        except AttributeError:
-            return NotImplemented
 
     def __lt__(self, other):
         """
