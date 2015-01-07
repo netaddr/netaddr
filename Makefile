@@ -55,3 +55,7 @@ download:
 register:
 	@echo 'releasing netaddr'
 	python setup_egg.py register
+
+push_tags:
+	@echo 'syncing tags'
+	git push --tags
