@@ -92,7 +92,7 @@ PostreSQL format (found in documentation)
 >>> EUI('001B77:4954FD')
 EUI('00-1B-77-49-54-FD')
 
-It is equally possible to specify a selected format for your MAC string output in the form of a 'dialect' class. It's use is similar to the dialect class used in the Python standard library csv module.
+It is equally possible to specify a selected format for your MAC string output in the form of a 'dialect' class. Its use is similar to the dialect class used in the Python standard library csv module.
 
 >>> mac = EUI('00-1B-77-49-54-FD')
 >>> mac
@@ -113,7 +113,7 @@ EUI('001B774954FD')
 >>> mac
 EUI('001b77:4954fd')
 
-You can of course, create your own dialect classes to customise the MAC formatting if the standard ones do not suit your needs.
+You can, of course, create your own dialect classes to customise the MAC formatting if the standard ones do not suit your needs.
 
 Here's a tweaked UNIX MAC dialect that generates uppercase, zero-filled octets.
 
@@ -144,9 +144,9 @@ You can also use OUI objects directly without going through the EUI interface.
 
 A few OUI records have multiple registrations against them. I'm not sure if this is recording historical information or just a quirk of the IEEE reigstration process.
 
-This example show you how you access them individually by specifying an index number.
+This example shows you how you access them individually by specifying an index number.
 
->>> oui = OUI(524336)   #   OUI constructor accepts integer values too.
+>>> oui = OUI(524336)   #   OUI constructor accepts integer values, too.
 >>> oui
 OUI('08-00-30')
 >>> oui.registration(0).address
