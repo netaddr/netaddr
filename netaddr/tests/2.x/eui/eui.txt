@@ -118,6 +118,15 @@ True
 >>> eui == EUI('009096afcc39')
 True
 
+>>> eui == str(eui)
+True
+
+>>> eui == eui.value
+True
+
+>>> eui != eui
+False
+
 >>> EUI('01-00-00-00-00-00') == EUI('010000000000')
 True
 
@@ -128,6 +137,9 @@ True
 True
 
 >>> EUI('01-00-00-01-00-00') == EUI('10000:10000')
+True
+
+>>> EUI('01-00-00-00-00-00') != EUI('020000000000')
 True
 
 }}}
