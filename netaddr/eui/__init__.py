@@ -102,14 +102,20 @@ class OUI(BaseIdentifier):
             raise NotRegisteredError('OUI %r not registered!' % oui)
 
     def __eq__(self, other):
-        if isinstance(other, OUI):
-            return self._value == other._value
-        else:
+        if not isinstance(other, OUI):
             try:
                 other = self.__class__(other)
             except Exception:
                 return NotImplemented
-            return self._value == other._value
+        return self._value == other._value
+
+    def __ne__(self, other):
+        if not isinstance(other, OUI):
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
+        return self._value != other._value
 
     def __getstate__(self):
         """:returns: Pickled state of an `OUI` object."""

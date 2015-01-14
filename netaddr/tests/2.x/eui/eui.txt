@@ -212,7 +212,16 @@ Equality check for OUI must support subclassing
 >>> oui == my_instance
 True
 
+>>> oui != my_instance
+False
+
 >>> oui == my_instance2
+False
+
+>>> oui != my_instance2
+True
+
+>>> my_instance != your_instance
 False
 
 >>> my_instance == your_instance
