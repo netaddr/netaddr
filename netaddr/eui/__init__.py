@@ -270,14 +270,20 @@ class IAB(BaseIdentifier):
             raise NotRegisteredError('IAB %r not unregistered!' % iab)
 
     def __eq__(self, other):
-        if isinstance(other, IAB):
-            return self._value == other._value
-        else:
+        if not isinstance(other, IAB):
             try:
                 other = self.__class__(other)
             except Exception:
                 return NotImplemented
-            return self._value == other._value
+        return self._value == other._value
+
+    def __ne__(self, other):
+        if not isinstance(other, IAB):
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
+        return self._value != other._value
 
     def __getstate__(self):
         """:returns: Pickled state of an `IAB` object."""

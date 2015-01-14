@@ -228,7 +228,16 @@ Equality check for IAB must support subclassing
 >>> iab == my_instance
 True
 
+>>> iab != my_instance
+False
+
 >>> iab == my_instance2
+False
+
+>>> iab != my_instance2
+True
+
+>>> my_instance != your_instance
 False
 
 >>> my_instance == your_instance
