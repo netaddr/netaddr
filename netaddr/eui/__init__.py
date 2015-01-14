@@ -52,17 +52,6 @@ class BaseIdentifier(object):
         #   Python 3.x only.
         return self._value
 
-    def __eq__(self, other):
-        """
-        :return: ``True`` if this BaseIdentifier object is numerically the
-            same as other, ``False`` otherwise.
-        """
-        try:
-            return (self.__class__, self._value) == (other.__class__, other._value)
-        except AttributeError:
-            return NotImplemented
-
-
 
 class OUI(BaseIdentifier):
     """
@@ -111,6 +100,16 @@ class OUI(BaseIdentifier):
             fh.close()
         else:
             raise NotRegisteredError('OUI %r not registered!' % oui)
+
+    def __eq__(self, other):
+        if isinstance(other, OUI):
+            return self._value == other._value
+        else:
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
+            return self._value == other._value
 
     def __getstate__(self):
         """:returns: Pickled state of an `OUI` object."""
@@ -263,6 +262,16 @@ class IAB(BaseIdentifier):
             fh.close()
         else:
             raise NotRegisteredError('IAB %r not unregistered!' % iab)
+
+    def __eq__(self, other):
+        if isinstance(other, IAB):
+            return self._value == other._value
+        else:
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
+            return self._value == other._value
 
     def __getstate__(self):
         """:returns: Pickled state of an `IAB` object."""
@@ -534,20 +543,14 @@ class EUI(BaseIdentifier):
         :return: ``True`` if this EUI object is numerically the same as other, \
             ``False`` otherwise.
         """
-        try:
+        if isinstance(other, EUI):
             return(self.version, self._value) == (other.version, other._value)
-        except AttributeError:
-            return NotImplemented
-
-    def __ne__(self, other):
-        """
-        :return: ``False`` if this EUI object is numerically the same as the \
-            other, ``True`` otherwise.
-        """
-        try:
-            return(self.version, self._value) != (other.version, other._value)
-        except AttributeError:
-            return NotImplemented
+        else:
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
+            return(self.version, self._value) == (other.version, other._value)
 
     def __lt__(self, other):
         """
