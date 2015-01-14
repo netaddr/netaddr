@@ -148,6 +148,146 @@ True
 False
 
 }}}
+
+Equality check for EUI must support subclassing
+
+{{{
+>>> eui = EUI(42)
+>>> class MySubclass(EUI): pass
+>>> my_instance = MySubclass(42)
+>>> my_instance2 = MySubclass(43)
+>>> class YourSubclass(EUI): pass
+>>> your_instance = YourSubclass(42)
+>>> your_instance2 = YourSubclass(43)
+
+>>> eui == my_instance
+True
+
+>>> eui == my_instance2
+False
+
+>>> my_instance == your_instance
+True
+
+>>> my_instance == your_instance2
+False
+
+>>> my_instance != your_instance2
+True
+
+}}}
+
+Equality check for OUI must support subclassing
+
+{{{
+>>> oui = OUI('00-1B-77')
+>>> class MySubclass(OUI): pass
+>>> my_instance = MySubclass('00-1B-77')
+>>> my_instance2 = MySubclass('00-1B-78')
+>>> class YourSubclass(OUI): pass
+>>> your_instance = YourSubclass('00-1B-77')
+>>> your_instance2 = YourSubclass('00-1B-78')
+
+>>> oui == my_instance
+True
+
+>>> oui == my_instance2
+False
+
+>>> my_instance == your_instance
+True
+
+>>> my_instance == your_instance2
+False
+
+>>> my_instance != your_instance2
+True
+
+}}}
+
+Equality check for IAB must support subclassing
+
+{{{
+>>> iab = IAB('00-50-C2-00-00-00')
+>>> class MySubclass(IAB): pass
+>>> my_instance = MySubclass('00-50-C2-00-00-00')
+>>> my_instance2 = MySubclass('00-50-C2-99-00-00')
+>>> class YourSubclass(IAB): pass
+>>> your_instance = YourSubclass('00-50-C2-00-00-00')
+>>> your_instance2 = YourSubclass('00-50-C2-99-00-00')
+
+>>> iab == my_instance
+True
+
+>>> iab == my_instance2
+False
+
+>>> my_instance == your_instance
+True
+
+>>> my_instance == your_instance2
+False
+
+>>> my_instance != your_instance2
+True
+
+}}}
+
+Check equality between EUI objects and their textual representations
+
+{{{
+
+>>> eui = EUI('11-22-33-44-55-66')
+>>> class MySubclass(EUI): pass
+>>> my_instance = MySubclass('11-22-33-44-55-66')
+
+>>> eui == '11-22-33-44-55-66'
+True
+
+>>> my_instance == '11-22-33-44-55-66'
+True
+
+>>> my_instance == '99-22-33-44-55-66'
+False
+
+}}}
+
+Check equality between OUI objects and their textual representations
+
+{{{
+
+>>> oui = OUI('00-1B-77')
+>>> class MySubclass(OUI): pass
+>>> my_instance = MySubclass('00-1B-77')
+
+>>> oui == '00-1B-77'
+True
+
+>>> my_instance == '00-1B-77'
+True
+
+>>> my_instance == '00-1B-99'
+False
+
+}}}
+
+Check equality between IAB objects and their textual representations
+{{{
+
+>>> eui = IAB('00-50-C2-00-00-00')
+>>> class MySubclass(IAB): pass
+>>> my_instance = MySubclass('00-50-C2-00-00-00')
+
+>>> eui == '00-50-C2-00-00-00'
+True
+
+>>> my_instance == '00-50-C2-00-00-00'
+True
+
+>>> my_instance == '00-50-C2-99-00-00'
+False
+
+}}}
  
 Sortability
 
