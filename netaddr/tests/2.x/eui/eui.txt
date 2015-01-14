@@ -149,7 +149,7 @@ False
 
 }}}
 
-Equality check for EUI must support subclassing
+Comparison of EUIs must support subclassing
 
 {{{
 >>> eui = EUI(42)
@@ -163,7 +163,16 @@ Equality check for EUI must support subclassing
 >>> eui == my_instance
 True
 
+>>> eui != my_instance
+False
+
 >>> eui == my_instance2
+False
+
+>>> eui != my_instance2
+True
+
+>>> my_instance != your_instance
 False
 
 >>> my_instance == your_instance
@@ -173,6 +182,18 @@ True
 False
 
 >>> my_instance != your_instance2
+True
+
+>>> my_instance < your_instance2
+True
+
+>>> my_instance2 > your_instance
+True
+
+>>> my_instance <= your_instance2
+True
+
+>>> my_instance2 >= your_instance
 True
 
 }}}
@@ -234,6 +255,7 @@ True
 }}}
 
 Check equality between EUI objects and their textual representations
+
 {{{
 
 >>> eui = EUI('11-22-33-44-55-66')
@@ -252,6 +274,7 @@ False
 }}}
 
 Check equality between OUI objects and their textual representations
+
 {{{
 
 >>> oui = OUI('00-1B-77')
@@ -270,6 +293,7 @@ False
 }}}
 
 Check equality between IAB objects and their textual representations
+
 {{{
 
 >>> eui = IAB('00-50-C2-00-00-00')

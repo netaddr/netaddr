@@ -552,6 +552,20 @@ class EUI(BaseIdentifier):
                 return NotImplemented
             return(self.version, self._value) == (other.version, other._value)
 
+    def __ne__(self, other):
+        """
+        :return: ``True`` if this EUI object is numerically the same as other, \
+            ``False`` otherwise.
+        """
+        if isinstance(other, EUI):
+            return(self.version, self._value) != (other.version, other._value)
+        else:
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
+            return(self.version, self._value) != (other.version, other._value)
+
     def __lt__(self, other):
         """
         :return: ``True`` if this EUI object is numerically lower in value than \
