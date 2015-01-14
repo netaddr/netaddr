@@ -543,41 +543,35 @@ class EUI(BaseIdentifier):
         :return: ``True`` if this EUI object is numerically the same as other, \
             ``False`` otherwise.
         """
-        if isinstance(other, EUI):
-            return(self.version, self._value) == (other.version, other._value)
-        else:
+        if not isinstance(other, EUI):
             try:
                 other = self.__class__(other)
             except Exception:
                 return NotImplemented
-            return(self.version, self._value) == (other.version, other._value)
+        return (self.version, self._value) == (other.version, other._value)
 
     def __ne__(self, other):
         """
         :return: ``True`` if this EUI object is numerically the same as other, \
             ``False`` otherwise.
         """
-        if isinstance(other, EUI):
-            return(self.version, self._value) != (other.version, other._value)
-        else:
+        if not isinstance(other, EUI):
             try:
                 other = self.__class__(other)
             except Exception:
                 return NotImplemented
-            return(self.version, self._value) != (other.version, other._value)
+        return (self.version, self._value) != (other.version, other._value)
 
     def __lt__(self, other):
         """
         :return: ``True`` if this EUI object is numerically lower in value than \
             other, ``False`` otherwise.
         """
-        if isinstance(other, EUI):
-            return (self.version, self._value) < (other.version, other._value)
-
-        try:
-            other = self.__class__(other)
-        except Exception:
-            return NotImplemented
+        if not isinstance(other, EUI):
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
         return (self.version, self._value) < (other.version, other._value)
 
     def __le__(self, other):
@@ -585,13 +579,11 @@ class EUI(BaseIdentifier):
         :return: ``True`` if this EUI object is numerically lower or equal in \
             value to other, ``False`` otherwise.
         """
-        if isinstance(other, EUI):
-            return (self.version, self._value) <= (other.version, other._value)
-
-        try:
-            other = self.__class__(other)
-        except Exception:
-            return NotImplemented
+        if not isinstance(other, EUI):
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
         return (self.version, self._value) <= (other.version, other._value)
 
     def __gt__(self, other):
@@ -599,13 +591,11 @@ class EUI(BaseIdentifier):
         :return: ``True`` if this EUI object is numerically greater in value \
             than other, ``False`` otherwise.
         """
-        if isinstance(other, EUI):
-            return (self.version, self._value) > (other.version, other._value)
-
-        try:
-            other = self.__class__(other)
-        except Exception:
-            return NotImplemented
+        if not isinstance(other, EUI):
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
         return (self.version, self._value) > (other.version, other._value)
 
     def __ge__(self, other):
@@ -613,13 +603,11 @@ class EUI(BaseIdentifier):
         :return: ``True`` if this EUI object is numerically greater or equal \
             in value to other, ``False`` otherwise.
         """
-        if isinstance(other, EUI):
-            return (self.version, self._value) >= (other.version, other._value)
-
-        try:
-            other = self.__class__(other)
-        except Exception:
-            return NotImplemented
+        if not isinstance(other, EUI):
+            try:
+                other = self.__class__(other)
+            except Exception:
+                return NotImplemented
         return (self.version, self._value) >= (other.version, other._value)
 
     def bits(self, word_sep=None):
