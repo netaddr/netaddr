@@ -571,40 +571,56 @@ class EUI(BaseIdentifier):
         :return: ``True`` if this EUI object is numerically lower in value than \
             other, ``False`` otherwise.
         """
-        try:
+        if isinstance(other, EUI):
             return (self.version, self._value) < (other.version, other._value)
-        except AttributeError:
+
+        try:
+            other = self.__class__(other)
+        except Exception:
             return NotImplemented
+        return (self.version, self._value) < (other.version, other._value)
 
     def __le__(self, other):
         """
         :return: ``True`` if this EUI object is numerically lower or equal in \
             value to other, ``False`` otherwise.
         """
+        if isinstance(other, EUI):
+            return (self.version, self._value) <= (other.version, other._value)
+
         try:
-            return(self.version, self._value) <= (other.version, other._value)
-        except AttributeError:
+            other = self.__class__(other)
+        except Exception:
             return NotImplemented
+        return (self.version, self._value) <= (other.version, other._value)
 
     def __gt__(self, other):
         """
         :return: ``True`` if this EUI object is numerically greater in value \
             than other, ``False`` otherwise.
         """
-        try:
+        if isinstance(other, EUI):
             return (self.version, self._value) > (other.version, other._value)
-        except AttributeError:
+
+        try:
+            other = self.__class__(other)
+        except Exception:
             return NotImplemented
+        return (self.version, self._value) > (other.version, other._value)
 
     def __ge__(self, other):
         """
         :return: ``True`` if this EUI object is numerically greater or equal \
             in value to other, ``False`` otherwise.
         """
+        if isinstance(other, EUI):
+            return (self.version, self._value) >= (other.version, other._value)
+
         try:
-            return(self.version, self._value) >= (other.version, other._value)
-        except AttributeError:
+            other = self.__class__(other)
+        except Exception:
             return NotImplemented
+        return (self.version, self._value) >= (other.version, other._value)
 
     def bits(self, word_sep=None):
         """

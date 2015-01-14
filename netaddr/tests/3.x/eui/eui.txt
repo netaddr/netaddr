@@ -233,7 +233,7 @@ True
 
 }}}
 
-Check equality between EUI objects and their textual representations
+Comparison between EUI objects and their textual representations
 
 {{{
 
@@ -249,6 +249,21 @@ True
 
 >>> my_instance == '99-22-33-44-55-66'
 False
+
+>>> '11-22-33-44-55-66' >= my_instance
+True
+
+>>> my_instance > '11-22-33-44-55-00'
+True
+
+>>> my_instance < '11-22-33-44-55-00'
+False
+
+>>> my_instance <= '11-22-33-44-55-00'
+False
+
+>>> my_instance >= '11-22-33-44-55-00'
+True
 
 }}}
 
