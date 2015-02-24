@@ -1849,12 +1849,8 @@ IPV4_PRIVATE = (
     IPNetwork('10.0.0.0/8'),                    #   Private-Use Networks
     IPNetwork('100.64.0.0/10'),                 #   Shared address space
     IPNetwork('172.16.0.0/12'),                 #   Private-Use Networks
-    IPNetwork('192.0.0.0/24'),                  #   Test-Net
     IPNetwork('192.0.2.0/24'),                  #   Test-Net
     IPNetwork('192.168.0.0/16'),                #   Private-Use Networks
-    IPNetwork('198.18.0.0/15'),                 #   Benchmarking
-    IPNetwork('198.51.100.0/24'),               #   Examples for documentation
-    IPNetwork('203.0.113.0/24'),                #   Examples for documentation
     IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
 )
 
@@ -1867,6 +1863,9 @@ IPV4_6TO4 = IPNetwork('192.88.99.0/24')    #   6to4 Relay Anycast
 IPV4_RESERVED = (
     IPNetwork('192.0.0.0/24'),      #   Reserved but subject to allocation
     IPNetwork('240.0.0.0/4'),       #   Reserved for Future Use
+    IPNetwork('198.18.0.0/15'),     #   Benchmarking
+    IPNetwork('198.51.100.0/24'),   #   Examples for documentation
+    IPNetwork('203.0.113.0/24'),    #   Examples for documentation
 
     #   Reserved multicast
     IPRange('234.0.0.0', '238.255.255.255'),
