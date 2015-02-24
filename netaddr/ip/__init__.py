@@ -1849,6 +1849,7 @@ IPV4_PRIVATE = (
     IPNetwork('10.0.0.0/8'),                    #   Private-Use Networks
     IPNetwork('100.64.0.0/10'),                 #   Shared address space
     IPNetwork('172.16.0.0/12'),                 #   Private-Use Networks
+    IPNetwork('192.0.0.0/24'),                  #   Test-Net
     IPNetwork('192.0.2.0/24'),                  #   Test-Net
     IPNetwork('192.168.0.0/16'),                #   Private-Use Networks
     IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
