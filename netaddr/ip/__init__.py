@@ -1853,6 +1853,8 @@ IPV4_PRIVATE = (
     IPNetwork('192.0.2.0/24'),                  #   Test-Net
     IPNetwork('192.168.0.0/16'),                #   Private-Use Networks
     IPNetwork('198.18.0.0/15'),                 #   Benchmarking
+    IPNetwork('198.51.100.0/24'),               #   Examples for documentation
+    IPNetwork('203.0.113.0/24'),                #   Examples for documentation
     IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
 )
 
