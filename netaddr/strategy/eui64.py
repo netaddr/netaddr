@@ -58,7 +58,7 @@ num_words = width // word_size
 max_word = 2 ** word_size - 1
 
 #: Compiled regular expression for detecting value EUI-64 identifiers.
-RE_EUI64_FORMAT = _re.compile('^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$',
+RE_EUI64_FORMAT = _re.compile('^' + '[:-]'.join(['([0-9A-F]{1,2})'] * 8) + '$',
     _re.IGNORECASE)
 
 
