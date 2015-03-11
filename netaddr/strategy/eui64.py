@@ -58,8 +58,11 @@ num_words = width // word_size
 max_word = 2 ** word_size - 1
 
 #: Compiled regular expression for detecting value EUI-64 identifiers.
-RE_EUI64_FORMAT = _re.compile('^' + '[:-]'.join(['([0-9A-F]{1,2})'] * 8) + '$',
-    _re.IGNORECASE)
+RE_EUI64_FORMATS = [
+    _re.compile('^' + ':'.join(['([0-9A-F]{1,2})'] * 8) + '$', _re.IGNORECASE),
+    _re.compile('^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$', _re.IGNORECASE),
+    _re.compile('^' + '([0-9A-F]{1,2})' * 8 + '$', _re.IGNORECASE),
+]
 
 
 def valid_str(addr):
@@ -69,7 +72,11 @@ def valid_str(addr):
     :return: ``True`` if EUI-64 indentifier is valid, ``False`` otherwise.
     """
     try:
-        match_result = RE_EUI64_FORMAT.findall(addr)
+        match_result = [m[0] 
+            for m 
+            in [re.findall(addr) for re in RE_EUI64_FORMATS] 
+            if len(m) > 0
+        ]
         if len(match_result) != 0:
             return True
     except TypeError:
@@ -88,7 +95,12 @@ def str_to_int(addr):
     words = []
 
     try:
-        match_result = RE_EUI64_FORMAT.findall(addr)
+        match_result = [m[0] 
+            for m 
+            in [re.findall(addr) for re in RE_EUI64_FORMATS] 
+            if len(m) > 0
+        ]
+        import ipdb; ipdb.set_trace()
         if not match_result:
             raise TypeError
     except TypeError:
