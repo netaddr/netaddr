@@ -65,6 +65,15 @@ RE_EUI64_FORMATS = [
 ]
 
 
+def _get_match_result(address, formats):
+    return [
+        m[0] 
+        for m 
+        in [re.findall(address) for re in formats] 
+        if len(m) > 0
+    ]
+
+
 def valid_str(addr):
     """
     :param addr: An IEEE EUI-64 indentifier in string form.
@@ -72,11 +81,7 @@ def valid_str(addr):
     :return: ``True`` if EUI-64 indentifier is valid, ``False`` otherwise.
     """
     try:
-        match_result = [m[0] 
-            for m 
-            in [re.findall(addr) for re in RE_EUI64_FORMATS] 
-            if len(m) > 0
-        ]
+        match_result = _get_match_result(addr, RE_EUI64_FORMATS)
         if len(match_result) != 0:
             return True
     except TypeError:
@@ -95,11 +100,7 @@ def str_to_int(addr):
     words = []
 
     try:
-        match_result = [m[0] 
-            for m 
-            in [re.findall(addr) for re in RE_EUI64_FORMATS] 
-            if len(m) > 0
-        ]
+        match_result = _get_match_result(addr, RE_EUI64_FORMATS)
         if not match_result:
             raise TypeError
     except TypeError:
