@@ -100,7 +100,6 @@ def str_to_int(addr):
             in [re.findall(addr) for re in RE_EUI64_FORMATS] 
             if len(m) > 0
         ]
-        import ipdb; ipdb.set_trace()
         if not match_result:
             raise TypeError
     except TypeError:

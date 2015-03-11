@@ -69,3 +69,7 @@ IPAddress('1234::21b:77ff:fe49:54fd')
 >>> addr_colonned = EUI('00:1B:77:49:54:FD:BB:34')
 >>> addr_colonned
 EUI('00-1B-77-49-54-FD-BB-34')
+
+>>> addr_no_delimeter = EUI('001B774954FDBB34')
+>>> addr_no_delimeter
+EUI('00-1B-77-49-54-FD-BB-34')
