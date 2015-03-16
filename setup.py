@@ -41,6 +41,11 @@ def main():
         version          = release.version,
         install_requires = release.install_requires,
         setup_requires   = release.setup_requires,
+        options = {
+            'build_scripts': {
+                'executable': '/usr/bin/env python',
+            },
+        },
     )
 
     setup(**setup_options)
