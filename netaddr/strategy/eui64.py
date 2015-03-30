@@ -13,6 +13,7 @@ import re as _re
 AF_EUI64 = 64
 
 from netaddr.core import AddrFormatError
+from netaddr.compat import _is_str
 from netaddr.strategy import \
     valid_words  as _valid_words, \
     int_to_words as _int_to_words, \
@@ -61,7 +62,7 @@ max_word = 2 ** word_size - 1
 RE_EUI64_FORMATS = [
     _re.compile('^' + ':'.join(['([0-9A-F]{1,2})'] * 8) + '$', _re.IGNORECASE),
     _re.compile('^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$', _re.IGNORECASE),
-    _re.compile('^' + '([0-9A-F]{1,2})' * 8 + '$', _re.IGNORECASE),
+    _re.compile('^(' + '[0-9A-F]' * 16 + ')$', _re.IGNORECASE),
 ]
 
 
@@ -102,6 +103,8 @@ def str_to_int(addr):
     except TypeError:
         raise AddrFormatError('invalid IEEE EUI-64 identifier: %r!' % addr)
 
+    if _is_str(words):
+        return int(words, 16)
     if len(words) != num_words:
         raise AddrFormatError('bad word count for EUI-64 identifier: %r!' \
             % addr)
