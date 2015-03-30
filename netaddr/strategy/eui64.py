@@ -67,9 +67,9 @@ RE_EUI64_FORMATS = [
 
 def _get_match_result(address, formats):
     for regexp in formats:
-      match = regexp.findall(address)
-      if match:
-        return match[0]
+        match = regexp.findall(address)
+        if match:
+            return match[0]
 
 def valid_str(addr):
     """
