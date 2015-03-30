@@ -1,6 +1,6 @@
 `netaddr` is a Python library for representing and manipulating network addresses.
 
-It support the ability to work and interact with the following:
+It supports the ability to work and interact with the following:
 
 - IPv4 and IPv6 addresses and subnets
 - MAC addresses, OUI and IAB identifiers, IEEE EUI-64 identifiers
