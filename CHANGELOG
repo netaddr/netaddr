@@ -1,4 +1,42 @@
 ---------------
+Release: 0.7.14
+---------------
+Date: TODO
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.13
+^^^^^^^^^^^^^^^^^^^^
+
+* Fix weird build breakage in 0.7.13 (wrong Python path, incorrect OUI DB).
+
+* EUI, OUI, and IAB objects can now be compared with strings. You can do
+    my_mac = EUI("11:22:33:44:55:66")
+    my_mac == "11:22:33:44:55:66"
+    and Python will return True on the "==" operator.
+
+* Implement the "!=" operator for OUI and IAB under Python2. It was already
+    working under Python3.
+
+* 64 bit EUIs could only be created from strings with "-" as a separator.
+    Now, ":" and no seperator are supported, which already worked for 48 bit EUIs.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 80: https://github.com/drkjam/netaddr/pull/80
+    - Compare L2 addresses with their representations
+
+FIXED Issue 81: https://github.com/drkjam/netaddr/issues/81
+    - OUI database tests fail in 0.7.13
+
+FIXED Issue 84: https://github.com/drkjam/netaddr/issues/84
+    - Incorrect python executable path in netaddr-0.7.13-py2.py3-none-any.whl
+
+FIXED Issue 87: https://github.com/drkjam/netaddr/pull/87
+    - Handle eui64 addresses with colon as a delimiter and without delimeter.
+
+---------------
 Release: 0.7.13
 ---------------
 Date: 31st Dec 2014
