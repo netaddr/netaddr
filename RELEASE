@@ -24,16 +24,19 @@ Here is how to go about releasing a new version of `netaddr`.
 
 * Commit all changes.
 
-* Build the packages.
+* Build the packages and documentation.
 
     `make dist`
 
-* Build sphinx documentation.
-
-    `make doc`
-
 * Tag the release.
 
-* Upload all built packages to PyPI.
+* Upload all built packages to PyPI (currently, only drkjam can do this).
 
-* Update documentation on PyPI. readthedocs will update itself.
+    - `dist/*.whl`
+    - `dist/*.zip`
+    - `dist/*.gz`
+    - `dist/*.egg`
+
+* Update documentation on PyPI (readthedocs will update itself).
+
+    - `docs/build/netaddr.zip`
