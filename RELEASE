@@ -1,0 +1,39 @@
+-----------------------
+netaddr release process
+-----------------------
+
+Here is how to go about releasing a new version of `netaddr`.
+
+* Pull down the latest set of changes for the current branch (at present this is '0.7.x').
+
+* Run the tests under Python 2.7.x and Python 3.4.x at a minimum, like so
+
+    `python netaddr/tests/__init__.py`
+
+* Update the CHANGELOG with details of all changes since the last release.
+  Ensure that all references to various tickets and merge requests are included.
+
+* Update the version numbers throughout the source code. At present they are in
+  the following locations.
+
+  - CHANGELOG
+  - netaddr/__init__.py
+  - docs/source/changes.rst
+  - docs/source/conf.py
+  - docs/source/index.rst
+
+* Commit all changes.
+
+* Build the packages.
+
+    `make dist`
+
+* Build sphinx documentation.
+
+    `make doc`
+
+* Tag the release.
+
+* Upload all built packages to PyPI.
+
+* Update documentation on PyPI. readthedocs will update itself.
