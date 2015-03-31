@@ -17,7 +17,7 @@ keywords = [
     'IPv4', 'IPv6', 'CIDR', 'EUI', 'MAC', 'MAC-48', 'EUI-48', 'EUI-64'
 ]
 
-download_url = 'https://github.com/drkjam/netaddr/downloads'
+download_url = 'https://pypi.python.org/pypi/netaddr/'
 
 author = 'David P. D. Moss'
 
@@ -86,7 +86,8 @@ For details on the latest updates and changes, see :-
 
 API documentation for the latest release is available here :-
 
-    https://pythonhosted.org/netaddr/
+    - http://netaddr.readthedocs.org/en/latest/
+    - https://pythonhosted.org/netaddr/
 """
 
 platforms = 'OS Independent'
