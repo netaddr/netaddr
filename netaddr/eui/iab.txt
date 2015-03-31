@@ -1,4 +1,4 @@
-  Generated: Wed, 31 Dec 2014 06:00:02 -0500
+  Generated: Tue, 31 Mar 2015 05:00:03 -0400
 
   OUI     			Organization
   IAB Range    			Organization
@@ -4764,8 +4764,8 @@
 				Ottawa Ontario K1T3T7
 				CANADA
 
-  00-50-C2	(hex)		American Microsystems LTD
-  2FD000-2FDFFF	(base 16)	American Microsystems LTD
+  00-50-C2	(hex)		American Microsystems, Ltd.
+  2FD000-2FDFFF	(base 16)	American Microsystems, Ltd.
   				2190 Regal Parkway
 				Euless Texas 76040
 				UNITED STATES
@@ -5220,7 +5220,7 @@
   00-50-C2	(hex)		ACT
   345000-345FFF	(base 16)	ACT
   				Unit C1, South City Business Center
-				Tallaght Dublin NA
+				Tallaght Dublin 
 				IRELAND
 
   00-50-C2	(hex)		biokeysystem
@@ -6168,8 +6168,8 @@
 				Duisburg NRW 47057
 				GERMANY
 
-  00-50-C2	(hex)		ABB Power Technologies
-  3DE000-3DEFFF	(base 16)	ABB Power Technologies
+  00-50-C2	(hex)		ABB Power Technologies S.p.A. Unità  Operativa SACE (PTMV)
+  3DE000-3DEFFF	(base 16)	ABB Power Technologies S.p.A. Unità  Operativa SACE (PTMV)
   				via Friuli 4
 				Dalmine Bergamo 24044
 				ITALY
@@ -6591,8 +6591,8 @@
 				Saint-Dié des Vosges Vosges 88100
 				FRANCE
 
-  00-50-C2	(hex)		Gekeler Martina
-  422000-422FFF	(base 16)	Gekeler Martina
+  00-50-C2	(hex)		ads-tec GmbH
+  422000-422FFF	(base 16)	ads-tec GmbH
   				Raiffeisenstraße 14
 				Leinfelden-Echterdingen Baden-Württemberg 70771
 				GERMANY
@@ -6911,8 +6911,8 @@
 				Bethesda MD 20814
 				UNITED STATES
 
-  00-50-C2	(hex)		AirCell, Inc.
-  455000-455FFF	(base 16)	AirCell, Inc.
+  00-50-C2	(hex)		Aircell
+  455000-455FFF	(base 16)	Aircell
   				1172 Century Drive
 				Building B, Suite 280
 				Louisville Colorado 80027
@@ -7250,8 +7250,8 @@
 				Red Bank New Jersey 07701
 				UNITED STATES
 
-  00-50-C2	(hex)		ADS-TEC GmbH
-  48B000-48BFFF	(base 16)	ADS-TEC GmbH
+  00-50-C2	(hex)		ads-tec GmbH
+  48B000-48BFFF	(base 16)	ads-tec GmbH
   				Raiffeisentraße 14
 				Leinfelden-Echterdingen Baden-Württemberg 70771
 				GERMANY
@@ -7752,8 +7752,8 @@
 				Aalen Baden-Württemberg 73433
 				GERMANY
 
-  00-50-C2	(hex)		Ace Electronics Inc.
-  4DC000-4DCFFF	(base 16)	Ace Electronics Inc.
+  00-50-C2	(hex)		Ace Electronics, Inc.
+  4DC000-4DCFFF	(base 16)	Ace Electronics, Inc.
   				27574 Commerce ctr. dr.
 				Temecula CA 92590
 				UNITED STATES
@@ -10251,8 +10251,8 @@
 				CHESTERFIELD DERBYSHIRE S41 0TZ
 				UNITED KINGDOM
 
-  00-50-C2	(hex)		ABB Xiamen Transmission and Distribution Automation Equipmen
-  66A000-66AFFF	(base 16)	ABB Xiamen Transmission and Distribution Automation Equipmen
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  66A000-66AFFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park
 				Torch Hi-Tech Development Zone
 				Xiamen Fujian 361005
@@ -10360,8 +10360,8 @@
 				Jackson MI 49202
 				UNITED STATES
 
-  00-50-C2	(hex)		AirCell, Inc.
-  67C000-67CFFF	(base 16)	AirCell, Inc.
+  00-50-C2	(hex)		Aircell
+  67C000-67CFFF	(base 16)	Aircell
   				1172 Century Drive
 				Building B, Suite 280
 				Louisville Colorado 80027
@@ -11157,9 +11157,8 @@
 
   00-50-C2	(hex)		DCN
   6FA000-6FAFFF	(base 16)	DCN
-  				DCN Services Brest
-				DiSM/CSMB/ELOSM-CS 72837
-				BREST  29228
+  				DCNS SCCC/SIS Le Mourillon
+				TOULON 83000  
 				FRANCE
 
   00-50-C2	(hex)		WaveIP
@@ -11750,8 +11749,8 @@
 
   00-50-C2	(hex)		Sequentric Energy Systems, LLC
   759000-759FFF	(base 16)	Sequentric Energy Systems, LLC
-  				8 Cedar Island
-				Wilmington NC 28409
+  				4651 Woodstock Rd 208-150
+				Roswell GA 30075
 				UNITED STATES
 
   00-50-C2	(hex)		Gaisler Research AB
@@ -11817,8 +11816,8 @@
 				Dallas Texas 75251
 				UNITED STATES
 
-  00-50-C2	(hex)		Argus-Spectrum
-  764000-764FFF	(base 16)	Argus-Spectrum
+  00-50-C2	(hex)		ARGUS-SPECTRUM
+  764000-764FFF	(base 16)	ARGUS-SPECTRUM
   				65, Serdobolskaya str.
 				St-Peterburg  197342
 				RUSSIAN FEDERATION
@@ -12209,8 +12208,8 @@
 				Airport City Lod 70100
 				ISRAEL
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiam
-  7A3000-7A3FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiam
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  7A3000-7A3FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park, Torch Hi-Tech Industrial Development Zone
 				Xiao Dong Shan, Xiamen
 				Xiamen  Fujian 361006
@@ -12481,8 +12480,8 @@
 				Carlsbad CA 92011
 				UNITED STATES
 
-  00-50-C2	(hex)		AirCell Inc.
-  7CE000-7CEFFF	(base 16)	AirCell Inc.
+  00-50-C2	(hex)		Aircell
+  7CE000-7CEFFF	(base 16)	Aircell
   				303 S. Technology Dr.
 				Bldg A
 				Broomfield CO 80021
@@ -13354,10 +13353,10 @@
 				San Jose CA 95134
 				UNITED STATES
 
-  00-50-C2	(hex)		ART s.r.l.
-  85A000-85AFFF	(base 16)	ART s.r.l.
-  				Via A. Borletti 61/63
-				Corbetta Milano 20011
+  00-50-C2	(hex)		ART Spa
+  85A000-85AFFF	(base 16)	ART Spa
+  				Voc.Pischiello
+				20 06065 Passignano sul Trasimeno (PG)  
 				ITALY
 
   00-50-C2	(hex)		Boreste
@@ -13649,8 +13648,8 @@
 				TAIPEI  114
 				TAIWAN, PROVINCE OF CHINA
 
-  00-50-C2	(hex)		ACS MOTION CONTROL
-  889000-889FFF	(base 16)	ACS MOTION CONTROL
+  00-50-C2	(hex)		ACS Motion Control Ltd.
+  889000-889FFF	(base 16)	ACS Motion Control Ltd.
   				SHAUL AMOR BLV RAMAT GABRIEL
 				MIGDAL HA'EMEQ ISRAEL 10500
 				ISRAEL
@@ -15938,8 +15937,8 @@
 				Osborne Park Western Australia 6017
 				AUSTRALIA
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
-  9F9000-9F9FFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  9F9000-9F9FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park, Torch Hi-Tech Development Zone.Xiamen.China
 				Xiao Dong Shan, Xiamen
 				Xiamen Fujian 361006
@@ -16046,8 +16045,8 @@
 				Coconut Creek FL 33073
 				UNITED STATES
 
-  00-50-C2	(hex)		ACD Elektronik Gmbh
-  A0A000-A0AFFF	(base 16)	ACD Elektronik Gmbh
+  00-50-C2	(hex)		ACD Elektronik GmbH
+  A0A000-A0AFFF	(base 16)	ACD Elektronik GmbH
   				Engelberg 2
 				Achstetten  88480
 				GERMANY
@@ -17507,8 +17506,8 @@
 				Portland OR 97221
 				UNITED STATES
 
-  00-50-C2	(hex)		ACD Elektronik Gmbh
-  AF2000-AF2FFF	(base 16)	ACD Elektronik Gmbh
+  00-50-C2	(hex)		ACD Elektronik GmbH
+  AF2000-AF2FFF	(base 16)	ACD Elektronik GmbH
   				Engelberg 2
 				Achstetten  88480
 				GERMANY
@@ -18120,8 +18119,8 @@
 				Montreal Quebec H1H 1Y3
 				CANADA
 
-  00-50-C2	(hex)		APG Cash Drawer, LLC
-  B54000-B54FFF	(base 16)	APG Cash Drawer, LLC
+  00-50-C2	(hex)		APG CASH DRAWER
+  B54000-B54FFF	(base 16)	APG CASH DRAWER
   				5250 Industrial Blvd NE
 				Minneapolis MN 55421
 				UNITED STATES
@@ -18501,8 +18500,8 @@
 				Moscow  109028
 				RUSSIAN FEDERATION
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
-  B92000-B92FFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  B92000-B92FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park Torch Hi-tech Development Zone,
 				Xiao Dong Shan,
 				Xiamen Fujian 361006
@@ -19239,8 +19238,8 @@
 				Palm Bay Florida 32905
 				UNITED STATES
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
-  C0A000-C0AFFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  C0A000-C0AFFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park Torch Hi-tech Development Zone
 				Xiao Dong Shan, Xiamen
 				Xiamen Fujian 361006
@@ -20484,7 +20483,7 @@
 
   00-50-C2	(hex)		Arcos Technologies Ltd.
   CD5000-CD5FFF	(base 16)	Arcos Technologies Ltd.
-  				26 Hasivim st.
+  				26 Hasivim  St.
 				Petach-Tikva  49517
 				ISRAEL
 
@@ -20525,8 +20524,8 @@
 				ST. JOHN'S NEWFOUNDLAND A1B 3M2
 				CANADA
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
-  CDC000-CDCFFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  CDC000-CDCFFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park Torch Hi-tech Development Zone
 				Xiao Dong Shan,
 				Xiamen Fujian 361006
@@ -20679,8 +20678,8 @@
 				Wäschenbeuren Baden-Württemberg 73116
 				GERMANY
 
-  00-50-C2	(hex)		AirCell Inc.
-  CF5000-CF5FFF	(base 16)	AirCell Inc.
+  00-50-C2	(hex)		Aircell
+  CF5000-CF5FFF	(base 16)	Aircell
   				303 S. Technology Dr.
 				Bldg A
 				Broomfield CO 80021
@@ -21569,8 +21568,8 @@
 				Bad Blankenburg TH 07422
 				GERMANY
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
-  D84000-D84FFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  D84000-D84FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park Torch Hi-tech Development Zone,
 				Xiao Dong Shan,
 				Xiamen Fujian 361006
@@ -22151,8 +22150,8 @@
 				Tres Cantos Madrid 28760
 				SPAIN
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Auto Eqip(Xiamen.China)
-  DE1000-DE1FFF	(base 16)	ABB Transmission and Distribution Auto Eqip(Xiamen.China)
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  DE1000-DE1FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industrial Park Torch Hi-tech Development Zone,
 				Xiao Dong Shan,
 				Xiamen Fujian 361006
@@ -22867,7 +22866,7 @@
 
   00-50-C2	(hex)		Arcos Technologies LTD
   E54000-E54FFF	(base 16)	Arcos Technologies LTD
-  				26 Hasivim
+  				26 Hasivim  St.
 				Petach-Tikva Israel 49517
 				ISRAEL
 
@@ -24084,8 +24083,8 @@
 				Offenburg Baden-Württemberg 77656
 				GERMANY
 
-  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd
-  F17000-F17FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd
+  00-50-C2	(hex)		ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
+  F17000-F17FFF	(base 16)	ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
   				ABB Industry Park,Torch Hi-tech Development Zone
 				Xiao Dong Shan,
 				Xiamen Fujian 361006
@@ -26353,8 +26352,8 @@
 				Isola Vicentina Vicenza 36033
 				ITALY
 
-  40-D8-55	(hex)		ard sa
-  082000-082FFF	(base 16)	ard sa
+  40-D8-55	(hex)		ARD SA
+  082000-082FFF	(base 16)	ARD SA
   				Micropolis Bat Clematis
 				Gap France 05000
 				FRANCE
@@ -26747,7 +26746,7 @@
   0C0000-0C0FFF	(base 16)	ACT
   				Unit C1
 				South City Business Center
-				Tallaght Dublin NA
+				Tallaght Dublin 
 				IRELAND
 
   40-D8-55	(hex)		Xepto Computing Inc
@@ -27321,8 +27320,8 @@
 				Bergisch Gladbach Northrhine Westfalia 51465
 				GERMANY
 
-  40-D8-55	(hex)		ACD Elektronik GmBH
-  11D000-11DFFF	(base 16)	ACD Elektronik GmBH
+  40-D8-55	(hex)		ACD Elektronik GmbH
+  11D000-11DFFF	(base 16)	ACD Elektronik GmbH
   				Engelberg 2
 				Achstetten  88480
 				GERMANY

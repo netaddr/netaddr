@@ -3,7 +3,7 @@
 <?oxygen RNGSchema="multicast-addresses.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2014-12-17</updated>
+  <updated>2015-03-23</updated>
   <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
@@ -2174,7 +2174,17 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="person" data="Sam_Birru"/>
     </record>
     <record>
-      <addr>224.0.141.0-224.0.249.255</addr>
+      <addr>224.0.141.0-224.0.143.255</addr>
+      <description>Unassigned</description>
+    </record>
+    
+    <record date="2015-03-23">
+      <addr>224.0.144.0-224.0.151.255</addr>
+      <description>VZ-Multicast-Public</description>
+      <xref type="person" data="Stephen_Ray_Middleton"/>
+    </record>
+    <record>
+      <addr>224.0.152.0-224.0.249.255</addr>
       <description>Unassigned</description>
     </record>
     
@@ -3676,6 +3686,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Stephen Hanna</name>
       <uri>mailto:steve.hanna&amp;sun.com</uri>
       <updated>2000-07-01</updated>
+    </person>
+    <person id="Stephen_Ray_Middleton">
+      <name>Stephen Ray Middleton</name>
+      <uri>mailto:stephen.r.middleton&amp;verizon.com</uri>
+      <updated>2015-03-23</updated>
     </person>
     <person id="Stephen_T_Lyda">
       <name>Stephen T. Lyda</name>
