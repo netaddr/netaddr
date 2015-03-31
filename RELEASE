@@ -28,8 +28,6 @@ Here is how to go about releasing a new version of `netaddr`.
 
     `make dist`
 
-* Tag the release.
-
 * Upload all built packages to PyPI (currently, only drkjam can do this).
 
     - `dist/*.whl`
@@ -40,3 +38,8 @@ Here is how to go about releasing a new version of `netaddr`.
 * Update documentation on PyPI (readthedocs will update itself).
 
     - `docs/build/netaddr.zip`
+
+* Tag the release and sync it to remote repo.
+
+    `git tag -a netaddr-0.7.xx -m 'netaddr release 0.7.xx'`
+    `make push_tags`
