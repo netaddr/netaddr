@@ -228,7 +228,6 @@ class BaseIP(object):
         return self._module.version
 
 
-
 class IPAddress(BaseIP):
     """
     An individual IPv4 or IPv6 address without a net mask or subnet prefix.
@@ -663,6 +662,7 @@ class IPListMixin(object):
     representing groups of IP addresses.
 
     """
+    __slots__ = ()
     def __iter__(self):
         """
         :return: An iterator providing access to all `IPAddress` objects
