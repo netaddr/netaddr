@@ -8,12 +8,10 @@ Classes and functions for dealing with MAC addresses, EUI-48, EUI-64, OUI, IAB
 identifiers.
 """
 
-from netaddr.core import NotRegisteredError, AddrFormatError, \
-    AddrConversionError, Subscriber, Publisher, DictDotLookup
+from netaddr.core import NotRegisteredError, AddrFormatError, DictDotLookup
 from netaddr.strategy import eui48 as _eui48, eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
 from netaddr.ip import IPAddress
-
 from netaddr.compat import _is_int, _is_str
 
 
@@ -131,7 +129,7 @@ class OUI(BaseIdentifier):
             'idx': 0,
             'oui': '',
             'org': '',
-            'address' : [],
+            'address': [],
             'offset': offset,
             'size': size,
         }
@@ -237,7 +235,7 @@ class IAB(BaseIdentifier):
             'idx': 0,
             'iab': '',
             'org': '',
-            'address' : [],
+            'address': [],
             'offset': 0,
             'size': 0,
         }
@@ -247,8 +245,7 @@ class IAB(BaseIdentifier):
             #TODO: '00-50-C2' is actually invalid.
             #TODO: Should be '00-50-C2-00-00-00' (i.e. a full MAC/EUI-48)
             int_val = int(iab.replace('-', ''), 16)
-            iab_int, user_int = self.split_iab_mac(int_val,
-                    strict=strict)
+            iab_int, user_int = self.split_iab_mac(int_val, strict=strict)
             self._value = iab_int
         elif _is_int(iab):
             iab_int, user_int = self.split_iab_mac(iab, strict=strict)

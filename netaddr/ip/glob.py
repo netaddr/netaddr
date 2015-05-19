@@ -169,11 +169,11 @@ def iprange_to_globs(start, end):
                         tokens.append('%s-%s' % (t1[i], t2[i]))
                         seen_hyphen = True
                     else:
-                        raise AddrConversionError('only 1 hyphenated octet' \
-                            ' per IP glob allowed!')
+                        raise AddrConversionError(
+                            'only 1 hyphenated octet per IP glob allowed!')
                 else:
-                    raise AddrConversionError("asterisks are not allowed' \
-                        ' before hyphenated octets!")
+                    raise AddrConversionError(
+                        "asterisks are not allowed before hyphenated octets!")
 
         return '.'.join(tokens)
 

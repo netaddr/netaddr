@@ -9,8 +9,8 @@ from struct import unpack as _unpack, pack as _pack
 
 from netaddr.compat import _bytes_join, _is_str
 
-AF_INET   =  2
-AF_INET6  = 10
+AF_INET = 2
+AF_INET6 = 10
 
 
 def inet_ntoa(packed_ip):
@@ -61,8 +61,7 @@ def _compact_ipv6_tokens(tokens):
                 best_position = position
         #   Replace chosen zero run.
         (length, start_idx) = best_position
-        new_tokens = new_tokens[0:start_idx] + [''] + \
-                     new_tokens[start_idx+length:]
+        new_tokens = new_tokens[0:start_idx] + [''] + new_tokens[start_idx + length:]
 
         #   Add start and end blanks so join creates '::'.
         if new_tokens[0] == '':
@@ -122,8 +121,7 @@ def _inet_pton_af_inet(ip_string):
         if len(tokens) == 4:
             words = []
             for token in tokens:
-                if token.startswith('0x') or \
-                  (token.startswith('0') and len(token) > 1):
+                if token.startswith('0x') or (token.startswith('0') and len(token) > 1):
                     raise invalid_addr
                 try:
                     octet = int(token)
@@ -192,9 +190,11 @@ def inet_pton(af, ip_string):
 
             gap_size = 8 - ( len(l_prefix) + len(l_suffix) )
 
-            values = [_pack('>H', int(i, 16)) for i in l_prefix] \
-                   + ['\x00\x00'.encode() for i in range(gap_size)] \
-                   + [_pack('>H', int(i, 16)) for i in l_suffix]
+            values = (
+                [_pack('>H', int(i, 16)) for i in l_prefix] +
+                ['\x00\x00'.encode() for i in range(gap_size)] +
+                [_pack('>H', int(i, 16)) for i in l_suffix]
+            )
             try:
                 for token in l_prefix + l_suffix:
                     word = int(token, 16)

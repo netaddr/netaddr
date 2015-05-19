@@ -19,16 +19,13 @@ except ImportError:
     AF_LINK = 48
 
 from netaddr.core import AddrFormatError
-from netaddr.strategy import \
-    valid_words  as _valid_words, \
-    int_to_words as _int_to_words, \
-    words_to_int as _words_to_int, \
-    valid_bits   as _valid_bits, \
-    bits_to_int  as _bits_to_int, \
-    int_to_bits  as _int_to_bits, \
-    valid_bin    as _valid_bin, \
-    int_to_bin   as _int_to_bin, \
-    bin_to_int   as _bin_to_int
+from netaddr.strategy import (
+    valid_words as _valid_words, int_to_words as _int_to_words,
+    words_to_int as _words_to_int, valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int)
+
 from netaddr.compat import _is_str
 
 #: The width (in bits) of this address type.
@@ -70,40 +67,45 @@ class mac_eui48(object):
     #: The number base to be used when interpreting word values as integers.
     word_base = 16
 
+
 class mac_unix(mac_eui48):
     """A UNIX-style MAC address dialect class."""
     word_size = 8
     num_words = width // word_size
-    word_sep  = ':'
-    word_fmt  = '%x'
+    word_sep = ':'
+    word_fmt = '%x'
     word_base = 16
+
 
 class mac_unix_expanded(mac_unix):
     """A UNIX-style MAC address dialect class with leading zeroes."""
-    word_fmt  = '%.2x'
+    word_fmt = '%.2x'
+
 
 class mac_cisco(mac_eui48):
     """A Cisco 'triple hextet' MAC address dialect class."""
     word_size = 16
     num_words = width // word_size
-    word_sep  = '.'
-    word_fmt  = '%.4x'
+    word_sep = '.'
+    word_fmt = '%.4x'
     word_base = 16
+
 
 class mac_bare(mac_eui48):
     """A bare (no delimiters) MAC address dialect class."""
     word_size = 48
     num_words = width // word_size
-    word_sep  = ''
-    word_fmt  = '%.12X'
+    word_sep = ''
+    word_fmt = '%.12X'
     word_base = 16
+
 
 class mac_pgsql(mac_eui48):
     """A PostgreSQL style (2 x 24-bit words) MAC address dialect class."""
     word_size = 24
     num_words = width // word_size
-    word_sep  = ':'
-    word_fmt  = '%.6x'
+    word_sep = ':'
+    word_fmt = '%.6x'
     word_base = 16
 
 #: The default dialect to be used when not specified by the user.
@@ -191,8 +193,7 @@ def str_to_int(addr):
         #   12 bytes (bare, no delimiters)
         int_val = int('%012x' % int(words[0], 16), 16)
     else:
-        raise AddrFormatError('unexpected word count in MAC address %r!' \
-            % addr)
+        raise AddrFormatError('unexpected word count in MAC address %r!' % addr)
 
     return int_val
 
@@ -278,8 +279,8 @@ def bits_to_int(bits, dialect=None):
 def int_to_bits(int_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
-    return _int_to_bits(int_val, dialect.word_size, dialect.num_words,
-        dialect.word_sep)
+    return _int_to_bits(
+        int_val, dialect.word_size, dialect.num_words, dialect.word_sep)
 
 
 def valid_bin(bin_val, dialect=None):

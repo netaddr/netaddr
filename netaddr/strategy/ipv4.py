@@ -20,13 +20,11 @@ else:
 
 from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON
 
-from netaddr.strategy import valid_words  as _valid_words, \
-    valid_bits   as _valid_bits, \
-    bits_to_int  as _bits_to_int, \
-    int_to_bits  as _int_to_bits, \
-    valid_bin    as _valid_bin, \
-    int_to_bin   as _int_to_bin, \
-    bin_to_int   as _bin_to_int
+from netaddr.strategy import (
+    valid_words as _valid_words, valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int)
 
 from netaddr.compat import _str_type
 
@@ -65,19 +63,19 @@ max_word = 2 ** word_size - 1
 
 #: A dictionary mapping IPv4 CIDR prefixes to the equivalent netmasks.
 prefix_to_netmask = dict(
-    [(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width+1)])
+    [(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv4 netmasks to their equivalent CIDR prefixes.
 netmask_to_prefix = dict(
-    [(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width+1)])
+    [(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv4 CIDR prefixes to the equivalent hostmasks.
 prefix_to_hostmask = dict(
-    [(i, (2 ** (width - i) - 1)) for i in range(0, width+1)])
+    [(i, (2 ** (width - i) - 1)) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv4 hostmasks to their equivalent CIDR prefixes.
 hostmask_to_prefix = dict(
-    [((2 ** (width - i) - 1), i) for i in range(0, width+1)])
+    [((2 ** (width - i) - 1), i) for i in range(0, width + 1)])
 
 
 def valid_str(addr, flags=0):
@@ -142,13 +140,12 @@ def int_to_str(int_val, dialect=None):
     """
     if 0 <= int_val <= max_int:
         return '%d.%d.%d.%d' % (
-             int_val >> 24,
+            int_val >> 24,
             (int_val >> 16) & 0xff,
-            (int_val >>  8) & 0xff,
-             int_val & 0xff)
+            (int_val >> 8) & 0xff,
+            int_val & 0xff)
     else:
-        raise ValueError('%r is not a valid 32-bit unsigned integer!' \
-            % int_val)
+        raise ValueError('%r is not a valid 32-bit unsigned integer!' % int_val)
 
 
 def int_to_arpa(int_val):
@@ -197,8 +194,8 @@ def int_to_words(int_val):
         represented by an unsigned integer.
     """
     if not 0 <= int_val <= max_int:
-        raise ValueError('%r is not a valid integer value supported ' \
-            'by this address type!' % int_val)
+        raise ValueError('%r is not a valid integer value supported by'
+                         'this address type!' % int_val)
     return ( int_val >> 24,
             (int_val >> 16) & 0xff,
             (int_val >>  8) & 0xff,
@@ -213,8 +210,7 @@ def words_to_int(words):
         by word (octet) sequence.
     """
     if not valid_words(words):
-        raise ValueError('%r is not a valid octet list for an IPv4 ' \
-            'address!' % words)
+        raise ValueError('%r is not a valid octet list for an IPv4 address!' % words)
     return _struct.unpack('>I', _struct.pack('4B', *words))[0]
 
 

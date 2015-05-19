@@ -33,23 +33,30 @@ if _sys.version_info[0] == 3:
 
     _iter_dict_keys = lambda x: x.keys()
 
-    def _bytes_join(*args): return ''.encode().join(*args)
+    def _bytes_join(*args):
+        return ''.encode().join(*args)
 
-    def _zip(*args): return list(zip(*args))
+    def _zip(*args):
+        return list(zip(*args))
 
-    def _range(*args, **kwargs): return list(range(*args, **kwargs))
+    def _range(*args, **kwargs):
+        return list(range(*args, **kwargs))
 
     _iter_range = range
 
     def _func_name(f, name=None):
-        if name is not None: f.__name__ = name
-        else: return f.__name__
+        if name is not None:
+            f.__name__ = name
+        else:
+            return f.__name__
 
     def _func_doc(f, docstring=None):
-        if docstring is not None: f.__doc__ = docstring
-        else: return f.__doc__
+        if docstring is not None:
+            f.__doc__ = docstring
+        else:
+            return f.__doc__
 
-elif  _sys.version_info[0:2] > [2, 3]:
+elif _sys.version_info[0:2] > [2, 3]:
     # Python 2.4 or higher.
     _sys_maxint = _sys.maxint
 
@@ -69,21 +76,28 @@ elif  _sys.version_info[0:2] > [2, 3]:
 
     _iter_dict_keys = lambda x: iter(x.keys())
 
-    def _bytes_join(*args): return ''.join(*args)
+    def _bytes_join(*args):
+        return ''.join(*args)
 
-    def _zip(*args): return zip(*args)
+    def _zip(*args):
+        return zip(*args)
 
-    def _range(*args, **kwargs): return range(*args, **kwargs)
+    def _range(*args, **kwargs):
+        return range(*args, **kwargs)
 
     _iter_range = xrange
 
     def _func_name(f, name=None):
-        if name is not None: f.func_name = name
-        else: return f.func_name
+        if name is not None:
+            f.func_name = name
+        else:
+            return f.func_name
 
     def _func_doc(f, docstring=None):
-        if docstring is not None: f.func_doc = docstring
-        else: return f.func_doc
+        if docstring is not None:
+            f.func_doc = docstring
+        else:
+            return f.func_doc
 
 else:
     # Unsupported versions.

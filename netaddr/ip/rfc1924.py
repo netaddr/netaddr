@@ -13,12 +13,15 @@ from netaddr.compat import _zip
 
 def chr_range(low, high):
     """Returns all characters between low and high chars."""
-    return [chr(i) for i in range(ord(low), ord(high)+1)]
+    return [chr(i) for i in range(ord(low), ord(high) + 1)]
 
 #: Base 85 integer index to character lookup table.
-BASE_85 = chr_range('0', '9') + chr_range('A', 'Z') + chr_range('a', 'z') + \
-    ['!', '#', '$', '%', '&', '(',')', '*', '+', '-',';', '<', '=', '>',
-     '?', '@', '^', '_','`', '{', '|', '}', '~']
+BASE_85 = (
+    chr_range('0', '9') + chr_range('A', 'Z') +
+    chr_range('a', 'z') +
+    ['!', '#', '$', '%', '&', '(', ')', '*', '+', '-', ';', '<', '=', '>',
+     '?', '@', '^', '_', '`', '{', '|', '}', '~']
+)
 
 #: Base 85 digit to integer lookup table.
 BASE_85_DICT = dict(_zip(BASE_85, range(0, 86)))

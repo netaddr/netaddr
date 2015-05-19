@@ -41,18 +41,15 @@ from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
 from netaddr.compat import _dict_items, _callable
 
 
-
 #: Topic based lookup dictionary for IANA information.
 IANA_INFO = {
-    'IPv4'      : {},
-    'IPv6'      : {},
-    'multicast' : {},
+    'IPv4': {},
+    'IPv6': {},
+    'multicast': {},
 }
 
 
-
 class SaxRecordParser(handler.ContentHandler):
-
     def __init__(self, callback=None):
         self._level = 0
         self._is_active = False
@@ -108,6 +105,7 @@ class XMLRecordParser(Publisher):
     """
     A configurable Parser that understands how to parse XML based records.
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -155,6 +153,7 @@ class IPv4Parser(XMLRecordParser):
 
         - http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -195,6 +194,7 @@ class IPv6Parser(XMLRecordParser):
 
         - http://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -213,10 +213,10 @@ class IPv6Parser(XMLRecordParser):
         """
 
         record = {
-                'prefix':       str(rec.get('prefix', '')).strip(),
-                'allocation':   str(rec.get('description', '')).strip(),
-                'reference':    str(rec.get('rfc', [''])[0]).strip(),
-            }
+            'prefix': str(rec.get('prefix', '')).strip(),
+            'allocation': str(rec.get('description', '')).strip(),
+            'reference': str(rec.get('rfc', [''])[0]).strip(),
+        }
 
         return record
 
@@ -230,6 +230,7 @@ class MulticastParser(XMLRecordParser):
 
         - http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -264,9 +265,9 @@ class MulticastParser(XMLRecordParser):
 
         if 'addr' in rec:
             record = {
-                    'address': self.normalise_addr(str(rec['addr'])),
-                    'descr': str(rec.get('description', '')),
-                }
+                'address': self.normalise_addr(str(rec['addr'])),
+                'descr': str(rec.get('description', '')),
+            }
             return record
 
 
@@ -275,6 +276,7 @@ class DictUpdater(Subscriber):
     Concrete Subscriber that inserts records received from a Publisher into a
     dictionary.
     """
+
     def __init__(self, dct, topic, unique_key):
         """
         Constructor.

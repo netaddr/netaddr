@@ -14,16 +14,12 @@ AF_EUI64 = 64
 
 from netaddr.core import AddrFormatError
 from netaddr.compat import _is_str
-from netaddr.strategy import \
-    valid_words  as _valid_words, \
-    int_to_words as _int_to_words, \
-    words_to_int as _words_to_int, \
-    valid_bits   as _valid_bits, \
-    bits_to_int  as _bits_to_int, \
-    int_to_bits  as _int_to_bits, \
-    valid_bin    as _valid_bin, \
-    int_to_bin   as _int_to_bin, \
-    bin_to_int   as _bin_to_int
+from netaddr.strategy import (
+    valid_words as _valid_words, int_to_words as _int_to_words,
+    words_to_int as _words_to_int, valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int)
 
 #: The width (in bits) of this address type.
 width = 64
@@ -72,6 +68,7 @@ def _get_match_result(address, formats):
         if match:
             return match[0]
 
+
 def valid_str(addr):
     """
     :param addr: An IEEE EUI-64 indentifier in string form.
@@ -106,8 +103,8 @@ def str_to_int(addr):
     if _is_str(words):
         return int(words, 16)
     if len(words) != num_words:
-        raise AddrFormatError('bad word count for EUI-64 identifier: %r!' \
-            % addr)
+        raise AddrFormatError(
+            'bad word count for EUI-64 identifier: %r!' % addr)
 
     return int(''.join(['%.2x' % int(w, 16) for w in words]), 16)
 

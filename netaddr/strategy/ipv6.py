@@ -18,26 +18,20 @@ try:
         raise Exception('IPv6 disabled')
     _socket.inet_pton
     _socket.AF_INET6
-    from _socket import inet_pton as _inet_pton, \
-                        inet_ntop as _inet_ntop, \
-                        AF_INET6
+    from _socket import (inet_pton as _inet_pton, inet_ntop as _inet_ntop,
+                         AF_INET6)
     OPT_IMPORTS = True
 except Exception:
-    from netaddr.fbsocket import inet_pton as _inet_pton, \
-                                 inet_ntop as _inet_ntop, \
-                                 AF_INET6
+    from netaddr.fbsocket import (inet_pton as _inet_pton, inet_ntop as _inet_ntop,
+                                 AF_INET6)
 
 from netaddr.core import AddrFormatError
-from netaddr.strategy import \
-    valid_words  as _valid_words, \
-    int_to_words as _int_to_words, \
-    words_to_int as _words_to_int, \
-    valid_bits   as _valid_bits, \
-    bits_to_int  as _bits_to_int, \
-    int_to_bits  as _int_to_bits, \
-    valid_bin    as _valid_bin, \
-    int_to_bin   as _int_to_bin, \
-    bin_to_int   as _bin_to_int
+from netaddr.strategy import (
+    valid_words as _valid_words, int_to_words as _int_to_words,
+    words_to_int as _words_to_int, valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int)
 
 #: The width (in bits) of this address type.
 width = 128
@@ -173,8 +167,7 @@ def int_to_str(int_val, dialect=None):
             tokens = [dialect.word_fmt % word for word in words]
             addr = word_sep.join(tokens)
     except Exception:
-        raise ValueError('%r is not a valid 128-bit unsigned integer!' \
-            % int_val)
+        raise ValueError('%r is not a valid 128-bit unsigned integer!' % int_val)
 
     return addr
 

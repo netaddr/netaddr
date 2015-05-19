@@ -78,6 +78,7 @@ class Subscriber(object):
     """
     An abstract class defining the interface expected by a Publisher.
     """
+
     def update(self, data):
         """
         A callback method used by a Publisher to notify this Subscriber about
@@ -96,6 +97,7 @@ class PrettyPrinter(Subscriber):
 
     Useful as a debugging aid.
     """
+
     def __init__(self, fh=_sys.stdout, write_eol=True):
         """
         Constructor.
@@ -128,6 +130,7 @@ class Publisher(object):
     them of state changes by passing them update data when it encounter events
     of interest.
     """
+
     def __init__(self):
         """Constructor"""
         self.subscribers = []
@@ -139,13 +142,11 @@ class Publisher(object):
         :param subscriber: a new object that implements the Subscriber object
             interface.
         """
-        if hasattr(subscriber, 'update') and \
-           _callable(eval('subscriber.update')):
+        if hasattr(subscriber, 'update') and _callable(eval('subscriber.update')):
             if subscriber not in self.subscribers:
                 self.subscribers.append(subscriber)
         else:
-            raise TypeError('%r does not support required interface!' \
-                % subscriber)
+            raise TypeError('%r does not support required interface!' % subscriber)
 
     def detach(self, subscriber):
         """
@@ -178,6 +179,7 @@ class DictDotLookup(object):
     structures - http://code.activestate.com/recipes/576586/
 
     """
+
     def __init__(self, d):
         for k in d:
             if isinstance(d[k], dict):
