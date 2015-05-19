@@ -232,3 +232,16 @@ Netmasks
 128
 
 }}}
+
+
+Class definition tests
+
+{{{
+
+>>> hasattr(IPNetwork("::/64"), "__dict__")
+False
+
+>>> hasattr(IPAddress("::"), "__dict__")
+False
+
+}}}
