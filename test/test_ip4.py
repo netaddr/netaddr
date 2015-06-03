@@ -2,8 +2,9 @@ import types
 import random
 
 import pytest
+import sys
 
-from netaddr import IPAddress, IPNetwork
+from netaddr import IPAddress, IPNetwork, INET_PTON, AddrFormatError, ZEROFILL, Z, P, NOHOST
 
 
 def test_ipaddress_v4():
@@ -167,3 +168,254 @@ def test_ipaddress_and_ipnetwork_canonical_sort_order_by_version():
         IPAddress('::'),
         IPNetwork('fe80::/64'),
     ]
+
+
+def test_ipnetwork_v4_constructor():
+    assert IPNetwork('192.168/16') == IPNetwork('192.168.0.0/16')
+    assert IPNetwork('192.168.0.15') == IPNetwork('192.168.0.15/32')
+    assert IPNetwork('192.168') == IPNetwork('192.168.0.0/32')
+    assert IPNetwork('192.168', implicit_prefix=True) == IPNetwork('192.168.0.0/24')
+    assert IPNetwork('192.168', True) == IPNetwork('192.168.0.0/24')
+    assert IPNetwork('10.0.0.1', True) == IPNetwork('10.0.0.1/8')
+
+
+def test_ipaddress_integer_operations_v4():
+    assert IPAddress('192.0.2.0') + 1 == IPAddress('192.0.2.1')
+    assert 1 + IPAddress('192.0.2.0') == IPAddress('192.0.2.1')
+    assert IPAddress('192.0.2.1') - 1 == IPAddress('192.0.2.0')
+    assert IPAddress('192.0.0.0') + IPAddress('0.0.0.42') == IPAddress('192.0.0.42')
+    assert IPAddress('192.0.0.42') - IPAddress('0.0.0.42') == IPAddress('192.0.0.0')
+
+    with pytest.raises(IndexError):
+        1 - IPAddress('192.0.2.1')
+
+    ip = IPAddress('10.0.0.1')
+    ip += 1
+    assert ip == IPAddress('10.0.0.2')
+
+    ip -= 1
+    assert ip == IPAddress('10.0.0.1')
+
+    ip += IPAddress('0.0.0.42')
+    assert ip == IPAddress('10.0.0.43')
+
+    ip -= IPAddress('0.0.0.43')
+    assert ip == IPAddress('10.0.0.0')
+
+    #   Negative increments around address range boundaries.
+    ip = IPAddress('0.0.0.0')
+    with pytest.raises(IndexError):
+        ip += -1
+
+    ip = IPAddress('255.255.255.255')
+    with pytest.raises(IndexError):
+        ip -= -1
+
+
+def test_ipaddress_binary_operations_v4():
+    assert IPAddress('192.0.2.15') & IPAddress('255.255.255.0') == IPAddress('192.0.2.0')
+    assert IPAddress('255.255.0.0') | IPAddress('0.0.255.255') == IPAddress('255.255.255.255')
+    assert IPAddress('255.255.0.0') ^ IPAddress('255.0.0.0') == IPAddress('0.255.0.0')
+    assert IPAddress('1.2.3.4').packed == '\x01\x02\x03\x04'.encode('ascii')
+
+
+def test_ipnetwork_slices_v4():
+    assert list(IPNetwork('192.0.2.0/29')[0:-1]) == [
+        IPAddress('192.0.2.0'),
+        IPAddress('192.0.2.1'),
+        IPAddress('192.0.2.2'),
+        IPAddress('192.0.2.3'),
+        IPAddress('192.0.2.4'),
+        IPAddress('192.0.2.5'),
+        IPAddress('192.0.2.6'),
+    ]
+
+    assert list(IPNetwork('192.0.2.0/29')[::-1]) == [
+        IPAddress('192.0.2.7'),
+        IPAddress('192.0.2.6'),
+        IPAddress('192.0.2.5'),
+        IPAddress('192.0.2.4'),
+        IPAddress('192.0.2.3'),
+        IPAddress('192.0.2.2'),
+        IPAddress('192.0.2.1'),
+        IPAddress('192.0.2.0'),
+    ]
+
+def test_iterhosts_v4():
+    assert list(IPNetwork('192.0.2.0/29').iter_hosts()) == [
+        IPAddress('192.0.2.1'),
+        IPAddress('192.0.2.2'),
+        IPAddress('192.0.2.3'),
+        IPAddress('192.0.2.4'),
+        IPAddress('192.0.2.5'),
+        IPAddress('192.0.2.6'),
+    ]
+
+
+    assert list(IPNetwork("192.168.0.0/31")) == [
+        IPAddress('192.168.0.0'),
+        IPAddress('192.168.0.1'),
+    ]
+
+    assert list(IPNetwork("1234::/128")) == [IPAddress('1234::')]
+    assert list(IPNetwork("1234::/128").iter_hosts()) == []
+    assert list(IPNetwork("192.168.0.0/31").iter_hosts()) == []
+
+
+def test_ipaddress_boolean_evaluation_v4():
+    assert not bool(IPAddress('0.0.0.0'))
+    assert bool(IPAddress('0.0.0.1'))
+    assert bool(IPAddress('255.255.255.255'))
+
+
+def test_ipnetwork_boolean_evaluation_v4():
+    assert bool(IPNetwork('0.0.0.0/0'))
+
+
+def test_ipnetwork_equality_v4():
+    assert IPNetwork('192.0.2.0/255.255.254.0') == IPNetwork('192.0.2.0/23')
+    assert IPNetwork('192.0.2.65/255.255.254.0') == IPNetwork('192.0.2.0/23')
+    assert IPNetwork('192.0.2.65/255.255.254.0') == IPNetwork('192.0.2.65/23')
+    assert IPNetwork('192.0.2.65/255.255.255.0') != IPNetwork('192.0.2.0/23')
+    assert IPNetwork('192.0.2.65/255.255.254.0') != IPNetwork('192.0.2.65/24')
+
+
+def test_ipnetwork_slicing_v4():
+    ip = IPNetwork('192.0.2.0/23')
+
+    assert ip.first == 3221225984
+    assert ip.last == 3221226495
+
+    assert ip[0] == IPAddress('192.0.2.0')
+    assert ip[-1] == IPAddress('192.0.3.255')
+
+    assert list(ip[::128]) ==  [
+        IPAddress('192.0.2.0'),
+        IPAddress('192.0.2.128'),
+        IPAddress('192.0.3.0'),
+        IPAddress('192.0.3.128'),
+    ]
+
+
+def test_ip_network_membership_v4():
+    assert IPAddress('192.0.2.1') in IPNetwork('192.0.2.0/24')
+    assert IPAddress('192.0.2.255') in IPNetwork('192.0.2.0/24')
+    assert IPNetwork('192.0.2.0/24') in IPNetwork('192.0.2.0/23')
+    assert IPNetwork('192.0.2.0/24') in IPNetwork('192.0.2.0/24')
+    assert IPNetwork('192.0.2.0/23') not in IPNetwork('192.0.2.0/24')
+
+
+def test_ip_network_equality_v4():
+    assert IPNetwork('192.0.2.0/24') == IPNetwork('192.0.2.0/24')
+    assert IPNetwork('192.0.2.0/24') is not IPNetwork('192.0.2.0/24')
+
+    assert not IPNetwork('192.0.2.0/24') != IPNetwork('192.0.2.0/24')
+    assert not IPNetwork('192.0.2.0/24') is IPNetwork('192.0.2.0/24')
+
+
+def test_ipaddress_integer_constructor_v4():
+    assert IPAddress(1) == IPAddress('0.0.0.1')
+    assert IPAddress(1, 4) == IPAddress('0.0.0.1')
+    assert IPAddress(1, 6) == IPAddress('::1')
+    assert IPAddress(10) == IPAddress('0.0.0.10')
+
+
+def test_ipaddress_integer_constructor_v6():
+    assert IPAddress(0x1ffffffff) == IPAddress('::1:ffff:ffff')
+    assert IPAddress(0xffffffff, 6) == IPAddress('::255.255.255.255')
+    assert IPAddress(0x1ffffffff) == IPAddress('::1:ffff:ffff')
+    assert IPAddress(2 ** 128 - 1) == IPAddress('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')
+
+
+def test_ipaddress_inet_aton_constructor_v4():
+    assert IPAddress('0x7f.0x1') == IPAddress('127.0.0.1')
+    assert IPAddress('0x7f.0x0.0x0.0x1') == IPAddress('127.0.0.1')
+    assert IPAddress('0177.01') == IPAddress('127.0.0.1')
+    assert IPAddress('0x7f.0.01') == IPAddress('127.0.0.1')
+
+    #	Partial addresses - pretty weird, but valid ...
+    assert IPAddress('127') == IPAddress('0.0.0.127')
+    assert IPAddress('127') == IPAddress('0.0.0.127')
+    assert IPAddress('127.1') == IPAddress('127.0.0.1')
+    assert IPAddress('127.0.1') == IPAddress('127.0.0.1')
+
+
+def test_ipaddress_inet_pton_constructor_v4():
+    with pytest.raises(AddrFormatError):
+        IPAddress('0177.01', flags=INET_PTON)
+
+    with pytest.raises(AddrFormatError):
+        IPAddress('0x7f.0.01', flags=INET_PTON)
+
+    with pytest.raises(AddrFormatError):
+        IPAddress('10', flags=INET_PTON)
+
+    with pytest.raises(AddrFormatError):
+        IPAddress('10.1', flags=INET_PTON)
+
+    with pytest.raises(AddrFormatError):
+        IPAddress('10.0.1', flags=INET_PTON)
+
+    assert IPAddress('10.0.0.1', flags=INET_PTON) == IPAddress('10.0.0.1')
+
+
+def test_ipaddress_constructor_zero_filled_octets_v4():
+    assert IPAddress('010.000.000.001') == IPAddress('8.0.0.1')
+    assert IPAddress('010.000.000.001', flags=ZEROFILL) == IPAddress('10.0.0.1')
+    assert IPAddress('010.000.001', flags=ZEROFILL) == IPAddress('10.0.0.1')
+
+    with pytest.raises(AddrFormatError):
+        assert IPAddress('010.000.001', flags=INET_PTON|ZEROFILL)
+
+    assert IPAddress('010.000.000.001', flags=INET_PTON|ZEROFILL) == IPAddress('10.0.0.1')
+
+    #   Short flags.
+    assert IPAddress('010.000.000.001', flags=P|Z) == IPAddress('10.0.0.1')
+
+
+def test_ipnetwork_constructor_v4():
+    assert IPNetwork('192.0.2.0/24') == IPNetwork('192.0.2.0/24')
+    assert IPNetwork('192.0.2.0/255.255.255.0') == IPNetwork('192.0.2.0/24')
+    assert IPNetwork('192.0.2.0/0.0.0.255') == IPNetwork('192.0.2.0/24')
+    assert IPNetwork(IPNetwork('192.0.2.0/24')) == IPNetwork('192.0.2.0/24')
+    assert IPNetwork(IPNetwork('192.0.2.0/24')) == IPNetwork('192.0.2.0/24')
+
+
+def test_ip_network_cosntructor_implicit_prefix_flag_v4():
+    assert IPNetwork('192.0.2.0', implicit_prefix=True) == IPNetwork('192.0.2.0/24')
+    assert IPNetwork('231.192.0.15', implicit_prefix=True) == IPNetwork('231.192.0.15/4')
+    assert IPNetwork('10', implicit_prefix=True) == IPNetwork('10.0.0.0/8')
+
+
+def test_ipnetwork_constructor_other_flags_v4():
+    assert IPNetwork('172.24.200') == IPNetwork('172.24.200.0/32')
+    assert IPNetwork('172.24.200', implicit_prefix=True) == IPNetwork('172.24.200.0/16')
+    assert IPNetwork('172.24.200', implicit_prefix=True, flags=NOHOST) == IPNetwork('172.24.0.0/16')
+
+
+def test_ipnetwork_bad_string_constructor():
+    with pytest.raises(AddrFormatError):
+        IPNetwork('foo')
+
+
+def test_ipaddress_netmask_v4():
+    assert IPAddress('1.1.1.1').netmask_bits() == 32
+    assert IPAddress('255.255.255.254').netmask_bits() == 31
+    assert IPAddress('255.255.255.0').netmask_bits() == 24
+
+
+def test_ipaddress_hex_format():
+    assert hex(IPAddress(0)) == '0x0'
+    assert hex(IPAddress(0xffffffff)) == '0xffffffff'
+
+
+@pytest.mark.skipif(sys.version_info > (2,), reason="requires python 2.x behaviour")
+def test_ipaddress_oct_format_py2():
+    assert oct(IPAddress(0xffffffff)) == '037777777777'
+    assert oct(IPAddress(0)) == '0'
+
+
+@pytest.mark.skipif(sys.version_info < (3,), reason="python 3.x behaviour")
+def test_ipaddress_oct_format_py3():
+    assert oct(IPAddress(0xffffffff)) == '0o37777777777'
+    assert oct(IPAddress(0)) == '0o0'

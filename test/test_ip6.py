@@ -37,3 +37,55 @@ def test_ipnetwork_v6(value, ipaddr, network, cidr, broadcast, netmask, hostmask
     assert net.netmask == netmask
     assert net.hostmask == hostmask
     assert net.size == size
+
+
+def test_iterhosts_v6():
+    assert list(IPNetwork('::ffff:192.0.2.0/125').iter_hosts()) == [
+        IPAddress('::ffff:192.0.2.1'),
+        IPAddress('::ffff:192.0.2.2'),
+        IPAddress('::ffff:192.0.2.3'),
+        IPAddress('::ffff:192.0.2.4'),
+        IPAddress('::ffff:192.0.2.5'),
+        IPAddress('::ffff:192.0.2.6'),
+        IPAddress('::ffff:192.0.2.7'),
+    ]
+
+def test_ipnetwork_boolean_evaluation_v6():
+    assert bool(IPNetwork('::/0'))
+
+
+def test_ipnetwork_slice_v6():
+    ip = IPNetwork('fe80::/10')
+    assert ip[0] == IPAddress('fe80::')
+    assert ip[-1] == IPAddress('febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff')
+    assert ip.size == 332306998946228968225951765070086144
+
+    with pytest.raises(TypeError):
+        list(ip[0:5:1])
+
+
+def test_ip_network_membership_v6():
+    assert IPAddress('ffff::1') in IPNetwork('ffff::/127')
+
+
+def test_ip_network_equality_v6():
+    assert IPNetwork('fe80::/10') == IPNetwork('fe80::/10')
+    assert IPNetwork('fe80::/10') is not IPNetwork('fe80::/10')
+
+    assert not IPNetwork('fe80::/10') != IPNetwork('fe80::/10')
+    assert not IPNetwork('fe80::/10') is IPNetwork('fe80::/10')
+
+
+def test_ipnetwork_constructor_v6():
+    assert IPNetwork(IPNetwork('::192.0.2.0/120')) == IPNetwork('::192.0.2.0/120')
+    assert IPNetwork('::192.0.2.0/120') == IPNetwork('::192.0.2.0/120')
+    assert IPNetwork('::192.0.2.0/120', 6) == IPNetwork('::192.0.2.0/120')
+
+
+def test_ipaddress_netmask_v6():
+    assert IPAddress('::').netmask_bits() == 128
+
+
+def test_objects_use_slots():
+    assert not hasattr(IPNetwork("::/64"), "__dict__")
+    assert not hasattr(IPAddress("::"), "__dict__")
