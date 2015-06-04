@@ -1,3 +1,4 @@
+import pickle
 import pytest
 from netaddr import IPAddress, IPNetwork
 
@@ -89,3 +90,31 @@ def test_ipaddress_netmask_v6():
 def test_objects_use_slots():
     assert not hasattr(IPNetwork("::/64"), "__dict__")
     assert not hasattr(IPAddress("::"), "__dict__")
+
+
+def test_ipaddress_pickling_v6():
+    ip = IPAddress('::ffff:192.0.2.1')
+    assert ip == IPAddress('::ffff:192.0.2.1')
+
+    assert ip.value == 281473902969345
+
+    buf = pickle.dumps(ip)
+    ip2 = pickle.loads(buf)
+    assert ip2 == ip
+    assert ip2.value == 281473902969345
+    assert ip2.version == 6
+
+
+def test_ipnetwork_pickling_v6():
+    cidr = IPNetwork('::ffff:192.0.2.0/120')
+    assert cidr == IPNetwork('::ffff:192.0.2.0/120')
+    assert cidr.value == 281473902969344
+    assert cidr.prefixlen == 120
+
+    buf = pickle.dumps(cidr)
+    cidr2 = pickle.loads(buf)
+
+    assert cidr2 == cidr
+    assert cidr2.value == 281473902969344
+    assert cidr2.prefixlen == 120
+    assert cidr2.version == 6

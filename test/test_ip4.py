@@ -1,3 +1,4 @@
+import pickle
 import types
 import random
 
@@ -419,3 +420,43 @@ def test_ipaddress_oct_format_py2():
 def test_ipaddress_oct_format_py3():
     assert oct(IPAddress(0xffffffff)) == '0o37777777777'
     assert oct(IPAddress(0)) == '0o0'
+
+
+def test_is_multicast():
+    ip = IPAddress('239.192.0.1')
+    assert ip.is_multicast()
+
+
+def test_multicast_info():
+    ip = IPAddress('224.0.1.173')
+    assert ip.info.IPv4[0].designation == 'Multicast'
+    assert ip.info.IPv4[0].prefix == '224/8'
+    assert ip.info.IPv4[0].status == 'Reserved'
+    assert ip.info.Multicast[0].address == '224.0.1.173'
+
+
+def test_ipaddress_pickling_v4():
+    ip = IPAddress(3221225985)
+    assert ip == IPAddress('192.0.2.1')
+
+    buf = pickle.dumps(ip)
+    ip2 = pickle.loads(buf)
+
+    assert ip2 == ip
+    assert id(ip2) != id(ip)
+    assert ip2.value == 3221225985
+    assert ip2.version == 4
+
+
+def test_ipnetwork_pickling_v4():
+    cidr = IPNetwork('192.0.2.0/24')
+    assert cidr == IPNetwork('192.0.2.0/24')
+
+    buf = pickle.dumps(cidr)
+    cidr2 = pickle.loads(buf)
+
+    assert cidr2 == cidr
+    assert id(cidr2) != id(cidr)
+    assert cidr2.value == 3221225984
+    assert cidr2.prefixlen == 24
+    assert cidr2.version == 4

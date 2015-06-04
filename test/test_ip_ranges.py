@@ -1,3 +1,4 @@
+import pickle
 import pytest
 
 from netaddr import iter_iprange, IPAddress, cidr_merge, IPNetwork, IPRange, ZEROFILL, AddrFormatError
@@ -241,3 +242,36 @@ def test_iprange_invalid_len_and_alternative():
     range2 = IPRange(IPAddress("::0"), IPAddress(_sys_maxint - 1, 6))
     assert len(range2) == _sys_maxint
 
+
+def test_iprange_pickling_v4():
+    iprange = IPRange('192.0.2.1', '192.0.2.254')
+    assert iprange == IPRange('192.0.2.1', '192.0.2.254')
+    assert iprange.first == 3221225985
+    assert iprange.last == 3221226238
+    assert iprange.version == 4
+
+    buf = pickle.dumps(iprange)
+    iprange2 = pickle.loads(buf)
+    assert iprange2 == iprange
+    assert id(iprange2) != id(iprange)
+    assert iprange2.first == 3221225985
+    assert iprange2.last == 3221226238
+    assert iprange2.version == 4
+
+
+def test_iprange_pickling_v6():
+    iprange = IPRange('::ffff:192.0.2.1', '::ffff:192.0.2.254')
+
+    assert iprange == IPRange('::ffff:192.0.2.1', '::ffff:192.0.2.254')
+    assert iprange.first == 281473902969345
+    assert iprange.last == 281473902969598
+    assert iprange.version == 6
+
+    buf = pickle.dumps(iprange)
+
+    iprange2 = pickle.loads(buf)
+
+    assert iprange2 == iprange
+    assert iprange2.first == 281473902969345
+    assert iprange2.last == 281473902969598
+    assert iprange2.version == 6
