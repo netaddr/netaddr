@@ -1,6 +1,7 @@
 import random
 
-from netaddr import iprange_to_cidrs, IPNetwork, cidr_merge, cidr_exclude
+from netaddr import iprange_to_cidrs, IPNetwork, cidr_merge, cidr_exclude, largest_matching_cidr, smallest_matching_cidr, \
+    all_matching_cidrs
 
 
 def test_iprange_to_cidrs_worst_case_v4():
@@ -143,8 +144,52 @@ def test_whole_network_cidr_merge_v4():
     assert cidr_merge(['0.0.0.0/0', '192.0.2.0/24', '10.0.0.0/8']) == [IPNetwork('0.0.0.0/0')]
 
 
-def test_whole_network_cidr_merge_v6():
-    assert cidr_merge(['::/0', 'fe80::1']) == [IPNetwork('::/0')]
-    assert cidr_merge(['::/0', '::']) == [IPNetwork('::/0')]
-    assert cidr_merge(['::/0', '::192.0.2.0/124', 'ff00::101']) == [IPNetwork('::/0')]
-    assert cidr_merge(['0.0.0.0/0', '0.0.0.0', '::/0', '::']) == [IPNetwork('0.0.0.0/0'), IPNetwork('::/0')]
+def test_largest_matching_cidr_v4():
+    assert largest_matching_cidr('192.0.2.0', ['192.0.2.0']) == IPNetwork('192.0.2.0/32')
+    assert largest_matching_cidr('192.0.2.0', ['10.0.0.1', '192.0.2.0']) == IPNetwork('192.0.2.0/32')
+    assert largest_matching_cidr('192.0.2.0', ['10.0.0.1', '192.0.2.0', '224.0.0.1']) == IPNetwork('192.0.2.0/32')
+    assert largest_matching_cidr('192.0.2.0', ['10.0.0.1', '224.0.0.1']) is None
+
+
+def test_smallest_matching_cidr_v4():
+    assert smallest_matching_cidr('192.0.2.0', ['10.0.0.1', '192.0.2.0', '224.0.0.1']) == IPNetwork('192.0.2.0/32')
+    assert smallest_matching_cidr('192.0.2.32', ['0.0.0.0/0', '10.0.0.0/8', '192.0.0.0/8', '192.0.1.0/24', '192.0.2.0/24', '192.0.3.0/24']) == IPNetwork('192.0.2.0/24')
+    assert smallest_matching_cidr('192.0.2.0', ['10.0.0.1', '224.0.0.1']) is None
+
+
+def test_all_matching_cidrs_v4():
+    assert all_matching_cidrs('192.0.2.32', ['0.0.0.0/0', '10.0.0.0/8', '192.0.0.0/8', '192.0.1.0/24', '192.0.2.0/24', '192.0.3.0/24']) == [
+        IPNetwork('0.0.0.0/0'),
+        IPNetwork('192.0.0.0/8'),
+        IPNetwork('192.0.2.0/24'),
+    ]
+
+def test_cidr_matching_v4():
+    networks = [str(c) for c in IPNetwork('192.0.2.128/27').supernet(22)]
+
+    assert networks == [
+        '192.0.0.0/22',
+        '192.0.2.0/23',
+        '192.0.2.0/24',
+        '192.0.2.128/25',
+        '192.0.2.128/26',
+    ]
+
+    assert all_matching_cidrs('192.0.2.0', networks) == [
+        IPNetwork('192.0.0.0/22'),
+        IPNetwork('192.0.2.0/23'),
+        IPNetwork('192.0.2.0/24'),
+    ]
+
+    assert smallest_matching_cidr('192.0.2.0', networks) == IPNetwork('192.0.2.0/24')
+    assert largest_matching_cidr('192.0.2.0', networks) == IPNetwork('192.0.0.0/22')
+
+# {{{
+# >>> all_matching_cidrs('192.0.2.0', ['192.0.2.0/24'])
+# [IPNetwork('192.0.2.0/24')]
+#
+# >>> all_matching_cidrs('192.0.2.0', ['::/96'])
+# []
+#
+#
+# }}}

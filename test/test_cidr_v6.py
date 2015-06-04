@@ -1,4 +1,4 @@
-from netaddr import iprange_to_cidrs, IPNetwork
+from netaddr import iprange_to_cidrs, IPNetwork, cidr_merge, all_matching_cidrs
 
 
 def test_iprange_to_cidrs_worst_case_v6():
@@ -91,3 +91,16 @@ def test_rfc_4291():
     assert str(IPNetwork('2001:0DB8:0:CD30::/60')) == '2001:db8:0:cd30::/60'
 
 
+def test_whole_network_cidr_merge_v6():
+    assert cidr_merge(['::/0', 'fe80::1']) == [IPNetwork('::/0')]
+    assert cidr_merge(['::/0', '::']) == [IPNetwork('::/0')]
+    assert cidr_merge(['::/0', '::192.0.2.0/124', 'ff00::101']) == [IPNetwork('::/0')]
+    assert cidr_merge(['0.0.0.0/0', '0.0.0.0', '::/0', '::']) == [IPNetwork('0.0.0.0/0'), IPNetwork('::/0')]
+
+
+def test_all_matching_cidrs_v6():
+    assert all_matching_cidrs('::ffff:192.0.2.1', ['::ffff:192.0.2.0/96']) == [IPNetwork('::ffff:192.0.2.0/96')]
+    assert all_matching_cidrs('::192.0.2.1', ['::192.0.2.0/96']) == [IPNetwork('::192.0.2.0/96')]
+    assert all_matching_cidrs('::192.0.2.1', ['192.0.2.0/23']) == []
+    assert all_matching_cidrs('::192.0.2.1', ['192.0.2.0/24', '::192.0.2.0/120']) == [IPNetwork('::192.0.2.0/120')]
+    assert all_matching_cidrs('::192.0.2.1', [IPNetwork('192.0.2.0/24'), IPNetwork('::192.0.2.0/120')]) == [IPNetwork('::192.0.2.0/120')]
