@@ -1,4 +1,22 @@
 ---------------
+Release: 0.7.15
+---------------
+Date: ?????????
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.14
+^^^^^^^^^^^^^^^^^^^^
+
+* Fix slowness in IPSet.__contains__. Thanks to novas0x2a for noticing.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 94: https://github.com/drkjam/netaddr/issues/94
+    - IPSet.__contains__ is about 40 times slower than the equivalent IPRange
+
+---------------
 Release: 0.7.14
 ---------------
 Date: 31st Mar 2015
