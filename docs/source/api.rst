@@ -112,7 +112,7 @@ Nowadays, IP networks are usually specified using the CIDR format with a prefix 
 Arbitrary IP address ranges
 ---------------------------
 
-netaddr was designed to accomodate the many different ways in which groups of IP addresses and IP networks are specified, not only in router configurations but also less standard but more human-readable forms found in, for instance, configuration files.
+netaddr was designed to accommodate the many different ways in which groups of IP addresses and IP networks are specified, not only in router configurations but also less standard but more human-readable forms found in, for instance, configuration files.
 
 Here are the options currently available.
 

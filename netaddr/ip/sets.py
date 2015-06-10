@@ -231,15 +231,16 @@ class IPSet(object):
 
         :return: ``True`` if IP address or subnet is a member of this IP set.
         """
-        ip = IPNetwork(ip)
         # Iterating over self._cidrs is an O(n) operation: 1000 items in
         # self._cidrs would mean 1000 loops. Iterating over all possible
         # supernets loops at most 32 times for IPv4 or 128 times for IPv6,
         # no matter how many CIDRs this object contains.
-        if ip in self._cidrs:
+        supernet = IPNetwork(ip)
+        if supernet in self._cidrs:
             return True
-        for cidr in ip.supernet():
-            if cidr in self._cidrs:
+        while supernet._prefixlen:
+            supernet._prefixlen -= 1
+            if supernet in self._cidrs:
                 return True
         return False
 
