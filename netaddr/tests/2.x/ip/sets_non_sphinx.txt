@@ -30,6 +30,19 @@ IPSet(['10.0.0.1/32', '10.0.0.2/32'])
 >>> s2
 IPSet(['10.0.0.1/32', '10.0.0.2/32', 'fe80::/128'])
 
+
+# When IPNetworks are not specified like 10.0.0.0/8 but like 10.1.2.3/8, the
+# IPSet must normalize them.
+
+>>> s1 = IPSet(IPNetwork('10.1.2.3/8'))
+>>> s1.iter_cidrs()
+[IPNetwork('10.0.0.0/8')]
+
+>>> s1 = IPSet(IPNetwork('fe80::4242/64'))
+>>> s1.iter_cidrs()
+[IPNetwork('fe80::/64')]
+
+
 ------------------------------
 Combined IPv4 and IPv6 support
 ------------------------------
