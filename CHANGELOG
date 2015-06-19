@@ -8,6 +8,7 @@ Changes since 0.7.14
 ^^^^^^^^^^^^^^^^^^^^
 
 * Fix slowness in IPSet.__contains__. Thanks to novas0x2a for noticing.
+* Normalize IPNetworks when they are added to an IPSet
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
@@ -15,6 +16,9 @@ Specific bug fixes addressed in this release
 
 FIXED Issue 94: https://github.com/drkjam/netaddr/issues/94
     - IPSet.__contains__ is about 40 times slower than the equivalent IPRange
+
+FIXED Issue 95: https://github.com/drkjam/netaddr/issues/95
+    - Inconsistent Address Handling in IPSet
 
 ---------------
 Release: 0.7.14
