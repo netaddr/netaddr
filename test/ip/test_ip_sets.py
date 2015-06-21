@@ -546,3 +546,20 @@ def test_ipset_comparison_with_int_is_invalid():
     assert not s1 == 42
     s1 != 42
 
+
+def test_ipset_converts_to_cidr_networks_v4():
+    s1 = IPSet(IPNetwork('10.1.2.3/8'))
+    s1.add(IPNetwork('192.168.1.2/16'))
+    assert list(s1.iter_cidrs()) == [
+        IPNetwork('10.0.0.0/8'),
+        IPNetwork('192.168.0.0/16'),
+    ]
+
+
+def test_ipset_converts_to_cidr_networks_v6():
+    s1 = IPSet(IPNetwork('fe80::4242/64'))
+    s1.add(IPNetwork('fe90::4343/64'))
+    assert list(s1.iter_cidrs()) == [
+        IPNetwork('fe80::/64'),
+        IPNetwork('fe90::/64'),
+    ]
