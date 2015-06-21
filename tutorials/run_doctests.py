@@ -30,7 +30,7 @@ def test_suite_all():
     #   Gather list of files containing tests.
     test_files = []
     for entry in test_dirs:
-        test_path = pathjoin(base_path, py_ver_dir, entry, "*.txt")
+        test_path = pathjoin(base_path, 'tutorials', py_ver_dir, entry, "*.txt")
         files = glob.glob(test_path)
         test_files.extend(files)
 
