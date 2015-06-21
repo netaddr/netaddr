@@ -103,7 +103,7 @@ class IPSet(object):
 
         """
         if isinstance(iterable, IPNetwork):
-            self._cidrs = {IPNetwork(iterable): True}
+            self._cidrs = {iterable.cidr: True}
         elif isinstance(iterable, IPRange):
             self._cidrs = dict.fromkeys(
                 iprange_to_cidrs(iterable[0], iterable[-1]), True)
@@ -284,8 +284,10 @@ class IPSet(object):
             self._cidrs.update(new_cidrs)
             self.compact()
             return
-
-        if isinstance(addr, _int_type):
+        if isinstance(addr, IPNetwork):
+            # Networks like 10.1.2.3/8 need to be normalized to 10.0.0.0/8
+            addr = addr.cidr
+        elif isinstance(addr, _int_type):
             addr = IPNetwork(IPAddress(addr, flags=flags))
         else:
             addr = IPNetwork(addr)
