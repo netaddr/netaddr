@@ -31,7 +31,6 @@ packages = [
     'netaddr.ip',
     'netaddr.eui',
     'netaddr.strategy',
-    'netaddr.tests',
 ]
 
 #   Required by distutils only.
@@ -44,12 +43,6 @@ package_data = {
     'netaddr.eui': [
         '*.txt',
         '*.idx'
-    ],
-    'netaddr.tests': [
-        'core/*.txt',
-        'eui/*.txt',
-        'ip/*.txt',
-        'strategy/*.txt',
     ],
 }
 
