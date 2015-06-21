@@ -12,16 +12,12 @@ import glob
 import doctest
 import unittest
 
-sys.path.insert(0, abspath(pathjoin(dirname(__file__), '..', '..')))
-
 
 def test_suite_all():
 
     test_dirs = [
         'ip',
         'eui',
-        'strategy',
-        'core'
     ]
 
     base_path = abspath(pathjoin(dirname(__file__), '..'))
@@ -34,7 +30,7 @@ def test_suite_all():
     #   Gather list of files containing tests.
     test_files = []
     for entry in test_dirs:
-        test_path = pathjoin(base_path, "tests", py_ver_dir, entry, "*.txt")
+        test_path = pathjoin(base_path, py_ver_dir, entry, "*.txt")
         files = glob.glob(test_path)
         test_files.extend(files)
 
