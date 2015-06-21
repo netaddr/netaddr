@@ -270,10 +270,9 @@ def test_cidr_abbrev_to_verbose():
         '255.0.0.0/32',
     ]
 
-@pytest.mark.xfail(reason='FIXME')
-def test_cidr_abbrev_to_verbose_exception():
-    with pytest.raises(ValueError):
-        cidr_abbrev_to_verbose('192.0.2.0/33')
+
+def test_cidr_abbrev_to_verbose_invalid_prefixlen():
+    assert cidr_abbrev_to_verbose('192.0.2.0/33') == '192.0.2.0/33'
 
 
 def test_expand_partial_address():

@@ -1,39 +1,30 @@
-from io import StringIO
+import os
+import sys
+
+import pytest
 
 from netaddr.eui.ieee import OUIIndexParser, IABIndexParser, FileIndexer
 
 
-def test_oui_parser():
-    infile = StringIO()
-    outfile = StringIO()
-    infile.write("""
-00-CA-FE   (hex)        ACME CORPORATION
-00CAFE     (base 16)        ACME CORPORATION
-				1 MAIN STREET
-				SPRINGFIELD
-				UNITED STATES
-""")
+SAMPLE_DIR = os.path.dirname(__file__)
 
-    infile.seek(0)
-    iab_parser = OUIIndexParser(infile)
-    iab_parser.attach(FileIndexer(outfile))
-    iab_parser.parse()
+@pytest.mark.skipif(sys.version_info > (3,), reason="requires python 2.x")
+def test_oui_parser():
+    from cStringIO import StringIO
+    outfile = StringIO()
+    with open(os.path.join(SAMPLE_DIR, 'sample_oui.txt')) as infile:
+        iab_parser = OUIIndexParser(infile)
+        iab_parser.attach(FileIndexer(outfile))
+        iab_parser.parse()
     assert outfile.getvalue() == '51966,1,138\n'
 
 
+@pytest.mark.skipif(sys.version_info > (3,), reason="requires python 2.x")
 def test_iab_parser():
-    infile = StringIO()
+    from cStringIO import StringIO
     outfile = StringIO()
-    infile.write("""
-00-50-C2   (hex)        ACME CORPORATION
-ABC000-ABCFFF     (base 16)        ACME CORPORATION
-                1 MAIN STREET
-                SPRINGFIELD
-                UNITED STATES
-""")
-
-    infile.seek(0)
-    iab_parser = IABIndexParser(infile)
-    iab_parser.attach(FileIndexer(outfile))
-    iab_parser.parse()
+    with open(os.path.join(SAMPLE_DIR, 'sample_iab.txt')) as infile:
+        iab_parser = IABIndexParser(infile)
+        iab_parser.attach(FileIndexer(outfile))
+        iab_parser.parse()
     assert outfile.getvalue() == '84683452,1,181\n'

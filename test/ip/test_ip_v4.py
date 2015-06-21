@@ -3,7 +3,6 @@ import types
 import random
 
 import pytest
-import sys
 
 from netaddr import IPAddress, IPNetwork, INET_PTON, AddrFormatError, ZEROFILL, Z, P, NOHOST
 
@@ -410,13 +409,13 @@ def test_ipaddress_hex_format():
     assert hex(IPAddress(0xffffffff)) == '0xffffffff'
 
 
-@pytest.mark.skipif(sys.version_info > (2,), reason="requires python 2.x behaviour")
+@pytest.mark.skipif('sys.version_info > (2,)', reason="requires python 2.x behaviour")
 def test_ipaddress_oct_format_py2():
     assert oct(IPAddress(0xffffffff)) == '037777777777'
     assert oct(IPAddress(0)) == '0'
 
 
-@pytest.mark.skipif(sys.version_info < (3,), reason="python 3.x behaviour")
+@pytest.mark.skipif('sys.version_info < (3,)', reason="python 3.x behaviour")
 def test_ipaddress_oct_format_py3():
     assert oct(IPAddress(0xffffffff)) == '0o37777777777'
     assert oct(IPAddress(0)) == '0o0'
