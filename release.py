@@ -86,8 +86,8 @@ For details on the latest updates and changes, see :-
 
 API documentation for the latest release is available here :-
 
-    - http://netaddr.readthedocs.org/en/latest/
     - https://pythonhosted.org/netaddr/
+    - http://netaddr.readthedocs.org/en/latest/
 """
 
 platforms = 'OS Independent'
@@ -155,10 +155,4 @@ classifiers = [
     'Topic :: Text Processing',
     'Topic :: Text Processing :: Filters',
     'Topic :: Utilities',
-]
-
-install_requires = [
-]
-
-setup_requires = [
 ]
