@@ -31,7 +31,6 @@ packages = [
     'netaddr.ip',
     'netaddr.eui',
     'netaddr.strategy',
-    'netaddr.tests',
 ]
 
 #   Required by distutils only.
@@ -44,12 +43,6 @@ package_data = {
     'netaddr.eui': [
         '*.txt',
         '*.idx'
-    ],
-    'netaddr.tests': [
-        'core/*.txt',
-        'eui/*.txt',
-        'ip/*.txt',
-        'strategy/*.txt',
     ],
 }
 
@@ -86,8 +79,8 @@ For details on the latest updates and changes, see :-
 
 API documentation for the latest release is available here :-
 
-    - http://netaddr.readthedocs.org/en/latest/
     - https://pythonhosted.org/netaddr/
+    - http://netaddr.readthedocs.org/en/latest/
 """
 
 platforms = 'OS Independent'
@@ -155,10 +148,4 @@ classifiers = [
     'Topic :: Text Processing',
     'Topic :: Text Processing :: Filters',
     'Topic :: Utilities',
-]
-
-install_requires = [
-]
-
-setup_requires = [
 ]

@@ -51,35 +51,25 @@ See :doc:`installation` for details.
 Documentation
 -------------
 
-The code contains thorough docstrings as well as detailed tutorials and
-API documentation can be found here:
+The code contains docstrings throughout and a full set of project
+documentation along with tutorials can be found here :-
 
+http://pythonhosted.org/netaddr/
 http://readthedocs.org/docs/netaddr/en/latest/
 
 ----------------------
 Running The Test Suite
 ----------------------
 
-No code can ever be deemed truly complete or trustworthy without reasonable
-unit test coverage. Full coverage for netaddr is the certainly the ultimate
-goal. To this end coverage.py by Ned Batchelder is being used from release
-0.7.x onwards to help with this. The latest coverage report can be found in
-the tests/ subdirectory. Feel free to add tests to help improve coverage ;-)
+netaddr uses py.test (http://pytest.org/) for its test suite.
 
-Wherever possible all changes and new features will be covered with specific
-regression tests.
+To run the unit tests, clone the repository and run the following in the
+root directory :-
 
-To run the unit tests, go into the netaddr directory and run the following
-using your Python interpreter :-
+    python setup.py test
 
-    python tests/__init__.py
-
-Or if you are partial to distribute (nee setuptools) :
-
-    python setup_egg.py test
-
-Tests are expected to run through without error. If any do fail, *please* help
-the project's user base by filing bug reports at the following URL :-
+If any of the tests fail, *please* help the project's user base by filing
+bug reports on the netaddr Issue Tracker, here :-
 
 	http://github.com/drkjam/netaddr/issues
 

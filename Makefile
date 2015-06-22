@@ -59,3 +59,9 @@ register:
 push_tags:
 	@echo 'syncing tags'
 	git push --tags
+
+runtests:
+	@echo 'running test suite'
+	python setup.py test
+	@echo 'running doc tests (tutorials)'
+	python tutorials/run_doctests.py
