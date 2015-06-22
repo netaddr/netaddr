@@ -27,8 +27,15 @@ class PyTest(Command):
     def run(self):
         import subprocess
         import sys
-        errno = subprocess.call([sys.executable, 'runtests.py'])
+        import os
+        saved_cwd = os.getcwd()
+        try:
+            os.chdir(os.path.join(os.path.dirname(__file__), 'test'))
+            errno = subprocess.call([sys.executable, '../runtests.py'])
+        finally:
+            os.chdir(saved_cwd)
         raise SystemExit(errno)
+
 
 def main():
     if sys.version_info[:2] < (2, 4):
