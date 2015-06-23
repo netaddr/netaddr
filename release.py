@@ -80,7 +80,7 @@ For details on the latest updates and changes, see :-
 API documentation for the latest release is available here :-
 
     - https://pythonhosted.org/netaddr/
-    - http://netaddr.readthedocs.org/en/latest/
+    - https://netaddr.readthedocs.org/en/latest/
 """
 
 platforms = 'OS Independent'
