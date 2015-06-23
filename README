@@ -1,4 +1,8 @@
-`netaddr` is a Python library for representing and manipulating network addresses.
+=======
+netaddr
+=======
+
+A Python library for representing and manipulating network addresses.
 
 It supports the ability to work and interact with the following:
 
