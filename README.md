@@ -50,10 +50,10 @@ Documentation
 -------------
 
 The code contains docstrings throughout and a full set of project
-documentation along with tutorials can be found here :-
+documentation along with tutorials can be found here :
 
-http://pythonhosted.org/netaddr/
-http://readthedocs.org/docs/netaddr/en/latest/
+- http://pythonhosted.org/netaddr/
+- http://readthedocs.org/docs/netaddr/en/latest/
 
 Running The Tests
 -----------------
@@ -66,9 +66,9 @@ root directory :-
     python setup.py test
 
 If any of the tests fail, *please* help the project's user base by filing
-bug reports on the netaddr Issue Tracker, here :-
+bug reports on the netaddr Issue Tracker, here :
 
-	http://github.com/drkjam/netaddr/issues
+- http://github.com/drkjam/netaddr/issues
 
 Efforts have been made to ensure this code works equally well on both big and 
 little endian architectures. However, the project does not own or have access
