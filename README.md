@@ -1,4 +1,3 @@
-=======
 netaddr
 =======
 
@@ -21,13 +20,11 @@ There are routines that allow :
 - accessing OUI and IAB organisational information published by IEEE
 - accessing IP address and block information published by IANA
 
--------
 Changes
 -------
 
 For details on the latest updates and changes, see :doc:`changes`
 
--------
 License
 -------
 
@@ -35,7 +32,6 @@ This software is released under the liberal BSD license.
 
 See the :doc:`license` and :doc:`copyright` for full text.
 
-------------
 Dependencies
 ------------
 
@@ -45,13 +41,11 @@ Python 3.x support available from netaddr version 0.7.5 onwards.
 
 Required IPython for the interactive netaddr shell.
 
-------------
 Installation
 ------------
 
 See :doc:`installation` for details.
 
--------------
 Documentation
 -------------
 
@@ -61,9 +55,8 @@ documentation along with tutorials can be found here :-
 http://pythonhosted.org/netaddr/
 http://readthedocs.org/docs/netaddr/en/latest/
 
-----------------------
-Running The Test Suite
-----------------------
+Running The Tests
+-----------------
 
 netaddr uses py.test (http://pytest.org/) for its test suite.
 
@@ -84,7 +77,6 @@ testing. If you happen to work on big endian architectures with Python and wish
 to use netaddr *PLEASE* ensure you run the unit tests before you using it in a 
 production setting just to make sure everything is functioning as expected.
 
---------------
 And finally...
 --------------
 
