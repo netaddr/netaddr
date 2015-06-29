@@ -3,7 +3,7 @@
 <?oxygen RNGSchema="multicast-addresses.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2015-03-23</updated>
+  <updated>2015-04-23</updated>
   <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
@@ -1671,10 +1671,11 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>acp-data</description>
       <xref type="person" data="Andy_Belk"/>
     </record>
-    <record date="2006-06-16">
+    <record date="2006-06-16" updated="2015-04-23">
       <addr>224.0.23.46</addr>
-      <description>oap-multicast</description>
+      <description>dof-multicast</description>
       <xref type="person" data="Bryant_Eastham"/>
+      <reviewed>2015-04-23</reviewed>
     </record>
     <record date="2005-10-28">
       <addr>224.0.23.47</addr>
@@ -2770,8 +2771,8 @@ low-order bits of the IP Multicast address are placed in the low-order
     </person>
     <person id="Bryant_Eastham">
       <name>Bryant Eastham</name>
-      <uri>mailto:protocols&amp;pewla.us.pewg.panasonic.com</uri>
-      <updated>2006-06-16</updated>
+      <uri>mailto:protocol&amp;opendof.org</uri>
+      <updated>2015-04-23</updated>
     </person>
     <person id="Caleb_Bell">
       <name>Caleb Bell</name>

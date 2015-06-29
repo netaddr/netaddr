@@ -1,4 +1,4 @@
-  Generated: Tue, 31 Mar 2015 05:00:03 -0400
+  Generated: Mon, 29 Jun 2015 05:00:03 -0400
 
   OUI     			Organization
   IAB Range    			Organization
@@ -14414,8 +14414,9 @@
 
   00-50-C2	(hex)		R2Sonic, LLC
   904000-904FFF	(base 16)	R2Sonic, LLC
-  				1503-A Cook Place
-				Santa Barbara CA 93117
+  				5307 Industrial Oaks Blvd
+				Ste 120
+				Austin TX 78735
 				UNITED STATES
 
   00-50-C2	(hex)		Link Communications, Inc
@@ -23553,9 +23554,9 @@
 
   00-50-C2	(hex)		Ixonos Plc
   EC2000-EC2FFF	(base 16)	Ixonos Plc
-  				Hitsaajankatu 24
-				P.O.Box 284
-				Helsinki  FI-00811
+  				Hermiankatu 6-8H
+				P.O. Box 57
+				Tampere  FI-33721
 				FINLAND
 
   00-50-C2	(hex)		Aplex Technology Inc.
