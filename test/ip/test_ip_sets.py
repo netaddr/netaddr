@@ -34,7 +34,7 @@ def test_ipset_basic_api():
     ])
 
     assert set1 == set2
-    assert set2.pop() == IPNetwork('192.0.2.4/30')
+    assert set2.pop() in set1
     assert set1 != set2
 
 
