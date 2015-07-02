@@ -2,4 +2,4 @@
 Introduction
 ============
 
-.. include:: ../../README
+.. include:: ../../README.md

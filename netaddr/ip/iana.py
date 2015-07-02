@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -32,29 +32,24 @@ More details can be found at the following URLs :-
 import os as _os
 import os.path as _path
 import sys as _sys
-import re as _re
 
 from xml.sax import make_parser, handler
 
-from netaddr.core import Publisher, Subscriber, PrettyPrinter, dos2unix
-from netaddr.ip import IPAddress, IPNetwork, IPRange, \
-    cidr_abbrev_to_verbose, iprange_to_cidrs
+from netaddr.core import Publisher, Subscriber, dos2unix
+from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
 
 from netaddr.compat import _dict_items, _callable
 
-#-----------------------------------------------------------------------------
 
 #: Topic based lookup dictionary for IANA information.
 IANA_INFO = {
-    'IPv4'      : {},
-    'IPv6'      : {},
-    'multicast' : {},
+    'IPv4': {},
+    'IPv6': {},
+    'multicast': {},
 }
 
-#-----------------------------------------------------------------------------
 
 class SaxRecordParser(handler.ContentHandler):
-
     def __init__(self, callback=None):
         self._level = 0
         self._is_active = False
@@ -110,6 +105,7 @@ class XMLRecordParser(Publisher):
     """
     A configurable Parser that understands how to parse XML based records.
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -147,7 +143,7 @@ class XMLRecordParser(Publisher):
         """
         self.xmlparser.parse(self.fh)
 
-#-----------------------------------------------------------------------------
+
 class IPv4Parser(XMLRecordParser):
     """
     A XMLRecordParser that understands how to parse and retrieve data records
@@ -157,6 +153,7 @@ class IPv4Parser(XMLRecordParser):
 
         - http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -187,7 +184,7 @@ class IPv4Parser(XMLRecordParser):
 
         return record
 
-#-----------------------------------------------------------------------------
+
 class IPv6Parser(XMLRecordParser):
     """
     A XMLRecordParser that understands how to parse and retrieve data records
@@ -197,6 +194,7 @@ class IPv6Parser(XMLRecordParser):
 
         - http://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -215,14 +213,14 @@ class IPv6Parser(XMLRecordParser):
         """
 
         record = {
-                'prefix':       str(rec.get('prefix', '')).strip(),
-                'allocation':   str(rec.get('description', '')).strip(),
-                'reference':    str(rec.get('rfc', [''])[0]).strip(),
-            }
+            'prefix': str(rec.get('prefix', '')).strip(),
+            'allocation': str(rec.get('description', '')).strip(),
+            'reference': str(rec.get('rfc', [''])[0]).strip(),
+        }
 
         return record
 
-#-----------------------------------------------------------------------------
+
 class MulticastParser(XMLRecordParser):
     """
     A XMLRecordParser that knows how to process the IANA IPv4 multicast address
@@ -232,6 +230,7 @@ class MulticastParser(XMLRecordParser):
 
         - http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -266,17 +265,18 @@ class MulticastParser(XMLRecordParser):
 
         if 'addr' in rec:
             record = {
-                    'address': self.normalise_addr(str(rec['addr'])),
-                    'descr': str(rec.get('description', '')),
-                }
+                'address': self.normalise_addr(str(rec['addr'])),
+                'descr': str(rec.get('description', '')),
+            }
             return record
 
-#-----------------------------------------------------------------------------
+
 class DictUpdater(Subscriber):
     """
     Concrete Subscriber that inserts records received from a Publisher into a
     dictionary.
     """
+
     def __init__(self, dct, topic, unique_key):
         """
         Constructor.
@@ -318,7 +318,7 @@ class DictUpdater(Subscriber):
                 iprange = IPAddress(data_id)
             self.dct[iprange] = data
 
-#-----------------------------------------------------------------------------
+
 def load_info():
     """
     Parse and load internal IANA data lookups with the latest information from
@@ -338,7 +338,7 @@ def load_info():
     mcast.attach(DictUpdater(IANA_INFO['multicast'], 'multicast', 'address'))
     mcast.parse()
 
-#-----------------------------------------------------------------------------
+
 def pprint_info(fh=None):
     """
     Pretty prints IANA information to filehandle.
@@ -355,7 +355,7 @@ def pprint_info(fh=None):
             details = ipranges[iprange]
             fh.write('%-45r' % (iprange) + details + "\n")
 
-#-----------------------------------------------------------------------------
+
 def query(ip_addr):
     """
     Returns informational data specific to this IP address.
@@ -393,7 +393,7 @@ def query(ip_addr):
 
     return info
 
-#-----------------------------------------------------------------------------
+
 def get_latest_files():
     """Download the latest files from IANA"""
     if _sys.version_info[0] == 3:
@@ -424,7 +424,6 @@ def get_latest_files():
         dos2unix(filename)
 
 
-#-----------------------------------------------------------------------------
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
     get_latest_files()

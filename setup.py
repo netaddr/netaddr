@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 """
@@ -8,12 +8,34 @@ A distutils Python setup file. For setuptools support see setup_egg.py.
 import os
 import sys
 
-from distutils.core import setup
+from distutils.core import setup, Command
 
 if os.path.exists('MANIFEST'):
     os.remove('MANIFEST')
 
 import release
+
+
+class PyTest(Command):
+    user_options = []
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import subprocess
+        import sys
+        import os
+        saved_cwd = os.getcwd()
+        try:
+            os.chdir(os.path.join(os.path.dirname(__file__), 'test'))
+            errno = subprocess.call([sys.executable, '../runtests.py'])
+        finally:
+            os.chdir(saved_cwd)
+        raise SystemExit(errno)
+
 
 def main():
     if sys.version_info[:2] < (2, 4):
@@ -27,6 +49,7 @@ def main():
         author           = release.author,
         author_email     = release.author_email,
         classifiers      = release.classifiers,
+        cmdclass         = {'test': PyTest},
         description      = release.description,
         download_url     = release.download_url,
         keywords         = release.keywords,
@@ -39,8 +62,11 @@ def main():
         scripts          = release.scripts,
         url              = release.url,
         version          = release.version,
-        install_requires = release.install_requires,
-        setup_requires   = release.setup_requires,
+        options = {
+            'build_scripts': {
+                'executable': '/usr/bin/env python',
+            },
+        },
     )
 
     setup(**setup_options)

@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -10,20 +10,23 @@ from netaddr.ip import IPAddress
 
 from netaddr.compat import _zip
 
-#-----------------------------------------------------------------------------
+
 def chr_range(low, high):
     """Returns all characters between low and high chars."""
-    return [chr(i) for i in range(ord(low), ord(high)+1)]
+    return [chr(i) for i in range(ord(low), ord(high) + 1)]
 
 #: Base 85 integer index to character lookup table.
-BASE_85 = chr_range('0', '9') + chr_range('A', 'Z') + chr_range('a', 'z') + \
-    ['!', '#', '$', '%', '&', '(',')', '*', '+', '-',';', '<', '=', '>',
-     '?', '@', '^', '_','`', '{', '|', '}', '~']
+BASE_85 = (
+    chr_range('0', '9') + chr_range('A', 'Z') +
+    chr_range('a', 'z') +
+    ['!', '#', '$', '%', '&', '(', ')', '*', '+', '-', ';', '<', '=', '>',
+     '?', '@', '^', '_', '`', '{', '|', '}', '~']
+)
 
 #: Base 85 digit to integer lookup table.
 BASE_85_DICT = dict(_zip(BASE_85, range(0, 86)))
 
-#-----------------------------------------------------------------------------
+
 def ipv6_to_base85(addr):
     """Convert a regular IPv6 address to base 85."""
     ip = IPAddress(addr)
@@ -34,9 +37,11 @@ def ipv6_to_base85(addr):
         remainder.append(int_val % 85)
         int_val //= 85
 
-    return ''.join([BASE_85[w] for w in reversed(remainder)])
+    encoded = ''.join([BASE_85[w] for w in reversed(remainder)])
+    leading_zeroes = (20 - len(encoded)) * "0"
+    return leading_zeroes + encoded
 
-#-----------------------------------------------------------------------------
+
 def base85_to_ipv6(addr):
     """
     Convert a base 85 IPv6 address to its hexadecimal format.
@@ -44,7 +49,7 @@ def base85_to_ipv6(addr):
     tokens = list(addr)
 
     if len(tokens) != 20:
-        raise AddrFormatError('Invalid base 85 IPv6 addess: %r' % addr)
+        raise AddrFormatError('Invalid base 85 IPv6 address: %r' % addr)
 
     result = 0
     for i, num in enumerate(reversed(tokens)):

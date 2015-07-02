@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -7,17 +7,17 @@
 
 from struct import unpack as _unpack, pack as _pack
 
-from netaddr.compat import _bytes_join
+from netaddr.compat import _bytes_join, _is_str
 
-AF_INET   =  2
-AF_INET6  = 10
+AF_INET = 2
+AF_INET6 = 10
 
-#-----------------------------------------------------------------------------
+
 def inet_ntoa(packed_ip):
     """
     Convert an IP address from 32-bit packed binary format to string format.
     """
-    if not hasattr(packed_ip, 'split'):
+    if not _is_str(packed_ip):
         raise TypeError('string type expected, not %s' % str(type(packed_ip)))
 
     if len(packed_ip) != 4:
@@ -25,54 +25,7 @@ def inet_ntoa(packed_ip):
 
     return '%d.%d.%d.%d' % _unpack('4B', packed_ip)
 
-#-----------------------------------------------------------------------------
-def inet_aton(ip_string):
-    """
-    Convert an IP address in string format (123.45.67.89) to the 32-bit packed
-    binary format used in low-level network functions.
-    """
-    if hasattr(ip_string, 'split'):
-        invalid_addr = ValueError('illegal IP address string %r' % ip_string)
-        #   Support for hexadecimal and octal octets.
-        tokens = []
 
-        base = 10
-        for token in ip_string.split('.'):
-            if token.startswith('0x'):
-                base = 16
-            elif token.startswith('0') and len(token) > 1:
-                base = 8
-            elif token == '':
-                continue
-            try:
-                tokens.append(int(token, base))
-            except ValueError:
-                raise invalid_addr
-
-        #   Zero fill missing octets.
-        num_tokens = len(tokens)
-        if num_tokens < 4:
-            fill_tokens = [0] * (4 - num_tokens)
-            if num_tokens > 1:
-                end_token = tokens.pop()
-                tokens = tokens + fill_tokens + [end_token]
-            else:
-                tokens = tokens + fill_tokens
-
-        #   Pack octets.
-        if len(tokens) == 4:
-            words = []
-            for token in tokens:
-                if (token >> 8) != 0:
-                    raise invalid_addr
-                words.append(_pack('B', token))
-            return _bytes_join(words)
-        else:
-            raise invalid_addr
-
-    raise ValueError('argument should be a string, not %s' % type(ip_string))
-
-#-----------------------------------------------------------------------------
 def _compact_ipv6_tokens(tokens):
     new_tokens = []
 
@@ -108,8 +61,7 @@ def _compact_ipv6_tokens(tokens):
                 best_position = position
         #   Replace chosen zero run.
         (length, start_idx) = best_position
-        new_tokens = new_tokens[0:start_idx] + [''] + \
-                     new_tokens[start_idx+length:]
+        new_tokens = new_tokens[0:start_idx] + [''] + new_tokens[start_idx + length:]
 
         #   Add start and end blanks so join creates '::'.
         if new_tokens[0] == '':
@@ -120,7 +72,7 @@ def _compact_ipv6_tokens(tokens):
 
     return new_tokens
 
-#-----------------------------------------------------------------------------
+
 def inet_ntop(af, packed_ip):
     """Convert an packed IP address of the given family to string format."""
     if af == AF_INET:
@@ -128,7 +80,7 @@ def inet_ntop(af, packed_ip):
         return inet_ntoa(packed_ip)
     elif af == AF_INET6:
         #   IPv6.
-        if len(packed_ip) != 16 or not hasattr(packed_ip, 'split'):
+        if len(packed_ip) != 16 or not _is_str(packed_ip):
             raise ValueError('invalid length of packed IP address string')
 
         tokens = ['%x' % i for i in _unpack('>8H', packed_ip)]
@@ -151,7 +103,7 @@ def inet_ntop(af, packed_ip):
     else:
         raise ValueError('unknown address family %d' % af)
 
-#-----------------------------------------------------------------------------
+
 def _inet_pton_af_inet(ip_string):
     """
     Convert an IP address in string format (123.45.67.89) to the 32-bit packed
@@ -160,7 +112,7 @@ def _inet_pton_af_inet(ip_string):
     raise a ValueError exception.
     """
     #TODO: optimise this ... use inet_aton with mods if available ...
-    if hasattr(ip_string, 'split'):
+    if _is_str(ip_string):
         invalid_addr = ValueError('illegal IP address string %r' % ip_string)
         #   Support for hexadecimal and octal octets.
         tokens = ip_string.split('.')
@@ -169,8 +121,7 @@ def _inet_pton_af_inet(ip_string):
         if len(tokens) == 4:
             words = []
             for token in tokens:
-                if token.startswith('0x') or \
-                  (token.startswith('0') and len(token) > 1):
+                if token.startswith('0x') or (token.startswith('0') and len(token) > 1):
                     raise invalid_addr
                 try:
                     octet = int(token)
@@ -186,7 +137,7 @@ def _inet_pton_af_inet(ip_string):
 
     raise ValueError('argument should be a string, not %s' % type(ip_string))
 
-#-----------------------------------------------------------------------------
+
 def inet_pton(af, ip_string):
     """
     Convert an IP address from string format to a packed string suitable for
@@ -200,7 +151,7 @@ def inet_pton(af, ip_string):
         #   IPv6.
         values = []
 
-        if not hasattr(ip_string, 'split'):
+        if not _is_str(ip_string):
             raise invalid_addr
 
         if 'x' in ip_string:
@@ -239,9 +190,11 @@ def inet_pton(af, ip_string):
 
             gap_size = 8 - ( len(l_prefix) + len(l_suffix) )
 
-            values = [_pack('>H', int(i, 16)) for i in l_prefix] \
-                   + ['\x00\x00'.encode() for i in range(gap_size)] \
-                   + [_pack('>H', int(i, 16)) for i in l_suffix]
+            values = (
+                [_pack('>H', int(i, 16)) for i in l_prefix] +
+                ['\x00\x00'.encode() for i in range(gap_size)] +
+                [_pack('>H', int(i, 16)) for i in l_suffix]
+            )
             try:
                 for token in l_prefix + l_suffix:
                     word = int(token, 16)

@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -10,8 +10,9 @@ glob style syntax.
 """
 from netaddr.core import AddrFormatError, AddrConversionError
 from netaddr.ip import IPRange, IPAddress, IPNetwork, iprange_to_cidrs
+from netaddr.compat import _is_str
 
-#-----------------------------------------------------------------------------
+
 def valid_glob(ipglob):
     """
     :param ipglob: An IP address range in a glob-style format.
@@ -22,7 +23,7 @@ def valid_glob(ipglob):
     #TODO: e.g. 192.0.*.* == 192.0.*
     #TODO:      *.*.*.*     == *
     #TODO: Add strict flag to enable verbose ipglob checking.
-    if not hasattr(ipglob, 'split'):
+    if not _is_str(ipglob):
         return False
 
     seen_hyphen = False
@@ -65,7 +66,7 @@ def valid_glob(ipglob):
                 return False
     return True
 
-#-----------------------------------------------------------------------------
+
 def glob_to_iptuple(ipglob):
     """
     A function that accepts a glob-style IP range and returns the component
@@ -95,7 +96,7 @@ def glob_to_iptuple(ipglob):
 
     return IPAddress('.'.join(start_tokens)), IPAddress('.'.join(end_tokens))
 
-#-----------------------------------------------------------------------------
+
 def glob_to_iprange(ipglob):
     """
     A function that accepts a glob-style IP range and returns the equivalent
@@ -125,7 +126,7 @@ def glob_to_iprange(ipglob):
 
     return IPRange('.'.join(start_tokens), '.'.join(end_tokens))
 
-#-----------------------------------------------------------------------------
+
 def iprange_to_globs(start, end):
     """
     A function that accepts an arbitrary start and end IP address or subnet
@@ -168,11 +169,11 @@ def iprange_to_globs(start, end):
                         tokens.append('%s-%s' % (t1[i], t2[i]))
                         seen_hyphen = True
                     else:
-                        raise AddrConversionError('only 1 hyphenated octet' \
-                            ' per IP glob allowed!')
+                        raise AddrConversionError(
+                            'only 1 hyphenated octet per IP glob allowed!')
                 else:
-                    raise AddrConversionError("asterisks are not allowed' \
-                        ' before hyphenated octets!")
+                    raise AddrConversionError(
+                        "asterisks are not allowed before hyphenated octets!")
 
         return '.'.join(tokens)
 
@@ -199,7 +200,7 @@ def iprange_to_globs(start, end):
 
     return globs
 
-#-----------------------------------------------------------------------------
+
 def glob_to_cidrs(ipglob):
     """
     A function that accepts a glob-style IP range and returns a list of one
@@ -211,7 +212,7 @@ def glob_to_cidrs(ipglob):
     """
     return iprange_to_cidrs(*glob_to_iptuple(ipglob))
 
-#-----------------------------------------------------------------------------
+
 def cidr_to_glob(cidr):
     """
     A function that accepts an IP subnet in a glob-style format and returns
@@ -229,7 +230,7 @@ def cidr_to_glob(cidr):
         raise AddrConversionError('bad CIDR to IP glob conversion!')
     return globs[0]
 
-#-----------------------------------------------------------------------------
+
 class IPGlob(IPRange):
     """
     Represents an IP address range using a glob-style syntax ``x.x.x-y.*``

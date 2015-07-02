@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -12,7 +12,7 @@ All operations emulate 2.x behaviour where applicable.
 import sys as _sys
 
 if _sys.version_info[0] == 3:
-    #   Python 3.x specific logic.
+    # Python 3.x specific logic.
     _sys_maxint = _sys.maxsize
 
     _int_type = int
@@ -33,32 +33,38 @@ if _sys.version_info[0] == 3:
 
     _iter_dict_keys = lambda x: x.keys()
 
-    def _bytes_join(*args): return ''.encode().join(*args)
+    def _bytes_join(*args):
+        return ''.encode().join(*args)
 
-    def _zip(*args): return list(zip(*args))
+    def _zip(*args):
+        return list(zip(*args))
 
-    def _range(*args, **kwargs): return list(range(*args, **kwargs))
+    def _range(*args, **kwargs):
+        return list(range(*args, **kwargs))
 
     _iter_range = range
 
     def _func_name(f, name=None):
-        if name is not None: f.__name__ = name
-        else: return f.__name__
+        if name is not None:
+            f.__name__ = name
+        else:
+            return f.__name__
 
     def _func_doc(f, docstring=None):
-        if docstring is not None: f.__doc__ = docstring
-        else: return f.__doc__
+        if docstring is not None:
+            f.__doc__ = docstring
+        else:
+            return f.__doc__
 
-elif  _sys.version_info[0:2] > [2, 3]:
-    #   Python 2.4 or higher.
+elif _sys.version_info[0:2] > [2, 3]:
+    # Python 2.4 or higher.
     _sys_maxint = _sys.maxint
 
     _int_type = (int, long)
 
-    _str_type = (str, unicode)
+    _str_type = basestring
 
-    # NB - not using basestring here for maximum 2.x compatibility.
-    _is_str = lambda x: isinstance(x, (str, unicode))
+    _is_str = lambda x: isinstance(x, basestring)
 
     _is_int = lambda x: isinstance(x, (int, long))
 
@@ -70,24 +76,31 @@ elif  _sys.version_info[0:2] > [2, 3]:
 
     _iter_dict_keys = lambda x: iter(x.keys())
 
-    def _bytes_join(*args): return ''.join(*args)
+    def _bytes_join(*args):
+        return ''.join(*args)
 
-    def _zip(*args): return zip(*args)
+    def _zip(*args):
+        return zip(*args)
 
-    def _range(*args, **kwargs): return range(*args, **kwargs)
+    def _range(*args, **kwargs):
+        return range(*args, **kwargs)
 
     _iter_range = xrange
 
     def _func_name(f, name=None):
-        if name is not None: f.func_name = name
-        else: return f.func_name
+        if name is not None:
+            f.func_name = name
+        else:
+            return f.func_name
 
     def _func_doc(f, docstring=None):
-        if docstring is not None: f.func_doc = docstring
-        else: return f.func_doc
+        if docstring is not None:
+            f.func_doc = docstring
+        else:
+            return f.func_doc
 
 else:
-    #   Unsupported versions.
+    # Unsupported versions.
     raise RuntimeError(
         'this module only supports Python 2.4.x or higher (including 3.x)!')
 

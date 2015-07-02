@@ -1,7 +1,97 @@
 ---------------
+Release: 0.7.15
+---------------
+Date: 29 Jun 2015
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.14
+^^^^^^^^^^^^^^^^^^^^
+
+* Fix slowness in IPSet.__contains__. Thanks to novas0x2a for noticing.
+
+* Normalize IPNetworks when they are added to an IPSet
+
+* Converted test suite to py.test
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 98: https://github.com/drkjam/netaddr/issues/98
+    - Convert test suite to py.test
+
+FIXED Issue 94: https://github.com/drkjam/netaddr/issues/94
+    - IPSet.__contains__ is about 40 times slower than the equivalent IPRange
+
+FIXED Issue 95: https://github.com/drkjam/netaddr/issues/95
+    - Inconsistent Address Handling in IPSet
+
+---------------
+Release: 0.7.14
+---------------
+Date: 31st Mar 2015
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.13
+^^^^^^^^^^^^^^^^^^^^
+
+* Fix weird build breakage in 0.7.13 (wrong Python path, incorrect OUI DB).
+
+* EUI, OUI, and IAB objects can now be compared with strings. You can do
+    my_mac = EUI("11:22:33:44:55:66")
+    my_mac == "11:22:33:44:55:66"
+    and Python will return True on the "==" operator.
+
+* Implement the "!=" operator for OUI and IAB under Python2. It was already
+    working under Python3.
+
+* 64 bit EUIs could only be created from strings with "-" as a separator.
+    Now, ":" and no seperator are supported, which already worked for 48 bit EUIs.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 80: https://github.com/drkjam/netaddr/pull/80
+    - Compare L2 addresses with their representations
+
+FIXED Issue 81: https://github.com/drkjam/netaddr/issues/81
+    - OUI database tests fail in 0.7.13
+
+FIXED Issue 84: https://github.com/drkjam/netaddr/issues/84
+    - Incorrect python executable path in netaddr-0.7.13-py2.py3-none-any.whl
+
+FIXED Issue 87: https://github.com/drkjam/netaddr/pull/87
+    - Handle eui64 addresses with colon as a delimiter and without delimeter.
+
+---------------
+Release: 0.7.13
+---------------
+Date: 31st Dec 2014
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.12
+^^^^^^^^^^^^^^^^^^^^
+
+* IPAddress objects can now be added to/subtracted from each other
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 73: https://github.com/drkjam/netaddr/issues/73
+    - Adding IP Addresses
+
+FIXED Issue 74: https://github.com/drkjam/netaddr/issues/74
+    - compute static global ipv6 addr from the net prefix and mac address
+
+FIXED Issue 75: https://github.com/drkjam/netaddr/issues/75
+    - add classifiers for python 3.3 and 3.4 support
+
+---------------
 Release: 0.7.12
 ---------------
-Date: ???
+Date: 6th Jul 2014
 
 ^^^^^^^^^^^^^^^^^^^^
 Changes since 0.7.11
@@ -9,6 +99,27 @@ Changes since 0.7.11
 
 * Added method IPSet.iter_ipranges().
 
+* bool(IPSet()) works now for large IPSets, e.g. IPSet(['2405:8100::/32']).
+
+* IPNetwork.iter_hosts now skips the subnet-router anycast address for IPv6.
+
+* Removed function fbsocket.inet_aton because it is unused and unnecessary
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 69: https://github.com/drkjam/netaddr/issues/69
+    - Add __nonzero__ method to IPSet
+
+FIXED Pull Request 68: https://github.com/drkjam/netaddr/pull/68
+    - Fixed a bug related to allowing ::0 during iter_hosts for v6
+
+FIXED Issue 67: https://github.com/drkjam/netaddr/issues/67
+    - Remove function fbsocket.inet_aton
+
+FIXED Pull Request 66: https://github.com/drkjam/netaddr/pull/66
+    - Added Function to create list of IPRange for non-contiguous IPSet
 
 ---------------
 Release: 0.7.11

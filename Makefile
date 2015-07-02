@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -8,7 +8,7 @@
 #
 SHELL = /bin/bash
 
-.PHONY = all clean build documentation download
+.PHONY = all clean dist doc download
 
 all:
 	@echo 'default target does nothing. try clean'
@@ -22,22 +22,29 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-build: clean download
-	@echo 'build netaddr release'
+dist: clean download doc
+	@echo 'building netaddr release'
 	python setup_egg.py develop
+	@echo 'building source distributions'
 	python setup.py sdist --formats=gztar,zip
+	@echo 'building egg package'
 	python setup_egg.py bdist_egg
+	@echo 'building wheel package'
+	pip install --upgrade pip
+	pip install wheel
+	python setup_egg.py bdist_wheel --universal
 
-documentation:
+doc:
 	@echo 'building documentation'
+	pip install sphinx
 	python setup_egg.py develop
 	cd docs/ && $(MAKE) -f Makefile clean html
 	cd docs/build/html && zip -r ../netaddr.zip *
 
 download:
 	@echo 'downloading latest IEEE data'
-	cd netaddr/eui/ && wget -N http://standards.ieee.org/regauth/oui/oui.txt
-	cd netaddr/eui/ && wget -N http://standards.ieee.org/regauth/oui/iab.txt
+	cd netaddr/eui/ && wget -N http://standards.ieee.org/develop/regauth/oui/oui.txt
+	cd netaddr/eui/ && wget -N http://standards.ieee.org/develop/regauth/iab/iab.txt
 	@echo 'rebuilding IEEE data file indices'
 	python netaddr/eui/ieee.py
 	@echo 'downloading latest IANA data'
@@ -49,3 +56,12 @@ register:
 	@echo 'releasing netaddr'
 	python setup_egg.py register
 
+push_tags:
+	@echo 'syncing tags'
+	git push --tags
+
+runtests:
+	@echo 'running test suite'
+	python setup.py test
+	@echo 'running doc tests (tutorials)'
+	python tutorials/run_doctests.py

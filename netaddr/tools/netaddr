@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -24,7 +24,7 @@ rc_override = None
 try:
     try:
         # ipython >= 0.11
-        from IPython.frontend.terminal.embed import InteractiveShellEmbed
+        from IPython.terminal.embed import InteractiveShellEmbed
         ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg)
     except ImportError:
         # ipython < 0.11

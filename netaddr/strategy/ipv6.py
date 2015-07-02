@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -18,26 +18,20 @@ try:
         raise Exception('IPv6 disabled')
     _socket.inet_pton
     _socket.AF_INET6
-    from _socket import inet_pton as _inet_pton, \
-                        inet_ntop as _inet_ntop, \
-                        AF_INET6
+    from _socket import (inet_pton as _inet_pton, inet_ntop as _inet_ntop,
+                         AF_INET6)
     OPT_IMPORTS = True
-except:
-    from netaddr.fbsocket import inet_pton as _inet_pton, \
-                                 inet_ntop as _inet_ntop, \
-                                 AF_INET6
+except Exception:
+    from netaddr.fbsocket import (inet_pton as _inet_pton, inet_ntop as _inet_ntop,
+                                 AF_INET6)
 
 from netaddr.core import AddrFormatError
-from netaddr.strategy import BYTES_TO_BITS as _BYTES_TO_BITS, \
-    valid_words  as _valid_words, \
-    int_to_words as _int_to_words, \
-    words_to_int as _words_to_int, \
-    valid_bits   as _valid_bits, \
-    bits_to_int  as _bits_to_int, \
-    int_to_bits  as _int_to_bits, \
-    valid_bin    as _valid_bin, \
-    int_to_bin   as _int_to_bin, \
-    bin_to_int   as _bin_to_int
+from netaddr.strategy import (
+    valid_words as _valid_words, int_to_words as _int_to_words,
+    words_to_int as _words_to_int, valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int)
 
 #: The width (in bits) of this address type.
 width = 128
@@ -112,7 +106,7 @@ class ipv6_verbose(ipv6_compact):
     #: Boolean flag indicating if IPv6 compaction algorithm should be used.
     compact = False
 
-#-----------------------------------------------------------------------------
+
 def valid_str(addr, flags=0):
     """
     :param addr: An IPv6 address in presentation (string) format.
@@ -131,7 +125,7 @@ def valid_str(addr, flags=0):
         return False
     return True
 
-#-----------------------------------------------------------------------------
+
 def str_to_int(addr, flags=0):
     """
     :param addr: An IPv6 address in string form.
@@ -147,7 +141,7 @@ def str_to_int(addr, flags=0):
     except Exception:
         raise AddrFormatError('%r is not a valid IPv6 address string!' % addr)
 
-#-----------------------------------------------------------------------------
+
 def int_to_str(int_val, dialect=None):
     """
     :param int_val: An unsigned integer.
@@ -173,12 +167,11 @@ def int_to_str(int_val, dialect=None):
             tokens = [dialect.word_fmt % word for word in words]
             addr = word_sep.join(tokens)
     except Exception:
-        raise ValueError('%r is not a valid 128-bit unsigned integer!' \
-            % int_val)
+        raise ValueError('%r is not a valid 128-bit unsigned integer!' % int_val)
 
     return addr
 
-#-----------------------------------------------------------------------------
+
 def int_to_arpa(int_val):
     """
     :param int_val: An unsigned integer.
@@ -193,7 +186,7 @@ def int_to_arpa(int_val):
     tokens = tokens + ['ip6', 'arpa', '']
     return '.'.join(tokens)
 
-#-----------------------------------------------------------------------------
+
 def int_to_packed(int_val):
     """
     :param int_val: the integer to be packed.
@@ -204,7 +197,7 @@ def int_to_packed(int_val):
     words = int_to_words(int_val, 4, 32)
     return _struct.pack('>4I', *words)
 
-#-----------------------------------------------------------------------------
+
 def packed_to_int(packed_int):
     """
     :param packed_int: a packed string containing an unsigned integer.
@@ -223,11 +216,11 @@ def packed_to_int(packed_int):
 
     return int_val
 
-#-----------------------------------------------------------------------------
+
 def valid_words(words):
     return _valid_words(words, word_size, num_words)
 
-#-----------------------------------------------------------------------------
+
 def int_to_words(int_val, num_words=None, word_size=None):
     if num_words is None:
         num_words = globals()['num_words']
@@ -235,32 +228,32 @@ def int_to_words(int_val, num_words=None, word_size=None):
         word_size = globals()['word_size']
     return _int_to_words(int_val, word_size, num_words)
 
-#-----------------------------------------------------------------------------
+
 def words_to_int(words):
     return _words_to_int(words, word_size, num_words)
 
-#-----------------------------------------------------------------------------
+
 def valid_bits(bits):
     return _valid_bits(bits, width, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def bits_to_int(bits):
     return _bits_to_int(bits, width, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bits(int_val, word_sep=None):
     if word_sep is None:
         word_sep = globals()['word_sep']
     return _int_to_bits(int_val, word_size, num_words, word_sep)
 
-#-----------------------------------------------------------------------------
+
 def valid_bin(bin_val):
     return _valid_bin(bin_val, width)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bin(int_val):
     return _int_to_bin(int_val, width)
 
-#-----------------------------------------------------------------------------
+
 def bin_to_int(bin_val):
     return _bin_to_int(bin_val, width)

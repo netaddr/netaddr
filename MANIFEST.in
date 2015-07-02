@@ -1,7 +1,7 @@
 include AUTHORS
 include CHANGELOG
 include COPYRIGHT
-include README
+include README.md
 include REFERENCES
 include THANKS
 include INSTALL
@@ -25,16 +25,6 @@ recursive-include netaddr/eui *.py *.txt *.idx
 recursive-include netaddr/ip *.py *.xml
 
 recursive-include netaddr/strategy *.py
-
-include netaddr/tests/__init__.py
-recursive-include netaddr/tests/2.x/core *.txt
-recursive-include netaddr/tests/2.x/eui *.txt
-recursive-include netaddr/tests/2.x/ip *.txt
-recursive-include netaddr/tests/2.x/strategy *.txt
-recursive-include netaddr/tests/3.x/core *.txt
-recursive-include netaddr/tests/3.x/eui *.txt
-recursive-include netaddr/tests/3.x/ip *.txt
-recursive-include netaddr/tests/3.x/strategy *.txt
 
 include netaddr/tools/netaddr
 

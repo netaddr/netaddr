@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2014, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008-2015, David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -19,16 +19,14 @@ except ImportError:
     AF_LINK = 48
 
 from netaddr.core import AddrFormatError
-from netaddr.strategy import BYTES_TO_BITS as _BYTES_TO_BITS, \
-    valid_words  as _valid_words, \
-    int_to_words as _int_to_words, \
-    words_to_int as _words_to_int, \
-    valid_bits   as _valid_bits, \
-    bits_to_int  as _bits_to_int, \
-    int_to_bits  as _int_to_bits, \
-    valid_bin    as _valid_bin, \
-    int_to_bin   as _int_to_bin, \
-    bin_to_int   as _bin_to_int
+from netaddr.strategy import (
+    valid_words as _valid_words, int_to_words as _int_to_words,
+    words_to_int as _words_to_int, valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int)
+
+from netaddr.compat import _is_str
 
 #: The width (in bits) of this address type.
 width = 48
@@ -69,36 +67,45 @@ class mac_eui48(object):
     #: The number base to be used when interpreting word values as integers.
     word_base = 16
 
+
 class mac_unix(mac_eui48):
     """A UNIX-style MAC address dialect class."""
     word_size = 8
     num_words = width // word_size
-    word_sep  = ':'
-    word_fmt  = '%x'
+    word_sep = ':'
+    word_fmt = '%x'
     word_base = 16
+
+
+class mac_unix_expanded(mac_unix):
+    """A UNIX-style MAC address dialect class with leading zeroes."""
+    word_fmt = '%.2x'
+
 
 class mac_cisco(mac_eui48):
     """A Cisco 'triple hextet' MAC address dialect class."""
     word_size = 16
     num_words = width // word_size
-    word_sep  = '.'
-    word_fmt  = '%.4x'
+    word_sep = '.'
+    word_fmt = '%.4x'
     word_base = 16
+
 
 class mac_bare(mac_eui48):
     """A bare (no delimiters) MAC address dialect class."""
     word_size = 48
     num_words = width // word_size
-    word_sep  = ''
-    word_fmt  = '%.12X'
+    word_sep = ''
+    word_fmt = '%.12X'
     word_base = 16
+
 
 class mac_pgsql(mac_eui48):
     """A PostgreSQL style (2 x 24-bit words) MAC address dialect class."""
     word_size = 24
     num_words = width // word_size
-    word_sep  = ':'
-    word_fmt  = '%.6x'
+    word_sep = ':'
+    word_fmt = '%.6x'
     word_base = 16
 
 #: The default dialect to be used when not specified by the user.
@@ -128,7 +135,7 @@ RE_MAC_FORMATS = (
 #   counterpart.
 RE_MAC_FORMATS = [_re.compile(_, _re.IGNORECASE) for _ in RE_MAC_FORMATS]
 
-#-----------------------------------------------------------------------------
+
 def valid_str(addr):
     """
     :param addr: An IEEE EUI-48 (MAC) address in string form.
@@ -145,7 +152,7 @@ def valid_str(addr):
 
     return False
 
-#-----------------------------------------------------------------------------
+
 def str_to_int(addr):
     """
     :param addr: An IEEE EUI-48 (MAC) address in string form.
@@ -155,7 +162,7 @@ def str_to_int(addr):
         settings.
     """
     words = []
-    if hasattr(addr, 'upper'):
+    if _is_str(addr):
         found_match = False
         for regexp in RE_MAC_FORMATS:
             match_result = regexp.findall(addr)
@@ -186,12 +193,11 @@ def str_to_int(addr):
         #   12 bytes (bare, no delimiters)
         int_val = int('%012x' % int(words[0], 16), 16)
     else:
-        raise AddrFormatError('unexpected word count in MAC address %r!' \
-            % addr)
+        raise AddrFormatError('unexpected word count in MAC address %r!' % addr)
 
     return int_val
 
-#-----------------------------------------------------------------------------
+
 def int_to_str(int_val, dialect=None):
     """
     :param int_val: An unsigned integer.
@@ -210,7 +216,7 @@ def int_to_str(int_val, dialect=None):
 
     return addr
 
-#-----------------------------------------------------------------------------
+
 def int_to_packed(int_val):
     """
     :param int_val: the integer to be packed.
@@ -220,7 +226,7 @@ def int_to_packed(int_val):
     """
     return _struct.pack(">HI", int_val >> 32, int_val & 0xffffffff)
 
-#-----------------------------------------------------------------------------
+
 def packed_to_int(packed_int):
     """
     :param packed_int: a packed string containing an unsigned integer.
@@ -239,53 +245,53 @@ def packed_to_int(packed_int):
 
     return int_val
 
-#-----------------------------------------------------------------------------
+
 def valid_words(words, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _valid_words(words, dialect.word_size, dialect.num_words)
 
-#-----------------------------------------------------------------------------
+
 def int_to_words(int_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _int_to_words(int_val, dialect.word_size, dialect.num_words)
 
-#-----------------------------------------------------------------------------
+
 def words_to_int(words, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _words_to_int(words, dialect.word_size, dialect.num_words)
 
-#-----------------------------------------------------------------------------
+
 def valid_bits(bits, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _valid_bits(bits, width, dialect.word_sep)
 
-#-----------------------------------------------------------------------------
+
 def bits_to_int(bits, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _bits_to_int(bits, width, dialect.word_sep)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bits(int_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
-    return _int_to_bits(int_val, dialect.word_size, dialect.num_words,
-        dialect.word_sep)
+    return _int_to_bits(
+        int_val, dialect.word_size, dialect.num_words, dialect.word_sep)
 
-#-----------------------------------------------------------------------------
+
 def valid_bin(bin_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
     return _valid_bin(bin_val, width)
 
-#-----------------------------------------------------------------------------
+
 def int_to_bin(int_val):
     return _int_to_bin(int_val, width)
 
-#-----------------------------------------------------------------------------
+
 def bin_to_int(bin_val):
     return _bin_to_int(bin_val, width)
