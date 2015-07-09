@@ -1296,7 +1296,7 @@ class IPNetwork(BaseIP, IPListMixin):
                 it_hosts = iter_iprange(
                         IPAddress(self.first + 1, self._module.version),
                         IPAddress(self.last - 1, self._module.version))
-            elif self.size >= 1:
+            else:
                 it_hosts = iter_iprange(
                         IPAddress(self.first, self._module.version),
                         IPAddress(self.last, self._module.version))
