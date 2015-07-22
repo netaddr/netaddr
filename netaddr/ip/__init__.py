@@ -991,7 +991,10 @@ class IPNetwork(BaseIP, IPListMixin):
     @property
     def broadcast(self):
         """The broadcast address of this `IPNetwork` object"""
-        return IPAddress(self._value | self._hostmask_int, self._module.version)
+        if (self._module.width - self._prefixlen) <= 1:
+            return None
+        else:
+            return IPAddress(self._value | self._hostmask_int, self._module.version)
 
     @property
     def first(self):
@@ -1293,6 +1296,10 @@ class IPNetwork(BaseIP, IPListMixin):
                 it_hosts = iter_iprange(
                         IPAddress(self.first + 1, self._module.version),
                         IPAddress(self.last - 1, self._module.version))
+            else:
+                it_hosts = iter_iprange(
+                        IPAddress(self.first, self._module.version),
+                        IPAddress(self.last, self._module.version))
         else:
             #   IPv6 logic.
             # RFC 4291 section 2.6.1 says that the first IP in the network is

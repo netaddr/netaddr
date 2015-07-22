@@ -27,7 +27,7 @@ def test_ipaddress_v4():
             IPAddress('192.0.2.1'),
             IPAddress('192.0.2.1'),
             IPNetwork('192.0.2.1/32'),
-            IPAddress('192.0.2.1'),
+            None,
             IPAddress('255.255.255.255'),
             IPAddress('0.0.0.0'),
             1,
@@ -259,7 +259,8 @@ def test_iterhosts_v4():
 
     assert list(IPNetwork("1234::/128")) == [IPAddress('1234::')]
     assert list(IPNetwork("1234::/128").iter_hosts()) == []
-    assert list(IPNetwork("192.168.0.0/31").iter_hosts()) == []
+    assert list(IPNetwork("192.168.0.0/31").iter_hosts()) == [IPAddress('192.168.0.0'),IPAddress('192.168.0.1')]
+    assert list(IPNetwork("192.168.0.0/32").iter_hosts()) == [IPAddress('192.168.0.0')]
 
 
 def test_ipaddress_boolean_evaluation_v4():
@@ -486,3 +487,15 @@ def test_ipnetwork_incrementing_by_int():
         '192.0.2.224/28',
         '192.0.2.240/28'
     ]
+
+
+def test_rfc3021_subnets():
+    # Tests for /31 subnet
+    assert IPNetwork('192.0.2.0/31').network == IPAddress('192.0.2.0')
+    assert IPNetwork('192.0.2.0/31').broadcast == None
+    assert list(IPNetwork('192.0.2.0/31').iter_hosts()) == [IPAddress('192.0.2.0'), IPAddress('192.0.2.1')]
+
+    # Tests for /32 subnet
+    assert IPNetwork('192.0.2.0/32').network == IPAddress('192.0.2.0')
+    assert IPNetwork('192.0.2.0/32').broadcast == None
+    assert list(IPNetwork('192.0.2.0/32').iter_hosts()) == [IPAddress('192.0.2.0')]
