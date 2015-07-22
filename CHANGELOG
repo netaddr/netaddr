@@ -1,4 +1,23 @@
 ---------------
+Release: 0.7.16
+---------------
+Date: ?????? 2015
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.15
+^^^^^^^^^^^^^^^^^^^^
+
+* IPv4 networks with /31 and /32 netmasks are now treated according to
+    RFC 3021. Thanks to kalombos and braaen.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 96: https://github.com/drkjam/netaddr/issues/96
+    - Wrong hosts and broadcasts for /31 and /32 networks.
+
+---------------
 Release: 0.7.15
 ---------------
 Date: 29 Jun 2015
