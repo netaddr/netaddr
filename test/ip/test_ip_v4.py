@@ -492,10 +492,10 @@ def test_ipnetwork_incrementing_by_int():
 def test_rfc3021_subnets():
     # Tests for /31 subnet
     assert IPNetwork('192.0.2.0/31').network == IPAddress('192.0.2.0')
-    assert IPNetwork('192.0.2.0/31').broadcast == None
+    assert IPNetwork('192.0.2.0/31').broadcast is None
     assert list(IPNetwork('192.0.2.0/31').iter_hosts()) == [IPAddress('192.0.2.0'), IPAddress('192.0.2.1')]
 
     # Tests for /32 subnet
     assert IPNetwork('192.0.2.0/32').network == IPAddress('192.0.2.0')
-    assert IPNetwork('192.0.2.0/32').broadcast == None
+    assert IPNetwork('192.0.2.0/32').broadcast is None
     assert list(IPNetwork('192.0.2.0/32').iter_hosts()) == [IPAddress('192.0.2.0')]
