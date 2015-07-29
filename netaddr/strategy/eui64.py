@@ -60,6 +60,38 @@ class eui64_eui64(object):
     #: The number base to be used when interpreting word values as integers.
     word_base = 16
 
+class eui64_unix(eui64_eui64):
+    """A UNIX-style MAC address dialect class."""
+    word_size = 8
+    num_words = width // word_size
+    word_sep = ':'
+    word_fmt = '%x'
+    word_base = 16
+
+
+class eui64_unix_expanded(eui64_unix):
+    """A UNIX-style MAC address dialect class with leading zeroes."""
+    word_fmt = '%.2x'
+
+
+class eui64_cisco(eui64_eui64):
+    """A Cisco 'triple hextet' MAC address dialect class."""
+    word_size = 16
+    num_words = width // word_size
+    word_sep = '.'
+    word_fmt = '%.4x'
+    word_base = 16
+
+
+class eui64_bare(eui64_eui64):
+    """A bare (no delimiters) MAC address dialect class."""
+    word_size = 64
+    num_words = width // word_size
+    word_sep = ''
+    word_fmt = '%.16X'
+    word_base = 16
+
+
 #: The default dialect to be used when not specified by the user.
 
 DEFAULT_EUI64_DIALECT = eui64_eui64
@@ -75,10 +107,6 @@ RE_EUI64_FORMATS = (
     '^' + ':'.join(['([0-9A-F]{1,4})'] * 4) + '$',
     '^' + '-'.join(['([0-9A-F]{1,4})'] * 4) + '$',
     '^' + '\.'.join(['([0-9A-F]{1,4})'] * 4) + '$',
-
-    #   6 bytes x 3 (PostgreSQL like)
-    '^' + '-'.join(['([0-9A-F]{5,6})'] * 3) + '$',
-    '^' + ':'.join(['([0-9A-F]{5,6})'] * 3) + '$',
 
     #   16 bytes (bare, no delimiters)
     '^(' + ''.join(['[0-9A-F]'] * 16) + ')$',
@@ -137,9 +165,6 @@ def str_to_int(addr):
     elif len(words) == 4:
         #   4 bytes x 4 (Cisco like)
         int_val = int(''.join(['%.4x' % int(w, 16) for w in words]), 16)
-    elif len(words) == 3:
-        #   6 bytes x 3 (PostgreSQL)
-        int_val = int(''.join(['%.6x' % int(w, 16) for w in words]), 16)
     elif len(words) == 1:
         #   16 bytes (bare, no delimiters)
         int_val = int('%016x' % int(words[0], 16), 16)
