@@ -36,32 +36,56 @@ version = 64
 #: The maximum integer value that can be represented by this address type.
 max_int = 2 ** width - 1
 
+#-----------------------------------------------------------------------------
+#   Dialect classes.
+#-----------------------------------------------------------------------------
 
+class eui64_eui64(object):
+    """A standard IEEE EUI-64 dialect class."""
+    #: The individual word size (in bits) of this address type.
+    word_size = 8
 
-#: The individual word size (in bits) of this address type.
-word_size = 8
+    #: The number of words in this address type.
+    num_words = width // word_size
 
-#: The number of words in this address type.
-num_words = width // word_size
+    #: The maximum integer value for an individual word in this address type.
+    max_word = 2 ** word_size - 1
 
-#: The maximum integer value for an individual word in this address type.
-max_word = 2 ** word_size - 1
+    #: The separator character used between each word.
+    word_sep = '-'
 
-#: The separator character used between each word.
-word_sep = '-'
+    #: The format string to be used when converting words to string values.
+    word_fmt = '%.2X'
 
-#: The format string to be used when converting words to string values.
-word_fmt = '%.2X'
+    #: The number base to be used when interpreting word values as integers.
+    word_base = 16
 
-#: The number base to be used when interpreting word values as integers.
-word_base = 16
+#: The default dialect to be used when not specified by the user.
 
-#: Compiled regular expression for detecting value EUI-64 identifiers.
-RE_EUI64_FORMATS = [
-    _re.compile('^' + ':'.join(['([0-9A-F]{1,2})'] * 8) + '$', _re.IGNORECASE),
-    _re.compile('^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$', _re.IGNORECASE),
-    _re.compile('^(' + '[0-9A-F]' * 16 + ')$', _re.IGNORECASE),
-]
+DEFAULT_EUI64_DIALECT = eui64_eui64
+
+#-----------------------------------------------------------------------------
+#: Regular expressions to match all supported MAC address formats.
+RE_EUI64_FORMATS = (
+    #   2 bytes x 8 (UNIX, Windows, EUI-64)
+    '^' + ':'.join(['([0-9A-F]{1,2})'] * 8) + '$',
+    '^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$',
+
+    #   4 bytes x 4 (Cisco like)
+    '^' + ':'.join(['([0-9A-F]{1,4})'] * 4) + '$',
+    '^' + '-'.join(['([0-9A-F]{1,4})'] * 4) + '$',
+    '^' + '\.'.join(['([0-9A-F]{1,4})'] * 4) + '$',
+
+    #   6 bytes x 3 (PostgreSQL like)
+    '^' + '-'.join(['([0-9A-F]{5,6})'] * 3) + '$',
+    '^' + ':'.join(['([0-9A-F]{5,6})'] * 3) + '$',
+
+    #   16 bytes (bare, no delimiters)
+    '^(' + ''.join(['[0-9A-F]'] * 16) + ')$',
+)
+#   For efficiency, each string regexp converted in place to its compiled
+#   counterpart.
+RE_EUI64_FORMATS = [_re.compile(_, _re.IGNORECASE) for _ in RE_EUI64_FORMATS]
 
 
 def _get_match_result(address, formats):
@@ -91,7 +115,7 @@ def str_to_int(addr):
     :param addr: An IEEE EUI-64 indentifier in string form.
 
     :return: An unsigned integer that is equivalent to value represented
-        by EUI-64 string identifier.
+        by EUI-64 string address formatted according to the dialect
     """
     words = []
 
@@ -102,13 +126,28 @@ def str_to_int(addr):
     except TypeError:
         raise AddrFormatError('invalid IEEE EUI-64 identifier: %r!' % addr)
 
-    if _is_str(words):
-        return int(words, 16)
-    if len(words) != num_words:
+    if isinstance(words, tuple):
+        pass
+    else:
+        words = (words,)
+
+    if len(words) == 8:
+        #   2 bytes x 8 (UNIX, Windows, EUI-48)
+        int_val = int(''.join(['%.2x' % int(w, 16) for w in words]), 16)
+    elif len(words) == 4:
+        #   4 bytes x 4 (Cisco like)
+        int_val = int(''.join(['%.4x' % int(w, 16) for w in words]), 16)
+    elif len(words) == 3:
+        #   6 bytes x 3 (PostgreSQL)
+        int_val = int(''.join(['%.6x' % int(w, 16) for w in words]), 16)
+    elif len(words) == 1:
+        #   16 bytes (bare, no delimiters)
+        int_val = int('%016x' % int(words[0], 16), 16)
+    else:
         raise AddrFormatError(
             'bad word count for EUI-64 identifier: %r!' % addr)
 
-    return int(''.join(['%.2x' % int(w, 16) for w in words]), 16)
+    return int_val
 
 
 def int_to_str(int_val, dialect=None):
@@ -116,13 +155,14 @@ def int_to_str(int_val, dialect=None):
     :param int_val: An unsigned integer.
 
     :param dialect: (optional) a Python class defining formatting options
-        (Please Note - not currently in use).
 
     :return: An IEEE EUI-64 identifier that is equivalent to unsigned integer.
     """
-    words = int_to_words(int_val)
-    tokens = [word_fmt % i for i in words]
-    addr = word_sep.join(tokens)
+    if dialect is None:
+        dialect = eui64_eui64
+    words = int_to_words(int_val, dialect)
+    tokens = [dialect.word_fmt % i for i in words]
+    addr = dialect.word_sep.join(tokens)
     return addr
 
 
@@ -157,30 +197,45 @@ def packed_to_int(packed_int):
 
 
 def valid_words(words, dialect=None):
-    return _valid_words(words, word_size, num_words)
+    if dialect is None:
+        dialect = DEFAULT_EUI64_DIALECT
+    return _valid_words(words, dialect.word_size, dialect.num_words)
 
 
 def int_to_words(int_val, dialect=None):
-    return _int_to_words(int_val, word_size, num_words)
+    if dialect is None:
+        dialect = DEFAULT_EUI64_DIALECT
+    return _int_to_words(int_val, dialect.word_size, dialect.num_words)
 
 
 def words_to_int(words, dialect=None):
-    return _words_to_int(words, word_size, num_words)
+    if dialect is None:
+        dialect = DEFAULT_EUI64_DIALECT
+    return _words_to_int(words, dialect.word_size, dialect.num_words)
 
 
 def valid_bits(bits, dialect=None):
-    return _valid_bits(bits, width, word_sep)
+    if dialect is None:
+        dialect = DEFAULT_EUI64_DIALECT
+    return _valid_bits(bits, width, dialect.word_sep)
 
 
 def bits_to_int(bits, dialect=None):
-    return _bits_to_int(bits, width, word_sep)
+    if dialect is None:
+        dialect = DEFAULT_EUI64_DIALECT
+    return _bits_to_int(bits, width, dialect.word_sep)
 
 
 def int_to_bits(int_val, dialect=None):
-    return _int_to_bits(int_val, word_size, num_words, word_sep)
+    if dialect is None:
+        dialect = DEFAULT_EUI64_DIALECT
+    return _int_to_bits(
+        int_val, dialect.word_size, dialect.num_words, dialect.word_sep)
 
 
-def valid_bin(bin_val):
+def valid_bin(bin_val, dialect=None):
+    if dialect is None:
+        dialect = DEFAULT_EUI64_DIALECT
     return _valid_bin(bin_val, width)
 
 
