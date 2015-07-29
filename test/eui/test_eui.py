@@ -4,7 +4,7 @@ import random
 
 import pytest
 
-from netaddr import EUI, mac_unix, mac_unix_expanded, mac_cisco, mac_bare, mac_pgsql, OUI, IAB, IPAddress
+from netaddr import EUI, mac_unix, mac_unix_expanded, mac_cisco, mac_bare, mac_pgsql, eui64_unix, eui64_unix_expanded, eui64_cisco, eui64_bare, OUI, IAB, IPAddress
 
 
 def test_mac_address_properties():
@@ -97,6 +97,39 @@ def test_eui_custom_dialect():
 
     mac = EUI('00-1B-77-49-54-FD', dialect=mac_custom)
     assert str(mac) == '00:1B:77:49:54:FD'
+
+
+def test_eui64_dialects():
+    mac = EUI('00-1B-77-49-54-FD-12-34')
+    assert str(mac) == '00-1B-77-49-54-FD-12-34'
+
+    mac = EUI('00-1B-77-49-54-FD-12-34', dialect=eui64_unix)
+    assert str(mac) == '0:1b:77:49:54:fd:12:34'
+
+    mac = EUI('00-1B-77-49-54-FD-12-34', dialect=eui64_unix_expanded)
+    assert str(mac) == '00:1b:77:49:54:fd:12:34'
+
+    mac = EUI('00-1B-77-49-54-FD-12-34', dialect=eui64_cisco)
+    assert str(mac) == '001b.7749.54fd.1234'
+
+    mac = EUI('00-1B-77-49-54-FD-12-34', dialect=eui64_bare)
+    assert str(mac) == '001B774954FD1234'
+
+
+def test_eui64_dialect_property_assignment():
+    mac = EUI('00-1B-77-49-54-FD-12-34')
+    assert str(mac) == '00-1B-77-49-54-FD-12-34'
+
+    mac.dialect = eui64_cisco
+    assert str(mac) == '001b.7749.54fd.1234'
+
+
+def test_eui64_custom_dialect():
+    class eui64_custom(eui64_unix):
+        word_fmt = '%.2X'
+
+    mac = EUI('00-1B-77-49-54-FD-12-34', dialect=eui64_custom)
+    assert str(mac) == '00:1B:77:49:54:FD:12:34'
 
 
 def test_eui_oui_information():
