@@ -19,14 +19,13 @@ except ImportError:
     AF_LINK = 48
 
 from netaddr.core import AddrFormatError
+from netaddr.compat import _is_str
 from netaddr.strategy import (
     valid_words as _valid_words, int_to_words as _int_to_words,
     words_to_int as _words_to_int, valid_bits as _valid_bits,
     bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
     valid_bin as _valid_bin, int_to_bin as _int_to_bin,
     bin_to_int as _bin_to_int)
-
-from netaddr.compat import _is_str
 
 #: The width (in bits) of this address type.
 width = 48

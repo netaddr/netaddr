@@ -24,15 +24,6 @@ from netaddr.strategy import (
 #: The width (in bits) of this address type.
 width = 64
 
-#: The individual word size (in bits) of this address type.
-word_size = 8
-
-#: The format string to be used when converting words to string values.
-word_fmt = '%.2X'
-
-#: The separator character used between each word.
-word_sep = '-'
-
 #: The AF_* constant value of this address type.
 family = AF_EUI64
 
@@ -42,17 +33,28 @@ family_name = 'EUI-64'
 #: The version of this address type.
 version = 64
 
-#: The number base to be used when interpreting word values as integers.
-word_base = 16
-
 #: The maximum integer value that can be represented by this address type.
 max_int = 2 ** width - 1
+
+
+
+#: The individual word size (in bits) of this address type.
+word_size = 8
 
 #: The number of words in this address type.
 num_words = width // word_size
 
 #: The maximum integer value for an individual word in this address type.
 max_word = 2 ** word_size - 1
+
+#: The separator character used between each word.
+word_sep = '-'
+
+#: The format string to be used when converting words to string values.
+word_fmt = '%.2X'
+
+#: The number base to be used when interpreting word values as integers.
+word_base = 16
 
 #: Compiled regular expression for detecting value EUI-64 identifiers.
 RE_EUI64_FORMATS = [
