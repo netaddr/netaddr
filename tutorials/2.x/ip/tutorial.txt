@@ -594,8 +594,6 @@ Armed with this information here are some examples of network comparisons.
 False
 >>> IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
 True
->>> IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
-True
 
 This will inevitably raise questions about comparing IPAddress (scalar) objects and IPNetwork (vector) objects with each other (or at least it should).
 
