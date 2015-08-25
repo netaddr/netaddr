@@ -14,6 +14,9 @@ Changes since 0.7.15
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+FIXED Issue 102: https://github.com/drkjam/netaddr/issues/102
+    - 0.7.15 tarball is missing tests.
+
 FIXED Issue 96: https://github.com/drkjam/netaddr/issues/96
     - Wrong hosts and broadcasts for /31 and /32 networks.
 

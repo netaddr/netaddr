@@ -8,7 +8,7 @@
 #
 SHELL = /bin/bash
 
-.PHONY = all clean dist doc download
+.PHONY = all clean dist doc download test
 
 all:
 	@echo 'default target does nothing. try clean'
@@ -22,7 +22,7 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-dist: clean download doc
+dist: clean doc
 	@echo 'building netaddr release'
 	python setup_egg.py develop
 	@echo 'building source distributions'
@@ -60,7 +60,7 @@ push_tags:
 	@echo 'syncing tags'
 	git push --tags
 
-runtests:
+test:
 	@echo 'running test suite'
 	python setup.py test
 	@echo 'running doc tests (tutorials)'
