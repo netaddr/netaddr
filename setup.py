@@ -30,8 +30,8 @@ class PyTest(Command):
         import os
         saved_cwd = os.getcwd()
         try:
-            os.chdir(os.path.join(os.path.dirname(__file__), 'test'))
-            errno = subprocess.call([sys.executable, '../runtests.py'])
+            os.chdir(os.path.join(os.path.dirname(__file__), 'netaddr', 'tests'))
+            errno = subprocess.call([sys.executable, '../../runtests.py'])
         finally:
             os.chdir(saved_cwd)
         raise SystemExit(errno)

@@ -25,8 +25,6 @@ def test_advanced_comparisons():
 
     assert IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
 
-    assert IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
-
     assert IPAddress('192.0.2.0') != IPNetwork('192.0.2.0/32')
 
     assert IPAddress('192.0.2.0') == IPNetwork('192.0.2.0/32')[0]

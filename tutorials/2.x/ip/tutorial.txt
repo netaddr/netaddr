@@ -164,7 +164,7 @@ Here are some networking details for an IPv6 subnet.
 Interoperability between IPv4 and IPv6 
 --------------------------------------
 
-It is likely that with IPv6 becoming more prevalent, you'll want to be able to interoperate between IPv4 and IPv6 address seemlessly.
+It is likely that with IPv6 becoming more prevalent, you'll want to be able to interoperate between IPv4 and IPv6 address seamlessly.
 
 Here are a couple of methods that help achieve this.
 
@@ -592,8 +592,6 @@ Armed with this information here are some examples of network comparisons.
 
 >>> IPNetwork('192.0.2.0/24') == IPNetwork('192.0.3.0/24')
 False
->>> IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
-True
 >>> IPNetwork('192.0.2.0/24') < IPNetwork('192.0.3.0/24')
 True
 

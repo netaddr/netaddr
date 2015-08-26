@@ -12,6 +12,7 @@ include release.py
 include setup.cfg
 include setup.py
 include setup_egg.py
+include runtests.py
 
 recursive-include docs/source *
 
@@ -25,6 +26,12 @@ recursive-include netaddr/eui *.py *.txt *.idx
 recursive-include netaddr/ip *.py *.xml
 
 recursive-include netaddr/strategy *.py
+
+include netaddr/tests/__init__.py
+recursive-include netaddr/tests/core *.py
+recursive-include netaddr/tests/eui *.py *.txt
+recursive-include netaddr/tests/ip *.py
+recursive-include netaddr/tests/strategy *.py
 
 include netaddr/tools/netaddr
 
