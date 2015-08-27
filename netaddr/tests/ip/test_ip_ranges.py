@@ -229,7 +229,7 @@ def test_iprange_info_and_properties():
             'whois': 'whois.arin.net'}]
     }
 
-    assert iprange.is_private()
+    assert iprange.is_reserved()
 
     assert iprange.version == 4
 
