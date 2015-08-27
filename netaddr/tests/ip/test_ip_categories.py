@@ -16,10 +16,22 @@ def test_is_private():
     assert IPAddress('10.0.0.1').is_private()
     assert IPAddress('192.168.0.1').is_private()
     assert IPAddress('fc00::1').is_private()
+    assert IPAddress('198.18.0.0').is_private()
+    assert IPAddress('198.19.255.255').is_private()
 
 
 def test_is_reserved():
     assert IPAddress('253.0.0.1').is_reserved()
+    assert IPAddress('192.0.2.0').is_reserved()
+    assert IPAddress('192.0.2.255').is_reserved()
+    assert IPAddress('127.0.0.0').is_reserved()
+    assert IPAddress('127.255.255.255').is_reserved()
+    assert IPAddress('192.88.99.0').is_reserved()
+    assert IPAddress('192.88.99.255').is_reserved()
+    assert IPAddress('0.0.0.0').is_reserved()
+    assert IPAddress('0.255.255.255').is_reserved()
+    assert IPAddress('233.252.0.0').is_reserved()
+    assert IPAddress('233.252.0.255').is_reserved()
 
 
 def test_is_public():
