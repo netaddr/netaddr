@@ -14,6 +14,9 @@ Changes since 0.7.15
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+FIXED Issue 109: https://github.com/drkjam/netaddr/issues/109
+    - Identify registry of global IPv6 unicast allocations
+
 FIXED Issue 108: https://github.com/drkjam/netaddr/issues/108
     - One part of docs unclear?
 
