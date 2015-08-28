@@ -11,7 +11,7 @@ identifiers.
 from netaddr.core import NotRegisteredError, AddrFormatError, DictDotLookup
 from netaddr.strategy import eui48 as _eui48, eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
-from netaddr.strategy.eui64 import eui64_eui64
+from netaddr.strategy.eui64 import eui64_base
 from netaddr.ip import IPAddress
 from netaddr.compat import _is_int, _is_str
 
@@ -458,7 +458,7 @@ class EUI(BaseIdentifier):
     def _set_dialect(self, value):
         if value is None:
             if self._module is _eui64:
-                self._dialect = eui64_eui64
+                self._dialect = eui64_base
             else:
                 self._dialect = mac_eui48
         else:

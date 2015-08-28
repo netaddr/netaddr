@@ -9,17 +9,17 @@ IEEE 64-bit EUI (Extended Unique Indentifier) logic.
 import struct as _struct
 import re as _re
 
-#   This is a fake constant that doesn't really exist. Here for completeness.
-AF_EUI64 = 64
-
 from netaddr.core import AddrFormatError
-from netaddr.compat import _is_str
 from netaddr.strategy import (
     valid_words as _valid_words, int_to_words as _int_to_words,
     words_to_int as _words_to_int, valid_bits as _valid_bits,
     bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
     valid_bin as _valid_bin, int_to_bin as _int_to_bin,
     bin_to_int as _bin_to_int)
+
+
+#   This is a fake constant that doesn't really exist. Here for completeness.
+AF_EUI64 = 64
 
 #: The width (in bits) of this address type.
 width = 64
@@ -40,7 +40,7 @@ max_int = 2 ** width - 1
 #   Dialect classes.
 #-----------------------------------------------------------------------------
 
-class eui64_eui64(object):
+class eui64_base(object):
     """A standard IEEE EUI-64 dialect class."""
     #: The individual word size (in bits) of this address type.
     word_size = 8
@@ -60,7 +60,8 @@ class eui64_eui64(object):
     #: The number base to be used when interpreting word values as integers.
     word_base = 16
 
-class eui64_unix(eui64_eui64):
+
+class eui64_unix(eui64_base):
     """A UNIX-style MAC address dialect class."""
     word_size = 8
     num_words = width // word_size
@@ -74,7 +75,7 @@ class eui64_unix_expanded(eui64_unix):
     word_fmt = '%.2x'
 
 
-class eui64_cisco(eui64_eui64):
+class eui64_cisco(eui64_base):
     """A Cisco 'triple hextet' MAC address dialect class."""
     word_size = 16
     num_words = width // word_size
@@ -83,7 +84,7 @@ class eui64_cisco(eui64_eui64):
     word_base = 16
 
 
-class eui64_bare(eui64_eui64):
+class eui64_bare(eui64_base):
     """A bare (no delimiters) MAC address dialect class."""
     word_size = 64
     num_words = width // word_size
@@ -94,7 +95,7 @@ class eui64_bare(eui64_eui64):
 
 #: The default dialect to be used when not specified by the user.
 
-DEFAULT_EUI64_DIALECT = eui64_eui64
+DEFAULT_EUI64_DIALECT = eui64_base
 
 #-----------------------------------------------------------------------------
 #: Regular expressions to match all supported MAC address formats.
@@ -184,7 +185,7 @@ def int_to_str(int_val, dialect=None):
     :return: An IEEE EUI-64 identifier that is equivalent to unsigned integer.
     """
     if dialect is None:
-        dialect = eui64_eui64
+        dialect = eui64_base
     words = int_to_words(int_val, dialect)
     tokens = [dialect.word_fmt % i for i in words]
     addr = dialect.word_sep.join(tokens)
