@@ -4,7 +4,9 @@ import random
 
 import pytest
 
-from netaddr import EUI, mac_unix, mac_unix_expanded, mac_cisco, mac_bare, mac_pgsql, eui64_unix, eui64_unix_expanded, eui64_cisco, eui64_bare, OUI, IAB, IPAddress
+from netaddr import (EUI, mac_unix, mac_unix_expanded, mac_cisco,
+    mac_bare, mac_pgsql, eui64_unix, eui64_unix_expanded,
+    eui64_cisco, eui64_bare, OUI, IAB, IPAddress)
 
 
 def test_mac_address_properties():
