@@ -29,22 +29,21 @@ More details can be found at the following URLs :-
     - IEEE Protocols Information Home Page - http://www.iana.org/protocols/
 """
 
-import os as _os
 import os.path as _path
 import sys as _sys
-
 from xml.sax import make_parser, handler
 
-from netaddr.core import Publisher, Subscriber, dos2unix
+from netaddr.core import Publisher, Subscriber
 from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
-
 from netaddr.compat import _dict_items, _callable
+
 
 
 #: Topic based lookup dictionary for IANA information.
 IANA_INFO = {
     'IPv4': {},
     'IPv6': {},
+    'IPv6_unicast': {},
     'multicast': {},
 }
 
@@ -221,6 +220,42 @@ class IPv6Parser(XMLRecordParser):
         return record
 
 
+class IPv6UnicastParser(XMLRecordParser):
+    """
+    A XMLRecordParser that understands how to parse and retrieve data records
+    from the IANA IPv6 unicast address assignments file.
+
+    It can be found online here :-
+
+        - http://www.iana.org/assignments/ipv6-unicast-address-assignments/ipv6-unicast-address-assignments.xml
+    """
+    def __init__(self, fh, **kwargs):
+        """
+        Constructor.
+
+        fh - a valid, open file handle to an IANA IPv6 address space file.
+
+        kwargs - additional parser options.
+        """
+        super(IPv6UnicastParser, self).__init__(fh)
+
+    def process_record(self, rec):
+        """
+        Callback method invoked for every record.
+
+        See base class method for more details.
+        """
+        record = {
+            'status': str(rec.get('status', '')).strip(),
+            'description': str(rec.get('description', '')).strip(),
+            'prefix': str(rec.get('prefix', '')).strip(),
+            'date': str(rec.get('date', '')).strip(),
+            'whois': str(rec.get('whois', '')).strip(),
+        }
+
+        return record
+
+
 class MulticastParser(XMLRecordParser):
     """
     A XMLRecordParser that knows how to process the IANA IPv4 multicast address
@@ -305,6 +340,9 @@ class DictUpdater(Subscriber):
         elif self.topic == 'IPv6':
             cidr = IPNetwork(cidr_abbrev_to_verbose(data_id))
             self.dct[cidr] = data
+        elif self.topic == 'IPv6_unicast':
+            cidr = IPNetwork(data_id)
+            self.dct[cidr] = data
         elif self.topic == 'multicast':
             iprange = None
             if '-' in data_id:
@@ -334,6 +372,10 @@ def load_info():
     ipv6.attach(DictUpdater(IANA_INFO['IPv6'], 'IPv6', 'prefix'))
     ipv6.parse()
 
+    ipv6ua = IPv6UnicastParser(open(_path.join(PATH, 'ipv6-unicast-address-assignments.xml')))
+    ipv6ua.attach(DictUpdater(IANA_INFO['IPv6_unicast'], 'IPv6_unicast', 'prefix'))
+    ipv6ua.parse()
+
     mcast = MulticastParser(open(_path.join(PATH, 'multicast-addresses.xml')))
     mcast.attach(DictUpdater(IANA_INFO['multicast'], 'multicast', 'address'))
     mcast.parse()
@@ -356,77 +398,46 @@ def pprint_info(fh=None):
             fh.write('%-45r' % (iprange) + details + "\n")
 
 
+def _within_bounds(ip, ip_range):
+    #   Boundary checking for multiple IP classes.
+    if hasattr(ip_range, 'first'):
+        #   IP network or IP range.
+        return ip in ip_range
+    elif hasattr(ip_range, 'value'):
+        #   IP address.
+        return ip == ip_range
+
+    raise Exception('Unsupported IP range or address: %r!' % ip_range)
+
+
 def query(ip_addr):
-    """
-    Returns informational data specific to this IP address.
-    """
+    """Returns informational data specific to this IP address."""
     info = {}
-
-    def within_bounds(ip, ip_range):
-        #   Boundary checking for multiple IP classes.
-        if hasattr(ip_range, 'first'):
-            #   IP network or IP range.
-            return ip in ip_range
-        elif hasattr(ip_range, 'value'):
-            #   IP address.
-            return ip == ip_range
-
-        raise Exception('Unsupported IP range or address: %r!' % ip_range)
 
     if ip_addr.version == 4:
         for cidr, record in _dict_items(IANA_INFO['IPv4']):
-            if within_bounds(ip_addr, cidr):
+            if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv4', [])
                 info['IPv4'].append(record)
 
         if ip_addr.is_multicast():
             for iprange, record in _dict_items(IANA_INFO['multicast']):
-                if within_bounds(ip_addr, iprange):
+                if _within_bounds(ip_addr, iprange):
                     info.setdefault('Multicast', [])
                     info['Multicast'].append(record)
 
     elif ip_addr.version == 6:
         for cidr, record in _dict_items(IANA_INFO['IPv6']):
-            if within_bounds(ip_addr, cidr):
+            if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv6', [])
                 info['IPv6'].append(record)
 
+        for cidr, record in _dict_items(IANA_INFO['IPv6_unicast']):
+            if _within_bounds(ip_addr, cidr):
+                info.setdefault('IPv6_unicast', [])
+                info['IPv6_unicast'].append(record)
+
     return info
-
-
-def get_latest_files():
-    """Download the latest files from IANA"""
-    if _sys.version_info[0] == 3:
-        #   Python 3.x
-        from urllib.request import Request, urlopen
-    else:
-        #   Python 2.x
-        from urllib2 import Request, urlopen
-
-    urls = [
-        'http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml',
-        'http://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml',
-        'http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml',
-    ]
-
-    for url in urls:
-        _sys.stdout.write('downloading latest copy of %s\n' % url)
-        request = Request(url)
-        response = urlopen(request)
-        save_path = _path.dirname(__file__)
-        basename = _os.path.basename(response.geturl().rstrip('/'))
-        filename = _path.join(save_path, basename)
-        fh = open(filename, 'wb')
-        fh.write(response.read())
-        fh.close()
-
-        #   Make sure the line endings are consistent across platforms.
-        dos2unix(filename)
-
-
-if __name__ == '__main__':
-    #   Generate indices when module is executed as a script.
-    get_latest_files()
 
 #   On module import, read IANA data files and populate lookups dict.
 load_info()
