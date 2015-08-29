@@ -61,7 +61,7 @@ push_tags:
 	@echo 'syncing tags'
 	git push --tags
 
-test:
+test: clean
 	@echo 'running test suite'
 	python setup.py test
 	@echo 'running doc tests (tutorials)'
