@@ -10,7 +10,7 @@ name = 'netaddr'
 
 version = netaddr.__version__
 
-description = 'Pythonic manipulation of IPv4, IPv6, CIDR, EUI and MAC network addresses'
+description = 'A Python library for representing and manipulating network addresses'
 
 keywords = [
     'Networking', 'Systems Administration', 'IANA', 'IEEE', 'CIDR', 'IP',
@@ -36,9 +36,7 @@ packages = [
 #   Required by distutils only.
 package_data = {
     'netaddr.ip': [
-        'ipv4-address-space.xml',
-        'ipv6-address-space.xml',
-        'multicast-addresses.xml'
+        '*.xml',
     ],
     'netaddr.eui': [
         '*.txt',
@@ -53,10 +51,7 @@ license = 'BSD License'
 #------------------------------------------------------------------------
 #   NB - keep this text around 74 characters wide so it is viewable
 #        in various fixed window sizes.
-long_description = """
-A Python library for representing and manipulating network addresses.
-
-Provides support for:
+long_description = """Provides provides support for:
 
 Layer 3 addresses
 
