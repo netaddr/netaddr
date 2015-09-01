@@ -1548,17 +1548,15 @@ def cidr_merge(ip_addrs):
     for ip in ip_addrs:
         cidr = IPNetwork(ip)
         # Since non-overlapping ranges are the common case, remember the original
-        ranges.append( (cidr.version, cidr.first, cidr.last, cidr) )
+        ranges.append( (cidr.version, cidr.last, cidr.first, cidr) )
 
     ranges.sort()
-    i = 1
-    while i < len(ranges):
-        if ranges[i][0] == ranges[i - 1][0] and ranges[i][1] - 1 <= ranges[i - 1][2]:
-            ranges[i - 1] = (ranges[i][0], ranges[i - 1][1], max(ranges[i - 1][2], ranges[i][2]))
+    i = len(ranges) - 1
+    while i > 0:
+        if ranges[i][0] == ranges[i - 1][0] and ranges[i][2] - 1 <= ranges[i - 1][1]:
+            ranges[i - 1] = (ranges[i][0], ranges[i][1], min(ranges[i - 1][2], ranges[i][2]))
             del ranges[i]
-        else:
-            i += 1
-
+        i -= 1
     merged = []
     for range_tuple in ranges:
         # If this range wasn't merged we can simply use the old cidr.
@@ -1566,8 +1564,8 @@ def cidr_merge(ip_addrs):
             merged.append(range_tuple[3])
         else:
             version = range_tuple[0]
-            range_start = IPAddress(range_tuple[1], version=version)
-            range_stop = IPAddress(range_tuple[2], version=version)
+            range_start = IPAddress(range_tuple[2], version=version)
+            range_stop = IPAddress(range_tuple[1], version=version)
             merged.extend(iprange_to_cidrs(range_start, range_stop))
     return merged
 
