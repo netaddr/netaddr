@@ -61,7 +61,7 @@ Representing networks and subnets
 >>> ip.ip
 IPAddress('192.0.2.1')
 >>> ip.network, ip.broadcast
-(IPAddress('192.0.2.1'), IPAddress('192.0.2.1'))
+(IPAddress('192.0.2.1'), None)
 >>> ip.netmask, ip.hostmask
 (IPAddress('255.255.255.255'), IPAddress('0.0.0.0'))
 >>> ip.size

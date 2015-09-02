@@ -1,7 +1,7 @@
 ---------------
 Release: 0.7.16
 ---------------
-Date: ?????? 2015
+Date: 30 Aug 2015
 
 ^^^^^^^^^^^^^^^^^^^^
 Changes since 0.7.15
@@ -14,8 +14,17 @@ Changes since 0.7.15
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+FIXED Issue 109: https://github.com/drkjam/netaddr/issues/109
+    - Identify registry of global IPv6 unicast allocations
+
 FIXED Issue 108: https://github.com/drkjam/netaddr/issues/108
     - One part of docs unclear?
+
+FIXED Issue 106: https://github.com/drkjam/netaddr/issues/106
+    - Eui64 Updated (pull request for Issue 105)
+
+FIXED Issue 105: https://github.com/drkjam/netaddr/issues/105
+    - Support dialects for EUI-64 addresses
 
 FIXED Issue 102: https://github.com/drkjam/netaddr/issues/102
     - 0.7.15 tarball is missing tests.

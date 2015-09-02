@@ -6,7 +6,7 @@
 """A Python library for manipulating IP and EUI network addresses."""
 
 #: Version info (major, minor, maintenance, status)
-VERSION = (0, 7, 15)
+VERSION = (0, 7, 16)
 STATUS = ''
 __version__ = '%d.%d.%d' % VERSION[0:3] + STATUS
 
@@ -41,6 +41,9 @@ from netaddr.strategy.ipv6 import (valid_str as valid_ipv6, ipv6_compact,
 
 from netaddr.strategy.eui48 import (mac_eui48, mac_unix, mac_unix_expanded,
         mac_cisco, mac_bare, mac_pgsql, valid_str as valid_mac)
+
+from netaddr.strategy.eui64 import (eui64_base, eui64_unix, eui64_unix_expanded,
+        eui64_cisco, eui64_bare, valid_str as valid_eui64)
 
 __all__ = [
     #   Constants.

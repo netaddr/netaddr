@@ -1548,17 +1548,15 @@ def cidr_merge(ip_addrs):
     for ip in ip_addrs:
         cidr = IPNetwork(ip)
         # Since non-overlapping ranges are the common case, remember the original
-        ranges.append( (cidr.version, cidr.first, cidr.last, cidr) )
+        ranges.append( (cidr.version, cidr.last, cidr.first, cidr) )
 
     ranges.sort()
-    i = 1
-    while i < len(ranges):
-        if ranges[i][0] == ranges[i - 1][0] and ranges[i][1] - 1 <= ranges[i - 1][2]:
-            ranges[i - 1] = (ranges[i][0], ranges[i - 1][1], max(ranges[i - 1][2], ranges[i][2]))
+    i = len(ranges) - 1
+    while i > 0:
+        if ranges[i][0] == ranges[i - 1][0] and ranges[i][2] - 1 <= ranges[i - 1][1]:
+            ranges[i - 1] = (ranges[i][0], ranges[i][1], min(ranges[i - 1][2], ranges[i][2]))
             del ranges[i]
-        else:
-            i += 1
-
+        i -= 1
     merged = []
     for range_tuple in ranges:
         # If this range wasn't merged we can simply use the old cidr.
@@ -1566,8 +1564,8 @@ def cidr_merge(ip_addrs):
             merged.append(range_tuple[3])
         else:
             version = range_tuple[0]
-            range_start = IPAddress(range_tuple[1], version=version)
-            range_stop = IPAddress(range_tuple[2], version=version)
+            range_start = IPAddress(range_tuple[2], version=version)
+            range_stop = IPAddress(range_tuple[1], version=version)
             merged.extend(iprange_to_cidrs(range_start, range_stop))
     return merged
 
@@ -1850,14 +1848,15 @@ def all_matching_cidrs(ip, cidrs):
 #-----------------------------------------------------------------------------
 #   Cached IPv4 address range lookups.
 #-----------------------------------------------------------------------------
-IPV4_LOOPBACK  = IPNetwork('127.0.0.0/8')
+IPV4_LOOPBACK  = IPNetwork('127.0.0.0/8')    #   Loopback addresses (RFC 990)
 
 IPV4_PRIVATE = (
-    IPNetwork('10.0.0.0/8'),                    #   Private-Use Networks
-    IPNetwork('100.64.0.0/10'),                 #   Shared address space
-    IPNetwork('172.16.0.0/12'),                 #   Private-Use Networks
-    IPNetwork('192.0.2.0/24'),                  #   Test-Net
-    IPNetwork('192.168.0.0/16'),                #   Private-Use Networks
+    IPNetwork('10.0.0.0/8'),        #   Class A private network local communication (RFC 1918)
+    IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
+    IPNetwork('172.16.0.0/12'),     #   Private network - local communication (RFC 1918)
+    IPNetwork('192.0.0.0/24'),      #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
+    IPNetwork('192.168.0.0/16'),    #   Class B private network local communication (RFC 1918)
+    IPNetwork('198.18.0.0/15'),     #  Testing of inter-network communications between subnets (RFC 2544)
     IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
 )
 
@@ -1865,19 +1864,20 @@ IPV4_LINK_LOCAL = IPNetwork('169.254.0.0/16')
 
 IPV4_MULTICAST = IPNetwork('224.0.0.0/4')
 
-IPV4_6TO4 = IPNetwork('192.88.99.0/24')    #   6to4 Relay Anycast
+IPV4_6TO4 = IPNetwork('192.88.99.0/24')    #   6to4 anycast relays (RFC 3068)
 
 IPV4_RESERVED = (
-    IPNetwork('192.0.0.0/24'),      #   Reserved but subject to allocation
-    IPNetwork('240.0.0.0/4'),       #   Reserved for Future Use
-    IPNetwork('198.18.0.0/15'),     #   Benchmarking
-    IPNetwork('198.51.100.0/24'),   #   Examples for documentation
-    IPNetwork('203.0.113.0/24'),    #   Examples for documentation
+    IPNetwork('0.0.0.0/8'),         #   Broadcast message (RFC 1700)
+    IPNetwork('192.0.2.0/24'),      #   TEST-NET examples and documentation (RFC 5737)
+    IPNetwork('240.0.0.0/4'),       #   Reserved for  multicast assignments (RFC 5771)
+    IPNetwork('198.51.100.0/24'),   #   TEST-NET-2 examples and documentation (RFC 5737)
+    IPNetwork('203.0.113.0/24'),    #   TEST-NET-3 examples and documentation (RFC 5737)
 
     #   Reserved multicast
+    IPNetwork('233.252.0.0/24'),    #   Multicast test network
     IPRange('234.0.0.0', '238.255.255.255'),
     IPRange('225.0.0.0', '231.255.255.255'),
-)
+) + (IPV4_LOOPBACK, IPV4_6TO4)
 
 #-----------------------------------------------------------------------------
 #   Cached IPv6 address range lookups.
