@@ -10,7 +10,7 @@ name = 'netaddr'
 
 version = netaddr.__version__
 
-description = 'A Python library for representing and manipulating network addresses'
+description = 'A network address manipulation library for Python'
 
 keywords = [
     'Networking', 'Systems Administration', 'IANA', 'IEEE', 'CIDR', 'IP',
