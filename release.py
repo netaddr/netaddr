@@ -51,36 +51,43 @@ license = 'BSD License'
 #------------------------------------------------------------------------
 #   NB - keep this text around 74 characters wide so it is viewable
 #        in various fixed window sizes.
-long_description = """Provides provides support for:
+long_description = """ .. image:: https://circleci.com/gh/drkjam/netaddr.png?style=shield
+            :target: https://circleci.com/gh/drkjam/netaddr
+        .. image:: https://readthedocs.org/projects/netaddr/badge/?version=latest
+            :target: https://netaddr.readthedocs.org/en/latest/
 
-Layer 3 addresses
+        Layer 3 addresses
+        -----------------
 
-    - IPv4 and IPv6 addresses, subnets, masks, prefixes
-    - iterating, slicing, sorting, summarizing and classifying IP networks
-    - dealing with various ranges formats (CIDR, arbitrary ranges and globs, nmap)
-    - set based operations (unions, intersections etc) over IP addresses and subnets
-    - parsing a large variety of different formats and notations
-    - looking up IANA IP block information
-    - generating DNS reverse lookups
-    - supernetting and subnetting
+        - IPv4 and IPv6 addresses, subnets, masks, prefixes
+        - iterating, slicing, sorting, summarizing and classifying IP networks
+        - dealing with various ranges formats (CIDR, arbitrary ranges and globs, nmap)
+        - set based operations (unions, intersections etc) over IP addresses and subnets
+        - parsing a large variety of different formats and notations
+        - looking up IANA IP block information
+        - generating DNS reverse lookups
+        - supernetting and subnetting
 
-Layer 2 addresses
+        Layer 2 addresses
+        -----------------
 
-    - representation and manipulation MAC addresses and EUI-64 identifiers
-    - looking up IEEE organisational information (OUI, IAB)
-    - generating derived IPv6 addresses
+        - representation and manipulation MAC addresses and EUI-64 identifiers
+        - looking up IEEE organisational information (OUI, IAB)
+        - generating derived IPv6 addresses
 
-Changes
--------
+        Changes
+        -------
 
-For details on the latest updates and changes, see
+        For details on the latest changes and updates, see :-
 
-    https://github.com/drkjam/netaddr/blob/rel-0.7.x/CHANGELOG
+        https://netaddr.readthedocs.org/en/latest/changes.html
 
-Documentation
--------------
-    - https://pythonhosted.org/netaddr/
-    - https://netaddr.readthedocs.org/en/latest/
+        Requirements
+        ------------
+        .. image:: https://img.shields.io/pypi/pyversions/netaddr.svg
+            :target: pypi.python.org/pypi/netaddr
+
+        Share and enjoy!
 """
 
 platforms = 'OS Independent'
