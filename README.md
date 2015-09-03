@@ -4,8 +4,8 @@ netaddr
 A network address manipulation library for Python
 
 [![Circle CI](https://circleci.com/gh/drkjam/netaddr.png?style=shield)](https://circleci.com/gh/drkjam/netaddr) 
-[![Latest Version](https://img.shields.io/pypi/v/netaddr.svg)](pypi.python.org/pypi/netaddr)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/netaddr.svg)](pypi.python.org/pypi/netaddr)
+[![Latest Version](https://img.shields.io/pypi/v/netaddr.svg)](https://pypi.python.org/pypi/netaddr)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/netaddr.svg)](https://pypi.python.org/pypi/netaddr)
 
 Provides support for:
 

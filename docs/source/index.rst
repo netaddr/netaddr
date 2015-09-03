@@ -5,9 +5,9 @@ netaddr 0.7.18 documentation
 .. image:: https://circleci.com/gh/drkjam/netaddr.png?style=shield
     :target: https://circleci.com/gh/drkjam/netaddr
 .. image:: https://readthedocs.org/projects/netaddr/badge/?version=latest
-    :target: http://netaddr.readthedocs.org/en/latest/
+    :target: https://netaddr.readthedocs.org/en/latest/
 .. image:: https://img.shields.io/pypi/dm/netaddr.svg
-    :target: pypi.python.org/pypi/netaddr
+    :target: https://pypi.python.org/pypi/netaddr
 
 .. toctree::
     :maxdepth: 1
