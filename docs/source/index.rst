@@ -1,5 +1,5 @@
 ============================
-netaddr 0.7.17 documentation
+netaddr 0.7.18 documentation
 ============================
 
 .. image:: https://circleci.com/gh/drkjam/netaddr.png?style=shield
