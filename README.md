@@ -3,7 +3,7 @@ netaddr
 
 [![Circle CI](https://circleci.com/gh/drkjam/netaddr.png?style=shield)](https://circleci.com/gh/drkjam/netaddr) 
 [![Documentation Status](https://readthedocs.org/projects/netaddr/badge/?version=latest)](http://netaddr.readthedocs.org/en/latest/)
-
+[![PyPI Downloads](https://img.shields.io/pypi/dm/netaddr.svg)](pypi.python.org/pypi/netaddr)
 
 A Python library for representing and manipulating network addresses.
 
