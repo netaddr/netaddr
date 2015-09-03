@@ -1,7 +1,9 @@
 netaddr
 =======
 
-[![Circle CI](https://circleci.com/gh/drkjam/netaddr.png?style=shield)](https://circleci.com/gh/drkjam/netaddr)
+[![Circle CI](https://circleci.com/gh/drkjam/netaddr.png?style=shield)](https://circleci.com/gh/drkjam/netaddr) 
+[![Documentation Status](https://readthedocs.org/projects/netaddr/badge/?version=latest)](https://readthedocs.org/projects/netaddr/?badge=latest)
+
 
 A Python library for representing and manipulating network addresses.
 
