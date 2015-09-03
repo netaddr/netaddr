@@ -2,7 +2,7 @@ import sys
 
 import pytest
 
-from netaddr.compat import _sys_maxint, _is_str, _is_int, _callable
+from netaddr.compat import _sys_maxint, _is_str, _is_int, _callable, _iter_next
 from netaddr.compat import _dict_keys, _dict_items
 from netaddr.compat import _bytes_join, _zip, _range
 from netaddr.compat import _iter_range, _func_name, _func_doc
@@ -75,3 +75,8 @@ def test_compat_callable():
     assert _callable(f2)
     assert _func_name(f1) == 'f1'
     assert _func_doc(f1) == 'docstring'
+
+
+def test_iter_next():
+    it = iter([42])
+    assert _iter_next(it) == 42
