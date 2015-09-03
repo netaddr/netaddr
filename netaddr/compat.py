@@ -56,6 +56,9 @@ if _sys.version_info[0] == 3:
         else:
             return f.__doc__
 
+    def _iter_next(x):
+        return next(x)
+
 elif _sys.version_info[0:2] > [2, 3]:
     # Python 2.4 or higher.
     _sys_maxint = _sys.maxint
@@ -99,6 +102,8 @@ elif _sys.version_info[0:2] > [2, 3]:
         else:
             return f.func_doc
 
+    def _iter_next(x):
+        return x.next()
 else:
     # Unsupported versions.
     raise RuntimeError(
