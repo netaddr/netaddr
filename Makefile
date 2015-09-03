@@ -66,3 +66,7 @@ test: clean
 	python setup.py test
 	@echo 'running doc tests (tutorials)'
 	python tutorials/run_doctests.py
+
+test_with_junitxml: clean
+	@echo 'running test suite with JUnit XML output'
+	py.test -vv --junitxml=$$CI_REPORTS/junit.xml $(PWD)/netaddr/tests
