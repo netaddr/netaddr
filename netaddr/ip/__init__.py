@@ -1277,11 +1277,12 @@ class IPNetwork(BaseIP, IPListMixin):
 
     def iter_hosts(self):
         """
-        An generator that provides all the IP addresses that can be assigned
+        A generator that provides all the IP addresses that can be assigned
         to hosts within the range of this IP object's subnet.
 
         - for IPv4, the network and broadcast addresses are always excluded. \
-          Any subnet that contains less than 4 IP addresses yields an empty list.
+          for subnets that contains less than 4 IP addresses /31 and /32 \
+          report in a manner per RFC 3021
 
         - for IPv6, only the unspecified address '::' or Subnet-Router anycast \
           address (first address in the network) is excluded.
