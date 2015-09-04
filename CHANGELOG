@@ -1,4 +1,29 @@
 ---------------
+Release: 0.7.18
+---------------
+Date: 4 Sep 2015
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.17
+^^^^^^^^^^^^^^^^^^^^
+
+* cidr_merge() algorithm is now O(n) and much faster.
+  Thanks to Anand Buddhdev (aabdnn) and Stefan Nordhausen (snordhausen).
+
+* nmap target specification now fully supported including IPv4 CIDR
+  prefixes and IPv6 addresses.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 100: https://github.com/drkjam/netaddr/issues/100
+    - nmap.py - CIDR targets
+
+FIXED Issue 112: https://github.com/drkjam/netaddr/issues/112
+    - Observation: netaddr slower under pypy
+
+---------------
 Release: 0.7.17
 ---------------
 Date: 31 Aug 2015

@@ -1,7 +1,12 @@
 netaddr
 =======
 
-A Python library for representing and manipulating network addresses.
+A network address manipulation library for Python
+
+[![Circle CI](https://circleci.com/gh/drkjam/netaddr.png?style=shield)](https://circleci.com/gh/drkjam/netaddr) 
+[![Latest Version](https://img.shields.io/pypi/v/netaddr.svg)](https://pypi.python.org/pypi/netaddr)
+[![Documentation Status](https://readthedocs.org/projects/netaddr/badge/?version=latest)](http://netaddr.readthedocs.org/en/latest/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/netaddr.svg)](https://pypi.python.org/pypi/netaddr)
 
 Provides support for:
 
@@ -22,53 +27,8 @@ Layer 2 addresses
 - looking up IEEE organisational information (OUI, IAB)
 - generating derived IPv6 addresses
 
-Changes
--------
-
-For details on the latest updates and changes, see :doc:`changes`
-
-License
--------
-
-This software is released under the liberal BSD license.
-
-See the :doc:`license` and :doc:`copyright` for full text.
-
-Dependencies
+Requirements
 ------------
-
-- Python 2.5.x through 3.5.x
-- IPython (for netaddr interactive shell)
-
-Installation
-------------
-
-See :doc:`installation` for details.
-
-Documentation
--------------
-
-This library has comprehensive docstrings and a full set of project
-documentation (including tutorials):
-
-- http://pythonhosted.org/netaddr/
-- http://readthedocs.org/docs/netaddr/en/latest/
-
-Tests
------
-
-netaddr requires py.test (http://pytest.org/).
-
-To run the test suite, clone the repository and run:
-
-    python setup.py test
-
-If any of the tests fail, *please* help the project's user base by filing
-bug reports on the netaddr issue tracker:
-
-- http://github.com/drkjam/netaddr/issues
-
-Finally...
-----------
+[![Versions](https://img.shields.io/pypi/pyversions/netaddr.svg)](pypi.python.org/pypi/netaddr)
 
 Share and enjoy!
