@@ -12,8 +12,8 @@ Based on nmap's Target Specification :-
 """
 
 from netaddr.core import AddrFormatError
-from netaddr.ip import IPAddress
-from netaddr.compat import _iter_range, _is_str
+from netaddr.ip import IPAddress, IPNetwork
+from netaddr.compat import _iter_range, _is_str, _iter_next
 
 
 def _nmap_octet_target_values(spec):
@@ -65,34 +65,53 @@ def _generate_nmap_octet_ranges(nmap_target_spec):
             _nmap_octet_target_values(tokens[3]))
 
 
-def valid_nmap_range(nmap_target_spec):
+def _parse_nmap_target_spec(target_spec):
+    if '/' in target_spec:
+        _, prefix = target_spec.split('/', 1)
+        if not (0 < int(prefix) < 33):
+            raise AddrFormatError('CIDR prefix expected, not %s' % prefix)
+        net = IPNetwork(target_spec)
+        if net.version != 4:
+            raise AddrFormatError('CIDR only support for IPv4!')
+        for ip in net:
+            yield ip
+    elif ':' in target_spec:
+        #   nmap only currently supports IPv6 addresses without prefixes.
+        yield IPAddress(target_spec)
+    else:
+        octet_ranges = _generate_nmap_octet_ranges(target_spec)
+        for w in octet_ranges[0]:
+            for x in octet_ranges[1]:
+                for y in octet_ranges[2]:
+                    for z in octet_ranges[3]:
+                        yield IPAddress("%d.%d.%d.%d" % (w, x, y, z), 4)
+
+
+def valid_nmap_range(target_spec):
     """
-    :param nmap_target_spec: an nmap-style IP range target specification.
+    :param target_spec: an nmap-style IP range target specification.
 
     :return: ``True`` if IP range target spec is valid, ``False`` otherwise.
     """
     try:
-        _generate_nmap_octet_ranges(nmap_target_spec)
+        _iter_next(_parse_nmap_target_spec(target_spec))
         return True
     except (TypeError, ValueError, AddrFormatError):
         pass
     return False
 
 
-def iter_nmap_range(nmap_target_spec):
+def iter_nmap_range(*nmap_target_spec):
     """
-    The nmap security tool supports a custom type of IPv4 range using multiple
-    hyphenated octets. This generator provides iterators yielding IP addresses
-    according to this rule set.
+    An generator that yields IPAddress objects from defined by nmap target
+    specifications.
 
-    :param nmap_target_spec: an nmap-style IP range target specification.
+    See https://nmap.org/book/man-target-specification.html for details.
 
-    :return: an iterator producing IPAddress objects for each IP in the range.
+    :param *nmap_target_spec: one or more nmap IP range target specification.
+
+    :return: an iterator producing IPAddress objects for each IP in the target spec(s).
     """
-    octet_ranges = _generate_nmap_octet_ranges(nmap_target_spec)
-    for w in octet_ranges[0]:
-        for x in octet_ranges[1]:
-            for y in octet_ranges[2]:
-                for z in octet_ranges[3]:
-                    yield IPAddress("%d.%d.%d.%d" % (w, x, y, z), 4)
-
+    for target_spec in nmap_target_spec:
+        for addr in _parse_nmap_target_spec(target_spec):
+            yield addr

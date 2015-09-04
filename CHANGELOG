@@ -1,4 +1,23 @@
 ---------------
+Release: 0.7.17
+---------------
+Date: 31 Aug 2015
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.16
+^^^^^^^^^^^^^^^^^^^^
+
+* Fixed a regression with valid_mac due to shadow import in the
+  netaddr module.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 114: https://github.com/drkjam/netaddr/issues/114
+    - netaddr.valid_mac('00-B0-D0-86-BB-F7')==False for 0.7.16 but True for 0.7.15
+
+---------------
 Release: 0.7.16
 ---------------
 Date: 30 Aug 2015
