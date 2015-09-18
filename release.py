@@ -20,8 +20,10 @@ keywords = [
 download_url = 'https://pypi.python.org/pypi/netaddr/'
 
 author = 'David P. D. Moss'
-
 author_email = 'drkjam@gmail.com'
+
+maintainer = 'Stefan Nordhausen'
+maintainer_email = 'stefan.nordhausen@immobilienscout24.de'
 
 url = 'https://github.com/drkjam/netaddr/'
 
