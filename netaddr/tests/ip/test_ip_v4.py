@@ -512,3 +512,25 @@ def test_rfc3021_subnets():
     # IPv6 must not be affected
     assert IPNetwork('abcd::/127').broadcast is not None
     assert IPNetwork('abcd::/128').broadcast is not None
+
+
+def test_ipnetwork_change_prefixlen():
+    ip = IPNetwork('192.168.0.0/16')
+    assert ip.prefixlen == 16
+    ip.prefixlen = 8
+    assert ip.prefixlen == 8
+
+    ip = IPNetwork('dead:beef::/16')
+    assert ip.prefixlen == 16
+    ip.prefixlen = 64
+    assert ip.prefixlen == 64
+
+
+def test_ipnetwork_change_netmask():
+    ip = IPNetwork('192.168.0.0/16')
+    ip.netmask = '255.0.0.0'
+    assert ip.prefixlen == 8
+
+    ip = IPNetwork('dead:beef::/16')
+    ip.netmask = 'ffff:ffff:ffff:ffff::'
+    assert ip.prefixlen == 64

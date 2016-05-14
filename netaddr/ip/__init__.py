@@ -1032,6 +1032,19 @@ class IPNetwork(BaseIP, IPListMixin):
         netmask = self._module.max_int ^ self._hostmask_int
         return IPAddress(netmask, self._module.version)
 
+    @netmask.setter
+    def netmask(self, value):
+        """Set the prefixlen using a subnet mask"""
+        ip = IPAddress(value)
+
+        if ip.version != self.version:
+            raise ValueError("IP version mismatch: %s and %s" % (ip, self))
+
+        if not ip.is_netmask():
+            raise ValueError("Invalid subnet mask specified: %s" % str(value))
+
+        self.prefixlen = ip.netmask_bits()
+
     @property
     def _netmask_int(self):
         """Same as self.netmask, but in integer format"""
