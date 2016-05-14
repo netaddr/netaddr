@@ -113,6 +113,17 @@ IPNetwork('192.0.2.1/0')
 >>> ip
 IPNetwork('192.0.2.1/23')
 
+The prefix length can also be changed by specifying a subnet mask:
+
+>>> ip = IPNetwork('192.168.1.0/24')
+>>> ip.netmask = '255.255.0.0'
+>>> ip
+IPNetwork('192.168.1.0/16')
+>>> ip = IPNetwork('fe80::dead:beef/64')
+>>> ip.netmask = 'ffff:ffff::'
+>>> ip
+IPNetwork('fe80::dead:beef/32')
+
 There is also a property that lets you access the *true* CIDR address which removes all host bits from the network address based on the CIDR subnet prefix.
 
 >>> ip.cidr
