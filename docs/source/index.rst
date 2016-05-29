@@ -5,7 +5,7 @@ netaddr 0.7.18 documentation
 .. image:: https://circleci.com/gh/drkjam/netaddr.png?style=shield
     :target: https://circleci.com/gh/drkjam/netaddr
 .. image:: https://readthedocs.org/projects/netaddr/badge/?version=latest
-    :target: https://netaddr.readthedocs.org/en/latest/
+    :target: https://netaddr.readthedocs.io/en/latest/
 .. image:: https://img.shields.io/pypi/dm/netaddr.svg
     :target: https://pypi.python.org/pypi/netaddr
 
