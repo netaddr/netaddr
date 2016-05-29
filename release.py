@@ -56,7 +56,7 @@ license = 'BSD License'
 long_description = """ .. image:: https://circleci.com/gh/drkjam/netaddr.png?style=shield
             :target: https://circleci.com/gh/drkjam/netaddr
         .. image:: https://readthedocs.org/projects/netaddr/badge/?version=latest
-            :target: https://netaddr.readthedocs.org/en/latest/
+            :target: https://netaddr.readthedocs.io/en/latest/
 
         Layer 3 addresses
         -----------------
@@ -82,7 +82,7 @@ long_description = """ .. image:: https://circleci.com/gh/drkjam/netaddr.png?sty
 
         For details on the latest changes and updates, see :-
 
-        https://netaddr.readthedocs.org/en/latest/changes.html
+        https://netaddr.readthedocs.io/en/latest/changes.html
 
         Requirements
         ------------
