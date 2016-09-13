@@ -46,6 +46,14 @@ OUI_METADATA = _path.join(_path.dirname(__file__), 'oui.idx')
 #: OUI index lookup dictionary.
 OUI_INDEX = {}
 
+#: Path to local copy of IEEE OUI36 Registry data file.
+OUI36_REGISTRY = _path.join(_path.dirname(__file__), 'oui36.txt')
+#: Path to netaddr OUI36 index file.
+OUI36_METADATA = _path.join(_path.dirname(__file__), 'oui36.idx')
+
+#: OUI36 index lookup dictionary.
+OUI36_INDEX = {}
+
 #: Path to local copy of IEEE IAB Registry data file.
 IAB_REGISTRY = _path.join(_path.dirname(__file__), 'iab.txt')
 
@@ -248,10 +256,14 @@ class IABIndexParser(Publisher):
 
 
 def create_indices():
-    """Create indices for OUI and IAB file based lookups"""
+    """Create indices for OUI, OUI36 and IAB file based lookups"""
     oui_parser = OUIIndexParser(OUI_REGISTRY)
     oui_parser.attach(FileIndexer(OUI_METADATA))
     oui_parser.parse()
+
+    oui36_parser = OUIIndexParser(OUI36_REGISTRY)
+    oui36_parser.attach(FileIndexer(OUI36_METADATA))
+    oui36_parser.parse()
 
     iab_parser = IABIndexParser(IAB_REGISTRY)
     iab_parser.attach(FileIndexer(IAB_METADATA))
@@ -266,6 +278,15 @@ def load_indices():
             (key, offset, size) = [int(_) for _ in row]
             OUI_INDEX.setdefault(key, [])
             OUI_INDEX[key].append((offset, size))
+    finally:
+        fp.close()
+
+    fp = open(OUI36_METADATA)
+    try:
+        for row in _csv.reader(fp):
+            (key, offset, size) = [int(_) for _ in row]
+            OUI36_INDEX.setdefault(key, [])
+            OUI36_INDEX[key].append((offset, size))
     finally:
         fp.close()
 
