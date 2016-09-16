@@ -84,7 +84,7 @@ def test_ipnetwork_constructor_v6():
 
 
 def test_ipaddress_netmask_v6():
-    assert IPAddress('::').netmask_bits() == 128
+    assert IPAddress('::').netmask_bits() == 0
 
 
 def test_objects_use_slots():

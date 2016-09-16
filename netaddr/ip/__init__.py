@@ -348,6 +348,11 @@ class IPAddress(BaseIP):
         if not self.is_netmask():
             return self._module.width
 
+        # the '0' address (e.g. 0.0.0.0 or 0000::) is a valid netmask with
+        # no bits set.
+        if self._value == 0:
+            return 0
+
         i_val = self._value
         numbits = 0
 

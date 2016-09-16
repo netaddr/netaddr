@@ -403,6 +403,7 @@ def test_ipaddress_netmask_v4():
     assert IPAddress('1.1.1.1').netmask_bits() == 32
     assert IPAddress('255.255.255.254').netmask_bits() == 31
     assert IPAddress('255.255.255.0').netmask_bits() == 24
+    assert IPAddress('0.0.0.0').netmask_bits() == 0
 
 
 def test_ipaddress_hex_format():
