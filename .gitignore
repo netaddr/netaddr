@@ -1,9 +1,8 @@
 *.py[co]
-*.bak
 netaddr/.coverage
 netaddr/tests/coverage/
-netaddr/tests/coverage_report.txt
-netaddr.egg-info/*
+netaddr.egg-info/
+__pycache__/
 *.DS_Store
 build/
 dist/

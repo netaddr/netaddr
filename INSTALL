@@ -1,120 +1,41 @@
-netaddr is available in various packaged and non-packaged forms :
+netaddr is available in various formats :
 
-- source code repository access
-- source release packages (tarball and zip formats)
-- Python eggs
-- Windows install packages
+- source code repository
+- source distribution packages (tarball and zip formats)
+- Python universal wheel packages
 
-Linux distribution specific :
-
-- Ubuntu and Debian (.deb packages)
-- Fedora (.rpm packages)
-
-Please see these Linux projects for availability and installation details.
-
-You can also build your own RPM packages, using bdist_rpm with setup.py
-available in the source tarball.
+Various Linux distributions make it available via their package managers.
 
 ---------------------
 Locating the software
 ---------------------
 
-netaddr is available directly from the public subversion source code 
-repository.
-
-Details on how to check out the source code can be found here :
+The netaddr project is hosted here on github
 
     http://github.com/drkjam/netaddr/
 
-Official milestone releases can be found here :
+----------------------------------------
+Installing from the Python Package Index
+----------------------------------------
 
-    http://github.com/drkjam/netaddr/downloads
+The easiest way to install netaddr is to use pip.
 
------------------------
-Source Release Packages
------------------------
-
-Download the latest release tarball/zip file and extract it to a temporary
-location or check out the source from the code hosting site into a local
-working copy directory.
-
-Run the setup file in the root directory like this::
-
-    python setup.py install
-
-This automatically places the required files in the ``lib/site-packages``
-directory of the Python version you used to run the setup script, may be
-part of a virtualenv or similar.
-
------------
-Python Eggs
------------
-
-You can build and install eggs with netaddr using the ``setup_egg.py``
-file provided in the source distribution.
-
-All the usual commands are supported e.g.::
-
-    python setup_egg.py develop
-    python setup_egg.py bdist_egg
-    ...
-
-This requires that you install distribute or setuptools which is not part of
-the Python standard library.
-
-See the following URL for details :-
-
-    - ``distribute`` - http://guide.python-distribute.org/
-
-    - ``setuptools`` (old) - http://peak.telecommunity.com/DevCenter/setuptools
-
-.. warning:: ``setuptools`` is now very long in the tooth and full of bugs! \
-    Just use distribute, or pip instead.
-
-Download and install the latest easy_install script and run the following
-command ::
-
-    easy_install netaddr
-
-This will go to the Python Package Index and automatically find the 
-appropriate version of netaddr for your Python setup.
-
-Alternatively, you can use pip instead of easy_install.
-
-Just download the latest version of pip from PyPI found here -
+Download and install the latest version from PyPI -
 http://pypi.python.org/pypi/pip and run the following command ::
 
     pip install netaddr
 
-------------------------
-Windows Install Packages
-------------------------
+--------------------------------
+Installing from a source package
+--------------------------------
 
-On Windows, it is usually more convenient to use the binary install packages. 
-Please note that you may want to download a source zip file as well if you
-want local access to the API documentation and unit tests as these are not
-distributed along with the code in the Windows install packages.
+Download the latest release tarball/zip file and extract it to a temporary
+directory or clone the repository into a local working directory.
 
-^^^^^^^^^^^^
-Security Tip
-^^^^^^^^^^^^
+Run the setup file from directory::
 
-.. warning:: while efforts are made to ensure that the Windows executables \
-    produced are virus free, they cannot be guaranteed to always be 100% free of \ 
-    possible nasties. Use them solely at your own risk!
+    python setup.py install
 
-If you are either
-
-a) paranoid, or
-b) properly and correctly security conscious
-
-either run your own virus checking software against the setup executable
-before installing it or just download the .zip file and install netaddr using
-Python's ``setup.py`` script to mitigate any potential problems.
-
------------
-Final Words
------------
-
-Always be sure you verify your downloads against the checksums on the code 
-hosting site's download page!
+This automatically places the required files in the ``lib/site-packages``
+directory of the Python version you used to run the setup script, may
+also be part of a virtualenv or similar environment manager.
