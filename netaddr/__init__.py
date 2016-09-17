@@ -44,3 +44,5 @@ from netaddr.strategy.eui48 import (mac_eui48, mac_unix, mac_unix_expanded,
 
 from netaddr.strategy.eui64 import (eui64_base, eui64_unix, eui64_unix_expanded,
         eui64_cisco, eui64_bare, valid_str as valid_eui64)
+
+from netaddr.contrib.subnet_splitter import SubnetSplitter

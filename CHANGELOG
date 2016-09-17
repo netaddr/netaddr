@@ -1,4 +1,35 @@
 ---------------
+Release: 0.7.19
+---------------
+Date: ? Sep 2016
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.18
+^^^^^^^^^^^^^^^^^^^^
+
+* added a new SubnetSplitter class for those looking to divide up subnets.
+  Thanks alanwill and RyPeck and those on (Stack Overflow discussion).
+
+* removed bundled pytest dependency code for "python setup.py test".
+
+* setup.py now uses setuptools only (no more distutils) and setup_egg.py removed.
+
+* cleaned up INSTALL docs so they accurately reflect current Python packaging.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 133: https://github.com/drkjam/netaddr/issues/133
+    - Splitting a single network into multiple prefixed networks
+
+FIXED Issue 129: https://github.com/drkjam/netaddr/issues/129
+    - fix IPAddress().netmask_bits to return 0 for 0.0.0.0 and [::] addresses
+
+FIXED Issue 117: https://github.com/drkjam/netaddr/issues/117
+    - (python setup.py test) failing with python3 >= 3.5
+
+---------------
 Release: 0.7.18
 ---------------
 Date: 4 Sep 2015
