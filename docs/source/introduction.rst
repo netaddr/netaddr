@@ -53,7 +53,7 @@ This library has comprehensive docstrings and a full set of project
 documentation (including tutorials):
 
 - http://pythonhosted.org/netaddr/
-- http://readthedocs.org/docs/netaddr/en/latest/
+- http://netaddr.readthedocs.io/en/latest/
 
 Tests
 -----

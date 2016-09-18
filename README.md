@@ -5,7 +5,6 @@ A network address manipulation library for Python
 
 [![Circle CI](https://circleci.com/gh/drkjam/netaddr.png?style=shield)](https://circleci.com/gh/drkjam/netaddr) 
 [![Latest Version](https://img.shields.io/pypi/v/netaddr.svg)](https://pypi.python.org/pypi/netaddr)
-[![Documentation Status](https://readthedocs.org/projects/netaddr/badge/?version=latest)](http://netaddr.readthedocs.org/en/latest/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/netaddr.svg)](https://pypi.python.org/pypi/netaddr)
 
 Provides support for:
@@ -26,6 +25,12 @@ Layer 2 addresses
 - representation and manipulation MAC addresses and EUI-64 identifiers
 - looking up IEEE organisational information (OUI, IAB)
 - generating derived IPv6 addresses
+
+
+Documentation
+-------------
+
+Latest documentation https://netaddr.readthedocs.io/en/latest/
 
 Requirements
 ------------

@@ -69,7 +69,7 @@ long_description = """
 
         For details on the latest changes and updates, see :-
 
-        https://netaddr.readthedocs.org/en/latest/changes.html
+        http://netaddr.readthedocs.io/en/latest/changes.html
 
         Requirements
         ------------
