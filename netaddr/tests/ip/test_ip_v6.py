@@ -138,3 +138,22 @@ def test_ipv6_unicast_address_allocation_info():
     assert ip.info.IPv6_unicast[0].description == 'LACNIC'
     assert ip.info.IPv6_unicast[0].whois == 'whois.lacnic.net'
     assert ip.info.IPv6_unicast[0].status == 'ALLOCATED'
+
+
+@pytest.mark.parametrize('input_str, expected', [
+    # RFC 5952 section 4.2.1 -- shorten as much as possible
+    ('2001:db8:0:0:0:0:2:1', '2001:db8::2:1'),
+
+    # RFC 5952 section 4.2.2 -- don't shorten a single 16-bit 0 field
+    ('2001:db8:0:1:1:1:1:1', '2001:db8:0:1:1:1:1:1'),
+
+    # RFC 5952 section 4.2.3 -- the '::' is the longest run of
+    # 16-bit 0 fields, or the first if there are multiple longest runs.
+    ('2001:db8:0:0:1:0:0:1', '2001:db8::1:0:0:1'),
+
+    # RFC 5952 section 4.3 -- 'a-f' must be lowercased
+    ('2001:DB8::1', '2001:db8::1'),
+])
+def test_rfc5952(input_str, expected):
+    addr = IPAddress(input_str)
+    assert str(addr) == expected
