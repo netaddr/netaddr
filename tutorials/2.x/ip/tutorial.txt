@@ -124,7 +124,7 @@ If you want to access information about each of the various IP addresses that fo
 
 For example if you want to see a binary digit representation of each address you can do the following.
 
->>> ip.ip.bits()
+>>> ip.bits()
 '11000000.00000000.00000010.00000001'
 >>> ip.network.bits()
 '11000000.00000000.00000010.00000000'
@@ -145,14 +145,14 @@ IPAddress('::')
 >>> ip = IPNetwork('fe80::dead:beef/64')
 >>> str(ip), ip.prefixlen, ip.version
 ('fe80::dead:beef/64', 64, 6)
->>> int(ip.ip) == 338288524927261089654018896845083623151
+>>> int(ip) == 338288524927261089654018896845083623151
 True
->>> hex(ip.ip)
+>>> hex(ip)
 '0xfe8000000000000000000000deadbeef'
 
 Bit-style output isn't as quite as friendly as hexadecimal for such a long numbers, but here the proof that it works!
 
->>> ip.ip.bits()
+>>> ip.bits()
 '1111111010000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:1101111010101101:1011111011101111'
 
 Here are some networking details for an IPv6 subnet.
