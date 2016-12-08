@@ -26,6 +26,7 @@ packages = [
     'netaddr.ip',
     'netaddr.eui',
     'netaddr.strategy',
+    'netaddr.contrib',
 ]
 
 #   Required by distutils only.

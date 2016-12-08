@@ -17,6 +17,7 @@ include netaddr/core.py
 include netaddr/compat.py
 include netaddr/fbsocket.py
 
+recursive-include netaddr/contrib *.py
 recursive-include netaddr/eui *.py *.txt *.idx
 recursive-include netaddr/ip *.py *.xml
 recursive-include netaddr/strategy *.py
