@@ -1,11 +1,32 @@
+# Python
 *.py[co]
-netaddr/.coverage
-netaddr/tests/coverage/
-netaddr.egg-info/
 __pycache__/
-*.DS_Store
+
+# setuptools
 build/
 dist/
 docs/build/
-.idea/
 tmp/
+
+# editors
+.*.swp
+.idea/
+
+# pytest
+.cache/
+
+# virtualenv
+bin/
+include/
+lib/
+share/
+pip-selfcheck.json
+
+# Unit tests
+JSON-Schema-Test-Suite/
+netaddr/.coverage
+netaddr/tests/coverage/
+netaddr.egg-info/
+
+# OS X directory metadata
+*.DS_Store
