@@ -1,3 +1,4 @@
+import os
 import sys
 import pickle
 import random
@@ -7,6 +8,25 @@ import pytest
 from netaddr import (EUI, mac_unix, mac_unix_expanded, mac_cisco,
     mac_bare, mac_pgsql, eui64_unix, eui64_unix_expanded,
     eui64_cisco, eui64_bare, OUI, IAB, IPAddress)
+from netaddr.eui import ieee
+
+if sys.version_info.major >= 3:
+    from io import StringIO
+else:
+    from cStringIO import StringIO
+
+
+SAMPLE_DIR = os.path.dirname(__file__)
+
+
+def get_sample_oui_index_and_registry(filename):
+    """Helper to return a sample index and registry file for testing."""
+    oui_registry = os.path.join(SAMPLE_DIR, filename)
+    index_file_output = StringIO()
+    ieee.create_oui_index(oui_registry, index_file_output)
+    index_file_input = StringIO(index_file_output.getvalue())
+    index = ieee.populate_index(index_file_input)
+    return index, oui_registry
 
 
 def test_mac_address_properties():
@@ -149,6 +169,21 @@ def test_eui_oui_information():
     assert oui.registration().org == 'Intel Corporate'
 
 
+def test_eui_information_subset_for_entry_with_incorrect_encoding():
+    filename = "sample_incorrect_encoded_oui.txt"
+    index, registry = get_sample_oui_index_and_registry(filename)
+    oui = OUI(9097, index, registry)
+    address = [
+        'Oriental Electronics Bldg., #2, Chuangye Road'
+        '\xc3\u201a\xc2\xa3\xc3\u201a\xc2\xac'
+        'Shangdi Information ''Industry Base,',
+        'Haidian District, Beijing, P.R.China',
+        'Beijing  100085',
+        'CHINA'
+    ]
+    assert oui.registration().address == address
+
+
 def test_oui_constructor():
     oui = OUI(524336)
     assert str(oui) == '08-00-30'
@@ -206,7 +241,6 @@ def test_eui64():
     assert eui.oui == OUI('00-1B-77')
     assert eui.ei == 'FF-FE-49-54-FD'
     assert eui.eui64() == EUI('00-1B-77-FF-FE-49-54-FD')
-
 
 
 def test_mac_to_ipv6_link_local():

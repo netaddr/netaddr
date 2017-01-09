@@ -247,41 +247,67 @@ class IABIndexParser(Publisher):
         self.notify(record)
 
 
-def create_indices():
-    """Create indices for OUI and IAB file based lookups"""
-    oui_parser = OUIIndexParser(OUI_REGISTRY)
-    oui_parser.attach(FileIndexer(OUI_METADATA))
+def create_oui_index(registry_path, out):
+    """Create the OUI index file.
+
+    :param registry_path: The filename to read OUI entries from.
+    :param out: A filename (or file-like object) to write the index to.
+    """
+    oui_parser = OUIIndexParser(registry_path)
+    oui_parser.attach(FileIndexer(out))
     oui_parser.parse()
 
-    iab_parser = IABIndexParser(IAB_REGISTRY)
-    iab_parser.attach(FileIndexer(IAB_METADATA))
+
+def create_iab_index(registry_path, out):
+    """Create the IAB index file.
+
+    :param registry_path: The filename to read OUI entries from.
+    :param out: A filename (or file-like object) to write the index to.
+    """
+    iab_parser = IABIndexParser(registry_path)
+    iab_parser.attach(FileIndexer(out))
     iab_parser.parse()
 
 
-def load_indices():
-    """Load OUI and IAB lookup indices into memory"""
-    fp = open(OUI_METADATA)
+def populate_index(fp, into=None):
+    """Given the specified file-like object, populates the given index.
+
+    :param fp: An open file-like object (such as for OUI or IAB entries).
+    :param into: If specified, loads the index into the specified dictionary.
+
+    :returns: the populated index object.
+    """
+    if into is None:
+        into = {}
+    for row in _csv.reader(fp):
+        (key, offset, size) = [int(_) for _ in row]
+        into.setdefault(key, [])
+        into[key].append((offset, size))
+    return into
+
+
+def load_index_file(filename, into=None):
+    """Load OUI or IAB index into the specified object.
+
+    :param filename: The index filename to read.
+    :param into: If specified, loads the index into the specified dictionary.
+
+    :returns: the populated index object.
+    """
+    if into is None:
+        into = {}
+    fp = open(filename)
     try:
-        for row in _csv.reader(fp):
-            (key, offset, size) = [int(_) for _ in row]
-            OUI_INDEX.setdefault(key, [])
-            OUI_INDEX[key].append((offset, size))
+        into = populate_index(fp, into)
     finally:
         fp.close()
-
-    fp = open(IAB_METADATA)
-    try:
-        for row in _csv.reader(fp):
-            (key, offset, size) = [int(_) for _ in row]
-            IAB_INDEX.setdefault(key, [])
-            IAB_INDEX[key].append((offset, size))
-    finally:
-        fp.close()
-
+    return into
 
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
-    create_indices()
+    create_oui_index(OUI_REGISTRY, OUI_METADATA)
+    create_iab_index(IAB_REGISTRY, IAB_METADATA)
 else:
     #   On module load read indices in memory to enable lookups.
-    load_indices()
+    load_index_file(OUI_METADATA, into=OUI_INDEX)
+    load_index_file(IAB_METADATA, into=IAB_INDEX)
