@@ -33,7 +33,6 @@ Here is how to go about releasing a new version of `netaddr`.
     - `dist/*.whl`
     - `dist/*.zip`
     - `dist/*.gz`
-    - `dist/*.egg`
 
 * Update documentation on PyPI (readthedocs will update itself).
 
