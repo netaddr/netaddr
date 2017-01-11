@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'netaddr'
-copyright = u'2008-2016, David P. D. Moss. All rights reserved'
+copyright = u'Copyright (c) 2008 by David P. D. Moss. All rights reserved.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
