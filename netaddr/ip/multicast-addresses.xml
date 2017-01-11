@@ -3,7 +3,7 @@
 <?oxygen RNGSchema="multicast-addresses.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2015-04-23</updated>
+  <updated>2016-10-20</updated>
   <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
@@ -16,6 +16,8 @@ topology discovery or maintenance protocols, such as gateway discovery
 and group membership reporting.  Multicast routers should not forward
 any multicast datagram with destination addresses in this range,
 regardless of its TTL.</note>
+  
+  
   <registry id="multicast-addresses-1">
     <title>Local Network Control Block (224.0.0.0 - 224.0.0.255  (224.0.0/24))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -43,7 +45,6 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record>
       <addr>224.0.0.3</addr>
       <description>Unassigned</description>
-      <xref type="person" data="Jon_Postel"/>
     </record>
     <record>
       <addr>224.0.0.4</addr>
@@ -81,10 +82,10 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="rfc" data="rfc1723"/>
       <xref type="person" data="Gary_S_Malkin"/>
     </record>
-    <record date="1996-03-01">
+    <record date="1996-03-01" updated="2016-03-21">
       <addr>224.0.0.10</addr>
-      <description>IGRP Routers</description>
-      <xref type="person" data="Dino_Farinacci"/>
+      <description>EIGRP Routers</description>
+      <xref type="rfc" data="rfc7868"/>
     </record>
     <record>
       <addr>224.0.0.11</addr>
@@ -166,7 +167,6 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record>
       <addr>224.0.0.26</addr>
       <description>Unassigned</description>
-      <xref type="person" data="Jon_Postel"/>
     </record>
     <record date="2000-03-01">
       <addr>224.0.0.27</addr>
@@ -307,10 +307,14 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>JSDP</description>
       <xref type="person" data="J._Ryan_Stinnett"/>
     </record>
+    <record date="2016-10-20">
+      <addr>224.0.0.116</addr>
+      <description>Device discovery/config</description>
+      <xref type="person" data="COMTECH_Kft."/>
+    </record>
     <record>
-      <addr>224.0.0.116-224.0.0.250</addr>
+      <addr>224.0.0.117-224.0.0.250</addr>
       <description>Unassigned</description>
-      <xref type="person" data="Jon_Postel"/>
     </record>
     <record date="2000-04-01">
       <addr>224.0.0.251</addr>
@@ -337,9 +341,10 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record>
       <addr>224.0.0.255</addr>
       <description>Unassigned</description>
-      <xref type="person" data="Jon_Postel"/>
     </record>
   </registry>
+
+  
   <registry id="multicast-addresses-2">
     <title>Internetwork Control Block (224.0.1.0 - 224.0.1.255  (224.0.1/24))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -536,7 +541,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record>
       <addr>224.0.1.38</addr>
-      <description>unassigned</description>
+      <description>Unassigned</description>
     </record>
     <record date="1996-03-01">
       <addr>224.0.1.39</addr>
@@ -1100,7 +1105,6 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record>
       <addr>224.0.1.150</addr>
       <description>Unassigned</description>
-      <xref type="person" data="Jon_Postel"/>
     </record>
     <record date="2000-02-01">
       <addr>224.0.1.151</addr>
@@ -1293,6 +1297,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Unassigned</description>
     </record>
   </registry>
+
+  
   <registry id="multicast-addresses-3">
     <title>AD-HOC Block I (224.0.2.0 - 224.0.255.255)</title>
     <xref type="rfc" data="rfc5771"/>
@@ -1336,13 +1342,18 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>rxWARN</description>
       <xref type="person" data="Caleb_Bell"/>
     </record>
+    <record date="2016-10-04">
+      <addr>224.0.2.9</addr>
+      <description>DATV streams</description>
+      <xref type="person" data="Grant_Taylor"/>
+    </record>
     <record>
-      <addr>224.0.2.9-224.0.2.63</addr>
+      <addr>224.0.2.10-224.0.2.63</addr>
       <description>Unassigned</description>
     </record>
-    <record date="1996-04">
+    <record date="1996-04" updated="2015-10-23">
       <addr>224.0.2.64-224.0.2.95</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
       <reviewed>2007-07</reviewed>
     </record>
@@ -1356,9 +1367,9 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>WOZ-Garage</description>
       <xref type="person" data="Douglas_Marquardt"/>
     </record>
-    <record date="1997-02-01">
+    <record date="1997-02-01" updated="2015-10-23">
       <addr>224.0.2.192-224.0.2.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
     <record>
@@ -1376,14 +1387,14 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>CDPD Groups</description>
       <xref type="text">[Bob Brenner]</xref>
     </record>
-    <record date="1998-10-01">
+    <record date="1998-10-01" updated="2015-10-23">
       <addr>224.0.5.128-224.0.5.191</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
-    <record date="2001-08-01">
+    <record date="2001-08-01" updated="2015-10-23">
       <addr>224.0.5.192-224.0.5.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
     <record>
@@ -1399,7 +1410,6 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record>
       <addr>224.0.6.144-224.0.6.150</addr>
       <description>Unassigned</description>
-      <xref type="person" data="IANA"/>
     </record>
     <record date="2014-08-01">
       <addr>224.0.6.151</addr>
@@ -1409,7 +1419,6 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     <record>
       <addr>224.0.6.152-224.0.6.191</addr>
       <description>Unassigned</description>
-      <xref type="person" data="IANA"/>
     </record>
     <record date="2014-09-19">
       <addr>224.0.6.192-224.0.6.255</addr>
@@ -1423,7 +1432,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
     <record date="2011-05-20">
       <addr>224.0.8.0-224.0.8.255</addr>
-      <description>UNASSIGNED</description>
+      <description>Unassigned</description>
     </record>
     <record date="1998-04-01">
       <addr>224.0.9.0-224.0.9.255</addr>
@@ -1455,10 +1464,10 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>NLANR</description>
       <xref type="person" data="Duane_Wessels"/>
     </record>
-    <record date="1997-02-01">
+    <record date="1997-02-01" updated="2015-10-12">
       <addr>224.0.15.0-224.0.15.255</addr>
       <description>Agilent Technologies</description>
-      <xref type="person" data="Ron_van_der_Meulen"/>
+      <xref type="person" data="IP_Admin"/>
     </record>
     <record date="1997-04-01">
       <addr>224.0.16.0-224.0.16.255</addr>
@@ -1495,9 +1504,9 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Cal Multicast</description>
       <xref type="person" data="Ed_Moran"/>
     </record>
-    <record date="1997-10">
+    <record date="1997-10" updated="2015-10-23">
       <addr>224.0.19.96-224.0.19.127</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
       <reviewed>2007-07</reviewed>
     </record>
@@ -1702,9 +1711,9 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Fairview</description>
       <xref type="person" data="Jim_Lyle"/>
     </record>
-    <record date="2006-08-11">
+    <record date="2006-08-11" updated="2015-10-23">
       <addr>224.0.23.52</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2006-11-30">
@@ -1891,8 +1900,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>network metronome</description>
       <xref type="person" data="George_Neville-Neil"/>
     </record>
+    <record date="2016-04-19">
+      <addr>224.0.23.181</addr>
+      <description>polaris-video-transport</description>
+      <xref type="person" data="Geoff_Golder"/>
+    </record>
     <record>
-      <addr>224.0.23.181-224.0.23.191</addr>
+      <addr>224.0.23.182-224.0.23.191</addr>
       <description>Unassigned</description>
     </record>
     <record date="2008-08-12">
@@ -1930,8 +1944,13 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>M2S</description>
       <xref type="person" data="Itamar_Gilad"/>
     </record>
+    <record date="2016-09-29">
+      <addr>224.0.36.0-224.0.36.255</addr>
+      <description>DigiPlay</description>
+      <xref type="person" data="Robert_Taylor"/>
+    </record>
     <record>
-      <addr>224.0.36.0-224.0.38.255</addr>
+      <addr>224.0.37.0-224.0.38.255</addr>
       <description>Unassigned</description>
     </record>
     <record date="2007-09-12">
@@ -1939,9 +1958,9 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>CDAS</description>
       <xref type="person" data="Oyvind_H_Olsen"/>
     </record>
-    <record date="2007-11-28">
+    <record date="2007-11-28" updated="2015-10-23">
       <addr>224.0.41.0-224.0.41.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
       <reviewed>2011-02-15</reviewed>
     </record>
@@ -1971,9 +1990,9 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Get - BCN</description>
       <xref type="person" data="Arne_Hvidsten"/>
     </record>
-    <record date="2008-08-27">
+    <record date="2008-08-27" updated="2015-10-23">
       <addr>224.0.58.0-224.0.61.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2008-12-24">
@@ -1992,14 +2011,14 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="person" data="Euronext_Admin"/>
       <reviewed>2014-11-24</reviewed>
     </record>
-    <record date="2009-05-12">
+    <record date="2009-05-12" updated="2016-05-06">
       <addr>224.0.68.0-224.0.69.255</addr>
       <description>ISE</description>
-      <xref type="person" data="Fabrice_Albert"/>
+      <xref type="person" data="ISE-Networks"/>
     </record>
-    <record date="2009-06-16">
+    <record date="2009-06-16" updated="2015-10-23">
       <addr>224.0.70.0-224.0.71.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
       <reviewed>2011-03-01</reviewed>
     </record>
@@ -2014,20 +2033,20 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Direct Edge</description>
       <xref type="person" data="Javier_Landin"/>
     </record>
-    <record date="2010-01-22">
+    <record date="2010-01-22" updated="2016-05-06">
       <addr>224.0.75.0-224.0.75.255</addr>
       <description>ISE</description>
-      <xref type="person" data="Fabrice_Albert"/>
+      <xref type="person" data="ISE-Networks"/>
     </record>
-    <record date="2010-02-26">
+    <record date="2010-02-26" updated="2015-10-23">
       <addr>224.0.76.0-224.0.76.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
       <reviewed>2011-03-01</reviewed>
     </record>
-    <record date="2010-02-26">
+    <record date="2010-02-26" updated="2015-10-23">
       <addr>224.0.77.0-224.0.77.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2010-03-12">
@@ -2035,24 +2054,24 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>ALCOM-IPTV</description>
       <xref type="person" data="Jan_Erik_Eriksson"/>
     </record>
-    <record date="2010-08-24">
+    <record date="2010-08-24" updated="2016-05-06">
       <addr>224.0.79.0-224.0.81.255</addr>
       <description>ISE</description>
-      <xref type="person" data="Fabrice_Albert"/>
+      <xref type="person" data="ISE-Networks"/>
     </record>
     <record date="2011-01-31">
       <addr>224.0.82.0-224.0.85.255</addr>
       <description>BATS Trading</description>
       <xref type="person" data="Tim_Gorsline"/>
     </record>
-    <record date="2011-02-10">
+    <record date="2011-02-10" updated="2015-10-23">
       <addr>224.0.86.0-224.0.101.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
-    <record date="2011-04-13">
+    <record date="2011-04-13" updated="2015-10-23">
       <addr>224.0.102.0-224.0.102.127</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2014-06-12">
@@ -2092,7 +2111,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Zaklina_Petkovic</description>
       <xref type="person" data="David_Brett"/>
     </record>
-    <record date="2011-10-25"> 
+    <record date="2011-10-25" updated="2014-09-05"> 
       <addr>224.0.111.0-224.0.111.255</addr>
       <description>VoleraDataFeed</description>
       <xref type="person" data="Gerald_Hanweck"/>
@@ -2118,10 +2137,10 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Ido Rosen</description>
       <xref type="person" data="Ido_Rosen"/>
     </record>
-    <record date="2012-07-12">
+    <record date="2012-07-12" updated="2016-05-06">
       <addr>224.0.117.0-224.0.119.255</addr>
       <description>ISE</description>
-      <xref type="person" data="Fabrice_Albert"/>
+      <xref type="person" data="ISE-Networks"/>
     </record>
     <record date="2013-01-15">
       <addr>224.0.120.0-224.0.120.255</addr>
@@ -2174,8 +2193,14 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Instinet</description>
       <xref type="person" data="Sam_Birru"/>
     </record>
+    <record date="2015-06-30">
+      <addr>224.0.141.0-224.0.141.255</addr>
+      <description>MIAX-2</description>
+      <xref type="person" data="Ruben_Hernandez"/>
+    </record>
     <record>
-      <addr>224.0.141.0-224.0.143.255</addr>
+      <addr>224.0.142.0-224.0.143.255</addr>
+      
       <description>Unassigned</description>
     </record>
     
@@ -2184,8 +2209,29 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>VZ-Multicast-Public</description>
       <xref type="person" data="Stephen_Ray_Middleton"/>
     </record>
+    <record date="2016-04-19">
+      <addr>224.0.152.0-224.0.152.255</addr>
+      <description>cse-md</description>
+      <xref type="person" data="David_Brett_2"/>
+    </record>
+    <record date="2016-05-24">
+      <addr>224.0.153.0-224.0.156.255</addr>
+      <description>Get - BCN</description>
+      <xref type="person" data="Arne_Hvidsten"/>
+    </record>
     <record>
-      <addr>224.0.152.0-224.0.249.255</addr>
+      <addr>224.0.157.0-224.0.159.255</addr>
+      
+      <description>Unassigned</description>
+    </record>
+    
+    <record date="2016-07-07">
+      <addr>224.0.160.0-224.0.165.255</addr>
+      <description>Deutsche Boerse</description>
+      <xref type="person" data="Bernd_Uphoff"/>
+    </record>
+    <record>
+      <addr>224.0.166.0-224.0.249.255</addr>
       <description>Unassigned</description>
     </record>
     
@@ -2221,6 +2267,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
   </registry>
   
+  
   <registry id="multicast-addresses-4">
     <title>RESERVED (224.1.0.0-224.1.255.255 (224.1/16))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2240,9 +2287,9 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>Reserved</description>
       <xref type="person" data="IANA"/>
     </record>
-    <record date="2006-02-17">
+    <record date="2006-02-17" updated="2015-10-23">
       <addr>224.1.2.0-224.1.2.255</addr>
-      <description>NYSE Euronext</description>
+      <description>Intercontinental Exchange, Inc.</description>
       <xref type="person" data="RIR_Admin"/>
     </record>
     <record date="2006-05-22">
@@ -2256,6 +2303,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="person" data="IANA"/>
     </record>
   </registry>
+  
   
   <registry id="multicast-addresses-5">
     <title>SDP/SAP Block (224.2.0.0-224.2.255.255 (224.2/16))</title>
@@ -2281,6 +2329,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="person" data="Steve_Casner"/>
     </record>
   </registry>
+  
   
   <registry id="multicast-addresses-6">
     <title>AD-HOC Block II (224.3.0.0-224.4.255.255 (224.3/16, 224.4/16))</title>
@@ -2326,10 +2375,10 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <description>CBOE Holdings</description>
       <xref type="person" data="John_Rittner"/>
     </record>
-    <record date="2012-04-11">
+    <record date="2012-04-11" updated="2016-05-06">
       <addr>224.4.8.0-224.4.9.255</addr>
       <description>ISE</description>
-      <xref type="person" data="Fabrice_Albert"/>
+      <xref type="person" data="ISE-Networks"/>
     </record>
     <record date="2012-04-11">
       <addr>224.4.10.0-224.4.13.255</addr>
@@ -2343,6 +2392,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
     </record>
   </registry>
   
+  
   <registry id="multicast-addresses-7">
   <title>RESERVED (224.5.0.0-224.251.255.255 (251 /16s))</title>
   <xref type="rfc" data="rfc5771"/>
@@ -2352,6 +2402,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
   <xref type="person" data="IANA"/>
   </record>
   </registry>
+  
   
   <registry id="multicast-addresses-8">
     <title>DIS Transient Groups 224.252.0.0-224.255.255.255 (224.252/14))</title>
@@ -2363,6 +2414,8 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
       <xref type="rfc" data="rfc2365"/>
     </record>
  </registry>
+
+  
   <registry id="multicast-addresses-9">
     <title>RESERVED (225.0.0.0-231.255.255.255 (7 /8s))</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2372,6 +2425,7 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.</note>
        <xref type="person" data="IANA"/>
     </record>
   </registry>
+  
   
   <registry id="multicast-addresses-10">
     <title>Source-Specific Multicast Block (232.0.0.0-232.255.255.255 (232/8))</title>
@@ -2395,6 +2449,7 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
     </record>
   </registry>
   
+  
  <registry id="glop">
     <title>GLOP Block</title>
     <xref type="rfc" data="rfc3180"/>
@@ -2404,6 +2459,7 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
       <xref type="rfc" data="rfc3180"/>
     </record>
   </registry>
+  
   
   <registry id="multicast-addresses-11">
     <title>AD-HOC Block III (233.252.0.0-233.255.255.255 (233.252/14))</title>
@@ -2425,7 +2481,6 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
     <record>
       <addr>233.252.1.32-233.252.1.255</addr>
       <description>Unassigned</description>
-      <xref type="person" data="IANA"/>
     </record>
     <record date="2010-08-12">
       <addr>233.252.2.0-233.252.7.255</addr>
@@ -2442,10 +2497,14 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
       <description>blizznet-tv-services</description>
       <xref type="person" data="Paul_Wallner"/>
     </record>
+    <record date="2016-09-27">
+      <addr>233.252.14.0-233.252.17.255</addr>
+      <description>BVMF_MKT_DATA_2</description>
+      <xref type="person" data="Guilherme_Longanezi"/>
+    </record>
     <record>
-      <addr>233.252.124.0-233.255.255.255</addr>
+      <addr>233.252.18.0-233.255.255.255</addr>
       <description>Unassigned</description>
-      <xref type="person" data="IANA"/>
     </record>
   </registry>
   
@@ -2459,6 +2518,7 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
     </record>
   </registry>
 
+  
   <registry id="multicast-addresses-12">
     <title>Scoped Multicast Ranges</title>
     <xref type="rfc" data="rfc5771"/>
@@ -2474,6 +2534,7 @@ allocated by hosts when needed <xref type="rfc" data="rfc4607"/></note>
       <xref type="rfc" data="rfc2365"/>
     </record>
   </registry>
+  
   
   <registry id="multicast-addresses-13">
     <title>Relative Addresses used with Scoped Multicast Addresses</title>
@@ -2562,6 +2623,7 @@ low-order bits of the IP Multicast address are placed in the low-order
       <description>Reserved - To be assigned by the IANA</description>
     </record>
   </registry>
+
   <people>
     <person id="Ad_C_Spelt">
       <name>Ad C. Spelt</name>
@@ -2655,7 +2717,7 @@ low-order bits of the IP Multicast address are placed in the low-order
     <person id="Arne_Hvidsten">
       <name>Arne Hvidsten</name>
       <uri>mailto:arne.hvidsten&amp;get.no</uri>
-      <updated>2008-08-20</updated>
+      <updated>2016-05-24</updated>
     </person>
     <person id="Arnoud_Zwemmer">
       <name>Arnoud Zwemmer</name>
@@ -2666,6 +2728,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Asad Gilani</name>
       <uri>mailto:agilani&amp;nymex.com</uri>
       <updated>1997-07-01</updated>
+    </person>
+    <person id="Bernd_Uphoff">
+      <name>Bernd Uphoff</name>
+      <uri>mailto:bernd.uphoff&amp;deutsche-boerse.com</uri>
+      <updated>2016-07-07</updated>
     </person>
     <person id="Bert_van_Willigen">
       <name>Bert van Willigen</name>
@@ -2833,6 +2900,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:cfc&amp;indigo-avs.com</uri>
       <updated>2000-05-01</updated>
     </person>
+    <person id="COMTECH_Kft.">
+      <name>COMTECH Kft.</name>
+      <uri>mailto:dev&amp;comtech.co.hu</uri>
+      <updated>2016-10-20</updated>
+    </person>
     <person id="Craig_Dowell">
       <name>Craig Dowell</name>
       <uri>mailto:cdowell&amp;quicinc.com</uri>
@@ -2885,6 +2957,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>David Brett</name>
       <uri>mailto:david.brett&amp;alpha-group.ca</uri>
       <updated>2011-10-25</updated>
+    </person>
+    <person id="David_Brett_2">
+      <name>David Brett</name>
+      <uri>mailto:david.brett&amp;thecse.com</uri>
+      <updated>2016-04-19</updated>
     </person>
     <person id="David_Meyer">
       <name>David Meyer</name>
@@ -2970,11 +3047,6 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:evan&amp;acc.com</uri>
       <updated>1998-06-01</updated>
     </person>
-    <person id="Fabrice_Albert">
-      <name>Fabrice Albert</name>
-      <uri>mailto:falbert&amp;ise.com</uri>
-      <updated>2012-07-12</updated>
-    </person>
     <person id="Florian_Weimer">
       <name>Florian Weimer</name>
       <uri>mailto:fweimer&amp;redhat.com</uri>
@@ -3004,6 +3076,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:MarshM&amp;diebold.com</uri>
       <updated>1998-11-01</updated>
     </person>
+    <person id="Geoff_Golder">
+      <name>Geoff Golder</name>
+      <uri>mailto:geoffgolder&amp;gmail.com</uri>
+      <updated>2016-04-19</updated>
+    </person>
     <person id="Geoff_Mendal">
       <name>Geoff Mendal</name>
       <uri>mailto:mendal&amp;talarian.com</uri>
@@ -3019,6 +3096,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:jhanweck&amp;hanweckassoc.com</uri>
       <updated>2014-09-05</updated>
     </person>
+    <person id="Grant_Taylor">
+      <name>Grant Taylor</name>
+      <uri>mailto:grantwtt&amp;gmail.com</uri>
+      <updated>2016-10-04</updated>
+    </person>
     <person id="Greig_Saunders">
       <name>Greig Saunders</name>
       <uri>mailto:gsaunder&amp;londonstockexchange.com</uri>
@@ -3028,6 +3110,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Guido Petronio</name>
       <uri>mailto:guido.petronio&amp;moneyline.com</uri>
       <updated>2004-01-01</updated>
+    </person>
+    <person id="Guilherme_Longanezi">
+      <name>Guilherme Longanezi</name>
+      <uri>mailto:glonganezi&amp;bvmf.com.br</uri>
+      <updated>2016-09-27</updated>
     </person>
     <person id="Guy_Whitehouse">
       <name>Guy Whitehouse</name>
@@ -3081,6 +3168,16 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Ido Rosen</name>
       <uri>mailto:iana&amp;idorosen.com</uri>
       <updated>2012-06-19</updated>
+    </person>
+    <person id="IP_Admin">
+      <name>IP Admin</name>
+      <uri>mailto:ipaddr&amp;agilent.com</uri>
+      <updated>2015-10-12</updated>
+    </person>
+    <person id="ISE-Networks">
+      <name>ISE-Networks</name>
+      <uri>mailto:isenetworks&amp;ise.com</uri>
+      <updated>2016-05-06</updated>
     </person>
     <person id="Ishan_Wu">
       <name>Ishan Wu</name>
@@ -3566,7 +3663,7 @@ low-order bits of the IP Multicast address are placed in the low-order
     <person id="RIR_Admin">
       <name>RIR Admin</name>
       <uri>mailto:riradmin&amp;nyx.com</uri>
-      <updated>2013-10-29</updated>
+      <updated>2015-10-23</updated>
     </person>
     <person id="Rob_Janssen">
       <name>Rob Janssen</name>
@@ -3588,20 +3685,20 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:sliwinre&amp;mail1st.com</uri>
       <updated>2000-02-01</updated>
     </person>
+    <person id="Robert_Taylor">
+      <name>Robert Taylor</name>
+      <uri>mailto:rtaylor&amp;digicelgroup.com</uri>
+      <updated>2016-09-29</updated>
+    </person>
     <person id="Roberto_Costa_Simoes">
       <name>Roberto Costa Simoes</name>
       <uri>mailto:rcosta&amp;bvmf.com.br</uri>
       <updated>2010-08-18</updated>
     </person>
-    <person id="Ron_van_der_Meulen">
-      <name>Ron van der Meulen</name>
-      <uri>mailto:ron_vandermeulen&amp;agilent.com</uri>
-      <updated>1997-02-01</updated>
-    </person>
     <person id="Ruben_Hernandez">
       <name>Ruben Hernandez</name>
       <uri>mailto:rhernandez&amp;miami-holdings.com</uri>
-      <updated>2011-06-06</updated>
+      <updated>2015-06-30</updated>
     </person>
     <person id="Ryon_Coleman">
       <name>Ryon Coleman</name>

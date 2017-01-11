@@ -4,9 +4,10 @@
 <registry xmlns="http://www.iana.org/assignments" id="ipv6-unicast-address-assignments">
   <title>IPv6 Global Unicast Address Assignments</title>
   <category>Internet Protocol version 6 (IPv6) Global Unicast Allocations</category>
-  <updated>2015-08-10</updated>
+  <updated>2017-01-04</updated>
   <xref type="rfc" data="rfc7249"/>
-  <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
+  <registration_rule>Allocations to RIRs are made in line with the Global Policy published at 
+<xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
 All other assignments require IETF Review.</registration_rule>
   <description>The allocation of Internet Protocol version 6 (IPv6) unicast address space is listed
 here. References to the various other registries detailing the use of the IPv6 address
@@ -21,12 +22,18 @@ table below is reserved by IANA for future allocation.</note>
     <status>ALLOCATED</status>
     <notes>2001:0000::/23 is reserved for IETF Protocol Assignments <xref type="rfc" data="rfc2928"/>.
 2001:0000::/32 is reserved for TEREDO <xref type="rfc" data="rfc4380"/>.
-2001:0002::/48 is reserved for Benchmarking <xref type="rfc" data="rfc5180"/>.
-2001:10::/28 is reserved for ORCHID <xref type="rfc" data="rfc4843"/>. 
+      2001:1::1/128 is reserved for Port Control Protocol Anycast <xref type="rfc" data="rfc7723"/>.
+2001:2::/48 is reserved for Benchmarking <xref type="rfc" data="rfc5180"/>.
+2001:3::/32 is reserved for AMT <xref type="rfc" data="rfc7450"/>.
+2001:4:112::/48 is reserved for AS112-v6 <xref type="rfc" data="rfc7535"/>.
+2001:5::/32 is reserved for EID Space for LISP <xref type="rfc" data="rfc7954"/>.
+2001:10::/28 is deprecated (previously ORCHID) <xref type="rfc" data="rfc4843"/>. 
+2001:20::/28 is reserved for ORCHIDv2 <xref type="rfc" data="rfc7343"/>.
+2001:db8::/32 is reserved for Documentation <xref type="rfc" data="rfc3849"/>.
 For complete registration details, see <xref type="registry" data="iana-ipv6-special-registry"/>.</notes>
   </record>
   <record date="1999-07-01">
-    <prefix>2001:0000::/23</prefix>
+    <prefix>2001:0200::/23</prefix>
     <description>APNIC</description>
     <whois>whois.apnic.net</whois>
     <status>ALLOCATED</status>
