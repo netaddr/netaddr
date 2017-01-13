@@ -65,6 +65,11 @@ long_description = """
         - looking up IEEE organisational information (OUI, IAB)
         - generating derived IPv6 addresses
 
+        Documentation
+        -------------
+
+        http://netaddr.readthedocs.io/
+
         Changes
         -------
 
@@ -75,7 +80,7 @@ long_description = """
         Requirements
         ------------
 
-        Supports Python version 2.5 through 3.5
+        Supports Python versions 2.5 through 3.6
 
         Share and enjoy!
 """
