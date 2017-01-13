@@ -19,6 +19,8 @@ if _sys.version_info[0] == 3:
 
     _str_type = str
 
+    _bytes_type = lambda x: bytes(x, 'UTF-8')
+
     _is_str = lambda x: isinstance(x, (str, type(''.encode())))
 
     _is_int = lambda x: isinstance(x, int)
@@ -66,6 +68,8 @@ elif _sys.version_info[0:2] > [2, 3]:
     _int_type = (int, long)
 
     _str_type = basestring
+
+    _bytes_type = str
 
     _is_str = lambda x: isinstance(x, basestring)
 

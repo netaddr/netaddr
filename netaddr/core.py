@@ -204,22 +204,3 @@ class DictDotLookup(object):
 
     def __repr__(self):
         return _pprint.pformat(self.__dict__)
-
-
-def dos2unix(filename):
-    """
-    Replace DOS line endings (CRLF) with UNIX line endings (LF) in file.
-
-    """
-    fh = open(filename, "rb")
-    data = fh.read()
-    fh.close()
-
-    if '\0' in data:
-        raise ValueError('file contains binary data: %s!' % filename)
-
-    newdata = data.replace("\r\n".encode(), "\n".encode())
-    if newdata != data:
-        f = open(filename, "wb")
-        f.write(newdata)
-        f.close()

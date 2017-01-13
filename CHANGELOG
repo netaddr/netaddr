@@ -16,6 +16,9 @@ Changes since 0.7.18
 
 * cleaned up INSTALL docs so they accurately reflect current Python packaging.
 
+* fixed broken parsing, generating and reading of IEEE index files when switching
+  between Python 2.x and 3.x.
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

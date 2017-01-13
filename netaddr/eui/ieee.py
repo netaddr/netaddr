@@ -35,22 +35,23 @@ More details can be found at the following URLs :-
 import os.path as _path
 import csv as _csv
 
+from netaddr.compat import _bytes_type
 from netaddr.core import Subscriber, Publisher
 
 
 #: Path to local copy of IEEE OUI Registry data file.
-OUI_REGISTRY = _path.join(_path.dirname(__file__), 'oui.txt')
+OUI_REGISTRY_PATH = _path.join(_path.dirname(__file__), 'oui.txt')
 #: Path to netaddr OUI index file.
-OUI_METADATA = _path.join(_path.dirname(__file__), 'oui.idx')
+OUI_INDEX_PATH = _path.join(_path.dirname(__file__), 'oui.idx')
 
 #: OUI index lookup dictionary.
 OUI_INDEX = {}
 
 #: Path to local copy of IEEE IAB Registry data file.
-IAB_REGISTRY = _path.join(_path.dirname(__file__), 'iab.txt')
+IAB_REGISTRY_PATH = _path.join(_path.dirname(__file__), 'iab.txt')
 
 #: Path to netaddr IAB index file.
-IAB_METADATA = _path.join(_path.dirname(__file__), 'iab.idx')
+IAB_INDEX_PATH = _path.join(_path.dirname(__file__), 'iab.idx')
 
 #: IAB index lookup dictionary.
 IAB_INDEX = {}
@@ -118,7 +119,7 @@ class OUIIndexParser(Publisher):
         if hasattr(ieee_file, 'readline') and hasattr(ieee_file, 'tell'):
             self.fh = ieee_file
         else:
-            self.fh = open(ieee_file)
+            self.fh = open(ieee_file, 'rb')
 
     def parse(self):
         """
@@ -129,20 +130,24 @@ class OUIIndexParser(Publisher):
         record = None
         size = 0
 
+        marker = _bytes_type('(hex)')
+        hyphen = _bytes_type('-')
+        empty_string = _bytes_type('')
+
         while True:
-            line = self.fh.readline() # unbuffered to obtain correct offsets
+            line = self.fh.readline()
 
             if not line:
                 break   # EOF, we're done
 
-            if skip_header and '(hex)' in line:
+            if skip_header and marker in line:
                 skip_header = False
 
             if skip_header:
                 #   ignoring header section
                 continue
 
-            if '(hex)' in line:
+            if marker in line:
                 #   record start
                 if record is not None:
                     #   a complete record.
@@ -152,7 +157,7 @@ class OUIIndexParser(Publisher):
                 size = len(line)
                 offset = (self.fh.tell() - len(line))
                 oui = line.split()[0]
-                index = int(oui.replace('-', ''), 16)
+                index = int(oui.replace(hyphen, empty_string), 16)
                 record = [index, offset]
             else:
                 #   within record
@@ -197,7 +202,7 @@ class IABIndexParser(Publisher):
         if hasattr(ieee_file, 'readline') and hasattr(ieee_file, 'tell'):
             self.fh = ieee_file
         else:
-            self.fh = open(ieee_file)
+            self.fh = open(ieee_file, 'rb')
 
     def parse(self):
         """
@@ -207,20 +212,26 @@ class IABIndexParser(Publisher):
         skip_header = True
         record = None
         size = 0
+
+        hex_marker = _bytes_type('(hex)')
+        base16_marker = _bytes_type('(base 16)')
+        hyphen = _bytes_type('-')
+        empty_string = _bytes_type('')
+
         while True:
-            line = self.fh.readline()   # unbuffered
+            line = self.fh.readline()
 
             if not line:
                 break   # EOF, we're done
 
-            if skip_header and '(hex)' in line:
+            if skip_header and hex_marker in line:
                 skip_header = False
 
             if skip_header:
                 #   ignoring header section
                 continue
 
-            if '(hex)' in line:
+            if hex_marker in line:
                 #   record start
                 if record is not None:
                     record.append(size)
@@ -231,12 +242,12 @@ class IABIndexParser(Publisher):
                 index = iab_prefix
                 record = [index, offset]
                 size = len(line)
-            elif '(base 16)' in line:
+            elif base16_marker in line:
                 #   within record
                 size += len(line)
-                prefix = record[0].replace('-', '')
+                prefix = record[0].replace(hyphen, empty_string)
                 suffix = line.split()[0]
-                suffix = suffix.split('-')[0]
+                suffix = suffix.split(hyphen)[0]
                 record[0] = (int(prefix + suffix, 16)) >> 12
             else:
                 #   within record
@@ -247,36 +258,35 @@ class IABIndexParser(Publisher):
         self.notify(record)
 
 
-def create_indices():
-    """Create indices for OUI and IAB file based lookups"""
-    oui_parser = OUIIndexParser(OUI_REGISTRY)
-    oui_parser.attach(FileIndexer(OUI_METADATA))
+def create_index_from_registry(registry_path, index_path, parser):
+    """Generate an index files from the IEEE registry file."""
+    oui_parser = parser(registry_path)
+    oui_parser.attach(FileIndexer(index_path))
     oui_parser.parse()
 
-    iab_parser = IABIndexParser(IAB_REGISTRY)
-    iab_parser.attach(FileIndexer(IAB_METADATA))
-    iab_parser.parse()
+
+def create_indices():
+    """Create indices for OUI and IAB file based lookups"""
+    create_index_from_registry(OUI_REGISTRY_PATH, OUI_INDEX_PATH, OUIIndexParser)
+    create_index_from_registry(IAB_REGISTRY_PATH, IAB_INDEX_PATH, IABIndexParser)
+
+
+def load_index(index, index_path):
+    """Load index from file into index data structure."""
+    fp = open(index_path, 'rb')
+    try:
+        for row in _csv.reader([x.decode('UTF-8') for x in fp]):
+            (key, offset, size) = [int(_) for _ in row]
+            index.setdefault(key, [])
+            index[key].append((offset, size))
+    finally:
+        fp.close()
 
 
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
-    fp = open(OUI_METADATA)
-    try:
-        for row in _csv.reader(fp):
-            (key, offset, size) = [int(_) for _ in row]
-            OUI_INDEX.setdefault(key, [])
-            OUI_INDEX[key].append((offset, size))
-    finally:
-        fp.close()
-
-    fp = open(IAB_METADATA)
-    try:
-        for row in _csv.reader(fp):
-            (key, offset, size) = [int(_) for _ in row]
-            IAB_INDEX.setdefault(key, [])
-            IAB_INDEX[key].append((offset, size))
-    finally:
-        fp.close()
+    load_index(OUI_INDEX, OUI_INDEX_PATH)
+    load_index(IAB_INDEX, IAB_INDEX_PATH)
 
 
 if __name__ == '__main__':

@@ -91,10 +91,10 @@ class OUI(BaseIdentifier):
 
         #   Discover offsets.
         if self._value in ieee.OUI_INDEX:
-            fh = open(ieee.OUI_REGISTRY)
+            fh = open(ieee.OUI_REGISTRY_PATH, 'rb')
             for (offset, size) in ieee.OUI_INDEX[self._value]:
                 fh.seek(offset)
-                data = fh.read(size)
+                data = fh.read(size).decode('UTF-8')
                 self._parse_data(data, offset, size)
             fh.close()
         else:
@@ -256,12 +256,12 @@ class IAB(BaseIdentifier):
 
         #   Discover offsets.
         if self._value in ieee.IAB_INDEX:
-            fh = open(ieee.IAB_REGISTRY)
+            fh = open(ieee.IAB_REGISTRY_PATH, 'rb')
             (offset, size) = ieee.IAB_INDEX[self._value][0]
             self.record['offset'] = offset
             self.record['size'] = size
             fh.seek(offset)
-            data = fh.read(size)
+            data = fh.read(size).decode('UTF-8')
             self._parse_data(data, offset, size)
             fh.close()
         else:
