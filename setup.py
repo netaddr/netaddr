@@ -162,10 +162,8 @@ def main():
         sys.stdout.write("To install, run 'python setup.py install'\n\n")
 
     setup_options = dict(
-        author='David P. D. Moss',
+        author='David P. D. Moss, Stefan Nordhausen et al',
         author_email='drkjam@gmail.com',
-        # maintainer='Stefan Nordhausen',
-        # maintainer_email='stefan.nordhausen@immobilienscout24.de',
         classifiers=classifiers,
         description='A network address manipulation library for Python',
         download_url='https://pypi.python.org/pypi/netaddr/',
