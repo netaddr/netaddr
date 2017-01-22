@@ -1274,7 +1274,7 @@ class IPNetwork(BaseIP, IPListMixin):
         i = 0
         while(i < count):
             subnet = self.__class__('%s/%d' % (base_subnet, prefixlen),
-                self._module.version)
+                False, self._module.version)
             subnet.value += (subnet.size * i)
             subnet.prefixlen = prefixlen
             i += 1
