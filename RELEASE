@@ -8,7 +8,7 @@ Here is how to go about releasing a new version of `netaddr`.
 
 * Run the tests under Python 2.7.x and Python 3.4.x at a minimum, like so
 
-    `python setup.py test`
+    `make test`
 
 * Update the CHANGELOG with details of all changes since the last release.
   Ensure that all references to various tickets and merge requests are included.
@@ -33,7 +33,6 @@ Here is how to go about releasing a new version of `netaddr`.
     - `dist/*.whl`
     - `dist/*.zip`
     - `dist/*.gz`
-    - `dist/*.egg`
 
 * Update documentation on PyPI (readthedocs will update itself).
 

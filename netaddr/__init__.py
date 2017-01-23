@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2016, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -7,7 +7,7 @@
 
 #: Version info (major, minor, maintenance, status)
 VERSION = (0, 7, 19)
-STATUS = '-dev'
+STATUS = ''
 __version__ = '%d.%d.%d' % VERSION[0:3] + STATUS
 
 import sys as _sys

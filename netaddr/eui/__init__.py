@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2016, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -117,10 +117,10 @@ class OUI(BaseIdentifier):
 
         #   Discover offsets.
         if self._value in oui_index:
-            fh = open(oui_registry)
+            fh = open(oui_registry, 'rb')
             for (offset, size) in oui_index[self._value]:
                 fh.seek(offset)
-                data = fh.read(size)
+                data = fh.read(size).decode('UTF-8')
                 self._parse_data(data, offset, size)
             fh.close()
         else:
@@ -282,12 +282,12 @@ class IAB(BaseIdentifier):
 
         #   Discover offsets.
         if self._value in ieee.IAB_INDEX:
-            fh = open(ieee.IAB_REGISTRY)
+            fh = open(ieee.IAB_REGISTRY_PATH, 'rb')
             (offset, size) = ieee.IAB_INDEX[self._value][0]
             self.record['offset'] = offset
             self.record['size'] = size
             fh.seek(offset)
-            data = fh.read(size)
+            data = fh.read(size).decode('UTF-8')
             self._parse_data(data, offset, size)
             fh.close()
         else:

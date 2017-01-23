@@ -17,7 +17,7 @@ SAMPLE_DIR = os.path.dirname(__file__)
 def test_oui_parser():
     from io import StringIO
     outfile = StringIO()
-    with open(os.path.join(SAMPLE_DIR, 'sample_oui.txt')) as infile:
+    with open(os.path.join(SAMPLE_DIR, 'sample_oui.txt'), 'rb') as infile:
         iab_parser = OUIIndexParser(infile)
         iab_parser.attach(FileIndexer(outfile))
         iab_parser.parse()
@@ -44,7 +44,7 @@ def test_oui_parser_handles_incorrect_encoding():
 def test_iab_parser():
     from io import StringIO
     outfile = StringIO()
-    with open(os.path.join(SAMPLE_DIR, 'sample_iab.txt')) as infile:
+    with open(os.path.join(SAMPLE_DIR, 'sample_iab.txt'), 'rb') as infile:
         iab_parser = IABIndexParser(infile)
         iab_parser.attach(FileIndexer(outfile))
         iab_parser.parse()

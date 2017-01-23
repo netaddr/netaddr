@@ -1,3 +1,8 @@
+#-----------------------------------------------------------------------------
+#   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
+#
+#   Released under the BSD license. See the LICENSE file for details.
+#-----------------------------------------------------------------------------
 """
 The netaddr.contrib namespace for non-core code contributed by users.
 

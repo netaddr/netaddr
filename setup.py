@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#   Copyright (c) 2008-2016, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 """
@@ -65,6 +65,11 @@ long_description = """
         - looking up IEEE organisational information (OUI, IAB)
         - generating derived IPv6 addresses
 
+        Documentation
+        -------------
+
+        http://netaddr.readthedocs.io/
+
         Changes
         -------
 
@@ -75,7 +80,7 @@ long_description = """
         Requirements
         ------------
 
-        Supports Python version 2.5 through 3.5
+        Supports Python versions 2.5 through 3.6
 
         Share and enjoy!
 """
@@ -107,6 +112,7 @@ classifiers = [
     'Programming Language :: Python :: 3.3',
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
     'Topic :: Communications',
     'Topic :: Documentation',
     'Topic :: Education',
@@ -156,10 +162,8 @@ def main():
         sys.stdout.write("To install, run 'python setup.py install'\n\n")
 
     setup_options = dict(
-        author='David P. D. Moss',
+        author='David P. D. Moss, Stefan Nordhausen et al',
         author_email='drkjam@gmail.com',
-        maintainer='Stefan Nordhausen',
-        maintainer_email='stefan.nordhausen@immobilienscout24.de',
         classifiers=classifiers,
         description='A network address manipulation library for Python',
         download_url='https://pypi.python.org/pypi/netaddr/',

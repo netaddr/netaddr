@@ -8,4 +8,7 @@ build/
 dist/
 docs/build/
 .idea/
+.cache/
+.vagrant/
 tmp/
+*.iml

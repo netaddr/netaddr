@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-#   Copyright (c) 2008-2016, David P. D. Moss. All rights reserved.
+#   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
@@ -18,6 +18,8 @@ if _sys.version_info[0] == 3:
     _int_type = int
 
     _str_type = str
+
+    _bytes_type = lambda x: bytes(x, 'UTF-8')
 
     _is_str = lambda x: isinstance(x, (str, type(''.encode())))
 
@@ -66,6 +68,8 @@ elif _sys.version_info[0:2] > [2, 3]:
     _int_type = (int, long)
 
     _str_type = basestring
+
+    _bytes_type = str
 
     _is_str = lambda x: isinstance(x, basestring)
 

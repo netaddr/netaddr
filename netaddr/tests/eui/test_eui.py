@@ -161,9 +161,8 @@ def test_eui_oui_information():
 
     assert oui.registration().address == [
         'Lot 8, Jalan Hi-Tech 2/3',
-        'Kulim Hi-Tech Park',
-        'Kulim Kedah 09000',
-        'MALAYSIA',
+        'Kulim  Kedah  09000',
+        'MY'
     ]
 
     assert oui.registration().org == 'Intel Corporate'
@@ -191,26 +190,26 @@ def test_oui_constructor():
 
     assert oui.registration(0).address == [
         '2380 N. ROSE AVENUE',
-        'OXNARD CA 93010',
-        'UNITED STATES',
+        'OXNARD  CA  93010',
+        'US'
     ]
     assert oui.registration(0).org == 'NETWORK RESEARCH CORPORATION'
     assert oui.registration(0).oui == '08-00-30'
 
     assert oui.registration(1).address == [
-        'CH-1211 GENEVE 23',
-        'SUISSE/SWITZ',
-        'SWITZERLAND',
+        'GPO BOX 2476V',
+        'MELBOURNE  VIC  3001',
+        'AU',
     ]
-    assert oui.registration(1).org == 'CERN'
+    assert oui.registration(1).org == 'ROYAL MELBOURNE INST OF TECH'
     assert oui.registration(1).oui == '08-00-30'
 
     assert oui.registration(2).address == [
-        'GPO BOX 2476V',
-        'MELBOURNE VIC 3001',
-        'AUSTRALIA',
+        'CH-1211 GENEVE 23',
+        'SUISSE/SWITZ',
+        'CH'
     ]
-    assert oui.registration(2).org == 'ROYAL MELBOURNE INST OF TECH'
+    assert oui.registration(2).org == 'CERN'
     assert oui.registration(2).oui == '08-00-30'
     assert oui.reg_count == 3
 
@@ -227,8 +226,8 @@ def test_eui_iab():
 
     assert reg_info.address == [
         '1241 Superieor Ave E',
-        'Cleveland OH 44114',
-        'UNITED STATES',
+        'Cleveland  OH  44114',
+        'US',
     ]
 
     assert reg_info.iab == '00-50-C2-00-00-00'
