@@ -1120,7 +1120,7 @@ class IPNetwork(BaseIP, IPListMixin):
                 return self_net == other_net and self._prefixlen <= other._prefixlen
 
         # Whatever it is, try to interpret it as IPAddress.
-        return IPAddress(other) in self
+        return self.__class__(other) in self
 
     def key(self):
         """
