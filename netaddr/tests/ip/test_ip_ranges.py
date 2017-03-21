@@ -188,11 +188,19 @@ def test_iprange_membership():
     assert IPRange('192.0.2.5', '192.0.2.10') in IPRange('192.0.2.1', '192.0.2.254')
     assert IPRange('fe80::1', 'fe80::fffe') in IPRange('fe80::', 'fe80::ffff:ffff:ffff:ffff')
     assert IPRange('192.0.2.5', '192.0.2.10') not in IPRange('::', '::255.255.255.255')
+
+    # test edges
     assert IPNetwork('192.0.2.5/32') in IPRange('192.0.2.1', '192.0.2.5')
     assert IPNetwork('192.0.2.4/32') in IPRange('192.0.2.1', '192.0.2.5')
     assert IPNetwork('192.0.2.1/32') in IPRange('192.0.2.1', '192.0.2.5')
     assert IPNetwork('192.0.2.1/32') not in IPRange('192.0.2.2', '192.0.2.5')
     assert IPNetwork('192.0.2.6/32') not in IPRange('192.0.2.2', '192.0.2.5')
+
+
+def test_self_membership_of_range():
+    sample_range = IPRange('192.0.2.2', '192.0.2.5')
+    for ip in sample_range:
+        assert IPNetwork(ip) in sample_range
 
 
 def test_more_iprange_sorting():
