@@ -190,6 +190,12 @@ def test_iprange_membership():
     assert IPRange('192.0.2.5', '192.0.2.10') not in IPRange('::', '::255.255.255.255')
 
 
+def test_iprange_membership():
+    assert Network('192.0.2.5/32') in IPRange('192.0.2.1', '192.0.2.5')
+    assert Network('192.0.2.4/32') in IPRange('192.0.2.1', '192.0.2.5')
+    assert Network('192.0.2.1/32') in IPRange('192.0.2.1', '192.0.2.5')
+
+
 def test_more_iprange_sorting():
     ipranges = (IPRange('192.0.2.40', '192.0.2.50'), IPRange('192.0.2.20', '192.0.2.30'), IPRange('192.0.2.1', '192.0.2.254'),)
 
