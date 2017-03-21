@@ -1391,7 +1391,7 @@ class IPRange(BaseIP, IPListMixin):
                 other_next_start = other_start + (1 << shiftwidth) - 1
 
                 return (self._start._value <= other_start and
-                        self._end._value => other_next_start)
+                        self._end._value >= other_next_start)
 
         # Whatever it is, try to interpret it as IPAddress.
         return IPAddress(other) in self
