@@ -177,11 +177,6 @@ def main():
         scripts=['netaddr/tools/netaddr'],
         url='https://github.com/drkjam/netaddr/',
         version=netaddr.__version__,
-        options={
-            'build_scripts': {
-                'executable': '/usr/bin/env python',
-            },
-        },
     )
 
     setup(**setup_options)
