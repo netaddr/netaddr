@@ -455,17 +455,20 @@ class EUI(BaseIdentifier):
     def _get_dialect(self):
         return self._dialect
 
-    def _set_dialect(self, value):
+    def _validate_dialect(self, value):
         if value is None:
             if self._module is _eui64:
-                self._dialect = eui64_base
+               return eui64_base
             else:
-                self._dialect = mac_eui48
+                return mac_eui48
         else:
             if hasattr(value, 'word_size') and hasattr(value, 'word_fmt'):
-                self._dialect = value
+                return value
             else:
                 raise TypeError('custom dialects should subclass mac_eui48!')
+
+    def _set_dialect(self, value):
+        self._dialect = self._validate_dialect(value)
 
     dialect = property(_get_dialect, _set_dialect, None,
         "a Python class providing support for the interpretation of "
@@ -720,6 +723,19 @@ class EUI(BaseIdentifier):
             data['IAB'] = self.iab.registration()
 
         return DictDotLookup(data)
+
+    def format(self, dialect=None):
+        """
+        Format the EUI into the representational format according to the given
+        dialect
+
+        :param dialect: the mac_* dialect defining the formatting of EUI-48 \
+            (MAC) addresses.
+
+        :return: EUI in representational format according to the given dialect
+        """
+        validated_dialect = self._validate_dialect(dialect)
+        return self._module.int_to_str(self._value, validated_dialect)
 
     def __str__(self):
         """:return: EUI in representational format"""

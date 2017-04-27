@@ -93,6 +93,13 @@ def test_eui_dialect_property_assignment():
     assert str(mac) == '001b77:4954fd'
 
 
+def test_eui_format():
+    mac = EUI('00-1B-77-49-54-FD')
+    assert mac.format() == '00-1B-77-49-54-FD'
+    assert mac.format(mac_pgsql) == '001b77:4954fd'
+    assert mac.format(mac_unix_expanded) == '00:1b:77:49:54:fd'
+
+
 def test_eui_custom_dialect():
     class mac_custom(mac_unix):
         word_fmt = '%.2X'
