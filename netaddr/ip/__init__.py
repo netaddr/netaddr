@@ -996,10 +996,7 @@ class IPNetwork(BaseIP, IPListMixin):
     @property
     def broadcast(self):
         """The broadcast address of this `IPNetwork` object"""
-        if self._module.version == 4 and (self._module.width - self._prefixlen) <= 1:
-            return None
-        else:
-            return IPAddress(self._value | self._hostmask_int, self._module.version)
+        return IPAddress(self._value | self._hostmask_int, self._module.version)
 
     @property
     def first(self):
