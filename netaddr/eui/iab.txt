@@ -428,12 +428,6 @@ EE6000-EE6FFF                 (base 16)                     Narinet, Inc.
                                                             Beaverton  Oregon  97006                     
                                                             US                                           
 
-40-D8-55                      (hex)                         Circuitlink Pty Ltd                          
-046000-046FFF                 (base 16)                     Circuitlink Pty Ltd                          
-                                                            7a / 30 Foundry Rd                           
-                                                            Seven Hills  NSW  2147                       
-                                                            AU                                           
-
 40-D8-55                      (hex)                         Mango Communicaitons Inc.                    
 042000-042FFF                 (base 16)                     Mango Communicaitons Inc.                    
                                                             4606 Morningside Dr.                         
@@ -694,12 +688,6 @@ FC5000-FC5FFF                 (base 16)                     Sakura Seiki Co.,Ltd
                                                             75-5, Imojiya                                
                                                             Chikuma-city  Nagano Prefecture  387-0015    
                                                             JP                                           
-
-00-50-C2                      (hex)                         Critical Link                                
-FC6000-FC6FFF                 (base 16)                     Critical Link                                
-                                                            6712 Brooklawn  Parkway                      
-                                                            Syracuse  New York  13211                    
-                                                            US                                           
 
 00-50-C2                      (hex)                         Netlink Bilisim Sistemleri San. ve Tic. Ltd. Sti.
 F19000-F19FFF                 (base 16)                     Netlink Bilisim Sistemleri San. ve Tic. Ltd. Sti.
@@ -1400,12 +1388,6 @@ C6B000-C6BFFF                 (base 16)                     SiGarden Sp z o.o.
                                                             Gdańsk  woj. Pomorskie  80-034               
                                                             PL                                           
 
-00-50-C2                      (hex)                         DORLET S.A.                                  
-C6C000-C6CFFF                 (base 16)                     DORLET S.A.                                  
-                                                            Albert Einstein 34                           
-                                                            Miñano  Mayor  Alava  01510                  
-                                                            ES                                           
-
 00-50-C2                      (hex)                         MSB Elektronik und Geraetebau GmbH           
 C6F000-C6FFFF                 (base 16)                     MSB Elektronik und Geraetebau GmbH           
                                                             Hofwiesenstr. 23                             
@@ -1579,12 +1561,6 @@ ACE000-ACEFFF                 (base 16)                     ChronoLogic Pty. Ltd
                                                             227 Gouger Street                            
                                                             Adelaide  South Australia  5000              
                                                             AU                                           
-
-00-50-C2                      (hex)                         Orion Technologies, Incorporated             
-AC4000-AC4FFF                 (base 16)                     Orion Technologies, Incorporated             
-                                                            690 Cone Park Court                          
-                                                            Merritt Island  FL  32952                    
-                                                            US                                           
 
 00-50-C2                      (hex)                         Austco Communication Systems Pty Ltd         
 9F8000-9F8FFF                 (base 16)                     Austco Communication Systems Pty Ltd         
@@ -1765,12 +1741,6 @@ A15000-A15FFF                 (base 16)                     Industrial Computing
                                                             Elmcroft                                     
                                                             Gillingham  Dorset  SP8 4NG                  
                                                             GB                                           
-
-00-50-C2                      (hex)                         I.D.S. Ingegneria Dei Sistemi  S.p.A.        
-A0B000-A0BFFF                 (base 16)                     I.D.S. Ingegneria Dei Sistemi  S.p.A.        
-                                                            via Enrica Calabresi, 24                     
-                                                            PISA  PI  56121                              
-                                                            IT                                           
 
 00-50-C2                      (hex)                         Dynon Instruments                            
 A07000-A07FFF                 (base 16)                     Dynon Instruments                            
@@ -2462,12 +2432,6 @@ A1F000-A1FFFF                 (base 16)                     Flight Data Systems 
                                                             Carlsbad  CA  92011                          
                                                             US                                           
 
-00-50-C2                      (hex)                         Aircell                                      
-7CE000-7CEFFF                 (base 16)                     Aircell                                      
-                                                            303 S. Technology Dr.                        
-                                                            Broomfield  CO  80021                        
-                                                            US                                           
-
 00-50-C2                      (hex)                         Lyngdorf Audio Aps                           
 7C6000-7C6FFF                 (base 16)                     Lyngdorf Audio Aps                           
                                                             Ulvevej 28                                   
@@ -2882,12 +2846,6 @@ A1F000-A1FFFF                 (base 16)                     Flight Data Systems 
                                                             Vallentuna    18630                          
                                                             SE                                           
 
-00-50-C2                      (hex)                         MedAvant Healthcare                          
-601000-601FFF                 (base 16)                     MedAvant Healthcare                          
-                                                            2533 Centennial Blvd                         
-                                                            Jeffersonville  IN  47130                    
-                                                            US                                           
-
 00-50-C2                      (hex)                         CHAUVIN ARNOUX                               
 602000-602FFF                 (base 16)                     CHAUVIN ARNOUX                               
                                                             la queue Devée                               
@@ -3116,12 +3074,6 @@ A1F000-A1FFFF                 (base 16)                     Flight Data Systems 
                                                             Sun Valley  CA  91352                        
                                                             US                                           
 
-00-50-C2                      (hex)                         MedAvant Healthcare                          
-4F0000-4F0FFF                 (base 16)                     MedAvant Healthcare                          
-                                                            2533 Centennial Blvd                         
-                                                            Jeffersonville  IN  47150                    
-                                                            US                                           
-
 00-50-C2                      (hex)                         Photonic Bridges  Inc.                       
 4E6000-4E6FFF                 (base 16)                     Photonic Bridges  Inc.                       
                                                             405 Fawns Run                                
@@ -3344,23 +3296,11 @@ A1F000-A1FFFF                 (base 16)                     Flight Data Systems 
                                                             Bethesda  MD  20814                          
                                                             US                                           
 
-00-50-C2                      (hex)                         Aircell                                      
-455000-455FFF                 (base 16)                     Aircell                                      
-                                                            1172 Century Drive                           
-                                                            Louisville  Colorado  80027                  
-                                                            US                                           
-
 00-50-C2                      (hex)                         Advanced Micro Controls Inc.                 
 399000-399FFF                 (base 16)                     Advanced Micro Controls Inc.                 
                                                             20 Gear Drive                                
                                                             Terryville  CT  06786                        
                                                             US                                           
-
-00-50-C2                      (hex)                         PHYTEC Messtechnik GmbH                      
-392000-392FFF                 (base 16)                     PHYTEC Messtechnik GmbH                      
-                                                            Robert-Koch-Strasse 39                       
-                                                            Mainz  Rheinland-Pfalz  55129                
-                                                            DE                                           
 
 00-50-C2                      (hex)                         TTC Telecom                                  
 38F000-38FFFF                 (base 16)                     TTC Telecom                                  
@@ -3836,12 +3776,6 @@ A1F000-A1FFFF                 (base 16)                     Flight Data Systems 
                                                             Suwanne  GA  30024                           
                                                             US                                           
 
-00-50-C2                      (hex)                         WOLF Industrial Systems Inc.                 
-17A000-17AFFF                 (base 16)                     WOLF Industrial Systems Inc.                 
-                                                            5 Foxfire Chase                              
-                                                            Uxbridge  Ontario  L9P 1R4                   
-                                                            CA                                           
-
 00-50-C2                      (hex)                         N&P Technologies                             
 174000-174FFF                 (base 16)                     N&P Technologies                             
                                                             Samsung Jangchung Branch                     
@@ -4108,12 +4042,6 @@ A1F000-A1FFFF                 (base 16)                     Flight Data Systems 
                                                             Riihitie 8                                   
                                                             00330 Helsinki                               
                                                             FI                                           
-
-00-50-C2                      (hex)                         InterEpoch Technology, Inc.                  
-0C4000-0C4FFF                 (base 16)                     InterEpoch Technology, Inc.                  
-                                                            &f, No. 3, Alley 6, Lane 235                 
-                                                            Taipei Hsien                                 
-                                                            TW                                           
 
 00-50-C2                      (hex)                         SAIA Burgess Controls AG                     
 0C5000-0C5FFF                 (base 16)                     SAIA Burgess Controls AG                     
@@ -4529,9 +4457,6 @@ E8E000-E8EFFF                 (base 16)                      GD Mission Systems
                                                             Shenzhen  Guangdong  518054                  
                                                             CN                                           
 
-00-50-C2                      (hex)                         Private                                      
-0BF000-0BFFFF                 (base 16)                     Private                                      
-
 00-50-C2                      (hex)                         ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
 DE1000-DE1FFF                 (base 16)                     ABB Transmission and Distribution Automation Equipment (Xiamen) Co., Ltd.
                                                             ABB Industrial Park, Torch Hi-Tech Industrial Development Zone
@@ -4628,6 +4553,81 @@ F8F000-F8FFFF                 (base 16)                     Computerwise, Inc.
                                                             Olathe  KS  66062                            
                                                             US                                           
 
+00-50-C2                      (hex)                         DORLET SAU                                   
+C6C000-C6CFFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Einstein 34                           
+                                                            Miñano  Mayor  Alava  01510                  
+                                                            ES                                           
+
+00-50-C2                      (hex)                         Gogo BA                                      
+455000-455FFF                 (base 16)                     Gogo BA                                      
+                                                            1172 Century Drive                           
+                                                            Louisville  Colorado  80027                  
+                                                            US                                           
+
+00-50-C2                      (hex)                         Gogo BA                                      
+7CE000-7CEFFF                 (base 16)                     Gogo BA                                      
+                                                            303 S. Technology Dr.                        
+                                                            Broomfield  CO  80021                        
+                                                            US                                           
+
+40-D8-55                      (hex)                         Circuitlink Pty Ltd                          
+046000-046FFF                 (base 16)                     Circuitlink Pty Ltd                          
+                                                            4 / 87 Station Road                          
+                                                            Seven Hills  NSW  2147                       
+                                                            AU                                           
+
+00-50-C2                      (hex)                         Orion Technologies,LLC                       
+AC4000-AC4FFF                 (base 16)                     Orion Technologies,LLC                       
+                                                            12605 Challenger Parkway Suite 130           
+                                                            Orlando  FL  32826                           
+                                                            US                                           
+
+00-50-C2                      (hex)                         Private                                      
+0BF000-0BFFFF                 (base 16)                     Private                                      
+
+00-50-C2                      (hex)                         MedAvant Healthcare                          
+4F0000-4F0FFF                 (base 16)                     MedAvant Healthcare                          
+                                                            2533 Centennial Blvd                         
+                                                            Jeffersonville  IN  47150                    
+                                                            US                                           
+
+00-50-C2                      (hex)                         MedAvant Healthcare                          
+601000-601FFF                 (base 16)                     MedAvant Healthcare                          
+                                                            2533 Centennial Blvd                         
+                                                            Jeffersonville  IN  47130                    
+                                                            US                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+392000-392FFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Strasse 39                       
+                                                            Mainz  Rheinland-Pfalz  55129                
+                                                            DE                                           
+
+00-50-C2                      (hex)                         WOLF Advanced Technology.                    
+17A000-17AFFF                 (base 16)                     WOLF Advanced Technology.                    
+                                                            2 Campbell Drive, Suite 200                  
+                                                            Uxbridge  Ontario  L9P 1H6                   
+                                                            CA                                           
+
+00-50-C2                      (hex)                          IDS GeoRadar s.r.l.                         
+A0B000-A0BFFF                 (base 16)                      IDS GeoRadar s.r.l.                         
+                                                            Via E. Calabresi, 24                         
+                                                            PISA  PI  56121                              
+                                                            IT                                           
+
+00-50-C2                      (hex)                         Critical Link LLC                            
+FC6000-FC6FFF                 (base 16)                     Critical Link LLC                            
+                                                            6712 Brooklawn  Parkway                      
+                                                            Syracuse  New York  13211                    
+                                                            US                                           
+
+00-50-C2                      (hex)                         InterEpoch Technology,INC.                   
+0C4000-0C4FFF                 (base 16)                     InterEpoch Technology,INC.                   
+                                                            &f, No. 3, Alley 6, Lane 235                 
+                                                            Taipei Hsien                                 
+                                                            TW                                           
+
 00-50-C2                      (hex)                         EMAC, Inc.                                   
 0E0000-0E0FFF                 (base 16)                     EMAC, Inc.                                   
                                                             2390 EMAC Way                                
@@ -4638,12 +4638,6 @@ F8F000-F8FFFF                 (base 16)                     Computerwise, Inc.
 19D000-19DFFF                 (base 16)                     EMAC, Inc.                                   
                                                             2390 EMAC Way                                
                                                             Carbondale  IL  62901                        
-                                                            US                                           
-
-40-D8-55                      (hex)                         Mettler Toledo Hi-Speed                      
-0C8000-0C8FFF                 (base 16)                     Mettler Toledo Hi-Speed                      
-                                                            5 Barr Rd                                    
-                                                            Ithaca  NY  14850                            
                                                             US                                           
 
 40-D8-55                      (hex)                         Peter Huber                                  
@@ -4891,12 +4885,6 @@ F8F000-F8FFFF                 (base 16)                     Computerwise, Inc.
                                                             ICHIGAYA BUILDING 2002-12                    
                                                             TODA CITY  SAITAMA  335-0021                 
                                                             JP                                           
-
-40-D8-55                      (hex)                         Avant Technologies,Inc                       
-0D7000-0D7FFF                 (base 16)                     Avant Technologies,Inc                       
-                                                            Road 156 Caguas West Ind. Park               
-                                                            Caguas    00726                              
-                                                            PR                                           
 
 40-D8-55                      (hex)                         Cytech Technology Pte Ltd                    
 0FE000-0FEFFF                 (base 16)                     Cytech Technology Pte Ltd                    
@@ -6698,29 +6686,11 @@ A44000-A44FFF                 (base 16)                     TORC Technologies
                                                             Blacksburg  VA  24060                        
                                                             US                                           
 
-00-50-C2                      (hex)                         PRIMETECH ENGINEERING CORP.                  
-A47000-A47FFF                 (base 16)                     PRIMETECH ENGINEERING CORP.                  
-                                                            1-21-15,Kitakoujiya,                         
-                                                            Ota-ku  Tokyo  144-0032                      
-                                                            JP                                           
-
-00-50-C2                      (hex)                         Thales Optronics Limited                     
-A48000-A48FFF                 (base 16)                     Thales Optronics Limited                     
-                                                            1 Linthouse Road                             
-                                                            Glasgow    G51 4BZ                           
-                                                            GB                                           
-
 00-50-C2                      (hex)                         DUEVI SNC DI MORA E SANTESE                  
 A3E000-A3EFFF                 (base 16)                     DUEVI SNC DI MORA E SANTESE                  
                                                             Via Gioberti 7                               
                                                             Piossasco  Torino  10045                     
                                                             IT                                           
-
-00-50-C2                      (hex)                         Telecor Inc.                                 
-A3A000-A3AFFF                 (base 16)                     Telecor Inc.                                 
-                                                            1114 Westport Crescent                       
-                                                            Mississauga  Ontario  L5T 1G1                
-                                                            CA                                           
 
 00-50-C2                      (hex)                         SAMH Engineering Services                    
 A1D000-A1DFFF                 (base 16)                     SAMH Engineering Services                    
@@ -7496,12 +7466,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             Beaverton  Oregon  97006                     
                                                             US                                           
 
-00-50-C2                      (hex)                         Cominfo Inc.                                 
-77E000-77EFFF                 (base 16)                     Cominfo Inc.                                 
-                                                            Nabrezi 695                                  
-                                                            Zlin  Czech Republic  76001                  
-                                                            CZ                                           
-
 00-50-C2                      (hex)                         GeoSIG Ltd.                                  
 774000-774FFF                 (base 16)                     GeoSIG Ltd.                                  
                                                             Europastrasse 11                             
@@ -7615,12 +7579,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             Kievskaja 14B                                
                                                             Vinnitsa    21009                            
                                                             UA                                           
-
-00-50-C2                      (hex)                         Axis Network Technology                      
-6E7000-6E7FFF                 (base 16)                     Axis Network Technology                      
-                                                            Unit7, Midshires Business Park               
-                                                            Aylesbury  Bucks  HP19 8HL                   
-                                                            GB                                           
 
 00-50-C2                      (hex)                         Version-T                                    
 621000-621FFF                 (base 16)                     Version-T                                    
@@ -7777,12 +7735,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             Boxtelseweg 26                               
                                                             Vught    5261NE                              
                                                             NL                                           
-
-00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
-5A7000-5A7FFF                 (base 16)                     Phytec Messtechnik GmbH                      
-                                                            Robert-Koch-Straße  39                       
-                                                            Mainz  Rheinland-Pfalz  55129                
-                                                            DE                                           
 
 00-50-C2                      (hex)                         Federal State Unitary Enterprise Experimental Factory for Sc
 5A4000-5A4FFF                 (base 16)                     Federal State Unitary Enterprise Experimental Factory for Sc
@@ -8011,12 +7963,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             1001 MURRY RIDGE LANE                        
                                                             MURRYSVILLE  PENNSYLVANIA  15668             
                                                             US                                           
-
-00-50-C2                      (hex)                         HORIBA MEDICAL                               
-589000-589FFF                 (base 16)                     HORIBA MEDICAL                               
-                                                            rue du caducee                               
-                                                            Montpellier  Herault  34000                  
-                                                            FR                                           
 
 00-50-C2                      (hex)                         Dixell S.p.a.                                
 58A000-58AFFF                 (base 16)                     Dixell S.p.a.                                
@@ -8276,12 +8222,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             Barsinghausen  Niedersachsen  30890          
                                                             DE                                           
 
-00-50-C2                      (hex)                         PHYTEC Messtechnik GmbH                      
-459000-459FFF                 (base 16)                     PHYTEC Messtechnik GmbH                      
-                                                            Robert-Koch-Strasse 39                       
-                                                            Mainz  Rheinland-Pfalz  55129                
-                                                            DE                                           
-
 00-50-C2                      (hex)                         Peleton Photonic Systems                     
 439000-439FFF                 (base 16)                     Peleton Photonic Systems                     
                                                             2355 St. Laurent BLVD                        
@@ -8485,12 +8425,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             16 Rue Laënnec                               
                                                             Vern Sur Seiche    35770                     
                                                             FR                                           
-
-00-50-C2                      (hex)                         North Pole Engineering, Inc.                 
-34F000-34FFFF                 (base 16)                     North Pole Engineering, Inc.                 
-                                                            212 3rd Ave N                                
-                                                            Minneapolis  Minnesota  55401                
-                                                            US                                           
 
 00-50-C2                      (hex)                         Ecutel Systems, Inc.                         
 34B000-34BFFF                 (base 16)                     Ecutel Systems, Inc.                         
@@ -8864,12 +8798,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             Seoul    134-011                             
                                                             US                                           
 
-00-50-C2                      (hex)                         TT electronic manufacturing services ltd     
-1C3000-1C3FFF                 (base 16)                     TT electronic manufacturing services ltd     
-                                                            Kitty Brewster Estate                        
-                                                            Blyth  Northumberland  NE3 2AX               
-                                                            GB                                           
-
 00-50-C2                      (hex)                         Palm Solutions Group                         
 1C4000-1C4FFF                 (base 16)                     Palm Solutions Group                         
                                                             400 N. McCarthy Blvd                         
@@ -9073,18 +9001,6 @@ A20000-A20FFF                 (base 16)                     Quorum Technologies 
                                                             PO Box 2549                                  
                                                             Champaign  IL  61825-2549                    
                                                             US                                           
-
-00-50-C2                      (hex)                         Marvell Hispana S.L.                         
-126000-126FFF                 (base 16)                     Marvell Hispana S.L.                         
-                                                            C/Charles Robert Darwin, 2                   
-                                                            Valencia  Paterna  46980                     
-                                                            ES                                           
-
-00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
-144000-144FFF                 (base 16)                     Phytec Messtechnik GmbH                      
-                                                            Robert-Koch-Strasse 39                       
-                                                            Mainz    D-55129                             
-                                                            DE                                           
 
 00-50-C2                      (hex)                         UniSUR                                       
 147000-147FFF                 (base 16)                     UniSUR                                       
@@ -9746,14 +9662,86 @@ C63000-C63FFF                 (base 16)                     Potter Electric Sign
                                                             Olathe  KS  66062                            
                                                             US                                           
 
-00-50-C2                      (hex)                         Mettler Toledo Hi-Speed                      
-EA9000-EA9FFF                 (base 16)                     Mettler Toledo Hi-Speed                      
-                                                            5 Barr Rd                                    
-                                                            Ithaca  NY  14850                            
+00-50-C2                      (hex)                         HORIBA ABX SAS                               
+589000-589FFF                 (base 16)                     HORIBA ABX SAS                               
+                                                            rue du caducee                               
+                                                            Montpellier  Herault  34000                  
+                                                            FR                                           
+
+00-50-C2                      (hex)                         Cominfo, Inc.                                
+77E000-77EFFF                 (base 16)                     Cominfo, Inc.                                
+                                                            Nabrezi 695                                  
+                                                            Zlin  Czech Republic  76001                  
+                                                            CZ                                           
+
+00-50-C2                      (hex)                         PRIMETECH ENGINEERING CORP.                  
+A47000-A47FFF                 (base 16)                     PRIMETECH ENGINEERING CORP.                  
+                                                             Koishikawadaikoku Bldg. 3F, 1-3-25          
+                                                             Koishikawa, Bunkyo-ku  Tokyo  112-0002      
+                                                            JP                                           
+
+00-50-C2                      (hex)                         MaxLinear Hispania S.L.U.                    
+126000-126FFF                 (base 16)                     MaxLinear Hispania S.L.U.                    
+                                                            Ronda Narcis Monturiol                       
+                                                            Estarriol, 11D  Paterna  46980               
+                                                            ES                                           
+
+40-D8-55                      (hex)                         Avant Technologies                           
+0D7000-0D7FFF                 (base 16)                     Avant Technologies                           
+                                                            Road 156 Caguas West Ind. Park               
+                                                            Caguas    00726                              
+                                                            PR                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+144000-144FFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Strasse 39                       
+                                                            Mainz    D-55129                             
+                                                            DE                                           
+
+00-50-C2                      (hex)                         TT electronics plc                           
+1C3000-1C3FFF                 (base 16)                     TT electronics plc                           
+                                                            Kitty Brewster Estate                        
+                                                            Blyth  Northumberland  NE3 2AX               
+                                                            GB                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+5A7000-5A7FFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Straße  39                       
+                                                            Mainz  Rheinland-Pfalz  55129                
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+459000-459FFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Strasse 39                       
+                                                            Mainz  Rheinland-Pfalz  55129                
+                                                            DE                                           
+
+00-50-C2                      (hex)                         North Pole Engineering, Inc.                 
+34F000-34FFFF                 (base 16)                     North Pole Engineering, Inc.                 
+                                                            221 N. 1st. St., Suite 310                   
+                                                            Minneapolis  MN  55401                       
                                                             US                                           
 
-00-50-C2                      (hex)                         Mettler Toledo Hi-Speed                      
-24D000-24DFFF                 (base 16)                     Mettler Toledo Hi-Speed                      
+00-50-C2                      (hex)                         Telecor Inc.                                 
+A3A000-A3AFFF                 (base 16)                     Telecor Inc.                                 
+                                                            6205 Kestrel Road                            
+                                                            Mississauga  Ontario  L5T 2A1                
+                                                            CA                                           
+
+00-50-C2                      (hex)                         Ace Axis Limited                             
+6E7000-6E7FFF                 (base 16)                     Ace Axis Limited                             
+                                                            602 Delta Business Park, Welton Road         
+                                                            Swindon    SN5 7XP                           
+                                                            GB                                           
+
+00-50-C2                      (hex)                         Thales UK Limited                            
+A48000-A48FFF                 (base 16)                     Thales UK Limited                            
+                                                            1 Linthouse Road                             
+                                                            Glasgow    G51 4BZ                           
+                                                            GB                                           
+
+40-D8-55                      (hex)                         Mettler Toledo Hi Speed                      
+0C8000-0C8FFF                 (base 16)                     Mettler Toledo Hi Speed                      
                                                             5 Barr Rd                                    
                                                             Ithaca  NY  14850                            
                                                             US                                           
@@ -9949,12 +9937,6 @@ EA9000-EA9FFF                 (base 16)                     Mettler Toledo Hi-Sp
                                                             4-22-3-101 Kaminoge                          
                                                             Setagayaku  Tokyo  158-0093                  
                                                             JP                                           
-
-40-D8-55                      (hex)                         DORLET S.A.U                                 
-15A000-15AFFF                 (base 16)                     DORLET S.A.U                                 
-                                                            Albert Einstein 34                           
-                                                            Miñano Mayor  Alava  01510                  
-                                                            ES                                           
 
 40-D8-55                      (hex)                         Home Automation Europe                       
 152000-152FFF                 (base 16)                     Home Automation Europe                       
@@ -10168,12 +10150,6 @@ EA9000-EA9FFF                 (base 16)                     Mettler Toledo Hi-Sp
                                                             Augustenborglandevej 7                       
                                                             Sønderborg  Denmark  6400                    
                                                             DK                                           
-
-40-D8-55                      (hex)                         DORLET SA                                    
-06F000-06FFFF                 (base 16)                     DORLET SA                                    
-                                                            Albert Eistein 34                            
-                                                            Miñano Mayor  Alava  01510                   
-                                                            ES                                           
 
 40-D8-55                      (hex)                         Tokyo Denki Gijutsu Kogyo                    
 09B000-09BFFF                 (base 16)                     Tokyo Denki Gijutsu Kogyo                    
@@ -10511,12 +10487,6 @@ EEA000-EEAFFF                 (base 16)                     Positioneering Limit
                                                             Aberdeen  Aberdeenshire  AB12 3BR            
                                                             GB                                           
 
-00-50-C2                      (hex)                         Applied Micro Electronics AME BV             
-F33000-F33FFF                 (base 16)                     Applied Micro Electronics AME BV             
-                                                            Esp 100                                      
-                                                            Eindhoven  Noord Brabant  5633AA             
-                                                            NL                                           
-
 00-50-C2                      (hex)                         Miris AB                                     
 F30000-F30FFF                 (base 16)                     Miris AB                                     
                                                             Kungsgatan 115                               
@@ -10673,12 +10643,6 @@ E7E000-E7EFFF                 (base 16)                     Swareflex GmbH
                                                             Vomp  Tyrol  6134                            
                                                             AT                                           
 
-00-50-C2                      (hex)                         Applied Micro Electronics AME BV             
-E4C000-E4CFFF                 (base 16)                     Applied Micro Electronics AME BV             
-                                                            Esp 100                                      
-                                                            Eindhoven  Noord Brabant  5633 AA            
-                                                            NL                                           
-
 00-50-C2                      (hex)                         PCSC                                         
 E4D000-E4DFFF                 (base 16)                     PCSC                                         
                                                             3541 Challenger Street                       
@@ -10727,12 +10691,6 @@ EB3000-EB3FFF                 (base 16)                     AR RF/Microwave Inst
                                                             Souderton  PA  18964                         
                                                             US                                           
 
-00-50-C2                      (hex)                         Aircell                                      
-EAF000-EAFFFF                 (base 16)                     Aircell                                      
-                                                            303 S. Technology Ct.                        
-                                                            Broomfield  Co  80021                        
-                                                            US                                           
-
 00-50-C2                      (hex)                         Hentschel System GmbH                        
 E9B000-E9BFFF                 (base 16)                     Hentschel System GmbH                        
                                                             Carl-Buderus-Str. 5                          
@@ -10774,12 +10732,6 @@ E53000-E53FFF                 (base 16)                     NEXT video systems H
                                                             Oderstr. 47                                  
                                                             Neumuenster  SH  24539                       
                                                             DE                                           
-
-00-50-C2                      (hex)                         Critical Link, LLC                           
-E67000-E67FFF                 (base 16)                     Critical Link, LLC                           
-                                                            251 Salina Meadows Pkwy                      
-                                                            Syracuse  New York  13212                    
-                                                            US                                           
 
 00-50-C2                      (hex)                         TAIYO SEIKI CO.,LTD.                         
 E60000-E60FFF                 (base 16)                     TAIYO SEIKI CO.,LTD.                         
@@ -12287,12 +12239,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             Langenhagen  Niedersachsen  30855            
                                                             DE                                           
 
-00-50-C2                      (hex)                         DORLET S.A.                                  
-9E7000-9E7FFF                 (base 16)                     DORLET S.A.                                  
-                                                            Albert Einstein 34                           
-                                                            Miñanoo Mayor  ALAVA  01510                  
-                                                            ES                                           
-
 00-50-C2                      (hex)                         DSCI                                         
 986000-986FFF                 (base 16)                     DSCI                                         
                                                             12249 Science Drive                          
@@ -12315,12 +12261,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
 8F9000-8F9FFF                 (base 16)                     Honeywell International                      
                                                             13350 US Hwy 19 N                            
                                                             Clearwater  Fl  33764-7290                   
-                                                            US                                           
-
-00-50-C2                      (hex)                         Critical Link                                
-8F4000-8F4FFF                 (base 16)                     Critical Link                                
-                                                            6712 Brooklawn Parkway                       
-                                                            Syracuse  NY  13211                          
                                                             US                                           
 
 00-50-C2                      (hex)                         Detection Technologies Ltd.                  
@@ -12628,12 +12568,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             Nizhni Krasnoselsky st., 35.                 
                                                             Moscow    140070                             
                                                             RU                                           
-
-00-50-C2                      (hex)                         Performance Motion Devices                   
-84C000-84CFFF                 (base 16)                     Performance Motion Devices                   
-                                                            80 Central St.                               
-                                                            Boxborough  MA  01719                        
-                                                            US                                           
 
 00-50-C2                      (hex)                         DRACO SYSTEMS                                
 84E000-84EFFF                 (base 16)                     DRACO SYSTEMS                                
@@ -13316,12 +13250,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             Mainz  Rheinland-Pfalz  55129                
                                                             DE                                           
 
-00-50-C2                      (hex)                         Speech Technology Center, Ltd.               
-63F000-63FFFF                 (base 16)                     Speech Technology Center, Ltd.               
-                                                            4 Krasutskogo st.                            
-                                                            St.Petersburg    196084                      
-                                                            RU                                           
-
 00-50-C2                      (hex)                         Powis Corporation                            
 63B000-63BFFF                 (base 16)                     Powis Corporation                            
                                                             2301 NW. Jefferson                           
@@ -13381,12 +13309,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             Schlossstrasse 119                           
                                                             Olching    D-82140                           
                                                             DE                                           
-
-00-50-C2                      (hex)                         Aircell                                      
-67C000-67CFFF                 (base 16)                     Aircell                                      
-                                                            1172 Century Drive                           
-                                                            Louisville  Colorado  80027                  
-                                                            US                                           
 
 00-50-C2                      (hex)                         Shenzhen Huazhong Technology Inc             
 606000-606FFF                 (base 16)                     Shenzhen Huazhong Technology Inc             
@@ -13886,12 +13808,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             Bollate  Milano  20021                       
                                                             IT                                           
 
-00-50-C2                      (hex)                         Armorlink CO .Ltd                            
-49E000-49EFFF                 (base 16)                     Armorlink CO .Ltd                            
-                                                            No. 515 of xinzhuang industry park shenfu road
-                                                            Shanghai province  SHANGHAI  201108          
-                                                            CN                                           
-
 00-50-C2                      (hex)                         TelASIC Communications, Inc.                 
 49A000-49AFFF                 (base 16)                     TelASIC Communications, Inc.                 
                                                             1940 E Mariposa Avenue                       
@@ -14071,12 +13987,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             4 Old Dairy Business Centre                  
                                                             Bath  BNES  BA2 3LR                          
                                                             GB                                           
-
-00-50-C2                      (hex)                         PHYTEC Messtechnik GmbH                      
-3BA000-3BAFFF                 (base 16)                     PHYTEC Messtechnik GmbH                      
-                                                            Robert-Koch-Strasse 39                       
-                                                            Mainz  Rheinland-Pfalz  55129                
-                                                            DE                                           
 
 00-50-C2                      (hex)                         Mindspeed Technologies                       
 3B7000-3B7FFF                 (base 16)                     Mindspeed Technologies                       
@@ -14287,12 +14197,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             4th floor SamKwang Bldg.                     
                                                             Seoul  Seoul  135-508                        
                                                             KR                                           
-
-00-50-C2                      (hex)                         Magellan Technology Pty Ltd                  
-2C0000-2C0FFF                 (base 16)                     Magellan Technology Pty Ltd                  
-                                                            65 Johnston Street                           
-                                                            Annandale  NSW  2038                         
-                                                            AU                                           
 
 00-50-C2                      (hex)                         TA Instruments Ltd                           
 2BB000-2BBFFF                 (base 16)                     TA Instruments Ltd                           
@@ -14526,12 +14430,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
 28F000-28FFFF                 (base 16)                     Spellman High Voltage Electronics Corp       
                                                             475 Wireless Blvd                            
                                                             Hauppauge  NY  11788                         
-                                                            US                                           
-
-00-50-C2                      (hex)                         Orion Technologies, Incorporated             
-28B000-28BFFF                 (base 16)                     Orion Technologies, Incorporated             
-                                                            690 Cone Park Court                          
-                                                            Merritt Island  FL  32952                    
                                                             US                                           
 
 00-50-C2                      (hex)                         RPM Systems Corporation                      
@@ -14852,12 +14750,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                               Seoul  135-260                             
                                                             KR                                           
 
-00-50-C2                      (hex)                         COMINFO                                      
-194000-194FFF                 (base 16)                     COMINFO                                      
-                                                            Lesetin 651                                  
-                                                            Zlin    760 01                               
-                                                            CZ                                           
-
 00-50-C2                      (hex)                         Teradyne Inc.                                
 18B000-18BFFF                 (base 16)                     Teradyne Inc.                                
                                                             30801 Agoura Rd.                             
@@ -15022,12 +14914,6 @@ A05000-A05FFF                 (base 16)                     Adgil Design Inc.
                                                             2096 Gaither Rd., Suite 100                  
                                                             Rockville  MD  20850                         
                                                             US                                           
-
-00-50-C2                      (hex)                         Delphin Technology AG                        
-138000-138FFF                 (base 16)                     Delphin Technology AG                        
-                                                            Offsermannsheider Str. 184                   
-                                                            51515 Kurten                                 
-                                                            DE                                           
 
 00-50-C2                      (hex)                         KMS Systems, Inc.                            
 0F2000-0F2FFF                 (base 16)                     KMS Systems, Inc.                            
@@ -15608,6 +15494,120 @@ A78000-A78FFF                 (base 16)                     Apantac LLC
                                                              Petőfi Sándor utca    11. 9. em. 11.        
                                                             HU                                           
 
+40-D8-55                      (hex)                         DORLET SAU                                   
+15A000-15AFFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Einstein 34                           
+                                                            Miñano Mayor  Alava  01510                  
+                                                            ES                                           
+
+40-D8-55                      (hex)                         DORLET SAU                                   
+06F000-06FFFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Eistein 34                            
+                                                            Miñano Mayor  Alava  01510                   
+                                                            ES                                           
+
+00-50-C2                      (hex)                         DORLET SAU                                   
+9E7000-9E7FFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Einstein 34                           
+                                                            Miñanoo Mayor  ALAVA  01510                  
+                                                            ES                                           
+
+00-50-C2                      (hex)                         Gogo BA                                      
+67C000-67CFFF                 (base 16)                     Gogo BA                                      
+                                                            1172 Century Drive                           
+                                                            Louisville  Colorado  80027                  
+                                                            US                                           
+
+00-50-C2                      (hex)                         Gogo BA                                      
+EAF000-EAFFFF                 (base 16)                     Gogo BA                                      
+                                                            303 S. Technology Ct.                        
+                                                            Broomfield  Co  80021                        
+                                                            US                                           
+
+00-50-C2                      (hex)                         Armorlink Co .Ltd                            
+49E000-49EFFF                 (base 16)                     Armorlink Co .Ltd                            
+                                                            No. 515 of Xinzhuang Industry Park Shenfu Road
+                                                            Shanghai Province  Shanghai  201108          
+                                                            CN                                           
+
+00-50-C2                      (hex)                         Applied Micro Electronics AME bv             
+F33000-F33FFF                 (base 16)                     Applied Micro Electronics AME bv             
+                                                            Esp 100                                      
+                                                            Eindhoven  Noord Brabant  5633AA             
+                                                            NL                                           
+
+00-50-C2                      (hex)                         Applied Micro Electronics AME bv             
+E4C000-E4CFFF                 (base 16)                     Applied Micro Electronics AME bv             
+                                                            Esp 100                                      
+                                                            Eindhoven  Noord Brabant  5633 AA            
+                                                            NL                                           
+
+00-50-C2                      (hex)                         Cominfo, Inc.                                
+194000-194FFF                 (base 16)                     Cominfo, Inc.                                
+                                                            Lesetin 651                                  
+                                                            Zlin    760 01                               
+                                                            CZ                                           
+
+00-50-C2                      (hex)                         Orion Technologies,LLC                       
+28B000-28BFFF                 (base 16)                     Orion Technologies,LLC                       
+                                                            12605 Challenger Parkway Suite 130           
+                                                            Orlando  FL  32826                           
+                                                            US                                           
+
+00-50-C2                      (hex)                         Delphin Technology AG                        
+138000-138FFF                 (base 16)                     Delphin Technology AG                        
+                                                            Offsermannsheider Str. 184                   
+                                                            51515 Kurten                                 
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Performance Motion Devices                   
+84C000-84CFFF                 (base 16)                     Performance Motion Devices                   
+                                                            1 Technology Park Drive                      
+                                                            Westford  MA  01886                          
+                                                            US                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+3BA000-3BAFFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Strasse 39                       
+                                                            Mainz  Rheinland-Pfalz  55129                
+                                                            DE                                           
+
+00-50-C2                      (hex)                         SPEECH TECHNOLOGY CENTER LIMITED             
+63F000-63FFFF                 (base 16)                     SPEECH TECHNOLOGY CENTER LIMITED             
+                                                            4 Krasutskogo st.                            
+                                                            St.Petersburg    196084                      
+                                                            RU                                           
+
+00-50-C2                      (hex)                         Magellan Technology Pty Limited              
+2C0000-2C0FFF                 (base 16)                     Magellan Technology Pty Limited              
+                                                            65 Johnston Street                           
+                                                            Annandale  NSW  2038                         
+                                                            AU                                           
+
+00-50-C2                      (hex)                         Mettler Toledo Hi Speed                      
+24D000-24DFFF                 (base 16)                     Mettler Toledo Hi Speed                      
+                                                            5 Barr Rd                                    
+                                                            Ithaca  NY  14850                            
+                                                            US                                           
+
+00-50-C2                      (hex)                         Mettler Toledo Hi Speed                      
+EA9000-EA9FFF                 (base 16)                     Mettler Toledo Hi Speed                      
+                                                            5 Barr Rd                                    
+                                                            Ithaca  NY  14850                            
+                                                            US                                           
+
+00-50-C2                      (hex)                         Critical Link LLC                            
+8F4000-8F4FFF                 (base 16)                     Critical Link LLC                            
+                                                            6712 Brooklawn Parkway                       
+                                                            Syracuse  NY  13211                          
+                                                            US                                           
+
+00-50-C2                      (hex)                         Critical Link LLC                            
+E67000-E67FFF                 (base 16)                     Critical Link LLC                            
+                                                            251 Salina Meadows Pkwy                      
+                                                            Syracuse  New York  13212                    
+                                                            US                                           
+
 00-50-C2                      (hex)                         Aeroflex GmbH                                
 B51000-B51FFF                 (base 16)                     Aeroflex GmbH                                
                                                             Gutenbergstrasse 2-4                         
@@ -15753,12 +15753,6 @@ B51000-B51FFF                 (base 16)                     Aeroflex GmbH
 17D000-17DFFF                 (base 16)                     Kiwigrid GmbH                                
                                                             Kleiststrasse 10c                            
                                                             Dresden  Sachsen  01129                      
-                                                            US                                           
-
-40-D8-55                      (hex)                         Critical Link                                
-17C000-17CFFF                 (base 16)                     Critical Link                                
-                                                            6712 Brooklawn Parkway                       
-                                                            Syracuse  NY  13211                          
                                                             US                                           
 
 40-D8-55                      (hex)                         LUCEO                                        
@@ -16559,12 +16553,6 @@ F32000-F32FFF                 (base 16)                     Net4Things
                                                             Madrid    28008                              
                                                             ES                                           
 
-00-50-C2                      (hex)                         DORLET S.A.                                  
-E70000-E70FFF                 (base 16)                     DORLET S.A.                                  
-                                                            Albert Einstein 34                           
-                                                            Vitoria  Alava  01510                        
-                                                            ES                                           
-
 00-50-C2                      (hex)                         Netmaker                                     
 E69000-E69FFF                 (base 16)                     Netmaker                                     
                                                             Mega Valley SB111,Gwanyang2,Dongan           
@@ -17068,12 +17056,6 @@ CFE000-CFEFFF                 (base 16)                     Techleader
                                                             HYEON BLDG 4TH FL 157-1 CHUNUI-DONG          
                                                             BUCHEON-SHI  KYONGGI-DO  420-859             
                                                             KR                                           
-
-00-50-C2                      (hex)                         Aircell                                      
-CF5000-CF5FFF                 (base 16)                     Aircell                                      
-                                                            303 S. Technology Dr.                        
-                                                            Broomfield  CO  80021                        
-                                                            US                                           
 
 00-50-C2                      (hex)                         Baudisch Electronic GmbH                     
 CF4000-CF4FFF                 (base 16)                     Baudisch Electronic GmbH                     
@@ -17870,12 +17852,6 @@ B36000-B36FFF                 (base 16)                     CRDE
                                                             MERCUES  LOT  46090                          
                                                             FR                                           
 
-00-50-C2                      (hex)                         Applied Micro Electronics AME BV             
-B30000-B30FFF                 (base 16)                     Applied Micro Electronics AME BV             
-                                                            ESP 100                                      
-                                                            Eindhoven  NoordBrabant  5633 AA             
-                                                            NL                                           
-
 00-50-C2                      (hex)                         Concepteers, LLC                             
 B2C000-B2CFFF                 (base 16)                     Concepteers, LLC                             
                                                             880 Bergen Ave                               
@@ -18524,12 +18500,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Santa Clara  CA  95050                       
                                                             US                                           
 
-00-50-C2                      (hex)                         Thales Communications, Inc                   
-8AD000-8ADFFF                 (base 16)                     Thales Communications, Inc                   
-                                                            22605 Gateway Center Drive                   
-                                                            Clarksburg  MD  20871                        
-                                                            US                                           
-
 00-50-C2                      (hex)                         Telsa s.r.l                                  
 8AC000-8ACFFF                 (base 16)                     Telsa s.r.l                                  
                                                             Via C.Colombo 29\31                          
@@ -18920,12 +18890,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Yoqneam    20692                             
                                                             IL                                           
 
-00-50-C2                      (hex)                         Phytec Mestechnik GmbH                       
-782000-782FFF                 (base 16)                     Phytec Mestechnik GmbH                       
-                                                            Robert-Koch-Straße 39                        
-                                                            Mainz  Rheinland-Pfalz  55129                
-                                                            DE                                           
-
 00-50-C2                      (hex)                         Coral Telecom Ltd                            
 779000-779FFF                 (base 16)                     Coral Telecom Ltd                            
                                                             E-02 Sector 63                               
@@ -19184,12 +19148,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Aachen  NRW  52064                           
                                                             DE                                           
 
-00-50-C2                      (hex)                         Schnick-Schnack-Systems GmbH                 
-6D1000-6D1FFF                 (base 16)                     Schnick-Schnack-Systems GmbH                 
-                                                            Heinrich Pesch Str. 14                       
-                                                            Koeln (Cologne)  NRW  50739                  
-                                                            DE                                           
-
 00-50-C2                      (hex)                         Widmer Time Recorder Co., Inc.               
 6CC000-6CCFFF                 (base 16)                     Widmer Time Recorder Co., Inc.               
                                                             p.o. box 588                                 
@@ -19213,12 +19171,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Zum Kesselort 53                             
                                                             Kiel  Schleswig-Holstein  24149              
                                                             DE                                           
-
-00-50-C2                      (hex)                         MedAvant Healthcare Solutions                
-6C6000-6C6FFF                 (base 16)                     MedAvant Healthcare Solutions                
-                                                            2533 Centennial Blvd., Suite B               
-                                                            Jeffersonville  IN  47130                    
-                                                            US                                           
 
 00-50-C2                      (hex)                         QuickCircuit Ltd.                            
 6C7000-6C7FFF                 (base 16)                     QuickCircuit Ltd.                            
@@ -19712,12 +19664,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Madrid    28033                              
                                                             ES                                           
 
-00-50-C2                      (hex)                         Delphi Display Systems, Inc.                 
-578000-578FFF                 (base 16)                     Delphi Display Systems, Inc.                 
-                                                            3160 Pullman Street                          
-                                                            Costa Mesa  CA  92626                        
-                                                            US                                           
-
 00-50-C2                      (hex)                         DATAMICRO Co., Ltd.                          
 573000-573FFF                 (base 16)                     DATAMICRO Co., Ltd.                          
                                                             P.O. Box 17                                  
@@ -19842,12 +19788,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
 532000-532FFF                 (base 16)                     NVE Corporation                              
                                                             11409 Valley View Road                       
                                                             Eden Prairie  MN  55344-3617                 
-                                                            US                                           
-
-00-50-C2                      (hex)                         Orion Technologies, Incorporated             
-531000-531FFF                 (base 16)                     Orion Technologies, Incorporated             
-                                                            690 Cone Park Court                          
-                                                            Merritt Island  FL  32952                    
                                                             US                                           
 
 00-50-C2                      (hex)                         Tecna Srl                                    
@@ -20012,12 +19952,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Concord  Ontario  L4K 4V3                    
                                                             CA                                           
 
-00-50-C2                      (hex)                         Critical Link                                
-49D000-49DFFF                 (base 16)                     Critical Link                                
-                                                            6712 Brooklawn Parkway                       
-                                                            Syracuse  NY  13211                          
-                                                            US                                           
-
 00-50-C2                      (hex)                         Acutelogic Corporation                       
 496000-496FFF                 (base 16)                     Acutelogic Corporation                       
                                                             3-7-1                                        
@@ -20106,12 +20040,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
 3E8000-3E8FFF                 (base 16)                     Conformative Systems, Inc.                   
                                                             4516 Seton Center Parkway                    
                                                             Austin  TX  78759                            
-                                                            US                                           
-
-00-50-C2                      (hex)                         MedAvant Healthcare                          
-3E9000-3E9FFF                 (base 16)                     MedAvant Healthcare                          
-                                                            2533 Centennial Blvd                         
-                                                            Jeffersonville  IN  47150                    
                                                             US                                           
 
 00-50-C2                      (hex)                         CSIRO - Division of Exploration and Mining   
@@ -20552,12 +20480,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             MONTREAL  QUEBEC  H4P 1P7                    
                                                             CA                                           
 
-00-50-C2                      (hex)                         PHYTEC Messtechnik GmbH                      
-32A000-32AFFF                 (base 16)                     PHYTEC Messtechnik GmbH                      
-                                                            Robert-Koch-Straße  39                       
-                                                            Mainz  Rheinland-Pfalz  55129                
-                                                            DE                                           
-
 00-50-C2                      (hex)                         Digital Multimedia Technologies Spa          
 32B000-32BFFF                 (base 16)                     Digital Multimedia Technologies Spa          
                                                             Via Zanella, 21                              
@@ -20594,12 +20516,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Herlev    2730                               
                                                             DK                                           
 
-00-50-C2                      (hex)                         CEGELEC SUD EST                              
-339000-339FFF                 (base 16)                     CEGELEC SUD EST                              
-                                                            ROUTE DE SALON                               
-                                                            LES PENNES MIRABEAU    13755                 
-                                                            FR                                           
-
 00-50-C2                      (hex)                         Picture Elements, Inc.                       
 334000-334FFF                 (base 16)                     Picture Elements, Inc.                       
                                                             777 Panoramic Way                            
@@ -20623,12 +20539,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Via Lombardia, 15                            
                                                             Carate Brianza  MILANO  20048                
                                                             IT                                           
-
-00-50-C2                      (hex)                         Delphi Display Systems, Inc.                 
-301000-301FFF                 (base 16)                     Delphi Display Systems, Inc.                 
-                                                            3160 Pullman Street                          
-                                                            Costa Mesa  CA  92626                        
-                                                            US                                           
 
 00-50-C2                      (hex)                         CI Systems Ltd.                              
 303000-303FFF                 (base 16)                     CI Systems Ltd.                              
@@ -20942,12 +20852,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Chung Ho City  Taipei  235                   
                                                             TW                                           
 
-00-50-C2                      (hex)                         Fracarro Radioindustrie SPA                  
-21C000-21CFFF                 (base 16)                     Fracarro Radioindustrie SPA                  
-                                                            Via Cazzaro 3                                
-                                                            Castelfranco Veneto  Treviso  31033          
-                                                            IT                                           
-
 00-50-C2                      (hex)                         Level Control Systems                        
 216000-216FFF                 (base 16)                     Level Control Systems                        
                                                             #42 - 100 Kal Lake Rd.                       
@@ -20971,12 +20875,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             Gragdanski str. 111                          
                                                             St.Petersburg    195256                      
                                                             RU                                           
-
-00-50-C2                      (hex)                         AutoTOOLS group Co. Ltd.                     
-230000-230FFF                 (base 16)                     AutoTOOLS group Co. Ltd.                     
-                                                            15F, No. 88, Chung Hsiao E. Rd., Sec. 2,     
-                                                            Taipei    100                                
-                                                            TW                                           
 
 00-50-C2                      (hex)                         Silverback Systems                           
 234000-234FFF                 (base 16)                     Silverback Systems                           
@@ -21007,12 +20905,6 @@ A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.
                                                             1620 Oakland Rd.                             
                                                             San jose  CA  95131                          
                                                             US                                           
-
-00-50-C2                      (hex)                         DORLET S.A.                                  
-1E5000-1E5FFF                 (base 16)                     DORLET S.A.                                  
-                                                            Albert Einstein 34                           
-                                                            Miñanoo Mayor  ALAVA  01510                  
-                                                            ES                                           
 
 00-50-C2                      (hex)                         Ross Video Limited                           
 226000-226FFF                 (base 16)                     Ross Video Limited                           
@@ -21833,6 +21725,114 @@ B04000-B04FFF                 (base 16)                     Ubiquiti Networks In
                                                             Stockholm    11157                           
                                                             SE                                           
 
+00-50-C2                      (hex)                         DORLET SAU                                   
+E70000-E70FFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Einstein 34                           
+                                                            Vitoria  Alava  01510                        
+                                                            ES                                           
+
+00-50-C2                      (hex)                         DORLET SAU                                   
+1E5000-1E5FFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Einstein 34                           
+                                                            Miñanoo Mayor  ALAVA  01510                  
+                                                            ES                                           
+
+00-50-C2                      (hex)                         Gogo BA                                      
+CF5000-CF5FFF                 (base 16)                     Gogo BA                                      
+                                                            303 S. Technology Dr.                        
+                                                            Broomfield  CO  80021                        
+                                                            US                                           
+
+00-50-C2                      (hex)                         Fracarro srl                                 
+21C000-21CFFF                 (base 16)                     Fracarro srl                                 
+                                                            Via Cazzaro 3                                
+                                                            Castelfranco Veneto  Treviso  31033          
+                                                            IT                                           
+
+00-50-C2                      (hex)                         Applied Micro Electronics AME bv             
+B30000-B30FFF                 (base 16)                     Applied Micro Electronics AME bv             
+                                                            ESP 100                                      
+                                                            Eindhoven  NoordBrabant  5633 AA             
+                                                            NL                                           
+
+00-50-C2                      (hex)                         Orion Technologies,LLC                       
+531000-531FFF                 (base 16)                     Orion Technologies,LLC                       
+                                                            12605 Challenger Parkway Suite 130           
+                                                            Orlando  FL  32826                           
+                                                            US                                           
+
+00-50-C2                      (hex)                         MedAvant Healthcare                          
+3E9000-3E9FFF                 (base 16)                     MedAvant Healthcare                          
+                                                            2533 Centennial Blvd                         
+                                                            Jeffersonville  IN  47150                    
+                                                            US                                           
+
+00-50-C2                      (hex)                         MedAvant Healthcare                          
+6C6000-6C6FFF                 (base 16)                     MedAvant Healthcare                          
+                                                            2533 Centennial Blvd., Suite B               
+                                                            Jeffersonville  IN  47130                    
+                                                            US                                           
+
+00-50-C2                      (hex)                         AutoTOOLS group Co. Ltd.                     
+230000-230FFF                 (base 16)                     AutoTOOLS group Co. Ltd.                     
+                                                            15F, No. 88, Chung Hsiao E. Rd., Sec. 2,     
+                                                            Taipei    100                                
+                                                            TW                                           
+
+00-50-C2                      (hex)                         Delphi Display Systems, Inc.                 
+301000-301FFF                 (base 16)                     Delphi Display Systems, Inc.                 
+                                                            3160 Pullman Street                          
+                                                            Costa Mesa  CA  92626                        
+                                                            US                                           
+
+00-50-C2                      (hex)                         Delphi Display Systems, Inc.                 
+578000-578FFF                 (base 16)                     Delphi Display Systems, Inc.                 
+                                                            3160 Pullman Street                          
+                                                            Costa Mesa  CA  92626                        
+                                                            US                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+32A000-32AFFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Straße  39                       
+                                                            Mainz  Rheinland-Pfalz  55129                
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+782000-782FFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Straße 39                        
+                                                            Mainz  Rheinland-Pfalz  55129                
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Schnick-Schnack-Systems GmbH                 
+6D1000-6D1FFF                 (base 16)                     Schnick-Schnack-Systems GmbH                 
+                                                            Mathias-Brüggen Str. 79                      
+                                                            Koeln    50829                               
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Critical Link LLC                            
+49D000-49DFFF                 (base 16)                     Critical Link LLC                            
+                                                            6712 Brooklawn Parkway                       
+                                                            Syracuse  NY  13211                          
+                                                            US                                           
+
+40-D8-55                      (hex)                         Critical Link LLC                            
+17C000-17CFFF                 (base 16)                     Critical Link LLC                            
+                                                            6712 Brooklawn Parkway                       
+                                                            Syracuse  NY  13211                          
+                                                            US                                           
+
+00-50-C2                      (hex)                         Thales Communications Inc                    
+8AD000-8ADFFF                 (base 16)                     Thales Communications Inc                    
+                                                            22605 Gateway Center Drive                   
+                                                            Clarksburg  MD  20871                        
+                                                            US                                           
+
+00-50-C2                      (hex)                         Secure Systems & Services                    
+339000-339FFF                 (base 16)                     Secure Systems & Services                    
+                                                            24, Chemin de la Pouranque                   
+                                                            F-13752  LES PENNES MIRABEAU  CS30084        
+                                                            FR                                           
+
 00-50-C2                      (hex)                         Baxter International Inc                     
 2E0000-2E0FFF                 (base 16)                     Baxter International Inc                     
                                                             One Baxter Parkway                           
@@ -21868,12 +21868,6 @@ CC7000-CC7FFF                 (base 16)                     TOPROOTTechnology Co
                                                             Grammetstrasse 14                            
                                                             Liestal  BL  4410                            
                                                             CH                                           
-
-00-50-C2                      (hex)                         Mettler Toledo Hi-Speed                      
-AB5000-AB5FFF                 (base 16)                     Mettler Toledo Hi-Speed                      
-                                                            5 Barr Rd                                    
-                                                            Ithaca  NY  14850                            
-                                                            US                                           
 
 40-D8-55                      (hex)                         InventLab s.c.                               
 1D2000-1D2FFF                 (base 16)                     InventLab s.c.                               
@@ -21958,12 +21952,6 @@ AB5000-AB5FFF                 (base 16)                     Mettler Toledo Hi-Sp
                                                             3476 Dayton Street                           
                                                             Denver  CO  80238                            
                                                             US                                           
-
-40-D8-55                      (hex)                         HORIBA ABX                                   
-1BD000-1BDFFF                 (base 16)                     HORIBA ABX                                   
-                                                            rue du caducee                               
-                                                            Montpellier    34000                         
-                                                            FR                                           
 
 40-D8-55                      (hex)                         Beking Industrieele automatisering           
 1B9000-1B9FFF                 (base 16)                     Beking Industrieele automatisering           
@@ -22301,12 +22289,6 @@ AB5000-AB5FFF                 (base 16)                     Mettler Toledo Hi-Sp
                                                             Phoenix  Arizona  85004                      
                                                             US                                           
 
-40-D8-55                      (hex)                         An Chen Computer Co. Ltd.                    
-044000-044FFF                 (base 16)                     An Chen Computer Co. Ltd.                    
-                                                            2F.,No.37,Sec. 2, San Min Rd.,               
-                                                            New Taipei City    220                       
-                                                            TW                                           
-
 40-D8-55                      (hex)                         Ermes Elettronica s.r.l.                     
 033000-033FFF                 (base 16)                     Ermes Elettronica s.r.l.                     
                                                             Via Treviso, 36                              
@@ -22377,12 +22359,6 @@ AB5000-AB5FFF                 (base 16)                     Mettler Toledo Hi-Sp
 012000-012FFF                 (base 16)                     Sencon Inc.                                  
                                                             6385 W. 74th Street                          
                                                             Bedford Park  IL  60638                      
-                                                            US                                           
-
-40-D8-55                      (hex)                         Aircell                                      
-00B000-00BFFF                 (base 16)                     Aircell                                      
-                                                            303 S Technology Ct                          
-                                                            Broomfield  CO  80021                        
                                                             US                                           
 
 40-D8-55                      (hex)                         Digital Audio SA                             
@@ -22522,12 +22498,6 @@ EFD000-EFDFFF                 (base 16)                     Sanmina
                                                             PO 106                                       
                                                             Ornskoldsvik    89123                        
                                                             SE                                           
-
-00-50-C2                      (hex)                         HORIBA ABX                                   
-EF9000-EF9FFF                 (base 16)                     HORIBA ABX                                   
-                                                            rue du caducee                               
-                                                            Montpellier    34000                         
-                                                            FR                                           
 
 00-50-C2                      (hex)                         DSP DESIGN LTD                               
 F5C000-F5CFFF                 (base 16)                     DSP DESIGN LTD                               
@@ -23056,12 +23026,6 @@ DE8000-DE8FFF                 (base 16)                     Visual Productions
                                                             Rollandstraat 55ZW                           
                                                             Haarlem    2013SM                            
                                                             NL                                           
-
-00-50-C2                      (hex)                         DRS ITS                                      
-DDE000-DDEFFF                 (base 16)                     DRS ITS                                      
-                                                            100 N. Babcock St.                           
-                                                            Melbourne  Florida  32935                    
-                                                            US                                           
 
 00-50-C2                      (hex)                         SYSTECH                                      
 DD4000-DD4FFF                 (base 16)                     SYSTECH                                      
@@ -24539,12 +24503,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             Smithsburg  Maryland  21783                  
                                                             US                                           
 
-00-50-C2                      (hex)                         Neptune Technology Group, Inc.               
-89A000-89AFFF                 (base 16)                     Neptune Technology Group, Inc.               
-                                                            1600 AL HWY 229 S                            
-                                                            Tallassee  Alabama  36078                    
-                                                            US                                           
-
 00-50-C2                      (hex)                         Marine Communications Limited                
 895000-895FFF                 (base 16)                     Marine Communications Limited                
                                                             59, Bownham Park                             
@@ -24853,12 +24811,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             Törökkö  u. 5-7.                             
                                                             Budapest  Pest  1037                         
                                                             HU                                           
-
-00-50-C2                      (hex)                         DORLET S.A.                                  
-796000-796FFF                 (base 16)                     DORLET S.A.                                  
-                                                            Albert Einstein 34                           
-                                                            Vitoria-gasteiz  Alava  01510                
-                                                            ES                                           
 
 00-50-C2                      (hex)                         M Squared Lasers Limited                     
 791000-791FFF                 (base 16)                     M Squared Lasers Limited                     
@@ -25352,12 +25304,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             Mainz  Rheinland-Pfalz  55129                
                                                             DE                                           
 
-00-50-C2                      (hex)                         CEGELEC SUD EST                              
-5DB000-5DBFFF                 (base 16)                     CEGELEC SUD EST                              
-                                                            ROUTE DE SALON                               
-                                                            LES PENNES MIRABEAU    13755                 
-                                                            FR                                           
-
 00-50-C2                      (hex)                         Synrad, Inc.                                 
 5D7000-5D7FFF                 (base 16)                     Synrad, Inc.                                 
                                                             4600 Campus Place                            
@@ -25369,12 +25315,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             434-140 Oryu-Dong                            
                                                             Incheon    404-300                           
                                                             KR                                           
-
-00-50-C2                      (hex)                         DORLET S.A.                                  
-5AF000-5AFFFF                 (base 16)                     DORLET S.A.                                  
-                                                            Albert Einstein 34                           
-                                                            Vitoria  Alava  01510                        
-                                                            ES                                           
 
 00-50-C2                      (hex)                         INCOTEC GmbH                                 
 5B0000-5B0FFF                 (base 16)                     INCOTEC GmbH                                 
@@ -25675,12 +25615,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             Djurhagegatan 19                             
                                                             Malmö    21376                               
                                                             SE                                           
-
-00-50-C2                      (hex)                         PHYTEC Messtechnik GmbH                      
-485000-485FFF                 (base 16)                     PHYTEC Messtechnik GmbH                      
-                                                            Robert-Koch-Straße  39                       
-                                                            Mainz  Rheinland-Pfalz  55129                
-                                                            DE                                           
 
 00-50-C2                      (hex)                         Beijing Corelogic Communication Co., Ltd.    
 4EE000-4EEFFF                 (base 16)                     Beijing Corelogic Communication Co., Ltd.    
@@ -26365,12 +26299,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             B-91,INDUSTRIAL AREA, PHASE 8,               
                                                             SAS NAGAR  PUNJAB  160059                    
                                                             IN                                           
-
-00-50-C2                      (hex)                         Handtmann Maschinenfabrik GmbH&Co.KG         
-25F000-25FFFF                 (base 16)                     Handtmann Maschinenfabrik GmbH&Co.KG         
-                                                            Hubertus Liebrecht Str. 10-12                
-                                                            Biberach  D-BW  88483                        
-                                                            DE                                           
 
 00-50-C2                      (hex)                         Omicron Ceti AB                              
 259000-259FFF                 (base 16)                     Omicron Ceti AB                              
@@ -27104,12 +27032,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             Lenexa  KS  66214                            
                                                             US                                           
 
-00-50-C2                      (hex)                         VersaLogic Corp.                             
-02A000-02AFFF                 (base 16)                     VersaLogic Corp.                             
-                                                            3888 Stewart Rd.                             
-                                                            Eugene  OR  97402                            
-                                                            US                                           
-
 00-50-C2                      (hex)                         Clive Green & Co. Ltd.                       
 007000-007FFF                 (base 16)                     Clive Green & Co. Ltd.                       
                                                             1 New Street                                 
@@ -27379,3 +27301,81 @@ D43000-D43FFF                 (base 16)                     DSP4YOU LTd
                                                             Building 5, New Town Science & Technology Park
                                                             Nanjing    210019                            
                                                             US                                           
+
+00-50-C2                      (hex)                         DRS Imaging and Targeting Solutions          
+DDE000-DDEFFF                 (base 16)                     DRS Imaging and Targeting Solutions          
+                                                            100 N. Babcock St.                           
+                                                            Melbourne  Florida  32935                    
+                                                            US                                           
+
+00-50-C2                      (hex)                         DORLET SAU                                   
+796000-796FFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Einstein 34                           
+                                                            Vitoria-gasteiz  Alava  01510                
+                                                            ES                                           
+
+00-50-C2                      (hex)                         DORLET SAU                                   
+5AF000-5AFFFF                 (base 16)                     DORLET SAU                                   
+                                                            Albert Einstein 34                           
+                                                            Vitoria  Alava  01510                        
+                                                            ES                                           
+
+40-D8-55                      (hex)                         Gogo BA                                      
+00B000-00BFFF                 (base 16)                     Gogo BA                                      
+                                                            303 S Technology Ct                          
+                                                            Broomfield  CO  80021                        
+                                                            US                                           
+
+00-50-C2                      (hex)                         HORIBA ABX SAS                               
+EF9000-EF9FFF                 (base 16)                     HORIBA ABX SAS                               
+                                                            rue du caducee                               
+                                                            Montpellier  Herault  34000                  
+                                                            FR                                           
+
+40-D8-55                      (hex)                         HORIBA ABX SAS                               
+1BD000-1BDFFF                 (base 16)                     HORIBA ABX SAS                               
+                                                            rue du caducee                               
+                                                            Montpellier  Herault  34000                  
+                                                            FR                                           
+
+00-50-C2                      (hex)                         Neptune Technology Group Inc.                
+89A000-89AFFF                 (base 16)                     Neptune Technology Group Inc.                
+                                                            1600 AL HWY 229 S                            
+                                                            Tallassee  Alabama  36078                    
+                                                            US                                           
+
+40-D8-55                      (hex)                         An Chen Computer Co., Ltd.                   
+044000-044FFF                 (base 16)                     An Chen Computer Co., Ltd.                   
+                                                            2F.,No.37,Sec. 2, San Min Rd.,               
+                                                            New Taipei City    220                       
+                                                            TW                                           
+
+00-50-C2                      (hex)                         VersaLogic Corp.                             
+02A000-02AFFF                 (base 16)                     VersaLogic Corp.                             
+                                                            12100 SW Tualatin Rd                         
+                                                            Tualatin  OR  97062                          
+                                                            US                                           
+
+00-50-C2                      (hex)                         Phytec Messtechnik GmbH                      
+485000-485FFF                 (base 16)                     Phytec Messtechnik GmbH                      
+                                                            Robert-Koch-Straße  39                       
+                                                            Mainz  Rheinland-Pfalz  55129                
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Albert Handtmann Maschinenfabrik GmbH&Co.KG  
+25F000-25FFFF                 (base 16)                     Albert Handtmann Maschinenfabrik GmbH&Co.KG  
+                                                            Hubertus Liebrecht Str. 10-12                
+                                                            Biberach  D-BW  88483                        
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Mettler Toledo Hi Speed                      
+AB5000-AB5FFF                 (base 16)                     Mettler Toledo Hi Speed                      
+                                                            5 Barr Rd                                    
+                                                            Ithaca  NY  14850                            
+                                                            US                                           
+
+00-50-C2                      (hex)                         Secure Systems & Services                    
+5DB000-5DBFFF                 (base 16)                     Secure Systems & Services                    
+                                                            24, Chemin de la Pouranque                   
+                                                            F-13752  LES PENNES MIRABEAU  CS30084        
+                                                            FR                                           
