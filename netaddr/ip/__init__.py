@@ -1552,9 +1552,12 @@ def cidr_merge(ip_addrs):
     ranges = []
 
     for ip in ip_addrs:
-        cidr = IPNetwork(ip)
+        if isinstance(ip, (IPNetwork, IPRange)):
+            net = ip
+        else:
+            net = IPNetwork(ip)
         # Since non-overlapping ranges are the common case, remember the original
-        ranges.append( (cidr.version, cidr.last, cidr.first, cidr) )
+        ranges.append( (net.version, net.last, net.first, net) )
 
     ranges.sort()
     i = len(ranges) - 1
