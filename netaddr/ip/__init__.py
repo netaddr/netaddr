@@ -1258,7 +1258,7 @@ class IPNetwork(BaseIP, IPListMixin):
 
         if not self.prefixlen <= prefixlen:
             #   Don't return anything.
-            raise StopIteration
+            return
 
         #   Calculate number of subnets to be returned.
         width = self._module.width
