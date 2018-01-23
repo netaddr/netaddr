@@ -1018,7 +1018,7 @@ class IPNetwork(BaseIP, IPListMixin):
             connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
             ``broadcast`` will be ``None`` when dealing with those networks.
         """
-        if self._module.version == 4 and (self._module.width - self._prefixlen) <= 1:
+        if (self._module.width - self._prefixlen) <= 1:
             return None
         else:
             return IPAddress(self._value | self._hostmask_int, self._module.version)
@@ -1320,12 +1320,12 @@ class IPNetwork(BaseIP, IPListMixin):
         A generator that provides all the IP addresses that can be assigned
         to hosts within the range of this IP object's subnet.
 
-        - for IPv4, the network and broadcast addresses are always excluded. \
-          for subnets that contains less than 4 IP addresses /31 and /32 \
-          report in a manner per RFC 3021
+        - for IPv4, the network and broadcast addresses are excluded, excepted \
+          when using /31 or /32 subnets as per RFC 3021.
 
-        - for IPv6, only the unspecified address '::' or Subnet-Router anycast \
-          address (first address in the network) is excluded.
+        - for IPv6, only Subnet-Router anycast address (first address in the \
+          network) is excluded as per RFC 4291 section 2.6.1, excepted when using \
+          /127 or /128 subnets as per RFC 6164.
 
         .. warning::
 
@@ -1338,25 +1338,27 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         it_hosts = iter([])
 
+        # Common logic, first IP is always reserved.
+        first_usable_address = self.first + 1
         if self._module.version == 4:
-            #   IPv4 logic.
-            if self.size >= 4:
-                it_hosts = iter_iprange(
-                        IPAddress(self.first + 1, self._module.version),
-                        IPAddress(self.last - 1, self._module.version))
-            else:
-                it_hosts = iter_iprange(
-                        IPAddress(self.first, self._module.version),
-                        IPAddress(self.last, self._module.version))
+            # IPv4 logic, last address is reserved for broadcast.
+            last_usable_address = self.last - 1
         else:
-            #   IPv6 logic.
-            # RFC 4291 section 2.6.1 says that the first IP in the network is
-            # the Subnet-Router anycast address. This address cannot be
-            # assigned to a host, so use self.first+1.
-            if self.size >= 2:
-                it_hosts = iter_iprange(
-                    IPAddress(self.first + 1, self._module.version),
+            # IPv6 logic, no broadcast address reserved.
+            last_usable_address = self.last
+
+        # If subnet has a size of less than 4, then it is a /31, /32, /127 or /128.
+        # Handle them as per RFC 3021 (IPv4) or RFC 6164 (IPv6), and don't reserve
+        # first or last IP address.
+        if self.size >= 4:
+            it_hosts = iter_iprange(
+                    IPAddress(first_usable_address, self._module.version),
+                    IPAddress(last_usable_address, self._module.version))
+        else:
+            it_hosts = iter_iprange(
+                    IPAddress(self.first, self._module.version),
                     IPAddress(self.last, self._module.version))
+
         return it_hosts
 
     def __str__(self):
