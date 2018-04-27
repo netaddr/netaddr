@@ -499,6 +499,14 @@ class IPAddress(BaseIP):
         #   Python 3.x
         return self._value
 
+    def __bytes__(self):
+        """ 
+        :return: a bytes object equivalent to this IP address. In network
+        byte order, big-endian.
+        """
+        #   Python 3.x
+        return self._value.to_bytes(self._module.width//8, 'big')
+
     def bits(self, word_sep=None):
         """
         :param word_sep: (optional) the separator to insert between words.
