@@ -1,4 +1,15 @@
 ---------------
+Release: 0.7.20
+---------------
+Date: 13 Nov 2019
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.19
+^^^^^^^^^^^^^^^^^^^^
+
+* updated the bundled IANA and IEEE databases
+
+---------------
 Release: 0.7.19
 ---------------
 Date: 11 Jan 2017
