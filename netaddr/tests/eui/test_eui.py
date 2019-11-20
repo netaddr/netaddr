@@ -233,6 +233,21 @@ def test_iab():
     assert int(eui.oui) == 0x0050c2
     assert int(eui.iab) == 0x0050c205c
 
+    assert IAB(eui.value) == eui.iab
+
+
+def test_new_iab():
+    eui = EUI('40-D8-55-13-10-00')
+
+    assert eui.is_iab()
+    assert str(eui.oui) == '40-D8-55'
+    assert str(eui.iab) == '40-D8-55-13-10-00'
+    assert eui.ei == '13-10-00'
+    assert int(eui.oui) == 0x40d855
+    assert int(eui.iab) == 0x40d855131
+
+    assert IAB(eui.value) == eui.iab
+
 
 def test_eui48_vs_eui64():
     eui48 = EUI('01-00-00-01-00-00')

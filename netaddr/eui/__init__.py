@@ -182,6 +182,8 @@ class OUI(BaseIdentifier):
 
 
 class IAB(BaseIdentifier):
+    IAB_EUI_VALUES = (0x0050c2, 0x40d855)
+
     """
     An individual IEEE IAB (Individual Address Block) identifier.
 
@@ -190,8 +192,8 @@ class IAB(BaseIdentifier):
     """
     __slots__ = ('record',)
 
-    @staticmethod
-    def split_iab_mac(eui_int, strict=False):
+    @classmethod
+    def split_iab_mac(cls, eui_int, strict=False):
         """
         :param eui_int: a MAC IAB as an unsigned integer.
 
@@ -199,7 +201,7 @@ class IAB(BaseIdentifier):
             IAB MAC/EUI-48 address are non-zero, ignores them otherwise.
             (Default: False)
         """
-        if 0x50c2000 <= eui_int <= 0x50c2fff:
+        if (eui_int >> 12) in cls.IAB_EUI_VALUES:
             return eui_int, 0
 
         user_mask = 2 ** 12 - 1
@@ -207,7 +209,7 @@ class IAB(BaseIdentifier):
         iab_bits = eui_int >> 12
         user_bits = (eui_int | iab_mask) - iab_mask
 
-        if 0x50c2000 <= iab_bits <= 0x50c2fff:
+        if (iab_bits >> 12) in cls.IAB_EUI_VALUES:
             if strict and user_bits != 0:
                 raise ValueError('%r is not a strict IAB!' % hex(user_bits))
         else:
@@ -492,7 +494,7 @@ class EUI(BaseIdentifier):
 
     def is_iab(self):
         """:return: True if this EUI is an IAB address, False otherwise"""
-        return 0x50c2000 <= (self._value >> 12) <= 0x50c2fff
+        return (self._value >> 24) in IAB.IAB_EUI_VALUES
 
     @property
     def iab(self):
