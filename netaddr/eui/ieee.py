@@ -258,30 +258,65 @@ class IABIndexParser(Publisher):
         self.notify(record)
 
 
-def create_index_from_registry(registry_path, index_path, parser):
-    """Generate an index files from the IEEE registry file."""
-    oui_parser = parser(registry_path)
-    oui_parser.attach(FileIndexer(index_path))
+def create_oui_index(registry_path, out):
+    """Create the OUI index file.
+
+    :param registry_path: The filename to read OUI entries from.
+    :param out: A filename (or file-like object) to write the index to.
+    """
+    oui_parser = OUIIndexParser(registry_path)
+    oui_parser.attach(FileIndexer(out))
     oui_parser.parse()
 
+
+def create_iab_index(registry_path, out):
+    """Create the IAB index file.
+
+    :param registry_path: The filename to read OUI entries from.
+    :param out: A filename (or file-like object) to write the index to.
+    """
+    iab_parser = IABIndexParser(registry_path)
+    iab_parser.attach(FileIndexer(out))
+    iab_parser.parse()
 
 def create_indices():
     """Create indices for OUI and IAB file based lookups"""
     create_index_from_registry(OUI_REGISTRY_PATH, OUI_INDEX_PATH, OUIIndexParser)
     create_index_from_registry(IAB_REGISTRY_PATH, IAB_INDEX_PATH, IABIndexParser)
 
+def populate_index(fp, into=None):
+    """Given the specified file-like object, populates the given index.
 
-def load_index(index, index_path):
-    """Load index from file into index data structure."""
-    fp = open(index_path, 'rb')
+    :param fp: An open file-like object (such as for OUI or IAB entries).
+    :param into: If specified, loads the index into the specified dictionary.
+
+    :returns: the populated index object.
+    """
+    if into is None:
+        into = {}
+    for row in _csv.reader([x.decode('UTF-8') for x in fp]):
+        (key, offset, size) = [int(_) for _ in row]
+        into.setdefault(key, [])
+        into[key].append((offset, size))
+    return into
+
+
+def load_index_file(filename, into=None):
+    """Load OUI or IAB index into the specified object.
+
+    :param filename: The index filename to read.
+    :param into: If specified, loads the index into the specified dictionary.
+
+    :returns: the populated index object.
+    """
+    if into is None:
+        into = {}
+    fp = open(filename, 'rb')
     try:
-        for row in _csv.reader([x.decode('UTF-8') for x in fp]):
-            (key, offset, size) = [int(_) for _ in row]
-            index.setdefault(key, [])
-            index[key].append((offset, size))
+        into = populate_index(fp, into)
     finally:
         fp.close()
-
+    return into
 
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
@@ -291,7 +326,9 @@ def load_indices():
 
 if __name__ == '__main__':
     #   Generate indices when module is executed as a script.
-    create_indices()
+    create_oui_index(OUI_REGISTRY, OUI_METADATA)
+    create_iab_index(IAB_REGISTRY, IAB_METADATA)
 else:
     #   On module load read indices in memory to enable lookups.
-    load_indices()
+    load_index_file(OUI_METADATA, into=OUI_INDEX)
+    load_index_file(IAB_METADATA, into=IAB_INDEX)

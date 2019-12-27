@@ -1,0 +1,38 @@
+  Generated: Sun, 31 May 2015 05:00:03 -0400
+
+  00-22-58   (hex)		Taiyo Yuden Co., Ltd.
+  002258     (base 16)		Taiyo Yuden Co., Ltd.
+  				8-1, Sakae-cho
+				Takasaki-shi Gunma-ken 370-8522
+				JAPAN
+
+  00-22-59   (hex)		Guangzhou New Postcom Equipment Co.,Ltd.
+  002259     (base 16)		Guangzhou New Postcom Equipment Co.,Ltd.
+  				No.3Ã‚Â¡Ã‚Â¡Guangpuxi Road,Guangzhou Science City,
+				Guangzhou Guangdong 510663
+				CHINA
+
+  00-22-5A   (hex)		Garde Security AB
+  00225A     (base 16)		Garde Security AB
+  				Box 78
+				Soderhamn  S-826 22
+				SWEDEN
+
+  00-23-88   (hex)		V.T. Telematica S.p.a.
+  002388     (base 16)		V.T. Telematica S.p.a.
+  				Via Gorky, 21
+				San Giuliano Milanese Milano 20098
+				ITALY
+
+  00-23-89   (hex)		HANGZHOU H3C Technologies Co., Ltd.
+  002389     (base 16)		HANGZHOU H3C Technologies Co., Ltd.
+  				Oriental Electronics Bldg., #2, Chuangye RoadÃ‚Â£Ã‚Â¬Shangdi Information Industry Base,
+				Haidian District, Beijing, P.R.China
+				Beijing  100085
+				CHINA
+
+  00-23-8A   (hex)		Ciena Corporation
+  00238A     (base 16)		Ciena Corporation
+  				920 Elkridge Landing
+				Linthicum MD 21090
+				UNITED STATES
