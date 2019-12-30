@@ -1,0 +1,11 @@
+version: 2
+jobs:
+    build:
+        working_directory: ~/netaddr
+        docker:
+            - image: circleci/python:3.6.9
+        steps:
+            - checkout
+            - run:
+                command: |
+                    make test
