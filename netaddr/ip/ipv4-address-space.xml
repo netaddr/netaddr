@@ -4,7 +4,7 @@
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
   <category>Internet Protocol version 4 (IPv4) Address Space</category>
-  <updated>2015-08-10</updated>
+  <updated>2019-12-27</updated>
   <xref type="rfc" data="rfc7249"/>
   <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
 All other assignments require IETF Review.</registration_rule>
@@ -41,7 +41,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>003/8</prefix>
-    <designation>General Electric Company</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-05</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -52,7 +52,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>004/8</prefix>
-    <designation>Level 3 Communications, Inc.</designation>
+    <designation>Administered by ARIN</designation>
     <date>1992-12</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -95,7 +95,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>008/8</prefix>
-    <designation>Level 3 Communications, Inc.</designation>
+    <designation>Administered by ARIN</designation>
     <date>1992-12</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -106,7 +106,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>009/8</prefix>
-    <designation>IBM</designation>
+    <designation>Administered by ARIN</designation>
     <date>1992-08</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -144,7 +144,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     </rdap>
     <status>LEGACY</status>
   </record>
-  <record updated="2015-05-01">
+  <record>
     <prefix>013/8</prefix>
     <designation>Administered by ARIN</designation>
     <date>1991-09</date>
@@ -168,7 +168,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>015/8</prefix>
-    <designation>Hewlett-Packard Company</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-07</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -179,7 +179,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>016/8</prefix>
-    <designation>Digital Equipment Corporation</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-11</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -201,7 +201,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>018/8</prefix>
-    <designation>MIT</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-01</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -223,7 +223,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>020/8</prefix>
-    <designation>Computer Sciences Corporation</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-10</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -276,9 +276,9 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     </rdap>
     <status>ALLOCATED</status>
   </record>
-  <record>
+  <record updated="2018-09-18">
     <prefix>025/8</prefix>
-    <designation>UK Ministry of Defence</designation>
+    <designation>Administered by RIPE NCC</designation>
     <date>1995-01</date>
     <whois>whois.ripe.net</whois>
     <rdap>
@@ -374,7 +374,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>034/8</prefix>
-    <designation>Halliburton Company</designation>
+    <designation>Administered by ARIN</designation>
     <date>1993-03</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -479,7 +479,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>044/8</prefix>
-    <designation>Amateur Radio Digital Communications</designation>
+    <designation>Administered by ARIN</designation>
     <date>1992-07</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -616,9 +616,9 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     </rdap>
     <status>LEGACY</status>
   </record>
-  <record updated="2014-10-14">
+  <record updated="2019-12-27">
     <prefix>057/8</prefix>
-    <designation>Societe Internationale de Telecommunications Aeronautiques S.C.R.L.</designation>
+    <designation>Administered by RIPE NCC</designation>
     <date>1995-05</date>
     <whois>whois.ripe.net</whois>
     <rdap>
@@ -2619,10 +2619,10 @@ Reserved by protocol. For authoritative registration, see <xref type="registry" 
 Complete registration details are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
   <footnote anchor="9">192.0.2.0/24  reserved for TEST-NET-1 <xref type="rfc" data="rfc5737"/>. 
 Complete registration details for 192.0.2.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
-192.88.99.0/24 reserved for 6to4 Relay Anycast <xref type="rfc" data="rfc3068"/>
+192.88.99.0/24 reserved for 6to4 Relay Anycast <xref type="rfc" data="rfc7526"/>
 Complete registration details for 192.88.99.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
 192.88.99.2/32 reserved for 6a44 Relay Anycast <xref type="rfc" data="rfc6751"/> (possibly collocated with 6to4 Relay 
-at 192.88.99.1/32 - see <xref type="rfc" data="rfc3068"/> section 2.4)
+at 192.88.99.1/32 - see <xref type="rfc" data="rfc7526"/>)
 192.168.0.0/16 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>. 
 Complete registration details for 192.168.0.0/16 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
   <footnote anchor="10">192.0.0.0/24 reserved for IANA IPv4 Special Purpose Address Registry <xref type="rfc" data="rfc5736"/>. 

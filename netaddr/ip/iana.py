@@ -214,7 +214,7 @@ class IPv6Parser(XMLRecordParser):
         record = {
             'prefix': str(rec.get('prefix', '')).strip(),
             'allocation': str(rec.get('description', '')).strip(),
-            'reference': str(rec.get('rfc', [''])[0]).strip(),
+            'reference': str(rec.get('rfc', [''])[-1]).strip(),
         }
 
         return record
