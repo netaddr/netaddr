@@ -49,7 +49,7 @@ def base85_to_ipv6(addr):
     tokens = list(addr)
 
     if len(tokens) != 20:
-        raise AddrFormatError('Invalid base 85 IPv6 address: %r' % addr)
+        raise AddrFormatError('Invalid base 85 IPv6 address: %r' % (addr,))
 
     result = 0
     for i, num in enumerate(reversed(tokens)):

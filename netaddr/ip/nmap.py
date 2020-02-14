@@ -31,15 +31,15 @@ def _nmap_octet_target_values(spec):
             low = int(left)
             high = int(right)
             if not ((0 <= low <= 255) and (0 <= high <= 255)):
-                raise ValueError('octet value overflow for spec %s!' % spec)
+                raise ValueError('octet value overflow for spec %s!' % (spec,))
             if low > high:
-                raise ValueError('left side of hyphen must be <= right %r' % element)
+                raise ValueError('left side of hyphen must be <= right %r' % (element,))
             for octet in _iter_range(low, high + 1):
                 values.add(octet)
         else:
             octet = int(element)
             if not (0 <= octet <= 255):
-                raise ValueError('octet value overflow for spec %s!' % spec)
+                raise ValueError('octet value overflow for spec %s!' % (spec,))
             values.add(octet)
 
     return sorted(values)
@@ -57,7 +57,7 @@ def _generate_nmap_octet_ranges(nmap_target_spec):
     tokens = nmap_target_spec.split('.')
 
     if len(tokens) != 4:
-        raise AddrFormatError('invalid nmap range: %s' % nmap_target_spec)
+        raise AddrFormatError('invalid nmap range: %s' % (nmap_target_spec,))
 
     return (_nmap_octet_target_values(tokens[0]),
             _nmap_octet_target_values(tokens[1]),
@@ -69,7 +69,7 @@ def _parse_nmap_target_spec(target_spec):
     if '/' in target_spec:
         _, prefix = target_spec.split('/', 1)
         if not (0 < int(prefix) < 33):
-            raise AddrFormatError('CIDR prefix expected, not %s' % prefix)
+            raise AddrFormatError('CIDR prefix expected, not %s' % (prefix,))
         net = IPNetwork(target_spec)
         if net.version != 4:
             raise AddrFormatError('CIDR only support for IPv4!')

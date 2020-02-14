@@ -153,7 +153,7 @@ def str_to_int(addr):
         if not words:
             raise TypeError
     except TypeError:
-        raise AddrFormatError('invalid IEEE EUI-64 identifier: %r!' % addr)
+        raise AddrFormatError('invalid IEEE EUI-64 identifier: %r!' % (addr,))
 
     if isinstance(words, tuple):
         pass

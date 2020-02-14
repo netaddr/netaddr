@@ -126,7 +126,7 @@ def str_to_int(addr, flags=0):
         else:
             return _struct.unpack('>I', _inet_aton(addr))[0]
     except Exception:
-        raise AddrFormatError('%r is not a valid IPv4 address string!' % addr)
+        raise AddrFormatError('%r is not a valid IPv4 address string!' % (addr,))
 
 
 def int_to_str(int_val, dialect=None):
@@ -145,7 +145,7 @@ def int_to_str(int_val, dialect=None):
             (int_val >> 8) & 0xff,
             int_val & 0xff)
     else:
-        raise ValueError('%r is not a valid 32-bit unsigned integer!' % int_val)
+        raise ValueError('%r is not a valid 32-bit unsigned integer!' % (int_val,))
 
 
 def int_to_arpa(int_val):
@@ -195,7 +195,7 @@ def int_to_words(int_val):
     """
     if not 0 <= int_val <= max_int:
         raise ValueError('%r is not a valid integer value supported by'
-                         'this address type!' % int_val)
+                         'this address type!' % (int_val,))
     return ( int_val >> 24,
             (int_val >> 16) & 0xff,
             (int_val >>  8) & 0xff,
@@ -210,7 +210,7 @@ def words_to_int(words):
         by word (octet) sequence.
     """
     if not valid_words(words):
-        raise ValueError('%r is not a valid octet list for an IPv4 address!' % words)
+        raise ValueError('%r is not a valid octet list for an IPv4 address!' % (words,))
     return _struct.unpack('>I', _struct.pack('4B', *words))[0]
 
 
