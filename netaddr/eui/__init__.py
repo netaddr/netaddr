@@ -85,9 +85,9 @@ class OUI(BaseIdentifier):
             if 0 <= oui <= 0xffffff:
                 self._value = oui
             else:
-                raise ValueError('OUI int outside expected range: %r' % oui)
+                raise ValueError('OUI int outside expected range: %r' % (oui,))
         else:
-            raise TypeError('unexpected OUI format: %r' % oui)
+            raise TypeError('unexpected OUI format: %r' % (oui,))
 
         #   Discover offsets.
         if self._value in ieee.OUI_INDEX:
@@ -98,7 +98,7 @@ class OUI(BaseIdentifier):
                 self._parse_data(data, offset, size)
             fh.close()
         else:
-            raise NotRegisteredError('OUI %r not registered!' % oui)
+            raise NotRegisteredError('OUI %r not registered!' % (oui,))
 
     def __eq__(self, other):
         if not isinstance(other, OUI):
@@ -252,7 +252,7 @@ class IAB(BaseIdentifier):
             iab_int, user_int = self.split_iab_mac(iab, strict=strict)
             self._value = iab_int
         else:
-            raise TypeError('unexpected IAB format: %r!' % iab)
+            raise TypeError('unexpected IAB format: %r!' % (iab,))
 
         #   Discover offsets.
         if self._value in ieee.IAB_INDEX:
@@ -265,7 +265,7 @@ class IAB(BaseIdentifier):
             self._parse_data(data, offset, size)
             fh.close()
         else:
-            raise NotRegisteredError('IAB %r not unregistered!' % iab)
+            raise NotRegisteredError('IAB %r not unregistered!' % (iab,))
 
     def __eq__(self, other):
         if not isinstance(other, IAB):
@@ -408,7 +408,7 @@ class EUI(BaseIdentifier):
             self._module = _eui64
         else:
             raise ValueError('unpickling failed for object state: %s' \
-                % str(state))
+                % (state,))
 
         self.dialect = dialect
 
@@ -434,7 +434,7 @@ class EUI(BaseIdentifier):
 
             if self._module is None:
                 raise AddrFormatError('failed to detect EUI version: %r'
-                    % value)
+                    % (value,))
         else:
             #   EUI version is explicit.
             if _is_str(value):
@@ -447,7 +447,7 @@ class EUI(BaseIdentifier):
                 if 0 <= int(value) <= self._module.max_int:
                     self._value = int(value)
                 else:
-                    raise AddrFormatError('bad address format: %r' % value)
+                    raise AddrFormatError('bad address format: %r' % (value,))
 
     value = property(_get_value, _set_value, None,
         'a positive integer representing the value of this EUI indentifier.')
@@ -522,7 +522,7 @@ class EUI(BaseIdentifier):
             words = self._module.int_to_words(self._value, self._dialect)
             return [words[i] for i in range(*idx.indices(len(words)))]
         else:
-            raise TypeError('unsupported type %r!' % idx)
+            raise TypeError('unsupported type %r!' % (idx,))
 
     def __setitem__(self, idx, value):
         """Set the value of the word referenced by index in this address"""
@@ -534,7 +534,7 @@ class EUI(BaseIdentifier):
             raise TypeError('index not an integer!')
 
         if not 0 <= idx <= (self._dialect.num_words - 1):
-            raise IndexError('index %d outside address type boundary!' % idx)
+            raise IndexError('index %d outside address type boundary!' % (idx,))
 
         if not _is_int(value):
             raise TypeError('value not an integer!')

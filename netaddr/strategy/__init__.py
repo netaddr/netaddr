@@ -95,7 +95,7 @@ def words_to_int(words, word_size, num_words):
         by word sequence.
     """
     if not valid_words(words, word_size, num_words):
-        raise ValueError('invalid integer word sequence: %r!' % words)
+        raise ValueError('invalid integer word sequence: %r!' % (words,))
 
     int_val = 0
     for i, num in enumerate(reversed(words)):
@@ -152,7 +152,7 @@ def bits_to_int(bits, width, word_sep=''):
         by network address in readable binary form.
     """
     if not valid_bits(bits, width, word_sep):
-        raise ValueError('invalid readable binary string: %r!' % bits)
+        raise ValueError('invalid readable binary string: %r!' % (bits,))
 
     if word_sep != '':
         bits = bits.replace(word_sep, '')
@@ -189,7 +189,7 @@ def int_to_bits(int_val, word_size, num_words, word_sep=''):
     if word_sep is not '':
         #   Check custom separator.
         if not _is_str(word_sep):
-            raise ValueError('word separator is not a string: %r!' % word_sep)
+            raise ValueError('word separator is not a string: %r!' % (word_sep,))
 
     return word_sep.join(bit_words)
 
@@ -252,7 +252,7 @@ def int_to_bin(int_val, width):
         bin_val = '0b' + _re.sub(r'^[0]+([01]+)$', r'\1', ''.join(bin_tokens))
 
     if len(bin_val[2:]) > width:
-        raise IndexError('binary string out of bounds: %s!' % bin_val)
+        raise IndexError('binary string out of bounds: %s!' % (bin_val,))
 
     return bin_val
 
@@ -268,6 +268,6 @@ def bin_to_int(bin_val, width):
         by Python binary string format.
     """
     if not valid_bin(bin_val, width):
-        raise ValueError('not a valid Python binary string: %r!' % bin_val)
+        raise ValueError('not a valid Python binary string: %r!' % (bin_val,))
 
     return int(bin_val.replace('0b', ''), 2)

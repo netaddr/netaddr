@@ -407,7 +407,7 @@ def _within_bounds(ip, ip_range):
         #   IP address.
         return ip == ip_range
 
-    raise Exception('Unsupported IP range or address: %r!' % ip_range)
+    raise Exception('Unsupported IP range or address: %r!' % (ip_range,))
 
 
 def query(ip_addr):

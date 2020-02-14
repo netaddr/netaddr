@@ -173,9 +173,9 @@ def str_to_int(addr):
                     words = (match_result[0],)
                 break
         if not found_match:
-            raise AddrFormatError('%r is not a supported MAC format!' % addr)
+            raise AddrFormatError('%r is not a supported MAC format!' % (addr,))
     else:
-        raise TypeError('%r is not str() or unicode()!' % addr)
+        raise TypeError('%r is not str() or unicode()!' % (addr,))
 
     int_val = None
 
@@ -192,7 +192,7 @@ def str_to_int(addr):
         #   12 bytes (bare, no delimiters)
         int_val = int('%012x' % int(words[0], 16), 16)
     else:
-        raise AddrFormatError('unexpected word count in MAC address %r!' % addr)
+        raise AddrFormatError('unexpected word count in MAC address %r!' % (addr,))
 
     return int_val
 
