@@ -5,7 +5,6 @@ netaddr.egg-info/
 __pycache__/
 *.DS_Store
 build/
-dist/
 docs/build/
 .idea/
 .cache/
