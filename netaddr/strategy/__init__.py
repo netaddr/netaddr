@@ -186,7 +186,7 @@ def int_to_bits(int_val, word_size, num_words, word_sep=''):
         bits = ('0' * word_size + bit_str)[-word_size:]
         bit_words.append(bits)
 
-    if word_sep is not '':
+    if word_sep != '':
         #   Check custom separator.
         if not _is_str(word_sep):
             raise ValueError('word separator is not a string: %r!' % word_sep)
