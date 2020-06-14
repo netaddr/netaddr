@@ -1,0 +1,2 @@
+# Tell Git not to mess with line endings when checking out on Windows, it breaks tests
+*   -text
