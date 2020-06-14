@@ -135,7 +135,6 @@ def test_strategy_ipv6_mapped_and_compatible_ipv4_string_formatting():
     assert ipv6.int_to_str(0xffffffff0000) == '::ffff:255.255.0.0'
     assert ipv6.int_to_str(0xffffff000000) == '::ffff:255.0.0.0'
     assert ipv6.int_to_str(0xffff000000) == '::ff:ff00:0'
-    assert ipv6.int_to_str(0xffff00000000) == '::ffff:0.0.0.0'
     assert ipv6.int_to_str(0x1ffff00000000) == '::1:ffff:0:0'
     assert ipv6.int_to_str(0xffff00000000) == '::ffff:0.0.0.0'
 
