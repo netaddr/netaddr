@@ -174,14 +174,9 @@ def main():
         package_data=package_data,
         packages=packages,
         platforms=platforms,
-        scripts=['netaddr/tools/netaddr'],
+        entry_points={'console_scripts': ['netaddr = netaddr.cli:main']},
         url='https://github.com/drkjam/netaddr/',
         version=netaddr.__version__,
-        options={
-            'build_scripts': {
-                'executable': '/usr/bin/env python',
-            },
-        },
     )
 
     setup(**setup_options)
