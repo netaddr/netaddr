@@ -29,13 +29,12 @@ More details can be found at the following URLs :-
     - IEEE Protocols Information Home Page - http://www.iana.org/protocols/
 """
 
-import os.path as _path
 import sys as _sys
 from xml.sax import make_parser, handler
 
 from netaddr.core import Publisher, Subscriber
 from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
-from netaddr.compat import _dict_items, _callable
+from netaddr.compat import _dict_items, _callable, _importlib_resources
 
 
 
@@ -362,21 +361,21 @@ def load_info():
     Parse and load internal IANA data lookups with the latest information from
     data files.
     """
-    PATH = _path.dirname(__file__)
-
-    ipv4 = IPv4Parser(open(_path.join(PATH, 'ipv4-address-space.xml')))
+    ipv4 = IPv4Parser(_importlib_resources.open_binary(__package__, 'ipv4-address-space.xml'))
     ipv4.attach(DictUpdater(IANA_INFO['IPv4'], 'IPv4', 'prefix'))
     ipv4.parse()
 
-    ipv6 = IPv6Parser(open(_path.join(PATH, 'ipv6-address-space.xml')))
+    ipv6 = IPv6Parser(_importlib_resources.open_binary(__package__, 'ipv6-address-space.xml'))
     ipv6.attach(DictUpdater(IANA_INFO['IPv6'], 'IPv6', 'prefix'))
     ipv6.parse()
 
-    ipv6ua = IPv6UnicastParser(open(_path.join(PATH, 'ipv6-unicast-address-assignments.xml')))
+    ipv6ua = IPv6UnicastParser(
+        _importlib_resources.open_binary(__package__, 'ipv6-unicast-address-assignments.xml'),
+    )
     ipv6ua.attach(DictUpdater(IANA_INFO['IPv6_unicast'], 'IPv6_unicast', 'prefix'))
     ipv6ua.parse()
 
-    mcast = MulticastParser(open(_path.join(PATH, 'multicast-addresses.xml')))
+    mcast = MulticastParser(_importlib_resources.open_binary(__package__, 'multicast-addresses.xml'))
     mcast.attach(DictUpdater(IANA_INFO['multicast'], 'multicast', 'address'))
     mcast.parse()
 

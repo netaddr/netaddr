@@ -13,8 +13,6 @@ from setuptools import setup
 if os.path.exists('MANIFEST'):
     os.remove('MANIFEST')
 
-import netaddr
-
 keywords = [
     'Networking', 'Systems Administration', 'IANA', 'IEEE', 'CIDR', 'IP',
     'IPv4', 'IPv6', 'CIDR', 'EUI', 'MAC', 'MAC-48', 'EUI-48', 'EUI-64'
@@ -171,7 +169,16 @@ def main():
         platforms=platforms,
         entry_points={'console_scripts': ['netaddr = netaddr.cli:main']},
         url='https://github.com/drkjam/netaddr/',
-        version=netaddr.__version__,
+        version=(
+            [
+                ln for ln in open(os.path.join(os.path.dirname(__file__), 'netaddr', '__init__.py'))
+                if '__version__' in ln
+            ][0]
+            .split('=')[-1]
+            .strip()
+            .strip('\'"')
+        ),
+        install_requires=['importlib-resources;python_version<"3.7"'],
     )
 
     setup(**setup_options)
