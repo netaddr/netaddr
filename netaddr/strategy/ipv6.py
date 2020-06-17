@@ -139,7 +139,7 @@ def str_to_int(addr, flags=0):
         packed_int = _inet_pton(AF_INET6, addr)
         return packed_to_int(packed_int)
     except Exception:
-        raise AddrFormatError('%r is not a valid IPv6 address string!' % addr)
+        raise AddrFormatError('%r is not a valid IPv6 address string!' % (addr,))
 
 
 def int_to_str(int_val, dialect=None):
@@ -167,7 +167,7 @@ def int_to_str(int_val, dialect=None):
             tokens = [dialect.word_fmt % word for word in words]
             addr = word_sep.join(tokens)
     except Exception:
-        raise ValueError('%r is not a valid 128-bit unsigned integer!' % int_val)
+        raise ValueError('%r is not a valid 128-bit unsigned integer!' % (int_val,))
 
     return addr
 

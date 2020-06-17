@@ -35,23 +35,12 @@ More details can be found at the following URLs :-
 import os.path as _path
 import csv as _csv
 
-from netaddr.compat import _bytes_type
+from netaddr.compat import _bytes_type, _importlib_resources
 from netaddr.core import Subscriber, Publisher
 
 
-#: Path to local copy of IEEE OUI Registry data file.
-OUI_REGISTRY_PATH = _path.join(_path.dirname(__file__), 'oui.txt')
-#: Path to netaddr OUI index file.
-OUI_INDEX_PATH = _path.join(_path.dirname(__file__), 'oui.idx')
-
 #: OUI index lookup dictionary.
 OUI_INDEX = {}
-
-#: Path to local copy of IEEE IAB Registry data file.
-IAB_REGISTRY_PATH = _path.join(_path.dirname(__file__), 'iab.txt')
-
-#: Path to netaddr IAB index file.
-IAB_INDEX_PATH = _path.join(_path.dirname(__file__), 'iab.idx')
 
 #: IAB index lookup dictionary.
 IAB_INDEX = {}
@@ -258,22 +247,29 @@ class IABIndexParser(Publisher):
         self.notify(record)
 
 
-def create_index_from_registry(registry_path, index_path, parser):
+def create_index_from_registry(registry_fh, index_path, parser):
     """Generate an index files from the IEEE registry file."""
-    oui_parser = parser(registry_path)
+    oui_parser = parser(registry_fh)
     oui_parser.attach(FileIndexer(index_path))
     oui_parser.parse()
 
 
 def create_indices():
     """Create indices for OUI and IAB file based lookups"""
-    create_index_from_registry(OUI_REGISTRY_PATH, OUI_INDEX_PATH, OUIIndexParser)
-    create_index_from_registry(IAB_REGISTRY_PATH, IAB_INDEX_PATH, IABIndexParser)
+    create_index_from_registry(
+        _path.join(_path.dirname(__file__), 'oui.txt'),
+        _path.join(_path.dirname(__file__), 'oui.idx'),
+        OUIIndexParser,
+    )
+    create_index_from_registry(
+        _path.join(_path.dirname(__file__), 'iab.txt'),
+        _path.join(_path.dirname(__file__), 'iab.idx'),
+        IABIndexParser,
+    )
 
 
-def load_index(index, index_path):
+def load_index(index, fp):
     """Load index from file into index data structure."""
-    fp = open(index_path, 'rb')
     try:
         for row in _csv.reader([x.decode('UTF-8') for x in fp]):
             (key, offset, size) = [int(_) for _ in row]
@@ -285,8 +281,8 @@ def load_index(index, index_path):
 
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
-    load_index(OUI_INDEX, OUI_INDEX_PATH)
-    load_index(IAB_INDEX, IAB_INDEX_PATH)
+    load_index(OUI_INDEX, _importlib_resources.open_binary(__package__, 'oui.idx'))
+    load_index(IAB_INDEX, _importlib_resources.open_binary(__package__, 'iab.idx'))
 
 
 if __name__ == '__main__':

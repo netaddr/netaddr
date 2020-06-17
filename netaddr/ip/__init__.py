@@ -316,7 +316,7 @@ class IPAddress(BaseIP):
                     if 0 <= int(addr) <= self._module.max_int:
                         self._value = int(addr)
                     else:
-                        raise AddrFormatError('bad address format: %r' % addr)
+                        raise AddrFormatError('bad address format: %r' % (addr,))
 
     def __getstate__(self):
         """:returns: Pickled state of an `IPAddress` object."""
@@ -935,7 +935,7 @@ class IPNetwork(BaseIP, IPListMixin):
                     pass
 
                 if value is None:
-                    raise AddrFormatError('invalid IPNetwork %s' % addr)
+                    raise AddrFormatError('invalid IPNetwork %s' % (addr,))
 
         self._value = value
         self._prefixlen = prefixlen
@@ -960,13 +960,13 @@ class IPNetwork(BaseIP, IPListMixin):
             self._module = _ipv6
         else:
             raise ValueError('unpickling failed for object state %s' \
-                % str(state))
+                % (state,))
 
         if 0 <= prefixlen <= self._module.width:
             self._prefixlen = prefixlen
         else:
             raise ValueError('unpickling failed for object state %s' \
-                % str(state))
+                % (state,))
 
     def _set_prefixlen(self, value):
         if not isinstance(value, _int_type):
@@ -1505,7 +1505,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             try:
                 if not 0 <= int(prefix) <= 32:
                     raise ValueError('prefixlen in address %r out of range' \
-                        ' for IPv4!' % abbrev_cidr)
+                        ' for IPv4!' % (abbrev_cidr,))
             except ValueError:
                 return abbrev_cidr
         else:
@@ -1783,7 +1783,7 @@ def smallest_matching_cidr(ip, cidrs):
 
     if not hasattr(cidrs, '__iter__'):
         raise TypeError('IP address/subnet sequence expected, not %r!'
-            % cidrs)
+            % (cidrs,))
 
     ip = IPAddress(ip)
     for cidr in sorted([IPNetwork(cidr) for cidr in cidrs]):
@@ -1812,7 +1812,7 @@ def largest_matching_cidr(ip, cidrs):
 
     if not hasattr(cidrs, '__iter__'):
         raise TypeError('IP address/subnet sequence expected, not %r!'
-            % cidrs)
+            % (cidrs,))
 
     ip = IPAddress(ip)
     for cidr in sorted([IPNetwork(cidr) for cidr in cidrs]):
@@ -1839,7 +1839,7 @@ def all_matching_cidrs(ip, cidrs):
 
     if not hasattr(cidrs, '__iter__'):
         raise TypeError('IP address/subnet sequence expected, not %r!'
-            % cidrs)
+            % (cidrs,))
 
     ip = IPAddress(ip)
     for cidr in sorted([IPNetwork(cidr) for cidr in cidrs]):

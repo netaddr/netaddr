@@ -113,3 +113,7 @@ else:
     raise RuntimeError(
         'this module only supports Python 2.4.x or higher (including 3.x)!')
 
+try:
+    from importlib import resources as _importlib_resources
+except ImportError:
+    import importlib_resources as _importlib_resources

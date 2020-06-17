@@ -13,8 +13,6 @@ from setuptools import setup
 if os.path.exists('MANIFEST'):
     os.remove('MANIFEST')
 
-import netaddr
-
 keywords = [
     'Networking', 'Systems Administration', 'IANA', 'IEEE', 'CIDR', 'IP',
     'IPv4', 'IPv6', 'CIDR', 'EUI', 'MAC', 'MAC-48', 'EUI-48', 'EUI-64'
@@ -102,17 +100,12 @@ classifiers = [
     'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.5',
-    'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.0',
-    'Programming Language :: Python :: 3.1',
-    'Programming Language :: Python :: 3.2',
-    'Programming Language :: Python :: 3.3',
-    'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
     'Topic :: Communications',
     'Topic :: Documentation',
     'Topic :: Education',
@@ -174,14 +167,18 @@ def main():
         package_data=package_data,
         packages=packages,
         platforms=platforms,
-        scripts=['netaddr/tools/netaddr'],
+        entry_points={'console_scripts': ['netaddr = netaddr.cli:main']},
         url='https://github.com/drkjam/netaddr/',
-        version=netaddr.__version__,
-        options={
-            'build_scripts': {
-                'executable': '/usr/bin/env python',
-            },
-        },
+        version=(
+            [
+                ln for ln in open(os.path.join(os.path.dirname(__file__), 'netaddr', '__init__.py'))
+                if '__version__' in ln
+            ][0]
+            .split('=')[-1]
+            .strip()
+            .strip('\'"')
+        ),
+        install_requires=['importlib-resources;python_version<"3.7"'],
     )
 
     setup(**setup_options)
