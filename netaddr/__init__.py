@@ -6,9 +6,9 @@
 """A Python library for manipulating IP and EUI network addresses."""
 
 #: Version info (major, minor, maintenance, status)
-VERSION = (0, 7, 19)
+__version__ = '0.7.19'
+VERSION = tuple(int(part) for part in __version__.split('.'))
 STATUS = ''
-__version__ = '%d.%d.%d' % VERSION[0:3] + STATUS
 
 import sys as _sys
 
