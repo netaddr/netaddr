@@ -213,7 +213,13 @@ class IPv6Parser(XMLRecordParser):
         record = {
             'prefix': str(rec.get('prefix', '')).strip(),
             'allocation': str(rec.get('description', '')).strip(),
-            'reference': str(rec.get('rfc', [''])[0]).strip(),
+            # HACK: -1 instead of 0 is a hacky hack to get 4291 instead of 3513 from
+            #
+            #     <xref type="rfc" data="rfc3513"/> was later obsoleted by <xref type="rfc" data="rfc4291"/>
+            #
+            # I imagine there's no way to solve this in a general way, maybe we should start returning a list
+            # of RFC-s here?
+            'reference': str(rec.get('rfc', [''])[-1]).strip(),
         }
 
         return record

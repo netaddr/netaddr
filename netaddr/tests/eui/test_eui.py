@@ -170,8 +170,8 @@ def test_oui_constructor():
     assert oui.registration(1).oui == '08-00-30'
 
     assert oui.registration(2).address == [
-        'CH-1211 GENEVE 23',
-        'SUISSE/SWITZ',
+        'CH-1211',
+        'GENEVE  SUISSE/SWITZ  023',
         'CH'
     ]
     assert oui.registration(2).org == 'CERN'
