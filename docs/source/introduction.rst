@@ -52,13 +52,13 @@ Documentation
 This library has comprehensive docstrings and a full set of project
 documentation (including tutorials):
 
-- http://pythonhosted.org/netaddr/
-- http://netaddr.readthedocs.io/en/latest/
+- https://pythonhosted.org/netaddr/
+- https://netaddr.readthedocs.io/en/latest/
 
 Tests
 -----
 
-netaddr requires py.test (http://pytest.org/).
+netaddr requires py.test (https://pytest.org/).
 
 To run the test suite, clone the repository and run:
 
@@ -67,7 +67,7 @@ To run the test suite, clone the repository and run:
 If any of the tests fail, *please* help the project's user base by filing
 bug reports on the netaddr issue tracker:
 
-- http://github.com/drkjam/netaddr/issues
+- https://github.com/drkjam/netaddr/issues
 
 Finally...
 ----------

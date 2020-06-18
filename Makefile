@@ -46,10 +46,10 @@ download:
 	@echo 'rebuilding IEEE data file indices'
 	python netaddr/eui/ieee.py
 	@echo 'downloading latest IANA data'
-	cd netaddr/ip/ && wget -N http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
-	cd netaddr/ip/ && wget -N http://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
-	cd netaddr/ip/ && wget -N http://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
-	cd netaddr/ip/ && wget -N http://www.iana.org/assignments/ipv6-unicast-address-assignments/ipv6-unicast-address-assignments.xml
+	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
+	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
+	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
+	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/ipv6-unicast-address-assignments/ipv6-unicast-address-assignments.xml
 
 register:
 	@echo 'releasing netaddr'

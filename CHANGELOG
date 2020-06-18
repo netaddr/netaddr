@@ -335,27 +335,27 @@ Changes since 0.7.9
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-FIXED Issue 36 - http://github.com/drkjam/netaddr/issues/36
+FIXED Issue 36 - https://github.com/drkjam/netaddr/issues/36
 
     - ResourceWarnings with Python >=3.2
 
-FIXED Issue 35 - http://github.com/drkjam/netaddr/issues/35
+FIXED Issue 35 - https://github.com/drkjam/netaddr/issues/35
 
 - netaddr-0.7.9: Test failure with Python 3
 
-FIXED Issue 34 - http://github.com/drkjam/netaddr/issues/34
+FIXED Issue 34 - https://github.com/drkjam/netaddr/issues/34
 
 - netaddr.ip.iana.SaxRecordParser.endElement() incompatible with Python 3.1
 
-FIXED Issue 33 - http://github.com/drkjam/netaddr/issues/33
+FIXED Issue 33 - https://github.com/drkjam/netaddr/issues/33
 
 - netaddr script not installed with Python 3
 
-FIXED Issue 23 - http://github.com/drkjam/netaddr/issues/23
+FIXED Issue 23 - https://github.com/drkjam/netaddr/issues/23
 
 - valid_nmap_range() does not validate nmap format case.
 
-FIXED Issue 22 - http://github.com/drkjam/netaddr/issues/22
+FIXED Issue 22 - https://github.com/drkjam/netaddr/issues/22
 
 - all_matching_cidrs: documentation incorrect
 
@@ -387,19 +387,19 @@ Changes since 0.7.7
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-FIXED Issue 31 - http://github.com/drkjam/netaddr/issues/31
+FIXED Issue 31 - https://github.com/drkjam/netaddr/issues/31
 
     - Exclude '39.0.0.0/8' network from reserved set. Thanks Andrew Stromnov
 
-FIXED Issue 28 - http://github.com/drkjam/netaddr/issues/28
+FIXED Issue 28 - https://github.com/drkjam/netaddr/issues/28
 
     - Fix algorithm in ipv6_link_local to fully conform to rfc4291. Thanks Philipp Wollermann
 
-FIXED Issue 25 - http://github.com/drkjam/netaddr/issues/25
+FIXED Issue 25 - https://github.com/drkjam/netaddr/issues/25
 
     - install_requires is too aggressive? Thanks Adam Lindsay and commenters.
 
-FIXED Issue 21 - http://github.com/drkjam/netaddr/issues/21
+FIXED Issue 21 - https://github.com/drkjam/netaddr/issues/21
 
     - deepcopy for EUI fails. Thanks Ryan Nowakowski.
 
@@ -424,15 +424,15 @@ Changes since 0.7.6
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-FIXED Issue 24 - http://github.com/drkjam/netaddr/issues/24
+FIXED Issue 24 - https://github.com/drkjam/netaddr/issues/24
 
     - Fixed TypeError when comparing BaseIP instance with non-BaseIP objects. Thanks pvaret
 
-FIXED Issue 17 - http://github.com/drkjam/netaddr/issues/17
+FIXED Issue 17 - https://github.com/drkjam/netaddr/issues/17
 
     - For large ipv6 networks the .subnet() method fails. Thanks daveyss
 
-FIXED Issue 20 - http://github.com/drkjam/netaddr/issues/20
+FIXED Issue 20 - https://github.com/drkjam/netaddr/issues/20
 
     - Test failure with Python 3. Thanks Arfrever
 
@@ -457,23 +457,23 @@ Changes since 0.7.5
 Specific bug fixes addressed in this release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-FIXED Issue 15 - http://github.com/drkjam/netaddr/issues/15
+FIXED Issue 15 - https://github.com/drkjam/netaddr/issues/15
 
     - Incorrect and invalid glob produced when last octet is not *
 
-FIXED Issue 13 - http://github.com/drkjam/netaddr/issues/13
+FIXED Issue 13 - https://github.com/drkjam/netaddr/issues/13
 
     - Added support for IPython 0.11 API changes. Thanks juliantaylor
 
-FIXED Issue 11 - http://github.com/drkjam/netaddr/issues/11
+FIXED Issue 11 - https://github.com/drkjam/netaddr/issues/11
 
     - Calling valid_glob on cidr raises ValueError. Thanks radicand
 
-FIXED Issue 7 - http://github.com/drkjam/netaddr/issues/7
+FIXED Issue 7 - https://github.com/drkjam/netaddr/issues/7
 
     - Unpickling Bug in IPSet. Thanks LuizOz and labeneator
 
-FIXED Issue 2 - http://github.com/drkjam/netaddr/issues/2
+FIXED Issue 2 - https://github.com/drkjam/netaddr/issues/2
 
     - UnboundLocalError raised in IPNetwork constructor. Thanks keesbos
 
@@ -495,10 +495,10 @@ Changes since 0.7.4
 
 * Python 3.x is now fully supported. The paint is still drying on this so
   please help with testing and raise bug tickets when you find any issues!
-  New Issue Tracker - http://github.com/drkjam/netaddr/issues
+  New Issue Tracker - https://github.com/drkjam/netaddr/issues
 
 * Moved code hosting to github. History ported thanks to svn2git.
-  - (http://github.com/nirvdrum/svn2git)
+  - (https://github.com/nirvdrum/svn2git)
 
 * All netaddr objects now use approx. 65% less memory due to the use of
   __slots__ in classes throughout the codebase. Thanks to Stefan Nordhausen

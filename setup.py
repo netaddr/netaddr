@@ -66,14 +66,14 @@ long_description = """
         Documentation
         -------------
 
-        http://netaddr.readthedocs.io/
+        https://netaddr.readthedocs.io/
 
         Changes
         -------
 
         For details on the latest changes and updates, see :-
 
-        http://netaddr.readthedocs.io/en/latest/changes.html
+        https://netaddr.readthedocs.io/en/latest/changes.html
 
         Requirements
         ------------

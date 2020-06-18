@@ -12,7 +12,7 @@ Locating the software
 
 The netaddr project is hosted here on github
 
-    http://github.com/drkjam/netaddr/
+    https://github.com/drkjam/netaddr/
 
 ----------------------------------------
 Installing from the Python Package Index
@@ -21,7 +21,7 @@ Installing from the Python Package Index
 The easiest way to install netaddr is to use pip.
 
 Download and install the latest version from PyPI -
-http://pypi.python.org/pypi/pip and run the following command ::
+https://pypi.python.org/pypi/pip and run the following command ::
 
     pip install netaddr
 
