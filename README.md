@@ -2,7 +2,7 @@ netaddr
 =======
 
 A network address manipulation library for Python
-
+[![CI](https://github.com/netaddr/netaddr/workflows/CI/badge.svg)](https://github.com/netaddr/netaddr/actions?query=workflow%3ACI+branch%3Amaster)
 [![Latest Version](https://img.shields.io/pypi/v/netaddr.svg)](https://pypi.org/project/netaddr/)
 
 Provides support for:
