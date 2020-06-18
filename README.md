@@ -3,7 +3,7 @@ netaddr
 
 A network address manipulation library for Python
 
-[![Latest Version](https://img.shields.io/pypi/v/netaddr.svg)](https://pypi.python.org/pypi/netaddr)
+[![Latest Version](https://img.shields.io/pypi/v/netaddr.svg)](https://pypi.org/project/netaddr/)
 
 Provides support for:
 

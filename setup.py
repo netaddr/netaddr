@@ -159,7 +159,7 @@ def main():
         author_email='drkjam@gmail.com',
         classifiers=classifiers,
         description='A network address manipulation library for Python',
-        download_url='https://pypi.python.org/pypi/netaddr/',
+        download_url='https://pypi.org/project/netaddr/',
         keywords=keywords,
         license='BSD License',
         long_description=long_description,
