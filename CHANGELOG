@@ -1,4 +1,53 @@
 ---------------
+Release: 0.7.20
+---------------
+Date: 19 Jun 2020
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.19
+^^^^^^^^^^^^^^^^^^^^
+
+* Fixed returning from an iterator on Python 3.7+, by Sergey Kozlov.
+* Fixed Python 3.8 SyntaxWarning on using `is not` with a string literal, by Stefan Nordhausen.
+* Fixed DeprecationWarnings by using raw strings for escape characters used in regexes, by Sean McGinnis.
+* Improved IPGlob documentation, by obkmeta.
+* Fixed exception creation in corner cases by explicitly passin error message params as tuples, by
+  Matthias Urlichs.
+* Stopped manually replacing shebang of an included script.
+* Stopped using __file__ in all code that's expected to run in environments that don't support it
+  (like PyOxidizer-produced binaries).
+* Updated all databases included in the package.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 182: https://github.com/netaddr/netaddr/issues/182
+    - test_ip_splitter_remove_prefix_larger_than_input_range fails with python 3.7
+
+FIXED Issue 206: https://github.com/netaddr/netaddr/issues/206
+    - ""is not" with a literal." SyntaxWarning
+
+FIXED Issue 198: https://github.com/netaddr/netaddr/issues/198
+    - oui databases are outdated
+
+FIXED Issue 188: https://github.com/netaddr/netaddr/issues/188
+    - Avoid use of __file__
+
+^^^^^^^^^^^
+Miscellanea
+^^^^^^^^^^^
+
+- Python 2 versions older than 2.7 and Python 3 versions older than 3.5 should be considered
+  unsupported. No incompatible code has been introduced to the best of our knowledge but
+  there's no CI infrastructure in place to verify this and if there are any issues with
+  those versions they won't be fixed.
+- Consequently, Python 2.7 and 3.5 support should be considered deprecated as 2.7 has
+  reached its end-of-life already and 3.5 will hit it soon.
+- A CI setup has been introduced which allows us to test on a variety of Python versions
+  on all Mac, Linux and Windows.
+
+---------------
 Release: 0.7.19
 ---------------
 Date: 11 Jan 2017
