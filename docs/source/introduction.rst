@@ -50,10 +50,7 @@ Documentation
 -------------
 
 This library has comprehensive docstrings and a full set of project
-documentation (including tutorials):
-
-- https://pythonhosted.org/netaddr/
-- https://netaddr.readthedocs.io/en/latest/
+documentation (including tutorials): https://netaddr.readthedocs.io/en/latest/
 
 Tests
 -----
