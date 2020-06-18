@@ -41,15 +41,15 @@ doc:
 
 download:
 	@echo 'downloading latest IEEE data'
-	cd netaddr/eui/ && wget -N http://standards-oui.ieee.org/oui/oui.txt
-	cd netaddr/eui/ && wget -N http://standards-oui.ieee.org/iab/iab.txt
+	cd netaddr/eui/ && wget http://standards-oui.ieee.org/oui/oui.txt
+	cd netaddr/eui/ && wget http://standards-oui.ieee.org/iab/iab.txt
 	@echo 'rebuilding IEEE data file indices'
 	python netaddr/eui/ieee.py
 	@echo 'downloading latest IANA data'
-	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
-	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
-	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
-	cd netaddr/ip/ && wget -N https://www.iana.org/assignments/ipv6-unicast-address-assignments/ipv6-unicast-address-assignments.xml
+	cd netaddr/ip/ && wget https://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xml
+	cd netaddr/ip/ && wget https://www.iana.org/assignments/ipv6-address-space/ipv6-address-space.xml
+	cd netaddr/ip/ && wget https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xml
+	cd netaddr/ip/ && wget https://www.iana.org/assignments/ipv6-unicast-address-assignments/ipv6-unicast-address-assignments.xml
 
 register:
 	@echo 'releasing netaddr'
