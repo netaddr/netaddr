@@ -157,8 +157,8 @@ def main():
     setup_options = dict(
         author='David P. D. Moss et al',
         author_email='drkjam@gmail.com',
-        maintainer='Stefan Nordhausen',
-        maintainer_email='stefan.nordhausen@immobilienscout24.de',
+        maintainer='Stefan Nordhausen, Jakub Stasiak',
+        maintainer_email='stefan.nordhausen@immobilienscout24.de, jakub@stasiak.at',
         classifiers=classifiers,
         description='A network address manipulation library for Python',
         download_url='https://pypi.org/project/netaddr/',
