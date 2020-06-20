@@ -1,7 +1,8 @@
 netaddr
 =======
 
-A network address manipulation library for Python
+A system-independent network address manipulation library for Python 2.7 and 3.5+.
+(Python 2.7 and 3.5 support is deprecated).
 
 .. image:: https://codecov.io/gh/netaddr/netaddr/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/netaddr/netaddr
@@ -9,7 +10,8 @@ A network address manipulation library for Python
    :target: https://github.com/netaddr/netaddr/actions?query=workflow%3ACI+branch%3Amaster
 .. image:: https://img.shields.io/pypi/v/netaddr.svg
    :target: https://pypi.org/project/netaddr/
-
+.. image:: https://img.shields.io/pypi/pyversions/netaddr.svg
+   :target: pypi.python.org/pypi/netaddr
 
 Provides support for:
 
@@ -36,11 +38,5 @@ Documentation
 -------------
 
 Latest documentation https://netaddr.readthedocs.io/en/latest/
-
-Requirements
-------------
-
-.. image:: https://img.shields.io/pypi/pyversions/netaddr.svg
-   :target: pypi.python.org/pypi/netaddr
 
 Share and enjoy!
