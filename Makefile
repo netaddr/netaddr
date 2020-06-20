@@ -59,6 +59,13 @@ push_tags:
 	@echo 'syncing tags'
 	git push --tags
 
+ci: test_with_junitxml lint
+
+lint: setup_check
+
+setup_check:
+	python setup.py check
+
 test: clean
 	@echo 'running test suite'
 	pip install -r requirements.txt
