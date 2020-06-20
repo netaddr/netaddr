@@ -12,3 +12,6 @@ docs/build/
 .vagrant/
 tmp/
 *.iml
+coverage.xml
+htmlcov/
+junit.xml
