@@ -1,6 +1,7 @@
 import pickle
 import types
 import random
+import sys
 
 import pytest
 
@@ -15,6 +16,8 @@ def test_ipaddress_v4():
     assert ip.format() == '192.0.2.1'
     assert int(ip) == 3221225985
     assert hex(ip) == '0xc0000201'
+    if sys.version_info[0] > 2:
+        assert bytes(ip) == b'\xc0\x00\x02\x01'
     assert ip.bin == '0b11000000000000000000001000000001'
     assert ip.bits() == '11000000.00000000.00000010.00000001'
     assert ip.words == (192, 0, 2, 1)
