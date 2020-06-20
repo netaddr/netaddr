@@ -34,6 +34,10 @@ Layer 2 addresses
 -  looking up IEEE organisational information (OUI, IAB)
 -  generating derived IPv6 addresses
 
+Starting with Python 3.3 there's an `ipaddress <https://docs.python.org/3/library/ipaddress.html>`_
+module in the Python standard library which provides layer 3 address manipulation
+capabilities overlapping ``netaddr``.
+
 Documentation
 -------------
 
