@@ -1,7 +1,7 @@
 include AUTHORS
 include CHANGELOG
 include COPYRIGHT
-include README.md
+include README.rst
 include REFERENCES
 include LICENSE
 include Makefile
