@@ -88,7 +88,7 @@ class IPSet(object):
     subnets.
 
     """
-    __slots__ = ('_cidrs',)
+    __slots__ = ('_cidrs', '__weakref__')
 
     def __init__(self, iterable=None, flags=0):
         """

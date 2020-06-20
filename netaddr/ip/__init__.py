@@ -22,7 +22,7 @@ class BaseIP(object):
     related subclasses.
 
     """
-    __slots__ = ('_value', '_module')
+    __slots__ = ('_value', '_module', '__weakref__')
 
     def __init__(self):
         """Constructor."""

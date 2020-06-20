@@ -18,7 +18,7 @@ from netaddr.compat import _importlib_resources, _is_int, _is_str
 
 class BaseIdentifier(object):
     """Base class for all IEEE identifiers."""
-    __slots__ = ('_value',)
+    __slots__ = ('_value', '__weakref__')
 
     def __init__(self):
         self._value = None
