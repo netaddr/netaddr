@@ -70,6 +70,8 @@ def test_ipnetwork_slice_v6():
 
 def test_ip_network_membership_v6():
     assert IPAddress('ffff::1') in IPNetwork('ffff::/127')
+    assert IPNetwork('ffff::/127') in IPNetwork('ffff::/127')
+    assert IPNetwork('fe80::/10') not in IPNetwork('ffff::/127')
 
 
 def test_ip_network_equality_v6():
