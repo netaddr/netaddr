@@ -1683,28 +1683,33 @@ def spanning_cidr(ip_addrs):
 
     :return: a single spanning `IPNetwork` subnet.
     """
-    sorted_ips = sorted(
-        [IPNetwork(ip) for ip in ip_addrs])
+    ip_addrs_count = 0
+    min_network = None
+    max_network = None
+    for ip in ip_addrs:
+        ip_addrs_count += 1
+        network = IPNetwork(ip)
+        if min_network is None or network < min_network:
+            min_network = network
+        if max_network is None or network > max_network:
+            max_network = network
 
-    if not len(sorted_ips) > 1:
+    if not ip_addrs_count > 1:
         raise ValueError('IP sequence must contain at least 2 elements!')
 
-    lowest_ip = sorted_ips[0]
-    highest_ip = sorted_ips[-1]
-
-    if lowest_ip.version != highest_ip.version:
+    if min_network.version != max_network.version:
         raise TypeError('IP sequence cannot contain both IPv4 and IPv6!')
 
-    ipnum = highest_ip.last
-    prefixlen = highest_ip.prefixlen
-    lowest_ipnum = lowest_ip.first
-    width = highest_ip._module.width
+    ipnum = max_network.last
+    prefixlen = max_network.prefixlen
+    lowest_ipnum = min_network.first
+    width = max_network._module.width
 
     while prefixlen > 0 and ipnum > lowest_ipnum:
         prefixlen -= 1
         ipnum &= -(1<<(width-prefixlen))
 
-    return IPNetwork( (ipnum, prefixlen), version=lowest_ip.version )
+    return IPNetwork( (ipnum, prefixlen), version=min_network.version )
 
 
 def iter_iprange(start, end, step=1):
