@@ -12,7 +12,7 @@ from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
-from netaddr.compat import _sys_maxint, _iter_range, _is_str, _int_type, \
+from netaddr.compat import _sys_maxint, _iter_next, _iter_range, _is_str, _int_type, \
     _str_type
 
 
@@ -1683,19 +1683,26 @@ def spanning_cidr(ip_addrs):
 
     :return: a single spanning `IPNetwork` subnet.
     """
-    ip_addrs_count = 0
-    min_network = None
-    max_network = None
-    for ip in ip_addrs:
-        ip_addrs_count += 1
-        network = IPNetwork(ip)
-        if min_network is None or network < min_network:
-            min_network = network
-        if max_network is None or network > max_network:
-            max_network = network
-
-    if not ip_addrs_count > 1:
+    ip_addrs_iter = iter(ip_addrs)
+    try:
+        network_a = _iter_next(ip_addrs_iter)
+        network_b = _iter_next(ip_addrs_iter)
+    except StopIteration:
         raise ValueError('IP sequence must contain at least 2 elements!')
+
+    if network_a < network_b:
+        min_network = network_a
+        max_network = network_b
+    else:
+        min_network = network_b
+        max_network = network_a
+
+    for ip in ip_addrs_iter:
+        network = IPNetwork(ip)
+        if network < min_network:
+            min_network = network
+        if network > max_network:
+            max_network = network
 
     if min_network.version != max_network.version:
         raise TypeError('IP sequence cannot contain both IPv4 and IPv6!')
