@@ -1140,8 +1140,8 @@ class IPNetwork(BaseIP, IPListMixin):
             if isinstance(other, IPNetwork):
                 return self_net == other_net and self._prefixlen <= other._prefixlen
 
-        # Whatever it is, try to interpret it as IPAddress.
-        return IPAddress(other) in self
+        # Whatever it is, try to interpret it as IPNetwork
+        return IPNetwork(other) in self
 
     def key(self):
         """

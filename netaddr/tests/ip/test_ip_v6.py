@@ -69,9 +69,13 @@ def test_ipnetwork_slice_v6():
 
 
 def test_ip_network_membership_v6():
-    assert IPAddress('ffff::1') in IPNetwork('ffff::/127')
-    assert IPNetwork('ffff::/127') in IPNetwork('ffff::/127')
-    assert IPNetwork('fe80::/10') not in IPNetwork('ffff::/127')
+    for what, network, result in [
+        (IPAddress('ffff::1'), IPNetwork('ffff::/127'), True),
+        (IPNetwork('ffff::/127'), IPNetwork('ffff::/127'), True),
+        (IPNetwork('fe80::/10'), IPNetwork('ffff::/127'), False),
+    ]:
+        assert (what in network) is result
+        assert (str(what) in network) is result
 
 
 def test_ip_network_equality_v6():

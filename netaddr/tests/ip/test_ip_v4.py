@@ -300,11 +300,15 @@ def test_ipnetwork_slicing_v4():
 
 
 def test_ip_network_membership_v4():
-    assert IPAddress('192.0.2.1') in IPNetwork('192.0.2.0/24')
-    assert IPAddress('192.0.2.255') in IPNetwork('192.0.2.0/24')
-    assert IPNetwork('192.0.2.0/24') in IPNetwork('192.0.2.0/23')
-    assert IPNetwork('192.0.2.0/24') in IPNetwork('192.0.2.0/24')
-    assert IPNetwork('192.0.2.0/23') not in IPNetwork('192.0.2.0/24')
+    for what, network, result in [
+        (IPAddress('192.0.2.1'), IPNetwork('192.0.2.0/24'), True),
+        (IPAddress('192.0.2.255'), IPNetwork('192.0.2.0/24'), True),
+        (IPNetwork('192.0.2.0/24'), IPNetwork('192.0.2.0/23'), True),
+        (IPNetwork('192.0.2.0/24'), IPNetwork('192.0.2.0/24'), True),
+        (IPNetwork('192.0.2.0/23'), IPNetwork('192.0.2.0/24'), False),
+    ]:
+        assert (what in network) is result
+        assert (str(what) in network) is result
 
 
 def test_ip_network_equality_v4():
