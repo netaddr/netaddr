@@ -1562,7 +1562,7 @@ def cidr_merge(ip_addrs):
     subnets where possible, those contained within others and also removes
     any duplicates.
 
-    :param ip_addrs: an iterable sequence of IP addresses and subnets.
+    :param ip_addrs: an iterable sequence of IP addresses, subnets or ranges.
 
     :return: a summarized list of `IPNetwork` objects.
     """
@@ -1575,9 +1575,12 @@ def cidr_merge(ip_addrs):
     ranges = []
 
     for ip in ip_addrs:
-        cidr = IPNetwork(ip)
+        if isinstance(ip, (IPNetwork, IPRange)):
+            net = ip
+        else:
+            net = IPNetwork(ip)
         # Since non-overlapping ranges are the common case, remember the original
-        ranges.append( (cidr.version, cidr.last, cidr.first, cidr) )
+        ranges.append( (net.version, net.last, net.first, net) )
 
     ranges.sort()
     i = len(ranges) - 1
@@ -1590,7 +1593,11 @@ def cidr_merge(ip_addrs):
     for range_tuple in ranges:
         # If this range wasn't merged we can simply use the old cidr.
         if len(range_tuple) == 4:
-            merged.append(range_tuple[3])
+            original = range_tuple[3]
+            if isinstance(original, IPRange):
+                merged.extend(original.cidrs())
+            else:
+                merged.append(original)
         else:
             version = range_tuple[0]
             range_start = IPAddress(range_tuple[2], version=version)

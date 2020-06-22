@@ -54,6 +54,7 @@ def test_ipset_constructor():
     assert IPSet(IPSet(['192.0.2.0/32'])) == IPSet(['192.0.2.0/32'])
     assert IPSet(IPRange("10.0.0.0", "10.0.1.31")) == IPSet(['10.0.0.0/24', '10.0.1.0/27'])
     assert IPSet(IPRange('0.0.0.0', '255.255.255.255')) == IPSet(['0.0.0.0/0'])
+    assert IPSet([IPRange("10.0.0.0", "10.0.1.31")]) == IPSet(IPRange("10.0.0.0", "10.0.1.31"))
 
 
 def test_ipset_iteration():
@@ -318,6 +319,16 @@ def test_ipset_updates():
 
     s1.update(['192.0.0.0/24', '192.0.1.0/24', '192.0.3.0/24'])
     assert s1 == IPSet(['192.0.0.0/22'])
+
+    expected = IPSet(['192.0.1.0/24', '192.0.2.0/24'])
+
+    s3 = IPSet(['192.0.1.0/24'])
+    s3.update(IPRange('192.0.2.0', '192.0.2.255'))
+    assert s3 == expected
+
+    s4 = IPSet(['192.0.1.0/24'])
+    s4.update([IPRange('192.0.2.0', '192.0.2.100'), IPRange('192.0.2.50', '192.0.2.255')])
+    assert s4 == expected
 
 
 def test_ipset_clear():
