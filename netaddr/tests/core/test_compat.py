@@ -5,7 +5,7 @@ import pytest
 from netaddr.compat import _sys_maxint, _is_str, _is_int, _callable, _iter_next
 from netaddr.compat import _dict_keys, _dict_items
 from netaddr.compat import _bytes_join, _zip, _range
-from netaddr.compat import _iter_range, _func_name, _func_doc
+from netaddr.compat import _iter_range
 
 
 @pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3.x")
@@ -73,8 +73,6 @@ def test_compat_callable():
 
     assert _callable(f1)
     assert _callable(f2)
-    assert _func_name(f1) == 'f1'
-    assert _func_doc(f1) == 'docstring'
 
 
 def test_iter_next():
