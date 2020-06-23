@@ -1692,8 +1692,8 @@ def spanning_cidr(ip_addrs):
     """
     ip_addrs_iter = iter(ip_addrs)
     try:
-        network_a = _iter_next(ip_addrs_iter)
-        network_b = _iter_next(ip_addrs_iter)
+        network_a = IPNetwork(_iter_next(ip_addrs_iter))
+        network_b = IPNetwork(_iter_next(ip_addrs_iter))
     except StopIteration:
         raise ValueError('IP sequence must contain at least 2 elements!')
 

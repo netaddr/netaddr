@@ -5,7 +5,7 @@ import sys
 
 import pytest
 
-from netaddr import IPAddress, IPNetwork, INET_PTON, AddrFormatError, ZEROFILL, Z, P, NOHOST
+from netaddr import IPAddress, IPNetwork, INET_PTON, spanning_cidr, AddrFormatError, ZEROFILL, Z, P, NOHOST
 
 
 def test_ipaddress_v4():
@@ -532,3 +532,16 @@ def test_ipnetwork_change_netmask():
     ip = IPNetwork('dead:beef::/16')
     ip.netmask = 'ffff:ffff:ffff:ffff::'
     assert ip.prefixlen == 64
+
+
+def test_spanning_cidr_handles_strings():
+    # This that a regression introduced in 0fda41a is fixed. The regression caused an error when str
+    # addresses were passed to the function.
+    addresses = [
+        IPAddress('10.0.0.1'),
+        IPAddress('10.0.0.2'),
+        '10.0.0.3',
+        '10.0.0.4',
+    ]
+    assert spanning_cidr(addresses) == IPNetwork('10.0.0.0/29')
+    assert spanning_cidr(reversed(addresses)) == IPNetwork('10.0.0.0/29')
