@@ -1,4 +1,5 @@
 import pickle
+import weakref
 
 import pytest
 
@@ -574,3 +575,7 @@ def test_ipset_converts_to_cidr_networks_v6():
         IPNetwork('fe80::/64'),
         IPNetwork('fe90::/64'),
     ]
+
+
+def test_ipset_is_weak_referencable():
+    weakref.ref(IPSet())
