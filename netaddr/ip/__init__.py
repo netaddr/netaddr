@@ -878,6 +878,13 @@ class IPNetwork(BaseIP, IPListMixin):
         x.x.0.0/y   -> 192.168.0.0/16
         x.x.x.0/y   -> 192.168.0.0/24
 
+    .. warning::
+
+        The next release (0.9.0) will contain a backwards incompatible change
+        connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
+        When iterating ``IPNetwork`` and ``IPNetwork.iter_hosts()`` the first
+        addresses in the networks will no longer be excluded and ``broadcast``
+        will be ``None``.
     """
     __slots__ = ('_prefixlen',)
 
@@ -1003,7 +1010,14 @@ class IPNetwork(BaseIP, IPListMixin):
 
     @property
     def broadcast(self):
-        """The broadcast address of this `IPNetwork` object"""
+        """The broadcast address of this `IPNetwork` object.
+
+        .. warning::
+
+            The next release (0.9.0) will contain a backwards incompatible change
+            connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
+            ``broadcast`` will be ``None`` when dealing with those networks.
+        """
         if self._module.version == 4 and (self._module.width - self._prefixlen) <= 1:
             return None
         else:
@@ -1312,6 +1326,13 @@ class IPNetwork(BaseIP, IPListMixin):
 
         - for IPv6, only the unspecified address '::' or Subnet-Router anycast \
           address (first address in the network) is excluded.
+
+        .. warning::
+
+            The next release (0.9.0) will contain a backwards incompatible change
+            connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
+            When iterating ``IPNetwork`` and ``IPNetwork.iter_hosts()`` the first
+            addresses in the networks will no longer be excluded.
 
         :return: an IPAddress iterator
         """
