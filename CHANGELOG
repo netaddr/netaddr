@@ -1,3 +1,45 @@
+--------------
+Release: 0.8.0
+--------------
+Date: 3 Jul 2020
+
+^^^^^^^^^^^^^^^^^^^^
+Changes since 0.7.20
+^^^^^^^^^^^^^^^^^^^^
+
+* Fixed weak reference support in classes with ``__slots__``
+* Added ``__bytes__`` to ``IPAddress`` for intuitive usage, thanks to Michael Belousov.
+* Added ``format()`` function to EUI, thanks to Omer Anson.
+* Added ``IPNetwork.netmask`` property setter, thanks to Naveen Nathan.
+* Added support for IABs in the ``40:D8:55`` OUI, thanks to Brian Maissy.
+* Drastically optimized ``spanning_cidr()``, thanks to Brian Maissy.
+* Fixed ``"x.x.x.x/x" in IPNetwork`` tests, thanks to xpac1985.
+* Added support for passing iterables of ``IPRange`` to ``IPSet`` and ``cidr_merge()``, based
+  on a patch by Henry Stern.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific bug fixes addressed in this release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+FIXED Issue 205: https://github.com/netaddr/netaddr/issues/205
+    - N log N complexity instead of linear
+
+FIXED Issue 171: https://github.com/netaddr/netaddr/issues/171
+    - Efficiently creating a large IPSet from a list of IPRanges?
+
+FIXED Issue 161: https://github.com/netaddr/netaddr/issues/161
+    - Weak reference support
+
+^^^^^^^^^^^
+Miscellanea
+^^^^^^^^^^^
+
+- The next release (0.9.0) will contain a backwards incompatible change in IPNetwork's behaviour.
+  It's connected to handling of RFC 6164 IPv6 addresses (/127 and /128): IPNetwork.broadcast will
+  return None for those and first addresses in the networks will no longer be excluded when
+  iterating IPNetwork and IPNetwork.iter_hosts(). See https://github.com/netaddr/netaddr/pull/168
+  (or temporarily reverted commit 2984c0a40a70 in this repository) to see the actual patch.
+
 ---------------
 Release: 0.7.20
 ---------------
