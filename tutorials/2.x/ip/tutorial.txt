@@ -285,7 +285,7 @@ List reversal.
 Use of generators ensures working with large IP subnets is efficient.
 
 >>> for ip in IPNetwork('192.0.2.0/23'):
-...    print '%s' % ip
+...    print('%s' % ip)
 ...
 192.0.2.0
 192.0.2.1
@@ -302,7 +302,7 @@ In IPv4 networks you only usually assign the addresses between the network and b
 Here is the iterator provided for accessing these IP addresses :-
 
 >>> for ip in IPNetwork('192.0.2.0/23').iter_hosts():
-...     print '%s' % ip
+...     print('%s' % ip)
 ...
 192.0.2.1
 192.0.2.2
