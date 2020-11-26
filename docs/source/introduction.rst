@@ -57,7 +57,7 @@ Tests
 
 netaddr requires py.test (https://pytest.org/).
 
-To run the test suite, clone the repository and run:
+To run the test suite, clone the repository and run::
 
     python setup.py test
 

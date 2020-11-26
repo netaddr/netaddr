@@ -428,7 +428,7 @@ Specific bug fixes addressed in this release
 
 FIXED Issue 36 - https://github.com/drkjam/netaddr/issues/36
 
-    - ResourceWarnings with Python >=3.2
+- ResourceWarnings with Python >=3.2
 
 FIXED Issue 35 - https://github.com/drkjam/netaddr/issues/35
 
