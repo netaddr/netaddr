@@ -91,12 +91,12 @@ IPAddress('192.0.3.112')
 >>> ip.size
 1024
 
-Internally, each IPNetwork object only stores 3 values :-
+Internally, each IPNetwork object only stores 3 values :
 
   * the IP address value as an unsigned integer
   * a reference to the IP protocol module for the IP version being represented
   * the CIDR prefix bitmask
-  
+
 All the other values are calculated on-the-fly on access.
 
 It is possible to adjust the IP address value and the CIDR prefix after object instantiation.
@@ -172,7 +172,7 @@ Here are some networking details for an IPv6 subnet.
 (IPAddress('fe80::'), IPAddress('fe80::ffff:ffff:ffff:ffff'), IPAddress('ffff:ffff:ffff:ffff::'), IPAddress('::ffff:ffff:ffff:ffff'))
 
 --------------------------------------
-Interoperability between IPv4 and IPv6 
+Interoperability between IPv4 and IPv6
 --------------------------------------
 
 It is likely that with IPv6 becoming more prevalent, you'll want to be able to interoperate between IPv4 and IPv6 address seamlessly.
@@ -265,7 +265,7 @@ You can also use list slices on IP addresses in the subnet.
 >>> ip[0:4]
 <generator object ...>
 
-The slice is a generator function. This was done to save time and system resources as some slices can end up being very large for certain subnets! 
+The slice is a generator function. This was done to save time and system resources as some slices can end up being very large for certain subnets!
 
 Here is how you'd access all elements in a slice.
 
@@ -299,7 +299,7 @@ Use of generators ensures working with large IP subnets is efficient.
 
 In IPv4 networks you only usually assign the addresses between the network and broadcast addresses to actual host interfaces on systems.
 
-Here is the iterator provided for accessing these IP addresses :-
+Here is the iterator provided for accessing these IP addresses :
 
 >>> for ip in IPNetwork('192.0.2.0/23').iter_hosts():
 ...     print '%s' % ip
@@ -396,7 +396,7 @@ Once again, this method produces and iterator because of the possibility for a l
 [IPNetwork('172.24.0.0/23'), IPNetwork('172.24.2.0/23'), IPNetwork('172.24.4.0/23'), ..., IPNetwork('172.24.250.0/23'), IPNetwork('172.24.252.0/23'), IPNetwork('172.24.254.0/23')]
 
 It is also possible to retrieve the list of supernets that a given IP address or subnet belongs to. You can also specify an optional limit.
- 
+
 >>> ip = IPNetwork('192.0.2.114')
 >>> supernets = ip.supernet(22)
 >>> pprint.pprint(supernets)
@@ -619,7 +619,7 @@ An IP network or subnet is different from an individual IP address and therefore
 
 If you want to compare them successfully, you must be explicit about which aspect of the IP network you wish to match against the IP address in question.
 
-You can use the index of the first or last address if it is a /32 like so :-
+You can use the index of the first or last address if it is a /32 like so :
 
 >>> IPAddress('192.0.2.0') == IPNetwork('192.0.2.0/32')[0]
 True
@@ -628,7 +628,7 @@ True
 >>> IPAddress('192.0.2.0') != IPNetwork('192.0.2.0/32')[0]
 False
 
-You can also use the base address if this is what you wish to compare :-
+You can also use the base address if this is what you wish to compare :
 
 >>> IPAddress('192.0.2.0') == IPNetwork('192.0.2.0/32').ip
 True
@@ -687,9 +687,9 @@ objects.
 
 >>> r1 = IPRange('192.0.2.1', '192.0.2.15')
 >>> addrs = list(r1)
->>> addrs 
+>>> addrs
 [IPAddress('192.0.2.1'), IPAddress('192.0.2.2'), IPAddress('192.0.2.3'), IPAddress('192.0.2.4'), IPAddress('192.0.2.5'), IPAddress('192.0.2.6'), IPAddress('192.0.2.7'), IPAddress('192.0.2.8'), IPAddress('192.0.2.9'), IPAddress('192.0.2.10'), IPAddress('192.0.2.11'), IPAddress('192.0.2.12'), IPAddress('192.0.2.13'), IPAddress('192.0.2.14'), IPAddress('192.0.2.15')]
->>> r1 == addrs  
+>>> r1 == addrs
 False
 
 Oops! Not quite what we were looking for or expecting.
@@ -716,7 +716,7 @@ The above works if the list you are comparing contains one type or the other, bu
 Time for some slightly more powerful operations. Let's make use of a new class for dealing with groups of IP addresses and subnets. The IPSet class.
 
 >>> ips = [IPAddress('192.0.2.1'), '192.0.2.2/31', IPNetwork('192.0.2.4/31'), IPAddress('192.0.2.6'), IPAddress('192.0.2.7'), '192.0.2.8', '192.0.2.9', IPAddress('192.0.2.10'), IPAddress('192.0.2.11'), IPNetwork('192.0.2.12/30')]
->>> s1 = IPSet(r1.cidrs()) 
+>>> s1 = IPSet(r1.cidrs())
 >>> s2 = IPSet(ips)
 >>> s2
 IPSet(['192.0.2.1/32', '192.0.2.2/31', '192.0.2.4/30', '192.0.2.8/29'])
@@ -745,7 +745,7 @@ netaddr also supports a user friendly form of specifying IP address ranges using
 >>> IPGlob('192.0.2.*') == IPNetwork('192.0.2.0/24')
 True
 
-IPGlob('192.0.2.*') != IPNetwork('192.0.2.0/24')
+>>> IPGlob('192.0.2.*') != IPNetwork('192.0.2.0/24')
 False
 
 As `IPGlob` is a subclass of `IPRange`, all of the same operations apply.
