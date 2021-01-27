@@ -151,7 +151,7 @@ class BaseIP(object):
         if self._module.version == 4:
             return self in IPV4_LOOPBACK
         elif self._module.version == 6:
-            return self == IPV6_LOOPBACK
+            return self in IPV6_LOOPBACK
 
     def is_private(self):
         """
@@ -1949,7 +1949,7 @@ IPV4_RESERVED = (
 #-----------------------------------------------------------------------------
 #   Cached IPv6 address range lookups.
 #-----------------------------------------------------------------------------
-IPV6_LOOPBACK = IPAddress('::1')
+IPV6_LOOPBACK = IPNetwork('::1/128')
 
 IPV6_PRIVATE = (
     IPNetwork('fc00::/7'),  #   Unique Local Addresses (ULA)
