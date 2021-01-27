@@ -12,13 +12,14 @@ def test_is_multicast():
 
 
 def test_is_private():
-    assert IPNetwork('192.0.2.0/24').is_private()
+    assert IPNetwork('10.0.0.0/24').is_private()
     assert IPNetwork('fc00::/7').is_private()
 
 
 def test_is_reserved():
     assert IPNetwork('240.0.0.0/24').is_reserved()
     assert IPNetwork('0::/48').is_reserved()
+
 
 def test_is_loopback():
     assert IPNetwork('127.0.0.0/8').is_loopback()
