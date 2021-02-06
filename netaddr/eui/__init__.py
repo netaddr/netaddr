@@ -101,7 +101,6 @@ class OUI(BaseIdentifier):
             raise NotRegisteredError('OUI %r not registered!' % (oui,))
 
     def __hash__(self):
-        """:return: hash of this OUI object suitable for dict keys, sets etc"""
         return hash(self._value)
 
     def __eq__(self, other):

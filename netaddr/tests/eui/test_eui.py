@@ -158,6 +158,7 @@ def test_eui_oui_information():
 def test_oui_constructor():
     oui = OUI(524336)
     assert str(oui) == '08-00-30'
+    assert hash(oui) == 524336
     assert oui == OUI('08-00-30')
 
     assert oui.registration(0).address == [
