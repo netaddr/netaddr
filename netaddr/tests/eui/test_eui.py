@@ -158,7 +158,6 @@ def test_eui_oui_information():
 def test_oui_constructor():
     oui = OUI(524336)
     assert str(oui) == '08-00-30'
-    assert hash(oui) == 524336
     assert oui == OUI('08-00-30')
 
     assert oui.registration(0).address == [
@@ -185,6 +184,18 @@ def test_oui_constructor():
     assert oui.registration(2).org == 'CERN'
     assert oui.registration(2).oui == '08-00-30'
     assert oui.reg_count == 3
+
+
+def test_oui_hash():
+    oui0 = OUI(0)
+    oui1 = OUI(1)
+
+    assert hash(oui0) == 0
+    assert hash(oui1) == 1
+
+    oui_dict = {oui0: None, oui1: None}
+
+    assert list(oui_dict.keys()) == [OUI(0), OUI(1)]
 
 
 def test_eui_iab():
