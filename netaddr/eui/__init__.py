@@ -100,6 +100,9 @@ class OUI(BaseIdentifier):
         else:
             raise NotRegisteredError('OUI %r not registered!' % (oui,))
 
+    def __hash__(self):
+        return hash(self._value)
+
     def __eq__(self, other):
         if not isinstance(other, OUI):
             try:

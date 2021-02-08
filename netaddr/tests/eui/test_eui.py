@@ -186,6 +186,14 @@ def test_oui_constructor():
     assert oui.reg_count == 3
 
 
+def test_oui_hash():
+    oui0 = OUI(0)
+    oui1 = OUI(1)
+    oui_dict = {oui0: None, oui1: None}
+
+    assert list(oui_dict.keys()) == [OUI(0), OUI(1)]
+
+
 def test_eui_iab():
     mac = EUI('00-50-C2-00-0F-01')
     assert mac.is_iab()
