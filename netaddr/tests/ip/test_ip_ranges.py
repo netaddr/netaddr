@@ -1,3 +1,4 @@
+from ast import literal_eval
 import pickle
 import pytest
 
@@ -220,7 +221,7 @@ def test_iprange_cidr_interoperability():
 def test_iprange_info_and_properties():
     iprange = IPRange('192.0.2.1', '192.0.2.254')
 
-    assert eval(str(iprange.info)) == {
+    assert literal_eval(str(iprange.info)) == {
         'IPv4': [{
             'date': '1993-05',
             'designation': 'Administered by ARIN',
