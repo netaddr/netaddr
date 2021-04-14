@@ -1,4 +1,5 @@
 *.py[co]
+netaddr/version.py
 netaddr/.coverage
 netaddr/tests/coverage/
 netaddr.egg-info/

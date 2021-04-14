@@ -6,8 +6,21 @@
 """A Python library for manipulating IP and EUI network addresses."""
 
 #: Version info (major, minor, maintenance, status)
-__version__ = '0.8.0'
-VERSION = tuple(int(part) for part in __version__.split('.'))
+from .version import __version__
+
+
+def _parse_version_string_into_tuple(ver_str):
+    parts = ver_str.split('.')
+    res = []
+    for part in parts:
+        try:
+            res.append(int(part))
+        except ValueError:
+            break
+    return tuple(res)
+
+
+VERSION = _parse_version_string_into_tuple(__version__)
 STATUS = ''
 
 import sys as _sys

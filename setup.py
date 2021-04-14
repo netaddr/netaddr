@@ -5,7 +5,6 @@
 """
 A distutils Python setup file. For setuptools support see setup_egg.py.
 """
-import os
 import sys
 
 from setuptools import setup
@@ -19,15 +18,10 @@ def main():
         sys.stdout.write("To install, run 'python setup.py install'\n\n")
 
     setup(
-        version=(
-            [
-                ln for ln in open(os.path.join(os.path.dirname(__file__), 'netaddr', '__init__.py'))
-                if '__version__' in ln
-            ][0]
-            .split('=')[-1]
-            .strip()
-            .strip('\'"')
-        ),
+        use_scm_version={
+            "write_to": "netaddr/version.py",
+            "write_to_template": '__version__ = "{version}"\n',
+        }
     )
 
 if __name__ == "__main__":
