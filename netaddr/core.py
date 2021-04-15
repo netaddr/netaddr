@@ -142,7 +142,7 @@ class Publisher(object):
         :param subscriber: a new object that implements the Subscriber object
             interface.
         """
-        if hasattr(subscriber, 'update') and _callable(eval('subscriber.update')):
+        if hasattr(subscriber, 'update') and _callable(subscriber.update):
             if subscriber not in self.subscribers:
                 self.subscribers.append(subscriber)
         else:
