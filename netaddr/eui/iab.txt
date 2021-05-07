@@ -1277,12 +1277,6 @@ F3D000-F3DFFF                 (base 16)                     Project service S.a.
                                                             Seriate  Bergamo  24100                      
                                                             IT                                           
 
-00-50-C2                      (hex)                         Vemco Sp. z o. o.                            
-F3C000-F3CFFF                 (base 16)                     Vemco Sp. z o. o.                            
-                                                            ul. Broniewskiego 3                          
-                                                            Sopot  pomorskie  81-837                     
-                                                            US                                           
-
 00-50-C2                      (hex)                         Rosslare Enterprises Limited                 
 F37000-F37FFF                 (base 16)                     Rosslare Enterprises Limited                 
                                                             Flat 912 Wing Fat Industrial Building        
@@ -1528,12 +1522,6 @@ E73000-E73FFF                 (base 16)                     ACS Motion Control L
                                                             Ramat Gabriel Industrial Park                
                                                             Migdal Ha'Emek    10500                      
                                                             IL                                           
-
-00-50-C2                      (hex)                         TAIYO SEIKI CO.,LTD.                         
-E60000-E60FFF                 (base 16)                     TAIYO SEIKI CO.,LTD.                         
-                                                            1600 Aza-Shironoshita Asahi                  
-                                                            Shin Asahi-cho  Takashima, Shiga  520-1501   
-                                                            JP                                           
 
 00-50-C2                      (hex)                         Institute For Information Industry           
 E4E000-E4EFFF                 (base 16)                     Institute For Information Industry           
@@ -2651,12 +2639,6 @@ A2F000-A2FFFF                 (base 16)                     DragonFly Scientific
                                                             Harveys Lake  PA  18618                      
                                                             US                                           
 
-00-50-C2                      (hex)                         Custom Control Concepts                      
-A2A000-A2AFFF                 (base 16)                     Custom Control Concepts                      
-                                                            6020 S 190th St                              
-                                                            Kent  WA  98032                              
-                                                            US                                           
-
 00-50-C2                      (hex)                         Meiryo Denshi Corp.                          
 A41000-A41FFF                 (base 16)                     Meiryo Denshi Corp.                          
                                                             38-23 higashi maeda                          
@@ -3334,12 +3316,6 @@ A04000-A04FFF                 (base 16)                     TP Radio
                                                             3375 Scott Blvd. #300                        
                                                             Santa Clara  CA  95054                       
                                                             US                                           
-
-00-50-C2                      (hex)                         Austco Communication Systems Pty Ltd         
-787000-787FFF                 (base 16)                     Austco Communication Systems Pty Ltd         
-                                                            40 O'Malley Street                           
-                                                            Osborne Park  Western Australia  6017        
-                                                            AU                                           
 
 00-50-C2                      (hex)                         Quantum Medical Imaging                      
 7A5000-7A5FFF                 (base 16)                     Quantum Medical Imaging                      
@@ -4583,12 +4559,6 @@ A04000-A04FFF                 (base 16)                     TP Radio
                                                             Houston  TX  77002                           
                                                             US                                           
 
-00-50-C2                      (hex)                         BMK professional electronics GmbH            
-34D000-34DFFF                 (base 16)                     BMK professional electronics GmbH            
-                                                            Werner-von-Siemens-Str. 6                    
-                                                            Augsburg  Bavaria  86156                     
-                                                            DE                                           
-
 00-50-C2                      (hex)                         Novx Systems                                 
 341000-341FFF                 (base 16)                     Novx Systems                                 
                                                             Suite 100                                    
@@ -4984,12 +4954,6 @@ A04000-A04FFF                 (base 16)                     TP Radio
                                                             Av. General Michel, 1E                       
                                                             CHARLEROI  Hainaut  B6000                    
                                                             BE                                           
-
-00-50-C2                      (hex)                         PESA Switching Systems, Inc.                 
-1AF000-1AFFFF                 (base 16)                     PESA Switching Systems, Inc.                 
-                                                            330A Wynn Drive                              
-                                                            Huntsville  AL  35805                        
-                                                            US                                           
 
 00-50-C2                      (hex)                         WillMonius Inc.                              
 1C0000-1C0FFF                 (base 16)                     WillMonius Inc.                              
@@ -5498,6 +5462,42 @@ A04000-A04FFF                 (base 16)                     TP Radio
                                                             Hampshire    RG24 8AH                        
                                                             GB                                           
 
+00-50-C2                      (hex)                         Austco Marketing & Service (USA) ltd.        
+787000-787FFF                 (base 16)                     Austco Marketing & Service (USA) ltd.        
+                                                            9155 Sterling St Unit 100                    
+                                                            Irving  TX  75063                            
+                                                            US                                           
+
+00-50-C2                      (hex)                         Astronics Custom Control Concepts            
+A2A000-A2AFFF                 (base 16)                     Astronics Custom Control Concepts            
+                                                            6020 S 190th St                              
+                                                            Kent  WA  98032                              
+                                                            US                                           
+
+00-50-C2                      (hex)                          BMK professional electronics GmbH           
+34D000-34DFFF                 (base 16)                      BMK professional electronics GmbH           
+                                                            Werner-von-Siemens-Straße 6                  
+                                                            Augsburg     86159                           
+                                                            DE                                           
+
+00-50-C2                      (hex)                         Vemco Sp. z o. o.                            
+F3C000-F3CFFF                 (base 16)                     Vemco Sp. z o. o.                            
+                                                            ul. Biala 1                                  
+                                                            Gdansk    80-435                             
+                                                            PL                                           
+
+00-50-C2                      (hex)                         PESA                                         
+1AF000-1AFFFF                 (base 16)                     PESA                                         
+                                                            103 Quality Circle, Suite 210                
+                                                            Huntsville  AL  35806                        
+                                                            US                                           
+
+00-50-C2                      (hex)                         HORIZON.INC                                  
+E60000-E60FFF                 (base 16)                     HORIZON.INC                                  
+                                                            1600 Aza-Shironoshita Asahi                  
+                                                            Shin Asahi-cho  Takashima, Shiga  520-1501   
+                                                            JP                                           
+
 00-50-C2                      (hex)                         Clever Devices                               
 065000-065FFF                 (base 16)                     Clever Devices                               
                                                             1662 Route 300                               
@@ -5705,12 +5705,6 @@ E98000-E98FFF                 (base 16)                     i3 International Inc
                                                             Toronto  Ontario  M1K5H4                     
                                                             CA                                           
 
-00-50-C2                      (hex)                         Potter Electric Signal Co. LLC               
-C63000-C63FFF                 (base 16)                     Potter Electric Signal Co. LLC               
-                                                            11790 Troy Lane North                        
-                                                            Maple Grove  MN  55369                       
-                                                            US                                           
-
 00-50-C2                      (hex)                         CODEC Co., Ltd.                              
 9DF000-9DFFFF                 (base 16)                     CODEC Co., Ltd.                              
                                                             1-29-18 Tamagawa                             
@@ -5776,12 +5770,6 @@ C0A000-C0AFFF                 (base 16)                     ABB Transmission and
                                                             Ingvald Ystgaards vei 23                     
                                                             N-7047  Trondheim  0000                      
                                                             NO                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-00C000-00CFFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
 
 00-50-C2                      (hex)                         Aplex Technology Inc.                        
 E6A000-E6AFFF                 (base 16)                     Aplex Technology Inc.                        
@@ -6100,12 +6088,6 @@ EE6000-EE6FFF                 (base 16)                     Narinet, Inc.
                                                             1410 Gillingham Lane                         
                                                             Sugar Land  Texas  77478                     
                                                             US                                           
-
-40-D8-55                      (hex)                         KMtronic LTD                                 
-163000-163FFF                 (base 16)                     KMtronic LTD                                 
-                                                            Dobry Czintulov 28A                          
-                                                            Gorna Oriahovitca  VT  5100                  
-                                                            BG                                           
 
 40-D8-55                      (hex)                         NFT Automatisierungssysteme GmbH             
 164000-164FFF                 (base 16)                     NFT Automatisierungssysteme GmbH             
@@ -7411,12 +7393,6 @@ C39000-C39FFF                 (base 16)                     SECAD SA
                                                             Zac des Pellants                             
                                                             St Martin du Fresne    01430                 
                                                             FR                                           
-
-00-50-C2                      (hex)                         Austco Communication Systems Pty Ltd         
-C26000-C26FFF                 (base 16)                     Austco Communication Systems Pty Ltd         
-                                                            40 O'Malley Street                           
-                                                            Osborne Park  Western Australia  6017        
-                                                            AU                                           
 
 00-50-C2                      (hex)                         Audient Ltd                                  
 C22000-C22FFF                 (base 16)                     Audient Ltd                                  
@@ -10301,12 +10277,6 @@ A09000-A09FFF                 (base 16)                     Innovative American 
                                                             Temecula  CA  92590                          
                                                             US                                           
 
-00-50-C2                      (hex)                         Polyvision Corporation                       
-0F1000-0F1FFF                 (base 16)                     Polyvision Corporation                       
-                                                            14523 SW Milliken Way                        
-                                                            Beaverton  OR  97005                         
-                                                            US                                           
-
 00-50-C2                      (hex)                         Young Computer Co., Ltd.                     
 0F3000-0F3FFF                 (base 16)                     Young Computer Co., Ltd.                     
                                                             6th Fl. Bojung Bldg.                         
@@ -10451,12 +10421,6 @@ A09000-A09FFF                 (base 16)                     Innovative American 
                                                             McKinney  TX  75069                          
                                                             US                                           
 
-00-50-C2                      (hex)                         Austco Communication Systems Pty, Ltd        
-059000-059FFF                 (base 16)                     Austco Communication Systems Pty, Ltd        
-                                                            40 O'Malley St                               
-                                                            Osborne Park  Western Australia 6017         
-                                                            AU                                           
-
 00-50-C2                      (hex)                         MiSPO Co., Ltd.                              
 040000-040FFF                 (base 16)                     MiSPO Co., Ltd.                              
                                                             Kanagawa Prefecture,                         
@@ -10564,6 +10528,42 @@ AB5000-AB5FFF                 (base 16)                     Mettler Toledo
                                                             13550 SW Karl Braun Drive                    
                                                             Beaverton  OR  97077                         
                                                             US                                           
+
+40-D8-55                      (hex)                         KMtronic ltd                                 
+163000-163FFF                 (base 16)                     KMtronic ltd                                 
+                                                            Dobry Czintulov 28A                          
+                                                            Gorna Oriahovitca  VT  5100                  
+                                                            BG                                           
+
+00-50-C2                      (hex)                         Steelcase Inc.                               
+0F1000-0F1FFF                 (base 16)                     Steelcase Inc.                               
+                                                            901 44th Street SE                           
+                                                            Grand Rapids  MI  49508-7594                 
+                                                            US                                           
+
+00-50-C2                      (hex)                         Austco Marketing & Service (USA) ltd.        
+C26000-C26FFF                 (base 16)                     Austco Marketing & Service (USA) ltd.        
+                                                            9155 Sterling St Unit 100                    
+                                                            Irving  TX  75063                            
+                                                            US                                           
+
+00-50-C2                      (hex)                         Austco Marketing & Service (USA) ltd.        
+059000-059FFF                 (base 16)                     Austco Marketing & Service (USA) ltd.        
+                                                            9155 Sterling St Unit 100                    
+                                                            Irving  TX  75063                            
+                                                            US                                           
+
+00-50-C2                      (hex)                         Potter Electric Signal Co. LLC               
+C63000-C63FFF                 (base 16)                     Potter Electric Signal Co. LLC               
+                                                            1609 Park 370 Place                          
+                                                            Hazelwood  MO  63042                         
+                                                            US                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+00C000-00CFFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           
 
 00-50-C2                      (hex)                         DEUTA-WERKE GmbH                             
 FD7000-FD7FFF                 (base 16)                     DEUTA-WERKE GmbH                             
@@ -10912,18 +10912,6 @@ DE1000-DE1FFF                 (base 16)                     ABB Transmission and
                                                             71th-73th Nicolae Caramfil street, 2nd floor, 1th district
                                                             Bucuresti  Romania  014142                   
                                                             RO                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-18A000-18AFFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-110000-110FFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
 
 00-50-C2                      (hex)                         Aplex Technology Inc.                        
 B49000-B49FFF                 (base 16)                     Aplex Technology Inc.                        
@@ -13426,12 +13414,6 @@ A1A000-A1AFFF                 (base 16)                     DDL
                                                             999 Broadway                                 
                                                             Saugus  MA  01906                            
                                                             US                                           
-
-00-50-C2                      (hex)                         Austco Communication Systems Pty Ltd         
-9F8000-9F8FFF                 (base 16)                     Austco Communication Systems Pty Ltd         
-                                                            40 O'Malley Street                           
-                                                            Osborne Park  Western Australia  6017        
-                                                            AU                                           
 
 00-50-C2                      (hex)                         Adgil Design Inc.                            
 A05000-A05FFF                 (base 16)                     Adgil Design Inc.                            
@@ -16304,6 +16286,24 @@ ACC000-ACCFFF                 (base 16)                     ProPhotonix
                                                             Co Cork  Little Island  n/A                  
                                                             IE                                           
 
+00-50-C2                      (hex)                         Austco Marketing & Service (USA) ltd.        
+9F8000-9F8FFF                 (base 16)                     Austco Marketing & Service (USA) ltd.        
+                                                            9155 Sterling St Unit 100                    
+                                                            Irving  TX  75063                            
+                                                            US                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+110000-110FFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+18A000-18AFFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           
+
 40-D8-55                      (hex)                         VITEC                                        
 054000-054FFF                 (base 16)                     VITEC                                        
                                                             99, rue Pierre Semard                        
@@ -16627,18 +16627,6 @@ EE4000-EE4FFF                 (base 16)                     Rohde&Schwarz Topex 
                                                             71th-73th Nicolae Caramfil street, 2nd floor, 1th district
                                                             Bucuresti  Romania  014142                   
                                                             RO                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-0BC000-0BCFFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-060000-060FFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
 
 00-50-C2                      (hex)                         Aplex Technology Inc.                        
 F08000-F08FFF                 (base 16)                     Aplex Technology Inc.                        
@@ -17174,12 +17162,6 @@ F58000-F58FFF                 (base 16)                     IEEE Registration Au
                                                             Nanjing    210019                            
                                                             US                                           
 
-40-D8-55                      (hex)                         insensiv GmbH                                
-0C7000-0C7FFF                 (base 16)                     insensiv GmbH                                
-                                                            Heidsieker Heide 114                         
-                                                            Bielefeld  Nordrhein-Westfalen  33739        
-                                                            DE                                           
-
 40-D8-55                      (hex)                         MITSUBISHI ELECTRIC SYSTEM & SERVICE CO.,LTD.
 0B4000-0B4FFF                 (base 16)                     MITSUBISHI ELECTRIC SYSTEM & SERVICE CO.,LTD.
                                                             26-43,1-Chome,Yata,Higashi-ku                
@@ -17257,12 +17239,6 @@ F58000-F58FFF                 (base 16)                     IEEE Registration Au
                                                             1326 Monde                                   
                                                             Sojya city  Okayama prefecture  7191156      
                                                             JP                                           
-
-40-D8-55                      (hex)                         elgris                                       
-06A000-06AFFF                 (base 16)                     elgris                                       
-                                                            Krantzstr 7                                  
-                                                            Aachen  NRW  52070                           
-                                                            DE                                           
 
 40-D8-55                      (hex)                         Wheatstone Corporation                       
 07F000-07FFFF                 (base 16)                     Wheatstone Corporation                       
@@ -20852,12 +20828,6 @@ A18000-A18FFF                 (base 16)                     Eoslink
                                                             BIEVRES Cedex    91573                       
                                                             FR                                           
 
-00-50-C2                      (hex)                         CabTronix GmbH                               
-281000-281FFF                 (base 16)                     CabTronix GmbH                               
-                                                            Hohstrass 1                                  
-                                                            Kloten  Zuerich  8302                        
-                                                            CH                                           
-
 00-50-C2                      (hex)                         ANSITEX CORP.                                
 283000-283FFF                 (base 16)                     ANSITEX CORP.                                
                                                             24F., No.56, Liansing Rd., Sijhih City,      
@@ -21554,11 +21524,41 @@ EA9000-EA9FFF                 (base 16)                     Mettler Toledo
                                                             Ridgefield  CT  06877                        
                                                             US                                           
 
-00-50-C2                      (hex)                         ABB Power Grids Germany AG – Grid Automation 
-3F3000-3F3FFF                 (base 16)                     ABB Power Grids Germany AG – Grid Automation 
+00-50-C2                      (hex)                         Cabtronix AG                                 
+281000-281FFF                 (base 16)                     Cabtronix AG                                 
+                                                            Hohstrass 1                                  
+                                                            Kloten  Zuerich  8302                        
+                                                            CH                                           
+
+00-50-C2                      (hex)                         Hitachi ABB Power Grids – Grid Automation    
+3F3000-3F3FFF                 (base 16)                     Hitachi ABB Power Grids – Grid Automation    
                                                             Kallstadter Strasse 1                        
                                                             Mannheim    68309                            
                                                             DE                                           
+
+40-D8-55                      (hex)                         elgris UG                                    
+06A000-06AFFF                 (base 16)                     elgris UG                                    
+                                                            Krantzstr 7                                  
+                                                            Aachen  NRW  52070                           
+                                                            DE                                           
+
+40-D8-55                      (hex)                         insensiv GmbH                                
+0C7000-0C7FFF                 (base 16)                     insensiv GmbH                                
+                                                            Auf dem Esch 28                              
+                                                            Bielefeld  Nordrhein-Westfalen  33619        
+                                                            DE                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+060000-060FFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+0BC000-0BCFFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           
 
 00-50-C2                      (hex)                         DEUTA-WERKE GmbH                             
 CB3000-CB3FFF                 (base 16)                     DEUTA-WERKE GmbH                             
@@ -21752,12 +21752,6 @@ F64000-F64FFF                 (base 16)                     Chrisso Technologies
                                                             Bene Beraq    51203                          
                                                             IL                                           
 
-00-50-C2                      (hex)                         Potter Electric Signal Co. LLC               
-DF4000-DF4FFF                 (base 16)                     Potter Electric Signal Co. LLC               
-                                                            1609 Park 370 Place                          
-                                                            Hazelwood    63042                           
-                                                            US                                           
-
 00-50-C2                      (hex)                         DAVE SRL                                     
 B9C000-B9CFFF                 (base 16)                     DAVE SRL                                     
                                                             Via  Talponedo 29                            
@@ -21877,24 +21871,6 @@ FB7000-FB7FFF                 (base 16)                     Pounce Consulting
                                                             Av 8 de Julio 1295                           
                                                             Guadalajara   Jalisco  44190                 
                                                             MX                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-1DC000-1DCFFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-16A000-16AFFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
-
-40-D8-55                      (hex)                         Aplex Technology Inc.                        
-147000-147FFF                 (base 16)                     Aplex Technology Inc.                        
-                                                            2Q , NanYouTianAn industrial park Tower4 ,Nanshan District
-                                                            Shenzhen  Guangdong  518054                  
-                                                            CN                                           
 
 00-50-C2                      (hex)                         Aplex Technology Inc.                        
 F6F000-F6FFFF                 (base 16)                     Aplex Technology Inc.                        
@@ -25049,12 +25025,6 @@ A13000-A13FFF                 (base 16)                     Talyst, Inc.
                                                             Costa Mesa  CA  92626                        
                                                             US                                           
 
-00-50-C2                      (hex)                         Lyngsoe Systems                              
-7EC000-7ECFFF                 (base 16)                     Lyngsoe Systems                              
-                                                            5570 Kennedy RD                              
-                                                            Mississauga  Ontario  L4Z 2A9                
-                                                            CA                                           
-
 00-50-C2                      (hex)                         Private                                      
 7DF000-7DFFFF                 (base 16)                     Private                                      
 
@@ -26258,12 +26228,6 @@ A13000-A13FFF                 (base 16)                     Talyst, Inc.
                                                             Almere    1351 HL                            
                                                             NL                                           
 
-00-50-C2                      (hex)                         Wisnu and Supak Co.Ltd.                      
-3D4000-3D4FFF                 (base 16)                     Wisnu and Supak Co.Ltd.                      
-                                                            102/111-112 Moo-Ban Sinpattanathanee         
-                                                            Jatujak  Bangkok  10900                      
-                                                            TH                                           
-
 00-50-C2                      (hex)                         Comlab Inc.                                  
 3D6000-3D6FFF                 (base 16)                     Comlab Inc.                                  
                                                             2300, Leon-Harmel                            
@@ -27368,14 +27332,50 @@ F48000-F48FFF                 (base 16)                     Phoenix Audio Techno
                                                             Irvine  CA  92614                            
                                                             US                                           
 
+00-50-C2                      (hex)                         Computechnic AG                              
+5E3000-5E3FFF                 (base 16)                     Computechnic AG                              
+                                                            Rietlistrasse 3                              
+                                                            Rorschacherberg  Goldach  9403               
+                                                            CH                                           
+
 00-50-C2                      (hex)                         SR RESEARCH LTD                              
 139000-139FFF                 (base 16)                     SR RESEARCH LTD                              
                                                             740 Meadow Wood Road                         
                                                             Mississauga  Ontario  L5J 2S6                
                                                             CA                                           
 
-00-50-C2                      (hex)                         Computechnic AG                              
-5E3000-5E3FFF                 (base 16)                     Computechnic AG                              
-                                                            Rietlistrasse 3                              
-                                                            Rorschacherberg  Goldach  9403               
-                                                            CH                                           
+00-50-C2                      (hex)                         Potter Electric Signal Co. LLC               
+DF4000-DF4FFF                 (base 16)                     Potter Electric Signal Co. LLC               
+                                                            1609 Park 370 Place                          
+                                                            Hazelwood  MO  63042                         
+                                                            US                                           
+
+00-50-C2                      (hex)                         Lyngsoe Systems                              
+7EC000-7ECFFF                 (base 16)                     Lyngsoe Systems                              
+                                                            101 Simona Dr Unit 2                         
+                                                            Bolton  Ontario  L7E 4E8                     
+                                                            CA                                           
+
+00-50-C2                      (hex)                         Wisnu and Supak Co.,Ltd.                     
+3D4000-3D4FFF                 (base 16)                     Wisnu and Supak Co.,Ltd.                     
+                                                            102/111-112 Moo-Ban Sinpattanathanee         
+                                                            Jatujak  Bangkok  10900                      
+                                                            TH                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+147000-147FFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+16A000-16AFFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           
+
+40-D8-55                      (hex)                         Aplex Technology Inc.                        
+1DC000-1DCFFF                 (base 16)                     Aplex Technology Inc.                        
+                                                            501-5B01,Xintianxia phase 2 building,Wankecheng community,Bantian township,Longgang district
+                                                            Shenzhen City  Guangdong  518129             
+                                                            CN                                           

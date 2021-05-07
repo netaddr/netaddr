@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?xml-stylesheet type="text/xsl" href="ipv4-address-space.xsl"?>
-<?oxygen RNGSchema="ipv4-address-space.rng" type="xml"?>
+<?xml-model href="ipv4-address-space.rng" schematypens="http://relaxng.org/ns/structure/1.0" ?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
   <category>Internet Protocol version 4 (IPv4) Address Space</category>
-  <updated>2019-12-27</updated>
+  <updated>2021-02-05</updated>
   <xref type="rfc" data="rfc7249"/>
   <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
 All other assignments require IETF Review.</registration_rule>
@@ -18,6 +18,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <date>1981-09</date>
     <status>RESERVED</status>
     <xref type="note" data="2"/>
+    <xref type="note" data="2bis"/>
   </record>
   <record>
     <prefix>001/8</prefix>
@@ -2603,7 +2604,9 @@ of WHOIS Directory and reverse DNS records. Assignments from these blocks are di
 on a regional basis.
 ALLOCATED: delegated entirely to specific RIR as indicated.
 UNALLOCATED: not yet allocated or reserved.</footnote>
-  <footnote anchor="2">0.0.0.0/8 reserved for self-identification <xref type="rfc" data="rfc1122"/>, section 3.2.1.3. 
+  <footnote anchor="2">0.0.0.0/8 reserved for self-identification <xref type="rfc" data="rfc791"/>, section 3.2.
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="2bis">0.0.0.0/32 reserved for self-identification <xref type="rfc" data="rfc1122"/>, section 3.2.1.3.
 Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
   <footnote anchor="3">Reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>.
 Complete registration details for 10.0.0.0/8 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>

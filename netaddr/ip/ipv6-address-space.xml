@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?xml-stylesheet type="text/xsl" href="ipv6-address-space.xsl"?>
-<?oxygen RNGSchema="ipv6-address-space.rng" type="xml"?>
+<?xml-model href="ipv6-address-space.rng" schematypens="http://relaxng.org/ns/structure/1.0" ?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv6-address-space">
   <title>Internet Protocol Version 6 Address Space</title>
   <updated>2019-09-13</updated>
-  <note>The IPv6 address management function was formally delegated to
-IANA in December 1995 <xref type="rfc" data="rfc1881"/>. The registration procedure
-was confirmed with the IETF Chair in March 2010.
+  <note>The IPv6 address management function was formally delegated to IANA
+in December 1995 <xref type="rfc" data="rfc1881"/>. The registration procedure was confirmed
+with the IETF Chair in March 2010.
 
-As stated in RFC3513, IANA should limit its allocation of IPv6-unicast 
-address space to the range of addresses that start with binary value 001.
-The rest of the global unicast address space (approximately 85% of the IPv6
-address space) is reserved for future definition and use, and is not to be
-assigned by IANA at this time.
+As stated in <xref type="rfc" data="rfc3513"/>, IANA should limit its allocation of 
+IPv6-unicast address space to the range of addresses that start with
+binary value 001. The rest of the global unicast address space 
+(approximately 85% of the IPv6 address space) is reserved for future
+definition and use, and is not to be assigned by IANA at this time.
         
-While <xref type="rfc" data="rfc3513"/> was obsoleted by <xref type="rfc" data="rfc4291"/>,
-the guidiance provided to IANA did not change regarding the allocation of IPv6 
-unicast addresses.
+While <xref type="rfc" data="rfc3513"/> was obsoleted by <xref type="rfc" data="rfc4291"/>, the guidance provided to
+IANA did not change regarding the allocation of IPv6 unicast 
+addresses.
         
   </note>
 <registry id="ipv6-address-space-1">
