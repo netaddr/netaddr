@@ -142,7 +142,7 @@ u'Intel Corporate'
 
 You can also use OUI objects directly without going through the EUI interface.
 
-A few OUI records have multiple registrations against them. I'm not sure if this is recording historical information or just a quirk of the IEEE reigstration process.
+A few OUI records have multiple registrations against them. I'm not sure if this is recording historical information or just a quirk of the IEEE registration process.
 
 This example shows you how you access them individually by specifying an index number.
 

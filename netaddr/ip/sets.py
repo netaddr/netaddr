@@ -349,7 +349,7 @@ class IPSet(object):
             for cidr in remainder:
                 self._cidrs[cidr] = True
                 # No call to self.compact() is needed. Removing an IPNetwork cannot
-                # create mergable networks.
+                # create mergeable networks.
 
     def pop(self):
         """

@@ -53,7 +53,7 @@ Changes since 0.7.19
 * Fixed Python 3.8 SyntaxWarning on using `is not` with a string literal, by Stefan Nordhausen.
 * Fixed DeprecationWarnings by using raw strings for escape characters used in regexes, by Sean McGinnis.
 * Improved IPGlob documentation, by obkmeta.
-* Fixed exception creation in corner cases by explicitly passin error message params as tuples, by
+* Fixed exception creation in corner cases by explicitly passing error message params as tuples, by
   Matthias Urlichs.
 * Stopped manually replacing shebang of an included script.
 * Stopped using __file__ in all code that's expected to run in environments that don't support it
@@ -261,7 +261,7 @@ Changes since 0.7.13
     working under Python3.
 
 * 64 bit EUIs could only be created from strings with "-" as a separator.
-    Now, ":" and no seperator are supported, which already worked for 48 bit EUIs.
+    Now, ":" and no separator are supported, which already worked for 48 bit EUIs.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specific bug fixes addressed in this release
@@ -277,7 +277,7 @@ FIXED Issue 84: https://github.com/drkjam/netaddr/issues/84
     - Incorrect python executable path in netaddr-0.7.13-py2.py3-none-any.whl
 
 FIXED Issue 87: https://github.com/drkjam/netaddr/pull/87
-    - Handle eui64 addresses with colon as a delimiter and without delimeter.
+    - Handle eui64 addresses with colon as a delimiter and without delimiter.
 
 ---------------
 Release: 0.7.13
@@ -357,7 +357,7 @@ Changes since 0.7.10
 
 * IPSet has two new methods: iscontiguous() and iprange(), thanks to Louis des Landes.
 
-* Re-added the IPAddress.netmask_bits() method that was accidently removed.
+* Re-added the IPAddress.netmask_bits() method that was accidentally removed.
 
 * Networks 128.0.0.0/16, 191.255.0.0/16, and 223.255.255.0/24 are not marked as
     reserved IPv4 addresses any more. Thanks to marnickv for pointing that out.
@@ -800,7 +800,7 @@ Some highlights of what has changed :-
   They also do not support any notion of a netmask or CIDR prefix; this is the
   primary function of an IPNetwork object.
 
-* Abritrary IP ranges and are still supported but a lot of their functionality
+* Arbitrary IP ranges and are still supported but a lot of their functionality
   has also been exposed via handy functions.
 
 * IP globbing routines (previous known as Wildcards) have been moved into
@@ -856,7 +856,7 @@ Specific bug fixes addressed in this release
 
 FIXED Issue 40 - http://code.google.com/p/netaddr/issues/detail?id=40
 
-    - Building RPM wth "python setup.py bdist_rpm" fails, multiple errors
+    - Building RPM with "python setup.py bdist_rpm" fails, multiple errors
 
 --------------
 Release: 0.6.3
@@ -1064,7 +1064,7 @@ Changes since 0.5.x
     which contextual information about your addresses can be accessed. This
     data is published by IANA and the IEEE respectively and sourced directly 
     from text files bundled with netaddr that are available for download
-    publically online. Details are available in the docstring of the relevant
+    publicly online. Details are available in the docstring of the relevant
     parsing classes. Subsequent netaddr releases will endeavour to keep 
     up-to-date with any updates to these files.
     
@@ -1270,7 +1270,7 @@ Changes since 0.4.x
   and Wildcard effectively read-write rather than read-only which they have 
   been up until this release.
 
-* Ammended the way sort order is calculated for Addr and AddrRange (sub)class
+* Amended the way sort order is calculated for Addr and AddrRange (sub)class
   instances so that the address type is taken into account as well as as the 
   numerical value of the address or address range. The ascending sort order 
   is IPv4, IPv6, EUI-48 and EUI-64. Sequences of AddrRange (sub)class 

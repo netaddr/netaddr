@@ -39,7 +39,7 @@ IPSet(['10.0.0.0/24', '10.0.1.0/27'])
 >>> IPSet(IPRange('0.0.0.0', '255.255.255.255'))
 IPSet(['0.0.0.0/0'])
 
-You can interate over all the IP addresses that are members of the IP set.
+You can iterate over all the IP addresses that are members of the IP set.
 
 >>> for ip in IPSet(['192.0.2.0/28', '::192.0.2.0/124']):
 ...     print(ip)

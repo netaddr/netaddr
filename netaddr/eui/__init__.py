@@ -78,7 +78,7 @@ class OUI(BaseIdentifier):
 
         if isinstance(oui, str):
             #TODO: Improve string parsing here.
-            #TODO: Accept full MAC/EUI-48 addressses as well as XX-XX-XX
+            #TODO: Accept full MAC/EUI-48 addresses as well as XX-XX-XX
             #TODO: and just take /16 (see IAB for details)
             self._value = int(oui.replace('-', ''), 16)
         elif _is_int(oui):
@@ -455,7 +455,7 @@ class EUI(BaseIdentifier):
                     raise AddrFormatError('bad address format: %r' % (value,))
 
     value = property(_get_value, _set_value, None,
-        'a positive integer representing the value of this EUI indentifier.')
+        'a positive integer representing the value of this EUI identifier.')
 
     def _get_dialect(self):
         return self._dialect
@@ -653,7 +653,7 @@ class EUI(BaseIdentifier):
     @property
     def bin(self):
         """
-        The value of this EUI adddress in standard Python binary
+        The value of this EUI address in standard Python binary
         representational form (0bxxx). A back port of the format provided by
         the builtin bin() function found in Python 2.6.x and higher.
         """

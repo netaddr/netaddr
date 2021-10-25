@@ -55,7 +55,7 @@ class BaseIP(object):
 
     def __hash__(self):
         """
-        :return: A hash value uniquely indentifying this IP object.
+        :return: A hash value uniquely identifying this IP object.
         """
         return hash(self.key())
 
@@ -531,7 +531,7 @@ class IPAddress(BaseIP):
     @property
     def bin(self):
         """
-        The value of this IP adddress in standard Python binary
+        The value of this IP address in standard Python binary
         representational form (0bxxx). A back port of the format provided by
         the builtin bin() function found in Python 2.6.x and higher.
         """
