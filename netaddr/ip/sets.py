@@ -88,7 +88,7 @@ class IPSet(object):
     subnets.
 
     """
-    __slots__ = ('_cidrs', '__weakref__')
+    __slots__ = ('_cidrs', '_prefixlens', '__weakref__')
 
     def __init__(self, iterable=None, flags=0):
         """
@@ -120,6 +120,8 @@ class IPSet(object):
 
                 for cidr in cidr_merge(mergeable):
                     self._cidrs[cidr] = True
+
+        self._update_prefixlens()
 
     def __getstate__(self):
         """:return: Pickled state of an ``IPSet`` object."""
@@ -216,6 +218,13 @@ class IPSet(object):
         cidrs = cidr_merge(self._cidrs)
         self._cidrs = dict.fromkeys(cidrs, True)
 
+    def _update_prefixlens(self):
+        """
+        A descending-order sorted list of all the unique prefix lengths in this IPSet.
+        Minimises the amount of iterations we need in __contains__
+        """
+        self._prefixlens = sorted({n._prefixlen for n in self._cidrs}, reverse=True)
+
     def __hash__(self):
         """
         Raises ``TypeError`` if this method is called.
@@ -236,10 +245,8 @@ class IPSet(object):
         # supernets loops at most 32 times for IPv4 or 128 times for IPv6,
         # no matter how many CIDRs this object contains.
         supernet = IPNetwork(ip)
-        if supernet in self._cidrs:
-            return True
-        while supernet._prefixlen:
-            supernet._prefixlen -= 1
+        for prefixlen in self._prefixlens:
+            supernet._prefixlen = prefixlen
             if supernet in self._cidrs:
                 return True
         return False
