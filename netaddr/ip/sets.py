@@ -223,7 +223,7 @@ class IPSet(object):
         A descending-order sorted list of all the unique prefix lengths in this IPSet.
         Minimises the amount of iterations we need in __contains__
         """
-        self._prefixlens = sorted({n._prefixlen for n in self._cidrs}, reverse=True)
+        self._prefixlens = sorted({(n.version, n._prefixlen) for n in self._cidrs}, reverse=True)
 
     def __hash__(self):
         """
@@ -245,10 +245,11 @@ class IPSet(object):
         # supernets loops at most 32 times for IPv4 or 128 times for IPv6,
         # no matter how many CIDRs this object contains.
         supernet = IPNetwork(ip)
-        for prefixlen in self._prefixlens:
-            supernet._prefixlen = prefixlen
-            if supernet in self._cidrs:
-                return True
+        for version, prefixlen in self._prefixlens:
+            if supernet.version == version:
+                supernet._prefixlen = prefixlen
+                if supernet in self._cidrs:
+                    return True
         return False
 
     def __nonzero__(self):
