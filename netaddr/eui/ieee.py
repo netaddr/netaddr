@@ -271,7 +271,7 @@ def create_indices():
 def load_index(index, fp):
     """Load index from file into index data structure."""
     try:
-        for row in _csv.reader([x.decode('UTF-8') for x in fp]):
+        for row in _csv.reader(fp):
             (key, offset, size) = [int(_) for _ in row]
             index.setdefault(key, [])
             index[key].append((offset, size))
@@ -281,8 +281,8 @@ def load_index(index, fp):
 
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
-    load_index(OUI_INDEX, _importlib_resources.open_binary(__package__, 'oui.idx'))
-    load_index(IAB_INDEX, _importlib_resources.open_binary(__package__, 'iab.idx'))
+    load_index(OUI_INDEX, _importlib_resources.open_text(__package__, 'oui.idx'))
+    load_index(IAB_INDEX, _importlib_resources.open_text(__package__, 'iab.idx'))
 
 
 if __name__ == '__main__':
