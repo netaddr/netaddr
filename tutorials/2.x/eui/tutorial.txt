@@ -37,7 +37,7 @@ Here are a few other common properties.
 Numerical representations
 -------------------------
 
-You can view an individual IP address in various other formats.
+You can view an individual MAC address in various other formats.
 
 >>> int(mac) == 117965411581
 True
