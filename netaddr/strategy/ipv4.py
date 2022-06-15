@@ -266,9 +266,14 @@ def expand_partial_address(addr):
         except ValueError:
             raise error
 
-        if 1 <= len(tokens) <= 4:
-            for i in range(4 - len(tokens)):
-                tokens.append('0')
+        if len(tokens) == 1:
+            tokens = ['0', '0', '0', tokens[0]]
+        elif len(tokens) == 2:
+            tokens = [tokens[0], '0', '0', tokens[1]]
+        elif len(tokens) == 3:
+            tokens = [tokens[0], tokens[1], '0', tokens[2]]
+        elif len(tokens) == 4:
+            pass
         else:
             raise error
 

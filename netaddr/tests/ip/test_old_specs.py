@@ -276,6 +276,6 @@ def test_cidr_abbrev_to_verbose_invalid_prefixlen():
 
 
 def test_expand_partial_address():
-    assert expand_partial_address('10') == '10.0.0.0'
-    assert expand_partial_address('10.1') == '10.1.0.0'
-    assert expand_partial_address('192.168.1') == '192.168.1.0'
+    assert expand_partial_address('10') == '0.0.0.10'
+    assert expand_partial_address('10.1') == '10.0.0.1'
+    assert expand_partial_address('192.168.1') == '192.168.0.1'
