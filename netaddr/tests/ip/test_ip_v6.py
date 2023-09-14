@@ -147,3 +147,22 @@ def test_ipv6_unicast_address_allocation_info():
     assert ip.info.IPv6_unicast[0].description == 'LACNIC'
     assert ip.info.IPv6_unicast[0].whois == 'whois.lacnic.net'
     assert ip.info.IPv6_unicast[0].status == 'ALLOCATED'
+
+def test_rfc6164_subnets():
+    # Tests for /127 subnet
+    assert list(IPNetwork('1234::/127')) == [
+        IPAddress('1234::'),
+        IPAddress('1234::1'),
+    ]
+    assert list(IPNetwork('1234::/127').iter_hosts()) == [
+        IPAddress('1234::'),
+        IPAddress('1234::1'),
+    ]
+    assert IPNetwork('1234::/127').network == IPAddress('1234::')
+    assert IPNetwork('1234::').broadcast is None
+
+    # Tests for /128 subnet
+    assert IPNetwork("1234::/128").network == IPAddress('1234::')
+    assert IPNetwork("1234::/128").broadcast is None
+    assert list(IPNetwork("1234::/128")) == [IPAddress('1234::')]
+    assert list(IPNetwork("1234::/128").iter_hosts()) == [IPAddress('1234::')]
