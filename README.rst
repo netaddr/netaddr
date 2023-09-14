@@ -2,7 +2,7 @@ netaddr
 =======
 
 A system-independent network address manipulation library for Python 2.7 and 3.5+.
-(Python 2.7 and 3.5 support is deprecated).
+(Python 2.7, 3.5 and 3.6 support is deprecated).
 
 .. image:: https://codecov.io/gh/netaddr/netaddr/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/netaddr/netaddr
