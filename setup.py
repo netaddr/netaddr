@@ -118,6 +118,8 @@ def main():
     setup_options = dict(
         author='David P. D. Moss, Stefan Nordhausen et al',
         author_email='drkjam@gmail.com',
+        maintainer='Jakub Stasiak',
+        maintainer_email='jakub@stasiak.at',
         classifiers=classifiers,
         description='A network address manipulation library for Python',
         download_url='https://pypi.org/project/netaddr/',
