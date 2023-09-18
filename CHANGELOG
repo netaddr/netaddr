@@ -1,4 +1,31 @@
 --------------
+Release: 0.9.0
+--------------
+
+Date: 2023-09-18
+
+Added:
+
+* Add hash capabilities to OUI (#225, amitmi704)
+
+Fixed:
+
+* **Backwards incompatible:** Handle RFC 6164 IPv6 addresses (don't reserve first IP
+  address in point-to-point subnets) ($267, Damien Claisse)
+* **Technically backwards incompatible:** Fix for is_loopback behaviour – consider
+  ``IPNetwork('::1/128')`` to be loopback (#222, #223, niels)
+* Include tutorials in source distributions (#215, Louis Sautier)
+* Fix a documentation typo (#242, Wouter)
+* Fix print syntax in the documentation to be Python 3 compatible (#221, François Magimel)
+* Fix the Sphinx syntax in the documentation (#220, François Magimel)
+
+Other:
+
+* Update the databases (#266, Jakub Stasiak)
+* Deprecate Python 3.6 (#263, Jakub Stasiak)
+* Eliminate unnecessary evals (#228, KOLANICH)
+
+--------------
 Release: 0.8.0
 --------------
 Date: 3 Jul 2020

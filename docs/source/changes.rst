@@ -1,5 +1,5 @@
 ===========================
-What's new in netaddr 0.8.0
+What's new in netaddr 0.9.0
 ===========================
 
 .. include:: ../../CHANGELOG
