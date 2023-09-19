@@ -52,6 +52,7 @@ try:
     a = 42
     a.bit_length()
     # No exception, must be Python 2.7 or 3.1+ -> can use bit_length()
+    del a
     def num_bits(int_val):
         """
         :param int_val: an unsigned integer.
