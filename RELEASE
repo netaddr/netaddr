@@ -42,3 +42,9 @@ Here is how to go about releasing a new version of `netaddr`.
 
     `git tag -a netaddr-0.7.xx -m 'netaddr release 0.7.xx'`
     `make push_tags`
+
+* Create a `GitHub Release <https://github.com/netaddr/netaddr/releases/new>`_ based on
+  the tag you just pushed.
+
+  Put the new ``CHANGELOG`` contents there and add the "Full changelog" link at the
+  end (copy and adapt from the previous release).
