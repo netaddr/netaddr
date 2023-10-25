@@ -13,7 +13,7 @@ from netaddr.strategy import eui48 as _eui48, eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
 from netaddr.strategy.eui64 import eui64_base
 from netaddr.ip import IPAddress
-from netaddr.compat import _importlib_resources, _is_int, _is_str
+from netaddr.compat import _open_binary, _is_int, _is_str
 
 
 class BaseIdentifier(object):
@@ -91,7 +91,7 @@ class OUI(BaseIdentifier):
 
         #   Discover offsets.
         if self._value in ieee.OUI_INDEX:
-            fh = _importlib_resources.open_binary(__package__, 'oui.txt')
+            fh = _open_binary(__package__, 'oui.txt')
             for (offset, size) in ieee.OUI_INDEX[self._value]:
                 fh.seek(offset)
                 data = fh.read(size).decode('UTF-8')
@@ -261,7 +261,7 @@ class IAB(BaseIdentifier):
 
         #   Discover offsets.
         if self._value in ieee.IAB_INDEX:
-            fh = _importlib_resources.open_binary(__package__, 'iab.txt')
+            fh = _open_binary(__package__, 'iab.txt')
             (offset, size) = ieee.IAB_INDEX[self._value][0]
             self.record['offset'] = offset
             self.record['size'] = size
