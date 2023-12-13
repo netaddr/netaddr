@@ -3,7 +3,7 @@ import sys
 
 import pytest
 
-from netaddr.compat import _importlib_resources
+from netaddr.compat import _open_binary
 from netaddr.eui.ieee import OUIIndexParser, IABIndexParser, FileIndexer
 
 
@@ -11,7 +11,7 @@ from netaddr.eui.ieee import OUIIndexParser, IABIndexParser, FileIndexer
 def test_oui_parser_py2():
     from cStringIO import StringIO
     outfile = StringIO()
-    with contextlib.closing(_importlib_resources.open_binary(__package__, 'sample_oui.txt')) as infile:
+    with contextlib.closing(_open_binary(__package__, 'sample_oui.txt')) as infile:
         iab_parser = OUIIndexParser(infile)
         iab_parser.attach(FileIndexer(outfile))
         iab_parser.parse()
@@ -22,7 +22,7 @@ def test_oui_parser_py2():
 def test_iab_parser_py2():
     from cStringIO import StringIO
     outfile = StringIO()
-    with contextlib.closing(_importlib_resources.open_binary(__package__, 'sample_iab.txt')) as infile:
+    with contextlib.closing(_open_binary(__package__, 'sample_iab.txt')) as infile:
         iab_parser = IABIndexParser(infile)
         iab_parser.attach(FileIndexer(outfile))
         iab_parser.parse()
@@ -33,7 +33,7 @@ def test_iab_parser_py2():
 def test_oui_parser_py3():
     from io import StringIO
     outfile = StringIO()
-    with contextlib.closing(_importlib_resources.open_binary(__package__, 'sample_oui.txt')) as infile:
+    with contextlib.closing(_open_binary(__package__, 'sample_oui.txt')) as infile:
         iab_parser = OUIIndexParser(infile)
         iab_parser.attach(FileIndexer(outfile))
         iab_parser.parse()
@@ -44,7 +44,7 @@ def test_oui_parser_py3():
 def test_iab_parser_py3():
     from io import StringIO
     outfile = StringIO()
-    with contextlib.closing(_importlib_resources.open_binary(__package__, 'sample_iab.txt')) as infile:
+    with contextlib.closing(_open_binary(__package__, 'sample_iab.txt')) as infile:
         iab_parser = IABIndexParser(infile)
         iab_parser.attach(FileIndexer(outfile))
         iab_parser.parse()

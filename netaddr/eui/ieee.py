@@ -35,7 +35,7 @@ More details can be found at the following URLs :-
 import os.path as _path
 import csv as _csv
 
-from netaddr.compat import _bytes_type, _importlib_resources
+from netaddr.compat import _bytes_type, _open_binary
 from netaddr.core import Subscriber, Publisher
 
 
@@ -281,8 +281,8 @@ def load_index(index, fp):
 
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
-    load_index(OUI_INDEX, _importlib_resources.open_binary(__package__, 'oui.idx'))
-    load_index(IAB_INDEX, _importlib_resources.open_binary(__package__, 'iab.idx'))
+    load_index(OUI_INDEX, _open_binary(__package__, 'oui.idx'))
+    load_index(IAB_INDEX, _open_binary(__package__, 'iab.idx'))
 
 
 if __name__ == '__main__':
