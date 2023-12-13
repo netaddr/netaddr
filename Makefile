@@ -35,6 +35,7 @@ dist: clean doc
 doc:
 	@echo 'building documentation'
 	pip install sphinx
+	pip install -r docs/requirements.txt
 	python setup.py develop
 	cd docs/ && $(MAKE) -f Makefile clean html
 	cd docs/build/html && zip -r ../netaddr.zip *
