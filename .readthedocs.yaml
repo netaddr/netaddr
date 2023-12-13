@@ -16,8 +16,7 @@ python:
   install:
     - method: pip
       path: .
-    - method: pip
-      path: sphinx_rtd_theme
+    - requirements: docs/requirements.txt
 # TODO: pin the development dependency versions
 # See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
 #     - requirements: docs/requirements.txt
