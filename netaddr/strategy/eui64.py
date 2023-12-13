@@ -4,7 +4,7 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 """
-IEEE 64-bit EUI (Extended Unique Indentifier) logic.
+IEEE 64-bit EUI (Extended Unique Identifier) logic.
 """
 import struct as _struct
 import re as _re
@@ -126,9 +126,9 @@ def _get_match_result(address, formats):
 
 def valid_str(addr):
     """
-    :param addr: An IEEE EUI-64 indentifier in string form.
+    :param addr: An IEEE EUI-64 identifier in string form.
 
-    :return: ``True`` if EUI-64 indentifier is valid, ``False`` otherwise.
+    :return: ``True`` if EUI-64 identifier is valid, ``False`` otherwise.
     """
     try:
         if _get_match_result(addr, RE_EUI64_FORMATS):
@@ -141,7 +141,7 @@ def valid_str(addr):
 
 def str_to_int(addr):
     """
-    :param addr: An IEEE EUI-64 indentifier in string form.
+    :param addr: An IEEE EUI-64 identifier in string form.
 
     :return: An unsigned integer that is equivalent to value represented
         by EUI-64 string address formatted according to the dialect
