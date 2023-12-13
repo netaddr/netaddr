@@ -244,3 +244,7 @@ texinfo_documents = [
 
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
+
+# Warn about invalid references
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-nitpicky
+nitpicky = True
