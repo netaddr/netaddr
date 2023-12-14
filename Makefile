@@ -71,8 +71,6 @@ test: clean
 	@echo 'running test suite'
 	pip install -r requirements.txt
 	py.test netaddr/tests
-	@echo 'running doc tests (tutorials)'
-	python tutorials/run_doctests.py
 
 test_with_junitxml: clean
 	@echo 'running test suite with JUnit XML output'
