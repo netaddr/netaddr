@@ -82,6 +82,7 @@ The `IPAddress` class is used to identify individual IP addresses.
 
 .. autoclass:: netaddr.IPAddress
     :members:
+    :inherited-members:
 
 .. _ipv6_formatting_dialects:
 
