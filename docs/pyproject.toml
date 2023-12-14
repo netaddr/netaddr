@@ -11,6 +11,9 @@ sphinx = "^7.2.6"
 furo = "^2023.9.10"
 
 
+[tool.poetry.group.autobuild.dependencies]
+sphinx-autobuild = "^2021.3.14"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
