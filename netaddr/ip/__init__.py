@@ -597,7 +597,7 @@ class IPAddress(BaseIP):
         """
         Only relevant for IPv6 addresses. Has no effect for IPv4.
 
-        :param dialect: An ipv6_* dialect class.
+        :param dialect: One of the :ref:`ipv6_formatting_dialects`.
 
         :return: an alternate string representation for this IP address.
         """

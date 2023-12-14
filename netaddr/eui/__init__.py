@@ -356,8 +356,8 @@ class EUI(BaseIdentifier):
             48 or 64. Mainly used to distinguish EUI-48 and EUI-64 identifiers \
             specified as integers which may be numerically equivalent.
 
-        :param dialect: (optional) the mac_* dialect to be used to configure \
-            the formatting of EUI-48 (MAC) addresses.
+        :param dialect: (optional) one of the :ref:`mac_formatting_dialects` to
+            be used to configure the formatting of EUI-48 (MAC) addresses.
         """
         super(EUI, self).__init__()
 
@@ -734,8 +734,8 @@ class EUI(BaseIdentifier):
         Format the EUI into the representational format according to the given
         dialect
 
-        :param dialect: the mac_* dialect defining the formatting of EUI-48 \
-            (MAC) addresses.
+        :param dialect: one of the :ref:`mac_formatting_dialects` defining the
+            formatting of EUI-48 (MAC) addresses.
 
         :return: EUI in representational format according to the given dialect
         """
