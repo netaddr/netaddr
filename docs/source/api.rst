@@ -83,6 +83,8 @@ The `IPAddress` class is used to identify individual IP addresses.
 .. autoclass:: netaddr.IPAddress
     :members:
 
+.. _ipv6_formatting_dialects:
+
 ^^^^^^^^^^^^^^^^^^^^^^^^
 IPv6 formatting dialects
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -204,6 +206,8 @@ The `EUI` class is used to represents MACs (as well as their larger and less com
 
 .. autoclass:: netaddr.IAB
     :members:
+
+.. _mac_formatting_dialects:
 
 ^^^^^^^^^^^^^^^^^^^^^^^
 MAC formatting dialects
