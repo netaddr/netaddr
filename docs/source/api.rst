@@ -66,8 +66,13 @@ The following constants are used by the various *flags* arguments on netaddr cla
 Custom Exceptions
 -----------------
 .. autoexception:: netaddr.AddrConversionError
+    :exclude-members: __init__
+
 .. autoexception:: netaddr.AddrFormatError
+    :exclude-members: __init__
+
 .. autoexception:: netaddr.NotRegisteredError
+    :exclude-members: __init__
 
 ------------
 IP addresses
@@ -79,7 +84,6 @@ The `IPAddress` class is used to identify individual IP addresses.
 
 .. autoclass:: netaddr.IPAddress
     :members:
-    :special-members:
 
 ^^^^^^^^^^^^^^^^^^^^^^^^
 IPv6 formatting dialects
@@ -106,7 +110,6 @@ Nowadays, IP networks are usually specified using the CIDR format with a prefix 
 
 .. autoclass:: netaddr.IPNetwork
     :members:
-    :special-members:
 
 ---------------------------
 Arbitrary IP address ranges
@@ -124,7 +127,6 @@ A bounded range is a group of IP addresses specified using a start and end addre
 
 .. autoclass:: netaddr.IPRange
     :members:
-    :special-members:
 
 ^^^^^^^^^^^^^^
 IP glob ranges
@@ -136,7 +138,6 @@ The `IPGlob` class is used to represent individual glob ranges.
 
 .. autoclass:: netaddr.IPGlob
     :members:
-    :special-members:
 
 ^^^^^^^^^^^^^^^^^^
 globbing functions
@@ -171,7 +172,6 @@ The `IPSet` class was built specifically for this purpose.
 
 .. autoclass:: netaddr.IPSet
     :members:
-    :special-members:
 
 ---------------------------
 IP functions and generators
@@ -200,15 +200,12 @@ The `EUI` class is used to represents MACs (as well as their larger and less com
 
 .. autoclass:: netaddr.EUI
     :members:
-    :special-members:
 
 .. autoclass:: netaddr.OUI
     :members:
-    :special-members:
 
 .. autoclass:: netaddr.IAB
     :members:
-    :special-members:
 
 ^^^^^^^^^^^^^^^^^^^^^^^
 MAC formatting dialects
