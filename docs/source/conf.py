@@ -248,3 +248,9 @@ texinfo_documents = [
 # Warn about invalid references
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-nitpicky
 nitpicky = True
+
+#autodoc_class_signature = 'separated'
+
+autodoc_default_options = {
+    'special-members': '__init__',
+}
