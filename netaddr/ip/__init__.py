@@ -668,6 +668,25 @@ class IPAddress(BaseIP):
         """:return: Python statement to create an equivalent object"""
         return "%s('%s')" % (self.__class__.__name__, self)
 
+    def to_canonical(self):
+        """
+        Converts the address to IPv4 if it is an IPv4-mapped IPv6 address (`RFC 4291
+        Section 2.5.5.2 <https://datatracker.ietf.org/doc/html/rfc4291.html#section-2.5.5.2>`_),
+        otherwise returns the address as-is.
+
+        >>> # IPv4-mapped IPv6
+        >>> IPAddress('::ffff:10.0.0.1').to_canonical()
+        IPAddress('10.0.0.1')
+        >>>
+        >>> # Everything else
+        >>> IPAddress('::1').to_canonical()
+        IPAddress('::1')
+        >>> IPAddress('10.0.0.1').to_canonical()
+        IPAddress('10.0.0.1')
+        """
+        if not self.is_ipv4_mapped():
+            return self
+        return self.ipv4()
 
 class IPListMixin(object):
     """
