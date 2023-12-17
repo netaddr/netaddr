@@ -27,7 +27,7 @@ Layer 2 addresses
     :maxdepth: 1
 
     installation
-    reference/python-versions
+    reference/compatibility
     api
     changes
     references
