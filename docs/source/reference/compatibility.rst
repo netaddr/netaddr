@@ -22,6 +22,7 @@ in netaddr 1.0):
 * 2.7
 * 3.5
 * 3.6
+* 3.7
 
 Supported operating systems
 ---------------------------
