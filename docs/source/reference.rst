@@ -8,6 +8,7 @@ They are information-oriented.
     :maxdepth: 1
 
     installation
+    reference/python-versions
     api
     changes
     references
