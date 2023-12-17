@@ -26,7 +26,6 @@ Layer 2 addresses
 .. toctree::
     :maxdepth: 1
 
-    installation
     reference/compatibility
     api
     changes
