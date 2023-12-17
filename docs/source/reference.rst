@@ -7,7 +7,6 @@ They are information-oriented.
 .. toctree::
     :maxdepth: 1
 
-    installation
     api
     changes
     references
