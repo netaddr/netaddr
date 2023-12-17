@@ -7,6 +7,7 @@ They are information-oriented.
 .. toctree::
     :maxdepth: 1
 
+    reference/python-versions
     api
     changes
     references
