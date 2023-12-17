@@ -1,5 +1,5 @@
-==================
-Installing netaddr
-==================
+======================
+How to install netaddr
+======================
 
 .. include:: ../../INSTALL
