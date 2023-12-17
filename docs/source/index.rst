@@ -2,6 +2,9 @@
 netaddr 0.9.0 documentation
 ===========================
 
+A Python library for representing and manipulating layer 3 (IP) and layer 2 (MAC)
+network addresses.
+
 netaddr's documentation uses the `Diátaxis approach to technical documentation
 authoring <https://diataxis.fr/>`_ and consists of the following modes of
 documentation:
@@ -35,7 +38,6 @@ documentation:
     :maxdepth: 1
     :hidden:
 
-    introduction
     tutorials
     how-to
     reference
