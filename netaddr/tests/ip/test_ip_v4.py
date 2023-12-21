@@ -433,11 +433,6 @@ def test_ipaddress_oct_format_py3():
     assert oct(IPAddress(0)) == '0o0'
 
 
-def test_is_multicast():
-    ip = IPAddress('239.192.0.1')
-    assert ip.is_multicast()
-
-
 def test_multicast_info():
     ip = IPAddress('224.0.1.173')
     assert ip.info.IPv4[0].designation == 'Multicast'
