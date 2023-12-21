@@ -287,6 +287,9 @@ class IPAddress(BaseIP):
         """
         super(IPAddress, self).__init__()
 
+        if flags & ~(INET_PTON | ZEROFILL):
+            raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
+
         if isinstance(addr, BaseIP):
             #   Copy constructor.
             if version is not None and version != addr._module.version:
@@ -968,6 +971,9 @@ class IPNetwork(BaseIP, IPListMixin):
             IPNetwork('1.2.3.0/24')
         """
         super(IPNetwork, self).__init__()
+
+        if flags & ~NOHOST:
+            raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
 
         value, prefixlen, module = None, None, None
 
