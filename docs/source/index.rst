@@ -37,12 +37,20 @@ documentation:
 .. toctree::
     :maxdepth: 1
     :hidden:
+    :caption: User documentation
 
     tutorials
     how-to
     reference
     authors
     contributors
+
+.. toctree::
+    :maxdepth: 1
+    :hidden:
+    :caption: Developer documentation
+
+    dev-how-to/index
 
 ------------------
 Indices and tables
