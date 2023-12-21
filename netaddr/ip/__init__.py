@@ -258,7 +258,7 @@ class IPAddress(BaseIP):
 
             * The default. Follows `inet_aton semantics
               <https://www.netmeister.org/blog/inet_aton.html>`_ and allows all kinds of
-              weird-looking addresses to be parsed correctly. For example:
+              weird-looking addresses to be parsed. For example:
 
               >>> IPAddress('1')
               IPAddress('0.0.0.1')
@@ -267,18 +267,23 @@ class IPAddress(BaseIP):
               >>> IPAddress('010.020.030.040')
               IPAddress('8.16.24.32')
 
-            * :data:`ZEROFILL` – like the default, except leading zeros are discarded
+            * :data:`ZEROFILL` – like the default, except leading zeros are discarded:
 
-              >>> IPAddress('010.020.030.040', flags=ZEROFILL)
-              IPAddress('10.20.30.40')
+              >>> IPAddress('010', flags=ZEROFILL)
+              IPAddress('0.0.0.10')
 
-            * :data:`INET_PTON` – requires four decimal octets, discards leading zeros:
+            * :data:`INET_PTON` – requires four decimal octets:
 
-              >>> IPAddress('010.0.0.1', flags=INET_PTON)
+              >>> IPAddress('10.0.0.1', flags=INET_PTON)
               IPAddress('10.0.0.1')
 
-              Addresses like `1` or `0xf.0.0.0` will fail to parse and raise
-              :exc:`AddrFormatError`.
+              Leading zeros may be ignored or rejected, depending on the platform.
+
+            * ``INET_PTON | ZEROFILL`` – like :data:`INET_PTON`, except leading zeros are
+              discarded:
+
+              >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
+              IPAddress('10.20.30.40')
         """
         super(IPAddress, self).__init__()
 
@@ -955,7 +960,7 @@ class IPNetwork(BaseIP, IPListMixin):
 
         :param flags: (optional) decides which rules are applied to the
             interpretation of the addr value. Currently only supports the
-            NOHOST option.
+            :data:`NOHOST` option.
 
             >>> IPNetwork('1.2.3.4/24')
             IPNetwork('1.2.3.4/24')
