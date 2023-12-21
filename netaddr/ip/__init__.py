@@ -683,6 +683,8 @@ class IPAddress(BaseIP):
         IPAddress('::1')
         >>> IPAddress('10.0.0.1').to_canonical()
         IPAddress('10.0.0.1')
+
+        .. versionadded:: NEXT_NETADDR_VERSION
         """
         if not self.is_ipv4_mapped():
             return self
