@@ -932,6 +932,8 @@ class IPNetwork(BaseIP, IPListMixin):
         x.x.0.0/y   -> 192.168.0.0/16
         x.x.x.0/y   -> 192.168.0.0/24
 
+       .. deprecated:: NEXT_NETADDR_VERSION
+
     .. warning::
 
         The next release (0.9.0) will contain a backwards incompatible change
@@ -956,6 +958,8 @@ class IPNetwork(BaseIP, IPListMixin):
             classful IPv4 rules to select a default prefix when one is not
             provided. If False it uses the length of the IP address version.
             (default: False)
+
+            .. deprecated:: NEXT_NETADDR_VERSION
 
         :param version: (optional) optimizes version detection if specified
             and distinguishes between IPv4 and IPv6 for addresses with an
