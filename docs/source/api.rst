@@ -42,20 +42,26 @@ Constants
 
 The following constants are used by the various *flags* arguments on netaddr class constructors.
 
-.. data:: P
-          INET_PTON
+.. data:: netaddr.P
+          netaddr.INET_PTON
 
    Use inet_pton() semantics instead of inet_aton() when parsing IPv4.
 
-.. data:: Z
-          ZEROFILL
+   See the :meth:`IPAddress.__init__` documentation for details.
+
+.. data:: netaddr.Z
+          netaddr.ZEROFILL
 
    Remove any preceding zeros from IPv4 address octets before parsing.
 
-.. data:: N
-          NOHOST
+   See the :meth:`IPAddress.__init__` documentation for details.
 
-   Remove any host bits found to the right of an applied CIDR prefix
+.. data:: netaddr.N
+          netaddr.NOHOST
+
+   Remove any host bits found to the right of an applied CIDR prefix.
+
+   See the :meth:`IPNetwork.__init__` documentation for details.
 
 -----------------
 Custom Exceptions
