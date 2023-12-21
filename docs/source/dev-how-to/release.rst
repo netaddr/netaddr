@@ -1,6 +1,6 @@
------------------------
-netaddr release process
------------------------
+----------------------
+How to release netaddr
+----------------------
 
 Here is how to go about releasing a new version of `netaddr`.
 
