@@ -250,10 +250,35 @@ class IPAddress(BaseIP):
             equivalent integer value.
 
         :param flags: (optional) decides which rules are applied to the
-            interpretation of the addr value. Supported constants are
-            INET_PTON and ZEROFILL. See the netaddr.core docs for further
-            details.
+            interpretation of the addr value if passed as a string.
 
+            Matters only in IPv4 context.
+
+            Allowed flag values:
+
+            * The default. Follows `inet_aton semantics
+              <https://www.netmeister.org/blog/inet_aton.html>`_ and allows all kinds of
+              weird-looking addresses to be parsed correctly. For example:
+
+              >>> IPAddress('1')
+              IPAddress('0.0.0.1')
+              >>> IPAddress('1.0xf')
+              IPAddress('1.0.0.15')
+              >>> IPAddress('010.020.030.040')
+              IPAddress('8.16.24.32')
+
+            * :data:`ZEROFILL` – like the default, except leading zeros are discarded
+
+              >>> IPAddress('010.020.030.040', flags=ZEROFILL)
+              IPAddress('10.20.30.40')
+
+            * :data:`INET_PTON` – requires four decimal octets, discards leading zeros:
+
+              >>> IPAddress('010.0.0.1', flags=INET_PTON)
+              IPAddress('10.0.0.1')
+
+              Addresses like `1` or `0xf.0.0.0` will fail to parse and raise
+              :exc:`AddrFormatError`.
         """
         super(IPAddress, self).__init__()
 
@@ -930,8 +955,12 @@ class IPNetwork(BaseIP, IPListMixin):
 
         :param flags: (optional) decides which rules are applied to the
             interpretation of the addr value. Currently only supports the
-            NOHOST option. See the netaddr.core docs for further details.
+            NOHOST option.
 
+            >>> IPNetwork('1.2.3.4/24')
+            IPNetwork('1.2.3.4/24')
+            >>> IPNetwork('1.2.3.4/24', flags=NOHOST)
+            IPNetwork('1.2.3.0/24')
         """
         super(IPNetwork, self).__init__()
 
@@ -1414,9 +1443,8 @@ class IPRange(BaseIP, IPListMixin):
             boundary of this IP range.
 
         :param flags: (optional) decides which rules are applied to the
-            interpretation of the start and end values. Supported constants
-            are INET_PTON and ZEROFILL. See the netaddr.core docs for further
-            details.
+            interpretation of the start and end values. Refer to the :meth:`IPAddress.__init__`
+            documentation for details.
 
         """
         self._start = IPAddress(start, flags=flags)
