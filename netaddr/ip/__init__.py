@@ -723,6 +723,51 @@ class IPAddress(BaseIP):
             return self
         return self.ipv4()
 
+    def is_global(self):
+        """
+        Returns ``True`` if this address is considered globally reachable, ``False`` otherwise.
+
+        An address is considered globally reachable if it's not a special-purpose address
+        or it's a special-purpose address listed as globally reachable in the relevant
+        registries:
+
+        * |iana_special_ipv4|
+        * |iana_special_ipv6|
+
+        Addresses for which the ``Globally Reachable`` value is ``N/A`` are not considered
+        globally reachable.
+
+        Address blocks with set termination date are not taken into consideration.
+
+        Whether or not an address can actually be reached in any local or global context will
+        depend on the network configuration and may differ from what this method returns.
+
+        There is no special meaning attached to IPv4-mapped IPv6 addresses – the whole
+        ``::ffff:0:0/96`` block is considered not globally reachable.
+
+        Currently there can be addresses that are neither ``is_global()`` nor :meth:`is_private`.
+        There are also addresses that are both. All things being equal ``is_global()`` should
+        be considered more trustworthy.
+
+        Examples:
+
+        >>> IPAddress('1.1.1.1').is_global()
+        True
+        >>> IPAddress('::1').is_global()
+        False
+        """
+        if self._module.version == 4:
+            not_reachable = IPV4_NOT_GLOBALLY_REACHABLE
+            exceptions = IPV4_NOT_GLOBALLY_REACHABLE_EXCEPTIONS
+        else:
+            not_reachable = IPV6_NOT_GLOBALLY_REACHABLE
+            exceptions = IPV6_NOT_GLOBALLY_REACHABLE_EXCEPTIONS
+
+        return (
+            not any(self in net for net in not_reachable)
+            or any(self in net for net in exceptions)
+        )
+
 class IPListMixin(object):
     """
     A mixin class providing shared list-like functionality to classes
@@ -2012,6 +2057,29 @@ IPV4_RESERVED = (
     IPRange('225.0.0.0', '231.255.255.255'),
 ) + (IPV4_LOOPBACK, IPV4_6TO4)
 
+IPV4_NOT_GLOBALLY_REACHABLE = [IPNetwork(net) for net in [
+    '0.0.0.0/8',
+    '10.0.0.0/8',
+    '100.64.0.0/10',
+    '127.0.0.0/8',
+    '169.254.0.0/16',
+    '172.16.0.0/12',
+    '192.0.0.0/24',
+    '192.0.0.170/31',
+    '192.0.2.0/24',
+    '192.168.0.0/16',
+    '198.18.0.0/15',
+    '198.51.100.0/24',
+    '203.0.113.0/24',
+    '240.0.0.0/4',
+    '255.255.255.255/32',
+]]
+
+IPV4_NOT_GLOBALLY_REACHABLE_EXCEPTIONS = [IPNetwork(net) for net in [
+    '192.0.0.9/32',
+    '192.0.0.10/32',
+]]
+
 #-----------------------------------------------------------------------------
 #   Cached IPv6 address range lookups.
 #-----------------------------------------------------------------------------
@@ -2036,3 +2104,29 @@ IPV6_RESERVED = (
     IPNetwork('E000::/4'), IPNetwork('F000::/5'),
     IPNetwork('F800::/6'), IPNetwork('FE00::/9'),
 )
+
+IPV6_NOT_GLOBALLY_REACHABLE = [
+    IPNetwork(net)
+    for net in [
+        '::1/128',
+        '::/128',
+        '::ffff:0:0/96',
+        '64:ff9b:1::/48',
+        '100::/64',
+        '2001::/23',
+        '2001:db8::/32',
+        '2002::/16',
+        'fc00::/7',
+        'fe80::/10',
+    ]
+]
+
+IPV6_NOT_GLOBALLY_REACHABLE_EXCEPTIONS = [
+    IPNetwork(net) for net in [
+    '2001:1::1/128',
+    '2001:1::2/128',
+    '2001:3::/32',
+    '2001:4:112::/48',
+    '2001:20::/28',
+    '2001:30::/28',
+]    ]
