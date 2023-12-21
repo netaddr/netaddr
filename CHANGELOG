@@ -1,3 +1,13 @@
+--------------------
+NEXT_NETADDR_VERSION
+--------------------
+
+Date: YYYY-MM-DD
+
+Deprecated:
+
+* Deprecate Python 3.7 support
+
 --------------
 Release: 0.9.0
 --------------

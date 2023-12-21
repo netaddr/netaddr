@@ -23,6 +23,10 @@ in netaddr 1.0):
 * 3.5
 * 3.6
 
+Support **deprecated and scheduled to be removed** in netaddr 2:
+
+* 3.7
+
 Supported operating systems
 ---------------------------
 
