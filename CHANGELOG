@@ -4,6 +4,11 @@ NEXT_NETADDR_VERSION
 
 Date: YYYY-MM-DD
 
+Added:
+
+* Add a :data:`~netaddr.INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
+  from :class:`~netaddr.IPAddress`
+
 Deprecated:
 
 * Deprecate Python 3.7 support
