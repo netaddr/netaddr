@@ -1,0 +1,112 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netaddr"
+authors = [
+    {name = "David P. D. Moss", email = "josiah_carberry@brown.edu"},
+    {name = "Stefan Nordhausen", email = "stefan.nordhausen@immobilienscout24.de"},
+]
+maintainers = [
+    {name = "Jakub Stasiak", email = "jakub@stasiak.at"},
+]
+description = "A network address manipulation library for Python"
+readme = "README.rst"
+keywords = [
+    "Networking",
+    "Systems Administration",
+    "IANA",
+    "IEEE",
+    "CIDR",
+    "IP",
+    "IPv4",
+    "IPv6",
+    "CIDR",
+    "EUI",
+    "MAC",
+    "MAC-48",
+    "EUI-48",
+    "EUI-64",
+]
+license = {text = "BSD License"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Telecommunications Industry",
+    "License :: OSI Approved :: BSD License",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Communications",
+    "Topic :: Documentation",
+    "Topic :: Education",
+    "Topic :: Education :: Testing",
+    "Topic :: Home Automation",
+    "Topic :: Internet",
+    "Topic :: Internet :: Log Analysis",
+    "Topic :: Internet :: Name Service (DNS)",
+    "Topic :: Internet :: Proxy Servers",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Topic :: Internet :: WWW/HTTP :: Site Management",
+    "Topic :: Security",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Testing :: Traffic Generation",
+    "Topic :: System :: Benchmark",
+    "Topic :: System :: Clustering",
+    "Topic :: System :: Distributed Computing",
+    "Topic :: System :: Installation/Setup",
+    "Topic :: System :: Logging",
+    "Topic :: System :: Monitoring",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Networking :: Firewalls",
+    "Topic :: System :: Networking :: Monitoring",
+    "Topic :: System :: Networking :: Time Synchronization",
+    "Topic :: System :: Recovery Tools",
+    "Topic :: System :: Shells",
+    "Topic :: System :: Software Distribution",
+    "Topic :: System :: Systems Administration",
+    "Topic :: System :: System Shells",
+    "Topic :: Text Processing",
+    "Topic :: Text Processing :: Filters",
+    "Topic :: Utilities",
+]
+dependencies = [
+    'importlib-resources;python_version<"3.7"',
+]
+dynamic = ["version"]
+
+[project.urls]
+Download = "https://pypi.org/project/netaddr/"
+Repository = "https://github.com/drkjam/netaddr/"
+
+[project.scripts]
+netaddr = "netaddr.cli:main"
+
+[tool.setuptools]
+packages = ["netaddr"]
+
+[tool.setuptools.dynamic]
+version = {attr = "netaddr.__version__"}
+readme = {file = ["README.rst", "USAGE.rst"]}

@@ -36,9 +36,9 @@ Installing from a source package
 Download the latest release tarball/zip file and extract it to a temporary
 directory or clone the repository into a local working directory.
 
-Run the setup file from directory::
+Install the local package::
 
-    python setup.py install
+    pip install .
 
 This automatically places the required files in the ``lib/site-packages``
 directory of the Python version you used to run the setup script, may
