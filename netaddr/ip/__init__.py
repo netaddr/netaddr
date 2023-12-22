@@ -8,7 +8,7 @@
 import sys as _sys
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
-    DictDotLookup, NOHOST, N, INET_PTON, P, ZEROFILL, Z
+    DictDotLookup, NOHOST, N, INET_ATON, INET_PTON, INET_PTON_STRICT, P, ZEROFILL, Z
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
@@ -256,7 +256,7 @@ class IPAddress(BaseIP):
 
             Allowed flag values:
 
-            * The default. Follows `inet_aton semantics
+            * The default (``0``) or :data:`INET_ATON`. Follows `inet_aton semantics
               <https://www.netmeister.org/blog/inet_aton.html>`_ and allows all kinds of
               weird-looking addresses to be parsed. For example:
 
@@ -267,9 +267,9 @@ class IPAddress(BaseIP):
               >>> IPAddress('010.020.030.040')
               IPAddress('8.16.24.32')
 
-            * :data:`ZEROFILL` – like the default, except leading zeros are discarded:
+            * ``INET_ATON | ZEROFILL`` or :data:`ZEROFILL` – like the default, except leading zeros are discarded:
 
-              >>> IPAddress('010', flags=ZEROFILL)
+              >>> IPAddress('010', flags=INET_ATON | ZEROFILL)
               IPAddress('0.0.0.10')
 
             * :data:`INET_PTON` – requires four decimal octets:
@@ -284,11 +284,22 @@ class IPAddress(BaseIP):
 
               >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
               IPAddress('10.20.30.40')
+
+            * :data:`netaddr.INET_PTON_STRICT` – the most predictable IPv4 parsing mode:
+              four decimal octets required, leading zeros disallowed.
+
+              Use this flag unless you specifically need more permissive behavior.
         """
         super(IPAddress, self).__init__()
 
-        if flags & ~(INET_PTON | ZEROFILL):
+        if flags & ~(INET_PTON | ZEROFILL | INET_ATON | INET_PTON_STRICT):
             raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
+
+        if flags & INET_ATON and flags & INET_PTON:
+            raise ValueError('INET_ATON and INET_PTON are mutually exclusive')
+
+        if flags & INET_PTON_STRICT and flags &~INET_PTON_STRICT:
+            raise ValueError('INET_PTON_STRICT cannot be combined with any other flags')
 
         if isinstance(addr, BaseIP):
             #   Copy constructor.
@@ -2033,7 +2044,10 @@ IPV4_PRIVATE = (
     IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
     IPNetwork('172.16.0.0/12'),     #   Private network - local communication (RFC 1918)
     IPNetwork('192.0.0.0/24'),      #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
-    IPNetwork('192.168.0.0/16'),    #   Class B private network local communication (RFC 1918)
+    # protocol assignments
+    IPNetwork('192.168.0.0/16'),    #  Class B private network local communication (RFC 1918)
+    
+    # benchmarking
     IPNetwork('198.18.0.0/15'),     #  Testing of inter-network communications between subnets (RFC 2544)
     IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
 )
