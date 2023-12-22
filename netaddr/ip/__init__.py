@@ -1987,12 +1987,12 @@ def all_matching_cidrs(ip, cidrs):
 IPV4_LOOPBACK  = IPNetwork('127.0.0.0/8')    #   Loopback addresses (RFC 990)
 
 IPV4_PRIVATE = (
-    IPNetwork('10.0.0.0/8'),        #XXX   Class A private network local communication (RFC 1918)
+    IPNetwork('10.0.0.0/8'),        #   Class A private network local communication (RFC 1918)
     IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
-    IPNetwork('172.16.0.0/12'),     #XXX   Private network - local communication (RFC 1918)
+    IPNetwork('172.16.0.0/12'),     #   Private network - local communication (RFC 1918)
     IPNetwork('192.0.0.0/24'),      #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
     # protocol assignments
-    IPNetwork('192.168.0.0/16'),    #XXX  Class B private network local communication (RFC 1918)
+    IPNetwork('192.168.0.0/16'),    #  Class B private network local communication (RFC 1918)
     
     # benchmarking
     IPNetwork('198.18.0.0/15'),     #  Testing of inter-network communications between subnets (RFC 2544)
