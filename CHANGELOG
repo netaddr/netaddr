@@ -6,20 +6,20 @@ Date: YYYY-MM-DD
 
 Added:
 
-* Add a :data:`~netaddr.INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
-  from :class:`~netaddr.IPAddress`
+* Add an :data:`~netaddr.INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
+  from :class:`~netaddr.IPAddress`.
 * Add an :data:`~netaddr.INET_PTON_STRICT` IPv4 parsing mode – it's a strict, predictable mode that
   will become the default in the future.
 
 Deprecated:
 
-* Deprecate Python 3.7 support
+* Deprecate Python 3.7 support.
 * Deprecate abbreviated CIDR format support in :class:`~netaddr.IPNetwork`
-  (``implicit_prefix=True``)
+  (``implicit_prefix=True``).
 
 Other:
 
-* Raise an exception if invalid flags are passed to ``IPAddress``, ``IPNetwork`` or ``IPRange``
+* Raise an exception if invalid flags are passed to ``IPAddress``, ``IPNetwork`` or ``IPRange``.
 
 --------------
 Release: 0.9.0
