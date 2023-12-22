@@ -18,6 +18,7 @@ Here is how to go about releasing a new version of `netaddr`.
 
   - CHANGELOG
   - netaddr/__init__.py
+  - docs/source/conf.py
 
 * Commit all changes.
 
