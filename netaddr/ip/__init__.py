@@ -267,9 +267,9 @@ class IPAddress(BaseIP):
               >>> IPAddress('010.020.030.040')
               IPAddress('8.16.24.32')
 
-            * :data:`ZEROFILL` – like the default, except leading zeros are discarded:
+            * ``INET_ATON | ZEROFILL`` or :data:`ZEROFILL` – like the default, except leading zeros are discarded:
 
-              >>> IPAddress('010', flags=ZEROFILL)
+              >>> IPAddress('010', flags=INET_ATON | ZEROFILL)
               IPAddress('0.0.0.10')
 
             * :data:`INET_PTON` – requires four decimal octets:
