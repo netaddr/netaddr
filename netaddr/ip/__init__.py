@@ -8,7 +8,7 @@
 import sys as _sys
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
-    DictDotLookup, NOHOST, N, INET_ATON, INET_PTON, P, ZEROFILL, Z
+    DictDotLookup, NOHOST, N, INET_ATON, INET_PTON, INET_PTON_STRICT, P, ZEROFILL, Z
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
@@ -284,14 +284,22 @@ class IPAddress(BaseIP):
 
               >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
               IPAddress('10.20.30.40')
+
+            * :data:`netaddr.INET_PTON_STRICT` – the most predictable IPv4 parsing mode:
+              four decimal octets required, leading zeros disallowed.
+
+              Use this flag unless you specifically need more permissive behavior.
         """
         super(IPAddress, self).__init__()
 
-        if flags & ~(INET_PTON | ZEROFILL | INET_ATON):
+        if flags & ~(INET_PTON | ZEROFILL | INET_ATON | INET_PTON_STRICT):
             raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
 
         if flags & INET_ATON and flags & INET_PTON:
             raise ValueError('INET_ATON and INET_PTON are mutually exclusive')
+
+        if flags & INET_PTON_STRICT and flags &~INET_PTON_STRICT:
+            raise ValueError('INET_PTON_STRICT cannot be combined with any other flags')
 
         if isinstance(addr, BaseIP):
             #   Copy constructor.

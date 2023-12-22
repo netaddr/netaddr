@@ -18,7 +18,7 @@ else:
     #   All other cases, use all functions from the socket module.
     from socket import inet_pton as _inet_pton, AF_INET
 
-from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON
+from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON, INET_PTON_STRICT
 
 from netaddr.strategy import (
     valid_words as _valid_words, valid_bits as _valid_bits,
@@ -121,7 +121,13 @@ def str_to_int(addr, flags=0):
         addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
 
     try:
-        if flags & INET_PTON:
+        if flags & INET_PTON_STRICT and any(
+            part != '0' and part.startswith('0') for part in addr.split('.')
+        ):
+            # Doesn't matter what we raise, it's just to trigger the raise in the except block
+            # below.
+            raise Exception()
+        if flags & (INET_PTON | INET_PTON_STRICT):
             return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
         else:
             return _struct.unpack('>I', _inet_aton(addr))[0]
