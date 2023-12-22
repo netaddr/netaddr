@@ -49,6 +49,14 @@ The following constants are used by the various *flags* arguments on netaddr cla
 
    See the :meth:`IPAddress.__init__` documentation for details.
 
+.. data:: netaddr.INET_ATON
+
+    Use ``inet_aton()`` semantics when parsing IPv4.
+
+    See the :meth:`IPAddress.__init__` documentation for details.
+
+    .. versionadded:: NEXT_NETADDR_VERSION
+
 .. data:: netaddr.Z
           netaddr.ZEROFILL
 

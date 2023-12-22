@@ -22,6 +22,9 @@ Z = ZEROFILL = 2
 #:  Remove any host bits found to the right of an applied CIDR prefix.
 N = NOHOST = 4
 
+#: Use legacy ``inet_aton()`` semantics when parsing IPv4.
+INET_ATON = 8
+
 #-----------------------------------------------------------------------------
 #   Custom exceptions.
 #-----------------------------------------------------------------------------

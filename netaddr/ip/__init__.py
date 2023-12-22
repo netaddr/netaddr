@@ -8,7 +8,7 @@
 import sys as _sys
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
-    DictDotLookup, NOHOST, N, INET_PTON, P, ZEROFILL, Z
+    DictDotLookup, NOHOST, N, INET_ATON, INET_PTON, P, ZEROFILL, Z
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
@@ -256,7 +256,7 @@ class IPAddress(BaseIP):
 
             Allowed flag values:
 
-            * The default. Follows `inet_aton semantics
+            * The default (``0``) or :data:`INET_ATON`. Follows `inet_aton semantics
               <https://www.netmeister.org/blog/inet_aton.html>`_ and allows all kinds of
               weird-looking addresses to be parsed. For example:
 
@@ -287,8 +287,11 @@ class IPAddress(BaseIP):
         """
         super(IPAddress, self).__init__()
 
-        if flags & ~(INET_PTON | ZEROFILL):
+        if flags & ~(INET_PTON | ZEROFILL | INET_ATON):
             raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
+
+        if flags & INET_ATON and flags & INET_PTON:
+            raise ValueError('INET_ATON and INET_PTON are mutually exclusive')
 
         if isinstance(addr, BaseIP):
             #   Copy constructor.
@@ -1984,11 +1987,14 @@ def all_matching_cidrs(ip, cidrs):
 IPV4_LOOPBACK  = IPNetwork('127.0.0.0/8')    #   Loopback addresses (RFC 990)
 
 IPV4_PRIVATE = (
-    IPNetwork('10.0.0.0/8'),        #   Class A private network local communication (RFC 1918)
+    IPNetwork('10.0.0.0/8'),        #XXX   Class A private network local communication (RFC 1918)
     IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
-    IPNetwork('172.16.0.0/12'),     #   Private network - local communication (RFC 1918)
+    IPNetwork('172.16.0.0/12'),     #XXX   Private network - local communication (RFC 1918)
     IPNetwork('192.0.0.0/24'),      #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
-    IPNetwork('192.168.0.0/16'),    #   Class B private network local communication (RFC 1918)
+    # protocol assignments
+    IPNetwork('192.168.0.0/16'),    #XXX  Class B private network local communication (RFC 1918)
+    
+    # benchmarking
     IPNetwork('198.18.0.0/15'),     #  Testing of inter-network communications between subnets (RFC 2544)
     IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
 )
