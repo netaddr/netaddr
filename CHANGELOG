@@ -10,6 +10,8 @@ Added:
   from :class:`~netaddr.IPAddress`
 * Add an :data:`~netaddr.INET_PTON_STRICT` IPv4 parsing mode – it's a strict, predictable mode that
   will become the default in the future.
+* Add an :meth:`~netaddr.IPAddress.is_global` method to allow determining if an address is
+  considered globally reachable.
 
 Deprecated:
 
