@@ -104,8 +104,10 @@ Repository = "https://github.com/drkjam/netaddr/"
 [project.scripts]
 netaddr = "netaddr.cli:main"
 
-[tool.setuptools]
-packages = ["netaddr"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["netaddr*"]  # alternatively: `exclude = ["additional*"]`
+namespaces = false
 
 [tool.setuptools.dynamic]
 version = {attr = "netaddr.__version__"}
