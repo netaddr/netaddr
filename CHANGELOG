@@ -11,6 +11,10 @@ Added:
 * Add an :data:`~netaddr.INET_PTON_STRICT` IPv4 parsing mode – it's a strict, predictable mode that
   will become the default in the future.
 
+Fixed:
+
+* Improve Python 3.13 compatibility, thank you John Eckersberg.
+
 Deprecated:
 
 * Deprecate Python 3.7 support.
@@ -20,6 +24,7 @@ Deprecated:
 Other:
 
 * Raise an exception if invalid flags are passed to ``IPAddress``, ``IPNetwork`` or ``IPRange``.
+* Improve the documentation substantially.
 
 --------------
 Release: 0.9.0
