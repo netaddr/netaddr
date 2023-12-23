@@ -25,6 +25,7 @@ Other:
 
 * Raise an exception if invalid flags are passed to ``IPAddress``, ``IPNetwork`` or ``IPRange``.
 * Improve the documentation substantially.
+* Update the DB files to the latest versions (2023-12-23).
 
 --------------
 Release: 0.9.0
