@@ -284,6 +284,10 @@ class IPAddress(BaseIP):
 
               >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
               IPAddress('10.20.30.40')
+
+        .. versionchanged:: NEXT_NETADDR_VERSION
+            The default IPv4 parsing mode is scheduled to become :data:`INET_PTON` in the next
+            major release.
         """
         super(IPAddress, self).__init__()
 
