@@ -8,8 +8,6 @@ Added:
 
 * Add an :data:`~netaddr.INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
   from :class:`~netaddr.IPAddress`.
-* Add an :data:`~netaddr.INET_PTON_STRICT` IPv4 parsing mode – it's a strict, predictable mode that
-  will become the default in the future.
 
 Fixed:
 
