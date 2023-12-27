@@ -20,6 +20,22 @@ Deprecated:
 * Deprecate Python 3.7 support.
 * Deprecate abbreviated CIDR format support in :class:`IPNetwork`
   (``implicit_prefix=True``).
+* Deprecate accepting leading zeros when parsing IPv4 addresses in :data:`INET_PTON` mode
+  (it's been allowed on some platforms).
+
+  If you need to allow and discard leading zeros use the :data:`ZEROFILL` flag.
+
+  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
+* Deprecate parsing IPv4 addresses permissively (``inet_aton()``-like) by default.
+
+  :data:`INET_PTON` will become the default mode.
+
+  If you need to be permissive and parse using ``inet_aton()`` semantics use the
+  :data:`INET_ATON` flag.
+
+  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
 
 Other:
 
