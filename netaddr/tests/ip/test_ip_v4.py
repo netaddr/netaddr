@@ -5,7 +5,7 @@ import sys
 
 import pytest
 
-from netaddr import IPAddress, IPNetwork, INET_ATON, INET_PTON, INET_PTON_STRICT, spanning_cidr, AddrFormatError, ZEROFILL, Z, P, NOHOST
+from netaddr import IPAddress, IPNetwork, INET_ATON, INET_PTON, spanning_cidr, AddrFormatError, ZEROFILL, Z, P, NOHOST
 
 
 def test_ipaddress_v4():
@@ -366,22 +366,6 @@ def test_ipaddress_inet_pton_constructor_v4():
         IPAddress('10.0.1', flags=INET_PTON)
 
     assert IPAddress('10.0.0.1', flags=INET_PTON) == IPAddress('10.0.0.1')
-
-
-@pytest.mark.parametrize('address', [
-    '1',
-    '1.1',
-    '1.1.1',
-    '0x7f.0.0.1',
-    '01.0.0.1',
-])
-def test_ipaddress_inet_pton_strict_rejects_invalid_addresses(address):
-    with pytest.raises(AddrFormatError):
-        IPAddress(address, flags=INET_PTON_STRICT)
-
-
-def test_ipaddress_inet_pton_strict_accepts_good_address():
-    assert IPAddress('127.0.0.1', flags=INET_PTON_STRICT).value == 2130706433
 
 
 def test_ipaddress_constructor_zero_filled_octets_v4():

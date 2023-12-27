@@ -42,14 +42,6 @@ Constants
 
 The following constants are used by the various *flags* arguments on netaddr class constructors.
 
-
-.. data:: netaddr.INET_PTON_STRICT
-
-    Use strict ``inet_pton()`` semantics when parsing IPv4: four decimal octets are required,
-    leading zeros disallowed.
-
-    .. versionadded:: NEXT_NETADDR_VERSION
-
 .. data:: netaddr.P
           netaddr.INET_PTON
 
