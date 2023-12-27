@@ -4,21 +4,37 @@ How to release netaddr
 
 Here is how to go about releasing a new version of `netaddr`.
 
-* Pull down the latest set of changes for the current branch (at present this is '0.7.x').
+* Make sure you have the necessary dependencies installed:
 
-* Run the tests under Python 2.7.x and Python 3.4.x at a minimum, like so
+  ::
 
-    `make test`
+    pip install --upgrade wheel twine
 
-* Update the CHANGELOG with details of all changes since the last release.
-  Ensure that all references to various tickets and merge requests are included.
+* Pull down the latest set of changes for the ``master`` branch.
 
-* Update the version numbers throughout the source code. At present they are in
-  the following locations.
+  The assumption is the ``master`` branch build is green and everything works correctly
+  (we have a CI process in place).
 
-  - CHANGELOG
+* Update the top-most section in the CHANGELOG with details of all notable
+  changes since the last release that aren't there already.
+
+  Set the release date to the current day.
+
+* Decide what the new version should be (depending on the changes that will be present
+  in this release):
+
+  * Fixes – patch version bump
+  * New features – minor version bump
+  * Substantial or breaking changes – major version bump
+
+* Update the version numbers throughout the source code. That includes changing the currently
+  version number in
+
   - netaddr/__init__.py
   - docs/source/conf.py
+
+  and replacing all ``NEXT_NETADDR_VERSION`` instances with the new version (except for places
+  like this file, of course).
 
 * Commit all changes.
 
@@ -26,19 +42,13 @@ Here is how to go about releasing a new version of `netaddr`.
 
     `make dist`
 
-* Upload all built packages to PyPI (currently, only drkjam can do this).
+* Upload all built packages to PyPI (currently drkjam and jstasiak can do this)::
 
-    - `dist/*.whl`
-    - `dist/*.zip`
-    - `dist/*.gz`
-
-* Update documentation on PyPI (readthedocs will update itself).
-
-    - `docs/build/netaddr.zip`
+    twine upload dist/*
 
 * Tag the release and sync it to remote repo.
 
-    `git tag -a netaddr-0.7.xx -m 'netaddr release 0.7.xx'`
+    `git tag -a x.y.z -m 'Release version x.y.z'`
     `make push_tags`
 
 * Create a `GitHub Release <https://github.com/netaddr/netaddr/releases/new>`_ based on
