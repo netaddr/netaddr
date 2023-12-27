@@ -1,3 +1,5 @@
+.. currentmodule:: netaddr
+
 --------------------
 NEXT_NETADDR_VERSION
 --------------------
@@ -6,8 +8,8 @@ Date: YYYY-MM-DD
 
 Added:
 
-* Add an :data:`~netaddr.INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
-  from :class:`~netaddr.IPAddress`.
+* Add an :data:`INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
+  from :class:`IPAddress`.
 
 Fixed:
 
@@ -16,7 +18,7 @@ Fixed:
 Deprecated:
 
 * Deprecate Python 3.7 support.
-* Deprecate abbreviated CIDR format support in :class:`~netaddr.IPNetwork`
+* Deprecate abbreviated CIDR format support in :class:`IPNetwork`
   (``implicit_prefix=True``).
 
 Other:
