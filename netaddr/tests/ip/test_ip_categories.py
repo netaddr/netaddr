@@ -12,6 +12,7 @@ reserved = 1 << 5
 ipv4_mapped = 1 << 6
 hostmask = 1 << 7
 netmask = 1 << 8
+ipv4_private_use = 1 << 9
 
 flags = {
     'unicast': unicast,
@@ -23,6 +24,7 @@ flags = {
     'ipv4_mapped': ipv4_mapped,
     'hostmask': hostmask,
     'netmask': netmask,
+    'ipv4_private_use': ipv4_private_use,
 }
 
 
@@ -31,12 +33,12 @@ flags = {
     ['0.0.0.0', reserved | hostmask | netmask | unicast],
     ['0.0.1.255', hostmask | reserved | unicast | hostmask],
     ['0.255.255.255', reserved | hostmask | unicast],
-    ['10.0.0.1', private | unicast],
+    ['10.0.0.1', ipv4_private_use | private | unicast],
     ['62.125.24.5', unicast],
     ['100.64.0.0', private | unicast],
     ['127.0.0.0', reserved | loopback | unicast | reserved],
     ['127.0.0.1', loopback | reserved | unicast],
-    ['172.24.0.1', private | unicast],
+    ['172.24.0.1', ipv4_private_use | private | unicast],
     ['127.255.255.255', reserved | hostmask | loopback | unicast],
     ['169.254.0.0', link_local | private | unicast],
     ['192.0.0.0', netmask | private | unicast],
@@ -53,7 +55,7 @@ flags = {
     ['192.52.193.0', unicast],
     ['192.88.99.0', reserved | unicast],
     ['192.88.99.255', reserved | unicast],
-    ['192.168.0.1', private | unicast],
+    ['192.168.0.1', ipv4_private_use | private | unicast],
     ['192.175.48.0', unicast],
     ['198.18.0.0', private | unicast],
     ['198.19.255.255', private | unicast],
