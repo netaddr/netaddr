@@ -257,3 +257,10 @@ autodoc_default_options = {
 
 
 html_css_files = ['custom.css']
+
+rst_prolog = """
+.. |iana_special_ipv4| replace:: `IANA IPv4 Special-Purpose Address Registry`_
+.. |iana_special_ipv6| replace:: `IANA IPv6 Special-Purpose Address Registry`_
+.. _IANA IPv4 Special-Purpose Address Registry: https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+.. _IANA IPv6 Special-Purpose Address Registry: https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
+"""
