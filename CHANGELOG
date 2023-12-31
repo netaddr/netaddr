@@ -6,6 +6,12 @@ NEXT_NETADDR_VERSION
 
 Date: YYYY-MM-DD
 
+---------------
+Release: 0.10.0
+---------------
+
+Date: 2023-12-31
+
 Added:
 
 * Add an :data:`INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
