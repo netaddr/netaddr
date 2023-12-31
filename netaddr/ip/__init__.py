@@ -2012,8 +2012,7 @@ IPV4_PRIVATE_USE = [
     IPNetwork('192.168.0.0/16'),    #  Class B private network local communication (RFC 1918)
 ]
 
-IPV4_PRIVATEISH = (
-    *IPV4_PRIVATE_USE,
+IPV4_PRIVATEISH = tuple(IPV4_PRIVATE_USE) + (
     IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
     IPNetwork('192.0.0.0/24'),      #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
     # protocol assignments
