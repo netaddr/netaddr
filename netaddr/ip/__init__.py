@@ -158,6 +158,27 @@ class BaseIP(object):
         :return: ``True`` if this IP is for internal/private use only
             (i.e. non-public), ``False`` otherwise. Reference: RFCs 1918,
             3330, 4193, 3879 and 2365.
+
+        .. deprecated:: NEXT_NETADDR_VERSION
+            The ``is_private`` method has been mixing several different address types together
+            which could lead to unexpected results. There are more precise
+            replacements for subset of the addresses handled by ``is_private`` today:
+
+            * :meth:`is_link_local`
+            * :meth:`is_ipv4_private_use`
+            * :meth:`is_ipv6_unique_local`
+
+            There is also the :meth:`is_global` method that lets you handle all globally
+            reachable (or not) addresses.
+
+            The following address blocks currently handled by ``is_private`` have no
+            convenience methods and you'll have to handle them manually or request a method
+            addition:
+
+            * ``100.64.0.0/10`` – Shared Address Space
+            * ``192.0.0.0/24`` – IETF Protocol Assignments
+            * ``198.18.0.0/15`` – Benchmarking
+            * ``239.0.0.0``-``239.255.255.255``
         """
         if self._module.version == 4:
             for cidr in IPV4_PRIVATEISH:
