@@ -1,8 +1,10 @@
 Tutorials
 =========
 
-The pages in this section contain practical steps that serve our study.
-They are learning-oriented.
+The pages in this section take you on a step-by-step journey through some of the
+netaddr's features.
+
+Start here if you're new to netaddr.
 
 .. toctree::
     :maxdepth: 1

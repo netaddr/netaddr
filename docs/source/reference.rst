@@ -1,8 +1,7 @@
 Reference
 =========
 
-The pages in this section contain theoretical knowledge that serves our work.
-They are information-oriented.
+The pages in this section contain technical description of various parts of netaddr machinery.
 
 netaddr provides support for:
 
