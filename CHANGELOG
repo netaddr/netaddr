@@ -40,6 +40,8 @@ Deprecated:
 
   This change will implicit conversions from ``str`` in all relevant contexts. If you need
   to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
+* Deprecate the :meth:`IPAddress.is_private` method. Migration instructions in the
+  documentation.
 
 Other:
 
