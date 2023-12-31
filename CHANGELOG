@@ -10,6 +10,7 @@ Added:
 
 * Add an :data:`INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
   from :class:`IPAddress`.
+* Add an :meth:`IPAddress.is_ipv4_private_use` convenience method.
 
 Fixed:
 
