@@ -1,3 +1,5 @@
+.. currentmodule:: netaddr
+
 --------------------
 NEXT_NETADDR_VERSION
 --------------------
@@ -6,22 +8,43 @@ Date: YYYY-MM-DD
 
 Added:
 
-* Add a :data:`~netaddr.INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
-  from :class:`~netaddr.IPAddress`
-* Add an :data:`~netaddr.INET_PTON_STRICT` IPv4 parsing mode – it's a strict, predictable mode that
-  will become the default in the future.
-* Add an :meth:`~netaddr.IPAddress.is_global` method to allow determining if an address is
+* Add an :data:`INET_ATON` flag to explicitly request ``inet_aton()`` IPv4 parsing semantics
+  from :class:`IPAddress`.
+* Add an :meth:`IPAddress.is_ipv4_private_use` convenience method.
+* Add an :meth:`IPAddress.is_global` convenience method to allow determining if an address is
   considered globally reachable.
+
+Fixed:
+
+* Improve Python 3.13 compatibility, thank you John Eckersberg.
 
 Deprecated:
 
-* Deprecate Python 3.7 support
-* Deprecate abbreviated CIDR format support in :class:`~netaddr.IPNetwork`
-  (``implicit_prefix=True``)
+* Deprecate Python 3.7 support.
+* Deprecate abbreviated CIDR format support in :class:`IPNetwork`
+  (``implicit_prefix=True``).
+* Deprecate accepting leading zeros when parsing IPv4 addresses in :data:`INET_PTON` mode
+  (it's been allowed on some platforms).
+
+  If you need to allow and discard leading zeros use the :data:`ZEROFILL` flag.
+
+  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
+* Deprecate parsing IPv4 addresses permissively (``inet_aton()``-like) by default.
+
+  :data:`INET_PTON` will become the default mode.
+
+  If you need to be permissive and parse using ``inet_aton()`` semantics use the
+  :data:`INET_ATON` flag.
+
+  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
 
 Other:
 
-* Raise an exception if invalid flags are passed to ``IPAddress``, ``IPNetwork`` or ``IPRange``
+* Raise an exception if invalid flags are passed to ``IPAddress``, ``IPNetwork`` or ``IPRange``.
+* Improve the documentation substantially.
+* Update the DB files to the latest versions (2023-12-23).
 
 --------------
 Release: 0.9.0

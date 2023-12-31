@@ -8,7 +8,7 @@
 import sys as _sys
 
 from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
-    DictDotLookup, NOHOST, N, INET_ATON, INET_PTON, INET_PTON_STRICT, P, ZEROFILL, Z
+    DictDotLookup, NOHOST, N, INET_ATON, INET_PTON, P, ZEROFILL, Z
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
@@ -160,7 +160,7 @@ class BaseIP(object):
             3330, 4193, 3879 and 2365.
         """
         if self._module.version == 4:
-            for cidr in IPV4_PRIVATE:
+            for cidr in IPV4_PRIVATEISH:
                 if self in cidr:
                     return True
         elif self._module.version == 6:
@@ -285,21 +285,17 @@ class IPAddress(BaseIP):
               >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
               IPAddress('10.20.30.40')
 
-            * :data:`netaddr.INET_PTON_STRICT` – the most predictable IPv4 parsing mode:
-              four decimal octets required, leading zeros disallowed.
-
-              Use this flag unless you specifically need more permissive behavior.
+        .. versionchanged:: NEXT_NETADDR_VERSION
+            The default IPv4 parsing mode is scheduled to become :data:`INET_PTON` in the next
+            major release.
         """
         super(IPAddress, self).__init__()
 
-        if flags & ~(INET_PTON | ZEROFILL | INET_ATON | INET_PTON_STRICT):
+        if flags & ~(INET_PTON | ZEROFILL | INET_ATON):
             raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
 
         if flags & INET_ATON and flags & INET_PTON:
             raise ValueError('INET_ATON and INET_PTON are mutually exclusive')
-
-        if flags & INET_PTON_STRICT and flags &~INET_PTON_STRICT:
-            raise ValueError('INET_PTON_STRICT cannot be combined with any other flags')
 
         if isinstance(addr, BaseIP):
             #   Copy constructor.
@@ -753,9 +749,6 @@ class IPAddress(BaseIP):
         Whether or not an address can actually be reached in any local or global context will
         depend on the network configuration and may differ from what this method returns.
 
-        There is no special meaning attached to IPv4-mapped IPv6 addresses – the whole
-        ``::ffff:0:0/96`` block is considered not globally reachable.
-
         Currently there can be addresses that are neither ``is_global()`` nor :meth:`is_private`.
         There are also addresses that are both. All things being equal ``is_global()`` should
         be considered more trustworthy.
@@ -778,6 +771,22 @@ class IPAddress(BaseIP):
             not any(self in net for net in not_reachable)
             or any(self in net for net in exceptions)
         )
+
+    def is_ipv4_private_use(self):
+        """
+        Returns ``True`` if this address is an IPv4 private-use address as defined in
+        :rfc:`1918`.
+
+        The private-use address blocks:
+
+        * ``10.0.0.0/8``
+        * ``172.16.0.0/12``
+        * ``192.168.0.0/16``
+
+        .. versionadded:: NEXT_NETADDR_VERSION
+        """
+        return self._module.version == 4 and any(self in cidr for cidr in IPV4_PRIVATE_USE)
+
 
 class IPListMixin(object):
     """
@@ -2039,13 +2048,16 @@ def all_matching_cidrs(ip, cidrs):
 #-----------------------------------------------------------------------------
 IPV4_LOOPBACK  = IPNetwork('127.0.0.0/8')    #   Loopback addresses (RFC 990)
 
-IPV4_PRIVATE = (
+IPV4_PRIVATE_USE = [
     IPNetwork('10.0.0.0/8'),        #   Class A private network local communication (RFC 1918)
-    IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
     IPNetwork('172.16.0.0/12'),     #   Private network - local communication (RFC 1918)
+    IPNetwork('192.168.0.0/16'),    #  Class B private network local communication (RFC 1918)
+]
+
+IPV4_PRIVATEISH = tuple(IPV4_PRIVATE_USE) + (
+    IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
     IPNetwork('192.0.0.0/24'),      #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
     # protocol assignments
-    IPNetwork('192.168.0.0/16'),    #  Class B private network local communication (RFC 1918)
     
     # benchmarking
     IPNetwork('198.18.0.0/15'),     #  Testing of inter-network communications between subnets (RFC 2544)

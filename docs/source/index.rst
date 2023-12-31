@@ -1,6 +1,6 @@
-===========================
-netaddr 0.9.0 documentation
-===========================
+=====================
+netaddr documentation
+=====================
 
 A Python library for representing and manipulating layer 3 (IP) and layer 2 (MAC)
 network addresses.

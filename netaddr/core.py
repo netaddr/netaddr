@@ -25,10 +25,6 @@ N = NOHOST = 4
 #: Use legacy ``inet_aton()`` semantics when parsing IPv4.
 INET_ATON = 8
 
-#: Use strict ``inet_pton()`` semantics when parsing IPv4 – leading zeros disallowed.
-INET_PTON_STRICT = 16
-
-
 #-----------------------------------------------------------------------------
 #   Custom exceptions.
 #-----------------------------------------------------------------------------
