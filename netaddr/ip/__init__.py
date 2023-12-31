@@ -147,6 +147,8 @@ class BaseIP(object):
         :return: ``True`` if this IP is loopback address (not for network
             transmission), ``False`` otherwise.
             References: RFC 3330 and 4291.
+
+        .. note:: |ipv4_in_ipv6_handling|
         """
         if self._module.version == 4:
             return self in IPV4_LOOPBACK
@@ -158,6 +160,8 @@ class BaseIP(object):
         :return: ``True`` if this IP is for internal/private use only
             (i.e. non-public), ``False`` otherwise. Reference: RFCs 1918,
             3330, 4193, 3879 and 2365.
+
+        .. note:: |ipv4_in_ipv6_handling|
 
         .. deprecated:: NEXT_NETADDR_VERSION
             The ``is_private`` method has been mixing several different address types together
@@ -198,6 +202,8 @@ class BaseIP(object):
         """
         :return: ``True`` if this IP is link-local address ``False`` otherwise.
             Reference: RFCs 3927 and 4291.
+
+        .. note:: |ipv4_in_ipv6_handling|
         """
         if self._module.version == 4:
             return self in IPV4_LINK_LOCAL
@@ -208,6 +214,8 @@ class BaseIP(object):
         """
         :return: ``True`` if this IP is in IANA reserved range, ``False``
             otherwise. Reference: RFCs 3330 and 3171.
+
+        .. note:: |ipv4_in_ipv6_handling|
         """
         if self._module.version == 4:
             for cidr in IPV4_RESERVED:
@@ -780,6 +788,8 @@ class IPAddress(BaseIP):
         True
         >>> IPAddress('::1').is_global()
         False
+
+        .. note:: |ipv4_in_ipv6_handling|
         """
         if self._module.version == 4:
             not_reachable = IPV4_NOT_GLOBALLY_REACHABLE
@@ -803,6 +813,8 @@ class IPAddress(BaseIP):
         * ``10.0.0.0/8``
         * ``172.16.0.0/12``
         * ``192.168.0.0/16``
+
+        .. note:: |ipv4_in_ipv6_handling|
 
         .. versionadded:: NEXT_NETADDR_VERSION
         """

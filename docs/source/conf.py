@@ -263,4 +263,8 @@ rst_prolog = """
 .. |iana_special_ipv6| replace:: `IANA IPv6 Special-Purpose Address Registry`_
 .. _IANA IPv4 Special-Purpose Address Registry: https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
 .. _IANA IPv6 Special-Purpose Address Registry: https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
+
+.. |ipv4_in_ipv6_handling| replace:: There is no special handling of IPv4-mapped IPv6 addresses \
+(``::ffff:0:0/96``, RFC 4291). If you need to treat them as if they were their IPv4 counterparts \
+take a look at the :meth:`~netaddr.IPAddress.to_canonical` method.
 """
