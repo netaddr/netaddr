@@ -2,6 +2,15 @@
 API Reference
 =============
 
+This page documents netaddr's public API. Only things explicitly mentioned in this documentation
+are supported and considered part of the public API.
+
+Any of the following is considered private and unsupported:
+
+* Anything within any of the ``netaddr`` submodules (``from netaddr.X import Y``)
+* Anything with a name started with a single underscore (``_X``)
+* Anything not explicitly documented as part of the public API
+
 ------------------
 IP Class Hierarchy
 ------------------
