@@ -13,6 +13,7 @@ Added:
 * Add an :meth:`IPAddress.is_ipv4_private_use` convenience method.
 * Add an :meth:`IPAddress.is_global` convenience method to allow determining if an address is
   considered globally reachable.
+* Add an :meth:`IPAddress.is_ipv6_unique_local` convenience method.
 
 Fixed:
 

@@ -14,6 +14,7 @@ hostmask = 1 << 7
 netmask = 1 << 8
 ipv4_private_use = 1 << 9
 global_ = 1 << 10
+ipv6_unique_local = 1 << 11
 
 flags = {
     'unicast': unicast,
@@ -27,6 +28,7 @@ flags = {
     'netmask': netmask,
     'ipv4_private_use': ipv4_private_use,
     'global': global_,
+    'ipv6_unique_local': ipv6_unique_local,
 }
 
 
@@ -88,7 +90,7 @@ flags = {
     ['2001:db8::', unicast],
     ['2002::', unicast],
     ['2620:4f:8000::', global_ | unicast],
-    ['fc00::1', private | unicast],
+    ['fc00::1', ipv6_unique_local | private | unicast],
     ['fe80::1', private | unicast | link_local],
     ['ff00::1', global_ | reserved | multicast],
 ])

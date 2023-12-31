@@ -164,7 +164,7 @@ class BaseIP(object):
                 if self in cidr:
                     return True
         elif self._module.version == 6:
-            for cidr in IPV6_PRIVATE:
+            for cidr in IPV6_PRIVATEISH:
                 if self in cidr:
                     return True
 
@@ -786,6 +786,17 @@ class IPAddress(BaseIP):
         .. versionadded:: NEXT_NETADDR_VERSION
         """
         return self._module.version == 4 and any(self in cidr for cidr in IPV4_PRIVATE_USE)
+
+    def is_ipv6_unique_local(self):
+        """
+        Returns ``True`` if this address is an IPv6 unique local address as defined in
+        :rfc:`4193` and listed in |iana_special_ipv6|.
+
+        The IPv6 unique local address block: ``fc00::/7``.
+
+        .. versionadded:: NEXT_NETADDR_VERSION
+        """
+        return self._module.version == 6 and self in IPV6_UNIQUE_LOCAL
 
 
 class IPListMixin(object):
@@ -2112,8 +2123,10 @@ IPV4_NOT_GLOBALLY_REACHABLE_EXCEPTIONS = [
 #-----------------------------------------------------------------------------
 IPV6_LOOPBACK = IPNetwork('::1/128')
 
-IPV6_PRIVATE = (
-    IPNetwork('fc00::/7'),  #   Unique Local Addresses (ULA)
+IPV6_UNIQUE_LOCAL = IPNetwork('fc00::/7')
+
+IPV6_PRIVATEISH = (
+    IPV6_UNIQUE_LOCAL,
     IPNetwork('fec0::/10'), #   Site Local Addresses (deprecated - RFC 3879)
 )
 
