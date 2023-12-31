@@ -58,7 +58,7 @@ The following constants are used by the various *flags* arguments on netaddr cla
 
    See the :meth:`IPAddress.__init__` documentation for details.
 
-   .. versionchanged:: NEXT_NETADDR_VERSION
+   .. versionchanged:: 0.10.0
         This parsing mode will become stricter in the future and it will reject leading zeros.
 
 .. data:: netaddr.INET_ATON
@@ -67,7 +67,7 @@ The following constants are used by the various *flags* arguments on netaddr cla
 
     See the :meth:`IPAddress.__init__` documentation for details.
 
-    .. versionadded:: NEXT_NETADDR_VERSION
+    .. versionadded:: 0.10.0
 
 .. data:: netaddr.Z
           netaddr.ZEROFILL

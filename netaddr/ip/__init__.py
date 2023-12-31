@@ -163,7 +163,7 @@ class BaseIP(object):
 
         .. note:: |ipv4_in_ipv6_handling|
 
-        .. deprecated:: NEXT_NETADDR_VERSION
+        .. deprecated:: 0.10.0
             The ``is_private`` method has been mixing several different address types together
             which could lead to unexpected results. There are more precise
             replacements for subset of the addresses handled by ``is_private`` today:
@@ -314,7 +314,7 @@ class IPAddress(BaseIP):
               >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
               IPAddress('10.20.30.40')
 
-        .. versionchanged:: NEXT_NETADDR_VERSION
+        .. versionchanged:: 0.10.0
             The default IPv4 parsing mode is scheduled to become :data:`INET_PTON` in the next
             major release.
         """
@@ -753,7 +753,7 @@ class IPAddress(BaseIP):
         >>> IPAddress('10.0.0.1').to_canonical()
         IPAddress('10.0.0.1')
 
-        .. versionadded:: NEXT_NETADDR_VERSION
+        .. versionadded:: 0.10.0
         """
         if not self.is_ipv4_mapped():
             return self
@@ -816,7 +816,7 @@ class IPAddress(BaseIP):
 
         .. note:: |ipv4_in_ipv6_handling|
 
-        .. versionadded:: NEXT_NETADDR_VERSION
+        .. versionadded:: 0.10.0
         """
         return self._module.version == 4 and any(self in cidr for cidr in IPV4_PRIVATE_USE)
 
@@ -827,7 +827,7 @@ class IPAddress(BaseIP):
 
         The IPv6 unique local address block: ``fc00::/7``.
 
-        .. versionadded:: NEXT_NETADDR_VERSION
+        .. versionadded:: 0.10.0
         """
         return self._module.version == 6 and self in IPV6_UNIQUE_LOCAL
 
@@ -1041,7 +1041,7 @@ class IPNetwork(BaseIP, IPListMixin):
         x.x.0.0/y   -> 192.168.0.0/16
         x.x.x.0/y   -> 192.168.0.0/24
 
-       .. deprecated:: NEXT_NETADDR_VERSION
+       .. deprecated:: 0.10.0
 
     .. warning::
 
@@ -1068,7 +1068,7 @@ class IPNetwork(BaseIP, IPListMixin):
             provided. If False it uses the length of the IP address version.
             (default: False)
 
-            .. deprecated:: NEXT_NETADDR_VERSION
+            .. deprecated:: 0.10.0
 
         :param version: (optional) optimizes version detection if specified
             and distinguishes between IPv4 and IPv6 for addresses with an
