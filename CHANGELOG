@@ -6,6 +6,10 @@ NEXT_NETADDR_VERSION
 
 Date: YYYY-MM-DD
 
+Fixed:
+
+* Get rid of some warnings
+
 ---------------
 Release: 0.10.0
 ---------------
