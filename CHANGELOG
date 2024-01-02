@@ -14,6 +14,10 @@ Deprecated:
 
 * Deprecate the flag shorthands: ``N``, ``P`` and ``Z``. Use :data:`NOHOST`, :data:`INET_PTON`
   and :data:`ZEROFILL` instead.
+* Deprecate importing objects from ``netaddr`` subpackages. Only importing things from the
+  top-level ``netaddr`` namespace is supported, everything else is considered private.
+
+  This has already been the case but we can use a reminder.
 
 ---------------
 Release: 0.10.0
