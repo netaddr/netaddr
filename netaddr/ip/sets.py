@@ -98,7 +98,7 @@ class IPSet(object):
             subnets or ranges.
 
         :param flags: decides which rules are applied to the interpretation
-            of the addr value. See the netaddr.core namespace documentation
+            of the addr value. See the :class:`IPAddress` documentation
             for supported constant values.
 
         """
@@ -274,7 +274,7 @@ class IPSet(object):
             an IPRange object.
 
         :param flags: decides which rules are applied to the interpretation
-            of the addr value. See the netaddr.core namespace documentation
+            of the addr value. See the :class:`IPAddress` documentation
             for supported constant values.
 
         """
@@ -310,7 +310,7 @@ class IPSet(object):
         :param addr: An IP address or subnet, or an IPRange.
 
         :param flags: decides which rules are applied to the interpretation
-            of the addr value. See the netaddr.core namespace documentation
+            of the addr value. See the :class:`IPAddress` documentation
             for supported constant values.
 
         """
@@ -385,7 +385,7 @@ class IPSet(object):
         :param iterable: an iterable containing IP addresses, subnets or ranges.
 
         :param flags: decides which rules are applied to the interpretation
-            of the addr value. See the netaddr.core namespace documentation
+            of the addr value. See the :class:`IPAddress` documentation
             for supported constant values.
 
         """

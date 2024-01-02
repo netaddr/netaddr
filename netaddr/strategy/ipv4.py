@@ -84,7 +84,7 @@ def valid_str(addr, flags=0):
 
     :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core docs for details.
+        :class:`IPAddress` documentation for details.
 
     :return: ``True`` if IPv4 address is valid, ``False`` otherwise.
     """
@@ -113,7 +113,7 @@ def str_to_int(addr, flags=0):
 
     :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core docs for details.
+        :class:`IPAddress` documentation for details.
 
     :return: The equivalent unsigned integer for a given IPv4 address.
     """
