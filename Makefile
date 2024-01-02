@@ -26,7 +26,7 @@ dist: clean doc
 	@echo 'building netaddr release'
 	python setup.py develop
 	@echo 'building source distributions'
-	python setup.py sdist --formats=gztar,zip
+	python setup.py sdist
 	@echo 'building wheel package'
 	pip install --upgrade pip
 	pip install wheel
