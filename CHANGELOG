@@ -18,7 +18,7 @@ Deprecated:
   top-level ``netaddr`` namespace is supported, everything else is considered private.
 
   This has already been the case but we can use a reminder.
-* Deprecate permissive-by-default IPv4 parsing in :function:`valid_ipv4`. The ``inet_pton()``
+* Deprecate permissive-by-default IPv4 parsing in :func:`valid_ipv4`. The ``inet_pton()``
   semantics (with leading zeros always disallowed) will become the default. Use :data:`INET_ATON`
   and/or :data:`ZEROFILL` flags if you need the legacy behavior.
 
