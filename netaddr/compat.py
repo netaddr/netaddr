@@ -92,8 +92,9 @@ try:
 except ImportError:
     import importlib_resources as _importlib_resources
 
-try:
-    _open_binary = _importlib_resources.open_binary
-except AttributeError:
+
+if hasattr(_importlib_resources, 'files'):
     def _open_binary(pkg, res):
         return _importlib_resources.files(pkg).joinpath(res).open('rb')
+else:
+    _open_binary = _importlib_resources.open_binary
