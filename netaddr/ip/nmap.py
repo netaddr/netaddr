@@ -108,7 +108,7 @@ def iter_nmap_range(*nmap_target_spec):
 
     See https://nmap.org/book/man-target-specification.html for details.
 
-    :param *nmap_target_spec: one or more nmap IP range target specification.
+    :param \\*nmap_target_spec: one or more nmap IP range target specification.
 
     :return: an iterator producing IPAddress objects for each IP in the target spec(s).
     """
