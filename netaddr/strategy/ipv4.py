@@ -86,6 +86,10 @@ def valid_str(addr, flags=0):
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
         :class:`IPAddress` documentation for details.
 
+    .. versionchanged:: NEXT_NETADDR_VERSION
+        ``flags`` is scheduled to default to :data:`INET_PTON` instead of :data:`INET_ATON`
+        in the future.
+
     :return: ``True`` if IPv4 address is valid, ``False`` otherwise.
     """
     if addr == '':
