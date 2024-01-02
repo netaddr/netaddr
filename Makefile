@@ -22,7 +22,7 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-dist: clean doc
+dist: clean
 	@echo 'building netaddr release'
 	python setup.py develop
 	@echo 'building source distributions'
