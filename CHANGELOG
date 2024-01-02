@@ -10,6 +10,11 @@ Fixed:
 
 * Get rid of some warnings
 
+Deprecated:
+
+* Deprecate the flag shorthands: ``N``, ``P`` and ``Z``. Use :data:`NOHOST`, :data:`INET_PTON`
+  and :data:`ZEROFILL` instead.
+
 ---------------
 Release: 0.10.0
 ---------------
