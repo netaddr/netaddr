@@ -540,6 +540,10 @@ class IPAddress(BaseIP):
         """:return: A key tuple used to compare and sort this `IPAddress` correctly."""
         return self._module.version, self._value, self._module.width
 
+    def __int__(self):
+        """:return: the value of this IP address as an unsigned integer"""
+        return self._value
+
     def __index__(self):
         """
         :return: return the integer value of this IP address.

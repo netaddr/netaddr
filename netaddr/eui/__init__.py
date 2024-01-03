@@ -23,6 +23,10 @@ class BaseIdentifier(object):
     def __init__(self):
         self._value = None
 
+    def __int__(self):
+        """:return: integer value of this identifier"""
+        return self._value
+
     def __index__(self):
         """
         :return: return the integer value of this identifier.
