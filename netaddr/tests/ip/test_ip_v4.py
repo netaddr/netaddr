@@ -443,12 +443,6 @@ def test_ipaddress_hex_format():
     assert hex(IPAddress(0xFFFFFFFF)) == '0xffffffff'
 
 
-@pytest.mark.skipif('sys.version_info > (2,)', reason='requires python 2.x behaviour')
-def test_ipaddress_oct_format_py2():
-    assert oct(IPAddress(0xFFFFFFFF)) == '037777777777'
-    assert oct(IPAddress(0)) == '0'
-
-
 @pytest.mark.skipif('sys.version_info < (3,)', reason='python 3.x behaviour')
 def test_ipaddress_oct_format_py3():
     assert oct(IPAddress(0xFFFFFFFF)) == '0o37777777777'

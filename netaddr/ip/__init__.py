@@ -557,28 +557,10 @@ class IPAddress(BaseIP):
         """:return: the value of this IP address as an unsigned integer"""
         return self._value
 
-    def __long__(self):
-        """:return: the value of this IP address as an unsigned integer"""
-        return self._value
-
-    def __oct__(self):
-        """:return: an octal string representation of this IP address."""
-        #   Python 2.x
-        if self._value == 0:
-            return '0'
-        return '0%o' % self._value
-
-    def __hex__(self):
-        """:return: a hexadecimal string representation of this IP address."""
-        #   Python 2.x
-        return '0x%x' % self._value
-
     def __index__(self):
         """
-        :return: return the integer value of this IP address when called by \
-            hex(), oct() or bin().
+        :return: return the integer value of this IP address.
         """
-        #   Python 3.x
         return self._value
 
     def __bytes__(self):
@@ -586,7 +568,6 @@ class IPAddress(BaseIP):
         :return: a bytes object equivalent to this IP address. In network
             byte order, big-endian.
         """
-        #   Python 3.x
         return self._value.to_bytes(self._module.width // 8, 'big')
 
     def bits(self, word_sep=None):
@@ -733,13 +714,10 @@ class IPAddress(BaseIP):
         """
         return self.__class__(self._value >> numbits, self._module.version)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """:return: ``True`` if the numerical value of this IP address is not \
             zero, ``False`` otherwise."""
-        #   Python 2.x.
         return bool(self._value)
-
-    __bool__ = __nonzero__  #   Python 3.x.
 
     def __str__(self):
         """:return: IP address in presentational format"""
@@ -939,15 +917,12 @@ class IPListMixin(object):
         # Whatever it is, try to interpret it as IPAddress.
         return IPAddress(other) in self
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         Ranged IP objects always represent a sequence of at least one IP
         address and are therefore always True in the boolean context.
         """
-        #   Python 2.x.
         return True
-
-    __bool__ = __nonzero__  #   Python 3.x.
 
 
 def parse_ip_network(module, addr, implicit_prefix=False, flags=0):

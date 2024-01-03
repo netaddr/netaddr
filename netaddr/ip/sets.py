@@ -240,11 +240,9 @@ class IPSet(object):
                 return True
         return False
 
-    def __nonzero__(self):
+    def __bool__(self):
         """Return True if IPSet contains at least one IP, else False"""
         return bool(self._cidrs)
-
-    __bool__ = __nonzero__  #   Python 3.x.
 
     def __iter__(self):
         """
