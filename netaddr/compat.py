@@ -4,14 +4,11 @@
 #   Released under the BSD license. See the LICENSE file for details.
 #-----------------------------------------------------------------------------
 
-try:
-    from importlib import resources as _importlib_resources
-except ImportError:
-    import importlib_resources as _importlib_resources
 
+import importlib.resources
 
-if hasattr(_importlib_resources, 'files'):
+if hasattr(importlib.resources, 'files'):
     def _open_binary(pkg, res):
-        return _importlib_resources.files(pkg).joinpath(res).open('rb')
+        return importlib.resources.files(pkg).joinpath(res).open('rb')
 else:
-    _open_binary = _importlib_resources.open_binary
+    _open_binary = importlib.resources.open_binary
