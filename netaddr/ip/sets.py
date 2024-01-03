@@ -6,11 +6,10 @@
 """Set based operations for IP addresses and subnets."""
 
 import itertools as _itertools
+import sys as _sys
 
 from netaddr.ip import (IPNetwork, IPAddress, IPRange, cidr_merge,
     cidr_exclude, iprange_to_cidrs)
-
-from netaddr.compat import _sys_maxint, _dict_keys, _int_type
 
 
 def _subtract(supernet, subnets, subnet_idx, ranges):
@@ -114,7 +113,7 @@ class IPSet(object):
             if iterable is not None:
                 mergeable = []
                 for addr in iterable:
-                    if isinstance(addr, _int_type):
+                    if isinstance(addr, int):
                         addr = IPAddress(addr, flags=flags)
                     mergeable.append(addr)
 
@@ -287,7 +286,7 @@ class IPSet(object):
         if isinstance(addr, IPNetwork):
             # Networks like 10.1.2.3/8 need to be normalized to 10.0.0.0/8
             addr = addr.cidr
-        elif isinstance(addr, _int_type):
+        elif isinstance(addr, int):
             addr = IPNetwork(IPAddress(addr, flags=flags))
         else:
             addr = IPNetwork(addr)
@@ -320,7 +319,7 @@ class IPSet(object):
                 self.remove(cidr)
             return
 
-        if isinstance(addr, _int_type):
+        if isinstance(addr, int):
             addr = IPAddress(addr, flags=flags)
         else:
             addr = IPNetwork(addr)
@@ -391,8 +390,7 @@ class IPSet(object):
         """
         if isinstance(iterable, IPSet):
             self._cidrs = dict.fromkeys(
-                (ip for ip in cidr_merge(_dict_keys(self._cidrs)
-                                         + _dict_keys(iterable._cidrs))), True)
+                (ip for ip in cidr_merge(_itertools.chain(self._cidrs.keys(), iterable._cidrs.keys()))), True)
             return
         elif isinstance(iterable, (IPNetwork, IPRange)):
             self.add(iterable)
@@ -403,11 +401,11 @@ class IPSet(object):
         #   An iterable containing IP addresses or subnets.
         mergeable = []
         for addr in iterable:
-            if isinstance(addr, _int_type):
+            if isinstance(addr, int):
                 addr = IPAddress(addr, flags=flags)
             mergeable.append(addr)
 
-        for cidr in cidr_merge(_dict_keys(self._cidrs) + mergeable):
+        for cidr in cidr_merge(_itertools.chain(self._cidrs.keys(),  mergeable)):
             self._cidrs[cidr] = True
 
         self.compact()
@@ -677,14 +675,14 @@ class IPSet(object):
     def __len__(self):
         """
         :return: the cardinality of this IP set (i.e. sum of individual IP \
-            addresses). Raises ``IndexError`` if size > maxint (a Python \
+            addresses). Raises ``IndexError`` if size > maxsize (a Python \
             limitation). Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys_maxint:
+        if size > _sys.maxsize:
             raise IndexError(
-                "range contains more than %d (sys.maxint) IP addresses!"
-                "Use the .size property instead." % _sys_maxint)
+                "range contains more than %d (sys.maxsize) IP addresses!"
+                "Use the .size property instead." % _sys.maxsize)
         return size
 
     @property

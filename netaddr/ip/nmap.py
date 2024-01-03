@@ -13,7 +13,6 @@ Based on nmap's Target Specification :-
 
 from netaddr.core import AddrFormatError
 from netaddr.ip import IPAddress, IPNetwork
-from netaddr.compat import _iter_range, _is_str, _iter_next
 
 
 def _nmap_octet_target_values(spec):
@@ -34,7 +33,7 @@ def _nmap_octet_target_values(spec):
                 raise ValueError('octet value overflow for spec %s!' % (spec,))
             if low > high:
                 raise ValueError('left side of hyphen must be <= right %r' % (element,))
-            for octet in _iter_range(low, high + 1):
+            for octet in range(low, high + 1):
                 values.add(octet)
         else:
             octet = int(element)
@@ -48,7 +47,7 @@ def _nmap_octet_target_values(spec):
 def _generate_nmap_octet_ranges(nmap_target_spec):
     #   Generate 4 lists containing all octets defined by a given nmap Target
     #   specification.
-    if not _is_str(nmap_target_spec):
+    if not isinstance(nmap_target_spec, str):
         raise TypeError('string expected, not %s' % type(nmap_target_spec))
 
     if not nmap_target_spec:
@@ -94,7 +93,7 @@ def valid_nmap_range(target_spec):
     :return: ``True`` if IP range target spec is valid, ``False`` otherwise.
     """
     try:
-        _iter_next(_parse_nmap_target_spec(target_spec))
+        next(_parse_nmap_target_spec(target_spec))
         return True
     except (TypeError, ValueError, AddrFormatError):
         pass

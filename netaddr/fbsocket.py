@@ -7,7 +7,6 @@
 
 from struct import unpack as _unpack, pack as _pack
 
-from netaddr.compat import _bytes_join, _is_str
 
 AF_INET = 2
 AF_INET6 = 10
@@ -17,7 +16,7 @@ def inet_ntoa(packed_ip):
     """
     Convert an IP address from 32-bit packed binary format to string format.
     """
-    if not _is_str(packed_ip):
+    if not isinstance(packed_ip, str):
         raise TypeError('string type expected, not %s' % type(packed_ip))
 
     if len(packed_ip) != 4:
@@ -80,7 +79,7 @@ def inet_ntop(af, packed_ip):
         return inet_ntoa(packed_ip)
     elif af == AF_INET6:
         #   IPv6.
-        if len(packed_ip) != 16 or not _is_str(packed_ip):
+        if len(packed_ip) != 16 or not isinstance(packed_ip, bytes):
             raise ValueError('invalid length of packed IP address string')
 
         tokens = ['%x' % i for i in _unpack('>8H', packed_ip)]
@@ -112,7 +111,7 @@ def _inet_pton_af_inet(ip_string):
     raise a ValueError exception.
     """
     #TODO: optimise this ... use inet_aton with mods if available ...
-    if _is_str(ip_string):
+    if isinstance(ip_string, str):
         invalid_addr = ValueError('illegal IP address string %r' % ip_string)
         #   Support for hexadecimal and octal octets.
         tokens = ip_string.split('.')
@@ -131,7 +130,7 @@ def _inet_pton_af_inet(ip_string):
                 if (octet >> 8) != 0:
                     raise invalid_addr
                 words.append(_pack('B', octet))
-            return _bytes_join(words)
+            return b''.join(words)
         else:
             raise invalid_addr
 
@@ -151,7 +150,7 @@ def inet_pton(af, ip_string):
         #   IPv6.
         values = []
 
-        if not _is_str(ip_string):
+        if not isinstance(ip_string, str):
             raise invalid_addr
 
         if 'x' in ip_string:
@@ -241,6 +240,6 @@ def inet_pton(af, ip_string):
             else:
                 raise invalid_addr
 
-        return _bytes_join(values)
+        return b''.join(values)
     else:
         raise ValueError('Unknown address family %d' % af)

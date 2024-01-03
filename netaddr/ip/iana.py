@@ -34,7 +34,7 @@ from xml.sax import make_parser, handler
 
 from netaddr.core import Publisher, Subscriber
 from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
-from netaddr.compat import _dict_items, _callable, _open_binary
+from netaddr.compat import _open_binary
 
 
 
@@ -83,7 +83,7 @@ class SaxRecordParser(handler.ContentHandler):
             if name == 'record' and self._tag_level == self._level:
                 self._is_active = False
                 self._tag_level = None
-                if _callable(self._callback):
+                if hasattr(self._callback, '__call__'):
                     self._callback(self._record)
                 self._record = None
             elif self._level == self._tag_level + 1:
@@ -420,24 +420,24 @@ def query(ip_addr):
     info = {}
 
     if ip_addr.version == 4:
-        for cidr, record in _dict_items(IANA_INFO['IPv4']):
+        for cidr, record in IANA_INFO['IPv4'].items():
             if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv4', [])
                 info['IPv4'].append(record)
 
         if ip_addr.is_multicast():
-            for iprange, record in _dict_items(IANA_INFO['multicast']):
+            for iprange, record in IANA_INFO['multicast'].items():
                 if _within_bounds(ip_addr, iprange):
                     info.setdefault('Multicast', [])
                     info['Multicast'].append(record)
 
     elif ip_addr.version == 6:
-        for cidr, record in _dict_items(IANA_INFO['IPv6']):
+        for cidr, record in IANA_INFO['IPv6'].items():
             if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv6', [])
                 info['IPv6'].append(record)
 
-        for cidr, record in _dict_items(IANA_INFO['IPv6_unicast']):
+        for cidr, record in IANA_INFO['IPv6_unicast'].items():
             if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv6_unicast', [])
                 info['IPv6_unicast'].append(record)
