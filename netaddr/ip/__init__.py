@@ -12,9 +12,6 @@ from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
 
-from netaddr.compat import _sys_maxint, _iter_next, _iter_range, _is_str, _int_type, \
-    _str_type
-
 
 class BaseIP(object):
     """
@@ -30,7 +27,7 @@ class BaseIP(object):
         self._module = None
 
     def _set_value(self, value):
-        if not isinstance(value, _int_type):
+        if not isinstance(value, int):
             raise TypeError('int argument expected, not %s' % type(value))
         if not 0 <= value <= self._module.max_int:
             raise AddrFormatError('value out of bounds for an %s address!' \
@@ -343,14 +340,14 @@ class IPAddress(BaseIP):
                 else:
                     raise ValueError('%r is an invalid IP version!' % version)
 
-            if _is_str(addr) and '/' in addr:
+            if isinstance(addr, str) and '/' in addr:
                 raise ValueError('%s() does not support netmasks or subnet' \
                     ' prefixes! See documentation for details.'
                     % self.__class__.__name__)
 
             if self._module is None:
                 #   IP version is implicit, detect it from addr.
-                if isinstance(addr, _int_type):
+                if isinstance(addr, int):
                     try:
                         if 0 <= int(addr) <= _ipv4.max_int:
                             self._value = int(addr)
@@ -375,7 +372,7 @@ class IPAddress(BaseIP):
                         'address from %r' % addr)
             else:
                 #   IP version is explicit.
-                if _is_str(addr):
+                if isinstance(addr, str):
                     try:
                         self._value = self._module.str_to_int(addr, flags)
                     except AddrFormatError:
@@ -862,9 +859,9 @@ class IPListMixin(object):
             limitation). Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys_maxint:
-            raise IndexError(("range contains more than %d (sys.maxint) "
-               "IP addresses! Use the .size property instead." % _sys_maxint))
+        if size > _sys.maxsize:
+            raise IndexError(("range contains more than %d (sys.maxsize) "
+               "IP addresses! Use the .size property instead." % _sys.maxsize))
         return size
 
     def __getitem__(self, index):
@@ -946,7 +943,7 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
         if not(0 <= prefixlen <= module.width):
             raise AddrFormatError('invalid prefix for %s tuple!' \
                 % module.family_name)
-    elif isinstance(addr, _str_type):
+    elif isinstance(addr, str):
         #   CIDR-like string subnet
         if implicit_prefix:
             #TODO: deprecate this option in netaddr 0.8.x
@@ -1158,7 +1155,7 @@ class IPNetwork(BaseIP, IPListMixin):
                 % (state,))
 
     def _set_prefixlen(self, value):
-        if not isinstance(value, _int_type):
+        if not isinstance(value, int):
             raise TypeError('int argument expected, not %s' % type(value))
         if not 0 <= value <= self._module.width:
             raise AddrFormatError('invalid prefix for an %s address!' \
@@ -1705,7 +1702,7 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             return 4
         return 32                   #   Default.
 
-    if _is_str(abbrev_cidr):
+    if isinstance(abbrev_cidr, str):
         if ':' in abbrev_cidr or abbrev_cidr == '':
             return abbrev_cidr
 
@@ -1886,8 +1883,8 @@ def spanning_cidr(ip_addrs):
     """
     ip_addrs_iter = iter(ip_addrs)
     try:
-        network_a = IPNetwork(_iter_next(ip_addrs_iter))
-        network_b = IPNetwork(_iter_next(ip_addrs_iter))
+        network_a = IPNetwork(next(ip_addrs_iter))
+        network_b = IPNetwork(next(ip_addrs_iter))
     except StopIteration:
         raise ValueError('IP sequence must contain at least 2 elements!')
 

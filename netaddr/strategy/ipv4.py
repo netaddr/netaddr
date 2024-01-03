@@ -26,7 +26,6 @@ from netaddr.strategy import (
     valid_bin as _valid_bin, int_to_bin as _int_to_bin,
     bin_to_int as _bin_to_int)
 
-from netaddr.compat import _str_type
 
 #: The width (in bits) of this address type.
 width = 32
@@ -257,7 +256,7 @@ def expand_partial_address(addr):
 
     error = AddrFormatError('invalid partial IPv4 address: %r!' % addr)
 
-    if isinstance(addr, _str_type):
+    if isinstance(addr, str):
         if ':' in addr:
             #   Ignore IPv6 ...
             raise error

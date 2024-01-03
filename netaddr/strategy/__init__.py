@@ -8,8 +8,6 @@ Shared logic for various address types.
 """
 import re as _re
 
-from netaddr.compat import _range, _is_str
-
 
 def bytes_to_bits():
     """
@@ -17,7 +15,7 @@ def bytes_to_bits():
         list index value is equivalent to its bit string value.
     """
     lookup = []
-    bits_per_byte = _range(7, -1, -1)
+    bits_per_byte = range(7, -1, -1)
     for num in range(256):
         bits = 8 * [None]
         for i in bits_per_byte:
@@ -118,7 +116,7 @@ def valid_bits(bits, width, word_sep=''):
 
     :return: ``True`` if network address is valid, ``False`` otherwise.
     """
-    if not _is_str(bits):
+    if not isinstance(bits, str):
         return False
 
     if word_sep != '':
@@ -188,7 +186,7 @@ def int_to_bits(int_val, word_size, num_words, word_sep=''):
 
     if word_sep != '':
         #   Check custom separator.
-        if not _is_str(word_sep):
+        if not isinstance(word_sep, str):
             raise ValueError('word separator is not a string: %r!' % (word_sep,))
 
     return word_sep.join(bit_words)
@@ -204,7 +202,7 @@ def valid_bin(bin_val, width):
 
     :return: ``True`` if network address is valid, ``False`` otherwise.
     """
-    if not _is_str(bin_val):
+    if not isinstance(bin_val, str):
         return False
 
     if not bin_val.startswith('0b'):

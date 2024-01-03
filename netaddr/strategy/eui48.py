@@ -19,7 +19,6 @@ except ImportError:
     AF_LINK = 48
 
 from netaddr.core import AddrFormatError
-from netaddr.compat import _is_str
 from netaddr.strategy import (
     valid_words as _valid_words, int_to_words as _int_to_words,
     words_to_int as _words_to_int, valid_bits as _valid_bits,
@@ -161,7 +160,7 @@ def str_to_int(addr):
         settings.
     """
     words = []
-    if _is_str(addr):
+    if isinstance(addr, str):
         found_match = False
         for regexp in RE_MAC_FORMATS:
             match_result = regexp.findall(addr)
