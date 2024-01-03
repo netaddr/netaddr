@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #   DISCLAIMER
 #
@@ -18,7 +18,7 @@
 #   See README file and source code for URLs to latest copies of the relevant
 #   files.
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Routines for accessing data published by IANA (Internet Assigned Numbers
 Authority).
@@ -35,7 +35,6 @@ from xml.sax import make_parser, handler
 from netaddr.core import Publisher, Subscriber
 from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
 from netaddr.compat import _open_binary
-
 
 
 #: Topic based lookup dictionary for IANA information.
@@ -234,6 +233,7 @@ class IPv6UnicastParser(XMLRecordParser):
 
         - http://www.iana.org/assignments/ipv6-unicast-address-assignments/ipv6-unicast-address-assignments.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -290,8 +290,10 @@ class MulticastParser(XMLRecordParser):
             (a1, a2) = addr.split('-')
             o1 = a1.strip().split('.')
             o2 = a2.strip().split('.')
-            return '%s-%s' % ('.'.join([str(int(i)) for i in o1]),
-                              '.'.join([str(int(i)) for i in o2]))
+            return '%s-%s' % (
+                '.'.join([str(int(i)) for i in o1]),
+                '.'.join([str(int(i)) for i in o2]),
+            )
         else:
             o1 = addr.strip().split('.')
             return '.'.join([str(int(i)) for i in o1])
@@ -394,13 +396,13 @@ def pprint_info(fh=None):
         fh = _sys.stdout
 
     for category in sorted(IANA_INFO):
-        fh.write('-' * len(category) + "\n")
-        fh.write(category + "\n")
-        fh.write('-' * len(category) + "\n")
+        fh.write('-' * len(category) + '\n')
+        fh.write(category + '\n')
+        fh.write('-' * len(category) + '\n')
         ipranges = IANA_INFO[category]
         for iprange in sorted(ipranges):
             details = ipranges[iprange]
-            fh.write('%-45r' % (iprange) + details + "\n")
+            fh.write('%-45r' % (iprange) + details + '\n')
 
 
 def _within_bounds(ip, ip_range):
@@ -443,6 +445,7 @@ def query(ip_addr):
                 info['IPv6_unicast'].append(record)
 
     return info
+
 
 #   On module import, read IANA data files and populate lookups dict.
 load_info()

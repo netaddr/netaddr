@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 IEEE 64-bit EUI (Extended Unique Identifier) logic.
 """
@@ -11,11 +11,16 @@ import re as _re
 
 from netaddr.core import AddrFormatError
 from netaddr.strategy import (
-    valid_words as _valid_words, int_to_words as _int_to_words,
-    words_to_int as _words_to_int, valid_bits as _valid_bits,
-    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
-    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
-    bin_to_int as _bin_to_int)
+    valid_words as _valid_words,
+    int_to_words as _int_to_words,
+    words_to_int as _words_to_int,
+    valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int,
+    int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin,
+    int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int,
+)
 
 
 #   This is a fake constant that doesn't really exist. Here for completeness.
@@ -34,14 +39,16 @@ family_name = 'EUI-64'
 version = 64
 
 #: The maximum integer value that can be represented by this address type.
-max_int = 2 ** width - 1
+max_int = 2**width - 1
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Dialect classes.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 class eui64_base(object):
     """A standard IEEE EUI-64 dialect class."""
+
     #: The individual word size (in bits) of this address type.
     word_size = 8
 
@@ -49,7 +56,7 @@ class eui64_base(object):
     num_words = width // word_size
 
     #: The maximum integer value for an individual word in this address type.
-    max_word = 2 ** word_size - 1
+    max_word = 2**word_size - 1
 
     #: The separator character used between each word.
     word_sep = '-'
@@ -63,6 +70,7 @@ class eui64_base(object):
 
 class eui64_unix(eui64_base):
     """A UNIX-style MAC address dialect class."""
+
     word_size = 8
     num_words = width // word_size
     word_sep = ':'
@@ -72,11 +80,13 @@ class eui64_unix(eui64_base):
 
 class eui64_unix_expanded(eui64_unix):
     """A UNIX-style MAC address dialect class with leading zeroes."""
+
     word_fmt = '%.2x'
 
 
 class eui64_cisco(eui64_base):
     """A Cisco 'triple hextet' MAC address dialect class."""
+
     word_size = 16
     num_words = width // word_size
     word_sep = '.'
@@ -86,6 +96,7 @@ class eui64_cisco(eui64_base):
 
 class eui64_bare(eui64_base):
     """A bare (no delimiters) MAC address dialect class."""
+
     word_size = 64
     num_words = width // word_size
     word_sep = ''
@@ -97,18 +108,16 @@ class eui64_bare(eui64_base):
 
 DEFAULT_EUI64_DIALECT = eui64_base
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #: Regular expressions to match all supported MAC address formats.
 RE_EUI64_FORMATS = (
     #   2 bytes x 8 (UNIX, Windows, EUI-64)
     '^' + ':'.join(['([0-9A-F]{1,2})'] * 8) + '$',
     '^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$',
-
     #   4 bytes x 4 (Cisco like)
     '^' + ':'.join(['([0-9A-F]{1,4})'] * 4) + '$',
     '^' + '-'.join(['([0-9A-F]{1,4})'] * 4) + '$',
     '^' + r'\.'.join(['([0-9A-F]{1,4})'] * 4) + '$',
-
     #   16 bytes (bare, no delimiters)
     '^(' + ''.join(['[0-9A-F]'] * 16) + ')$',
 )
@@ -170,8 +179,7 @@ def str_to_int(addr):
         #   16 bytes (bare, no delimiters)
         int_val = int('%016x' % int(words[0], 16), 16)
     else:
-        raise AddrFormatError(
-            'bad word count for EUI-64 identifier: %r!' % addr)
+        raise AddrFormatError('bad word count for EUI-64 identifier: %r!' % addr)
 
     return int_val
 
@@ -255,8 +263,7 @@ def bits_to_int(bits, dialect=None):
 def int_to_bits(int_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_EUI64_DIALECT
-    return _int_to_bits(
-        int_val, dialect.word_size, dialect.num_words, dialect.word_sep)
+    return _int_to_bits(int_val, dialect.word_size, dialect.num_words, dialect.word_sep)
 
 
 def valid_bin(bin_val, dialect=None):

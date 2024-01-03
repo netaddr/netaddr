@@ -55,7 +55,13 @@ push_tags:
 	@echo 'syncing tags'
 	git push --tags
 
-ci: test_with_junitxml
+ci: lint test_with_junitxml
+
+lint:
+	ruff format --check
+
+fix:
+	ruff format
 
 test: clean
 	@echo 'running test suite'

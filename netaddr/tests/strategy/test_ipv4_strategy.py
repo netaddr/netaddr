@@ -25,7 +25,7 @@ def test_strategy_ipv4():
     assert ipv4.valid_bin(bin_val)
 
 
-@pytest.mark.skipif(sys.version_info > (3,), reason="requires python 2.x")
+@pytest.mark.skipif(sys.version_info > (3,), reason='requires python 2.x')
 def test_strategy_ipv4_py2():
     i = 3221225985
     p = '\xc0\x00\x02\x01'
@@ -33,7 +33,7 @@ def test_strategy_ipv4_py2():
     assert ipv4.packed_to_int(p) == i
 
 
-@pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3.x")
+@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
 def test_strategy_ipv4_py3():
     i = 3221225985
     p = b'\xc0\x00\x02\x01'

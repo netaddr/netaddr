@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Classes and functions for dealing with MAC addresses, EUI-48, EUI-64, OUI, IAB
 identifiers.
@@ -18,6 +18,7 @@ from netaddr.compat import _open_binary
 
 class BaseIdentifier(object):
     """Base class for all IEEE identifiers."""
+
     __slots__ = ('_value', '__weakref__')
 
     def __init__(self):
@@ -59,6 +60,7 @@ class OUI(BaseIdentifier):
     For online details see - http://standards.ieee.org/regauth/oui/
 
     """
+
     __slots__ = ('records',)
 
     def __init__(self, oui):
@@ -77,12 +79,12 @@ class OUI(BaseIdentifier):
         self.records = []
 
         if isinstance(oui, str):
-            #TODO: Improve string parsing here.
-            #TODO: Accept full MAC/EUI-48 addresses as well as XX-XX-XX
-            #TODO: and just take /16 (see IAB for details)
+            # TODO: Improve string parsing here.
+            # TODO: Accept full MAC/EUI-48 addresses as well as XX-XX-XX
+            # TODO: and just take /16 (see IAB for details)
             self._value = int(oui.replace('-', ''), 16)
         elif isinstance(oui, int):
-            if 0 <= oui <= 0xffffff:
+            if 0 <= oui <= 0xFFFFFF:
                 self._value = oui
             else:
                 raise ValueError('OUI int outside expected range: %r' % (oui,))
@@ -92,7 +94,7 @@ class OUI(BaseIdentifier):
         #   Discover offsets.
         if self._value in ieee.OUI_INDEX:
             fh = _open_binary(__package__, 'oui.txt')
-            for (offset, size) in ieee.OUI_INDEX[self._value]:
+            for offset, size in ieee.OUI_INDEX[self._value]:
                 fh.seek(offset)
                 data = fh.read(size).decode('UTF-8')
                 self._parse_data(data, offset, size)
@@ -138,7 +140,7 @@ class OUI(BaseIdentifier):
             'size': size,
         }
 
-        for line in data.split("\n"):
+        for line in data.split('\n'):
             line = line.strip()
             if not line:
                 continue
@@ -174,10 +176,7 @@ class OUI(BaseIdentifier):
     def __str__(self):
         """:return: string representation of this OUI"""
         int_val = self._value
-        return "%02X-%02X-%02X" % (
-                (int_val >> 16) & 0xff,
-                (int_val >> 8) & 0xff,
-                int_val & 0xff)
+        return '%02X-%02X-%02X' % ((int_val >> 16) & 0xFF, (int_val >> 8) & 0xFF, int_val & 0xFF)
 
     def __repr__(self):
         """:return: executable Python string to recreate equivalent object."""
@@ -185,7 +184,7 @@ class OUI(BaseIdentifier):
 
 
 class IAB(BaseIdentifier):
-    IAB_EUI_VALUES = (0x0050c2, 0x40d855)
+    IAB_EUI_VALUES = (0x0050C2, 0x40D855)
 
     """
     An individual IEEE IAB (Individual Address Block) identifier.
@@ -207,8 +206,8 @@ class IAB(BaseIdentifier):
         if (eui_int >> 12) in cls.IAB_EUI_VALUES:
             return eui_int, 0
 
-        user_mask = 2 ** 12 - 1
-        iab_mask = (2 ** 48 - 1) ^ user_mask
+        user_mask = 2**12 - 1
+        iab_mask = (2**48 - 1) ^ user_mask
         iab_bits = eui_int >> 12
         user_bits = (eui_int | iab_mask) - iab_mask
 
@@ -247,9 +246,9 @@ class IAB(BaseIdentifier):
         }
 
         if isinstance(iab, str):
-            #TODO: Improve string parsing here.
-            #TODO: '00-50-C2' is actually invalid.
-            #TODO: Should be '00-50-C2-00-00-00' (i.e. a full MAC/EUI-48)
+            # TODO: Improve string parsing here.
+            # TODO: '00-50-C2' is actually invalid.
+            # TODO: Should be '00-50-C2-00-00-00' (i.e. a full MAC/EUI-48)
             int_val = int(iab.replace('-', ''), 16)
             iab_int, user_int = self.split_iab_mac(int_val, strict=strict)
             self._value = iab_int
@@ -298,7 +297,7 @@ class IAB(BaseIdentifier):
 
     def _parse_data(self, data, offset, size):
         """Returns a dict record from raw IAB record data"""
-        for line in data.split("\n"):
+        for line in data.split('\n'):
             line = line.strip()
             if not line:
                 continue
@@ -320,12 +319,13 @@ class IAB(BaseIdentifier):
         """:return: string representation of this IAB"""
         int_val = self._value << 4
 
-        return "%02X-%02X-%02X-%02X-%02X-00" % (
-                (int_val >> 32) & 0xff,
-                (int_val >> 24) & 0xff,
-                (int_val >> 16) & 0xff,
-                (int_val >> 8) & 0xff,
-                int_val & 0xff)
+        return '%02X-%02X-%02X-%02X-%02X-00' % (
+            (int_val >> 32) & 0xFF,
+            (int_val >> 24) & 0xFF,
+            (int_val >> 16) & 0xFF,
+            (int_val >> 8) & 0xFF,
+            int_val & 0xFF,
+        )
 
     def __repr__(self):
         """:return: executable Python string to recreate equivalent object."""
@@ -342,6 +342,7 @@ class EUI(BaseIdentifier):
     variants.
 
     """
+
     __slots__ = ('_module', '_dialect')
 
     def __init__(self, addr, version=None, dialect=None):
@@ -366,8 +367,7 @@ class EUI(BaseIdentifier):
         if isinstance(addr, EUI):
             #   Copy constructor.
             if version is not None and version != addr._module.version:
-                raise ValueError('cannot switch EUI versions using '
-                    'copy constructor!')
+                raise ValueError('cannot switch EUI versions using ' 'copy constructor!')
             self._module = addr._module
             self._value = addr._value
             self.dialect = addr.dialect
@@ -381,12 +381,12 @@ class EUI(BaseIdentifier):
             else:
                 raise ValueError('unsupported EUI version %r' % version)
         else:
-        #   Choose a default version when addr is an integer and version is
-        #   not specified.
+            #   Choose a default version when addr is an integer and version is
+            #   not specified.
             if isinstance(addr, int):
-                if 0 <= addr <= 0xffffffffffff:
+                if 0 <= addr <= 0xFFFFFFFFFFFF:
                     self._module = _eui48
-                elif 0xffffffffffff < addr <= 0xffffffffffffffff:
+                elif 0xFFFFFFFFFFFF < addr <= 0xFFFFFFFFFFFFFFFF:
                     self._module = _eui64
 
         self.value = addr
@@ -412,8 +412,7 @@ class EUI(BaseIdentifier):
         elif version == 64:
             self._module = _eui64
         else:
-            raise ValueError('unpickling failed for object state: %s' \
-                % (state,))
+            raise ValueError('unpickling failed for object state: %s' % (state,))
 
         self.dialect = dialect
 
@@ -438,24 +437,28 @@ class EUI(BaseIdentifier):
                         pass
 
             if self._module is None:
-                raise AddrFormatError('failed to detect EUI version: %r'
-                    % (value,))
+                raise AddrFormatError('failed to detect EUI version: %r' % (value,))
         else:
             #   EUI version is explicit.
             if isinstance(value, str):
                 try:
                     self._value = self._module.str_to_int(value)
                 except AddrFormatError:
-                    raise AddrFormatError('address %r is not an EUIv%d'
-                        % (value, self._module.version))
+                    raise AddrFormatError(
+                        'address %r is not an EUIv%d' % (value, self._module.version)
+                    )
             else:
                 if 0 <= int(value) <= self._module.max_int:
                     self._value = int(value)
                 else:
                     raise AddrFormatError('bad address format: %r' % (value,))
 
-    value = property(_get_value, _set_value, None,
-        'a positive integer representing the value of this EUI identifier.')
+    value = property(
+        _get_value,
+        _set_value,
+        None,
+        'a positive integer representing the value of this EUI identifier.',
+    )
 
     def _get_dialect(self):
         return self._dialect
@@ -463,7 +466,7 @@ class EUI(BaseIdentifier):
     def _validate_dialect(self, value):
         if value is None:
             if self._module is _eui64:
-               return eui64_base
+                return eui64_base
             else:
                 return mac_eui48
         else:
@@ -475,9 +478,13 @@ class EUI(BaseIdentifier):
     def _set_dialect(self, value):
         self._dialect = self._validate_dialect(value)
 
-    dialect = property(_get_dialect, _set_dialect, None,
-        "a Python class providing support for the interpretation of "
-        "various MAC\n address formats.")
+    dialect = property(
+        _get_dialect,
+        _set_dialect,
+        None,
+        'a Python class providing support for the interpretation of '
+        'various MAC\n address formats.',
+    )
 
     @property
     def oui(self):
@@ -548,8 +555,9 @@ class EUI(BaseIdentifier):
             raise TypeError('value not an integer!')
 
         if not 0 <= value <= self._dialect.max_word:
-            raise IndexError('value %d outside word size maximum of %d bits!'
-                % (value, self._dialect.word_size))
+            raise IndexError(
+                'value %d outside word size maximum of %d bits!' % (value, self._dialect.word_size)
+            )
 
         words = list(self._module.int_to_words(self._value, self._dialect))
         words[idx] = value
@@ -671,8 +679,8 @@ class EUI(BaseIdentifier):
         if self.version == 48:
             # Convert 11:22:33:44:55:66 into 11:22:33:FF:FE:44:55:66.
             first_three = self._value >> 24
-            last_three = self._value & 0xffffff
-            new_value = (first_three << 40) | 0xfffe000000 | last_three
+            last_three = self._value & 0xFFFFFF
+            new_value = (first_three << 40) | 0xFFFE000000 | last_three
         else:
             # is already a EUI64
             new_value = self._value
@@ -715,7 +723,7 @@ class EUI(BaseIdentifier):
         :return: new link local IPv6 `IPAddress` object based on this `EUI` \
             using the technique described in RFC 4291.
         """
-        return self.ipv6(0xfe800000000000000000000000000000)
+        return self.ipv6(0xFE800000000000000000000000000000)
 
     @property
     def info(self):
@@ -749,4 +757,3 @@ class EUI(BaseIdentifier):
     def __repr__(self):
         """:return: executable Python string to recreate equivalent object."""
         return "EUI('%s')" % self
-

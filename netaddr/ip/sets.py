@@ -1,15 +1,14 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """Set based operations for IP addresses and subnets."""
 
 import itertools as _itertools
 import sys as _sys
 
-from netaddr.ip import (IPNetwork, IPAddress, IPRange, cidr_merge,
-    cidr_exclude, iprange_to_cidrs)
+from netaddr.ip import IPNetwork, IPAddress, IPRange, cidr_merge, cidr_exclude, iprange_to_cidrs
 
 
 def _subtract(supernet, subnets, subnet_idx, ranges):
@@ -72,13 +71,11 @@ def _iter_merged_ranges(sorted_ranges):
             current_stop = next_stop
             continue
         # Cannot be merged.
-        yield (IPAddress(current_start, current_version),
-               IPAddress(current_stop, current_version))
+        yield (IPAddress(current_start, current_version), IPAddress(current_stop, current_version))
         current_start = next_start
         current_stop = next_stop
         current_version = next_version
-    yield (IPAddress(current_start, current_version),
-           IPAddress(current_stop, current_version))
+    yield (IPAddress(current_start, current_version), IPAddress(current_stop, current_version))
 
 
 class IPSet(object):
@@ -87,6 +84,7 @@ class IPSet(object):
     subnets.
 
     """
+
     __slots__ = ('_cidrs', '__weakref__')
 
     def __init__(self, iterable=None, flags=0):
@@ -104,8 +102,7 @@ class IPSet(object):
         if isinstance(iterable, IPNetwork):
             self._cidrs = {iterable.cidr: True}
         elif isinstance(iterable, IPRange):
-            self._cidrs = dict.fromkeys(
-                iprange_to_cidrs(iterable[0], iterable[-1]), True)
+            self._cidrs = dict.fromkeys(iprange_to_cidrs(iterable[0], iterable[-1]), True)
         elif isinstance(iterable, IPSet):
             self._cidrs = dict.fromkeys(iterable.iter_cidrs(), True)
         else:
@@ -130,9 +127,9 @@ class IPSet(object):
 
         """
         self._cidrs = dict.fromkeys(
-            (IPNetwork((value, prefixlen), version=version)
-             for value, prefixlen, version in state),
-            True)
+            (IPNetwork((value, prefixlen), version=version) for value, prefixlen, version in state),
+            True,
+        )
 
     def _compact_single_network(self, added_network):
         """
@@ -158,7 +155,7 @@ class IPSet(object):
             # IPNetworks from self._cidrs that are subnets of added_network.
             to_remove = []
             for cidr in self._cidrs:
-                if (cidr._module.version != added_version or cidr == added_network):
+                if cidr._module.version != added_version or cidr == added_network:
                     # We found added_network or some network of a different version.
                     continue
                 first = cidr.first
@@ -171,7 +168,7 @@ class IPSet(object):
                     del self._cidrs[added_network]
                     # This IPSet was properly compacted before. Since added_network
                     # is removed now, it must again be properly compacted -> done.
-                    assert (not to_remove)
+                    assert not to_remove
                     return
             for item in to_remove:
                 del self._cidrs[item]
@@ -278,8 +275,7 @@ class IPSet(object):
 
         """
         if isinstance(addr, IPRange):
-            new_cidrs = dict.fromkeys(
-                iprange_to_cidrs(addr[0], addr[-1]), True)
+            new_cidrs = dict.fromkeys(iprange_to_cidrs(addr[0], addr[-1]), True)
             self._cidrs.update(new_cidrs)
             self.compact()
             return
@@ -390,7 +386,14 @@ class IPSet(object):
         """
         if isinstance(iterable, IPSet):
             self._cidrs = dict.fromkeys(
-                (ip for ip in cidr_merge(_itertools.chain(self._cidrs.keys(), iterable._cidrs.keys()))), True)
+                (
+                    ip
+                    for ip in cidr_merge(
+                        _itertools.chain(self._cidrs.keys(), iterable._cidrs.keys())
+                    )
+                ),
+                True,
+            )
             return
         elif isinstance(iterable, (IPNetwork, IPRange)):
             self.add(iterable)
@@ -405,7 +408,7 @@ class IPSet(object):
                 addr = IPAddress(addr, flags=flags)
             mergeable.append(addr)
 
-        for cidr in cidr_merge(_itertools.chain(self._cidrs.keys(),  mergeable)):
+        for cidr in cidr_merge(_itertools.chain(self._cidrs.keys(), mergeable)):
             self._cidrs[cidr] = True
 
         self.compact()
@@ -585,28 +588,26 @@ class IPSet(object):
             else:
                 # own_cur and other_cur have nothing in common
                 if own_cur < other_cur:
-                    result_ranges.append((own_cur._module.version,
-                                          own_cur.first, own_cur.last))
+                    result_ranges.append((own_cur._module.version, own_cur.first, own_cur.last))
                     own_idx += 1
                 else:
-                    result_ranges.append((other_cur._module.version,
-                                          other_cur.first, other_cur.last))
+                    result_ranges.append(
+                        (other_cur._module.version, other_cur.first, other_cur.last)
+                    )
                     other_idx += 1
 
         # If the above loop terminated because it processed all cidrs of
         # "other", then any remaining cidrs in self must be part of the result.
         while own_idx < own_len:
             own_cur = own_nets[own_idx]
-            result_ranges.append((own_cur._module.version,
-                                  own_cur.first, own_cur.last))
+            result_ranges.append((own_cur._module.version, own_cur.first, own_cur.last))
             own_idx += 1
 
         # If the above loop terminated because it processed all cidrs of
         # self, then any remaining cidrs in "other" must be part of the result.
         while other_idx < other_len:
             other_cur = other_nets[other_idx]
-            result_ranges.append((other_cur._module.version,
-                                  other_cur.first, other_cur.last))
+            result_ranges.append((other_cur._module.version, other_cur.first, other_cur.last))
             other_idx += 1
 
         result = IPSet()
@@ -645,8 +646,7 @@ class IPSet(object):
             elif own_cur in other_cur:
                 own_idx += 1
             elif other_cur in own_cur:
-                other_idx = _subtract(own_cur, other_nets, other_idx,
-                                      result_ranges)
+                other_idx = _subtract(own_cur, other_nets, other_idx, result_ranges)
                 own_idx += 1
             else:
                 # own_cur and other_cur have nothing in common
@@ -681,8 +681,9 @@ class IPSet(object):
         size = self.size
         if size > _sys.maxsize:
             raise IndexError(
-                "range contains more than %d (sys.maxsize) IP addresses!"
-                "Use the .size property instead." % _sys.maxsize)
+                'range contains more than %d (sys.maxsize) IP addresses!'
+                'Use the .size property instead.' % _sys.maxsize
+            )
         return size
 
     @property
@@ -730,7 +731,7 @@ class IPSet(object):
                 return None
             return IPRange(cidrs[0][0], cidrs[-1][-1])
         else:
-            raise ValueError("IPSet is not contiguous")
+            raise ValueError('IPSet is not contiguous')
 
     def iter_ipranges(self):
         """Generate the merged IPRanges for this IPSet.
@@ -739,8 +740,9 @@ class IPSet(object):
         not contiguous. Adjacent IPRanges will be merged together, so you
         get the minimal number of IPRanges.
         """
-        sorted_ranges = [(cidr._module.version, cidr.first, cidr.last) for
-                         cidr in self.iter_cidrs()]
+        sorted_ranges = [
+            (cidr._module.version, cidr.first, cidr.last) for cidr in self.iter_cidrs()
+        ]
 
         for start, stop in _iter_merged_ranges(sorted_ranges):
             yield IPRange(start, stop)

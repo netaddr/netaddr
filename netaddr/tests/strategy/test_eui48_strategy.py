@@ -8,7 +8,7 @@ from netaddr.strategy import eui48
 def test_strategy_eui48():
     b = '00000000-00001111-00011111-00010010-11100111-00110011'
     i = 64945841971
-    t = (0x0, 0x0f, 0x1f, 0x12, 0xe7, 0x33)
+    t = (0x0, 0x0F, 0x1F, 0x12, 0xE7, 0x33)
     s = '00-0F-1F-12-E7-33'
 
     assert eui48.bits_to_int(b) == i
@@ -22,7 +22,7 @@ def test_strategy_eui48():
     assert eui48.words_to_int(list(t)) == i
 
 
-@pytest.mark.skipif(sys.version_info > (3,), reason="requires python 2.x")
+@pytest.mark.skipif(sys.version_info > (3,), reason='requires python 2.x')
 def test_strategy_eui48_py2():
     i = 64945841971
     p = '\x00\x0f\x1f\x12\xe73'
@@ -30,7 +30,7 @@ def test_strategy_eui48_py2():
     assert eui48.packed_to_int(p) == i
 
 
-@pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3.x")
+@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
 def test_strategy_eui48_py3():
     i = 64945841971
     p = b'\x00\x0f\x1f\x12\xe73'
@@ -41,7 +41,7 @@ def test_strategy_eui48_py3():
 def test_strategy_eui48_alternate_dialect():
     b = '00000000:00001111:00011111:00010010:11100111:00110011'
     i = 64945841971
-    t = (0x0, 0x0f, 0x1f, 0x12, 0xe7, 0x33)
+    t = (0x0, 0x0F, 0x1F, 0x12, 0xE7, 0x33)
     s = '0:f:1f:12:e7:33'
 
     assert eui48.bits_to_int(b, eui48.mac_unix) == i

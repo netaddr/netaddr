@@ -4,9 +4,21 @@ import random
 
 import pytest
 
-from netaddr import (EUI, mac_unix, mac_unix_expanded, mac_cisco,
-    mac_bare, mac_pgsql, eui64_unix, eui64_unix_expanded,
-    eui64_cisco, eui64_bare, OUI, IAB, IPAddress)
+from netaddr import (
+    EUI,
+    mac_unix,
+    mac_unix_expanded,
+    mac_cisco,
+    mac_bare,
+    mac_pgsql,
+    eui64_unix,
+    eui64_unix_expanded,
+    eui64_cisco,
+    eui64_bare,
+    OUI,
+    IAB,
+    IPAddress,
+)
 
 
 def test_mac_address_properties():
@@ -26,12 +38,12 @@ def test_mac_address_numerical_operations():
     assert mac.bin == '0b1101101110111010010010101010011111101'
 
 
-@pytest.mark.skipif(sys.version_info > (3,), reason="requires python 2.x")
+@pytest.mark.skipif(sys.version_info > (3,), reason='requires python 2.x')
 def test_eui_oct_format_py2():
     assert oct(EUI('00-1B-77-49-54-FD')) == '01556722252375'
 
 
-@pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3.x")
+@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
 def test_eui_oct_format_py3():
     assert oct(EUI('00-1B-77-49-54-FD')) == '0o1556722252375'
 
@@ -146,11 +158,7 @@ def test_eui_oui_information():
     oui = mac.oui
     assert str(oui) == '00-1B-77'
 
-    assert oui.registration().address == [
-        'Lot 8, Jalan Hi-Tech 2/3',
-        'Kulim  Kedah  09000',
-        'MY'
-    ]
+    assert oui.registration().address == ['Lot 8, Jalan Hi-Tech 2/3', 'Kulim  Kedah  09000', 'MY']
 
     assert oui.registration().org == 'Intel Corporate'
 
@@ -160,11 +168,7 @@ def test_oui_constructor():
     assert str(oui) == '08-00-30'
     assert oui == OUI('08-00-30')
 
-    assert oui.registration(0).address == [
-        '2380 N. ROSE AVENUE',
-        'OXNARD  CA  93010',
-        'US'
-    ]
+    assert oui.registration(0).address == ['2380 N. ROSE AVENUE', 'OXNARD  CA  93010', 'US']
     assert oui.registration(0).org == 'NETWORK RESEARCH CORPORATION'
     assert oui.registration(0).oui == '08-00-30'
 
@@ -176,11 +180,7 @@ def test_oui_constructor():
     assert oui.registration(1).org == 'ROYAL MELBOURNE INST OF TECH'
     assert oui.registration(1).oui == '08-00-30'
 
-    assert oui.registration(2).address == [
-        'CH-1211',
-        'GENEVE  SUISSE/SWITZ  023',
-        'CH'
-    ]
+    assert oui.registration(2).address == ['CH-1211', 'GENEVE  SUISSE/SWITZ  023', 'CH']
     assert oui.registration(2).org == 'CERN'
     assert oui.registration(2).oui == '08-00-30'
     assert oui.reg_count == 3
@@ -222,7 +222,6 @@ def test_eui64():
     assert eui.eui64() == EUI('00-1B-77-FF-FE-49-54-FD')
 
 
-
 def test_mac_to_ipv6_link_local():
     mac = EUI('00-0F-1F-12-E7-33')
     ip = mac.ipv6_link_local()
@@ -238,8 +237,8 @@ def test_iab():
     assert str(eui.oui) == '00-50-C2'
     assert str(eui.iab) == '00-50-C2-05-C0-00'
     assert eui.ei == '05-C0-00'
-    assert int(eui.oui) == 0x0050c2
-    assert int(eui.iab) == 0x0050c205c
+    assert int(eui.oui) == 0x0050C2
+    assert int(eui.iab) == 0x0050C205C
 
     assert IAB(eui.value) == eui.iab
 
@@ -251,8 +250,8 @@ def test_new_iab():
     assert str(eui.oui) == '40-D8-55'
     assert str(eui.iab) == '40-D8-55-13-10-00'
     assert eui.ei == '13-10-00'
-    assert int(eui.oui) == 0x40d855
-    assert int(eui.iab) == 0x40d855131
+    assert int(eui.oui) == 0x40D855
+    assert int(eui.iab) == 0x40D855131
 
     assert IAB(eui.value) == eui.iab
 
@@ -270,7 +269,7 @@ def test_eui_sort_order():
     eui_list = [
         EUI(0, 64),
         EUI(0),
-        EUI(0xffffffffffff, dialect=mac_unix),
+        EUI(0xFFFFFFFFFFFF, dialect=mac_unix),
         EUI(0x1000000000000),
     ]
 
