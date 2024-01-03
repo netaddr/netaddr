@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?xml-stylesheet type="text/xsl" href="ipv6-unicast-address-assignments.xsl"?>
-<?oxygen RNGSchema="ipv6-unicast-address-assignments.rng" type="xml"?>
+<?xml-model href="ipv6-unicast-address-assignments.rng" schematypens="http://relaxng.org/ns/structure/1.0" ?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv6-unicast-address-assignments">
   <title>IPv6 Global Unicast Address Assignments</title>
   <category>Internet Protocol version 6 (IPv6) Global Unicast Allocations</category>

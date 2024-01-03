@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "docs"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sphinx = "^7.2.6"
+furo = "^2023.9.10"
+
+
+[tool.poetry.group.autobuild.dependencies]
+sphinx-autobuild = "^2021.3.14"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

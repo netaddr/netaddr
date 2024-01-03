@@ -2,8 +2,14 @@
 API Reference
 =============
 
-.. toctree::
-    :maxdepth: 2
+This page documents netaddr's public API. Only things explicitly mentioned in this documentation
+are supported and considered part of the public API.
+
+Any of the following is considered private and unsupported:
+
+* Anything within any of the ``netaddr`` submodules (``from netaddr.X import Y``)
+* Anything with a name started with a single underscore (``_X``)
+* Anything not explicitly documented as part of the public API
 
 ------------------
 IP Class Hierarchy
@@ -11,25 +17,23 @@ IP Class Hierarchy
 
 Here the class hierarchy for IP related classes ::
 
-                                +--------+    +-------------+
-                                | BaseIP |    | IPListMixin |
-     +---------+                +--------+    +-------------+   +---------+
-     | ipv4(M) |                     |          |        |      | ipv6(M) |
-     +---------+                     |          |        |      +---------+
-          |         +----------------+----------------+  |           |
-       (HAS A)      |                |          |     |  |        (HAS A)
-          |         |                |          |     |  |           |
-          +-----+----------------+-----------------+  |  |           |
-                |   |   +--------|-------+---------|--------+--------+
-                |   |   |        |   |   |      |  |  |  |  |
-                |   |   |        |   |   |      |  |  |  |  |
-                v   v   v        v   v   v      |  |  |  |  |
-              +-----------+    +-----------+    |  |  |  |  |
-              | IPAddress |    | IPNetwork |<---+  |  |  |  |
-              +-----------+    +-----------+       |  |  |  |
-                    |                |             |  |  |  |
-                 (HAS A)          (HAS A)          |  |  |  |
-                    |                |             v  v  v  v
+     +---------+                                                +---------+
+     | ipv4(M) |                                                | ipv6(M) |
+     +---------+                                                +---------+
+          |                                                          |
+       (HAS A)                                                    (HAS A)
+          |                                                          |
+          +-----+----------------+-----------------+                 |
+                |       +--------|-------+---------|--------+--------+
+                |       |        |       |         |        |
+                |       |        |       |         |        |
+                v       v        v       v         |        |
+              +-----------+    +-----------+       |        |
+              | IPAddress |    | IPNetwork |       |        |
+              +-----------+    +-----------+       |        |
+                    |                |             |        |
+                 (HAS A)          (HAS A)          |        |
+                    |                |             v        v
                     +-------+--------+           +------------+
                             |                    |  IPRange   |
                             |                    +------------+
@@ -47,27 +51,49 @@ Constants
 
 The following constants are used by the various *flags* arguments on netaddr class constructors.
 
-.. data:: P
-          INET_PTON
+.. data:: netaddr.P
+          netaddr.INET_PTON
 
    Use inet_pton() semantics instead of inet_aton() when parsing IPv4.
 
-.. data:: Z
-          ZEROFILL
+   See the :meth:`IPAddress.__init__` documentation for details.
+
+   .. versionchanged:: 0.10.0
+        This parsing mode will become stricter in the future and it will reject leading zeros.
+
+.. data:: netaddr.INET_ATON
+
+    Use ``inet_aton()`` semantics when parsing IPv4.
+
+    See the :meth:`IPAddress.__init__` documentation for details.
+
+    .. versionadded:: 0.10.0
+
+.. data:: netaddr.Z
+          netaddr.ZEROFILL
 
    Remove any preceding zeros from IPv4 address octets before parsing.
 
-.. data:: N
-          NOHOST
+   See the :meth:`IPAddress.__init__` documentation for details.
 
-   Remove any host bits found to the right of an applied CIDR prefix
+.. data:: netaddr.N
+          netaddr.NOHOST
+
+   Remove any host bits found to the right of an applied CIDR prefix.
+
+   See the :meth:`IPNetwork.__init__` documentation for details.
 
 -----------------
 Custom Exceptions
 -----------------
 .. autoexception:: netaddr.AddrConversionError
+    :exclude-members: __init__
+
 .. autoexception:: netaddr.AddrFormatError
+    :exclude-members: __init__
+
 .. autoexception:: netaddr.NotRegisteredError
+    :exclude-members: __init__
 
 ------------
 IP addresses
@@ -79,7 +105,9 @@ The `IPAddress` class is used to identify individual IP addresses.
 
 .. autoclass:: netaddr.IPAddress
     :members:
-    :special-members:
+    :inherited-members:
+
+.. _ipv6_formatting_dialects:
 
 ^^^^^^^^^^^^^^^^^^^^^^^^
 IPv6 formatting dialects
@@ -106,7 +134,6 @@ Nowadays, IP networks are usually specified using the CIDR format with a prefix 
 
 .. autoclass:: netaddr.IPNetwork
     :members:
-    :special-members:
 
 ---------------------------
 Arbitrary IP address ranges
@@ -124,7 +151,6 @@ A bounded range is a group of IP addresses specified using a start and end addre
 
 .. autoclass:: netaddr.IPRange
     :members:
-    :special-members:
 
 ^^^^^^^^^^^^^^
 IP glob ranges
@@ -136,7 +162,6 @@ The `IPGlob` class is used to represent individual glob ranges.
 
 .. autoclass:: netaddr.IPGlob
     :members:
-    :special-members:
 
 ^^^^^^^^^^^^^^^^^^
 globbing functions
@@ -171,7 +196,6 @@ The `IPSet` class was built specifically for this purpose.
 
 .. autoclass:: netaddr.IPSet
     :members:
-    :special-members:
 
 ---------------------------
 IP functions and generators
@@ -200,15 +224,14 @@ The `EUI` class is used to represents MACs (as well as their larger and less com
 
 .. autoclass:: netaddr.EUI
     :members:
-    :special-members:
 
 .. autoclass:: netaddr.OUI
     :members:
-    :special-members:
 
 .. autoclass:: netaddr.IAB
     :members:
-    :special-members:
+
+.. _mac_formatting_dialects:
 
 ^^^^^^^^^^^^^^^^^^^^^^^
 MAC formatting dialects

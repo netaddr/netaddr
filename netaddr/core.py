@@ -1,14 +1,12 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """Common code shared between various netaddr sub modules"""
 
 import sys as _sys
 import pprint as _pprint
-
-from netaddr.compat import _callable, _iter_dict_keys
 
 #: True if platform is natively big endian, False otherwise.
 BIG_ENDIAN_PLATFORM = _sys.byteorder == 'big'
@@ -22,13 +20,18 @@ Z = ZEROFILL = 2
 #:  Remove any host bits found to the right of an applied CIDR prefix.
 N = NOHOST = 4
 
-#-----------------------------------------------------------------------------
+#: Use legacy ``inet_aton()`` semantics when parsing IPv4.
+INET_ATON = 8
+
+
+# -----------------------------------------------------------------------------
 #   Custom exceptions.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 class AddrFormatError(Exception):
     """
     An Exception indicating a network address is not correctly formatted.
     """
+
     pass
 
 
@@ -37,6 +40,7 @@ class AddrConversionError(Exception):
     An Exception indicating a failure to convert between address types or
     notations.
     """
+
     pass
 
 
@@ -45,6 +49,7 @@ class NotRegisteredError(Exception):
     An Exception indicating that an OUI or IAB was not found in the IEEE
     Registry.
     """
+
     pass
 
 
@@ -52,6 +57,8 @@ try:
     a = 42
     a.bit_length()
     # No exception, must be Python 2.7 or 3.1+ -> can use bit_length()
+    del a
+
     def num_bits(int_val):
         """
         :param int_val: an unsigned integer.
@@ -121,7 +128,7 @@ class PrettyPrinter(Subscriber):
         """
         self.fh.write(_pprint.pformat(data))
         if self.write_eol:
-            self.fh.write("\n")
+            self.fh.write('\n')
 
 
 class Publisher(object):
@@ -142,7 +149,7 @@ class Publisher(object):
         :param subscriber: a new object that implements the Subscriber object
             interface.
         """
-        if hasattr(subscriber, 'update') and _callable(subscriber.update):
+        if hasattr(subscriber, 'update') and hasattr(subscriber.update, '__call__'):
             if subscriber not in self.subscribers:
                 self.subscribers.append(subscriber)
         else:
@@ -200,7 +207,7 @@ class DictDotLookup(object):
             return self.__dict__[name]
 
     def __iter__(self):
-        return _iter_dict_keys(self.__dict__)
+        return self.__dict__.keys()
 
     def __repr__(self):
         return _pprint.pformat(self.__dict__)

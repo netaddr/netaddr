@@ -2,13 +2,10 @@ include AUTHORS
 include CHANGELOG
 include COPYRIGHT
 include README.rst
-include REFERENCES
 include LICENSE
 include Makefile
 include MANIFEST.in
 include release.py
-include setup.cfg
-include setup.py
 
 recursive-include docs/source *.rst *.py
 graft tutorials

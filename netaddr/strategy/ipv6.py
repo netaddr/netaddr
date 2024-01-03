@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 IPv6 address logic.
 """
@@ -13,25 +13,30 @@ OPT_IMPORTS = False
 #   Check whether we need to use fallback code or not.
 try:
     import socket as _socket
+
     #   These might all generate exceptions on different platforms.
     if not _socket.has_ipv6:
         raise Exception('IPv6 disabled')
     _socket.inet_pton
     _socket.AF_INET6
-    from _socket import (inet_pton as _inet_pton, inet_ntop as _inet_ntop,
-                         AF_INET6)
+    from _socket import inet_pton as _inet_pton, inet_ntop as _inet_ntop, AF_INET6
+
     OPT_IMPORTS = True
 except Exception:
-    from netaddr.fbsocket import (inet_pton as _inet_pton, inet_ntop as _inet_ntop,
-                                 AF_INET6)
+    from netaddr.fbsocket import inet_pton as _inet_pton, inet_ntop as _inet_ntop, AF_INET6
 
 from netaddr.core import AddrFormatError
 from netaddr.strategy import (
-    valid_words as _valid_words, int_to_words as _int_to_words,
-    words_to_int as _words_to_int, valid_bits as _valid_bits,
-    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
-    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
-    bin_to_int as _bin_to_int)
+    valid_words as _valid_words,
+    int_to_words as _int_to_words,
+    words_to_int as _words_to_int,
+    valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int,
+    int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin,
+    int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int,
+)
 
 #: The width (in bits) of this address type.
 width = 128
@@ -55,47 +60,47 @@ version = 6
 word_base = 16
 
 #: The maximum integer value that can be represented by this address type.
-max_int = 2 ** width - 1
+max_int = 2**width - 1
 
 #: The number of words in this address type.
 num_words = width // word_size
 
 #: The maximum integer value for an individual word in this address type.
-max_word = 2 ** word_size - 1
+max_word = 2**word_size - 1
 
 #: A dictionary mapping IPv6 CIDR prefixes to the equivalent netmasks.
-prefix_to_netmask = dict(
-    [(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width+1)])
+prefix_to_netmask = dict([(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv6 netmasks to their equivalent CIDR prefixes.
-netmask_to_prefix = dict(
-    [(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width+1)])
+netmask_to_prefix = dict([(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv6 CIDR prefixes to the equivalent hostmasks.
-prefix_to_hostmask = dict(
-    [(i, (2 ** (width - i) - 1)) for i in range(0, width+1)])
+prefix_to_hostmask = dict([(i, (2 ** (width - i) - 1)) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv6 hostmasks to their equivalent CIDR prefixes.
-hostmask_to_prefix = dict(
-    [((2 ** (width - i) - 1), i) for i in range(0, width+1)])
+hostmask_to_prefix = dict([((2 ** (width - i) - 1), i) for i in range(0, width + 1)])
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Dialect classes.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 class ipv6_compact(object):
     """An IPv6 dialect class - compact form."""
+
     #: The format string used to converting words into string values.
     word_fmt = '%x'
 
     #: Boolean flag indicating if IPv6 compaction algorithm should be used.
     compact = True
 
+
 class ipv6_full(ipv6_compact):
     """An IPv6 dialect class - 'all zeroes' form."""
 
     #: Boolean flag indicating if IPv6 compaction algorithm should be used.
     compact = False
+
 
 class ipv6_verbose(ipv6_compact):
     """An IPv6 dialect class - extra wide 'all zeroes' form."""

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?xml-stylesheet type="text/xsl" href="ipv4-address-space.xsl"?>
-<?oxygen RNGSchema="ipv4-address-space.rng" type="xml"?>
+<?xml-model href="ipv4-address-space.rng" schematypens="http://relaxng.org/ns/structure/1.0" ?>
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
   <category>Internet Protocol version 4 (IPv4) Address Space</category>
-  <updated>2019-12-27</updated>
+  <updated>2023-12-18</updated>
   <xref type="rfc" data="rfc7249"/>
   <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
 All other assignments require IETF Review.</registration_rule>
@@ -18,6 +18,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <date>1981-09</date>
     <status>RESERVED</status>
     <xref type="note" data="2"/>
+    <xref type="note" data="3"/>
   </record>
   <record>
     <prefix>001/8</prefix>
@@ -120,7 +121,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>IANA - Private Use</designation>
     <date>1995-06</date>
     <status>RESERVED</status>
-    <xref type="note" data="3"/>
+    <xref type="note" data="4"/>
   </record>
   <record>
     <prefix>011/8</prefix>
@@ -160,11 +161,11 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>APNIC</designation>
     <date>2010-04</date>
     <whois>whois.apnic.net</whois>
-    <status>ALLOCATED</status>
     <rdap>
       <server>https://rdap.apnic.net/</server>
     </rdap>
-    <xref type="note" data="4"/>
+    <status>ALLOCATED</status>
+    <xref type="note" data="5"/>
   </record>
   <record>
     <prefix>015/8</prefix>
@@ -520,9 +521,9 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     </rdap>
     <status>LEGACY</status>
   </record>
-  <record>
+  <record updated="2023-12-18">
     <prefix>048/8</prefix>
-    <designation>Prudential Securities Inc.</designation>
+    <designation>Administered by ARIN</designation>
     <date>1995-05</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -607,7 +608,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
   </record>
   <record>
     <prefix>056/8</prefix>
-    <designation>US Postal Service</designation>
+    <designation>Administered by ARIN</designation>
     <date>1994-06</date>
     <whois>whois.arin.net</whois>
     <rdap>
@@ -1069,12 +1070,12 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>ARIN</designation>
     <date>2010-11</date>
     <whois>whois.arin.net</whois>
-    <status>ALLOCATED</status>
     <rdap>
       <server>https://rdap.arin.net/registry</server>
       <server>http://rdap.arin.net/registry</server>
     </rdap>
-    <xref type="note" data="5"/>
+    <status>ALLOCATED</status>
+    <xref type="note" data="6"/>
   </record>
   <record>
     <prefix>101/8</prefix>
@@ -1346,7 +1347,7 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>IANA - Loopback</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="6"/>
+    <xref type="note" data="7"/>
   </record>
   <record>
     <prefix>128/8</prefix>
@@ -1797,12 +1798,12 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>Administered by ARIN</designation>
     <date>1993-05</date>
     <whois>whois.arin.net</whois>
-    <status>LEGACY</status>
     <rdap>
       <server>https://rdap.arin.net/registry</server>
       <server>http://rdap.arin.net/registry</server>
     </rdap>
-    <xref type="note" data="7"/>
+    <status>LEGACY</status>
+    <xref type="note" data="8"/>
   </record>
   <record>
     <prefix>170/8</prefix>
@@ -1830,12 +1831,12 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>Administered by ARIN</designation>
     <date>1993-05</date>
     <whois>whois.arin.net</whois>
-    <status>LEGACY</status>
     <rdap>
       <server>https://rdap.arin.net/registry</server>
       <server>http://rdap.arin.net/registry</server>
     </rdap>
-    <xref type="note" data="8"/>
+    <status>LEGACY</status>
+    <xref type="note" data="9"/>
   </record>
   <record>
     <prefix>173/8</prefix>
@@ -2035,13 +2036,13 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>Administered by ARIN</designation>
     <date>1993-05</date>
     <whois>whois.arin.net</whois>
-    <status>LEGACY</status>
-    <xref type="note" data="9"/>
     <rdap>
       <server>https://rdap.arin.net/registry</server>
       <server>http://rdap.arin.net/registry</server>
     </rdap>
+    <status>LEGACY</status>
     <xref type="note" data="10"/>
+    <xref type="note" data="11"/>
   </record>
   <record>
     <prefix>193/8</prefix>
@@ -2100,12 +2101,12 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>Administered by ARIN</designation>
     <date>1993-05</date>
     <whois>whois.arin.net</whois>
-    <status>LEGACY</status>
     <rdap>
       <server>https://rdap.arin.net/registry</server>
       <server>http://rdap.arin.net/registry</server>
     </rdap>
-    <xref type="note" data="11"/>
+    <status>LEGACY</status>
+    <xref type="note" data="12"/>
   </record>
   <record>
     <prefix>199/8</prefix>
@@ -2153,11 +2154,11 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>APNIC</designation>
     <date>1993-05</date>
     <whois>whois.apnic.net</whois>
-    <status>ALLOCATED</status>
     <rdap>
       <server>https://rdap.apnic.net/</server>
     </rdap>
-    <xref type="note" data="12"/>
+    <status>ALLOCATED</status>
+    <xref type="note" data="13"/>
   </record>
   <record>
     <prefix>204/8</prefix>
@@ -2373,227 +2374,227 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>225/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>226/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>227/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>228/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>229/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>230/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>231/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>232/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>233/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>234/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
     <xref type="note" data="14"/>
+    <xref type="note" data="15"/>
   </record>
   <record>
     <prefix>235/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>236/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>237/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>238/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
+    <xref type="note" data="14"/>
   </record>
   <record>
     <prefix>239/8</prefix>
     <designation>Multicast</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="13"/>
-    <xref type="note" data="15"/>
+    <xref type="note" data="14"/>
+    <xref type="note" data="16"/>
   </record>
   <record>
     <prefix>240/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>241/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>242/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>243/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>244/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>245/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>246/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>247/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>248/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>249/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>250/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>251/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>252/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>253/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>254/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
+    <xref type="note" data="17"/>
   </record>
   <record>
     <prefix>255/8</prefix>
     <designation>Future use</designation>
     <date>1981-09</date>
     <status>RESERVED</status>
-    <xref type="note" data="16"/>
     <xref type="note" data="17"/>
+    <xref type="note" data="18"/>
   </record>
   <footnote anchor="1">Indicates the status of address blocks as follows:
 RESERVED: designated by the IETF for specific non-global-unicast purposes as noted.
@@ -2603,21 +2604,23 @@ of WHOIS Directory and reverse DNS records. Assignments from these blocks are di
 on a regional basis.
 ALLOCATED: delegated entirely to specific RIR as indicated.
 UNALLOCATED: not yet allocated or reserved.</footnote>
-  <footnote anchor="2">0.0.0.0/8 reserved for self-identification <xref type="rfc" data="rfc1122"/>, section 3.2.1.3. 
+  <footnote anchor="2">0.0.0.0/8 reserved for self-identification <xref type="rfc" data="rfc791"/>, section 3.2.
 Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="3">Reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>.
+  <footnote anchor="3">0.0.0.0/32 reserved for self-identification <xref type="rfc" data="rfc1122"/>, section 3.2.1.3.
+Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
+  <footnote anchor="4">Reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>.
 Complete registration details for 10.0.0.0/8 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="4">This was reserved for Public Data Networks <xref type="rfc" data="rfc1356"/>. See <xref type="registry" data="public-data-network-numbers"/>.
+  <footnote anchor="5">This was reserved for Public Data Networks <xref type="rfc" data="rfc1356"/>. See <xref type="registry" data="public-data-network-numbers"/>.
 It was recovered in February 2008 and was subsequently allocated to APNIC in April 2010.</footnote>
-  <footnote anchor="5">100.64.0.0/10 reserved for Shared Address Space <xref type="rfc" data="rfc6598"/>. 
+  <footnote anchor="6">100.64.0.0/10 reserved for Shared Address Space <xref type="rfc" data="rfc6598"/>. 
 Complete registration details for 100.64.0.0/10 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="6">127.0.0.0/8 reserved for Loopback <xref type="rfc" data="rfc1122"/>, section 3.2.1.3. 
+  <footnote anchor="7">127.0.0.0/8 reserved for Loopback <xref type="rfc" data="rfc1122"/>, section 3.2.1.3. 
 Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="7">169.254.0.0/16 reserved for Link Local <xref type="rfc" data="rfc3927"/>.
+  <footnote anchor="8">169.254.0.0/16 reserved for Link Local <xref type="rfc" data="rfc3927"/>.
 Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="8">172.16.0.0/12 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>. 
+  <footnote anchor="9">172.16.0.0/12 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>. 
 Complete registration details are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="9">192.0.2.0/24  reserved for TEST-NET-1 <xref type="rfc" data="rfc5737"/>. 
+  <footnote anchor="10">192.0.2.0/24  reserved for TEST-NET-1 <xref type="rfc" data="rfc5737"/>. 
 Complete registration details for 192.0.2.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
 192.88.99.0/24 reserved for 6to4 Relay Anycast <xref type="rfc" data="rfc7526"/>
 Complete registration details for 192.88.99.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
@@ -2625,20 +2628,20 @@ Complete registration details for 192.88.99.0/24 are found in <xref type="regist
 at 192.88.99.1/32 - see <xref type="rfc" data="rfc7526"/>)
 192.168.0.0/16 reserved for Private-Use Networks <xref type="rfc" data="rfc1918"/>. 
 Complete registration details for 192.168.0.0/16 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="10">192.0.0.0/24 reserved for IANA IPv4 Special Purpose Address Registry <xref type="rfc" data="rfc5736"/>. 
+  <footnote anchor="11">192.0.0.0/24 reserved for IANA IPv4 Special Purpose Address Registry <xref type="rfc" data="rfc5736"/>. 
 Complete registration details for 192.0.0.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="11">198.18.0.0/15 reserved for Network Interconnect Device Benchmark Testing <xref type="rfc" data="rfc2544"/>. 
+  <footnote anchor="12">198.18.0.0/15 reserved for Network Interconnect Device Benchmark Testing <xref type="rfc" data="rfc2544"/>. 
 Complete registration details for 198.18.0.0/15 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.
 198.51.100.0/24 reserved for TEST-NET-2 <xref type="rfc" data="rfc5737"/>. 
 Complete registration details for 198.51.100.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="12">203.0.113.0/24 reserved for TEST-NET-3 <xref type="rfc" data="rfc5737"/>. 
+  <footnote anchor="13">203.0.113.0/24 reserved for TEST-NET-3 <xref type="rfc" data="rfc5737"/>. 
 Complete registration details for 203.0.113.0/24 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="13">Multicast (formerly "Class D") <xref type="rfc" data="rfc5771"/> registered in <xref type="registry" data="multicast-addresses"/></footnote>
-  <footnote anchor="14">Unicast-Prefix-Based IPv4 Multicast Addresses <xref type="rfc" data="rfc6034"/></footnote>
-  <footnote anchor="15">Administratively Scoped IP Multicast <xref type="rfc" data="rfc2365"/></footnote>
-  <footnote anchor="16">Reserved for future use (formerly "Class E") <xref type="rfc" data="rfc1112"/>.
+  <footnote anchor="14">Multicast (formerly "Class D") <xref type="rfc" data="rfc5771"/> registered in <xref type="registry" data="multicast-addresses"/></footnote>
+  <footnote anchor="15">Unicast-Prefix-Based IPv4 Multicast Addresses <xref type="rfc" data="rfc6034"/></footnote>
+  <footnote anchor="16">Administratively Scoped IP Multicast <xref type="rfc" data="rfc2365"/></footnote>
+  <footnote anchor="17">Reserved for future use (formerly "Class E") <xref type="rfc" data="rfc1112"/>.
 Reserved by protocol. For authoritative registration, see <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
-  <footnote anchor="17">255.255.255.255 is reserved for "limited broadcast" destination address <xref type="rfc" data="rfc919"/> and <xref type="rfc" data="rfc922"/>.
+  <footnote anchor="18">255.255.255.255 is reserved for "limited broadcast" destination address <xref type="rfc" data="rfc919"/> and <xref type="rfc" data="rfc922"/>.
 Complete registration details for 255.255.255.255/32 are found in <xref type="registry" data="iana-ipv4-special-registry"/>.</footnote>
   <people/>
 </registry>

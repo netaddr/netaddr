@@ -36,15 +36,39 @@ def test_iter_nmap_range():
     ip_list = list(iter_nmap_range('192.0.2.0-31'))
     assert len(ip_list) == 32
     assert ip_list == [
-        IPAddress('192.0.2.0'), IPAddress('192.0.2.1'), IPAddress('192.0.2.2'),
-        IPAddress('192.0.2.3'), IPAddress('192.0.2.4'), IPAddress('192.0.2.5'),
-        IPAddress('192.0.2.6'), IPAddress('192.0.2.7'), IPAddress('192.0.2.8'), IPAddress('192.0.2.9'),
-        IPAddress('192.0.2.10'), IPAddress('192.0.2.11'), IPAddress('192.0.2.12'), IPAddress('192.0.2.13'),
-        IPAddress('192.0.2.14'), IPAddress('192.0.2.15'), IPAddress('192.0.2.16'), IPAddress('192.0.2.17'),
-        IPAddress('192.0.2.18'), IPAddress('192.0.2.19'), IPAddress('192.0.2.20'), IPAddress('192.0.2.21'),
-        IPAddress('192.0.2.22'), IPAddress('192.0.2.23'), IPAddress('192.0.2.24'), IPAddress('192.0.2.25'),
-        IPAddress('192.0.2.26'), IPAddress('192.0.2.27'), IPAddress('192.0.2.28'), IPAddress('192.0.2.29'),
-        IPAddress('192.0.2.30'), IPAddress('192.0.2.31')]
+        IPAddress('192.0.2.0'),
+        IPAddress('192.0.2.1'),
+        IPAddress('192.0.2.2'),
+        IPAddress('192.0.2.3'),
+        IPAddress('192.0.2.4'),
+        IPAddress('192.0.2.5'),
+        IPAddress('192.0.2.6'),
+        IPAddress('192.0.2.7'),
+        IPAddress('192.0.2.8'),
+        IPAddress('192.0.2.9'),
+        IPAddress('192.0.2.10'),
+        IPAddress('192.0.2.11'),
+        IPAddress('192.0.2.12'),
+        IPAddress('192.0.2.13'),
+        IPAddress('192.0.2.14'),
+        IPAddress('192.0.2.15'),
+        IPAddress('192.0.2.16'),
+        IPAddress('192.0.2.17'),
+        IPAddress('192.0.2.18'),
+        IPAddress('192.0.2.19'),
+        IPAddress('192.0.2.20'),
+        IPAddress('192.0.2.21'),
+        IPAddress('192.0.2.22'),
+        IPAddress('192.0.2.23'),
+        IPAddress('192.0.2.24'),
+        IPAddress('192.0.2.25'),
+        IPAddress('192.0.2.26'),
+        IPAddress('192.0.2.27'),
+        IPAddress('192.0.2.28'),
+        IPAddress('192.0.2.29'),
+        IPAddress('192.0.2.30'),
+        IPAddress('192.0.2.31'),
+    ]
 
     assert len(list(iter_nmap_range('192.0.2-3.1-7'))) == 14
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #   DISCLAIMER
 #
@@ -22,7 +22,7 @@
 #   See README file and source code for URLs to latest copies of the relevant
 #   files.
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Provides access to public OUI and IAB registration data published by the IEEE.
 
@@ -35,7 +35,7 @@ More details can be found at the following URLs :-
 import os.path as _path
 import csv as _csv
 
-from netaddr.compat import _bytes_type, _importlib_resources
+from netaddr.compat import _open_binary
 from netaddr.core import Subscriber, Publisher
 
 
@@ -51,6 +51,7 @@ class FileIndexer(Subscriber):
     A concrete Subscriber that receives OUI record offset information that is
     written to an index data file as a set of comma separated records.
     """
+
     def __init__(self, index_file):
         """
         Constructor.
@@ -63,7 +64,7 @@ class FileIndexer(Subscriber):
         else:
             self.fh = open(index_file, 'w')
 
-        self.writer = _csv.writer(self.fh, lineterminator="\n")
+        self.writer = _csv.writer(self.fh, lineterminator='\n')
 
     def update(self, data):
         """
@@ -95,6 +96,7 @@ class OUIIndexParser(Publisher):
                         SPRINGFIELD
                         UNITED STATES
     """
+
     def __init__(self, ieee_file):
         """
         Constructor.
@@ -119,15 +121,15 @@ class OUIIndexParser(Publisher):
         record = None
         size = 0
 
-        marker = _bytes_type('(hex)')
-        hyphen = _bytes_type('-')
-        empty_string = _bytes_type('')
+        marker = b'(hex)'
+        hyphen = b'-'
+        empty_string = b''
 
         while True:
             line = self.fh.readline()
 
             if not line:
-                break   # EOF, we're done
+                break  # EOF, we're done
 
             if skip_header and marker in line:
                 skip_header = False
@@ -144,7 +146,7 @@ class OUIIndexParser(Publisher):
                     self.notify(record)
 
                 size = len(line)
-                offset = (self.fh.tell() - len(line))
+                offset = self.fh.tell() - len(line)
                 oui = line.split()[0]
                 index = int(oui.replace(hyphen, empty_string), 16)
                 record = [index, offset]
@@ -178,6 +180,7 @@ class IABIndexParser(Publisher):
                         SPRINGFIELD
                         UNITED STATES
     """
+
     def __init__(self, ieee_file):
         """
         Constructor.
@@ -202,16 +205,16 @@ class IABIndexParser(Publisher):
         record = None
         size = 0
 
-        hex_marker = _bytes_type('(hex)')
-        base16_marker = _bytes_type('(base 16)')
-        hyphen = _bytes_type('-')
-        empty_string = _bytes_type('')
+        hex_marker = b'(hex)'
+        base16_marker = b'(base 16)'
+        hyphen = b'-'
+        empty_string = b''
 
         while True:
             line = self.fh.readline()
 
             if not line:
-                break   # EOF, we're done
+                break  # EOF, we're done
 
             if skip_header and hex_marker in line:
                 skip_header = False
@@ -226,7 +229,7 @@ class IABIndexParser(Publisher):
                     record.append(size)
                     self.notify(record)
 
-                offset = (self.fh.tell() - len(line))
+                offset = self.fh.tell() - len(line)
                 iab_prefix = line.split()[0]
                 index = iab_prefix
                 record = [index, offset]
@@ -281,8 +284,8 @@ def load_index(index, fp):
 
 def load_indices():
     """Load OUI and IAB lookup indices into memory"""
-    load_index(OUI_INDEX, _importlib_resources.open_binary(__package__, 'oui.idx'))
-    load_index(IAB_INDEX, _importlib_resources.open_binary(__package__, 'iab.idx'))
+    load_index(OUI_INDEX, _open_binary(__package__, 'oui.idx'))
+    load_index(IAB_INDEX, _open_binary(__package__, 'iab.idx'))
 
 
 if __name__ == '__main__':

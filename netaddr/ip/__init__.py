@@ -1,19 +1,27 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """Routines for IPv4 and IPv6 addresses, subnets and ranges."""
 
 import sys as _sys
 
-from netaddr.core import AddrFormatError, AddrConversionError, num_bits, \
-    DictDotLookup, NOHOST, N, INET_PTON, P, ZEROFILL, Z
+from netaddr.core import (
+    AddrFormatError,
+    AddrConversionError,
+    num_bits,
+    DictDotLookup,
+    NOHOST,
+    N,
+    INET_ATON,
+    INET_PTON,
+    P,
+    ZEROFILL,
+    Z,
+)
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
-
-from netaddr.compat import _sys_maxint, _iter_next, _iter_range, _is_str, _int_type, \
-    _str_type
 
 
 class BaseIP(object):
@@ -22,6 +30,7 @@ class BaseIP(object):
     related subclasses.
 
     """
+
     __slots__ = ('_value', '_module', '__weakref__')
 
     def __init__(self):
@@ -30,15 +39,19 @@ class BaseIP(object):
         self._module = None
 
     def _set_value(self, value):
-        if not isinstance(value, _int_type):
+        if not isinstance(value, int):
             raise TypeError('int argument expected, not %s' % type(value))
         if not 0 <= value <= self._module.max_int:
-            raise AddrFormatError('value out of bounds for an %s address!' \
-                % self._module.family_name)
+            raise AddrFormatError(
+                'value out of bounds for an %s address!' % self._module.family_name
+            )
         self._value = value
 
-    value = property(lambda self: self._value, _set_value,
-        doc='a positive integer representing the value of IP address/subnet.')
+    value = property(
+        lambda self: self._value,
+        _set_value,
+        doc='a positive integer representing the value of IP address/subnet.',
+    )
 
     def key(self):
         """
@@ -55,7 +68,7 @@ class BaseIP(object):
 
     def __hash__(self):
         """
-        :return: A hash value uniquely indentifying this IP object.
+        :return: A hash value uniquely identifying this IP object.
         """
         return hash(self.key())
 
@@ -147,6 +160,8 @@ class BaseIP(object):
         :return: ``True`` if this IP is loopback address (not for network
             transmission), ``False`` otherwise.
             References: RFC 3330 and 4291.
+
+        .. note:: |ipv4_in_ipv6_handling|
         """
         if self._module.version == 4:
             return self in IPV4_LOOPBACK
@@ -158,13 +173,36 @@ class BaseIP(object):
         :return: ``True`` if this IP is for internal/private use only
             (i.e. non-public), ``False`` otherwise. Reference: RFCs 1918,
             3330, 4193, 3879 and 2365.
+
+        .. note:: |ipv4_in_ipv6_handling|
+
+        .. deprecated:: 0.10.0
+            The ``is_private`` method has been mixing several different address types together
+            which could lead to unexpected results. There are more precise
+            replacements for subset of the addresses handled by ``is_private`` today:
+
+            * :meth:`is_link_local`
+            * :meth:`is_ipv4_private_use`
+            * :meth:`is_ipv6_unique_local`
+
+            There is also the :meth:`is_global` method that lets you handle all globally
+            reachable (or not) addresses.
+
+            The following address blocks currently handled by ``is_private`` have no
+            convenience methods and you'll have to handle them manually or request a method
+            addition:
+
+            * ``100.64.0.0/10`` – Shared Address Space
+            * ``192.0.0.0/24`` – IETF Protocol Assignments
+            * ``198.18.0.0/15`` – Benchmarking
+            * ``239.0.0.0``-``239.255.255.255``
         """
         if self._module.version == 4:
-            for cidr in IPV4_PRIVATE:
+            for cidr in IPV4_PRIVATEISH:
                 if self in cidr:
                     return True
         elif self._module.version == 6:
-            for cidr in IPV6_PRIVATE:
+            for cidr in IPV6_PRIVATEISH:
                 if self in cidr:
                     return True
 
@@ -177,6 +215,8 @@ class BaseIP(object):
         """
         :return: ``True`` if this IP is link-local address ``False`` otherwise.
             Reference: RFCs 3927 and 4291.
+
+        .. note:: |ipv4_in_ipv6_handling|
         """
         if self._module.version == 4:
             return self in IPV4_LINK_LOCAL
@@ -187,6 +227,8 @@ class BaseIP(object):
         """
         :return: ``True`` if this IP is in IANA reserved range, ``False``
             otherwise. Reference: RFCs 3330 and 3171.
+
+        .. note:: |ipv4_in_ipv6_handling|
         """
         if self._module.version == 4:
             for cidr in IPV4_RESERVED:
@@ -203,7 +245,7 @@ class BaseIP(object):
         :return: ``True`` if this IP is IPv4-compatible IPv6 address, ``False``
             otherwise.
         """
-        return self._module.version == 6 and (self._value >> 32) == 0xffff
+        return self._module.version == 6 and (self._value >> 32) == 0xFFFF
 
     def is_ipv4_compat(self):
         """
@@ -220,6 +262,7 @@ class BaseIP(object):
         """
         #   Lazy loading of IANA data structures.
         from netaddr.ip.iana import query
+
         return DictDotLookup(query(self))
 
     @property
@@ -235,6 +278,7 @@ class IPAddress(BaseIP):
     To support these and other network based operations, see `IPNetwork`.
 
     """
+
     __slots__ = ()
 
     def __init__(self, addr, version=None, flags=0):
@@ -250,18 +294,57 @@ class IPAddress(BaseIP):
             equivalent integer value.
 
         :param flags: (optional) decides which rules are applied to the
-            interpretation of the addr value. Supported constants are
-            INET_PTON and ZEROFILL. See the netaddr.core docs for further
-            details.
+            interpretation of the addr value if passed as a string.
 
+            Matters only in IPv4 context.
+
+            Allowed flag values:
+
+            * The default (``0``) or :data:`INET_ATON`. Follows `inet_aton semantics
+              <https://www.netmeister.org/blog/inet_aton.html>`_ and allows all kinds of
+              weird-looking addresses to be parsed. For example:
+
+              >>> IPAddress('1')
+              IPAddress('0.0.0.1')
+              >>> IPAddress('1.0xf')
+              IPAddress('1.0.0.15')
+              >>> IPAddress('010.020.030.040')
+              IPAddress('8.16.24.32')
+
+            * ``INET_ATON | ZEROFILL`` or :data:`ZEROFILL` – like the default, except leading zeros are discarded:
+
+              >>> IPAddress('010', flags=INET_ATON | ZEROFILL)
+              IPAddress('0.0.0.10')
+
+            * :data:`INET_PTON` – requires four decimal octets:
+
+              >>> IPAddress('10.0.0.1', flags=INET_PTON)
+              IPAddress('10.0.0.1')
+
+              Leading zeros may be ignored or rejected, depending on the platform.
+
+            * ``INET_PTON | ZEROFILL`` – like :data:`INET_PTON`, except leading zeros are
+              discarded:
+
+              >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
+              IPAddress('10.20.30.40')
+
+        .. versionchanged:: 0.10.0
+            The default IPv4 parsing mode is scheduled to become :data:`INET_PTON` in the next
+            major release.
         """
         super(IPAddress, self).__init__()
+
+        if flags & ~(INET_PTON | ZEROFILL | INET_ATON):
+            raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
+
+        if flags & INET_ATON and flags & INET_PTON:
+            raise ValueError('INET_ATON and INET_PTON are mutually exclusive')
 
         if isinstance(addr, BaseIP):
             #   Copy constructor.
             if version is not None and version != addr._module.version:
-                raise ValueError('cannot switch IP versions using '
-                    'copy constructor!')
+                raise ValueError('cannot switch IP versions using ' 'copy constructor!')
             self._value = addr._value
             self._module = addr._module
         else:
@@ -274,14 +357,15 @@ class IPAddress(BaseIP):
                 else:
                     raise ValueError('%r is an invalid IP version!' % version)
 
-            if _is_str(addr) and '/' in addr:
-                raise ValueError('%s() does not support netmasks or subnet' \
-                    ' prefixes! See documentation for details.'
-                    % self.__class__.__name__)
+            if isinstance(addr, str) and '/' in addr:
+                raise ValueError(
+                    '%s() does not support netmasks or subnet'
+                    ' prefixes! See documentation for details.' % self.__class__.__name__
+                )
 
             if self._module is None:
                 #   IP version is implicit, detect it from addr.
-                if isinstance(addr, _int_type):
+                if isinstance(addr, int):
                     try:
                         if 0 <= int(addr) <= _ipv4.max_int:
                             self._value = int(addr)
@@ -302,16 +386,16 @@ class IPAddress(BaseIP):
                             break
 
                 if self._module is None:
-                    raise AddrFormatError('failed to detect a valid IP ' \
-                        'address from %r' % addr)
+                    raise AddrFormatError('failed to detect a valid IP ' 'address from %r' % addr)
             else:
                 #   IP version is explicit.
-                if _is_str(addr):
+                if isinstance(addr, str):
                     try:
                         self._value = self._module.str_to_int(addr, flags)
                     except AddrFormatError:
-                        raise AddrFormatError('base address %r is not IPv%d'
-                            % (addr, self._module.version))
+                        raise AddrFormatError(
+                            'base address %r is not IPv%d' % (addr, self._module.version)
+                        )
                 else:
                     if 0 <= int(addr) <= self._module.max_int:
                         self._value = int(addr)
@@ -336,8 +420,7 @@ class IPAddress(BaseIP):
         elif version == 6:
             self._module = _ipv6
         else:
-            raise ValueError('unpickling failed for object state: %s' \
-                % str(state))
+            raise ValueError('unpickling failed for object state: %s' % str(state))
 
     def netmask_bits(self):
         """
@@ -365,8 +448,7 @@ class IPAddress(BaseIP):
         mask_length = self._module.width - numbits
 
         if not 0 <= mask_length <= self._module.width:
-            raise ValueError('Unexpected mask length %d for address type!' \
-                % mask_length)
+            raise ValueError('Unexpected mask length %d for address type!' % mask_length)
 
         return mask_length
 
@@ -375,14 +457,14 @@ class IPAddress(BaseIP):
         :return: ``True`` if this IP address host mask, ``False`` otherwise.
         """
         int_val = self._value + 1
-        return (int_val & (int_val - 1) == 0)
+        return int_val & (int_val - 1) == 0
 
     def is_netmask(self):
         """
         :return: ``True`` if this IP address network mask, ``False`` otherwise.
         """
         int_val = (self._value ^ self._module.max_int) + 1
-        return (int_val & (int_val - 1) == 0)
+        return int_val & (int_val - 1) == 0
 
     def __iadd__(self, num):
         """
@@ -475,37 +557,18 @@ class IPAddress(BaseIP):
         """:return: the value of this IP address as an unsigned integer"""
         return self._value
 
-    def __long__(self):
-        """:return: the value of this IP address as an unsigned integer"""
-        return self._value
-
-    def __oct__(self):
-        """:return: an octal string representation of this IP address."""
-        #   Python 2.x
-        if self._value == 0:
-            return '0'
-        return '0%o' % self._value
-
-    def __hex__(self):
-        """:return: a hexadecimal string representation of this IP address."""
-        #   Python 2.x
-        return '0x%x' % self._value
-
     def __index__(self):
         """
-        :return: return the integer value of this IP address when called by \
-            hex(), oct() or bin().
+        :return: return the integer value of this IP address.
         """
-        #   Python 3.x
         return self._value
 
     def __bytes__(self):
-        """ 
-        :return: a bytes object equivalent to this IP address. In network
-        byte order, big-endian.
         """
-        #   Python 3.x
-        return self._value.to_bytes(self._module.width//8, 'big')
+        :return: a bytes object equivalent to this IP address. In network
+            byte order, big-endian.
+        """
+        return self._value.to_bytes(self._module.width // 8, 'big')
 
     def bits(self, word_sep=None):
         """
@@ -531,7 +594,7 @@ class IPAddress(BaseIP):
     @property
     def bin(self):
         """
-        The value of this IP adddress in standard Python binary
+        The value of this IP address in standard Python binary
         representational form (0bxxx). A back port of the format provided by
         the builtin bin() function found in Python 2.6.x and higher.
         """
@@ -557,11 +620,12 @@ class IPAddress(BaseIP):
         elif self._module.version == 6:
             if 0 <= self._value <= _ipv4.max_int:
                 ip = klass(self._value, 4)
-            elif _ipv4.max_int <= self._value <= 0xffffffffffff:
-                ip = klass(self._value - 0xffff00000000, 4)
+            elif _ipv4.max_int <= self._value <= 0xFFFFFFFFFFFF:
+                ip = klass(self._value - 0xFFFF00000000, 4)
             else:
-                raise AddrConversionError('IPv6 address %s unsuitable for ' \
-                    'conversion to IPv4!' % self)
+                raise AddrConversionError(
+                    'IPv6 address %s unsuitable for ' 'conversion to IPv4!' % self
+                )
         return ip
 
     def ipv6(self, ipv4_compatible=False):
@@ -579,9 +643,8 @@ class IPAddress(BaseIP):
         klass = self.__class__
 
         if self._module.version == 6:
-            if ipv4_compatible and \
-                (0xffff00000000 <= self._value <= 0xffffffffffff):
-                ip = klass(self._value - 0xffff00000000, 6)
+            if ipv4_compatible and (0xFFFF00000000 <= self._value <= 0xFFFFFFFFFFFF):
+                ip = klass(self._value - 0xFFFF00000000, 6)
             else:
                 ip = klass(self._value, 6)
         elif self._module.version == 4:
@@ -589,7 +652,7 @@ class IPAddress(BaseIP):
             ip = klass(self._value, 6)
             if not ipv4_compatible:
                 #   IPv4-Mapped IPv6 address
-                ip = klass(0xffff00000000 + self._value, 6)
+                ip = klass(0xFFFF00000000 + self._value, 6)
 
         return ip
 
@@ -597,14 +660,13 @@ class IPAddress(BaseIP):
         """
         Only relevant for IPv6 addresses. Has no effect for IPv4.
 
-        :param dialect: An ipv6_* dialect class.
+        :param dialect: One of the :ref:`ipv6_formatting_dialects`.
 
         :return: an alternate string representation for this IP address.
         """
         if dialect is not None:
             if not hasattr(dialect, 'word_fmt'):
-                raise TypeError(
-                    'custom dialects should subclass ipv6_verbose!')
+                raise TypeError('custom dialects should subclass ipv6_verbose!')
         return self._module.int_to_str(self._value, dialect=dialect)
 
     def __or__(self, other):
@@ -652,13 +714,10 @@ class IPAddress(BaseIP):
         """
         return self.__class__(self._value >> numbits, self._module.version)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """:return: ``True`` if the numerical value of this IP address is not \
             zero, ``False`` otherwise."""
-        #   Python 2.x.
         return bool(self._value)
-
-    __bool__ = __nonzero__  #   Python 3.x.
 
     def __str__(self):
         """:return: IP address in presentational format"""
@@ -668,6 +727,99 @@ class IPAddress(BaseIP):
         """:return: Python statement to create an equivalent object"""
         return "%s('%s')" % (self.__class__.__name__, self)
 
+    def to_canonical(self):
+        """
+        Converts the address to IPv4 if it is an IPv4-mapped IPv6 address (`RFC 4291
+        Section 2.5.5.2 <https://datatracker.ietf.org/doc/html/rfc4291.html#section-2.5.5.2>`_),
+        otherwise returns the address as-is.
+
+        >>> # IPv4-mapped IPv6
+        >>> IPAddress('::ffff:10.0.0.1').to_canonical()
+        IPAddress('10.0.0.1')
+        >>>
+        >>> # Everything else
+        >>> IPAddress('::1').to_canonical()
+        IPAddress('::1')
+        >>> IPAddress('10.0.0.1').to_canonical()
+        IPAddress('10.0.0.1')
+
+        .. versionadded:: 0.10.0
+        """
+        if not self.is_ipv4_mapped():
+            return self
+        return self.ipv4()
+
+    def is_global(self):
+        """
+        Returns ``True`` if this address is considered globally reachable, ``False`` otherwise.
+
+        An address is considered globally reachable if it's not a special-purpose address
+        or it's a special-purpose address listed as globally reachable in the relevant
+        registries:
+
+        * |iana_special_ipv4|
+        * |iana_special_ipv6|
+
+        Addresses for which the ``Globally Reachable`` value is ``N/A`` are not considered
+        globally reachable.
+
+        Address blocks with set termination date are not taken into consideration.
+
+        Whether or not an address can actually be reached in any local or global context will
+        depend on the network configuration and may differ from what this method returns.
+
+        Currently there can be addresses that are neither ``is_global()`` nor :meth:`is_private`.
+        There are also addresses that are both. All things being equal ``is_global()`` should
+        be considered more trustworthy.
+
+        Examples:
+
+        >>> IPAddress('1.1.1.1').is_global()
+        True
+        >>> IPAddress('::1').is_global()
+        False
+
+        .. note:: |ipv4_in_ipv6_handling|
+        """
+        if self._module.version == 4:
+            not_reachable = IPV4_NOT_GLOBALLY_REACHABLE
+            exceptions = IPV4_NOT_GLOBALLY_REACHABLE_EXCEPTIONS
+        else:
+            not_reachable = IPV6_NOT_GLOBALLY_REACHABLE
+            exceptions = IPV6_NOT_GLOBALLY_REACHABLE_EXCEPTIONS
+
+        return not any(self in net for net in not_reachable) or any(
+            self in net for net in exceptions
+        )
+
+    def is_ipv4_private_use(self):
+        """
+        Returns ``True`` if this address is an IPv4 private-use address as defined in
+        :rfc:`1918`.
+
+        The private-use address blocks:
+
+        * ``10.0.0.0/8``
+        * ``172.16.0.0/12``
+        * ``192.168.0.0/16``
+
+        .. note:: |ipv4_in_ipv6_handling|
+
+        .. versionadded:: 0.10.0
+        """
+        return self._module.version == 4 and any(self in cidr for cidr in IPV4_PRIVATE_USE)
+
+    def is_ipv6_unique_local(self):
+        """
+        Returns ``True`` if this address is an IPv6 unique local address as defined in
+        :rfc:`4193` and listed in |iana_special_ipv6|.
+
+        The IPv6 unique local address block: ``fc00::/7``.
+
+        .. versionadded:: 0.10.0
+        """
+        return self._module.version == 6 and self in IPV6_UNIQUE_LOCAL
+
 
 class IPListMixin(object):
     """
@@ -675,7 +827,9 @@ class IPListMixin(object):
     representing groups of IP addresses.
 
     """
+
     __slots__ = ()
+
     def __iter__(self):
         """
         :return: An iterator providing access to all `IPAddress` objects
@@ -699,9 +853,13 @@ class IPListMixin(object):
             limitation). Use the .size property for subnets of any size.
         """
         size = self.size
-        if size > _sys_maxint:
-            raise IndexError(("range contains more than %d (sys.maxint) "
-               "IP addresses! Use the .size property instead." % _sys_maxint))
+        if size > _sys.maxsize:
+            raise IndexError(
+                (
+                    'range contains more than %d (sys.maxsize) '
+                    'IP addresses! Use the .size property instead.' % _sys.maxsize
+                )
+            )
         return size
 
     def __getitem__(self, index):
@@ -728,7 +886,7 @@ class IPListMixin(object):
         else:
             try:
                 index = int(index)
-                if (- self.size) <= index < 0:
+                if (-self.size) <= index < 0:
                     #   negative index.
                     item = IPAddress(self.last + index + 1, self._module.version)
                 elif 0 <= index <= (self.size - 1):
@@ -759,15 +917,12 @@ class IPListMixin(object):
         # Whatever it is, try to interpret it as IPAddress.
         return IPAddress(other) in self
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         Ranged IP objects always represent a sequence of at least one IP
         address and are therefore always True in the boolean context.
         """
-        #   Python 2.x.
         return True
-
-    __bool__ = __nonzero__  #   Python 3.x.
 
 
 def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
@@ -777,16 +932,14 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
             raise AddrFormatError('invalid %s tuple!' % module.family_name)
         value, prefixlen = addr
 
-        if not(0 <= value <= module.max_int):
-            raise AddrFormatError('invalid address value for %s tuple!'
-                % module.family_name)
-        if not(0 <= prefixlen <= module.width):
-            raise AddrFormatError('invalid prefix for %s tuple!' \
-                % module.family_name)
-    elif isinstance(addr, _str_type):
+        if not (0 <= value <= module.max_int):
+            raise AddrFormatError('invalid address value for %s tuple!' % module.family_name)
+        if not (0 <= prefixlen <= module.width):
+            raise AddrFormatError('invalid prefix for %s tuple!' % module.family_name)
+    elif isinstance(addr, str):
         #   CIDR-like string subnet
         if implicit_prefix:
-            #TODO: deprecate this option in netaddr 0.8.x
+            # TODO: deprecate this option in netaddr 0.8.x
             addr = cidr_abbrev_to_verbose(addr)
 
         if '/' in addr:
@@ -821,12 +974,10 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
             elif mask.is_hostmask():
                 prefixlen = module.hostmask_to_prefix[mask._value]
             else:
-                raise AddrFormatError('addr %r is not a valid IPNetwork!' \
-                    % addr)
+                raise AddrFormatError('addr %r is not a valid IPNetwork!' % addr)
 
         if not 0 <= prefixlen <= module.width:
-            raise AddrFormatError('invalid prefix for %s address!' \
-                % module.family_name)
+            raise AddrFormatError('invalid prefix for %s address!' % module.family_name)
     else:
         raise TypeError('unexpected type %s for addr arg' % type(addr))
 
@@ -878,6 +1029,8 @@ class IPNetwork(BaseIP, IPListMixin):
         x.x.0.0/y   -> 192.168.0.0/16
         x.x.x.0/y   -> 192.168.0.0/24
 
+       .. deprecated:: 0.10.0
+
     .. warning::
 
         The next release (0.9.0) will contain a backwards incompatible change
@@ -886,6 +1039,7 @@ class IPNetwork(BaseIP, IPListMixin):
         addresses in the networks will no longer be excluded and ``broadcast``
         will be ``None``.
     """
+
     __slots__ = ('_prefixlen',)
 
     def __init__(self, addr, implicit_prefix=False, version=None, flags=0):
@@ -903,16 +1057,25 @@ class IPNetwork(BaseIP, IPListMixin):
             provided. If False it uses the length of the IP address version.
             (default: False)
 
+            .. deprecated:: 0.10.0
+
         :param version: (optional) optimizes version detection if specified
             and distinguishes between IPv4 and IPv6 for addresses with an
             equivalent integer value.
 
         :param flags: (optional) decides which rules are applied to the
             interpretation of the addr value. Currently only supports the
-            NOHOST option. See the netaddr.core docs for further details.
+            :data:`NOHOST` option.
 
+            >>> IPNetwork('1.2.3.4/24')
+            IPNetwork('1.2.3.4/24')
+            >>> IPNetwork('1.2.3.4/24', flags=NOHOST)
+            IPNetwork('1.2.3.0/24')
         """
         super(IPNetwork, self).__init__()
+
+        if flags & ~NOHOST:
+            raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
 
         value, prefixlen, module = None, None, None
 
@@ -927,25 +1090,25 @@ class IPNetwork(BaseIP, IPListMixin):
             module = addr._module
             prefixlen = module.width
         elif version == 4:
-            value, prefixlen = parse_ip_network(_ipv4, addr,
-                implicit_prefix=implicit_prefix, flags=flags)
+            value, prefixlen = parse_ip_network(
+                _ipv4, addr, implicit_prefix=implicit_prefix, flags=flags
+            )
             module = _ipv4
         elif version == 6:
-            value, prefixlen = parse_ip_network(_ipv6, addr,
-                implicit_prefix=implicit_prefix, flags=flags)
+            value, prefixlen = parse_ip_network(
+                _ipv6, addr, implicit_prefix=implicit_prefix, flags=flags
+            )
             module = _ipv6
         else:
             if version is not None:
                 raise ValueError('%r is an invalid IP version!' % version)
             try:
                 module = _ipv4
-                value, prefixlen = parse_ip_network(module, addr,
-                    implicit_prefix, flags)
+                value, prefixlen = parse_ip_network(module, addr, implicit_prefix, flags)
             except AddrFormatError:
                 try:
                     module = _ipv6
-                    value, prefixlen = parse_ip_network(module, addr,
-                        implicit_prefix, flags)
+                    value, prefixlen = parse_ip_network(module, addr, implicit_prefix, flags)
                 except AddrFormatError:
                     pass
 
@@ -974,25 +1137,25 @@ class IPNetwork(BaseIP, IPListMixin):
         elif version == 6:
             self._module = _ipv6
         else:
-            raise ValueError('unpickling failed for object state %s' \
-                % (state,))
+            raise ValueError('unpickling failed for object state %s' % (state,))
 
         if 0 <= prefixlen <= self._module.width:
             self._prefixlen = prefixlen
         else:
-            raise ValueError('unpickling failed for object state %s' \
-                % (state,))
+            raise ValueError('unpickling failed for object state %s' % (state,))
 
     def _set_prefixlen(self, value):
-        if not isinstance(value, _int_type):
+        if not isinstance(value, int):
             raise TypeError('int argument expected, not %s' % type(value))
         if not 0 <= value <= self._module.width:
-            raise AddrFormatError('invalid prefix for an %s address!' \
-                % self._module.family_name)
+            raise AddrFormatError('invalid prefix for an %s address!' % self._module.family_name)
         self._prefixlen = value
 
-    prefixlen = property(lambda self: self._prefixlen, _set_prefixlen,
-        doc='size of the bitmask used to separate the network from the host bits')
+    prefixlen = property(
+        lambda self: self._prefixlen,
+        _set_prefixlen,
+        doc='size of the bitmask used to separate the network from the host bits',
+    )
 
     @property
     def ip(self):
@@ -1018,7 +1181,7 @@ class IPNetwork(BaseIP, IPListMixin):
             connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
             ``broadcast`` will be ``None`` when dealing with those networks.
         """
-        if self._module.version == 4 and (self._module.width - self._prefixlen) <= 1:
+        if (self._module.width - self._prefixlen) <= 1:
             return None
         else:
             return IPAddress(self._value | self._hostmask_int, self._module.version)
@@ -1052,10 +1215,10 @@ class IPNetwork(BaseIP, IPListMixin):
         ip = IPAddress(value)
 
         if ip.version != self.version:
-            raise ValueError("IP version mismatch: %s and %s" % (ip, self))
+            raise ValueError('IP version mismatch: %s and %s' % (ip, self))
 
         if not ip.is_netmask():
-            raise ValueError("Invalid subnet mask specified: %s" % str(value))
+            raise ValueError('Invalid subnet mask specified: %s' % str(value))
 
         self.prefixlen = ip.netmask_bits()
 
@@ -1082,8 +1245,8 @@ class IPNetwork(BaseIP, IPListMixin):
         host bits to the right of the CIDR subnet prefix.
         """
         return IPNetwork(
-                (self._value & self._netmask_int, self._prefixlen),
-                version=self._module.version)
+            (self._value & self._netmask_int, self._prefixlen), version=self._module.version
+        )
 
     def __iadd__(self, num):
         """
@@ -1145,8 +1308,9 @@ class IPNetwork(BaseIP, IPListMixin):
                 # IPRange has no _value.
                 # (self_net+1)<<shiftwidth is not our last address, but the one
                 # after the last one.
-                return ((self_net << shiftwidth) <= other._start._value and
-                        (((self_net + 1) << shiftwidth) > other._end._value))
+                return (self_net << shiftwidth) <= other._start._value and (
+                    ((self_net + 1) << shiftwidth) > other._end._value
+                )
 
             other_net = other._value >> shiftwidth
             if isinstance(other, IPAddress):
@@ -1187,12 +1351,13 @@ class IPNetwork(BaseIP, IPListMixin):
             if 0 <= self._value <= _ipv4.max_int:
                 addr = _ipv4.int_to_str(self._value)
                 ip = klass('%s/%d' % (addr, self.prefixlen - 96))
-            elif _ipv4.max_int <= self._value <= 0xffffffffffff:
-                addr = _ipv4.int_to_str(self._value - 0xffff00000000)
+            elif _ipv4.max_int <= self._value <= 0xFFFFFFFFFFFF:
+                addr = _ipv4.int_to_str(self._value - 0xFFFF00000000)
                 ip = klass('%s/%d' % (addr, self.prefixlen - 96))
             else:
-                raise AddrConversionError('IPv6 address %s unsuitable for ' \
-                    'conversion to IPv4!' % self)
+                raise AddrConversionError(
+                    'IPv6 address %s unsuitable for ' 'conversion to IPv4!' % self
+                )
         return ip
 
     def ipv6(self, ipv4_compatible=False):
@@ -1210,10 +1375,8 @@ class IPNetwork(BaseIP, IPListMixin):
         klass = self.__class__
 
         if self._module.version == 6:
-            if ipv4_compatible and \
-                (0xffff00000000 <= self._value <= 0xffffffffffff):
-                ip = klass((self._value - 0xffff00000000, self._prefixlen),
-                    version=6)
+            if ipv4_compatible and (0xFFFF00000000 <= self._value <= 0xFFFFFFFFFFFF):
+                ip = klass((self._value - 0xFFFF00000000, self._prefixlen), version=6)
             else:
                 ip = klass((self._value, self._prefixlen), version=6)
         elif self._module.version == 4:
@@ -1222,8 +1385,7 @@ class IPNetwork(BaseIP, IPListMixin):
                 ip = klass((self._value, self._prefixlen + 96), version=6)
             else:
                 #   IPv4-Mapped IPv6 address
-                ip = klass((0xffff00000000 + self._value,
-                            self._prefixlen + 96), version=6)
+                ip = klass((0xFFFF00000000 + self._value, self._prefixlen + 96), version=6)
 
         return ip
 
@@ -1234,8 +1396,7 @@ class IPNetwork(BaseIP, IPListMixin):
 
         :return: The adjacent subnet preceding this `IPNetwork` object.
         """
-        ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
-            self._module.version)
+        ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen), self._module.version)
         ip_copy -= step
         return ip_copy
 
@@ -1246,8 +1407,7 @@ class IPNetwork(BaseIP, IPListMixin):
 
         :return: The adjacent subnet succeeding this `IPNetwork` object.
         """
-        ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen),
-            self._module.version)
+        ip_copy = self.__class__('%s/%d' % (self.network, self.prefixlen), self._module.version)
         ip_copy += step
         return ip_copy
 
@@ -1262,8 +1422,9 @@ class IPNetwork(BaseIP, IPListMixin):
         :return: a tuple of supernet `IPNetwork` objects.
         """
         if not 0 <= prefixlen <= self._module.width:
-            raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
-                % (prefixlen, self._module.version))
+            raise ValueError(
+                'CIDR prefix /%d invalid for IPv%d!' % (prefixlen, self._module.version)
+            )
 
         supernets = []
         # Use a copy of self as we'll be editing it.
@@ -1288,8 +1449,9 @@ class IPNetwork(BaseIP, IPListMixin):
         :return: an iterator containing IPNetwork subnet objects.
         """
         if not 0 <= self.prefixlen <= self._module.width:
-            raise ValueError('CIDR prefix /%d invalid for IPv%d!' \
-                % (prefixlen, self._module.version))
+            raise ValueError(
+                'CIDR prefix /%d invalid for IPv%d!' % (prefixlen, self._module.version)
+            )
 
         if not self.prefixlen <= prefixlen:
             #   Don't return anything.
@@ -1307,10 +1469,9 @@ class IPNetwork(BaseIP, IPListMixin):
 
         base_subnet = self._module.int_to_str(self.first)
         i = 0
-        while(i < count):
-            subnet = self.__class__('%s/%d' % (base_subnet, prefixlen),
-                self._module.version)
-            subnet.value += (subnet.size * i)
+        while i < count:
+            subnet = self.__class__('%s/%d' % (base_subnet, prefixlen), self._module.version)
+            subnet.value += subnet.size * i
             subnet.prefixlen = prefixlen
             i += 1
             yield subnet
@@ -1320,12 +1481,12 @@ class IPNetwork(BaseIP, IPListMixin):
         A generator that provides all the IP addresses that can be assigned
         to hosts within the range of this IP object's subnet.
 
-        - for IPv4, the network and broadcast addresses are always excluded. \
-          for subnets that contains less than 4 IP addresses /31 and /32 \
-          report in a manner per RFC 3021
+        - for IPv4, the network and broadcast addresses are excluded, excepted \
+          when using /31 or /32 subnets as per RFC 3021.
 
-        - for IPv6, only the unspecified address '::' or Subnet-Router anycast \
-          address (first address in the network) is excluded.
+        - for IPv6, only Subnet-Router anycast address (first address in the \
+          network) is excluded as per RFC 4291 section 2.6.1, excepted when using \
+          /127 or /128 subnets as per RFC 6164.
 
         .. warning::
 
@@ -1338,31 +1499,35 @@ class IPNetwork(BaseIP, IPListMixin):
         """
         it_hosts = iter([])
 
+        # Common logic, first IP is always reserved.
+        first_usable_address = self.first + 1
         if self._module.version == 4:
-            #   IPv4 logic.
-            if self.size >= 4:
-                it_hosts = iter_iprange(
-                        IPAddress(self.first + 1, self._module.version),
-                        IPAddress(self.last - 1, self._module.version))
-            else:
-                it_hosts = iter_iprange(
-                        IPAddress(self.first, self._module.version),
-                        IPAddress(self.last, self._module.version))
+            # IPv4 logic, last address is reserved for broadcast.
+            last_usable_address = self.last - 1
         else:
-            #   IPv6 logic.
-            # RFC 4291 section 2.6.1 says that the first IP in the network is
-            # the Subnet-Router anycast address. This address cannot be
-            # assigned to a host, so use self.first+1.
-            if self.size >= 2:
-                it_hosts = iter_iprange(
-                    IPAddress(self.first + 1, self._module.version),
-                    IPAddress(self.last, self._module.version))
+            # IPv6 logic, no broadcast address reserved.
+            last_usable_address = self.last
+
+        # If subnet has a size of less than 4, then it is a /31, /32, /127 or /128.
+        # Handle them as per RFC 3021 (IPv4) or RFC 6164 (IPv6), and don't reserve
+        # first or last IP address.
+        if self.size >= 4:
+            it_hosts = iter_iprange(
+                IPAddress(first_usable_address, self._module.version),
+                IPAddress(last_usable_address, self._module.version),
+            )
+        else:
+            it_hosts = iter_iprange(
+                IPAddress(self.first, self._module.version),
+                IPAddress(self.last, self._module.version),
+            )
+
         return it_hosts
 
     def __str__(self):
         """:return: this IPNetwork in CIDR format"""
         addr = self._module.int_to_str(self._value)
-        return "%s/%s" % (addr, self.prefixlen)
+        return '%s/%s' % (addr, self.prefixlen)
 
     def __repr__(self):
         """:return: Python statement to create an equivalent object"""
@@ -1378,6 +1543,7 @@ class IPRange(BaseIP, IPListMixin):
     must match.
 
     """
+
     __slots__ = ('_start', '_end')
 
     def __init__(self, start, end, flags=0):
@@ -1391,9 +1557,8 @@ class IPRange(BaseIP, IPListMixin):
             boundary of this IP range.
 
         :param flags: (optional) decides which rules are applied to the
-            interpretation of the start and end values. Supported constants
-            are INET_PTON and ZEROFILL. See the netaddr.core docs for further
-            details.
+            interpretation of the start and end values. Refer to the :meth:`IPAddress.__init__`
+            documentation for details.
 
         """
         self._start = IPAddress(start, flags=flags)
@@ -1421,19 +1586,19 @@ class IPRange(BaseIP, IPListMixin):
             if self._module.version != other._module.version:
                 return False
             if isinstance(other, IPAddress):
-                return (self._start._value <= other._value and
-                        self._end._value >= other._value)
+                return self._start._value <= other._value and self._end._value >= other._value
             if isinstance(other, IPRange):
-                return (self._start._value <= other._start._value and
-                        self._end._value >= other._end._value)
+                return (
+                    self._start._value <= other._start._value
+                    and self._end._value >= other._end._value
+                )
             if isinstance(other, IPNetwork):
                 shiftwidth = other._module.width - other._prefixlen
                 other_start = (other._value >> shiftwidth) << shiftwidth
                 # Start of the next network after other
                 other_next_start = other_start + (1 << shiftwidth)
 
-                return (self._start._value <= other_start and
-                        self._end._value > other_next_start)
+                return self._start._value <= other_start and self._end._value > other_next_start
 
         # Whatever it is, try to interpret it as IPAddress.
         return IPAddress(other) in self
@@ -1470,12 +1635,11 @@ class IPRange(BaseIP, IPListMixin):
 
     def __str__(self):
         """:return: this `IPRange` in a common representational format."""
-        return "%s-%s" % (self._start, self._end)
+        return '%s-%s' % (self._start, self._end)
 
     def __repr__(self):
         """:return: Python statement to create an equivalent object"""
-        return "%s('%s', '%s')" % (self.__class__.__name__,
-            self._start, self._end)
+        return "%s('%s', '%s')" % (self.__class__.__name__, self._start, self._end)
 
 
 def iter_unique_ips(*args):
@@ -1514,30 +1678,31 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
         network address. The original value if it was not recognised as a \
         supported abbreviation.
     """
+
     #   Internal function that returns a prefix value based on the old IPv4
     #   classful network scheme that has been superseded (almost) by CIDR.
     def classful_prefix(octet):
         octet = int(octet)
         if not 0 <= octet <= 255:
             raise IndexError('Invalid octet: %r!' % octet)
-        if 0 <= octet <= 127:       #   Legacy class 'A' classification.
+        if 0 <= octet <= 127:  #   Legacy class 'A' classification.
             return 8
-        elif 128 <= octet <= 191:   #   Legacy class 'B' classification.
+        elif 128 <= octet <= 191:  #   Legacy class 'B' classification.
             return 16
-        elif 192 <= octet <= 223:   #   Legacy class 'C' classification.
+        elif 192 <= octet <= 223:  #   Legacy class 'C' classification.
             return 24
-        elif 224 <= octet <= 239:   #   Multicast address range.
+        elif 224 <= octet <= 239:  #   Multicast address range.
             return 4
-        return 32                   #   Default.
+        return 32  #   Default.
 
-    if _is_str(abbrev_cidr):
+    if isinstance(abbrev_cidr, str):
         if ':' in abbrev_cidr or abbrev_cidr == '':
             return abbrev_cidr
 
     try:
         #   Single octet partial integer or string address.
         i = int(abbrev_cidr)
-        return "%s.0.0.0/%s" % (i, classful_prefix(i))
+        return '%s.0.0.0/%s' % (i, classful_prefix(i))
     except ValueError:
         #   Multi octet partial string address with optional prefix.
         if '/' in abbrev_cidr:
@@ -1546,8 +1711,9 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             #   Check prefix for validity.
             try:
                 if not 0 <= int(prefix) <= 32:
-                    raise ValueError('prefixlen in address %r out of range' \
-                        ' for IPv4!' % (abbrev_cidr,))
+                    raise ValueError(
+                        'prefixlen in address %r out of range' ' for IPv4!' % (abbrev_cidr,)
+                    )
             except ValueError:
                 return abbrev_cidr
         else:
@@ -1567,11 +1733,10 @@ def cidr_abbrev_to_verbose(abbrev_cidr):
             except ValueError:
                 return abbrev_cidr
 
-        return "%s/%s" % ('.'.join(tokens), prefix)
+        return '%s/%s' % ('.'.join(tokens), prefix)
     except (TypeError, IndexError):
         #   Not a recognisable format.
         return abbrev_cidr
-
 
 
 def cidr_merge(ip_addrs):
@@ -1599,7 +1764,7 @@ def cidr_merge(ip_addrs):
         else:
             net = IPNetwork(ip)
         # Since non-overlapping ranges are the common case, remember the original
-        ranges.append( (net.version, net.last, net.first, net) )
+        ranges.append((net.version, net.last, net.first, net))
 
     ranges.sort()
     i = len(ranges) - 1
@@ -1638,6 +1803,7 @@ def cidr_exclude(target, exclude):
     left, _, right = cidr_partition(target, exclude)
 
     return left + right
+
 
 def cidr_partition(target, exclude):
     """
@@ -1711,8 +1877,8 @@ def spanning_cidr(ip_addrs):
     """
     ip_addrs_iter = iter(ip_addrs)
     try:
-        network_a = IPNetwork(_iter_next(ip_addrs_iter))
-        network_b = IPNetwork(_iter_next(ip_addrs_iter))
+        network_a = IPNetwork(next(ip_addrs_iter))
+        network_b = IPNetwork(next(ip_addrs_iter))
     except StopIteration:
         raise ValueError('IP sequence must contain at least 2 elements!')
 
@@ -1740,9 +1906,9 @@ def spanning_cidr(ip_addrs):
 
     while prefixlen > 0 and ipnum > lowest_ipnum:
         prefixlen -= 1
-        ipnum &= -(1<<(width-prefixlen))
+        ipnum &= -(1 << (width - prefixlen))
 
-    return IPNetwork( (ipnum, prefixlen), version=min_network.version )
+    return IPNetwork((ipnum, prefixlen), version=min_network.version)
 
 
 def iter_iprange(start, end, step=1):
@@ -1791,7 +1957,6 @@ def iter_iprange(start, end, step=1):
         yield IPAddress(index, version)
 
 
-
 def iprange_to_cidrs(start, end):
     """
     A function that accepts an arbitrary start and end IP address or subnet
@@ -1816,11 +1981,11 @@ def iprange_to_cidrs(start, end):
     width = start._module.width
 
     if cidr_span.first < iprange[0]:
-        exclude = IPNetwork((iprange[0]-1, width), version=start.version)
+        exclude = IPNetwork((iprange[0] - 1, width), version=start.version)
         cidr_list = cidr_partition(cidr_span, exclude)[2]
         cidr_span = cidr_list.pop()
     if cidr_span.last > iprange[1]:
-        exclude = IPNetwork((iprange[1]+1, width), version=start.version)
+        exclude = IPNetwork((iprange[1] + 1, width), version=start.version)
         cidr_list += cidr_partition(cidr_span, exclude)[0]
     else:
         cidr_list.append(cidr_span)
@@ -1843,8 +2008,7 @@ def smallest_matching_cidr(ip, cidrs):
     match = None
 
     if not hasattr(cidrs, '__iter__'):
-        raise TypeError('IP address/subnet sequence expected, not %r!'
-            % (cidrs,))
+        raise TypeError('IP address/subnet sequence expected, not %r!' % (cidrs,))
 
     ip = IPAddress(ip)
     for cidr in sorted([IPNetwork(cidr) for cidr in cidrs]):
@@ -1872,8 +2036,7 @@ def largest_matching_cidr(ip, cidrs):
     match = None
 
     if not hasattr(cidrs, '__iter__'):
-        raise TypeError('IP address/subnet sequence expected, not %r!'
-            % (cidrs,))
+        raise TypeError('IP address/subnet sequence expected, not %r!' % (cidrs,))
 
     ip = IPAddress(ip)
     for cidr in sorted([IPNetwork(cidr) for cidr in cidrs]):
@@ -1899,8 +2062,7 @@ def all_matching_cidrs(ip, cidrs):
     matches = []
 
     if not hasattr(cidrs, '__iter__'):
-        raise TypeError('IP address/subnet sequence expected, not %r!'
-            % (cidrs,))
+        raise TypeError('IP address/subnet sequence expected, not %r!' % (cidrs,))
 
     ip = IPAddress(ip)
     for cidr in sorted([IPNetwork(cidr) for cidr in cidrs]):
@@ -1912,48 +2074,82 @@ def all_matching_cidrs(ip, cidrs):
 
     return matches
 
-#-----------------------------------------------------------------------------
-#   Cached IPv4 address range lookups.
-#-----------------------------------------------------------------------------
-IPV4_LOOPBACK  = IPNetwork('127.0.0.0/8')    #   Loopback addresses (RFC 990)
 
-IPV4_PRIVATE = (
-    IPNetwork('10.0.0.0/8'),        #   Class A private network local communication (RFC 1918)
-    IPNetwork('100.64.0.0/10'),     #   Carrier grade NAT (RFC 6598)
-    IPNetwork('172.16.0.0/12'),     #   Private network - local communication (RFC 1918)
-    IPNetwork('192.0.0.0/24'),      #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
-    IPNetwork('192.168.0.0/16'),    #   Class B private network local communication (RFC 1918)
-    IPNetwork('198.18.0.0/15'),     #  Testing of inter-network communications between subnets (RFC 2544)
-    IPRange('239.0.0.0', '239.255.255.255'),    #   Administrative Multicast
+# -----------------------------------------------------------------------------
+#   Cached IPv4 address range lookups.
+# -----------------------------------------------------------------------------
+IPV4_LOOPBACK = IPNetwork('127.0.0.0/8')  #   Loopback addresses (RFC 990)
+
+IPV4_PRIVATE_USE = [
+    IPNetwork('10.0.0.0/8'),  #   Class A private network local communication (RFC 1918)
+    IPNetwork('172.16.0.0/12'),  #   Private network - local communication (RFC 1918)
+    IPNetwork('192.168.0.0/16'),  #  Class B private network local communication (RFC 1918)
+]
+
+IPV4_PRIVATEISH = tuple(IPV4_PRIVATE_USE) + (
+    IPNetwork('100.64.0.0/10'),  #   Carrier grade NAT (RFC 6598)
+    IPNetwork('192.0.0.0/24'),  #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
+    # protocol assignments
+    # benchmarking
+    IPNetwork(
+        '198.18.0.0/15'
+    ),  #  Testing of inter-network communications between subnets (RFC 2544)
+    IPRange('239.0.0.0', '239.255.255.255'),  #   Administrative Multicast
 )
 
 IPV4_LINK_LOCAL = IPNetwork('169.254.0.0/16')
 
 IPV4_MULTICAST = IPNetwork('224.0.0.0/4')
 
-IPV4_6TO4 = IPNetwork('192.88.99.0/24')    #   6to4 anycast relays (RFC 3068)
+IPV4_6TO4 = IPNetwork('192.88.99.0/24')  #   6to4 anycast relays (RFC 3068)
 
 IPV4_RESERVED = (
-    IPNetwork('0.0.0.0/8'),         #   Broadcast message (RFC 1700)
-    IPNetwork('192.0.2.0/24'),      #   TEST-NET examples and documentation (RFC 5737)
-    IPNetwork('240.0.0.0/4'),       #   Reserved for  multicast assignments (RFC 5771)
-    IPNetwork('198.51.100.0/24'),   #   TEST-NET-2 examples and documentation (RFC 5737)
-    IPNetwork('203.0.113.0/24'),    #   TEST-NET-3 examples and documentation (RFC 5737)
-
+    IPNetwork('0.0.0.0/8'),  #   Broadcast message (RFC 1700)
+    IPNetwork('192.0.2.0/24'),  #   TEST-NET examples and documentation (RFC 5737)
+    IPNetwork('240.0.0.0/4'),  #   Reserved for  multicast assignments (RFC 5771)
+    IPNetwork('198.51.100.0/24'),  #   TEST-NET-2 examples and documentation (RFC 5737)
+    IPNetwork('203.0.113.0/24'),  #   TEST-NET-3 examples and documentation (RFC 5737)
     #   Reserved multicast
-    IPNetwork('233.252.0.0/24'),    #   Multicast test network
+    IPNetwork('233.252.0.0/24'),  #   Multicast test network
     IPRange('234.0.0.0', '238.255.255.255'),
     IPRange('225.0.0.0', '231.255.255.255'),
 ) + (IPV4_LOOPBACK, IPV4_6TO4)
 
-#-----------------------------------------------------------------------------
+IPV4_NOT_GLOBALLY_REACHABLE = [
+    IPNetwork(net)
+    for net in [
+        '0.0.0.0/8',
+        '10.0.0.0/8',
+        '100.64.0.0/10',
+        '127.0.0.0/8',
+        '169.254.0.0/16',
+        '172.16.0.0/12',
+        '192.0.0.0/24',
+        '192.0.0.170/31',
+        '192.0.2.0/24',
+        '192.168.0.0/16',
+        '198.18.0.0/15',
+        '198.51.100.0/24',
+        '203.0.113.0/24',
+        '240.0.0.0/4',
+        '255.255.255.255/32',
+    ]
+]
+
+IPV4_NOT_GLOBALLY_REACHABLE_EXCEPTIONS = [
+    IPNetwork(net) for net in ['192.0.0.9/32', '192.0.0.10/32']
+]
+
+# -----------------------------------------------------------------------------
 #   Cached IPv6 address range lookups.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 IPV6_LOOPBACK = IPNetwork('::1/128')
 
-IPV6_PRIVATE = (
-    IPNetwork('fc00::/7'),  #   Unique Local Addresses (ULA)
-    IPNetwork('fec0::/10'), #   Site Local Addresses (deprecated - RFC 3879)
+IPV6_UNIQUE_LOCAL = IPNetwork('fc00::/7')
+
+IPV6_PRIVATEISH = (
+    IPV6_UNIQUE_LOCAL,
+    IPNetwork('fec0::/10'),  #   Site Local Addresses (deprecated - RFC 3879)
 )
 
 IPV6_LINK_LOCAL = IPNetwork('fe80::/10')
@@ -1961,12 +2157,48 @@ IPV6_LINK_LOCAL = IPNetwork('fe80::/10')
 IPV6_MULTICAST = IPNetwork('ff00::/8')
 
 IPV6_RESERVED = (
-    IPNetwork('ff00::/12'), IPNetwork('::/8'),
-    IPNetwork('0100::/8'), IPNetwork('0200::/7'),
-    IPNetwork('0400::/6'), IPNetwork('0800::/5'),
-    IPNetwork('1000::/4'), IPNetwork('4000::/3'),
-    IPNetwork('6000::/3'), IPNetwork('8000::/3'),
-    IPNetwork('A000::/3'), IPNetwork('C000::/3'),
-    IPNetwork('E000::/4'), IPNetwork('F000::/5'),
-    IPNetwork('F800::/6'), IPNetwork('FE00::/9'),
+    IPNetwork('ff00::/12'),
+    IPNetwork('::/8'),
+    IPNetwork('0100::/8'),
+    IPNetwork('0200::/7'),
+    IPNetwork('0400::/6'),
+    IPNetwork('0800::/5'),
+    IPNetwork('1000::/4'),
+    IPNetwork('4000::/3'),
+    IPNetwork('6000::/3'),
+    IPNetwork('8000::/3'),
+    IPNetwork('A000::/3'),
+    IPNetwork('C000::/3'),
+    IPNetwork('E000::/4'),
+    IPNetwork('F000::/5'),
+    IPNetwork('F800::/6'),
+    IPNetwork('FE00::/9'),
 )
+
+IPV6_NOT_GLOBALLY_REACHABLE = [
+    IPNetwork(net)
+    for net in [
+        '::1/128',
+        '::/128',
+        '::ffff:0:0/96',
+        '64:ff9b:1::/48',
+        '100::/64',
+        '2001::/23',
+        '2001:db8::/32',
+        '2002::/16',
+        'fc00::/7',
+        'fe80::/10',
+    ]
+]
+
+IPV6_NOT_GLOBALLY_REACHABLE_EXCEPTIONS = [
+    IPNetwork(net)
+    for net in [
+        '2001:1::1/128',
+        '2001:1::2/128',
+        '2001:3::/32',
+        '2001:4:112::/48',
+        '2001:20::/28',
+        '2001:30::/28',
+    ]
+]

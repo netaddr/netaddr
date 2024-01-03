@@ -1,9 +1,6 @@
 netaddr
 =======
 
-A system-independent network address manipulation library for Python 2.7 and 3.5+.
-(Python 2.7 and 3.5 support is deprecated).
-
 .. image:: https://codecov.io/gh/netaddr/netaddr/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/netaddr/netaddr
 .. image:: https://github.com/netaddr/netaddr/workflows/CI/badge.svg
@@ -12,6 +9,8 @@ A system-independent network address manipulation library for Python 2.7 and 3.5
    :target: https://pypi.org/project/netaddr/
 .. image:: https://img.shields.io/pypi/pyversions/netaddr.svg
    :target: pypi.python.org/pypi/netaddr
+
+A Python library for representing and manipulating network addresses.
 
 Provides support for:
 
@@ -34,13 +33,6 @@ Layer 2 addresses
 -  looking up IEEE organisational information (OUI, IAB)
 -  generating derived IPv6 addresses
 
-Starting with Python 3.3 there's an `ipaddress <https://docs.python.org/3/library/ipaddress.html>`_
-module in the Python standard library which provides layer 3 address manipulation
-capabilities overlapping ``netaddr``.
-
-Documentation
--------------
-
-Latest documentation https://netaddr.readthedocs.io/en/latest/
+Documentation: https://netaddr.readthedocs.io/en/latest/
 
 Share and enjoy!
