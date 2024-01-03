@@ -24,14 +24,6 @@ def test_strategy_ipv6():
     assert ipv6.words_to_int(list(t)) == i
 
 
-@pytest.mark.skipif(sys.version_info > (3,), reason="requires python 2.x")
-def test_strategy_ipv6_py2():
-    i = 4294967294
-    p = '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xfe'
-    assert ipv6.int_to_packed(i) == p
-    assert ipv6.packed_to_int(p) == 4294967294
-
-
 @pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3.x")
 def test_strategy_ipv6_py3():
     i = 4294967294

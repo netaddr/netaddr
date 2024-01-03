@@ -23,32 +23,10 @@ class BaseIdentifier(object):
     def __init__(self):
         self._value = None
 
-    def __int__(self):
-        """:return: integer value of this identifier"""
-        return self._value
-
-    def __long__(self):
-        """:return: integer value of this identifier"""
-        return self._value
-
-    def __oct__(self):
-        """:return: octal string representation of this identifier."""
-        #   Python 2.x only.
-        if self._value == 0:
-            return '0'
-        return '0%o' % self._value
-
-    def __hex__(self):
-        """:return: hexadecimal string representation of this identifier."""
-        #   Python 2.x only.
-        return '0x%x' % self._value
-
     def __index__(self):
         """
-        :return: return the integer value of this identifier when passed to
-            hex(), oct() or bin().
+        :return: return the integer value of this identifier.
         """
-        #   Python 3.x only.
         return self._value
 
 
