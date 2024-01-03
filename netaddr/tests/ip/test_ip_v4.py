@@ -5,7 +5,18 @@ import sys
 
 import pytest
 
-from netaddr import IPAddress, IPNetwork, INET_ATON, INET_PTON, spanning_cidr, AddrFormatError, ZEROFILL, Z, P, NOHOST
+from netaddr import (
+    IPAddress,
+    IPNetwork,
+    INET_ATON,
+    INET_PTON,
+    spanning_cidr,
+    AddrFormatError,
+    ZEROFILL,
+    Z,
+    P,
+    NOHOST,
+)
 
 
 def test_ipaddress_v4():
@@ -24,7 +35,8 @@ def test_ipaddress_v4():
 
 
 @pytest.mark.parametrize(
-    ('value', 'ipaddr', 'network', 'cidr', 'broadcast', 'netmask', 'hostmask', 'size'), [
+    ('value', 'ipaddr', 'network', 'cidr', 'broadcast', 'netmask', 'hostmask', 'size'),
+    [
         (
             '192.0.2.1',
             IPAddress('192.0.2.1'),
@@ -43,7 +55,7 @@ def test_ipaddress_v4():
             IPAddress('192.0.2.255'),
             IPAddress('255.255.255.0'),
             IPAddress('0.0.0.255'),
-            256
+            256,
         ),
         (
             '192.0.3.112/22',
@@ -53,9 +65,10 @@ def test_ipaddress_v4():
             IPAddress('192.0.3.255'),
             IPAddress('255.255.252.0'),
             IPAddress('0.0.3.255'),
-            1024
+            1024,
         ),
-    ])
+    ],
+)
 def test_ipnetwork_v4(value, ipaddr, network, cidr, broadcast, netmask, hostmask, size):
     net = IPNetwork(value)
     assert net.ip == ipaddr
@@ -121,7 +134,7 @@ def test_ipnetwork_slice_operations_v4():
         IPAddress('192.0.2.18'),
         IPAddress('192.0.2.17'),
         IPAddress('192.0.2.16'),
-]
+    ]
 
 
 def test_ipnetwork_sort_order():
@@ -145,6 +158,7 @@ def test_ipnetwork_sort_order():
         IPAddress('192.0.2.142'),
         IPAddress('192.0.2.143'),
     ]
+
 
 def test_ipaddress_and_ipnetwork_canonical_sort_order_by_version():
     ip_list = [
@@ -244,6 +258,7 @@ def test_ipnetwork_slices_v4():
         IPAddress('192.0.2.0'),
     ]
 
+
 def test_iterhosts_v4():
     assert list(IPNetwork('192.0.2.0/29').iter_hosts()) == [
         IPAddress('192.0.2.1'),
@@ -254,14 +269,16 @@ def test_iterhosts_v4():
         IPAddress('192.0.2.6'),
     ]
 
-
-    assert list(IPNetwork("192.168.0.0/31")) == [
+    assert list(IPNetwork('192.168.0.0/31')) == [
         IPAddress('192.168.0.0'),
         IPAddress('192.168.0.1'),
     ]
 
-    assert list(IPNetwork("192.168.0.0/31").iter_hosts()) == [IPAddress('192.168.0.0'),IPAddress('192.168.0.1')]
-    assert list(IPNetwork("192.168.0.0/32").iter_hosts()) == [IPAddress('192.168.0.0')]
+    assert list(IPNetwork('192.168.0.0/31').iter_hosts()) == [
+        IPAddress('192.168.0.0'),
+        IPAddress('192.168.0.1'),
+    ]
+    assert list(IPNetwork('192.168.0.0/32').iter_hosts()) == [IPAddress('192.168.0.0')]
 
 
 def test_ipaddress_boolean_evaluation_v4():
@@ -291,7 +308,7 @@ def test_ipnetwork_slicing_v4():
     assert ip[0] == IPAddress('192.0.2.0')
     assert ip[-1] == IPAddress('192.0.3.255')
 
-    assert list(ip[::128]) ==  [
+    assert list(ip[::128]) == [
         IPAddress('192.0.2.0'),
         IPAddress('192.0.2.128'),
         IPAddress('192.0.3.0'),
@@ -327,10 +344,10 @@ def test_ipaddress_integer_constructor_v4():
 
 
 def test_ipaddress_integer_constructor_v6():
-    assert IPAddress(0x1ffffffff) == IPAddress('::1:ffff:ffff')
-    assert IPAddress(0xffffffff, 6) == IPAddress('::255.255.255.255')
-    assert IPAddress(0x1ffffffff) == IPAddress('::1:ffff:ffff')
-    assert IPAddress(2 ** 128 - 1) == IPAddress('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')
+    assert IPAddress(0x1FFFFFFFF) == IPAddress('::1:ffff:ffff')
+    assert IPAddress(0xFFFFFFFF, 6) == IPAddress('::255.255.255.255')
+    assert IPAddress(0x1FFFFFFFF) == IPAddress('::1:ffff:ffff')
+    assert IPAddress(2**128 - 1) == IPAddress('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')
 
 
 def test_ipaddress_inet_aton_constructor_v4():
@@ -339,7 +356,7 @@ def test_ipaddress_inet_aton_constructor_v4():
     assert IPAddress('0177.01') == IPAddress('127.0.0.1')
     assert IPAddress('0x7f.0.01') == IPAddress('127.0.0.1')
 
-    #	Partial addresses - pretty weird, but valid ...
+    # Partial addresses - pretty weird, but valid ...
     assert IPAddress('127') == IPAddress('0.0.0.127')
     assert IPAddress('127') == IPAddress('0.0.0.127')
     assert IPAddress('127.1') == IPAddress('127.0.0.1')
@@ -376,12 +393,12 @@ def test_ipaddress_constructor_zero_filled_octets_v4():
     assert IPAddress('010.000.000.001', flags=INET_ATON | ZEROFILL) == IPAddress('10.0.0.1')
 
     with pytest.raises(AddrFormatError):
-        assert IPAddress('010.000.001', flags=INET_PTON|ZEROFILL)
+        assert IPAddress('010.000.001', flags=INET_PTON | ZEROFILL)
 
-    assert IPAddress('010.000.000.001', flags=INET_PTON|ZEROFILL) == IPAddress('10.0.0.1')
+    assert IPAddress('010.000.000.001', flags=INET_PTON | ZEROFILL) == IPAddress('10.0.0.1')
 
     #   Short flags.
-    assert IPAddress('010.000.000.001', flags=P|Z) == IPAddress('10.0.0.1')
+    assert IPAddress('010.000.000.001', flags=P | Z) == IPAddress('10.0.0.1')
 
 
 def test_ipnetwork_constructor_v4():
@@ -423,12 +440,12 @@ def test_ipaddress_netmask_v4():
 
 def test_ipaddress_hex_format():
     assert hex(IPAddress(0)) == '0x0'
-    assert hex(IPAddress(0xffffffff)) == '0xffffffff'
+    assert hex(IPAddress(0xFFFFFFFF)) == '0xffffffff'
 
 
-@pytest.mark.skipif('sys.version_info < (3,)', reason="python 3.x behaviour")
+@pytest.mark.skipif('sys.version_info < (3,)', reason='python 3.x behaviour')
 def test_ipaddress_oct_format_py3():
-    assert oct(IPAddress(0xffffffff)) == '0o37777777777'
+    assert oct(IPAddress(0xFFFFFFFF)) == '0o37777777777'
     assert oct(IPAddress(0)) == '0o0'
 
 
@@ -490,7 +507,7 @@ def test_ipnetwork_incrementing_by_int():
         '192.0.2.192/28',
         '192.0.2.208/28',
         '192.0.2.224/28',
-        '192.0.2.240/28'
+        '192.0.2.240/28',
     ]
 
 
@@ -498,7 +515,10 @@ def test_rfc3021_subnets():
     # Tests for /31 subnet
     assert IPNetwork('192.0.2.0/31').network == IPAddress('192.0.2.0')
     assert IPNetwork('192.0.2.0/31').broadcast is None
-    assert list(IPNetwork('192.0.2.0/31').iter_hosts()) == [IPAddress('192.0.2.0'), IPAddress('192.0.2.1')]
+    assert list(IPNetwork('192.0.2.0/31').iter_hosts()) == [
+        IPAddress('192.0.2.0'),
+        IPAddress('192.0.2.1'),
+    ]
 
     # Tests for /32 subnet
     assert IPNetwork('192.0.2.0/32').network == IPAddress('192.0.2.0')

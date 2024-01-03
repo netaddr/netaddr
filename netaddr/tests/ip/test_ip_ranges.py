@@ -4,7 +4,15 @@ import sys
 import sys
 import pytest
 
-from netaddr import iter_iprange, IPAddress, cidr_merge, IPNetwork, IPRange, ZEROFILL, AddrFormatError
+from netaddr import (
+    iter_iprange,
+    IPAddress,
+    cidr_merge,
+    IPNetwork,
+    IPRange,
+    ZEROFILL,
+    AddrFormatError,
+)
 
 
 def test_ip_range():
@@ -38,6 +46,7 @@ def test_ip_range():
         IPNetwork('192.0.2.14/32'),
     ]
 
+
 def test_iprange():
     range1 = IPRange('192.0.2.1', '192.0.2.15')
     assert range1 == IPRange('192.0.2.1', '192.0.2.15')
@@ -54,7 +63,7 @@ def test_iprange():
     range2 = IPRange('192.0.2.1', '192.0.2.15')
     addrs = list(range2)
 
-    assert addrs ==  [
+    assert addrs == [
         IPAddress('192.0.2.1'),
         IPAddress('192.0.2.2'),
         IPAddress('192.0.2.3'),
@@ -77,7 +86,11 @@ def test_iprange():
 
     subnets = range2.cidrs()
     assert subnets == [
-        IPNetwork('192.0.2.1/32'), IPNetwork('192.0.2.2/31'), IPNetwork('192.0.2.4/30'), IPNetwork('192.0.2.8/29')]
+        IPNetwork('192.0.2.1/32'),
+        IPNetwork('192.0.2.2/31'),
+        IPNetwork('192.0.2.4/30'),
+        IPNetwork('192.0.2.8/29'),
+    ]
 
     assert range2 != subnets
 
@@ -134,9 +147,13 @@ def test_iprange_constructor():
 
     assert iprange == IPRange('192.0.2.1', '192.0.2.254')
     assert '%s' % iprange == '192.0.2.1-192.0.2.254'
-    assert IPRange('::ffff:192.0.2.1', '::ffff:192.0.2.254') == IPRange('::ffff:192.0.2.1', '::ffff:192.0.2.254')
+    assert IPRange('::ffff:192.0.2.1', '::ffff:192.0.2.254') == IPRange(
+        '::ffff:192.0.2.1', '::ffff:192.0.2.254'
+    )
     assert IPRange('192.0.2.1', '192.0.2.1') == IPRange('192.0.2.1', '192.0.2.1')
-    assert IPRange('208.049.164.000', '208.050.066.255', flags=ZEROFILL) == IPRange('208.49.164.0', '208.50.66.255')
+    assert IPRange('208.049.164.000', '208.050.066.255', flags=ZEROFILL) == IPRange(
+        '208.49.164.0', '208.50.66.255'
+    )
 
     with pytest.raises(AddrFormatError):
         IPRange('192.0.2.2', '192.0.2.1')
@@ -193,9 +210,17 @@ def test_iprange_membership():
 
 
 def test_more_iprange_sorting():
-    ipranges = (IPRange('192.0.2.40', '192.0.2.50'), IPRange('192.0.2.20', '192.0.2.30'), IPRange('192.0.2.1', '192.0.2.254'),)
+    ipranges = (
+        IPRange('192.0.2.40', '192.0.2.50'),
+        IPRange('192.0.2.20', '192.0.2.30'),
+        IPRange('192.0.2.1', '192.0.2.254'),
+    )
 
-    assert sorted(ipranges) == [IPRange('192.0.2.1', '192.0.2.254'), IPRange('192.0.2.20', '192.0.2.30'), IPRange('192.0.2.40', '192.0.2.50')]
+    assert sorted(ipranges) == [
+        IPRange('192.0.2.1', '192.0.2.254'),
+        IPRange('192.0.2.20', '192.0.2.30'),
+        IPRange('192.0.2.40', '192.0.2.50'),
+    ]
 
     ipranges = list(ipranges)
     ipranges.append(IPRange('192.0.2.45', '192.0.2.49'))
@@ -223,25 +248,29 @@ def test_iprange_info_and_properties():
     iprange = IPRange('192.0.2.1', '192.0.2.254')
 
     assert literal_eval(str(iprange.info)) == {
-        'IPv4': [{
-            'date': '1993-05',
-            'designation': 'Administered by ARIN',
-            'prefix': '192/8',
-            'status': 'Legacy',
-            'whois': 'whois.arin.net'}]
+        'IPv4': [
+            {
+                'date': '1993-05',
+                'designation': 'Administered by ARIN',
+                'prefix': '192/8',
+                'status': 'Legacy',
+                'whois': 'whois.arin.net',
+            }
+        ]
     }
 
     assert iprange.is_reserved()
 
     assert iprange.version == 4
 
+
 def test_iprange_invalid_len_and_alternative():
-    range1 = IPRange(IPAddress("::0"), IPAddress(sys.maxsize, 6))
+    range1 = IPRange(IPAddress('::0'), IPAddress(sys.maxsize, 6))
 
     with pytest.raises(IndexError):
         len(range1)
 
-    range2 = IPRange(IPAddress("::0"), IPAddress(sys.maxsize - 1, 6))
+    range2 = IPRange(IPAddress('::0'), IPAddress(sys.maxsize - 1, 6))
     assert len(range2) == sys.maxsize
 
 

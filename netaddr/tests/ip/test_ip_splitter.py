@@ -36,7 +36,7 @@ def test_ip_splitter():
         IPNetwork('172.24.8.144/28'),
     ]
 
-    splitter.available_subnets() ==  [
+    splitter.available_subnets() == [
         IPNetwork('172.24.8.128/25'),
         IPNetwork('172.24.9.0/24'),
         IPNetwork('172.24.10.0/23'),

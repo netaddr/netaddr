@@ -105,3 +105,9 @@ namespaces = false
 [tool.setuptools.dynamic]
 version = {attr = "netaddr.__version__"}
 readme = {file = ["README.rst", "USAGE.rst"]}
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.format]
+quote-style = 'single'

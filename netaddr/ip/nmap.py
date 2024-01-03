@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Routines for dealing with nmap-style IPv4 address ranges.
 
@@ -58,10 +58,12 @@ def _generate_nmap_octet_ranges(nmap_target_spec):
     if len(tokens) != 4:
         raise AddrFormatError('invalid nmap range: %s' % (nmap_target_spec,))
 
-    return (_nmap_octet_target_values(tokens[0]),
-            _nmap_octet_target_values(tokens[1]),
-            _nmap_octet_target_values(tokens[2]),
-            _nmap_octet_target_values(tokens[3]))
+    return (
+        _nmap_octet_target_values(tokens[0]),
+        _nmap_octet_target_values(tokens[1]),
+        _nmap_octet_target_values(tokens[2]),
+        _nmap_octet_target_values(tokens[3]),
+    )
 
 
 def _parse_nmap_target_spec(target_spec):
@@ -83,7 +85,7 @@ def _parse_nmap_target_spec(target_spec):
             for x in octet_ranges[1]:
                 for y in octet_ranges[2]:
                     for z in octet_ranges[3]:
-                        yield IPAddress("%d.%d.%d.%d" % (w, x, y, z), 4)
+                        yield IPAddress('%d.%d.%d.%d' % (w, x, y, z), 4)
 
 
 def valid_nmap_range(target_spec):

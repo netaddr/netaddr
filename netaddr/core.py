@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """Common code shared between various netaddr sub modules"""
 
 import sys as _sys
@@ -23,13 +23,15 @@ N = NOHOST = 4
 #: Use legacy ``inet_aton()`` semantics when parsing IPv4.
 INET_ATON = 8
 
-#-----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 #   Custom exceptions.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 class AddrFormatError(Exception):
     """
     An Exception indicating a network address is not correctly formatted.
     """
+
     pass
 
 
@@ -38,6 +40,7 @@ class AddrConversionError(Exception):
     An Exception indicating a failure to convert between address types or
     notations.
     """
+
     pass
 
 
@@ -46,6 +49,7 @@ class NotRegisteredError(Exception):
     An Exception indicating that an OUI or IAB was not found in the IEEE
     Registry.
     """
+
     pass
 
 
@@ -54,6 +58,7 @@ try:
     a.bit_length()
     # No exception, must be Python 2.7 or 3.1+ -> can use bit_length()
     del a
+
     def num_bits(int_val):
         """
         :param int_val: an unsigned integer.
@@ -123,7 +128,7 @@ class PrettyPrinter(Subscriber):
         """
         self.fh.write(_pprint.pformat(data))
         if self.write_eol:
-            self.fh.write("\n")
+            self.fh.write('\n')
 
 
 class Publisher(object):

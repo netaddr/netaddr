@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """Fallback routines for Python's standard library socket module"""
 
 from struct import unpack as _unpack, pack as _pack
@@ -60,7 +60,7 @@ def _compact_ipv6_tokens(tokens):
                 best_position = position
         #   Replace chosen zero run.
         (length, start_idx) = best_position
-        new_tokens = new_tokens[0:start_idx] + [''] + new_tokens[start_idx + length:]
+        new_tokens = new_tokens[0:start_idx] + [''] + new_tokens[start_idx + length :]
 
         #   Add start and end blanks so join creates '::'.
         if new_tokens[0] == '':
@@ -92,7 +92,7 @@ def inet_ntop(af, packed_ip):
             word = word << 16 * i
             int_val = int_val | word
 
-        if 0xffff < int_val <= 0xffffffff or int_val >> 32 == 0xffff:
+        if 0xFFFF < int_val <= 0xFFFFFFFF or int_val >> 32 == 0xFFFF:
             #   IPv4 compatible / mapped IPv6.
             packed_ipv4 = _pack('>2H', *[int(i, 16) for i in tokens[-2:]])
             ipv4_str = inet_ntoa(packed_ipv4)
@@ -110,7 +110,7 @@ def _inet_pton_af_inet(ip_string):
     by only support decimal octets. Using octal or hexadecimal values will
     raise a ValueError exception.
     """
-    #TODO: optimise this ... use inet_aton with mods if available ...
+    # TODO: optimise this ... use inet_aton with mods if available ...
     if isinstance(ip_string, str):
         invalid_addr = ValueError('illegal IP address string %r' % ip_string)
         #   Support for hexadecimal and octal octets.
@@ -187,17 +187,17 @@ def inet_pton(af, ip_string):
             if not 0 <= token_count <= 8 - 1:
                 raise invalid_addr
 
-            gap_size = 8 - ( len(l_prefix) + len(l_suffix) )
+            gap_size = 8 - (len(l_prefix) + len(l_suffix))
 
             values = (
-                [_pack('>H', int(i, 16)) for i in l_prefix] +
-                ['\x00\x00'.encode() for i in range(gap_size)] +
-                [_pack('>H', int(i, 16)) for i in l_suffix]
+                [_pack('>H', int(i, 16)) for i in l_prefix]
+                + ['\x00\x00'.encode() for i in range(gap_size)]
+                + [_pack('>H', int(i, 16)) for i in l_suffix]
             )
             try:
                 for token in l_prefix + l_suffix:
                     word = int(token, 16)
-                    if not 0 <= word <= 0xffff:
+                    if not 0 <= word <= 0xFFFF:
                         raise invalid_addr
             except ValueError:
                 raise invalid_addr
@@ -230,7 +230,7 @@ def inet_pton(af, ip_string):
                 try:
                     tokens = [int(token, 16) for token in tokens]
                     for token in tokens:
-                        if not 0 <= token <= 0xffff:
+                        if not 0 <= token <= 0xFFFF:
                             raise invalid_addr
 
                 except ValueError:

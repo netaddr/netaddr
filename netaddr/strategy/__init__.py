@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Shared logic for various address types.
 """
@@ -23,6 +23,7 @@ def bytes_to_bits():
             num >>= 1
         lookup.append(''.join(bits))
     return lookup
+
 
 #: A lookup table of 8-bit integer values to their binary digit bit strings.
 BYTES_TO_BITS = bytes_to_bits()
@@ -45,7 +46,7 @@ def valid_words(words, word_size, num_words):
     if len(words) != num_words:
         return False
 
-    max_word = 2 ** word_size - 1
+    max_word = 2**word_size - 1
 
     for i in words:
         if not 0 <= i <= max_word:
@@ -70,7 +71,7 @@ def int_to_words(int_val, word_size, num_words):
     if not 0 <= int_val <= max_int:
         raise IndexError('integer out of bounds: %r!' % hex(int_val))
 
-    max_word = 2 ** word_size - 1
+    max_word = 2**word_size - 1
 
     words = []
     for _ in range(num_words):
@@ -125,7 +126,7 @@ def valid_bits(bits, width, word_sep=''):
     if len(bits) != width:
         return False
 
-    max_int = 2 ** width - 1
+    max_int = 2**width - 1
 
     try:
         if 0 <= int(bits, 2) <= max_int:
@@ -213,7 +214,7 @@ def valid_bin(bin_val, width):
     if len(bin_val) > width:
         return False
 
-    max_int = 2 ** width - 1
+    max_int = 2**width - 1
 
     try:
         if 0 <= int(bin_val, 2) <= max_int:
@@ -242,7 +243,7 @@ def int_to_bin(int_val, width):
         #   Python 2.4.x and 2.5.x
         i = int_val
         while i > 0:
-            word = i & 0xff
+            word = i & 0xFF
             bin_tokens.append(BYTES_TO_BITS[word])
             i >>= 8
 

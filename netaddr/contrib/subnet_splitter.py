@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 from netaddr.ip import IPNetwork, cidr_exclude, cidr_merge
 
 
@@ -13,6 +13,7 @@ class SubnetSplitter(object):
     leaving address space is available for subsequent extractions until
     all space is exhausted.
     """
+
     def __init__(self, base_cidr):
         """
         Constructor.
@@ -29,11 +30,7 @@ class SubnetSplitter(object):
             if not subnets:
                 continue
             self.remove_subnet(cidr)
-            self._subnets = self._subnets.union(
-                set(
-                    cidr_exclude(cidr, cidr_merge(subnets)[0])
-                )
-            )
+            self._subnets = self._subnets.union(set(cidr_exclude(cidr, cidr_merge(subnets)[0])))
             return subnets
         return []
 

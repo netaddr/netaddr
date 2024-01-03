@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """A basic implementation of RFC 1924 ;-)"""
 
 from netaddr.core import AddrFormatError
@@ -13,12 +13,37 @@ def chr_range(low, high):
     """Returns all characters between low and high chars."""
     return [chr(i) for i in range(ord(low), ord(high) + 1)]
 
+
 #: Base 85 integer index to character lookup table.
 BASE_85 = (
-    chr_range('0', '9') + chr_range('A', 'Z') +
-    chr_range('a', 'z') +
-    ['!', '#', '$', '%', '&', '(', ')', '*', '+', '-', ';', '<', '=', '>',
-     '?', '@', '^', '_', '`', '{', '|', '}', '~']
+    chr_range('0', '9')
+    + chr_range('A', 'Z')
+    + chr_range('a', 'z')
+    + [
+        '!',
+        '#',
+        '$',
+        '%',
+        '&',
+        '(',
+        ')',
+        '*',
+        '+',
+        '-',
+        ';',
+        '<',
+        '=',
+        '>',
+        '?',
+        '@',
+        '^',
+        '_',
+        '`',
+        '{',
+        '|',
+        '}',
+        '~',
+    ]
 )
 
 #: Base 85 digit to integer lookup table.
@@ -36,7 +61,7 @@ def ipv6_to_base85(addr):
         int_val //= 85
 
     encoded = ''.join([BASE_85[w] for w in reversed(remainder)])
-    leading_zeroes = (20 - len(encoded)) * "0"
+    leading_zeroes = (20 - len(encoded)) * '0'
     return leading_zeroes + encoded
 
 
@@ -52,7 +77,7 @@ def base85_to_ipv6(addr):
     result = 0
     for i, num in enumerate(reversed(tokens)):
         num = BASE_85_DICT[num]
-        result += (num * 85 ** i)
+        result += num * 85**i
 
     ip = IPAddress(result, 6)
 
