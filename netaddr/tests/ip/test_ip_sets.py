@@ -1,10 +1,10 @@
 import pickle
+import sys
 import weakref
 
 import pytest
 
 from netaddr import IPAddress, IPNetwork, IPRange, IPSet, cidr_exclude
-from netaddr.compat import _sys_maxint
 
 
 def test_ipset_basic_api():
@@ -529,12 +529,12 @@ def test_converting_ipsets_to_ipranges():
 
 
 def test_len_on_ipset_failure_with_large_ipv6_addresses():
-    s1 = IPSet(IPRange(IPAddress("::0"), IPAddress(_sys_maxint, 6)))
+    s1 = IPSet(IPRange(IPAddress("::0"), IPAddress(sys.maxsize, 6)))
     with pytest.raises(IndexError):
         len(s1)
 
-    s2 = IPSet(IPRange(IPAddress("::0"), IPAddress(_sys_maxint - 1, 6)))
-    assert len(s2) == _sys_maxint
+    s2 = IPSet(IPRange(IPAddress("::0"), IPAddress(sys.maxsize - 1, 6)))
+    assert len(s2) == sys.maxsize
 
 
 def test_ipset_ipv4_and_ipv4_separation():

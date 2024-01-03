@@ -4,7 +4,7 @@
 <registry xmlns="http://www.iana.org/assignments" id="ipv4-address-space">
   <title>IANA IPv4 Address Space Registry</title>
   <category>Internet Protocol version 4 (IPv4) Address Space</category>
-  <updated>2023-07-18</updated>
+  <updated>2023-12-18</updated>
   <xref type="rfc" data="rfc7249"/>
   <registration_rule>Allocations to RIRs are made in line with the Global Policy published at <xref type="uri" data="http://www.icann.org/en/resources/policy/global-addressing"/>. 
 All other assignments require IETF Review.</registration_rule>
@@ -521,9 +521,9 @@ regional areas of the world. RFC 1466 <xref type="rfc" data="rfc1466"/> document
     </rdap>
     <status>LEGACY</status>
   </record>
-  <record>
+  <record updated="2023-12-18">
     <prefix>048/8</prefix>
-    <designation>Prudential Securities Inc.</designation>
+    <designation>Administered by ARIN</designation>
     <date>1995-05</date>
     <whois>whois.arin.net</whois>
     <rdap>

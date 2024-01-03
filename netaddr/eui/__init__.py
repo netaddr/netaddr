@@ -13,7 +13,7 @@ from netaddr.strategy import eui48 as _eui48, eui64 as _eui64
 from netaddr.strategy.eui48 import mac_eui48
 from netaddr.strategy.eui64 import eui64_base
 from netaddr.ip import IPAddress
-from netaddr.compat import _open_binary, _is_int, _is_str
+from netaddr.compat import _open_binary
 
 
 class BaseIdentifier(object):
@@ -81,7 +81,7 @@ class OUI(BaseIdentifier):
             #TODO: Accept full MAC/EUI-48 addresses as well as XX-XX-XX
             #TODO: and just take /16 (see IAB for details)
             self._value = int(oui.replace('-', ''), 16)
-        elif _is_int(oui):
+        elif isinstance(oui, int):
             if 0 <= oui <= 0xffffff:
                 self._value = oui
             else:
@@ -253,7 +253,7 @@ class IAB(BaseIdentifier):
             int_val = int(iab.replace('-', ''), 16)
             iab_int, user_int = self.split_iab_mac(int_val, strict=strict)
             self._value = iab_int
-        elif _is_int(iab):
+        elif isinstance(iab, int):
             iab_int, user_int = self.split_iab_mac(iab, strict=strict)
             self._value = iab_int
         else:
@@ -383,7 +383,7 @@ class EUI(BaseIdentifier):
         else:
         #   Choose a default version when addr is an integer and version is
         #   not specified.
-            if _is_int(addr):
+            if isinstance(addr, int):
                 if 0 <= addr <= 0xffffffffffff:
                     self._module = _eui48
                 elif 0xffffffffffff < addr <= 0xffffffffffffffff:
@@ -442,7 +442,7 @@ class EUI(BaseIdentifier):
                     % (value,))
         else:
             #   EUI version is explicit.
-            if _is_str(value):
+            if isinstance(value, str):
                 try:
                     self._value = self._module.str_to_int(value)
                 except AddrFormatError:
@@ -520,7 +520,7 @@ class EUI(BaseIdentifier):
             of bounds. Also supports Python list slices for accessing \
             word groups.
         """
-        if _is_int(idx):
+        if isinstance(idx, int):
             #   Indexing, including negative indexing goodness.
             num_words = self._dialect.num_words
             if not (-num_words) <= idx <= (num_words - 1):
@@ -538,13 +538,13 @@ class EUI(BaseIdentifier):
             #   TODO - settable slices.
             raise NotImplementedError('settable slices are not supported!')
 
-        if not _is_int(idx):
+        if not isinstance(idx, int):
             raise TypeError('index not an integer!')
 
         if not 0 <= idx <= (self._dialect.num_words - 1):
             raise IndexError('index %d outside address type boundary!' % (idx,))
 
-        if not _is_int(value):
+        if not isinstance(value, int):
             raise TypeError('value not an integer!')
 
         if not 0 <= value <= self._dialect.max_word:

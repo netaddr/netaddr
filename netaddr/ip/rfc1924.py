@@ -8,8 +8,6 @@
 from netaddr.core import AddrFormatError
 from netaddr.ip import IPAddress
 
-from netaddr.compat import _zip
-
 
 def chr_range(low, high):
     """Returns all characters between low and high chars."""
@@ -24,7 +22,7 @@ BASE_85 = (
 )
 
 #: Base 85 digit to integer lookup table.
-BASE_85_DICT = dict(_zip(BASE_85, range(0, 86)))
+BASE_85_DICT = dict(zip(BASE_85, range(0, 86)))
 
 
 def ipv6_to_base85(addr):

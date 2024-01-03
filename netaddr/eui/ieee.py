@@ -35,7 +35,7 @@ More details can be found at the following URLs :-
 import os.path as _path
 import csv as _csv
 
-from netaddr.compat import _bytes_type, _open_binary
+from netaddr.compat import _open_binary
 from netaddr.core import Subscriber, Publisher
 
 
@@ -119,9 +119,9 @@ class OUIIndexParser(Publisher):
         record = None
         size = 0
 
-        marker = _bytes_type('(hex)')
-        hyphen = _bytes_type('-')
-        empty_string = _bytes_type('')
+        marker = b'(hex)'
+        hyphen = b'-'
+        empty_string = b''
 
         while True:
             line = self.fh.readline()
@@ -202,10 +202,10 @@ class IABIndexParser(Publisher):
         record = None
         size = 0
 
-        hex_marker = _bytes_type('(hex)')
-        base16_marker = _bytes_type('(base 16)')
-        hyphen = _bytes_type('-')
-        empty_string = _bytes_type('')
+        hex_marker = b'(hex)'
+        base16_marker = b'(base 16)'
+        hyphen = b'-'
+        empty_string = b''
 
         while True:
             line = self.fh.readline()

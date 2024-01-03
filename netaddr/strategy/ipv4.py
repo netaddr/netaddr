@@ -26,7 +26,6 @@ from netaddr.strategy import (
     valid_bin as _valid_bin, int_to_bin as _int_to_bin,
     bin_to_int as _bin_to_int)
 
-from netaddr.compat import _str_type
 
 #: The width (in bits) of this address type.
 width = 32
@@ -84,7 +83,11 @@ def valid_str(addr, flags=0):
 
     :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core docs for details.
+        :class:`IPAddress` documentation for details.
+
+    .. versionchanged:: 0.10.1
+        ``flags`` is scheduled to default to :data:`INET_PTON` instead of :data:`INET_ATON`
+        in the future.
 
     :return: ``True`` if IPv4 address is valid, ``False`` otherwise.
     """
@@ -113,7 +116,7 @@ def str_to_int(addr, flags=0):
 
     :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core docs for details.
+        :class:`IPAddress` documentation for details.
 
     :return: The equivalent unsigned integer for a given IPv4 address.
     """
@@ -253,7 +256,7 @@ def expand_partial_address(addr):
 
     error = AddrFormatError('invalid partial IPv4 address: %r!' % addr)
 
-    if isinstance(addr, _str_type):
+    if isinstance(addr, str):
         if ':' in addr:
             #   Ignore IPv6 ...
             raise error

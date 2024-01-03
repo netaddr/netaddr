@@ -22,7 +22,8 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-dist: clean doc
+dist: clean
+	pip install --upgrade build
 	@echo 'building netaddr release'
 	python -m build
 
