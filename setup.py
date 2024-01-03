@@ -137,7 +137,6 @@ def main():
             .strip()
             .strip('\'"')
         ),
-        install_requires=['importlib-resources;python_version<"3.7"'],
     )
 
     setup(**setup_options)
