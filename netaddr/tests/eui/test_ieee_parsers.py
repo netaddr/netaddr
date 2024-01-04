@@ -1,12 +1,16 @@
 import contextlib
 import sys
-from io import StringIO
+
+import pytest
 
 from netaddr.compat import _open_binary
 from netaddr.eui.ieee import OUIIndexParser, IABIndexParser, FileIndexer
 
 
-def test_oui_parser():
+@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
+def test_oui_parser_py3():
+    from io import StringIO
+
     outfile = StringIO()
     with contextlib.closing(_open_binary(__package__, 'sample_oui.txt')) as infile:
         iab_parser = OUIIndexParser(infile)
@@ -15,7 +19,10 @@ def test_oui_parser():
     assert outfile.getvalue() == '51966,1,138\n'
 
 
-def test_iab_parser():
+@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
+def test_iab_parser_py3():
+    from io import StringIO
+
     outfile = StringIO()
     with contextlib.closing(_open_binary(__package__, 'sample_iab.txt')) as infile:
         iab_parser = IABIndexParser(infile)
