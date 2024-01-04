@@ -10,7 +10,6 @@ import sys as _sys
 from netaddr.core import (
     AddrFormatError,
     AddrConversionError,
-    num_bits,
     DictDotLookup,
     NOHOST,
     N,
@@ -1623,7 +1622,7 @@ class IPRange(BaseIP, IPListMixin):
         """
         :return: A key tuple used to compare and sort this `IPRange` correctly.
         """
-        skey = self._module.width - num_bits(self.size)
+        skey = self._module.width - self.size.bit_length()
         return self._module.version, self._start._value, skey
 
     def cidrs(self):

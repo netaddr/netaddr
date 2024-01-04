@@ -24,16 +24,9 @@ def main():
     rc_override = None
 
     try:
-        try:
-            # ipython >= 0.11
-            from IPython.terminal.embed import InteractiveShellEmbed
+        from IPython.terminal.embed import InteractiveShellEmbed
 
-            ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg)
-        except ImportError:
-            # ipython < 0.11
-            from IPython.Shell import IPShellEmbed
-
-            ipshell = IPShellEmbed(argv, banner, exit_msg, rc_override)
+        ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg)
     except ImportError:
         sys.stderr.write('IPython (http://ipython.scipy.org/) not found!\n')
         sys.exit(1)
