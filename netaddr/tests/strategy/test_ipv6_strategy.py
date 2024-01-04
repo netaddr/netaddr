@@ -1,5 +1,4 @@
 import platform
-import sys
 
 import pytest
 
@@ -12,6 +11,7 @@ def test_strategy_ipv6():
     i = 4294967294
     t = (0, 0, 0, 0, 0, 0, 0xFFFF, 0xFFFE)
     s = '::255.255.255.254'
+    p = b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xfe'
 
     assert ipv6.bits_to_int(b) == i
     assert ipv6.int_to_bits(i) == b
@@ -23,11 +23,6 @@ def test_strategy_ipv6():
     assert ipv6.words_to_int(t) == i
     assert ipv6.words_to_int(list(t)) == i
 
-
-@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
-def test_strategy_ipv6_py3():
-    i = 4294967294
-    p = b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xfe'
     assert ipv6.int_to_packed(i) == p
     assert ipv6.packed_to_int(p) == 4294967294
 

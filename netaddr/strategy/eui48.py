@@ -12,11 +12,8 @@ as bare MACs containing no delimiters.
 import struct as _struct
 import re as _re
 
-#   Check whether we need to use fallback code or not.
-try:
-    from socket import AF_LINK
-except ImportError:
-    AF_LINK = 48
+from socket import AF_LINK
+
 
 from netaddr.core import AddrFormatError
 from netaddr.strategy import (

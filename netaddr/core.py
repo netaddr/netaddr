@@ -53,34 +53,6 @@ class NotRegisteredError(Exception):
     pass
 
 
-try:
-    a = 42
-    a.bit_length()
-    # No exception, must be Python 2.7 or 3.1+ -> can use bit_length()
-    del a
-
-    def num_bits(int_val):
-        """
-        :param int_val: an unsigned integer.
-
-        :return: the minimum number of bits needed to represent value provided.
-        """
-        return int_val.bit_length()
-except AttributeError:
-    # a.bit_length() excepted, must be an older Python version.
-    def num_bits(int_val):
-        """
-        :param int_val: an unsigned integer.
-
-        :return: the minimum number of bits needed to represent value provided.
-        """
-        numbits = 0
-        while int_val:
-            numbits += 1
-            int_val >>= 1
-        return numbits
-
-
 class Subscriber(object):
     """
     An abstract class defining the interface expected by a Publisher.

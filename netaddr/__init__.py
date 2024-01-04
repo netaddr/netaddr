@@ -10,10 +10,6 @@ __version__ = '0.10.1'
 VERSION = tuple(int(part) for part in __version__.split('.'))
 STATUS = ''
 
-import sys as _sys
-
-if _sys.version_info[0:2] < (2, 4):
-    raise RuntimeError('Python 2.4.x or higher is required!')
 
 from netaddr.core import (
     AddrConversionError,

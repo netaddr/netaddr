@@ -1,5 +1,4 @@
 import pickle
-import sys
 import pytest
 from netaddr import IPAddress, IPNetwork
 
@@ -12,8 +11,7 @@ def test_ipaddress_v6():
     assert ip.format() == 'fe80::dead:beef'
     assert int(ip) == 338288524927261089654018896845083623151
     assert hex(ip) == '0xfe8000000000000000000000deadbeef'
-    if sys.version_info[0] > 2:
-        assert bytes(ip) == b'\xfe\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xde\xad\xbe\xef'
+    assert bytes(ip) == b'\xfe\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xde\xad\xbe\xef'
     assert (
         ip.bin
         == '0b11111110100000000000000000000000000000000000000000000000000000000000000000000000000000000000000011011110101011011011111011101111'
