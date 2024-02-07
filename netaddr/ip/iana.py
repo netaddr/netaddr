@@ -30,6 +30,7 @@ More details can be found at the following URLs :-
 """
 
 import sys as _sys
+from typing import Any, Dict, Tuple, TypedDict, Union
 from xml.sax import make_parser, handler
 
 from netaddr.core import Publisher, Subscriber
@@ -37,8 +38,16 @@ from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
 from netaddr.compat import _open_binary
 
 
+class IanaInfoType(TypedDict):
+    # TODO: Make the types more precise, get rid of Any
+    IPv4: Dict[IPNetwork, Any]
+    IPv6: Dict[IPNetwork, Any]
+    IPv6_unicast: Dict[IPNetwork, Any]
+    multicast: Dict[Union[IPRange, IPAddress], Any]
+
+
 #: Topic based lookup dictionary for IANA information.
-IANA_INFO = {
+IANA_INFO: IanaInfoType = {
     'IPv4': {},
     'IPv6': {},
     'IPv6_unicast': {},

@@ -111,3 +111,10 @@ line-length = 100
 
 [tool.ruff.format]
 quote-style = 'single'
+
+[tool.mypy]
+# Only temporarily false until the codebase passes strict checks
+strict = false
+exclude = [
+    "/tests/",
+]

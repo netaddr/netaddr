@@ -55,7 +55,7 @@ push_tags:
 	@echo 'syncing tags'
 	git push --tags
 
-ci: lint test_with_junitxml
+ci: mypy lint test_with_junitxml
 
 lint:
 	ruff format --check
@@ -71,3 +71,7 @@ test: clean
 test_with_junitxml: clean
 	@echo 'running test suite with JUnit XML output'
 	py.test -vv --junitxml=junit.xml
+
+.PHONY: mypy
+mypy:
+	mypy netaddr
