@@ -1,5 +1,3 @@
-import sys
-
 import pytest
 
 from netaddr import INET_PTON, AddrFormatError
@@ -12,6 +10,7 @@ def test_strategy_ipv4():
     t = (192, 0, 2, 1)
     s = '192.0.2.1'
     bin_val = '0b11000000000000000000001000000001'
+    p = b'\xc0\x00\x02\x01'
 
     assert ipv4.bits_to_int(b) == i
     assert ipv4.int_to_bits(i) == b
@@ -23,12 +22,6 @@ def test_strategy_ipv4():
     assert ipv4.words_to_int(t) == i
     assert ipv4.words_to_int(list(t)) == i
     assert ipv4.valid_bin(bin_val)
-
-
-@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
-def test_strategy_ipv4_py3():
-    i = 3221225985
-    p = b'\xc0\x00\x02\x01'
     assert ipv4.int_to_packed(i) == p
     assert ipv4.packed_to_int(p) == i
 

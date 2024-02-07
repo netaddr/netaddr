@@ -1,5 +1,4 @@
 import platform
-import sys
 
 import pytest
 
@@ -12,6 +11,7 @@ def test_strategy_ipv6():
     i = 4294967294
     t = (0, 0, 0, 0, 0, 0, 0xFFFF, 0xFFFE)
     s = '::255.255.255.254'
+    p = b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xfe'
 
     assert ipv6.bits_to_int(b) == i
     assert ipv6.int_to_bits(i) == b
@@ -23,11 +23,6 @@ def test_strategy_ipv6():
     assert ipv6.words_to_int(t) == i
     assert ipv6.words_to_int(list(t)) == i
 
-
-@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
-def test_strategy_ipv6_py3():
-    i = 4294967294
-    p = b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xfe'
     assert ipv6.int_to_packed(i) == p
     assert ipv6.packed_to_int(p) == 4294967294
 
@@ -139,12 +134,9 @@ def test_strategy_ipv6_mapped_and_compatible_ipv4_string_formatting():
     assert ipv6.int_to_str(0xFFFF000000) == '::ff:ff00:0'
     assert ipv6.int_to_str(0x1FFFF00000000) == '::1:ffff:0:0'
     # So this is strange. Even though on Windows we get decimal notation in a lot of the addresses above,
-    # in case of 0.0.0.0 we get hex instead, unless it's Python 2, then we get decimal... unless it's
-    # actually PyPy Python 2, then we always get hex (again, only on Windows). Worth investigating, putting
+    # in case of 0.0.0.0 we get hex instead. Worth investigating, putting
     # the conditional assert here for now to make this visible.
-    if platform.system() == 'Windows' and (
-        platform.python_version() >= '3.0' or platform.python_implementation() == 'PyPy'
-    ):
+    if platform.system() == 'Windows':
         assert ipv6.int_to_str(0xFFFF00000000) == '::ffff:0:0'
     else:
         assert ipv6.int_to_str(0xFFFF00000000) == '::ffff:0.0.0.0'
