@@ -136,7 +136,7 @@ def test_strategy_ipv6_mapped_and_compatible_ipv4_string_formatting():
     # So this is strange. Even though on Windows we get decimal notation in a lot of the addresses above,
     # in case of 0.0.0.0 we get hex instead. Worth investigating, putting
     # the conditional assert here for now to make this visible.
-    if platform.system() == 'Windows' and platform.python_implementation() == 'PyPy':
+    if platform.system() == 'Windows':
         assert ipv6.int_to_str(0xFFFF00000000) == '::ffff:0:0'
     else:
         assert ipv6.int_to_str(0xFFFF00000000) == '::ffff:0.0.0.0'
