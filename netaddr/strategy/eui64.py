@@ -101,20 +101,22 @@ DEFAULT_EUI64_DIALECT = eui64_base
 
 # -----------------------------------------------------------------------------
 #: Regular expressions to match all supported MAC address formats.
-RE_EUI64_FORMATS = (
-    #   2 bytes x 8 (UNIX, Windows, EUI-64)
-    '^' + ':'.join(['([0-9A-F]{1,2})'] * 8) + '$',
-    '^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$',
-    #   4 bytes x 4 (Cisco like)
-    '^' + ':'.join(['([0-9A-F]{1,4})'] * 4) + '$',
-    '^' + '-'.join(['([0-9A-F]{1,4})'] * 4) + '$',
-    '^' + r'\.'.join(['([0-9A-F]{1,4})'] * 4) + '$',
-    #   16 bytes (bare, no delimiters)
-    '^(' + ''.join(['[0-9A-F]'] * 16) + ')$',
-)
-#   For efficiency, each string regexp converted in place to its compiled
-#   counterpart.
-RE_EUI64_FORMATS = [_re.compile(_, _re.IGNORECASE) for _ in RE_EUI64_FORMATS]
+#: For efficiency, each string regexp converted in place to its compiled
+#: counterpart.
+RE_EUI64_FORMATS = [
+    _re.compile(_, _re.IGNORECASE)
+    for _ in (
+        #   2 bytes x 8 (UNIX, Windows, EUI-64)
+        '^' + ':'.join(['([0-9A-F]{1,2})'] * 8) + '$',
+        '^' + '-'.join(['([0-9A-F]{1,2})'] * 8) + '$',
+        #   4 bytes x 4 (Cisco like)
+        '^' + ':'.join(['([0-9A-F]{1,4})'] * 4) + '$',
+        '^' + '-'.join(['([0-9A-F]{1,4})'] * 4) + '$',
+        '^' + r'\.'.join(['([0-9A-F]{1,4})'] * 4) + '$',
+        #   16 bytes (bare, no delimiters)
+        '^(' + ''.join(['[0-9A-F]'] * 16) + ')$',
+    )
+]
 
 
 def _get_match_result(address, formats):
