@@ -23,17 +23,8 @@ from netaddr.strategy import (
 )
 
 
-#   This is a fake constant that doesn't really exist. Here for completeness.
-AF_EUI64 = 64
-
 #: The width (in bits) of this address type.
 width = 64
-
-#: The AF_* constant value of this address type.
-family = AF_EUI64
-
-#: A friendly string name address type.
-family_name = 'EUI-64'
 
 #: The version of this address type.
 version = 64
