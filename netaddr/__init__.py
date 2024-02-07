@@ -12,8 +12,8 @@ STATUS = ''
 
 import sys as _sys
 
-if _sys.version_info[0:2] < (2, 4):
-    raise RuntimeError('Python 2.4.x or higher is required!')
+if _sys.version_info[0:2] < (3, 7):
+    raise RuntimeError('Python 3.7.0 or higher is required!')
 
 from netaddr.core import (
     AddrConversionError,
