@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #   DISCLAIMER
 #
@@ -18,7 +18,7 @@
 #   See README file and source code for URLs to latest copies of the relevant
 #   files.
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Routines for accessing data published by IANA (Internet Assigned Numbers
 Authority).
@@ -34,8 +34,7 @@ from xml.sax import make_parser, handler
 
 from netaddr.core import Publisher, Subscriber
 from netaddr.ip import IPAddress, IPNetwork, IPRange, cidr_abbrev_to_verbose
-from netaddr.compat import _dict_items, _callable, _open_binary
-
+from netaddr.compat import _open_binary
 
 
 #: Topic based lookup dictionary for IANA information.
@@ -83,7 +82,7 @@ class SaxRecordParser(handler.ContentHandler):
             if name == 'record' and self._tag_level == self._level:
                 self._is_active = False
                 self._tag_level = None
-                if _callable(self._callback):
+                if hasattr(self._callback, '__call__'):
                     self._callback(self._record)
                 self._record = None
             elif self._level == self._tag_level + 1:
@@ -234,6 +233,7 @@ class IPv6UnicastParser(XMLRecordParser):
 
         - http://www.iana.org/assignments/ipv6-unicast-address-assignments/ipv6-unicast-address-assignments.xml
     """
+
     def __init__(self, fh, **kwargs):
         """
         Constructor.
@@ -290,8 +290,10 @@ class MulticastParser(XMLRecordParser):
             (a1, a2) = addr.split('-')
             o1 = a1.strip().split('.')
             o2 = a2.strip().split('.')
-            return '%s-%s' % ('.'.join([str(int(i)) for i in o1]),
-                              '.'.join([str(int(i)) for i in o2]))
+            return '%s-%s' % (
+                '.'.join([str(int(i)) for i in o1]),
+                '.'.join([str(int(i)) for i in o2]),
+            )
         else:
             o1 = addr.strip().split('.')
             return '.'.join([str(int(i)) for i in o1])
@@ -394,13 +396,13 @@ def pprint_info(fh=None):
         fh = _sys.stdout
 
     for category in sorted(IANA_INFO):
-        fh.write('-' * len(category) + "\n")
-        fh.write(category + "\n")
-        fh.write('-' * len(category) + "\n")
+        fh.write('-' * len(category) + '\n')
+        fh.write(category + '\n')
+        fh.write('-' * len(category) + '\n')
         ipranges = IANA_INFO[category]
         for iprange in sorted(ipranges):
             details = ipranges[iprange]
-            fh.write('%-45r' % (iprange) + details + "\n")
+            fh.write('%-45r' % (iprange) + details + '\n')
 
 
 def _within_bounds(ip, ip_range):
@@ -420,29 +422,30 @@ def query(ip_addr):
     info = {}
 
     if ip_addr.version == 4:
-        for cidr, record in _dict_items(IANA_INFO['IPv4']):
+        for cidr, record in IANA_INFO['IPv4'].items():
             if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv4', [])
                 info['IPv4'].append(record)
 
         if ip_addr.is_multicast():
-            for iprange, record in _dict_items(IANA_INFO['multicast']):
+            for iprange, record in IANA_INFO['multicast'].items():
                 if _within_bounds(ip_addr, iprange):
                     info.setdefault('Multicast', [])
                     info['Multicast'].append(record)
 
     elif ip_addr.version == 6:
-        for cidr, record in _dict_items(IANA_INFO['IPv6']):
+        for cidr, record in IANA_INFO['IPv6'].items():
             if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv6', [])
                 info['IPv6'].append(record)
 
-        for cidr, record in _dict_items(IANA_INFO['IPv6_unicast']):
+        for cidr, record in IANA_INFO['IPv6_unicast'].items():
             if _within_bounds(ip_addr, cidr):
                 info.setdefault('IPv6_unicast', [])
                 info['IPv6_unicast'].append(record)
 
     return info
+
 
 #   On module import, read IANA data files and populate lookups dict.
 load_info()

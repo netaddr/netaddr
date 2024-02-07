@@ -1,14 +1,15 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """IPv4 address logic."""
 
 import sys as _sys
 import struct as _struct
 
 from socket import inet_aton as _inet_aton
+
 #   Check whether we need to use fallback code or not.
 if _sys.platform in ('win32', 'cygwin'):
     #   inet_pton() not available on Windows. inet_pton() under cygwin
@@ -18,15 +19,18 @@ else:
     #   All other cases, use all functions from the socket module.
     from socket import inet_pton as _inet_pton, AF_INET
 
-from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON, INET_PTON_STRICT
+from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON
 
 from netaddr.strategy import (
-    valid_words as _valid_words, valid_bits as _valid_bits,
-    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
-    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
-    bin_to_int as _bin_to_int)
+    valid_words as _valid_words,
+    valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int,
+    int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin,
+    int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int,
+)
 
-from netaddr.compat import _str_type
 
 #: The width (in bits) of this address type.
 width = 32
@@ -53,29 +57,25 @@ version = 4
 word_base = 10
 
 #: The maximum integer value that can be represented by this address type.
-max_int = 2 ** width - 1
+max_int = 2**width - 1
 
 #: The number of words in this address type.
 num_words = width // word_size
 
 #: The maximum integer value for an individual word in this address type.
-max_word = 2 ** word_size - 1
+max_word = 2**word_size - 1
 
 #: A dictionary mapping IPv4 CIDR prefixes to the equivalent netmasks.
-prefix_to_netmask = dict(
-    [(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width + 1)])
+prefix_to_netmask = dict([(i, max_int ^ (2 ** (width - i) - 1)) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv4 netmasks to their equivalent CIDR prefixes.
-netmask_to_prefix = dict(
-    [(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width + 1)])
+netmask_to_prefix = dict([(max_int ^ (2 ** (width - i) - 1), i) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv4 CIDR prefixes to the equivalent hostmasks.
-prefix_to_hostmask = dict(
-    [(i, (2 ** (width - i) - 1)) for i in range(0, width + 1)])
+prefix_to_hostmask = dict([(i, (2 ** (width - i) - 1)) for i in range(0, width + 1)])
 
 #: A dictionary mapping IPv4 hostmasks to their equivalent CIDR prefixes.
-hostmask_to_prefix = dict(
-    [((2 ** (width - i) - 1), i) for i in range(0, width + 1)])
+hostmask_to_prefix = dict([((2 ** (width - i) - 1), i) for i in range(0, width + 1)])
 
 
 def valid_str(addr, flags=0):
@@ -84,7 +84,11 @@ def valid_str(addr, flags=0):
 
     :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core docs for details.
+        :class:`IPAddress` documentation for details.
+
+    .. versionchanged:: 0.10.1
+        ``flags`` is scheduled to default to :data:`INET_PTON` instead of :data:`INET_ATON`
+        in the future.
 
     :return: ``True`` if IPv4 address is valid, ``False`` otherwise.
     """
@@ -113,7 +117,7 @@ def str_to_int(addr, flags=0):
 
     :param flags: decides which rules are applied to the interpretation of the
         addr value. Supported constants are INET_PTON and ZEROFILL. See the
-        netaddr.core docs for details.
+        :class:`IPAddress` documentation for details.
 
     :return: The equivalent unsigned integer for a given IPv4 address.
     """
@@ -121,13 +125,7 @@ def str_to_int(addr, flags=0):
         addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
 
     try:
-        if flags & INET_PTON_STRICT and any(
-            part != '0' and part.startswith('0') for part in addr.split('.')
-        ):
-            # Doesn't matter what we raise, it's just to trigger the raise in the except block
-            # below.
-            raise Exception()
-        if flags & (INET_PTON | INET_PTON_STRICT):
+        if flags & INET_PTON:
             return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
         else:
             return _struct.unpack('>I', _inet_aton(addr))[0]
@@ -147,9 +145,10 @@ def int_to_str(int_val, dialect=None):
     if 0 <= int_val <= max_int:
         return '%d.%d.%d.%d' % (
             int_val >> 24,
-            (int_val >> 16) & 0xff,
-            (int_val >> 8) & 0xff,
-            int_val & 0xff)
+            (int_val >> 16) & 0xFF,
+            (int_val >> 8) & 0xFF,
+            int_val & 0xFF,
+        )
     else:
         raise ValueError('%r is not a valid 32-bit unsigned integer!' % (int_val,))
 
@@ -161,7 +160,7 @@ def int_to_arpa(int_val):
     :return: The reverse DNS lookup for an IPv4 address in network byte
         order integer form.
     """
-    words = ["%d" % i for i in int_to_words(int_val)]
+    words = ['%d' % i for i in int_to_words(int_val)]
     words.reverse()
     words.extend(['in-addr', 'arpa', ''])
     return '.'.join(words)
@@ -200,12 +199,10 @@ def int_to_words(int_val):
         represented by an unsigned integer.
     """
     if not 0 <= int_val <= max_int:
-        raise ValueError('%r is not a valid integer value supported by'
-                         'this address type!' % (int_val,))
-    return ( int_val >> 24,
-            (int_val >> 16) & 0xff,
-            (int_val >>  8) & 0xff,
-             int_val & 0xff)
+        raise ValueError(
+            '%r is not a valid integer value supported by' 'this address type!' % (int_val,)
+        )
+    return (int_val >> 24, (int_val >> 16) & 0xFF, (int_val >> 8) & 0xFF, int_val & 0xFF)
 
 
 def words_to_int(words):
@@ -259,7 +256,7 @@ def expand_partial_address(addr):
 
     error = AddrFormatError('invalid partial IPv4 address: %r!' % addr)
 
-    if isinstance(addr, _str_type):
+    if isinstance(addr, str):
         if ':' in addr:
             #   Ignore IPv6 ...
             raise error
@@ -282,4 +279,3 @@ def expand_partial_address(addr):
         raise error
 
     return '%s.%s.%s.%s' % tuple(tokens)
-

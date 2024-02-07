@@ -2,10 +2,11 @@ import types
 
 from netaddr import IPNetwork, cidr_merge
 
+
 def test_ipnetwork_cidr_merge():
     ip_list = (
-        list(IPNetwork('fe80::/120')) +
-        [
+        list(IPNetwork('fe80::/120'))
+        + [
             IPNetwork('192.0.2.0/24'),
             IPNetwork('192.0.4.0/25'),
             IPNetwork('192.0.4.128/25'),
@@ -19,6 +20,7 @@ def test_ipnetwork_cidr_merge():
         IPNetwork('192.0.4.0/24'),
         IPNetwork('fe80::/120'),
     ]
+
 
 def test_subnetting():
     ip = IPNetwork('172.24.0.0/23')

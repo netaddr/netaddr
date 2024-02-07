@@ -14,13 +14,20 @@ def test_ipaddress_v6():
     assert hex(ip) == '0xfe8000000000000000000000deadbeef'
     if sys.version_info[0] > 2:
         assert bytes(ip) == b'\xfe\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xde\xad\xbe\xef'
-    assert ip.bin == '0b11111110100000000000000000000000000000000000000000000000000000000000000000000000000000000000000011011110101011011011111011101111'
-    assert ip.bits() == '1111111010000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:1101111010101101:1011111011101111'
+    assert (
+        ip.bin
+        == '0b11111110100000000000000000000000000000000000000000000000000000000000000000000000000000000000000011011110101011011011111011101111'
+    )
+    assert (
+        ip.bits()
+        == '1111111010000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:0000000000000000:1101111010101101:1011111011101111'
+    )
     assert ip.words == (65152, 0, 0, 0, 0, 0, 57005, 48879)
 
 
 @pytest.mark.parametrize(
-    ('value', 'ipaddr', 'network', 'cidr', 'broadcast', 'netmask', 'hostmask', 'size'), [
+    ('value', 'ipaddr', 'network', 'cidr', 'broadcast', 'netmask', 'hostmask', 'size'),
+    [
         (
             'fe80::dead:beef/64',
             IPAddress('fe80::dead:beef'),
@@ -31,7 +38,8 @@ def test_ipaddress_v6():
             IPAddress('::ffff:ffff:ffff:ffff'),
             18446744073709551616,
         ),
-    ])
+    ],
+)
 def test_ipnetwork_v6(value, ipaddr, network, cidr, broadcast, netmask, hostmask, size):
     net = IPNetwork(value)
     assert net.ip == ipaddr
@@ -53,6 +61,7 @@ def test_iterhosts_v6():
         IPAddress('::ffff:192.0.2.6'),
         IPAddress('::ffff:192.0.2.7'),
     ]
+
 
 def test_ipnetwork_boolean_evaluation_v6():
     assert bool(IPNetwork('::/0'))
@@ -104,8 +113,8 @@ def test_ipaddress_netmask_v6():
 
 
 def test_objects_use_slots():
-    assert not hasattr(IPNetwork("::/64"), "__dict__")
-    assert not hasattr(IPAddress("::"), "__dict__")
+    assert not hasattr(IPNetwork('::/64'), '__dict__')
+    assert not hasattr(IPAddress('::'), '__dict__')
 
 
 def test_ipaddress_pickling_v6():
@@ -148,6 +157,7 @@ def test_ipv6_unicast_address_allocation_info():
     assert ip.info.IPv6_unicast[0].whois == 'whois.lacnic.net'
     assert ip.info.IPv6_unicast[0].status == 'ALLOCATED'
 
+
 def test_rfc6164_subnets():
     # Tests for /127 subnet
     assert list(IPNetwork('1234::/127')) == [
@@ -162,7 +172,7 @@ def test_rfc6164_subnets():
     assert IPNetwork('1234::').broadcast is None
 
     # Tests for /128 subnet
-    assert IPNetwork("1234::/128").network == IPAddress('1234::')
-    assert IPNetwork("1234::/128").broadcast is None
-    assert list(IPNetwork("1234::/128")) == [IPAddress('1234::')]
-    assert list(IPNetwork("1234::/128").iter_hosts()) == [IPAddress('1234::')]
+    assert IPNetwork('1234::/128').network == IPAddress('1234::')
+    assert IPNetwork('1234::/128').broadcast is None
+    assert list(IPNetwork('1234::/128')) == [IPAddress('1234::')]
+    assert list(IPNetwork('1234::/128').iter_hosts()) == [IPAddress('1234::')]

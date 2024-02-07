@@ -1,14 +1,12 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Shared logic for various address types.
 """
 import re as _re
-
-from netaddr.compat import _range, _is_str
 
 
 def bytes_to_bits():
@@ -17,7 +15,7 @@ def bytes_to_bits():
         list index value is equivalent to its bit string value.
     """
     lookup = []
-    bits_per_byte = _range(7, -1, -1)
+    bits_per_byte = range(7, -1, -1)
     for num in range(256):
         bits = 8 * [None]
         for i in bits_per_byte:
@@ -25,6 +23,7 @@ def bytes_to_bits():
             num >>= 1
         lookup.append(''.join(bits))
     return lookup
+
 
 #: A lookup table of 8-bit integer values to their binary digit bit strings.
 BYTES_TO_BITS = bytes_to_bits()
@@ -47,7 +46,7 @@ def valid_words(words, word_size, num_words):
     if len(words) != num_words:
         return False
 
-    max_word = 2 ** word_size - 1
+    max_word = 2**word_size - 1
 
     for i in words:
         if not 0 <= i <= max_word:
@@ -72,7 +71,7 @@ def int_to_words(int_val, word_size, num_words):
     if not 0 <= int_val <= max_int:
         raise IndexError('integer out of bounds: %r!' % hex(int_val))
 
-    max_word = 2 ** word_size - 1
+    max_word = 2**word_size - 1
 
     words = []
     for _ in range(num_words):
@@ -118,7 +117,7 @@ def valid_bits(bits, width, word_sep=''):
 
     :return: ``True`` if network address is valid, ``False`` otherwise.
     """
-    if not _is_str(bits):
+    if not isinstance(bits, str):
         return False
 
     if word_sep != '':
@@ -127,7 +126,7 @@ def valid_bits(bits, width, word_sep=''):
     if len(bits) != width:
         return False
 
-    max_int = 2 ** width - 1
+    max_int = 2**width - 1
 
     try:
         if 0 <= int(bits, 2) <= max_int:
@@ -188,7 +187,7 @@ def int_to_bits(int_val, word_size, num_words, word_sep=''):
 
     if word_sep != '':
         #   Check custom separator.
-        if not _is_str(word_sep):
+        if not isinstance(word_sep, str):
             raise ValueError('word separator is not a string: %r!' % (word_sep,))
 
     return word_sep.join(bit_words)
@@ -204,7 +203,7 @@ def valid_bin(bin_val, width):
 
     :return: ``True`` if network address is valid, ``False`` otherwise.
     """
-    if not _is_str(bin_val):
+    if not isinstance(bin_val, str):
         return False
 
     if not bin_val.startswith('0b'):
@@ -215,7 +214,7 @@ def valid_bin(bin_val, width):
     if len(bin_val) > width:
         return False
 
-    max_int = 2 ** width - 1
+    max_int = 2**width - 1
 
     try:
         if 0 <= int(bin_val, 2) <= max_int:
@@ -244,7 +243,7 @@ def int_to_bin(int_val, width):
         #   Python 2.4.x and 2.5.x
         i = int_val
         while i > 0:
-            word = i & 0xff
+            word = i & 0xFF
             bin_tokens.append(BYTES_TO_BITS[word])
             i >>= 8
 

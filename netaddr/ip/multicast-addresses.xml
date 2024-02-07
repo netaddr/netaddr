@@ -3,7 +3,7 @@
 <?xml-model href="multicast-addresses.rng" schematypens="http://relaxng.org/ns/structure/1.0" ?>
 <registry xmlns="http://www.iana.org/assignments" id="multicast-addresses">
   <title>IPv4 Multicast Address Space Registry</title>
-  <updated>2023-08-29</updated>
+  <updated>2023-10-16</updated>
   <expert>Stig Venaas</expert>
   <note>Host Extensions for IP Multicasting <xref type="rfc" data="rfc1112"/> specifies the extensions
 required of a host implementation of the Internet Protocol (IP) to
@@ -1473,8 +1473,24 @@ implementations.  See <xref type="rfc" data="rfc3692"/> for details.
       <xref type="person" data="Xie_Shao"/>
       <controller><xref type="person" data="Xie_Shao"/></controller>
     </record>
+    <record date="2023-10-13" updated="2023-10-16">
+      <addr>224.0.2.18</addr>
+      <description>vivoh-directory-1</description>
+      <xref type="person" data="Giovanni_Marzot_2"/>
+      <controller>
+        <xref type="person" data="Vivoh"/>
+      </controller>
+    </record>
+    <record date="2023-10-13" updated="2023-10-16">
+      <addr>224.0.2.19</addr>
+      <description>vivoh-directory-2</description>
+      <xref type="person" data="Giovanni_Marzot_2"/>
+      <controller>
+        <xref type="person" data="Vivoh"/>
+      </controller>
+    </record>
     <record>
-      <addr>224.0.2.18-224.0.2.63</addr>
+      <addr>224.0.2.20-224.0.2.63</addr>
       <description>Unassigned</description>
     </record>
     <record date="1996-04" updated="2018-04-20">
@@ -3764,6 +3780,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <uri>mailto:gmarzot&amp;ramp.com</uri>
       <updated>2019-03-13</updated>
     </person>
+    <person id="Giovanni_Marzot_2">
+      <name>Giovanni Marzot</name>
+      <uri>mailto:gmarzot&amp;vivoh.com</uri>
+      <updated>2023-10-13</updated>
+    </person>
     <person id="Global_Futures_and_Options_Limited">
       <org>Global Futures and Options Limited</org>
       <uri>mailto:david.beattie&amp;gfo-x.com</uri>
@@ -4813,6 +4834,11 @@ low-order bits of the IP Multicast address are placed in the low-order
       <name>Victor Volpe</name>
       <uri>mailto:vvolpe&amp;smtp.microcom.com</uri>
       <updated>1997-10-01</updated>
+    </person>
+    <person id="Vivoh">
+      <org>Vivoh</org>
+      <uri>mailto:gmarzot&amp;vivoh.com</uri>
+      <updated>2023-10-16</updated>
     </person>
     <person id="Vladimir_Shishkov">
       <name>Vladimir Shishkov</name>

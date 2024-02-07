@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 IEEE 48-bit EUI (MAC address) logic.
 
@@ -12,42 +12,37 @@ as bare MACs containing no delimiters.
 import struct as _struct
 import re as _re
 
-#   Check whether we need to use fallback code or not.
-try:
-    from socket import AF_LINK
-except ImportError:
-    AF_LINK = 48
 
 from netaddr.core import AddrFormatError
-from netaddr.compat import _is_str
 from netaddr.strategy import (
-    valid_words as _valid_words, int_to_words as _int_to_words,
-    words_to_int as _words_to_int, valid_bits as _valid_bits,
-    bits_to_int as _bits_to_int, int_to_bits as _int_to_bits,
-    valid_bin as _valid_bin, int_to_bin as _int_to_bin,
-    bin_to_int as _bin_to_int)
+    valid_words as _valid_words,
+    int_to_words as _int_to_words,
+    words_to_int as _words_to_int,
+    valid_bits as _valid_bits,
+    bits_to_int as _bits_to_int,
+    int_to_bits as _int_to_bits,
+    valid_bin as _valid_bin,
+    int_to_bin as _int_to_bin,
+    bin_to_int as _bin_to_int,
+)
 
 #: The width (in bits) of this address type.
 width = 48
-
-#: The AF_* constant value of this address type.
-family = AF_LINK
-
-#: A friendly string name address type.
-family_name = 'MAC'
 
 #: The version of this address type.
 version = 48
 
 #: The maximum integer value that can be represented by this address type.
-max_int = 2 ** width - 1
+max_int = 2**width - 1
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Dialect classes.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 class mac_eui48(object):
     """A standard IEEE EUI-48 dialect class."""
+
     #: The individual word size (in bits) of this address type.
     word_size = 8
 
@@ -55,7 +50,7 @@ class mac_eui48(object):
     num_words = width // word_size
 
     #: The maximum integer value for an individual word in this address type.
-    max_word = 2 ** word_size - 1
+    max_word = 2**word_size - 1
 
     #: The separator character used between each word.
     word_sep = '-'
@@ -69,6 +64,7 @@ class mac_eui48(object):
 
 class mac_unix(mac_eui48):
     """A UNIX-style MAC address dialect class."""
+
     word_size = 8
     num_words = width // word_size
     word_sep = ':'
@@ -78,11 +74,13 @@ class mac_unix(mac_eui48):
 
 class mac_unix_expanded(mac_unix):
     """A UNIX-style MAC address dialect class with leading zeroes."""
+
     word_fmt = '%.2x'
 
 
 class mac_cisco(mac_eui48):
     """A Cisco 'triple hextet' MAC address dialect class."""
+
     word_size = 16
     num_words = width // word_size
     word_sep = '.'
@@ -92,6 +90,7 @@ class mac_cisco(mac_eui48):
 
 class mac_bare(mac_eui48):
     """A bare (no delimiters) MAC address dialect class."""
+
     word_size = 48
     num_words = width // word_size
     word_sep = ''
@@ -101,38 +100,39 @@ class mac_bare(mac_eui48):
 
 class mac_pgsql(mac_eui48):
     """A PostgreSQL style (2 x 24-bit words) MAC address dialect class."""
+
     word_size = 24
     num_words = width // word_size
     word_sep = ':'
     word_fmt = '%.6x'
     word_base = 16
 
+
 #: The default dialect to be used when not specified by the user.
 DEFAULT_DIALECT = mac_eui48
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #: Regular expressions to match all supported MAC address formats.
-RE_MAC_FORMATS = (
-    #   2 bytes x 6 (UNIX, Windows, EUI-48)
-    '^' + ':'.join(['([0-9A-F]{1,2})'] * 6) + '$',
-    '^' + '-'.join(['([0-9A-F]{1,2})'] * 6) + '$',
-
-    #   4 bytes x 3 (Cisco)
-    '^' + ':'.join(['([0-9A-F]{1,4})'] * 3) + '$',
-    '^' + '-'.join(['([0-9A-F]{1,4})'] * 3) + '$',
-    '^' + r'\.'.join(['([0-9A-F]{1,4})'] * 3) + '$',
-
-    #   6 bytes x 2 (PostgreSQL)
-    '^' + '-'.join(['([0-9A-F]{5,6})'] * 2) + '$',
-    '^' + ':'.join(['([0-9A-F]{5,6})'] * 2) + '$',
-
-    #   12 bytes (bare, no delimiters)
-    '^(' + ''.join(['[0-9A-F]'] * 12) + ')$',
-    '^(' + ''.join(['[0-9A-F]'] * 11) + ')$',
-)
-#   For efficiency, each string regexp converted in place to its compiled
-#   counterpart.
-RE_MAC_FORMATS = [_re.compile(_, _re.IGNORECASE) for _ in RE_MAC_FORMATS]
+#: For efficiency, each string regexp converted in place to its compiled
+#: counterpart.
+RE_MAC_FORMATS = [
+    _re.compile(_, _re.IGNORECASE)
+    for _ in (
+        #   2 bytes x 6 (UNIX, Windows, EUI-48)
+        '^' + ':'.join(['([0-9A-F]{1,2})'] * 6) + '$',
+        '^' + '-'.join(['([0-9A-F]{1,2})'] * 6) + '$',
+        #   4 bytes x 3 (Cisco)
+        '^' + ':'.join(['([0-9A-F]{1,4})'] * 3) + '$',
+        '^' + '-'.join(['([0-9A-F]{1,4})'] * 3) + '$',
+        '^' + r'\.'.join(['([0-9A-F]{1,4})'] * 3) + '$',
+        #   6 bytes x 2 (PostgreSQL)
+        '^' + '-'.join(['([0-9A-F]{5,6})'] * 2) + '$',
+        '^' + ':'.join(['([0-9A-F]{5,6})'] * 2) + '$',
+        #   12 bytes (bare, no delimiters)
+        '^(' + ''.join(['[0-9A-F]'] * 12) + ')$',
+        '^(' + ''.join(['[0-9A-F]'] * 11) + ')$',
+    )
+]
 
 
 def valid_str(addr):
@@ -161,7 +161,7 @@ def str_to_int(addr):
         settings.
     """
     words = []
-    if _is_str(addr):
+    if isinstance(addr, str):
         found_match = False
         for regexp in RE_MAC_FORMATS:
             match_result = regexp.findall(addr)
@@ -223,7 +223,7 @@ def int_to_packed(int_val):
     :return: a packed string that is equivalent to value represented by an
     unsigned integer.
     """
-    return _struct.pack(">HI", int_val >> 32, int_val & 0xffffffff)
+    return _struct.pack('>HI', int_val >> 32, int_val & 0xFFFFFFFF)
 
 
 def packed_to_int(packed_int):
@@ -278,8 +278,7 @@ def bits_to_int(bits, dialect=None):
 def int_to_bits(int_val, dialect=None):
     if dialect is None:
         dialect = DEFAULT_DIALECT
-    return _int_to_bits(
-        int_val, dialect.word_size, dialect.num_words, dialect.word_sep)
+    return _int_to_bits(int_val, dialect.word_size, dialect.num_words, dialect.word_sep)
 
 
 def valid_bin(bin_val, dialect=None):

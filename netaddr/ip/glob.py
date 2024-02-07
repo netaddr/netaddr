@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Routines and classes for supporting and expressing IP address ranges using a
 glob style syntax.
@@ -10,7 +10,6 @@ glob style syntax.
 """
 from netaddr.core import AddrFormatError, AddrConversionError
 from netaddr.ip import IPRange, IPAddress, IPNetwork, iprange_to_cidrs
-from netaddr.compat import _is_str
 
 
 def valid_glob(ipglob):
@@ -19,11 +18,11 @@ def valid_glob(ipglob):
 
     :return: ``True`` if IP range glob is valid, ``False`` otherwise.
     """
-    #TODO: Add support for abbreviated ipglobs.
-    #TODO: e.g. 192.0.*.* == 192.0.*
-    #TODO:      *.*.*.*     == *
-    #TODO: Add strict flag to enable verbose ipglob checking.
-    if not _is_str(ipglob):
+    # TODO: Add support for abbreviated ipglobs.
+    # TODO: e.g. 192.0.*.* == 192.0.*
+    # TODO:      *.*.*.*     == *
+    # TODO: Add strict flag to enable verbose ipglob checking.
+    if not isinstance(ipglob, str):
         return False
 
     seen_hyphen = False
@@ -169,11 +168,9 @@ def iprange_to_globs(start, end):
                         tokens.append('%s-%s' % (t1[i], t2[i]))
                         seen_hyphen = True
                     else:
-                        raise AddrConversionError(
-                            'only 1 hyphenated octet per IP glob allowed!')
+                        raise AddrConversionError('only 1 hyphenated octet per IP glob allowed!')
                 else:
-                    raise AddrConversionError(
-                        "asterisks are not allowed before hyphenated octets!")
+                    raise AddrConversionError('asterisks are not allowed before hyphenated octets!')
 
         return '.'.join(tokens)
 
@@ -183,16 +180,16 @@ def iprange_to_globs(start, end):
         #   IP range can be represented by a single glob.
         ipglob = _iprange_to_glob(start, end)
         if not valid_glob(ipglob):
-            #TODO: this is a workaround, it is produces non-optimal but valid
-            #TODO: glob conversions. Fix inner function so that is always
-            #TODO: produces a valid glob.
+            # TODO: this is a workaround, it is produces non-optimal but valid
+            # TODO: glob conversions. Fix inner function so that is always
+            # TODO: produces a valid glob.
             raise AddrConversionError('invalid ip glob created')
         globs.append(ipglob)
     except AddrConversionError:
         #   Break IP range up into CIDRs before conversion to globs.
         #
-        #TODO: this is still not completely optimised but is good enough
-        #TODO: for the moment.
+        # TODO: this is still not completely optimised but is good enough
+        # TODO: for the moment.
         #
         for cidr in iprange_to_cidrs(start, end):
             ipglob = _iprange_to_glob(cidr[0], cidr[-1])
@@ -277,6 +274,7 @@ class IPGlob(IPRange):
     experience. All CIDR addresses can always be represented as IP globs \
     but the reverse is not always true.
     """
+
     __slots__ = ('_glob',)
 
     def __init__(self, ipglob):
@@ -300,12 +298,11 @@ class IPGlob(IPRange):
         (self._start, self._end) = glob_to_iptuple(ipglob)
         self._glob = iprange_to_globs(self._start, self._end)[0]
 
-    glob = property(_get_glob, _set_glob, None,
-        'an arbitrary IP address range in glob format.')
+    glob = property(_get_glob, _set_glob, None, 'an arbitrary IP address range in glob format.')
 
     def __str__(self):
         """:return: IP glob in common representational format."""
-        return "%s" % self.glob
+        return '%s' % self.glob
 
     def __repr__(self):
         """:return: Python statement to create an equivalent object"""

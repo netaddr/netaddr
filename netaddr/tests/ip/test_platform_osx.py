@@ -77,9 +77,9 @@ def test_ip_behaviour_osx():
     assert IPAddress('010.000.000.001', flags=INET_PTON) == IPAddress('10.0.0.1')
     # ...but at least Apple changed inet_ntop in Mac OS 10.15 (Catalina) so it's compatible with Linux
     if platform.mac_ver()[0] >= '10.15':
-        assert int_to_str(0xffff) == '::ffff'
+        assert int_to_str(0xFFFF) == '::ffff'
     else:
-        assert int_to_str(0xffff) == '::0.0.255.255'
+        assert int_to_str(0xFFFF) == '::0.0.255.255'
 
 
 @pytest.mark.skipif('sys.platform == "darwin"')
@@ -153,4 +153,4 @@ def test_ip_behaviour_non_osx():
     with pytest.raises(AddrFormatError):
         IPAddress('010.000.000.001', flags=INET_PTON)
 
-    assert int_to_str(0xffff) == '::ffff'
+    assert int_to_str(0xFFFF) == '::ffff'

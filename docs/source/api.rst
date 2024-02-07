@@ -2,6 +2,15 @@
 API Reference
 =============
 
+This page documents netaddr's public API. Only things explicitly mentioned in this documentation
+are supported and considered part of the public API.
+
+Any of the following is considered private and unsupported:
+
+* Anything within any of the ``netaddr`` submodules (``from netaddr.X import Y``)
+* Anything with a name started with a single underscore (``_X``)
+* Anything not explicitly documented as part of the public API
+
 ------------------
 IP Class Hierarchy
 ------------------
@@ -42,14 +51,6 @@ Constants
 
 The following constants are used by the various *flags* arguments on netaddr class constructors.
 
-
-.. data:: netaddr.INET_PTON_STRICT
-
-    Use strict ``inet_pton()`` semantics when parsing IPv4: four decimal octets are required,
-    leading zeros disallowed.
-
-    .. versionadded:: NEXT_NETADDR_VERSION
-
 .. data:: netaddr.P
           netaddr.INET_PTON
 
@@ -57,13 +58,16 @@ The following constants are used by the various *flags* arguments on netaddr cla
 
    See the :meth:`IPAddress.__init__` documentation for details.
 
+   .. versionchanged:: 0.10.0
+        This parsing mode will become stricter in the future and it will reject leading zeros.
+
 .. data:: netaddr.INET_ATON
 
     Use ``inet_aton()`` semantics when parsing IPv4.
 
     See the :meth:`IPAddress.__init__` documentation for details.
 
-    .. versionadded:: NEXT_NETADDR_VERSION
+    .. versionadded:: 0.10.0
 
 .. data:: netaddr.Z
           netaddr.ZEROFILL

@@ -22,21 +22,16 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} ';'
 	find . -name '*.pyo' -exec rm -f {} ';'
 
-dist: clean doc
+dist: clean
+	pip install --upgrade build
 	@echo 'building netaddr release'
-	python setup.py develop
-	@echo 'building source distributions'
-	python setup.py sdist --formats=gztar,zip
-	@echo 'building wheel package'
-	pip install --upgrade pip
-	pip install wheel
-	python setup.py bdist_wheel --universal
+	python -m build
 
 doc:
 	@echo 'building documentation'
 	pip install sphinx
 	pip install -r docs/requirements.txt
-	python setup.py develop
+	pip install -e .
 	cd docs/ && $(MAKE) -f Makefile clean html
 	cd docs/build/html && zip -r ../netaddr.zip *
 
@@ -60,12 +55,13 @@ push_tags:
 	@echo 'syncing tags'
 	git push --tags
 
-ci: test_with_junitxml lint
+ci: lint test_with_junitxml
 
-lint: setup_check
+lint:
+	ruff format --check
 
-setup_check:
-	python setup.py check
+fix:
+	ruff format
 
 test: clean
 	@echo 'running test suite'

@@ -1,8 +1,8 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Copyright (c) 2008 by David P. D. Moss. All rights reserved.
 #
 #   Released under the BSD license. See the LICENSE file for details.
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """
 Routines for dealing with nmap-style IPv4 address ranges.
 
@@ -13,7 +13,6 @@ Based on nmap's Target Specification :-
 
 from netaddr.core import AddrFormatError
 from netaddr.ip import IPAddress, IPNetwork
-from netaddr.compat import _iter_range, _is_str, _iter_next
 
 
 def _nmap_octet_target_values(spec):
@@ -34,7 +33,7 @@ def _nmap_octet_target_values(spec):
                 raise ValueError('octet value overflow for spec %s!' % (spec,))
             if low > high:
                 raise ValueError('left side of hyphen must be <= right %r' % (element,))
-            for octet in _iter_range(low, high + 1):
+            for octet in range(low, high + 1):
                 values.add(octet)
         else:
             octet = int(element)
@@ -48,7 +47,7 @@ def _nmap_octet_target_values(spec):
 def _generate_nmap_octet_ranges(nmap_target_spec):
     #   Generate 4 lists containing all octets defined by a given nmap Target
     #   specification.
-    if not _is_str(nmap_target_spec):
+    if not isinstance(nmap_target_spec, str):
         raise TypeError('string expected, not %s' % type(nmap_target_spec))
 
     if not nmap_target_spec:
@@ -59,10 +58,12 @@ def _generate_nmap_octet_ranges(nmap_target_spec):
     if len(tokens) != 4:
         raise AddrFormatError('invalid nmap range: %s' % (nmap_target_spec,))
 
-    return (_nmap_octet_target_values(tokens[0]),
-            _nmap_octet_target_values(tokens[1]),
-            _nmap_octet_target_values(tokens[2]),
-            _nmap_octet_target_values(tokens[3]))
+    return (
+        _nmap_octet_target_values(tokens[0]),
+        _nmap_octet_target_values(tokens[1]),
+        _nmap_octet_target_values(tokens[2]),
+        _nmap_octet_target_values(tokens[3]),
+    )
 
 
 def _parse_nmap_target_spec(target_spec):
@@ -84,7 +85,7 @@ def _parse_nmap_target_spec(target_spec):
             for x in octet_ranges[1]:
                 for y in octet_ranges[2]:
                     for z in octet_ranges[3]:
-                        yield IPAddress("%d.%d.%d.%d" % (w, x, y, z), 4)
+                        yield IPAddress('%d.%d.%d.%d' % (w, x, y, z), 4)
 
 
 def valid_nmap_range(target_spec):
@@ -94,7 +95,7 @@ def valid_nmap_range(target_spec):
     :return: ``True`` if IP range target spec is valid, ``False`` otherwise.
     """
     try:
-        _iter_next(_parse_nmap_target_spec(target_spec))
+        next(_parse_nmap_target_spec(target_spec))
         return True
     except (TypeError, ValueError, AddrFormatError):
         pass
@@ -108,7 +109,7 @@ def iter_nmap_range(*nmap_target_spec):
 
     See https://nmap.org/book/man-target-specification.html for details.
 
-    :param \*nmap_target_spec: one or more nmap IP range target specification.
+    :param nmap_target_spec: one or more nmap IP range target specification.
 
     :return: an iterator producing IPAddress objects for each IP in the target spec(s).
     """
