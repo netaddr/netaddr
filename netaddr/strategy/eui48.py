@@ -12,11 +12,6 @@ as bare MACs containing no delimiters.
 import struct as _struct
 import re as _re
 
-#   Check whether we need to use fallback code or not.
-try:
-    from socket import AF_LINK
-except ImportError:
-    AF_LINK = 48
 
 from netaddr.core import AddrFormatError
 from netaddr.strategy import (
@@ -33,12 +28,6 @@ from netaddr.strategy import (
 
 #: The width (in bits) of this address type.
 width = 48
-
-#: The AF_* constant value of this address type.
-family = AF_LINK
-
-#: A friendly string name address type.
-family_name = 'MAC'
 
 #: The version of this address type.
 version = 48
