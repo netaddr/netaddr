@@ -32,7 +32,8 @@ __all__ = [
     'all_matching_cidrs',
     'cidr_abbrev_to_verbose',
     'cidr_exclude',
-    'cidr_merge,' 'iprange_to_cidrs',
+    'cidr_merge',
+    'iprange_to_cidrs',
     'iter_iprange',
     'iter_unique_ips',
     'largest_matching_cidr',
@@ -70,7 +71,7 @@ __all__ = [
     'eui64_unix_expanded',
     'eui64_cisco',
     'eui64_bare',
-    'valid_eui6',
+    'valid_eui64',
     'SubnetSplitter',
 ]
 
