@@ -21,7 +21,15 @@ Changed:
 
   This change will implicit conversions from ``str`` in all relevant contexts. If you need
   to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
+* Stop parsing IPv4 addresses permissively (``inet_aton()``-like) by default.
 
+  :data:`INET_PTON` is the default mode.
+
+  If you need to be permissive and parse using ``inet_aton()`` semantics use the
+  :data:`INET_ATON` flag.
+
+  This change will affect implicit conversions from ``str`` in all relevant contexts. If you
+  need to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
 
 ---------------
 Release: 0.10.1

@@ -150,7 +150,7 @@ def test_ipset_membership_largest():
 
     assert IPAddress('10.0.0.1') in ipset
     assert IPAddress('0.0.0.0') in ipset
-    assert IPAddress('255.255.255') in ipset
+    assert IPAddress('255.255.255.0') in ipset
     assert IPNetwork('10.0.0.0/24') in ipset
     assert IPAddress('::1') not in ipset
 

@@ -296,38 +296,37 @@ class IPAddress(BaseIP):
 
             Allowed flag values:
 
-            * The default (``0``) or :data:`INET_ATON`. Follows `inet_aton semantics
+            * :data:`INET_ATON`. Follows `inet_aton semantics
               <https://www.netmeister.org/blog/inet_aton.html>`_ and allows all kinds of
               weird-looking addresses to be parsed. For example:
 
-              >>> IPAddress('1')
+              >>> IPAddress('1', flags=INET_ATON)
               IPAddress('0.0.0.1')
-              >>> IPAddress('1.0xf')
+              >>> IPAddress('1.0xf', flags=INET_ATON)
               IPAddress('1.0.0.15')
-              >>> IPAddress('010.020.030.040')
+              >>> IPAddress('010.020.030.040', flags=INET_ATON)
               IPAddress('8.16.24.32')
 
-            * ``INET_ATON | ZEROFILL`` or :data:`ZEROFILL` – like the default, except leading zeros are discarded:
+            * ``INET_ATON | ZEROFILL`` or :data:`ZEROFILL` – like ``INET_ATON``, except leading zeros are discarded:
 
               >>> IPAddress('010', flags=INET_ATON | ZEROFILL)
               IPAddress('0.0.0.10')
 
-            * :data:`INET_PTON` – requires four decimal octets:
+            * The default (``0``) or :data:`INET_PTON` – requires four decimal octets:
 
               >>> IPAddress('10.0.0.1', flags=INET_PTON)
               IPAddress('10.0.0.1')
 
               Leading zeros may be ignored or rejected, depending on the platform.
 
-            * ``INET_PTON | ZEROFILL`` – like :data:`INET_PTON`, except leading zeros are
-              discarded:
+            * ``INET_PTON | ZEROFILL`` – like the default :data:`INET_PTON`, except leading
+              zeros are discarded:
 
               >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
               IPAddress('10.20.30.40')
 
-        .. versionchanged:: 0.10.0
-            The default IPv4 parsing mode is scheduled to become :data:`INET_PTON` in the next
-            major release.
+        .. versionchanged:: NEXT_NETADDR_VERSION
+            Changed the default IPv4 parsing mode from :data:`INET_ATON` to :data:`INET_PTON`.
         """
         super(IPAddress, self).__init__()
 
