@@ -12,13 +12,13 @@ import pprint as _pprint
 BIG_ENDIAN_PLATFORM = _sys.byteorder == 'big'
 
 #:  Use inet_pton() semantics instead of inet_aton() when parsing IPv4.
-P = INET_PTON = 1
+INET_PTON = 1
 
 #:  Remove any preceding zeros from IPv4 address octets before parsing.
-Z = ZEROFILL = 2
+ZEROFILL = 2
 
 #:  Remove any host bits found to the right of an applied CIDR prefix.
-N = NOHOST = 4
+NOHOST = 4
 
 #: Use legacy ``inet_aton()`` semantics when parsing IPv4.
 INET_ATON = 8

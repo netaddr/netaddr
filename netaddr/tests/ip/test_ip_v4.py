@@ -12,8 +12,6 @@ from netaddr import (
     spanning_cidr,
     AddrFormatError,
     ZEROFILL,
-    Z,
-    P,
     NOHOST,
 )
 
@@ -398,9 +396,6 @@ def test_ipaddress_constructor_zero_filled_octets_v4():
         assert IPAddress('010.000.001', flags=INET_PTON | ZEROFILL)
 
     assert IPAddress('010.000.000.001', flags=INET_PTON | ZEROFILL) == IPAddress('10.0.0.1')
-
-    #   Short flags.
-    assert IPAddress('010.000.000.001', flags=P | Z) == IPAddress('10.0.0.1')
 
 
 def test_ipnetwork_constructor_v4():
