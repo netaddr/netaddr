@@ -55,7 +55,7 @@ push_tags:
 	@echo 'syncing tags'
 	git push --tags
 
-ci: lint test
+ci: lint test-ci
 
 lint:
 	ruff format --check
@@ -66,3 +66,7 @@ fix:
 test:
 	@echo 'running test suite'
 	pytest
+
+.PHONY: test-ci
+test-ci:
+	pytest --cov-report term --cov-report html --cov-report xml --cov-report term-missing --cov=netaddr --cov-branch
