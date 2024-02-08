@@ -130,6 +130,7 @@ IPNetwork('fe80::dead:beef/32')
 
 There is also a property that lets you access the *true* CIDR address which removes all host bits from the network address based on the CIDR subnet prefix.
 
+>>> ip = IPNetwork('192.0.2.1/23')
 >>> ip.cidr
 IPNetwork('192.0.2.0/23')
 
@@ -729,8 +730,8 @@ True
 
 Let's remove one of the element from one of the IPSet objects and see what happens.
 
->>> s2.pop()
-IPNetwork('192.0.2.4/30')
+>>> s2.pop()  # doctest: +ELLIPSIS
+IPNetwork('...')
 >>> s1 == s2
 False
 

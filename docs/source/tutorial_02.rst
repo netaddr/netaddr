@@ -48,7 +48,7 @@ True
 >>> hex(mac)
 '0x1b774954fd'
 >>> oct(mac)
-'01556722252375'
+'0o1556722252375'
 >>> mac.bits()
 '00000000-00011011-01110111-01001001-01010100-11111101'
 >>> mac.bin
@@ -140,9 +140,9 @@ Here is how you query an OUI with the EUI interface.
 >>> oui
 OUI('00-1B-77')
 >>> oui.registration().address
-[u'Lot 8, Jalan Hi-Tech 2/3', u'Kulim  Kedah  09000', u'MY']
+['Lot 8, Jalan Hi-Tech 2/3', 'Kulim  Kedah  09000', 'MY']
 >>> oui.registration().org
-u'Intel Corporate'
+'Intel Corporate'
 
 You can also use OUI objects directly without going through the EUI interface.
 
@@ -154,29 +154,29 @@ This example shows you how you access them individually by specifying an index n
 >>> oui
 OUI('08-00-30')
 >>> oui.registration(0).address
-[u'2380 N. ROSE AVENUE', u'OXNARD  CA  93010', u'US']
+['2380 N. ROSE AVENUE', 'OXNARD  CA  93010', 'US']
 >>> oui.registration(0).org
-u'NETWORK RESEARCH CORPORATION'
+'NETWORK RESEARCH CORPORATION'
 >>> oui.registration(0).oui
 '08-00-30'
 >>> oui.registration(1).address
-[u'GPO BOX 2476V', u'MELBOURNE  VIC  3001', u'AU']
+['GPO BOX 2476V', 'MELBOURNE  VIC  3001', 'AU']
 >>> oui.registration(1).org
-u'ROYAL MELBOURNE INST OF TECH'
+'ROYAL MELBOURNE INST OF TECH'
 >>> oui.registration(1).oui
 '08-00-30'
 >>> oui.registration(2).address
-[u'CH-1211 GENEVE 23', u'SUISSE/SWITZ', u'CH']
+['CH-1211', 'GENEVE  SUISSE/SWITZ  023', 'CH']
 >>> oui.registration(2).org
-u'CERN'
+'CERN'
 >>> oui.registration(2).oui
 '08-00-30'
 >>> for i in range(oui.reg_count):
 ...     str(oui), oui.registration(i).org
 ...
-('08-00-30', u'NETWORK RESEARCH CORPORATION')
-('08-00-30', u'ROYAL MELBOURNE INST OF TECH')
-('08-00-30', u'CERN')
+('08-00-30', 'NETWORK RESEARCH CORPORATION')
+('08-00-30', 'ROYAL MELBOURNE INST OF TECH')
+('08-00-30', 'CERN')
 
 Here is how you query an IAB with the EUI interface.
 
@@ -187,9 +187,9 @@ True
 >>> iab
 IAB('00-50-C2-00-00-00')
 >>> iab.registration()
-{'address': [u'1241 Superieor Ave E', u'Cleveland  OH  44114', u'US'],
+{'address': ['1241 Superieor Ave E', 'Cleveland  OH  44114', 'US'],
  'iab': '00-50-C2-00-00-00',
  'idx': 84680704,
  ...
- 'org': u'T.L.S. Corp.',
+ 'org': 'T.L.S. Corp.',
  'size': 537}

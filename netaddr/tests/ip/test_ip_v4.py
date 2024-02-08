@@ -1,7 +1,6 @@
 import pickle
 import types
 import random
-import sys
 
 import pytest
 
@@ -27,8 +26,7 @@ def test_ipaddress_v4():
     assert ip.format() == '192.0.2.1'
     assert int(ip) == 3221225985
     assert hex(ip) == '0xc0000201'
-    if sys.version_info[0] > 2:
-        assert bytes(ip) == b'\xc0\x00\x02\x01'
+    assert bytes(ip) == b'\xc0\x00\x02\x01'
     assert ip.bin == '0b11000000000000000000001000000001'
     assert ip.bits() == '11000000.00000000.00000010.00000001'
     assert ip.words == (192, 0, 2, 1)
@@ -443,8 +441,7 @@ def test_ipaddress_hex_format():
     assert hex(IPAddress(0xFFFFFFFF)) == '0xffffffff'
 
 
-@pytest.mark.skipif('sys.version_info < (3,)', reason='python 3.x behaviour')
-def test_ipaddress_oct_format_py3():
+def test_ipaddress_oct_format():
     assert oct(IPAddress(0xFFFFFFFF)) == '0o37777777777'
     assert oct(IPAddress(0)) == '0o0'
 

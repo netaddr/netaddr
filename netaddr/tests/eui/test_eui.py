@@ -1,8 +1,5 @@
-import sys
 import pickle
 import random
-
-import pytest
 
 from netaddr import (
     EUI,
@@ -38,8 +35,7 @@ def test_mac_address_numerical_operations():
     assert mac.bin == '0b1101101110111010010010101010011111101'
 
 
-@pytest.mark.skipif(sys.version_info < (3,), reason='requires python 3.x')
-def test_eui_oct_format_py3():
+def test_eui_oct_format():
     assert oct(EUI('00-1B-77-49-54-FD')) == '0o1556722252375'
 
 
