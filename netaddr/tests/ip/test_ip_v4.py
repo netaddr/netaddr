@@ -372,6 +372,10 @@ def test_ipaddress_inet_aton_constructor_v4():
         '10',
         '10.1',
         '10.0.1',
+        '010.0.0.1',
+        '10.01.0.1',
+        '10.0.00.1',
+        '10.0.1.01',
     ],
 )
 def test_ipaddress_inet_pton_constructor_v4_rejects_invalid_input(address):

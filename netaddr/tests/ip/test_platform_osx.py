@@ -2,7 +2,7 @@ import platform
 
 import pytest
 
-from netaddr import iprange_to_cidrs, IPNetwork, IPAddress, INET_PTON, AddrFormatError
+from netaddr import iprange_to_cidrs, IPNetwork
 from netaddr.strategy.ipv6 import int_to_str
 
 
@@ -73,9 +73,7 @@ def test_ip_behaviour_osx():
         IPNetwork('::255.255.255.254/128'),
     ]
 
-    #   inet_pton has to be different on Mac OSX *sigh*...
-    assert IPAddress('010.000.000.001', flags=INET_PTON) == IPAddress('10.0.0.1')
-    # ...but at least Apple changed inet_ntop in Mac OS 10.15 (Catalina) so it's compatible with Linux
+    # At least Apple changed inet_ntop in Mac OS 10.15 (Catalina) so it's compatible with Linux
     if platform.mac_ver()[0] >= '10.15':
         assert int_to_str(0xFFFF) == '::ffff'
     else:
@@ -148,9 +146,5 @@ def test_ip_behaviour_non_osx():
         IPNetwork('::255.255.255.252/127'),
         IPNetwork('::255.255.255.254/128'),
     ]
-
-    #   Sadly, inet_pton cannot help us here ...
-    with pytest.raises(AddrFormatError):
-        IPAddress('010.000.000.001', flags=INET_PTON)
 
     assert int_to_str(0xFFFF) == '::ffff'
