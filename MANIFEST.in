@@ -9,7 +9,6 @@ include release.py
 include THANKS
 
 recursive-include docs/source *.rst *.py
-graft tutorials
 
 include netaddr/__init__.py
 include netaddr/core.py
