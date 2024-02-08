@@ -2,6 +2,10 @@
 coverage<7
 pluggy<1.3
 
+# Restrict the version until we drop Python 3.8 support
+ipython<8
+
+mypy
 pytest>=2.4.2
 pytest-cov
 ruff

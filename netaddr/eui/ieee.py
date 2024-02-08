@@ -34,16 +34,17 @@ More details can be found at the following URLs :-
 
 import os.path as _path
 import csv as _csv
+from typing import Dict, Tuple
 
 from netaddr.compat import _open_binary
 from netaddr.core import Subscriber, Publisher
 
 
 #: OUI index lookup dictionary.
-OUI_INDEX = {}
+OUI_INDEX: Dict[int, Tuple[int, int]] = {}
 
 #: IAB index lookup dictionary.
-IAB_INDEX = {}
+IAB_INDEX: Dict[int, Tuple[int, int]] = {}
 
 
 class FileIndexer(Subscriber):
