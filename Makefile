@@ -66,7 +66,7 @@ fix:
 test: clean
 	@echo 'running test suite'
 	pip install -r requirements.txt
-	py.test netaddr/tests
+	py.test
 
 test_with_junitxml: clean
 	@echo 'running test suite with JUnit XML output'
