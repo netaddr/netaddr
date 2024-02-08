@@ -58,8 +58,9 @@ The following constants are used by the various *flags* arguments on netaddr cla
 
    See the :meth:`IPAddress.__init__` documentation for details.
 
-   .. versionchanged:: 0.10.0
-        This parsing mode will become stricter in the future and it will reject leading zeros.
+   .. versionchanged:: NEXT_NETADDR_VERSION
+        Started rejecting leading zeros regardless of the platform (it was previously allowed
+        on some).
 
 .. data:: netaddr.INET_ATON
 
