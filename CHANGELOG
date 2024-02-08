@@ -9,6 +9,8 @@ Date: not released yet
 Removed:
 
 * Drop support for Python versions lower than 3.7.
+* Remove the flag shorthands: ``N``, ``P`` and ``Z``. Use :data:`NOHOST`, :data:`INET_PTON`
+  and :data:`ZEROFILL` instead.
 
 Changed:
 

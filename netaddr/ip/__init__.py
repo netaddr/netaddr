@@ -12,12 +12,9 @@ from netaddr.core import (
     AddrConversionError,
     DictDotLookup,
     NOHOST,
-    N,
     INET_ATON,
     INET_PTON,
-    P,
     ZEROFILL,
-    Z,
 )
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6

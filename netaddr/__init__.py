@@ -20,12 +20,9 @@ __all__ = [
     'AddrFormatError',
     'NotRegisteredError',
     'ZEROFILL',
-    'Z',
     'INET_ATON',
     'INET_PTON',
-    'P',
     'NOHOST',
-    'N',
     'IPAddress',
     'IPNetwork',
     'IPRange',
@@ -80,12 +77,9 @@ from netaddr.core import (
     AddrFormatError,
     NotRegisteredError,
     ZEROFILL,
-    Z,
     INET_ATON,
     INET_PTON,
-    P,
     NOHOST,
-    N,
 )
 
 from netaddr.ip import (
