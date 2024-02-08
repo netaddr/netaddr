@@ -10,6 +10,17 @@ Removed:
 
 * Drop support for Python versions lower than 3.7.
 
+Changed:
+
+* Stop accepting leading zeros when parsing IPv4 addresses in :data:`INET_PTON` mode
+  (it's been allowed on some platforms).
+
+  If you need to allow and discard leading zeros use the :data:`ZEROFILL` flag.
+
+  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
+
+
 ---------------
 Release: 0.10.1
 ---------------
