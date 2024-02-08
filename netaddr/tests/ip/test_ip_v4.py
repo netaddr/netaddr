@@ -364,22 +364,22 @@ def test_ipaddress_inet_aton_constructor_v4():
     assert IPAddress('127', flags=INET_ATON) == IPAddress('127')
 
 
-def test_ipaddress_inet_pton_constructor_v4():
+@pytest.mark.parametrize(
+    'address',
+    [
+        '0177.01',
+        '0x7f.0.01',
+        '10',
+        '10.1',
+        '10.0.1',
+    ],
+)
+def test_ipaddress_inet_pton_constructor_v4_rejects_invalid_input(address):
     with pytest.raises(AddrFormatError):
-        IPAddress('0177.01', flags=INET_PTON)
+        IPAddress(address, flags=INET_PTON)
 
-    with pytest.raises(AddrFormatError):
-        IPAddress('0x7f.0.01', flags=INET_PTON)
 
-    with pytest.raises(AddrFormatError):
-        IPAddress('10', flags=INET_PTON)
-
-    with pytest.raises(AddrFormatError):
-        IPAddress('10.1', flags=INET_PTON)
-
-    with pytest.raises(AddrFormatError):
-        IPAddress('10.0.1', flags=INET_PTON)
-
+def test_ipaddress_inet_pton_constructor_v4_accepts_valid_input():
     assert IPAddress('10.0.0.1', flags=INET_PTON) == IPAddress('10.0.0.1')
 
 
