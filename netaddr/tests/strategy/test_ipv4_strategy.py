@@ -28,9 +28,7 @@ def test_strategy_ipv4():
 
 def test_strategy_inet_aton_behaviour():
     # inet_aton() is a very old system call and is very permissive with
-    # regard to what is assume is a valid IPv4 address. Unfortunately, it
-    # is also the most widely used by system software used in software today,
-    # so netaddr supports this behaviour by default.
+    # regard to what is assume is a valid IPv4 address.
 
     assert ipv4.str_to_int('127', flags=INET_ATON) == 127
     assert ipv4.str_to_int('0x7f', flags=INET_ATON) == 127
