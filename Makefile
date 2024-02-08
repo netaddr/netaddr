@@ -63,7 +63,7 @@ lint:
 fix:
 	ruff format
 
-test: clean
+test:
 	@echo 'running test suite'
 	pip install -r requirements.txt
 	py.test
