@@ -70,6 +70,7 @@ def test_strategy_inet_pton_behaviour():
     ('address', 'flags', 'valid'),
     [
         ['', 0, False],
+        ['192', 0, False],
         ['192', INET_ATON, True],
         ['127.0.0.1', 0, True],
     ],
