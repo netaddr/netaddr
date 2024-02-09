@@ -84,6 +84,7 @@ def test_strategy_ipv6_valid_str(str_value):
 @pytest.mark.parametrize(
     'str_value',
     (
+        '',
         'g:h:i:j:k:l:m:n',  # bad chars.
         '0:0:0:0:0:0:0:0:0',  # too long,
         #   Unexpected types.
@@ -96,11 +97,6 @@ def test_strategy_ipv6_valid_str(str_value):
 )
 def test_strategy_ipv6_is_not_valid_str(str_value):
     assert not ipv6.valid_str(str_value)
-
-
-def test_strategy_ipv6_valid_str_exception_on_empty_string():
-    with pytest.raises(AddrFormatError):
-        ipv6.valid_str('')
 
 
 @pytest.mark.parametrize(

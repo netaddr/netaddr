@@ -31,6 +31,11 @@ Changed:
   This change will affect implicit conversions from ``str`` in all relevant contexts. If you
   need to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
 
+Fixed:
+
+* Return ``False`` instead of raising :exc:`AddrFormatError` when an empty string is passed
+  to :func:`valid_ipv4` or :func:`valid_ipv6`.
+
 ---------------
 Release: 0.10.1
 ---------------

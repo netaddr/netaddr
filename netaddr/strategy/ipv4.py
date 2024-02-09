@@ -91,10 +91,10 @@ def valid_str(addr, flags=0):
         in the future.
 
     :return: ``True`` if IPv4 address is valid, ``False`` otherwise.
-    """
-    if addr == '':
-        raise AddrFormatError('Empty strings are not supported!')
 
+    .. versionchanged:: NEXT_NETADDR_VERSION
+        Returns ``False`` instead of raising :exc:`AddrFormatError` for empty strings.
+    """
     validity = True
 
     if flags & ZEROFILL:
