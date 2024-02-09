@@ -187,9 +187,6 @@ def test_ipnetwork_v4_constructor():
     assert IPNetwork('192.168/16') == IPNetwork('192.168.0.0/16')
     assert IPNetwork('192.168.0.15') == IPNetwork('192.168.0.15/32')
     assert IPNetwork('192.168') == IPNetwork('192.168.0.0/32')
-    assert IPNetwork('192.168', implicit_prefix=True) == IPNetwork('192.168.0.0/24')
-    assert IPNetwork('192.168', True) == IPNetwork('192.168.0.0/24')
-    assert IPNetwork('10.0.0.1', True) == IPNetwork('10.0.0.1/8')
 
 
 def test_ipaddress_integer_operations_v4():
@@ -407,16 +404,8 @@ def test_ipnetwork_constructor_v4():
     assert IPNetwork(IPNetwork('192.0.2.0/24')) == IPNetwork('192.0.2.0/24')
 
 
-def test_ip_network_cosntructor_implicit_prefix_flag_v4():
-    assert IPNetwork('192.0.2.0', implicit_prefix=True) == IPNetwork('192.0.2.0/24')
-    assert IPNetwork('231.192.0.15', implicit_prefix=True) == IPNetwork('231.192.0.15/4')
-    assert IPNetwork('10', implicit_prefix=True) == IPNetwork('10.0.0.0/8')
-
-
 def test_ipnetwork_constructor_other_flags_v4():
     assert IPNetwork('172.24.200') == IPNetwork('172.24.200.0/32')
-    assert IPNetwork('172.24.200', implicit_prefix=True) == IPNetwork('172.24.200.0/16')
-    assert IPNetwork('172.24.200', implicit_prefix=True, flags=NOHOST) == IPNetwork('172.24.0.0/16')
 
 
 def test_ipnetwork_bad_string_constructor():
