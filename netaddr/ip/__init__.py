@@ -1005,14 +1005,6 @@ class IPNetwork(BaseIP, IPListMixin):
 
         x.x.x.x/y.y.y.y -> 192.0.2.0/0.0.0.255
         x::/y:: -> fe80::/3f:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-
-    .. warning::
-
-        The next release (0.9.0) will contain a backwards incompatible change
-        connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
-        When iterating ``IPNetwork`` and ``IPNetwork.iter_hosts()`` the first
-        addresses in the networks will no longer be excluded and ``broadcast``
-        will be ``None``.
     
     .. versionchanged:: NEXT_NETADDR_VERSION
         Removed the ``implicit_prefix`` switch that used to enable the abbreviated CIDR
@@ -1141,14 +1133,7 @@ class IPNetwork(BaseIP, IPListMixin):
 
     @property
     def broadcast(self):
-        """The broadcast address of this `IPNetwork` object.
-
-        .. warning::
-
-            The next release (0.9.0) will contain a backwards incompatible change
-            connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
-            ``broadcast`` will be ``None`` when dealing with those networks.
-        """
+        """The broadcast address of this `IPNetwork` object."""
         if (self._module.width - self._prefixlen) <= 1:
             return None
         else:
@@ -1455,13 +1440,6 @@ class IPNetwork(BaseIP, IPListMixin):
         - for IPv6, only Subnet-Router anycast address (first address in the \
           network) is excluded as per RFC 4291 section 2.6.1, excepted when using \
           /127 or /128 subnets as per RFC 6164.
-
-        .. warning::
-
-            The next release (0.9.0) will contain a backwards incompatible change
-            connected to handling of RFC 6164 IPv6 addresses (/127 and /128 subnets).
-            When iterating ``IPNetwork`` and ``IPNetwork.iter_hosts()`` the first
-            addresses in the networks will no longer be excluded.
 
         :return: an IPAddress iterator
         """
