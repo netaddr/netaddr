@@ -64,3 +64,15 @@ def test_strategy_inet_pton_behaviour():
         ipv4.str_to_int('0177.1', flags=INET_PTON)
 
     assert ipv4.str_to_int('127.0.0.1', flags=INET_PTON) == 2130706433
+
+
+@pytest.mark.parametrize(
+    ('address', 'flags', 'valid'),
+    [
+        ['', 0, False],
+        ['192', INET_ATON, True],
+        ['127.0.0.1', 0, True],
+    ],
+)
+def test_valid_str(address, flags, valid):
+    assert ipv4.valid_str(address, flags) is valid
