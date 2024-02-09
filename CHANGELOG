@@ -32,6 +32,7 @@ Changed:
 
   This change will affect implicit conversions from ``str`` in all relevant contexts. If you
   need to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
+* Apply the two changes above to :func:`valid_ipv4` as well.
 
 Fixed:
 

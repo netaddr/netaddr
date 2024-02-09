@@ -95,20 +95,11 @@ def valid_str(addr, flags=0):
     .. versionchanged:: NEXT_NETADDR_VERSION
         Returns ``False`` instead of raising :exc:`AddrFormatError` for empty strings.
     """
-    validity = True
-
-    if flags & ZEROFILL:
-        addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
-
     try:
-        if flags & INET_PTON:
-            _inet_pton(AF_INET, addr)
-        else:
-            _inet_aton(addr)
-    except Exception:
-        validity = False
-
-    return validity
+        str_to_int(addr, flags)
+    except AddrFormatError:
+        return False
+    return True
 
 
 def str_to_int(addr, flags=0):
