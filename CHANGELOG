@@ -11,6 +11,8 @@ Removed:
 * Drop support for Python versions lower than 3.7.
 * Remove the flag shorthands: ``N``, ``P`` and ``Z``. Use :data:`NOHOST`, :data:`INET_PTON`
   and :data:`ZEROFILL` instead.
+* Remove abbreviated CIDR format support in :class:`IPNetwork` (``implicit_prefix=True``),
+  use :func:`cidr_abbrev_to_verbose` if you need this behavior.
 
 Changed:
 

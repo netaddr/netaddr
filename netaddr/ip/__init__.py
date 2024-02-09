@@ -920,7 +920,7 @@ class IPListMixin(object):
         return True
 
 
-def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
+def parse_ip_network(module, addr, flags=0):
     if isinstance(addr, tuple):
         #   CIDR integer tuple
         if len(addr) != 2:
@@ -933,9 +933,6 @@ def parse_ip_network(module, addr, implicit_prefix=False, flags=0):
             raise AddrFormatError('invalid prefix for %s tuple!' % module.family_name)
     elif isinstance(addr, str):
         #   CIDR-like string subnet
-        if implicit_prefix:
-            # TODO: deprecate this option in netaddr 0.8.x
-            addr = cidr_abbrev_to_verbose(addr)
 
         if '/' in addr:
             val1, val2 = addr.split('/', 1)
@@ -1009,23 +1006,6 @@ class IPNetwork(BaseIP, IPListMixin):
         x.x.x.x/y.y.y.y -> 192.0.2.0/0.0.0.255
         x::/y:: -> fe80::/3f:ffff:ffff:ffff:ffff:ffff:ffff:ffff
 
-    d) Abbreviated CIDR format (as of netaddr 0.7.x this requires the \
-       optional constructor argument ``implicit_prefix=True``)::
-
-        x       -> 192
-        x/y     -> 10/8
-        x.x/y   -> 192.168/16
-        x.x.x/y -> 192.168.0/24
-
-        which are equivalent to::
-
-        x.0.0.0/y   -> 192.0.0.0/24
-        x.0.0.0/y   -> 10.0.0.0/8
-        x.x.0.0/y   -> 192.168.0.0/16
-        x.x.x.0/y   -> 192.168.0.0/24
-
-       .. deprecated:: 0.10.0
-
     .. warning::
 
         The next release (0.9.0) will contain a backwards incompatible change
@@ -1033,11 +1013,15 @@ class IPNetwork(BaseIP, IPListMixin):
         When iterating ``IPNetwork`` and ``IPNetwork.iter_hosts()`` the first
         addresses in the networks will no longer be excluded and ``broadcast``
         will be ``None``.
+    
+    .. versionchanged:: NEXT_NETADDR_VERSION
+        Removed the ``implicit_prefix`` switch that used to enable the abbreviated CIDR
+        format support, use :func:`cidr_abbrev_to_verbose` if you need this behavior.
     """
 
     __slots__ = ('_prefixlen',)
 
-    def __init__(self, addr, implicit_prefix=False, version=None, flags=0):
+    def __init__(self, addr, version=None, flags=0):
         """
         Constructor.
 
@@ -1046,13 +1030,6 @@ class IPNetwork(BaseIP, IPListMixin):
             (string) format, an tuple containing and integer address and a
             network prefix, or another IPAddress/IPNetwork object (copy
             construction).
-
-        :param implicit_prefix: (optional) if True, the constructor uses
-            classful IPv4 rules to select a default prefix when one is not
-            provided. If False it uses the length of the IP address version.
-            (default: False)
-
-            .. deprecated:: 0.10.0
 
         :param version: (optional) optimizes version detection if specified
             and distinguishes between IPv4 and IPv6 for addresses with an
@@ -1085,25 +1062,21 @@ class IPNetwork(BaseIP, IPListMixin):
             module = addr._module
             prefixlen = module.width
         elif version == 4:
-            value, prefixlen = parse_ip_network(
-                _ipv4, addr, implicit_prefix=implicit_prefix, flags=flags
-            )
+            value, prefixlen = parse_ip_network(_ipv4, addr, flags=flags)
             module = _ipv4
         elif version == 6:
-            value, prefixlen = parse_ip_network(
-                _ipv6, addr, implicit_prefix=implicit_prefix, flags=flags
-            )
+            value, prefixlen = parse_ip_network(_ipv6, addr, flags=flags)
             module = _ipv6
         else:
             if version is not None:
                 raise ValueError('%r is an invalid IP version!' % version)
             try:
                 module = _ipv4
-                value, prefixlen = parse_ip_network(module, addr, implicit_prefix, flags)
+                value, prefixlen = parse_ip_network(module, addr, flags)
             except AddrFormatError:
                 try:
                     module = _ipv6
-                    value, prefixlen = parse_ip_network(module, addr, implicit_prefix, flags)
+                    value, prefixlen = parse_ip_network(module, addr, flags)
                 except AddrFormatError:
                     pass
 
