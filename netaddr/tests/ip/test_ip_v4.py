@@ -347,19 +347,16 @@ def test_ipaddress_integer_constructor_v6():
 
 
 def test_ipaddress_inet_aton_constructor_v4():
-    assert IPAddress('0x7f.0x1') == IPAddress('127.0.0.1')
-    assert IPAddress('0x7f.0x0.0x0.0x1') == IPAddress('127.0.0.1')
-    assert IPAddress('0177.01') == IPAddress('127.0.0.1')
-    assert IPAddress('0x7f.0.01') == IPAddress('127.0.0.1')
+    assert IPAddress('0x7f.0x1', flags=INET_ATON) == IPAddress('127.0.0.1')
+    assert IPAddress('0x7f.0x0.0x0.0x1', flags=INET_ATON) == IPAddress('127.0.0.1')
+    assert IPAddress('0177.01', flags=INET_ATON) == IPAddress('127.0.0.1')
+    assert IPAddress('0x7f.0.01', flags=INET_ATON) == IPAddress('127.0.0.1')
 
     # Partial addresses - pretty weird, but valid ...
-    assert IPAddress('127') == IPAddress('0.0.0.127')
-    assert IPAddress('127') == IPAddress('0.0.0.127')
-    assert IPAddress('127.1') == IPAddress('127.0.0.1')
-    assert IPAddress('127.0.1') == IPAddress('127.0.0.1')
-
-    # Verify explicit INET_ATON is the same as the current default
-    assert IPAddress('127', flags=INET_ATON) == IPAddress('127')
+    assert IPAddress('127', flags=INET_ATON) == IPAddress('0.0.0.127')
+    assert IPAddress('127', flags=INET_ATON) == IPAddress('0.0.0.127')
+    assert IPAddress('127.1', flags=INET_ATON) == IPAddress('127.0.0.1')
+    assert IPAddress('127.0.1', flags=INET_ATON) == IPAddress('127.0.0.1')
 
 
 @pytest.mark.parametrize(
@@ -380,17 +377,21 @@ def test_ipaddress_inet_pton_constructor_v4_rejects_invalid_input(address):
     with pytest.raises(AddrFormatError):
         IPAddress(address, flags=INET_PTON)
 
+    with pytest.raises(AddrFormatError):
+        IPAddress(address)
+
 
 def test_ipaddress_inet_pton_constructor_v4_accepts_valid_input():
     assert IPAddress('10.0.0.1', flags=INET_PTON) == IPAddress('10.0.0.1')
 
 
 def test_ipaddress_constructor_zero_filled_octets_v4():
-    assert IPAddress('010.000.000.001') == IPAddress('8.0.0.1')
-    assert IPAddress('010.000.000.001', flags=ZEROFILL) == IPAddress('10.0.0.1')
-    assert IPAddress('010.000.001', flags=ZEROFILL) == IPAddress('10.0.0.1')
-    # Verify explicit INET_ATON is the same as the current default
+    assert IPAddress('010.000.000.001', flags=INET_ATON) == IPAddress('8.0.0.1')
     assert IPAddress('010.000.000.001', flags=INET_ATON | ZEROFILL) == IPAddress('10.0.0.1')
+    assert IPAddress('010.000.001', flags=INET_ATON | ZEROFILL) == IPAddress('10.0.0.1')
+
+    with pytest.raises(AddrFormatError):
+        assert IPAddress('010.000.001', flags=ZEROFILL)
 
     with pytest.raises(AddrFormatError):
         assert IPAddress('010.000.001', flags=INET_PTON | ZEROFILL)

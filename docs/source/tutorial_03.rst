@@ -145,7 +145,7 @@ More exotic IPSets
 True
 >>> IPAddress("0.0.0.0") in bigone
 True
->>> IPAddress("255.255.255") in bigone
+>>> IPAddress("255.255.255.0") in bigone
 True
 >>> IPNetwork("10.0.0.0/24") in bigone
 True

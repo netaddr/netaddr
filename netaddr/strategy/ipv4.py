@@ -19,7 +19,7 @@ else:
     #   All other cases, use all functions from the socket module.
     from socket import inet_pton as _inet_pton, AF_INET
 
-from netaddr.core import AddrFormatError, ZEROFILL, INET_PTON
+from netaddr.core import AddrFormatError, ZEROFILL, INET_ATON, INET_PTON
 
 from netaddr.strategy import (
     valid_words as _valid_words,
@@ -122,13 +122,14 @@ def str_to_int(addr, flags=0):
     :return: The equivalent unsigned integer for a given IPv4 address.
     """
     error = AddrFormatError('%r is not a valid IPv4 address string!' % (addr,))
+    pton_mode = flags & INET_PTON or not flags & INET_ATON
     if flags & ZEROFILL:
         addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
-    elif flags & INET_PTON and any(len(p) > 1 and p.startswith('0') for p in addr.split('.')):
+    elif pton_mode and any(len(p) > 1 and p.startswith('0') for p in addr.split('.')):
         raise error
 
     try:
-        if flags & INET_PTON:
+        if pton_mode:
             return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
         else:
             return _struct.unpack('>I', _inet_aton(addr))[0]
