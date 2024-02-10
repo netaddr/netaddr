@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'netaddr'
-copyright = '2008 by David P. D. Moss, 2020 netaddr contributors. All rights reserved.'
+copyright = '2008 David P. D. Moss, 2020 netaddr contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
