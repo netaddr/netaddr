@@ -13,7 +13,7 @@ netaddr supports the following Python versions (CPython and PyPy):
 * 3.11
 * 3.12
 
-Support for the following versions has been removed in NEXT_NETADDR_VERSION:
+Support for the following versions has been removed in 1.0.0:
 
 * 2.7
 * 3.5

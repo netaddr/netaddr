@@ -6,6 +6,12 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+--------------
+Release: 1.0.0
+--------------
+
+Date: 2024-02-10
+
 Removed:
 
 * Drop support for Python versions lower than 3.7.

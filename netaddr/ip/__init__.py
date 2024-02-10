@@ -282,7 +282,7 @@ class IPAddress(BaseIP):
               >>> IPAddress('010.020.030.040', flags=INET_PTON | ZEROFILL)
               IPAddress('10.20.30.40')
 
-        .. versionchanged:: NEXT_NETADDR_VERSION
+        .. versionchanged:: 1.0.0
             Changed the default IPv4 parsing mode from :data:`INET_ATON` to :data:`INET_PTON`.
         """
         super(IPAddress, self).__init__()
@@ -959,7 +959,7 @@ class IPNetwork(BaseIP, IPListMixin):
         x.x.x.x/y.y.y.y -> 192.0.2.0/0.0.0.255
         x::/y:: -> fe80::/3f:ffff:ffff:ffff:ffff:ffff:ffff:ffff
     
-    .. versionchanged:: NEXT_NETADDR_VERSION
+    .. versionchanged:: 1.0.0
         Removed the ``implicit_prefix`` switch that used to enable the abbreviated CIDR
         format support, use :func:`cidr_abbrev_to_verbose` if you need this behavior.
     """

@@ -57,7 +57,7 @@ The following constants are used by the various *flags* arguments on netaddr cla
 
    See the :meth:`IPAddress.__init__` documentation for details.
 
-   .. versionchanged:: NEXT_NETADDR_VERSION
+   .. versionchanged:: 1.0.0
         Started rejecting leading zeros regardless of the platform (it was previously allowed
         on some).
 
