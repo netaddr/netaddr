@@ -30,6 +30,7 @@ keywords = [
     "EUI-64",
 ]
 license = {text = "BSD License"}
+requires-python = ">=3.7"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",

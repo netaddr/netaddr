@@ -6,6 +6,10 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Added:
+
+* Add the required Python version to the package metadata (GH :issue:`365`).
+
 Fixed:
 
 * Fix ``IPNetwork(...) in IPRange(...)`` false negatives (GH :issue:`157`).
