@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.10"
 sphinx = "^7.2.6"
 furo = "^2023.9.10"
+sphinx-issues = "^4.0.0"
 
 
 [tool.poetry.group.autobuild.dependencies]

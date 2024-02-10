@@ -31,6 +31,8 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
+
+    'sphinx_issues',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -270,3 +272,5 @@ rst_prolog = """
 (``::ffff:0:0/96``, RFC 4291). If you need to treat them as if they were their IPv4 counterparts \
 take a look at the :meth:`~netaddr.IPAddress.to_canonical` method.
 """
+
+issues_github_path = 'netaddr/netaddr'
