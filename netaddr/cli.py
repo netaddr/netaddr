@@ -30,7 +30,7 @@ netaddr shell %s - %s
     try:
         from IPython.terminal.embed import InteractiveShellEmbed
 
-        ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg)
+        ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg, user_ns=globals())
     except ImportError:
         sys.stderr.write('IPython (http://ipython.scipy.org/) not found!\n')
         sys.exit(1)
