@@ -495,20 +495,6 @@ True
 >>> IPAddress('ff00::1').is_multicast()
 True
 
-^^^^^^^
-Private
-^^^^^^^
-
-Found on intranets and used behind NAT routers.
-
->>> IPAddress('172.24.0.1').is_private()
-True
->>> IPAddress('10.0.0.1').is_private()
-True
->>> IPAddress('192.168.0.1').is_private()
-True
->>> IPAddress('fc00::1').is_private()
-True
 
 ^^^^^^^^
 Reserved
@@ -519,17 +505,6 @@ Addresses in reserved ranges are not available for general use.
 >>> IPAddress('253.0.0.1').is_reserved()
 True
 
-^^^^^^
-Public
-^^^^^^
-
-Addresses accessible via the Internet.
-
-.. note:: circa the end of 2011 all IPv4 addresses had been allocated to the Regional Internet Registrars. A booming after market in IPv4 addresses has started. There is still plenty of life left in this protocol version yet :)
-
->>> ip = IPAddress('62.125.24.5')
->>> ip.is_unicast() and not ip.is_private()
-True
 
 ^^^^^^^^
 Netmasks

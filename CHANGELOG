@@ -13,6 +13,23 @@ Removed:
   and :data:`ZEROFILL` instead.
 * Remove abbreviated CIDR format support in :class:`IPNetwork` (``implicit_prefix=True``),
   use :func:`cidr_abbrev_to_verbose` if you need this behavior.
+* Remove the ``IPAddress.is_private`` method.
+
+  There are more precise replacements for subset of the addresses that used to handled by ``is_private``:
+
+  * :meth:`IPAddress.is_link_local`
+  * :meth:`IPAddress.is_ipv4_private_use`
+  * :meth:`IPAddress.is_ipv6_unique_local`
+  * :meth:`IPAddress.is_global`
+
+  The following address blocks used to be handled by ``is_private`` have no dedicated
+  convenience methods and you'll have to handle them manually or request a method
+  addition:
+
+  * ``100.64.0.0/10`` – Shared Address Space
+  * ``192.0.0.0/24`` – IETF Protocol Assignments (watch out – there are exceptions in there)
+  * ``198.18.0.0/15`` – Benchmarking
+  * ``239.0.0.0``-``239.255.255.255`` – ``240.0.0.0/4`` is Reserved, ``239.0.0.0/8`` – unclear
 
 Changed:
 
@@ -101,7 +118,7 @@ Deprecated:
 
   This change will implicit conversions from ``str`` in all relevant contexts. If you need
   to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
-* Deprecate the :meth:`IPAddress.is_private` method. Migration instructions in the
+* Deprecate the ``IPAddress.is_private`` method. Migration instructions in the
   documentation.
 
 Other:

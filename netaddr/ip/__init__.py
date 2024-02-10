@@ -164,49 +164,6 @@ class BaseIP(object):
         elif self._module.version == 6:
             return self in IPV6_LOOPBACK
 
-    def is_private(self):
-        """
-        :return: ``True`` if this IP is for internal/private use only
-            (i.e. non-public), ``False`` otherwise. Reference: RFCs 1918,
-            3330, 4193, 3879 and 2365.
-
-        .. note:: |ipv4_in_ipv6_handling|
-
-        .. deprecated:: 0.10.0
-            The ``is_private`` method has been mixing several different address types together
-            which could lead to unexpected results. There are more precise
-            replacements for subset of the addresses handled by ``is_private`` today:
-
-            * :meth:`is_link_local`
-            * :meth:`is_ipv4_private_use`
-            * :meth:`is_ipv6_unique_local`
-
-            There is also the :meth:`is_global` method that lets you handle all globally
-            reachable (or not) addresses.
-
-            The following address blocks currently handled by ``is_private`` have no
-            convenience methods and you'll have to handle them manually or request a method
-            addition:
-
-            * ``100.64.0.0/10`` – Shared Address Space
-            * ``192.0.0.0/24`` – IETF Protocol Assignments
-            * ``198.18.0.0/15`` – Benchmarking
-            * ``239.0.0.0``-``239.255.255.255``
-        """
-        if self._module.version == 4:
-            for cidr in IPV4_PRIVATEISH:
-                if self in cidr:
-                    return True
-        elif self._module.version == 6:
-            for cidr in IPV6_PRIVATEISH:
-                if self in cidr:
-                    return True
-
-        if self.is_link_local():
-            return True
-
-        return False
-
     def is_link_local(self):
         """
         :return: ``True`` if this IP is link-local address ``False`` otherwise.
@@ -762,10 +719,6 @@ class IPAddress(BaseIP):
 
         Whether or not an address can actually be reached in any local or global context will
         depend on the network configuration and may differ from what this method returns.
-
-        Currently there can be addresses that are neither ``is_global()`` nor :meth:`is_private`.
-        There are also addresses that are both. All things being equal ``is_global()`` should
-        be considered more trustworthy.
 
         Examples:
 
@@ -2032,17 +1985,6 @@ IPV4_PRIVATE_USE = [
     IPNetwork('192.168.0.0/16'),  #  Class B private network local communication (RFC 1918)
 ]
 
-IPV4_PRIVATEISH = tuple(IPV4_PRIVATE_USE) + (
-    IPNetwork('100.64.0.0/10'),  #   Carrier grade NAT (RFC 6598)
-    IPNetwork('192.0.0.0/24'),  #   IANA IPv4 Special Purpose Address Registry (RFC 5736)
-    # protocol assignments
-    # benchmarking
-    IPNetwork(
-        '198.18.0.0/15'
-    ),  #  Testing of inter-network communications between subnets (RFC 2544)
-    IPRange('239.0.0.0', '239.255.255.255'),  #   Administrative Multicast
-)
-
 IPV4_LINK_LOCAL = IPNetwork('169.254.0.0/16')
 
 IPV4_MULTICAST = IPNetwork('224.0.0.0/4')
@@ -2092,11 +2034,6 @@ IPV4_NOT_GLOBALLY_REACHABLE_EXCEPTIONS = [
 IPV6_LOOPBACK = IPNetwork('::1/128')
 
 IPV6_UNIQUE_LOCAL = IPNetwork('fc00::/7')
-
-IPV6_PRIVATEISH = (
-    IPV6_UNIQUE_LOCAL,
-    IPNetwork('fec0::/10'),  #   Site Local Addresses (deprecated - RFC 3879)
-)
 
 IPV6_LINK_LOCAL = IPNetwork('fe80::/10')
 
