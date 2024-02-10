@@ -55,6 +55,7 @@ Fixed:
 
 * Return ``False`` instead of raising :exc:`AddrFormatError` when an empty string is passed
   to :func:`valid_ipv4` or :func:`valid_ipv6`.
+* Fix handling of ``dialect`` provided to :class:`EUI` during copy-construction.
 
 ---------------
 Release: 0.10.1

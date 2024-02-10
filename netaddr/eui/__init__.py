@@ -352,7 +352,7 @@ class EUI(BaseIdentifier):
                 raise ValueError('cannot switch EUI versions using ' 'copy constructor!')
             self._module = addr._module
             self._value = addr._value
-            self.dialect = addr.dialect
+            self.dialect = dialect or addr.dialect
             return
 
         if version is not None:

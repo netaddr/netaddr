@@ -96,6 +96,12 @@ def test_eui_dialect_property_assignment():
     assert str(mac) == '001b77:4954fd'
 
 
+def test_eui_copy_constructor_dialect_support():
+    mac = EUI('00-1B-77-49-54-FD')
+    copy = EUI(mac, dialect=mac_unix_expanded)
+    assert str(copy) == '00:1b:77:49:54:fd'
+
+
 def test_eui_format():
     mac = EUI('00-1B-77-49-54-FD')
     assert mac.format() == '00-1B-77-49-54-FD'
