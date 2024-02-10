@@ -38,7 +38,7 @@ Changed:
 
   If you need to allow and discard leading zeros use the :data:`ZEROFILL` flag.
 
-  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  This change will affect implicit conversions from ``str`` in all relevant contexts. If you need
   to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
 * Stop parsing IPv4 addresses permissively (``inet_aton()``-like) by default.
 
@@ -108,7 +108,7 @@ Deprecated:
 
   If you need to allow and discard leading zeros use the :data:`ZEROFILL` flag.
 
-  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  This change will affect implicit conversions from ``str`` in all relevant contexts. If you need
   to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
 * Deprecate parsing IPv4 addresses permissively (``inet_aton()``-like) by default.
 
@@ -117,7 +117,7 @@ Deprecated:
   If you need to be permissive and parse using ``inet_aton()`` semantics use the
   :data:`INET_ATON` flag.
 
-  This change will implicit conversions from ``str`` in all relevant contexts. If you need
+  This change will affect implicit conversions from ``str`` in all relevant contexts. If you need
   to control the IPv4 parsing mode construct :class:`IPAddress` objects explicitly.
 * Deprecate the ``IPAddress.is_private`` method. Migration instructions in the
   documentation.
