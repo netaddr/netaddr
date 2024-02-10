@@ -6,6 +6,10 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Fixed:
+
+* Fix ``IPNetwork(...) in IPRange(...)`` false negatives (GH :issue:`157`).
+
 --------------
 Release: 1.0.0
 --------------
