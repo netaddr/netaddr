@@ -17,8 +17,6 @@ from netaddr import EUI as MAC
 
 
 def main():
-    argv = sys.argv[1:]
-
     banner = r"""               __            __    __
    ____  ___  / /_____ _____/ /___/ /____
   / __ \/ _ \/ __/ __ `/ __  / __  / ___/
@@ -28,7 +26,6 @@ def main():
 netaddr shell %s - %s
 """ % (netaddr.__version__, __doc__)
     exit_msg = '\nShare and enjoy!'
-    rc_override = None
 
     try:
         from IPython.terminal.embed import InteractiveShellEmbed
