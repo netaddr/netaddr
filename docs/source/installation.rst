@@ -16,7 +16,7 @@ Locating the software
 
 The netaddr project is hosted here on github
 
-    https://github.com/drkjam/netaddr/
+    https://github.com/netaddr/netaddr/
 
 ----------------------------------------
 Installing from the Python Package Index

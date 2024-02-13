@@ -93,7 +93,7 @@ dynamic = ["version"]
 
 [project.urls]
 Download = "https://pypi.org/project/netaddr/"
-Repository = "https://github.com/drkjam/netaddr/"
+Repository = "https://github.com/netaddr/netaddr/"
 Changelog = "https://netaddr.readthedocs.io/en/latest/changes.html"
 
 [project.scripts]
