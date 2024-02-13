@@ -92,9 +92,11 @@ classifiers = [
 dynamic = ["version"]
 
 [project.urls]
+Documentation = "https://netaddr.readthedocs.io/en/latest/"
 Download = "https://pypi.org/project/netaddr/"
 Repository = "https://github.com/netaddr/netaddr/"
 Changelog = "https://netaddr.readthedocs.io/en/latest/changes.html"
+"Issue tracker" = "https://github.com/netaddr/netaddr/issues"
 
 [project.scripts]
 netaddr = "netaddr.cli:main"
