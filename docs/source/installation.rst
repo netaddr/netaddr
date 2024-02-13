@@ -24,6 +24,31 @@ or install IPython directly ::
 
     pip install ipython
 
+--------------------------------------------------------
+Installing using your Linux distribution package manager
+--------------------------------------------------------
+
+Various Linux distributions make netaddr available via their package managers.
+
+.. note::
+
+    The netaddr versions provided by Linux distributions may be outdated.
+
+Refer to your distribution's documentation for installation instructions.
+
+Example commands:
+
+.. code-block:: shell
+
+    # Debian, Ubuntu
+    sudo apt install python3-netaddr
+
+    # Fedora
+    # Base installation
+    sudo dnf install python3-netaddr
+    # The CLI tool
+    sudo dnf install python3-netaddr-shell
+
 --------------------------------
 Installing from a source package
 --------------------------------
