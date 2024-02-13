@@ -11,8 +11,7 @@ import sys
 import netaddr
 
 SHELL_NAMESPACE = {
-    name: getattr(netaddr, name) for name in dir(netaddr) if name in netaddr.__all__
-} | {
+    **{name: getattr(netaddr, name) for name in dir(netaddr) if name in netaddr.__all__},
     #   aliases to save some typing ...
     'IP': netaddr.IPAddress,
     'CIDR': netaddr.IPNetwork,
