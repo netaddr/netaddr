@@ -41,7 +41,6 @@ classifiers = [
     "Intended Audience :: System Administrators",
     "Intended Audience :: Telecommunications Industry",
     "License :: OSI Approved :: BSD License",
-    "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
