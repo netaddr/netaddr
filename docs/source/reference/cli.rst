@@ -16,7 +16,7 @@ Interactive shell
 -----------------
 
 Calling ``netaddr`` without any arguments will launch an interactive, `IPython`_-based shell.
-As such `IPython`_ needs to be installed for the shell to work.
+As such `IPython`_ needs to be :doc:`installed <../installation>` for the shell to work.
 
 The shell comes with all parts of :doc:`the netaddr API <../api>` pre-imported so you can
 interact with it right away, with minimal friction:
