@@ -2,4 +2,4 @@
 Copyright
 =========
 
-.. include:: ../../COPYRIGHT
+.. include:: ../../COPYRIGHT.rst

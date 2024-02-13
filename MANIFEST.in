@@ -1,12 +1,7 @@
-include AUTHORS
-include CHANGELOG
-include COPYRIGHT
-include README.rst
-include LICENSE
+include *.rst
 include Makefile
 include MANIFEST.in
 include release.py
-include THANKS
 
 recursive-include docs/source *.rst *.py
 

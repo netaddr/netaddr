@@ -15,7 +15,7 @@ Here is how to go about releasing a new version of `netaddr`.
   The assumption is the ``master`` branch build is green and everything works correctly
   (we have a CI process in place).
 
-* Update the top-most section in the CHANGELOG with details of all notable
+* Update the top-most section in the CHANGELOG.rst with details of all notable
   changes since the last release that aren't there already.
 
   Set the release date to the current day.
@@ -54,5 +54,5 @@ Here is how to go about releasing a new version of `netaddr`.
 * Create a `GitHub Release <https://github.com/netaddr/netaddr/releases/new>`_ based on
   the tag you just pushed.
 
-  Put the new ``CHANGELOG`` contents there and add the "Full changelog" link at the
+  Put the new ``CHANGELOG.rst`` contents there and add the "Full changelog" link at the
   end (copy and adapt from the previous release).

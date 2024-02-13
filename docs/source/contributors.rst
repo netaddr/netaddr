@@ -2,4 +2,4 @@
 Contributors
 ============
 
-.. include:: ../../THANKS
+.. include:: ../../THANKS.rst
