@@ -32,6 +32,14 @@ authoring <https://diataxis.fr/>`_ and is organized like so:
 
     dev-how-to/index
 
+.. toctree::
+    :maxdepth: 1
+    :hidden:
+    :caption: Project links
+
+    Source code repository <https://github.com/netaddr/netaddr/>
+    PyPI page <https://pypi.org/project/netaddr/>
+
 ------------------
 Indices and tables
 ------------------
