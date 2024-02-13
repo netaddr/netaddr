@@ -6,6 +6,7 @@
 # -----------------------------------------------------------------------------
 """an interactive shell for the netaddr library"""
 
+import argparse
 import sys
 import netaddr
 
@@ -18,15 +19,23 @@ SHELL_NAMESPACE = {
     'MAC': netaddr.EUI,
 }
 
-
-def main():
-    banner = r"""               __            __    __
+ASCII_ART_LOGO = r"""               __            __    __
    ____  ___  / /_____ _____/ /___/ /____
   / __ \/ _ \/ __/ __ `/ __  / __  / ___/
  / / / /  __/ /_/ /_/ / /_/ / /_/ / /
 /_/ /_/\___/\__/\__,_/\__,_/\__,_/_/
+"""
 
-netaddr shell %s - %s
+
+def main():
+    print(ASCII_ART_LOGO)
+
+    parser = argparse.ArgumentParser(
+        prog='netaddr', description='The netaddr CLI tool', epilog='Share and enjoy!'
+    )
+    _args = parser.parse_args()
+
+    banner = r"""netaddr shell %s - %s
 """ % (netaddr.__version__, __doc__)
     exit_msg = '\nShare and enjoy!'
 
