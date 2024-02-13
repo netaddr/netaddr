@@ -91,6 +91,9 @@ classifiers = [
 ]
 dynamic = ["version"]
 
+[project.optional-dependencies]
+shell = ['ipython']
+
 [project.urls]
 Documentation = "https://netaddr.readthedocs.io/en/latest/"
 Download = "https://pypi.org/project/netaddr/"
