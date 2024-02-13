@@ -1395,6 +1395,13 @@ class IPNetwork(BaseIP, IPListMixin):
 
         :return: an IPAddress iterator
         """
+        first_usable_address, last_usable_address = self._usable_range()
+        return iter_iprange(
+            IPAddress(first_usable_address, self._module.version),
+            IPAddress(last_usable_address, self._module.version),
+        )
+
+    def _usable_range(self):
         if self.size >= 4:
             # Common logic, first IP is always reserved.
             first_usable_address = self.first + 1
@@ -1404,16 +1411,12 @@ class IPNetwork(BaseIP, IPListMixin):
             else:
                 # IPv6 logic, no broadcast address reserved.
                 last_usable_address = self.last
+            return (first_usable_address, last_usable_address)
         else:
             # If subnet has a size of less than 4, then it is a /31, /32, /127 or /128.
             # Handle them as per RFC 3021 (IPv4) or RFC 6164 (IPv6), and don't reserve
             # first or last IP address.
-            first_usable_address = self.first
-            last_usable_address = self.last
-        return iter_iprange(
-            IPAddress(first_usable_address, self._module.version),
-            IPAddress(last_usable_address, self._module.version),
-        )
+            return (self.first, self.last)
 
     def __str__(self):
         """:return: this IPNetwork in CIDR format"""

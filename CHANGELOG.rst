@@ -6,6 +6,10 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Added:
+
+* Add CLI tool subcommand to display :ref:`cli-network-info`.
+
 Changed:
 
 * Support running :ref:`interactive-shell` without IPython installed.
