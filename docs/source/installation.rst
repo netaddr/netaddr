@@ -2,21 +2,7 @@
 How to install netaddr
 ======================
 
-netaddr is available in various formats :
-
-- source code repository
-- source distribution packages (tarball and zip formats)
-- Python universal wheel packages
-
 Various Linux distributions make it available via their package managers.
-
----------------------
-Locating the software
----------------------
-
-The netaddr project is hosted here on github
-
-    https://github.com/netaddr/netaddr/
 
 ----------------------------------------
 Installing from the Python Package Index
