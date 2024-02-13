@@ -2,7 +2,7 @@
 netaddr documentation
 =====================
 
-A Python library for representing and manipulating layer 3 (IP) and layer 2 (MAC)
+A Python library and a :doc:`reference/cli` for representing and manipulating layer 3 (IP) and layer 2 (MAC)
 network addresses.
 
 netaddr's documentation uses the `Diátaxis approach to technical documentation
