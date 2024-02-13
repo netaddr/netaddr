@@ -6,7 +6,6 @@
 # -----------------------------------------------------------------------------
 """an interactive shell for the netaddr library"""
 
-import os
 import sys
 import netaddr
 
