@@ -9,11 +9,15 @@
 import os
 import sys
 import netaddr
-from netaddr import *
 
-#   aliases to save some typing ...
-from netaddr import IPAddress as IP, IPNetwork as CIDR
-from netaddr import EUI as MAC
+SHELL_NAMESPACE = {
+    name: getattr(netaddr, name) for name in dir(netaddr) if name in netaddr.__all__
+} | {
+    #   aliases to save some typing ...
+    'IP': netaddr.IPAddress,
+    'CIDR': netaddr.IPNetwork,
+    'MAC': netaddr.EUI,
+}
 
 
 def main():
@@ -30,7 +34,7 @@ netaddr shell %s - %s
     try:
         from IPython.terminal.embed import InteractiveShellEmbed
 
-        ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg, user_ns=globals())
+        ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg, user_ns=SHELL_NAMESPACE)
     except ImportError:
         sys.stderr.write('IPython (http://ipython.scipy.org/) not found!\n')
         sys.exit(1)
