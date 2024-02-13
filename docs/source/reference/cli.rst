@@ -10,6 +10,8 @@ The netaddr package includes a ``netaddr`` CLI application.
 
     If you want a stable interface use the :doc:`programmatic API <../api>`.
 
+.. _interactive-shell:
+
 Interactive shell
 -----------------
 
