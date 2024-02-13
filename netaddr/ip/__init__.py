@@ -582,7 +582,7 @@ class IPAddress(BaseIP):
 
     def ipv6(self, ipv4_compatible=False):
         """
-        .. note:: The IPv4-mapped IPv6 address format is now considered \
+        .. note:: The IPv4-compatible IPv6 address format is now considered \
             deprecated. See RFC 4291 or later for details.
 
         :param ipv4_compatible: If ``True`` returns an IPv4-mapped address
