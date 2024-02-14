@@ -9,6 +9,7 @@ Date: not released yet
 Added:
 
 * Add the required Python version to the package metadata (GH :issue:`365`).
+* Add :func:`expand_partial_ipv4_address` to the public API.
 
 Fixed:
 
@@ -22,6 +23,7 @@ Fixed:
   If you need the old behavior use :func:`expand_partial_ipv4_address`.
 
   Related GH issue: :issue:`110`.
+* Fixed an incorrect license classifier in the package metadata.
 
 --------------
 Release: 1.0.0
