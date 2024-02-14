@@ -829,7 +829,10 @@ class IPListMixin(object):
                 item = iter([IPAddress(self.first, self._module.version)])
             else:
                 start_ip = IPAddress(self.first + start, self._module.version)
-                end_ip = IPAddress(self.first + stop - step, self._module.version)
+                # We want to stop one short of stop – it depends on which way are we slicing
+                # (increasing or decreasing).
+                one_before_stop = stop + (1 if step < 0 else -1)
+                end_ip = IPAddress(self.first + one_before_stop, self._module.version)
                 item = iter_iprange(start_ip, end_ip, step)
         else:
             try:

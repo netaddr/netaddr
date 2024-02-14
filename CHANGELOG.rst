@@ -13,6 +13,7 @@ Added:
 Fixed:
 
 * Fix ``IPNetwork(...) in IPRange(...)`` false negatives (GH :issue:`157`).
+* Fix a few :class:`IPNetwork` slicing edge cases (GH :issue:`214`).
 
 --------------
 Release: 1.0.0
