@@ -205,6 +205,7 @@ The following are a set of useful helper functions related to the various format
 .. autofunction:: netaddr.cidr_abbrev_to_verbose
 .. autofunction:: netaddr.cidr_exclude
 .. autofunction:: netaddr.cidr_merge
+.. autofunction:: netaddr.expand_partial_ipv4_address
 .. autofunction:: netaddr.iprange_to_cidrs
 .. autofunction:: netaddr.iter_iprange
 .. autofunction:: netaddr.iter_unique_ips
