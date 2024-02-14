@@ -2,6 +2,8 @@ include *.rst
 include Makefile
 include MANIFEST.in
 include release.py
+include requirements-dev.*
+include pytest.ini
 
 recursive-include docs/source *.rst *.py
 
@@ -22,3 +24,10 @@ recursive-include netaddr/tests/ip *.py
 recursive-include netaddr/tests/strategy *.py
 
 include netaddr/tools/netaddr
+
+include docs/Makefile
+include docs/make.bat
+include docs/poetry.lock
+include docs/pyproject.toml
+include docs/requirements.txt
+recursive-include docs *.css
