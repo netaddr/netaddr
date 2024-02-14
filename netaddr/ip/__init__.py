@@ -896,15 +896,7 @@ def parse_ip_network(module, addr, flags=0):
             val1 = addr
             val2 = None
 
-        try:
-            ip = IPAddress(val1, module.version, flags=INET_PTON)
-        except AddrFormatError:
-            if module.version == 4:
-                #   Try a partial IPv4 network address...
-                expanded_addr = _ipv4.expand_partial_address(val1)
-                ip = IPAddress(expanded_addr, module.version, flags=INET_PTON)
-            else:
-                raise AddrFormatError('invalid IPNetwork address %s!' % addr)
+        ip = IPAddress(val1, module.version, flags=INET_PTON)
         value = ip._value
 
         try:
@@ -965,6 +957,10 @@ class IPNetwork(BaseIP, IPListMixin):
     .. versionchanged:: 1.0.0
         Removed the ``implicit_prefix`` switch that used to enable the abbreviated CIDR
         format support, use :func:`cidr_abbrev_to_verbose` if you need this behavior.
+
+    .. versionchanged:: NEXT_NETADDR_VERSION
+        Removed partial IPv4 address support accidentally left when making 1.0.0 release.
+        Use :func:`expand_partial_ipv4_address` if you need this behavior.
     """
 
     __slots__ = ('_prefixlen',)

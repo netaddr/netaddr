@@ -14,6 +14,14 @@ Fixed:
 
 * Fix ``IPNetwork(...) in IPRange(...)`` false negatives (GH :issue:`157`).
 * Fix a few :class:`IPNetwork` slicing edge cases (GH :issue:`214`).
+* Fix support for partial IP addresses accidentally left in :class:`IPNetwork` in 1.0.0.
+
+  When I removed the ``implicit_prefix`` switch I missed the fact that there was some
+  partial IPv4 address expansion triggered unconditionally.
+
+  If you need the old behavior use :func:`expand_partial_ipv4_address`.
+
+  Related GH issue: :issue:`110`.
 
 --------------
 Release: 1.0.0
