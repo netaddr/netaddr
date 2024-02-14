@@ -102,35 +102,19 @@ def test_ipnetwork_index_operations_v4():
     assert ip[-1] == IPAddress('192.0.2.23')
 
 
-def test_ipnetwork_slice_operations_v4():
+@pytest.mark.parametrize(
+    ['start', 'stop', 'step'],
+    [
+        [None, None, -1],
+        [-1, None, -1],
+        [0, 4, None],
+    ],
+)
+def test_ipnetwork_slice_operations_v4(start, stop, step):
     ip = IPNetwork('192.0.2.16/29')
-
-    assert isinstance(ip[0:4], types.GeneratorType)
-
-    assert list(ip[0:4]) == [
-        IPAddress('192.0.2.16'),
-        IPAddress('192.0.2.17'),
-        IPAddress('192.0.2.18'),
-        IPAddress('192.0.2.19'),
-    ]
-
-    assert list(ip[0::2]) == [
-        IPAddress('192.0.2.16'),
-        IPAddress('192.0.2.18'),
-        IPAddress('192.0.2.20'),
-        IPAddress('192.0.2.22'),
-    ]
-
-    assert list(ip[-1::-1]) == [
-        IPAddress('192.0.2.23'),
-        IPAddress('192.0.2.22'),
-        IPAddress('192.0.2.21'),
-        IPAddress('192.0.2.20'),
-        IPAddress('192.0.2.19'),
-        IPAddress('192.0.2.18'),
-        IPAddress('192.0.2.17'),
-        IPAddress('192.0.2.16'),
-    ]
+    result = ip[start:stop:step]
+    assert isinstance(result, types.GeneratorType)
+    assert list(result) == list(ip)[start:stop:step]
 
 
 def test_ipnetwork_sort_order():
