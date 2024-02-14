@@ -6,9 +6,9 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
--------------
+--------------
 Release: 1.1.0
--------------
+--------------
 
 Date: 2024-02-15
 
