@@ -958,7 +958,7 @@ class IPNetwork(BaseIP, IPListMixin):
         Removed the ``implicit_prefix`` switch that used to enable the abbreviated CIDR
         format support, use :func:`cidr_abbrev_to_verbose` if you need this behavior.
 
-    .. versionchanged:: NEXT_NETADDR_VERSION
+    .. versionchanged:: 1.1.0
         Removed partial IPv4 address support accidentally left when making 1.0.0 release.
         Use :func:`expand_partial_ipv4_address` if you need this behavior.
     """

@@ -6,6 +6,12 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+-----
+1.1.0
+-----
+
+Date: 2024-02-15
+
 Added:
 
 * Add the required Python version to the package metadata (GH :issue:`365`).
