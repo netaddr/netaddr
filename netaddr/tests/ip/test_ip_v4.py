@@ -107,6 +107,8 @@ def test_ipnetwork_index_operations_v4():
     [
         [None, None, -1],
         [-1, None, -1],
+        [0, None, 4],
+        [0, -1, None],
         [0, 4, None],
     ],
 )
@@ -213,29 +215,6 @@ def test_ipaddress_binary_operations_v4():
     assert IPAddress('1.2.3.4').packed == '\x01\x02\x03\x04'.encode('ascii')
 
 
-def test_ipnetwork_slices_v4():
-    assert list(IPNetwork('192.0.2.0/29')[0:-1]) == [
-        IPAddress('192.0.2.0'),
-        IPAddress('192.0.2.1'),
-        IPAddress('192.0.2.2'),
-        IPAddress('192.0.2.3'),
-        IPAddress('192.0.2.4'),
-        IPAddress('192.0.2.5'),
-        IPAddress('192.0.2.6'),
-    ]
-
-    assert list(IPNetwork('192.0.2.0/29')[::-1]) == [
-        IPAddress('192.0.2.7'),
-        IPAddress('192.0.2.6'),
-        IPAddress('192.0.2.5'),
-        IPAddress('192.0.2.4'),
-        IPAddress('192.0.2.3'),
-        IPAddress('192.0.2.2'),
-        IPAddress('192.0.2.1'),
-        IPAddress('192.0.2.0'),
-    ]
-
-
 def test_iterhosts_v4():
     assert list(IPNetwork('192.0.2.0/29').iter_hosts()) == [
         IPAddress('192.0.2.1'),
@@ -274,23 +253,6 @@ def test_ipnetwork_equality_v4():
     assert IPNetwork('192.0.2.65/255.255.254.0') == IPNetwork('192.0.2.65/23')
     assert IPNetwork('192.0.2.65/255.255.255.0') != IPNetwork('192.0.2.0/23')
     assert IPNetwork('192.0.2.65/255.255.254.0') != IPNetwork('192.0.2.65/24')
-
-
-def test_ipnetwork_slicing_v4():
-    ip = IPNetwork('192.0.2.0/23')
-
-    assert ip.first == 3221225984
-    assert ip.last == 3221226495
-
-    assert ip[0] == IPAddress('192.0.2.0')
-    assert ip[-1] == IPAddress('192.0.3.255')
-
-    assert list(ip[::128]) == [
-        IPAddress('192.0.2.0'),
-        IPAddress('192.0.2.128'),
-        IPAddress('192.0.3.0'),
-        IPAddress('192.0.3.128'),
-    ]
 
 
 def test_ip_network_membership_v4():
