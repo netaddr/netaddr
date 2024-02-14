@@ -19,7 +19,7 @@ Fixed:
   When I removed the ``implicit_prefix`` switch I missed the fact that there was some
   partial IPv4 address expansion triggered unconditionally.
 
-  If you need the old behavior use :func:`netaddr.expand_partial_ipv4_address`.
+  If you need the old behavior use :func:`expand_partial_ipv4_address`.
 
   Related GH issue: :issue:`110`.
 
