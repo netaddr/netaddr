@@ -248,6 +248,8 @@ def expand_partial_address(addr):
 
     >>> expand_partial_address('1.2')
     '1.2.0.0'
+
+    .. versionadded:: NEXT_NETADDR_VERSION
     """
     tokens = []
 
