@@ -154,7 +154,6 @@ def test_ipaddress_and_ipnetwork_canonical_sort_order_by_version():
         IPNetwork('192.0.3.0/24'),
         IPNetwork('192.0.2.0/24'),
         IPNetwork('fe80::/64'),
-        IPNetwork('172.24/12'),
         IPAddress('10.0.0.1'),
     ]
 
@@ -163,7 +162,6 @@ def test_ipaddress_and_ipnetwork_canonical_sort_order_by_version():
 
     assert ip_list == [
         IPAddress('10.0.0.1'),
-        IPNetwork('172.24.0.0/12'),
         IPNetwork('192.0.2.0/24'),
         IPNetwork('192.0.2.128/28'),
         IPAddress('192.0.2.130'),
@@ -174,9 +172,7 @@ def test_ipaddress_and_ipnetwork_canonical_sort_order_by_version():
 
 
 def test_ipnetwork_v4_constructor():
-    assert IPNetwork('192.168/16') == IPNetwork('192.168.0.0/16')
     assert IPNetwork('192.168.0.15') == IPNetwork('192.168.0.15/32')
-    assert IPNetwork('192.168') == IPNetwork('192.168.0.0/32')
 
 
 def test_ipaddress_integer_operations_v4():
@@ -352,10 +348,6 @@ def test_ipnetwork_constructor_v4():
     assert IPNetwork('192.0.2.0/0.0.0.255') == IPNetwork('192.0.2.0/24')
     assert IPNetwork(IPNetwork('192.0.2.0/24')) == IPNetwork('192.0.2.0/24')
     assert IPNetwork(IPNetwork('192.0.2.0/24')) == IPNetwork('192.0.2.0/24')
-
-
-def test_ipnetwork_constructor_other_flags_v4():
-    assert IPNetwork('172.24.200') == IPNetwork('172.24.200.0/32')
 
 
 def test_ipnetwork_bad_string_constructor():

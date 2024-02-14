@@ -342,13 +342,11 @@ For convenience, you are able to sort IP subnets at the same time as addresses a
 ... IPNetwork('192.0.3.0/24'),
 ... IPNetwork('192.0.2.0/24'),
 ... IPNetwork('fe80::/64'),
-... IPAddress('::'),
-... IPNetwork('172.24/12')]
+... IPAddress('::')]
 >>> random.shuffle(ip_list)
 >>> ip_list.sort()
 >>> pprint.pprint(ip_list)
 [IPAddress('10.0.0.1'),
- IPNetwork('172.24.0.0/12'),
  IPNetwork('192.0.2.0/24'),
  IPNetwork('192.0.2.128/28'),
  IPAddress('192.0.2.130'),
