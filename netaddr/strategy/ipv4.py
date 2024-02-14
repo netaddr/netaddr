@@ -246,6 +246,8 @@ def expand_partial_address(addr):
 
     :return: an expanded IP address in presentation format (x.x.x.x)
 
+    >>> expand_partial_address('1.2')
+    '1.2.0.0'
     """
     tokens = []
 

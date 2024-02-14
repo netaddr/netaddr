@@ -30,6 +30,7 @@ __all__ = [
     'cidr_abbrev_to_verbose',
     'cidr_exclude',
     'cidr_merge',
+    'expand_partial_ipv4_address',
     'iprange_to_cidrs',
     'iter_iprange',
     'iter_unique_ips',
@@ -116,7 +117,10 @@ from netaddr.ip.rfc1924 import base85_to_ipv6, ipv6_to_base85
 
 from netaddr.eui import EUI, IAB, OUI
 
-from netaddr.strategy.ipv4 import valid_str as valid_ipv4
+from netaddr.strategy.ipv4 import (
+    expand_partial_address as expand_partial_ipv4_address,
+    valid_str as valid_ipv4,
+)
 
 from netaddr.strategy.ipv6 import valid_str as valid_ipv6, ipv6_compact, ipv6_full, ipv6_verbose
 
