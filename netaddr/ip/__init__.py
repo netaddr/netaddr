@@ -960,7 +960,7 @@ class IPNetwork(BaseIP, IPListMixin):
 
     .. versionchanged:: NEXT_NETADDR_VERSION
         Removed partial IPv4 address support accidentally left when making 1.0.0 release.
-        Use :func:`netaddr.expand_partial_ipv4_address` if you need this behavior.
+        Use :func:`expand_partial_ipv4_address` if you need this behavior.
     """
 
     __slots__ = ('_prefixlen',)
