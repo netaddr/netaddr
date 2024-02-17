@@ -15,8 +15,10 @@ The netaddr package includes a ``netaddr`` CLI application.
 Interactive shell
 -----------------
 
-Calling ``netaddr`` without any arguments will launch an interactive, `IPython`_-based shell.
-As such `IPython`_ needs to be :doc:`installed <../installation>` for the shell to work.
+Calling ``netaddr`` without any arguments will launch an interactive shell.
+
+The shell uses `IPython`_ if available or the built-in Python REPL otherwise. The IPython REPL
+has more features and offers nicer experience overall.
 
 The shell comes with all parts of :doc:`the netaddr API <../api>` pre-imported so you can
 interact with it right away, with minimal friction:
@@ -36,5 +38,8 @@ interact with it right away, with minimal friction:
     Out[1]: True
 
     In [2]:
+
+.. versionchanged:: NEXT_NETADDR_VERSION
+    Made IPython an optional dependency.
 
 .. _IPython: https://pypi.org/project/ipython/

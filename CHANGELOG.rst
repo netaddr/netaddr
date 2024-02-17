@@ -6,6 +6,10 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Changed:
+
+* Support running :ref:`interactive-shell` without IPython installed.
+
 --------------
 Release: 1.1.0
 --------------

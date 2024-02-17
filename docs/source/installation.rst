@@ -15,8 +15,8 @@ https://pypi.org/project/pip and run the following command ::
 
     pip install netaddr
 
-If you want to use the :ref:`IPython-based interactive shell <interactive-shell>` you need to install the
-package like ::
+If you want better the :ref:`interactive-shell`  experience you can install the extra
+IPython dependency like ::
 
     pip install 'netaddr[shell]'
 

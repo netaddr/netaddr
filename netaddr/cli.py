@@ -41,12 +41,17 @@ def main():
     try:
         from IPython.terminal.embed import InteractiveShellEmbed
 
-        ipshell = InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg, user_ns=SHELL_NAMESPACE)
+        def shell(namespace, banner, exit_msg):
+            InteractiveShellEmbed(banner1=banner, exit_msg=exit_msg, user_ns=SHELL_NAMESPACE)()
     except ImportError:
-        sys.stderr.write('IPython (http://ipython.scipy.org/) not found!\n')
-        sys.exit(1)
+        notice = 'Using built-in Python REPL. You can install IPython for better experience.'
+        print()
+        import code
 
-    ipshell()
+        def shell(namespace, banner, exit_msg):
+            code.interact('\n'.join([banner, notice, '']), local=namespace, exitmsg=exit_msg)
+
+    shell(locals(), banner, exit_msg)
 
 
 if __name__ == '__main__':
