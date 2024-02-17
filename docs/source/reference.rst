@@ -28,7 +28,5 @@ Layer 2 addresses
     reference/compatibility
     api
     reference/cli
-    changes
     references
-    copyright
-    license
+

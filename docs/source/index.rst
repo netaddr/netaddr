@@ -22,8 +22,6 @@ authoring <https://diataxis.fr/>`_ and is organized like so:
     tutorials
     how-to
     reference
-    authors
-    contributors
 
 .. toctree::
     :maxdepth: 1
@@ -31,6 +29,17 @@ authoring <https://diataxis.fr/>`_ and is organized like so:
     :caption: Developer documentation
 
     dev-how-to/index
+
+.. toctree::
+    :maxdepth: 1
+    :hidden:
+    :caption: Misc
+
+    changes
+    copyright
+    license
+    authors
+    contributors
 
 .. toctree::
     :maxdepth: 1
