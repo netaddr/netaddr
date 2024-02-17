@@ -38,13 +38,9 @@ Here is how to go about releasing a new version of `netaddr`.
 
 * Commit all changes.
 
-* Build the packages and documentation.
+* Build and publish the package::
 
-    `make dist`
-
-* Upload all built packages to PyPI (currently drkjam and jstasiak can do this)::
-
-    twine upload dist/*
+    make build-and-publish
 
 * Tag the release and sync it to remote repo.
 
