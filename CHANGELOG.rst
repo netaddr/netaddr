@@ -6,6 +6,12 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+--------------
+Release: 1.2.0
+--------------
+
+Date: 2024-02-17
+
 Added:
 
 * Add CLI tool subcommand to display :ref:`cli-network-info`.

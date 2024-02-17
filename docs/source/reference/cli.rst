@@ -57,7 +57,7 @@ interact with it right away, with minimal friction:
 
     In [2]:
 
-.. versionchanged:: NEXT_NETADDR_VERSION
+.. versionchanged:: 1.2.0
     Made IPython an optional dependency.
 
 .. _IPython: https://pypi.org/project/ipython/
