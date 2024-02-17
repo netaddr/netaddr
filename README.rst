@@ -33,8 +33,8 @@ Layer 2 addresses
 -  looking up IEEE organisational information (OUI, IAB)
 -  generating derived IPv6 addresses
 
-Documentation: https://netaddr.readthedocs.io/en/latest/
-Source code repository <https://github.com/netaddr/netaddr/>
+| Documentation: https://netaddr.readthedocs.io/en/latest/
+| Source code repository: https://github.com/netaddr/netaddr/
 PyPI page: https://pypi.org/project/netaddr/
 
 Share and enjoy!
