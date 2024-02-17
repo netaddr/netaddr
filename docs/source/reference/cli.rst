@@ -10,6 +10,24 @@ The netaddr package includes a ``netaddr`` CLI application.
 
     If you want a stable interface use the :doc:`programmatic API <../api>`.
 
+To see the usage ::
+
+    % netaddr --help
+                   __            __    __
+       ____  ___  / /_____ _____/ /___/ /____
+      / __ \/ _ \/ __/ __ `/ __  / __  / ___/
+     / / / /  __/ /_/ /_/ / /_/ / /_/ / /
+    /_/ /_/\___/\__/\__,_/\__,_/\__,_/_/
+
+    usage: netaddr [-h]
+
+    The netaddr CLI tool
+
+    options:
+    -h, --help  show this help message and exit
+
+    Share and enjoy!
+
 .. _interactive-shell:
 
 Interactive shell
