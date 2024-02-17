@@ -18,7 +18,7 @@ https://pypi.org/project/pip and run the following command ::
 If you want better the :ref:`interactive-shell`  experience you can install the extra
 IPython dependency like ::
 
-    pip install 'netaddr[shell]'
+    pip install 'netaddr[nicer-shell]'
 
 or install IPython directly ::
 
