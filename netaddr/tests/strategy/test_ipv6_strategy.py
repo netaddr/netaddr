@@ -94,6 +94,22 @@ def test_strategy_ipv6_is_not_valid_str(str_value):
 
 
 @pytest.mark.parametrize(
+    'str_value',
+    (
+        [],
+        (),
+        {},
+        True,
+        False,
+        192,
+    ),
+)
+def test_valid_str_unexpected_types(str_value):
+    with pytest.raises(TypeError):
+        ipv6.valid_str(str_value)
+
+
+@pytest.mark.parametrize(
     ('long_form', 'short_form'),
     (
         ('FEDC:BA98:7654:3210:FEDC:BA98:7654:3210', 'fedc:ba98:7654:3210:fedc:ba98:7654:3210'),
