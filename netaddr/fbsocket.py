@@ -112,7 +112,7 @@ def _inet_pton_af_inet(ip_string):
     """
     # TODO: optimise this ... use inet_aton with mods if available ...
     if isinstance(ip_string, str):
-        invalid_addr = ValueError('illegal IP address string %r' % ip_string)
+        invalid_addr = OSError('illegal IP address string %r' % ip_string)
         #   Support for hexadecimal and octal octets.
         tokens = ip_string.split('.')
 
@@ -134,7 +134,7 @@ def _inet_pton_af_inet(ip_string):
         else:
             raise invalid_addr
 
-    raise ValueError('argument should be a string, not %s' % type(ip_string))
+    raise TypeError(f'inet_pton() argument 2 must be str, not {type(ip_string)}')
 
 
 def inet_pton(af, ip_string):
@@ -146,12 +146,12 @@ def inet_pton(af, ip_string):
         #   IPv4.
         return _inet_pton_af_inet(ip_string)
     elif af == AF_INET6:
-        invalid_addr = ValueError('illegal IP address string %r' % ip_string)
+        invalid_addr = OSError('illegal IP address string %r' % ip_string)
         #   IPv6.
         values = []
 
         if not isinstance(ip_string, str):
-            raise invalid_addr
+            raise TypeError(f'inet_pton() argument 2 must be str, not {type(ip_string)}')
 
         if 'x' in ip_string:
             #   Don't accept hextets with the 0x prefix.
