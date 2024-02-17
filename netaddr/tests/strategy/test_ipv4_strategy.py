@@ -77,3 +77,19 @@ def test_strategy_inet_pton_behaviour():
 )
 def test_valid_str(address, flags, valid):
     assert ipv4.valid_str(address, flags) is valid
+
+
+@pytest.mark.parametrize(
+    'str_value',
+    (
+        [],
+        (),
+        {},
+        True,
+        False,
+        192,
+    ),
+)
+def test_valid_str_unexpected_types(str_value):
+    with pytest.raises(TypeError):
+        ipv4.valid_str(str_value)
