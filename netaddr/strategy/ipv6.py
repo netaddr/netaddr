@@ -126,7 +126,7 @@ def valid_str(addr, flags=0):
     """
     try:
         _inet_pton(AF_INET6, addr)
-    except:
+    except OSError:
         return False
     return True
 
@@ -142,9 +142,9 @@ def str_to_int(addr, flags=0):
     """
     try:
         packed_int = _inet_pton(AF_INET6, addr)
-        return packed_to_int(packed_int)
-    except Exception:
+    except OSError:
         raise AddrFormatError('%r is not a valid IPv6 address string!' % (addr,))
+    return packed_to_int(packed_int)
 
 
 def int_to_str(int_val, dialect=None):

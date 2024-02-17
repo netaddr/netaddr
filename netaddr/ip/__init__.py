@@ -331,7 +331,7 @@ class IPAddress(BaseIP):
                     for module in _ipv4, _ipv6:
                         try:
                             self._value = module.str_to_int(addr, flags)
-                        except:
+                        except AddrFormatError:
                             continue
                         else:
                             self._module = module

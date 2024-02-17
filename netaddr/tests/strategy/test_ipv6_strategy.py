@@ -87,12 +87,6 @@ def test_strategy_ipv6_valid_str(str_value):
         '',
         'g:h:i:j:k:l:m:n',  # bad chars.
         '0:0:0:0:0:0:0:0:0',  # too long,
-        #   Unexpected types.
-        [],
-        (),
-        {},
-        True,
-        False,
     ),
 )
 def test_strategy_ipv6_is_not_valid_str(str_value):

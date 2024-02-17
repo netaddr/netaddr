@@ -121,11 +121,12 @@ def str_to_int(addr, flags=0):
 
     try:
         if pton_mode:
-            return _struct.unpack('>I', _inet_pton(AF_INET, addr))[0]
+            packed = _inet_pton(AF_INET, addr)
         else:
-            return _struct.unpack('>I', _inet_aton(addr))[0]
-    except Exception:
+            packed = _inet_aton(addr)
+    except OSError:
         raise error
+    return _struct.unpack('>I', packed)[0]
 
 
 def int_to_str(int_val, dialect=None):
