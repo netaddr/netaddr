@@ -7,6 +7,16 @@ NEXT_NETADDR_VERSION
 Date: not released yet
 
 --------------
+Release: 1.2.1
+--------------
+
+Date: 2024-02-17
+
+Fixed:
+
+* Fix bad version 1.2.0 upload to PyPI – now yanked. No changes to the package.
+
+--------------
 Release: 1.2.0
 --------------
 
