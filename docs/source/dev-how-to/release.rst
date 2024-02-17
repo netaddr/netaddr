@@ -15,7 +15,7 @@ Here is how to go about releasing a new version of `netaddr`.
   The assumption is the ``master`` branch build is green and everything works correctly
   (we have a CI process in place).
 
-* Update the top-most section in the CHANGELOG.rst with details of all notable
+* Update the top-most section in the ``CHANGELOG.rst`` with details of all notable
   changes since the last release that aren't there already.
 
   Set the release date to the current day.
@@ -30,8 +30,8 @@ Here is how to go about releasing a new version of `netaddr`.
 * Update the version numbers throughout the source code. That includes changing the currently
   version number in
 
-  - netaddr/__init__.py
-  - docs/source/conf.py
+  - ``netaddr/__init__.py``
+  - ``docs/source/conf.py``
 
   and replacing all ``NEXT_NETADDR_VERSION`` instances with the new version (except for places
   like this file, of course).
@@ -42,10 +42,10 @@ Here is how to go about releasing a new version of `netaddr`.
 
     make build-and-publish
 
-* Tag the release and sync it to remote repo.
+* Tag the release and sync it to remote repo::
 
-    `git tag -a x.y.z -m 'Release version x.y.z'`
-    `make push_tags`
+    git tag -a x.y.z -m 'Release version x.y.z'
+    make push_tags
 
 * Create a `GitHub Release <https://github.com/netaddr/netaddr/releases/new>`_ based on
   the tag you just pushed.
