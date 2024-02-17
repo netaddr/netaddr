@@ -14,6 +14,11 @@ Changed:
 
 * Support running :ref:`interactive-shell` without IPython installed.
 
+Fixed:
+
+* Explicitly raise ``TypeError`` is a non-string value is passed to :func:`valid_ipv4`
+  or :func:`valid_ipv6`.
+
 --------------
 Release: 1.1.0
 --------------
