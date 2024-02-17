@@ -28,7 +28,7 @@ dist: clean
 	python -m build
 
 .PHONY: build-and-publish
-build-and-publish:
+build-and-publish: dist
 	twine upload dist/*
 
 doc:
