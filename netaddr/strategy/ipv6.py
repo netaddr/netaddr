@@ -124,6 +124,8 @@ def valid_str(addr, flags=0):
     .. versionchanged:: 1.0.0
         Returns ``False`` instead of raising :exc:`AddrFormatError` for empty strings.
     """
+    if not isinstance(addr, str):
+        return False
     try:
         _inet_pton(AF_INET6, addr)
     except:
