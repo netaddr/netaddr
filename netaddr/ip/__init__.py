@@ -1000,6 +1000,9 @@ class IPNetwork(BaseIP, IPListMixin):
             value = addr._value
             module = addr._module
             prefixlen = addr._prefixlen
+            if flags & NOHOST:
+                netmask = module.prefix_to_netmask[prefixlen]
+                value = value & netmask
         elif hasattr(addr, '_value'):
             #   IPAddress object copy constructor
             value = addr._value
