@@ -26,6 +26,7 @@ INET_ATON = 8
 #:  Try parsing as a hostmask before netmask. This option only affects all zeros and all ones cases.
 HOSTMASK = 16
 
+
 # -----------------------------------------------------------------------------
 #   Custom exceptions.
 # -----------------------------------------------------------------------------

@@ -13,7 +13,7 @@ from netaddr import (
     AddrFormatError,
     ZEROFILL,
     NOHOST,
-    HOSTMASK
+    HOSTMASK,
 )
 
 
