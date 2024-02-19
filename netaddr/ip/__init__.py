@@ -15,6 +15,7 @@ from netaddr.core import (
     INET_ATON,
     INET_PTON,
     ZEROFILL,
+    HOSTMASK,
 )
 
 from netaddr.strategy import ipv4 as _ipv4, ipv6 as _ipv6
@@ -909,12 +910,20 @@ def parse_ip_network(module, addr, flags=0):
         except ValueError:
             #   Not an integer prefix, try a netmask/hostmask prefix.
             mask = IPAddress(val2, module.version, flags=INET_PTON)
-            if mask.is_netmask():
-                prefixlen = module.netmask_to_prefix[mask._value]
-            elif mask.is_hostmask():
-                prefixlen = module.hostmask_to_prefix[mask._value]
+            if flags & HOSTMASK:
+                if mask.is_hostmask():
+                    prefixlen = module.hostmask_to_prefix[mask._value]
+                elif mask.is_netmask():
+                    prefixlen = module.netmask_to_prefix[mask._value]
+                else:
+                    raise AddrFormatError('addr %r is not a valid IPNetwork!' % addr)
             else:
-                raise AddrFormatError('addr %r is not a valid IPNetwork!' % addr)
+                if mask.is_netmask():
+                    prefixlen = module.netmask_to_prefix[mask._value]
+                elif mask.is_hostmask():
+                    prefixlen = module.hostmask_to_prefix[mask._value]
+                else:
+                    raise AddrFormatError('addr %r is not a valid IPNetwork!' % addr)
 
         if not 0 <= prefixlen <= module.width:
             raise AddrFormatError('invalid prefix for %s address!' % module.family_name)
@@ -981,16 +990,20 @@ class IPNetwork(BaseIP, IPListMixin):
 
         :param flags: (optional) decides which rules are applied to the
             interpretation of the addr value. Currently only supports the
-            :data:`NOHOST` option.
+            :data:`NOHOST` and :data:`HOSTMASK` options.
 
             >>> IPNetwork('1.2.3.4/24')
             IPNetwork('1.2.3.4/24')
             >>> IPNetwork('1.2.3.4/24', flags=NOHOST)
             IPNetwork('1.2.3.0/24')
+            >>> IPNetwork('1.2.3.4/0.0.0.0')
+            IPNetwork('1.2.3.4/0')
+            >>> IPNetwork('1.2.3.4/0.0.0.0', flags=HOSTMASK)
+            IPNetwork('1.2.3.4/32')
         """
         super(IPNetwork, self).__init__()
 
-        if flags & ~NOHOST:
+        if flags & ~(NOHOST | HOSTMASK):
             raise ValueError('Unrecognized IPAddress flags value: %s' % (flags,))
 
         value, prefixlen, module = None, None, None

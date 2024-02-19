@@ -23,6 +23,8 @@ NOHOST = 4
 #: Use legacy ``inet_aton()`` semantics when parsing IPv4.
 INET_ATON = 8
 
+#:  Try parsing as a hostmask before netmask. This option only affects all zeros and all ones cases.
+HOSTMASK = 16
 
 # -----------------------------------------------------------------------------
 #   Custom exceptions.
