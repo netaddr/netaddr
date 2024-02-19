@@ -490,5 +490,4 @@ def test_spanning_cidr_handles_strings():
 
 
 def test_ipnetwork_nohost():
-    assert IPNetwork('192.168.0.1/24', flags=NOHOST).ip == IPAddress('192.168.0.0')
     assert IPNetwork(IPNetwork('192.168.0.1/24'), flags=NOHOST).ip == IPAddress('192.168.0.0')
