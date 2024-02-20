@@ -23,6 +23,7 @@ __all__ = [
     'INET_ATON',
     'INET_PTON',
     'NOHOST',
+    'HOSTMASK',
     'IPAddress',
     'IPNetwork',
     'IPRange',
@@ -81,6 +82,7 @@ from netaddr.core import (
     INET_ATON,
     INET_PTON,
     NOHOST,
+    HOSTMASK,
 )
 
 from netaddr.ip import (

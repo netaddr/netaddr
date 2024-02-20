@@ -2,7 +2,7 @@ import weakref
 
 import pytest
 
-from netaddr import INET_ATON, INET_PTON, IPAddress, IPNetwork, IPRange, NOHOST
+from netaddr import INET_ATON, INET_PTON, IPAddress, IPNetwork, IPRange, NOHOST, HOSTMASK
 
 
 def test_ip_classes_are_weak_referencable():
@@ -11,7 +11,7 @@ def test_ip_classes_are_weak_referencable():
     weakref.ref(IPRange('10.0.0.1', '10.0.0.10'))
 
 
-@pytest.mark.parametrize('flags', [NOHOST, INET_ATON | INET_PTON])
+@pytest.mark.parametrize('flags', [NOHOST, INET_ATON | INET_PTON | HOSTMASK])
 def test_invalid_ipaddress_flags_are_rejected(flags):
     with pytest.raises(ValueError):
         IPAddress('1.2.3.4', flags=flags)

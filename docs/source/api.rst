@@ -81,6 +81,12 @@ The following constants are used by the various *flags* arguments on netaddr cla
 
    See the :meth:`IPNetwork.__init__` documentation for details.
 
+.. data:: netaddr.HOSTMASK
+
+   Try parsing as a hostmask before netmask. This option only affects all zeros and all ones cases.
+
+   See the :meth:`IPNetwork.__init__` documentation for details.
+
 -----------------
 Custom Exceptions
 -----------------
