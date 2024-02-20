@@ -487,3 +487,7 @@ def test_spanning_cidr_handles_strings():
     ]
     assert spanning_cidr(addresses) == IPNetwork('10.0.0.0/29')
     assert spanning_cidr(reversed(addresses)) == IPNetwork('10.0.0.0/29')
+
+
+def test_ipnetwork_nohost():
+    assert IPNetwork(IPNetwork('192.168.0.1/24'), flags=NOHOST).ip == IPAddress('192.168.0.0')
