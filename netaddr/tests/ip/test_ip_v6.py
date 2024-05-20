@@ -1,6 +1,6 @@
 import pickle
 import pytest
-from netaddr import IPAddress, IPNetwork
+from netaddr import IPAddress, IPNetwork, ZEROFILL
 
 
 def test_ipaddress_v6():
@@ -174,3 +174,7 @@ def test_rfc6164_subnets():
     assert IPNetwork('1234::/128').broadcast is None
     assert list(IPNetwork('1234::/128')) == [IPAddress('1234::')]
     assert list(IPNetwork('1234::/128').iter_hosts()) == [IPAddress('1234::')]
+
+
+def test_ipaddress_ignores_zerofill_when_parsing_ipv6():
+    assert IPAddress('fe80::', flags=ZEROFILL)
