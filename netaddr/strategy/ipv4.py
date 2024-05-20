@@ -115,6 +115,8 @@ def str_to_int(addr, flags=0):
     :return: The equivalent unsigned integer for a given IPv4 address.
     """
     error = AddrFormatError('%r is not a valid IPv4 address string!' % (addr,))
+    if ':' in addr:
+        raise error
     pton_mode = flags & INET_PTON or not flags & INET_ATON
     if flags & ZEROFILL:
         addr = '.'.join(['%d' % int(i) for i in addr.split('.')])
