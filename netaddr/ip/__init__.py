@@ -195,14 +195,14 @@ class BaseIP(object):
 
     def is_ipv4_mapped(self):
         """
-        :return: ``True`` if this IP is IPv4-compatible IPv6 address, ``False``
+        :return: ``True`` if this IP is IPv4-mapped IPv6 address, ``False``
             otherwise.
         """
         return self._module.version == 6 and (self._value >> 32) == 0xFFFF
 
     def is_ipv4_compat(self):
         """
-        :return: ``True`` if this IP is IPv4-mapped IPv6 address, ``False``
+        :return: ``True`` if this IP is IPv4-compatible IPv6 address, ``False``
             otherwise.
         """
         return self._module.version == 6 and (self._value >> 32) == 0
@@ -585,8 +585,8 @@ class IPAddress(BaseIP):
         .. note:: The IPv4-compatible IPv6 address format is now considered \
             deprecated. See RFC 4291 or later for details.
 
-        :param ipv4_compatible: If ``True`` returns an IPv4-mapped address
-            (::ffff:x.x.x.x), an IPv4-compatible (::x.x.x.x) address
+        :param ipv4_compatible: If ``True`` returns an IPv4-compatible address
+            (::x.x.x.x), an IPv4-mapped (::ffff:x.x.x.x) address
             otherwise. Default: False (IPv4-mapped).
 
         :return: A numerically equivalent version 6 `IPAddress` object.
@@ -1273,8 +1273,8 @@ class IPNetwork(BaseIP, IPListMixin):
         .. note:: the IPv4-mapped IPv6 address format is now considered \
         deprecated. See RFC 4291 or later for details.
 
-        :param ipv4_compatible: If ``True`` returns an IPv4-mapped address
-            (::ffff:x.x.x.x), an IPv4-compatible (::x.x.x.x) address
+        :param ipv4_compatible: If ``True`` returns an IPv4-compatible address
+            (::x.x.x.x), an IPv4-mapped (::ffff:x.x.x.x) address
             otherwise. Default: False (IPv4-mapped).
 
         :return: A numerically equivalent version 6 `IPNetwork` object.
