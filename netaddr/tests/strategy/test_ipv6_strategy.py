@@ -4,6 +4,7 @@ import pytest
 
 from netaddr import AddrFormatError
 from netaddr.strategy import ipv6
+from netaddr.tests import IS_MUSL
 
 
 def test_strategy_ipv6():
@@ -16,7 +17,8 @@ def test_strategy_ipv6():
     assert ipv6.bits_to_int(b) == i
     assert ipv6.int_to_bits(i) == b
 
-    assert ipv6.int_to_str(i) == s
+    # musl renders IPv4-compatible IPv6 addresses like any other IPv6 address.
+    assert ipv6.int_to_str(i) == s if not IS_MUSL else '::ffff:fffe'
     assert ipv6.str_to_int(s) == i
 
     assert ipv6.int_to_words(i) == t
@@ -126,8 +128,10 @@ def test_strategy_ipv6_string_compaction(long_form, short_form):
 
 
 def test_strategy_ipv6_mapped_and_compatible_ipv4_string_formatting():
-    assert ipv6.int_to_str(0xFFFFFF) == '::0.255.255.255'
-    assert ipv6.int_to_str(0xFFFFFFFF) == '::255.255.255.255'
+    # musl renders IPv4-compatible IPv6 addresses like any other IPv6 address.
+    assert ipv6.int_to_str(0xFFFFFF) == '::0.255.255.255' if not IS_MUSL else '::ff:ffff'
+    assert ipv6.int_to_str(0xFFFFFFFF) == '::255.255.255.255' if not IS_MUSL else '::ffff:ffff'
+
     assert ipv6.int_to_str(0x1FFFFFFFF) == '::1:ffff:ffff'
     assert ipv6.int_to_str(0xFFFFFFFFFFFF) == '::ffff:255.255.255.255'
     assert ipv6.int_to_str(0xFFFEFFFFFFFF) == '::fffe:ffff:ffff'
