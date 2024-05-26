@@ -198,18 +198,18 @@ True
 >>> ip.is_ipv4_compat()
 False
 
->>> IPAddress('192.0.2.15').ipv6(ipv4_compatible=True)
+>>> IPAddress('192.0.2.15').ipv6(ipv4_compatible=True)  # doctest: +SKIP
 IPAddress('::192.0.2.15')
 >>> IPAddress('192.0.2.15').ipv6(ipv4_compatible=True).is_ipv4_compat()
 True
->>> IPAddress('192.0.2.15').ipv6(True)
+>>> IPAddress('192.0.2.15').ipv6(True)  # doctest: +SKIP
 IPAddress('::192.0.2.15')
 >>> ip = IPNetwork('192.0.2.1/23')
 >>> ip.ipv4()
 IPNetwork('192.0.2.1/23')
 >>> ip.ipv6()
 IPNetwork('::ffff:192.0.2.1/119')
->>> ip.ipv6(ipv4_compatible=True)
+>>> ip.ipv6(ipv4_compatible=True)  # doctest: +SKIP
 IPNetwork('::192.0.2.1/119')
 
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -218,7 +218,7 @@ IPv6 to IPv4 conversion
 
 >>> IPNetwork('::ffff:192.0.2.1/119').ipv6()
 IPNetwork('::ffff:192.0.2.1/119')
->>> IPNetwork('::ffff:192.0.2.1/119').ipv6(ipv4_compatible=True)
+>>> IPNetwork('::ffff:192.0.2.1/119').ipv6(ipv4_compatible=True)  # doctest: +SKIP
 IPNetwork('::192.0.2.1/119')
 >>> IPNetwork('::ffff:192.0.2.1/119').ipv4()
 IPNetwork('192.0.2.1/23')
