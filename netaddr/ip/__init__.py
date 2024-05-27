@@ -876,7 +876,7 @@ class IPListMixin(object):
         return True
 
 
-def parse_ip_network(module, addr, flags=0, expand=False):
+def parse_ip_network(module, addr, flags=0, *, expand_partial=False):
     if isinstance(addr, tuple):
         #   CIDR integer tuple
         if len(addr) != 2:
@@ -896,7 +896,7 @@ def parse_ip_network(module, addr, flags=0, expand=False):
             val1 = addr
             val2 = None
 
-        if expand:
+        if expand_partial:
             val1 = module.expand_partial_address(val1)
 
         ip = IPAddress(val1, module.version, flags=INET_PTON)
@@ -972,7 +972,7 @@ class IPNetwork(BaseIP, IPListMixin):
 
     __slots__ = ('_prefixlen',)
 
-    def __init__(self, addr, version=None, flags=0, expand=False):
+    def __init__(self, addr, version=None, flags=0, *, expand_partial=False):
         """
         Constructor.
 
@@ -990,14 +990,14 @@ class IPNetwork(BaseIP, IPListMixin):
             interpretation of the addr value. Currently only supports the
             :data:`NOHOST` option.
 
-        :param expand: (optional) decides whether partial address is
+        :param expand_partial: (optional) decides whether partial address is
             expanded. Currently this is only effective for IPv4 address.
 
             >>> IPNetwork('1.2.3.4/24')
             IPNetwork('1.2.3.4/24')
             >>> IPNetwork('1.2.3.4/24', flags=NOHOST)
             IPNetwork('1.2.3.0/24')
-            >>> IPNetwork('10/24', expand=True)
+            >>> IPNetwork('10/24', expand_partial=True)
             IPNetwork('10.0.0.0/24')
         """
         super(IPNetwork, self).__init__()
@@ -1021,7 +1021,7 @@ class IPNetwork(BaseIP, IPListMixin):
             module = addr._module
             prefixlen = module.width
         elif version == 4:
-            value, prefixlen = parse_ip_network(_ipv4, addr, flags, expand)
+            value, prefixlen = parse_ip_network(_ipv4, addr, flags, expand_partial=expand_partial)
             module = _ipv4
         elif version == 6:
             value, prefixlen = parse_ip_network(_ipv6, addr, flags)
@@ -1031,7 +1031,9 @@ class IPNetwork(BaseIP, IPListMixin):
                 raise ValueError('%r is an invalid IP version!' % version)
             try:
                 module = _ipv4
-                value, prefixlen = parse_ip_network(module, addr, flags, expand)
+                value, prefixlen = parse_ip_network(
+                    module, addr, flags, expand_partial=expand_partial
+                )
             except AddrFormatError:
                 try:
                     module = _ipv6

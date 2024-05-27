@@ -355,12 +355,12 @@ def test_ipnetwork_bad_string_constructor():
         IPNetwork('foo')
 
 
-def test_ipnetwork_expand_v4():
+def test_ipnetwork_expand_partial_v4():
     with pytest.raises(AddrFormatError):
         IPNetwork('10/8')
-    assert IPNetwork('10/8', expand=True) == IPNetwork('10.0.0.0/8')
-    assert IPNetwork('10.20/16', expand=True) == IPNetwork('10.20.0.0/16')
-    assert IPNetwork('10.20.30/24', expand=True) == IPNetwork('10.20.30.0/24')
+    assert IPNetwork('10/8', expand_partial=True) == IPNetwork('10.0.0.0/8')
+    assert IPNetwork('10.20/16', expand_partial=True) == IPNetwork('10.20.0.0/16')
+    assert IPNetwork('10.20.30/24', expand_partial=True) == IPNetwork('10.20.30.0/24')
 
 
 def test_ipaddress_netmask_v4():
