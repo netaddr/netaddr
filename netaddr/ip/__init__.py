@@ -966,7 +966,7 @@ class IPNetwork(BaseIP, IPListMixin):
         Use :func:`expand_partial_ipv4_address` if you need this behavior.
 
     .. versionchanged:: NEXT_NETADDR_VERSION
-        Added the expand flag, which restores the previous behavior to expand
+        Added the expand_partial flag, which restores the previous behavior to expand
         partial IPv4 address
     """
 
