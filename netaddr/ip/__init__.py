@@ -965,7 +965,7 @@ class IPNetwork(BaseIP, IPListMixin):
         Removed partial IPv4 address support accidentally left when making 1.0.0 release.
         Use :func:`expand_partial_ipv4_address` if you need this behavior.
 
-    .. versionchanged:: NEXT_NETADDR_VERSION
+    .. versionchanged:: 1.3.0
         Added the expand_partial flag, which restores the previous behavior to expand
         partial IPv4 address
     """

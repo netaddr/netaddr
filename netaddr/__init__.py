@@ -6,7 +6,7 @@
 """A Python library for manipulating IP and EUI network addresses."""
 
 #: Version info (major, minor, maintenance, status)
-__version__ = '1.2.1'
+__version__ = '1.3.0'
 VERSION = tuple(int(part) for part in __version__.split('.'))
 STATUS = ''
 

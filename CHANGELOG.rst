@@ -7,6 +7,23 @@ NEXT_NETADDR_VERSION
 Date: not released yet
 
 --------------
+Release: 1.3.0
+--------------
+
+Date: 2024-05-28
+
+Added:
+
+* Add partial address expansion in :class:`IPNetwork` via the ``expand_partial`` switch,
+  this enables opting into pre-1.1.0 behavior
+
+Fixed:
+
+* Fix running the test suite on musl systems
+* Fix :class:`IPAddress` IPv6 parsing with :data:`ZEROFILL` enabled
+* Fix handling of the :data:`NOHOST` flag in the :class:`IPNetwork` copy constructor
+
+--------------
 Release: 1.2.1
 --------------
 
