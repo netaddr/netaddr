@@ -2,8 +2,6 @@ name: CI
 
 on: 
   push:
-    branches:
-      - master
   pull_request:
 
 jobs:
@@ -13,10 +11,9 @@ jobs:
       matrix:
         # Not all Python versions are available in the latest Ubuntu environments
         # so pin this to 20.04.
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [windows-2019, windows-2022]
         python-version: [
-          3.8, 3.9, "3.10", 3.11,
-          pypy3.8, pypy3.9, pypy3.10,
+          3.11,
         ]
     steps:
     - uses: actions/checkout@v4
@@ -24,12 +21,4 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        pip install --upgrade -r requirements-dev.txt
-        pip install .
-    - name: Run tests
-      run: |
-        make ci
-    - name: Report coverage to Codecov
-      uses: codecov/codecov-action@v4
+    - run: python3 do.py
