@@ -1985,6 +1985,53 @@ def all_matching_cidrs(ip, cidrs):
     return matches
 
 
+def group_supernets(ip_addrs, key=None):
+    """
+    Groups a sequence of elements into supernets with groups of child subnet elements.
+    Elements may be overlapping IP addresses, subnets, or other objects. The key is
+    a function computing an IPNetwork for each element. If not specified or is None,
+    key defaults to converting each element to an IPNetwork.
+
+    :param ip_addrs: a sequence of IP addresses and/or subnets or a sequence of elements.
+
+    :param key: a function computing an IPAddress or IPNetwork value for each element.
+
+    :return: a sequence of tuples with IPNetwork supernet and list of contained elements.
+    """
+    networks = []
+
+    if not hasattr(ip_addrs, '__iter__'):
+        raise TypeError('Sequence expected, not %r!' % (ip_addrs,))
+
+    if key is None:
+        key = lambda x: x
+    elif not callable(key):
+        raise TypeError('Callable function expected!')
+
+    # The algorithm: For each CIDR we create a (IPNetwork, [element]).
+    # Sort them and merge subnets into the supernet.
+
+    for network in ip_addrs:
+        networks.append(
+            (
+                IPNetwork(key(network), flags=NOHOST),
+                [
+                    network,
+                ],
+            )
+        )
+    networks.sort(key=lambda network: (network[0].version, network[0].last, network[0].first))
+
+    i = len(networks) - 1
+    while i > 0:
+        if networks[i - 1][0] in networks[i][0]:
+            networks[i][1].extend(networks[i - 1][1])
+            del networks[i - 1]
+        i -= 1
+
+    return networks
+
+
 # -----------------------------------------------------------------------------
 #   Cached IPv4 address range lookups.
 # -----------------------------------------------------------------------------
