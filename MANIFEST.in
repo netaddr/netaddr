@@ -17,11 +17,6 @@ recursive-include netaddr/eui *.py *.txt *.idx
 recursive-include netaddr/ip *.py *.xml
 recursive-include netaddr/strategy *.py
 
-include netaddr/tests/__init__.py
-recursive-include netaddr/tests/core *.py
-recursive-include netaddr/tests/eui *.py *.txt
-recursive-include netaddr/tests/ip *.py
-recursive-include netaddr/tests/strategy *.py
 
 include netaddr/tools/netaddr
 
