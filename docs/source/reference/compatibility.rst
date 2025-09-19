@@ -12,6 +12,8 @@ netaddr supports the following Python versions (CPython and PyPy):
 * 3.10
 * 3.11
 * 3.12
+* 3.13
+* 3.14
 
 Support for the following versions has been removed in 1.0.0:
 
