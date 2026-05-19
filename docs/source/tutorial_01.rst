@@ -8,9 +8,6 @@ First of all you need to pull the various netaddr classes and functions into you
 
 >>> from netaddr import *
 
-We also import the standard library module `pprint` to help format our output.
-
->>> import pprint
 
 ----------------
 Basic operations
@@ -345,14 +342,15 @@ For convenience, you are able to sort IP subnets at the same time as addresses a
 ... IPAddress('::')]
 >>> random.shuffle(ip_list)
 >>> ip_list.sort()
->>> pprint.pprint(ip_list)
-[IPAddress('10.0.0.1'),
- IPNetwork('192.0.2.0/24'),
- IPNetwork('192.0.2.128/28'),
- IPAddress('192.0.2.130'),
- IPNetwork('192.0.3.0/24'),
- IPAddress('::'),
- IPNetwork('fe80::/64')]
+>>> for ip in ip_list:
+...     print(ip)
+10.0.0.1
+192.0.2.0/24
+192.0.2.128/28
+192.0.2.130
+192.0.3.0/24
+::
+fe80::/64
 
 Notice how overlapping subnets also sort in order from largest to smallest.
 
@@ -402,17 +400,18 @@ It is also possible to retrieve the list of supernets that a given IP address or
 
 >>> ip = IPNetwork('192.0.2.114')
 >>> supernets = ip.supernet(22)
->>> pprint.pprint(supernets)
-[IPNetwork('192.0.0.0/22'),
- IPNetwork('192.0.2.0/23'),
- IPNetwork('192.0.2.0/24'),
- IPNetwork('192.0.2.0/25'),
- IPNetwork('192.0.2.64/26'),
- IPNetwork('192.0.2.96/27'),
- IPNetwork('192.0.2.112/28'),
- IPNetwork('192.0.2.112/29'),
- IPNetwork('192.0.2.112/30'),
- IPNetwork('192.0.2.114/31')]
+>>> for net in supernets:
+...     print(net)
+192.0.0.0/22
+192.0.2.0/23
+192.0.2.0/24
+192.0.2.0/25
+192.0.2.64/26
+192.0.2.96/27
+192.0.2.112/28
+192.0.2.112/29
+192.0.2.112/30
+192.0.2.114/31
 
 Here, we return a list rather than a generator because the potential list of values is of a predictable size (no more than 31 subnets for an IPv4 address and 127 for IPv6).
 
@@ -448,22 +447,23 @@ You frequently come across reference to them in various RFCs and they are well s
 Here is an example of these rules for the whole of the IPv4 address space.
 
 >>> cidrs = [cidr_abbrev_to_verbose(octet) for octet in range(0, 256)]
->>> pprint.pprint(cidrs)
-['0.0.0.0/8',
+>>> for cidr in cidrs:
+...     print(cidr)
+0.0.0.0/8
 ...
- '127.0.0.0/8',
- '128.0.0.0/16',
+127.0.0.0/8
+128.0.0.0/16
 ...
- '191.0.0.0/16',
- '192.0.0.0/24',
+191.0.0.0/16
+192.0.0.0/24
 ...
- '223.0.0.0/24',
- '224.0.0.0/4',
+223.0.0.0/24
+224.0.0.0/4
 ...
- '239.0.0.0/4',
- '240.0.0.0/32',
+239.0.0.0/4
+240.0.0.0/32
 ...
- '255.0.0.0/32']
+255.0.0.0/32
 >>> len(cidrs)
 256
 

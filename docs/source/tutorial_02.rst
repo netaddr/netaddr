@@ -186,10 +186,8 @@ True
 >>> iab = mac.iab
 >>> iab
 IAB('00-50-C2-00-00-00')
->>> iab.registration()
-{'address': ['1241 Superieor Ave E', 'Cleveland  OH  44114', 'US'],
- 'iab': '00-50-C2-00-00-00',
- 'idx': 84680704,
- ...
- 'org': 'T.L.S. Corp.',
- 'size': 537}
+>>> reg = iab.registration()
+>>> reg['org']
+'T.L.S. Corp.'
+>>> reg['address']
+['1241 Superieor Ave E', 'Cleveland  OH  44114', 'US']
