@@ -1,8 +1,12 @@
 import random
 
+import pytest
+
 from netaddr import (
     iprange_to_cidrs,
+    IPAddress,
     IPNetwork,
+    IPSet,
     cidr_merge,
     cidr_exclude,
     largest_matching_cidr,
@@ -159,6 +163,118 @@ def test_extended_cidr_merge():
 
     assert merged_cidrs == [IPNetwork('192.0.2.0/23'), IPNetwork('::192.0.2.0/120')]
     assert merged_cidrs == [orig_cidr_ipv4, orig_cidr_ipv6]
+
+
+@pytest.mark.parametrize(
+    'networks, expected',
+    [
+        ([], []),
+        (['192.0.2.1/32'], ['192.0.2.1/32']),
+        (['2001:db8::1/128'], ['2001:db8::1/128']),
+        (
+            ['192.0.2.0/30', '192.0.2.4/31', '192.0.2.7/32'],
+            ['192.0.2.0/30', '192.0.2.4/31', '192.0.2.7/32'],
+        ),
+        (
+            ['2001:db8::/126', '2001:db8::4/127', '2001:db8::7/128'],
+            ['2001:db8::/126', '2001:db8::4/127', '2001:db8::7/128'],
+        ),
+        (
+            ['2001:db8::/126', '192.0.2.0/30'],
+            ['192.0.2.0/30', '2001:db8::/126'],
+        ),
+        (['0.0.0.0/0', '::/0'], ['0.0.0.0/0', '::/0']),
+    ],
+)
+def test_cidr_merge_ipset_does_not_expand_addresses(monkeypatch, networks, expected):
+    ipset = IPSet(networks)
+
+    def fail_iteration(self):
+        pytest.fail('IPSet merging must not enumerate individual addresses')
+
+    monkeypatch.setattr(IPSet, '__iter__', fail_iteration)
+    monkeypatch.setattr(IPNetwork, '__iter__', fail_iteration)
+    assert list(map(str, cidr_merge(ipset))) == expected
+
+
+@pytest.mark.parametrize(
+    'stored, expected',
+    [
+        ('192.0.2.42/24', '192.0.2.0/24'),
+        ('2001:db8::42/120', '2001:db8::/120'),
+        ('192.0.2.42/32', '192.0.2.42/32'),
+        ('2001:db8::42/128', '2001:db8::42/128'),
+    ],
+)
+def test_cidr_merge_ipset_returns_independent_canonical_networks(stored, expected):
+    ipset = IPSet([stored])
+    original = ipset.iter_cidrs()[0]
+    merged = cidr_merge(ipset)
+    assert list(map(str, merged)) == [expected]
+    assert merged[0] is not original
+    assert cidr_merge(ipset)[0] is not merged[0]
+    merged[0].value = 0
+    assert str(original) == stored
+    assert str(ipset.iter_cidrs()[0]) == stored
+
+
+def test_cidr_merge_ipset_subclass_preserves_iteration():
+    class FilteredIPSet(IPSet):
+        def __iter__(self):
+            yield IPAddress('192.0.2.1')
+
+        def iter_cidrs(self):
+            pytest.fail('Custom IPSet iteration must not inspect CIDRs')
+
+    assert cidr_merge(FilteredIPSet(['192.0.2.0/30'])) == [IPNetwork('192.0.2.1/32')]
+
+
+def test_cidr_merge_ipset_network_subclass_preserves_iteration():
+    class FilteredIPNetwork(IPNetwork):
+        def __iter__(self):
+            yield IPAddress(self.first + 1, version=self.version)
+
+        @property
+        def cidr(self):
+            pytest.fail('Custom network iteration must not be replaced with CIDR coverage')
+
+    ipset = IPSet([FilteredIPNetwork('192.0.2.0/30'), IPNetwork('192.0.2.8/30')])
+    assert cidr_merge(ipset) == [IPNetwork('192.0.2.1/32'), IPNetwork('192.0.2.8/30')]
+
+
+def test_cidr_merge_ipset_network_subclass_is_not_sorted_twice():
+    class ComparisonIPNetwork(IPNetwork):
+        comparisons = 0
+
+        def sort_key(self):
+            type(self).comparisons += 1
+            return super().sort_key()
+
+        def __iter__(self):
+            yield IPAddress(self.first + type(self).comparisons, version=self.version)
+
+    ipset = IPSet([ComparisonIPNetwork('192.0.2.0/30'), IPNetwork('192.0.2.8/30')])
+    ComparisonIPNetwork.comparisons = 0
+    expected = cidr_merge(iter(ipset))
+    ComparisonIPNetwork.comparisons = 0
+    assert cidr_merge(ipset) == expected
+
+
+def test_cidr_merge_ipset_noncompact_state():
+    ipset = IPSet()
+    ipset.__setstate__(((int(IPAddress('192.0.2.0')), 30, 4), (int(IPAddress('192.0.2.4')), 30, 4)))
+    before = tuple(map(str, ipset.iter_cidrs()))
+    assert cidr_merge(ipset) == [IPNetwork('192.0.2.0/29')]
+    assert tuple(map(str, ipset.iter_cidrs())) == before
+
+
+@pytest.mark.parametrize('container', [list, iter, dict.fromkeys])
+def test_cidr_merge_generic_iterable_preserves_original_network(container):
+    network = IPNetwork('192.0.2.42/24')
+    merged = cidr_merge(container([network]))
+    assert merged == [network]
+    assert merged[0] is network
+    assert str(merged[0]) == '192.0.2.42/24'
 
 
 def test_whole_network_cidr_merge_v4():

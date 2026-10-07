@@ -1666,6 +1666,15 @@ def cidr_merge(ip_addrs):
     if not hasattr(ip_addrs, '__iter__'):
         raise ValueError('A sequence or iterator is expected!')
 
+    # Import here to avoid a circular dependency with netaddr.ip.sets.
+    from netaddr.ip.sets import IPSet
+
+    # Preserve subclass iterators and avoid returning mutable keys owned by the set.
+    if type(ip_addrs) is IPSet:
+        cidrs = list(ip_addrs._cidrs)
+        if all(type(cidr) is IPNetwork for cidr in cidrs):
+            ip_addrs = (cidr.cidr for cidr in cidrs)
+
     ranges = []
 
     for ip in ip_addrs:
