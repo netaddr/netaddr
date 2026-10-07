@@ -6,6 +6,7 @@ import pytest
 
 from netaddr import (
     iter_iprange,
+    iprange_to_cidrs,
     IPAddress,
     cidr_merge,
     IPNetwork,
@@ -13,6 +14,39 @@ from netaddr import (
     ZEROFILL,
     AddrFormatError,
 )
+
+
+@pytest.mark.parametrize(
+    'start, end',
+    [
+        ('192.168.0.10', '192.168.0.1'),
+        ('2001:db8::a', '2001:db8::1'),
+        ('192.0.2.128/25', '192.0.2.0/25'),
+        ('2001:db8::80/121', '2001:db8::/121'),
+    ],
+)
+def test_iprange_to_cidrs_reversed_bounds(start, end):
+    with pytest.raises(AddrFormatError):
+        iprange_to_cidrs(start, end)
+
+
+@pytest.mark.parametrize(
+    'start, end, expected',
+    [
+        ('192.0.2.1', '192.0.2.1', '192.0.2.1/32'),
+        ('2001:db8::1', '2001:db8::1', '2001:db8::1/128'),
+        ('192.0.2.200/24', '192.0.2.1/24', '192.0.2.0/24'),
+        ('2001:db8::ff/120', '2001:db8::1/120', '2001:db8::/120'),
+    ],
+)
+def test_iprange_to_cidrs_equal_or_overlapping_bounds(start, end, expected):
+    assert iprange_to_cidrs(start, end) == [IPNetwork(expected)]
+
+
+@pytest.mark.parametrize('start, end', [('192.0.2.1', '::1'), ('::1', '192.0.2.1')])
+def test_iprange_to_cidrs_mixed_versions(start, end):
+    with pytest.raises(TypeError):
+        iprange_to_cidrs(start, end)
 
 
 def test_ip_range():

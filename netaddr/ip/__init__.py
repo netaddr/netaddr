@@ -1877,6 +1877,8 @@ def iprange_to_cidrs(start, end):
 
     :param end: the end IP address or subnet.
 
+    :raises AddrFormatError: if the lower bound is greater than the upper bound.
+
     :return: a list of one or more IP addresses and subnets.
     """
     cidr_list = []
@@ -1888,6 +1890,8 @@ def iprange_to_cidrs(start, end):
 
     #   Get spanning CIDR covering both addresses.
     cidr_span = spanning_cidr([start, end])
+    if start.first > end.last:
+        raise AddrFormatError('lower bound IP greater than upper bound!')
     width = start._module.width
 
     if cidr_span.first < iprange[0]:
