@@ -37,6 +37,29 @@ Here are a few other common properties.
 >>> str(mac), str(mac.oui), mac.ei, mac.version
 ('00-1B-77-49-54-FD', '00-1B-77', '49-54-FD', 48)
 
+------------------------------
+Locally administered addresses
+------------------------------
+
+Use :meth:`EUI.is_local <netaddr.EUI.is_local>` to check the Local bit in the first octet. This works
+for both EUI-48 and EUI-64, regardless of the output dialect or Group bit.
+
+>>> EUI('00-00-5E-00-53-01').is_local()
+False
+>>> EUI('02-00-5E-00-53-01').is_local()
+True
+>>> EUI('03-00-5E-00-53-01').is_local()
+True
+>>> EUI('02-00-5E-FF-FE-00-53-01').is_local()
+True
+>>> EUI('0200.5e00.5301', dialect=mac_cisco).is_local()
+True
+
+A set Local bit does not prove that an address was randomly generated. This
+method uses the EUI convention; IPv6 Modified EUI-64 interface identifiers
+invert the bit. See `RFC 7042, sections 2.1 and 2.2
+<https://www.rfc-editor.org/rfc/rfc7042.html#section-2.1>`_.
+
 -------------------------
 Numerical representations
 -------------------------
