@@ -484,6 +484,17 @@ class EUI(BaseIdentifier):
         elif self._module == _eui64:
             return '%02X-%02X-%02X-%02X-%02X' % tuple(self[3:8])
 
+    def is_local(self):
+        """
+        :return: True if the Local bit (0x02 in the first octet) is set,
+            False otherwise. Applies to both EUI-48 and EUI-64 identifiers,
+            independently of the Group bit and display dialect.
+
+        A locally administered address is not necessarily randomized. This
+        checks the unmodified EUI bit convention, not an IPv6 interface ID.
+        """
+        return bool(self.words[0] & 0x02)
+
     def is_iab(self):
         """:return: True if this EUI is an IAB address, False otherwise"""
         return (self._value >> 24) in IAB.IAB_EUI_VALUES

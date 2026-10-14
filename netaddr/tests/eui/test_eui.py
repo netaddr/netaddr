@@ -1,6 +1,8 @@
 import pickle
 import random
 
+import pytest
+
 from netaddr import (
     EUI,
     mac_unix,
@@ -336,3 +338,42 @@ def test_eui64_constructor():
 
     addr_no_delimiter = EUI('001B774954FDBB34')
     assert addr_no_delimiter == EUI('00-1B-77-49-54-FD-BB-34')
+
+
+@pytest.mark.parametrize('version', [48, 64])
+@pytest.mark.parametrize(
+    'first_octet, expected',
+    [(0, False), (1, False), (2, True), (3, True), (254, True), (255, True)],
+)
+def test_eui_is_local(version, first_octet, expected):
+    address = EUI(first_octet << (version - 8), version=version)
+    assert address.is_local() is expected
+    assert EUI(str(address)).is_local() is expected
+    assert EUI(address).is_local() is expected
+
+
+def test_eui_is_local_independent_of_dialect():
+    address = EUI('02-00-5E-00-53-01')
+    for dialect in (mac_unix, mac_unix_expanded, mac_cisco, mac_bare, mac_pgsql):
+        address.dialect = dialect
+        assert address.is_local() is True
+    address.value = int(EUI('00-02-5E-00-53-01'))
+    assert address.is_local() is False
+
+    address = EUI('02-00-5E-FF-FE-00-53-01')
+    for dialect in (eui64_unix, eui64_unix_expanded, eui64_cisco, eui64_bare):
+        address.dialect = dialect
+        assert address.is_local() is True
+    address.value = int(EUI('00-02-5E-FF-FE-00-53-01'))
+    assert address.is_local() is False
+
+
+def test_eui_is_local_after_edit_and_conversion():
+    address = EUI('00-00-5E-00-53-01')
+    assert address.is_local() is False
+    address[0] = 2
+    assert address.is_local() is True
+    assert address.eui64().is_local() is True
+    address[0] = 0
+    assert address.is_local() is False
+    assert address.eui64().is_local() is False

@@ -6,6 +6,11 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Added:
+
+* Add :meth:`EUI.is_local` to check the Local bit of EUI-48 and EUI-64 identifiers
+  (GH :issue:`380`).
+
 --------------
 Release: 1.3.0
 --------------
