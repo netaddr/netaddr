@@ -6,6 +6,11 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Fixed:
+
+* Make IPv4 network and range slicing honor empty slices and large positive
+  or negative steps, including ranges at the address-space boundaries.
+
 --------------
 Release: 1.3.0
 --------------
