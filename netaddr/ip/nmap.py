@@ -69,7 +69,7 @@ def _generate_nmap_octet_ranges(nmap_target_spec):
 def _parse_nmap_target_spec(target_spec):
     if '/' in target_spec:
         _, prefix = target_spec.split('/', 1)
-        if not (0 < int(prefix) < 33):
+        if not (0 <= int(prefix) <= 32):
             raise AddrFormatError('CIDR prefix expected, not %s' % (prefix,))
         net = IPNetwork(target_spec)
         if net.version != 4:

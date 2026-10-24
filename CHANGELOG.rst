@@ -6,6 +6,11 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Fixed:
+
+* Accept IPv4 ``/0`` targets in :func:`valid_nmap_range` and
+  :func:`iter_nmap_range`, as allowed by the Nmap target specification.
+
 --------------
 Release: 1.3.0
 --------------
