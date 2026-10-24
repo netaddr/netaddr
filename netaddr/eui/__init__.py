@@ -51,7 +51,9 @@ class OUI(BaseIdentifier):
 
         :param oui: an OUI string ``XX-XX-XX`` or an unsigned integer. \
             Also accepts and parses full MAC/EUI-48 address strings (but not \
-            MAC/EUI-48 integers)!
+            MAC/EUI-48 integers)! Three hyphen-separated words of one or \
+            two hex digits are interpreted as an OUI, not a full address. \
+            Bare 11- or 12-digit strings are interpreted as full EUI-48 addresses.
         """
         super(OUI, self).__init__()
 
@@ -61,10 +63,14 @@ class OUI(BaseIdentifier):
         self.records = []
 
         if isinstance(oui, str):
-            # TODO: Improve string parsing here.
-            # TODO: Accept full MAC/EUI-48 addresses as well as XX-XX-XX
-            # TODO: and just take /16 (see IAB for details)
-            self._value = int(oui.replace('-', ''), 16)
+            # Three short hyphen-separated words are an OUI, even though
+            # the EUI-48 parser also accepts them as three 16-bit words.
+            words = oui.split('-')
+            is_oui = len(words) == 3 and all(1 <= len(word) <= 2 for word in words)
+            if not is_oui and _eui48.valid_str(oui):
+                self._value = _eui48.str_to_int(oui) >> 24
+            else:
+                self._value = int(oui.replace('-', ''), 16)
         elif isinstance(oui, int):
             if 0 <= oui <= 0xFFFFFF:
                 self._value = oui
