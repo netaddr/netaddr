@@ -707,11 +707,12 @@ class IPSet(object):
         """
         cidrs = self.iter_cidrs()
         if len(cidrs) > 1:
-            previous = cidrs[0][0]
+            previous = cidrs[0].first
+            version = cidrs[0].version
             for cidr in cidrs:
-                if cidr[0] != previous:
+                if cidr.version != version or cidr.first != previous:
                     return False
-                previous = cidr[-1] + 1
+                previous = cidr.last + 1
         return True
 
     def iprange(self):
