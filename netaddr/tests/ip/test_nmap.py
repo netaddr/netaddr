@@ -1,5 +1,7 @@
+from itertools import islice
+
 import pytest
-from netaddr import valid_nmap_range, iter_nmap_range, IPAddress, AddrFormatError
+from netaddr import valid_nmap_range, iter_nmap_range, IPAddress, IPNetwork, AddrFormatError
 
 
 def test_valid_nmap_range_with_valid_target_specs():
@@ -108,3 +110,34 @@ def test_iter_nmap_range_invalid():
 
 def test_iter_nmap_range_remove_duplicates():
     assert list(iter_nmap_range('10.0.0.42,42-42')) == [IPAddress('10.0.0.42')]
+
+
+@pytest.mark.parametrize('target', ['0.0.0.0/0', '192.0.2.1/0', '255.255.255.255/0'])
+def test_zero_prefix_target_is_valid_and_lazy(target):
+    assert valid_nmap_range(target)
+    addresses = iter_nmap_range(target)
+    assert iter(addresses) is addresses
+    assert list(islice(addresses, 3)) == [IPAddress(0), IPAddress(1), IPAddress(2)]
+
+
+@pytest.mark.parametrize('prefix', [1, 24, 31, 32])
+def test_cidr_prefix_boundaries(prefix):
+    target = '192.0.2.1/%d' % prefix
+    assert valid_nmap_range(target)
+    assert list(islice(iter_nmap_range(target), 3)) == list(islice(IPNetwork(target), 3))
+
+
+@pytest.mark.parametrize(
+    'target, error',
+    [
+        ('192.0.2.1/-1', AddrFormatError),
+        ('192.0.2.1/33', AddrFormatError),
+        ('192.0.2.1/255.255.255.0', ValueError),
+        ('::/0', AddrFormatError),
+        ('fe80::/64', AddrFormatError),
+    ],
+)
+def test_invalid_cidr_prefixes_still_rejected(target, error):
+    assert not valid_nmap_range(target)
+    with pytest.raises(error):
+        next(iter_nmap_range(target))
