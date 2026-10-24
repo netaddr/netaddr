@@ -2067,6 +2067,7 @@ IPV6_RESERVED = (
     IPNetwork('F000::/5'),
     IPNetwork('F800::/6'),
     IPNetwork('FE00::/9'),
+    IPNetwork('fec0::/10'),  # Deprecated site-local addresses (RFC 3879)
 )
 
 IPV6_NOT_GLOBALLY_REACHABLE = [

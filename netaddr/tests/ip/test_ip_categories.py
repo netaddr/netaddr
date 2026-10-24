@@ -92,7 +92,12 @@ flags = {
         ['2620:4f:8000::', global_ | unicast],
         ['fc00::1', ipv6_unique_local | unicast],
         ['fe80::1', unicast | link_local],
+        ['febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff', unicast | link_local],
+        ['fec0::', global_ | reserved | unicast],
+        ['fec0::1', global_ | reserved | unicast],
+        ['feff:ffff:ffff:ffff:ffff:ffff:ffff:ffff', global_ | reserved | unicast],
         ['ff00::1', global_ | reserved | multicast],
+        ['ff00::', global_ | reserved | multicast | netmask],
     ],
 )
 def test_ip_categories(text_address, categories):
