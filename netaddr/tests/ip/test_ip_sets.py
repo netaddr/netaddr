@@ -748,3 +748,53 @@ def test_ipset_converts_to_cidr_networks_v6():
 
 def test_ipset_is_weak_referencable():
     weakref.ref(IPSet())
+
+
+@pytest.mark.parametrize('version,width', [(4, 32), (6, 128)])
+@pytest.mark.parametrize('first_offset,last_offset', [(2, 0), (6, 0), (8, 0), (16, 0), (5, 1)])
+def test_ipset_contiguous_near_address_boundary(version, width, first_offset, last_offset):
+    maximum = (1 << width) - 1
+    first = IPAddress(maximum - first_offset, version)
+    last = IPAddress(maximum - last_offset, version)
+    expected = IPRange(first, last)
+    addresses = IPSet(expected.cidrs())
+    original_cidrs = addresses.iter_cidrs()
+    assert len(original_cidrs) > 1
+
+    assert addresses.iscontiguous()
+    assert addresses.iprange() == expected
+    assert addresses.iter_cidrs() == original_cidrs
+
+
+@pytest.mark.parametrize('version,width', [(4, 32), (6, 128)])
+def test_ipset_contiguous_large_range_reaching_maximum(version, width):
+    expected = IPRange(IPAddress(1, version), IPAddress((1 << width) - 1, version))
+    addresses = IPSet(expected.cidrs())
+    assert len(addresses.iter_cidrs()) == width
+    assert addresses.iscontiguous()
+    assert addresses.iprange() == expected
+
+
+@pytest.mark.parametrize('version,width', [(4, 32), (6, 128)])
+def test_ipset_gap_before_maximum(version, width):
+    maximum = (1 << width) - 1
+    addresses = IPSet([IPAddress(maximum - 2, version), IPAddress(maximum, version)])
+    assert not addresses.iscontiguous()
+    with pytest.raises(ValueError, match='IPSet is not contiguous'):
+        addresses.iprange()
+
+
+@pytest.mark.parametrize(
+    'cidrs',
+    [
+        ['0.0.0.0/0', '::/128'],
+        ['255.255.255.255/32', '::1:0:0/128'],
+        ['255.255.255.253/32', '255.255.255.254/31', '::/128'],
+        ['0.0.0.0/32', '::/128'],
+    ],
+)
+def test_ipset_different_address_families_are_not_contiguous(cidrs):
+    addresses = IPSet(cidrs)
+    assert not addresses.iscontiguous()
+    with pytest.raises(ValueError, match='IPSet is not contiguous'):
+        addresses.iprange()

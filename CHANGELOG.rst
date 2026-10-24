@@ -6,6 +6,11 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Fixed:
+
+* Fix :meth:`IPSet.iscontiguous` and :meth:`IPSet.iprange` for multi-CIDR sets
+  ending at the maximum IPv4 or IPv6 address
+
 --------------
 Release: 1.3.0
 --------------
