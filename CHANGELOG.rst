@@ -6,6 +6,13 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Fixed:
+
+* Parse full MAC/EUI-48 strings in :class:`OUI` as documented, preserving
+  short OUI strings and integer inputs. Bare 11- or 12-digit strings now
+  identify the full EUI-48 address, including when leading zeroes make its
+  numeric value fit in 24 bits.
+
 --------------
 Release: 1.3.0
 --------------
