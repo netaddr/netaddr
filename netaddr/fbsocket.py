@@ -16,8 +16,8 @@ def inet_ntoa(packed_ip):
     """
     Convert an IP address from 32-bit packed binary format to string format.
     """
-    if not isinstance(packed_ip, str):
-        raise TypeError('string type expected, not %s' % type(packed_ip))
+    if not isinstance(packed_ip, bytes):
+        raise TypeError('bytes type expected, not %s' % type(packed_ip))
 
     if len(packed_ip) != 4:
         raise ValueError('invalid length of packed IP address string')

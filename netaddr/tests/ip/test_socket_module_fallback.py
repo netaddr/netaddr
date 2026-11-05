@@ -31,8 +31,37 @@ def test_inet_ntoa_ipv4_exceptions():
     with pytest.raises(TypeError):
         inet_ntoa(1)
 
-    with pytest.raises(ValueError):
+    # str is the wrong type on Python 3 (struct.unpack needs bytes), so it is a
+    # TypeError rather than a length error. This used to pass '\x00', a 1-char
+    # str, and expect ValueError - which only worked because the str check made
+    # every call fail before the length was ever looked at.
+    with pytest.raises(TypeError):
         inet_ntoa('\x00')
+
+    with pytest.raises(ValueError):
+        inet_ntoa(b'\x00')
+
+
+def test_inet_ntoa_ipv4():
+    assert inet_ntoa(b'\x01\x02\x03\x04') == '1.2.3.4'
+
+
+@pytest.mark.parametrize(
+    ('af', 'packed_ip', 'expected'),
+    [
+        (AF_INET, b'\x01\x02\x03\x04', '1.2.3.4'),
+        (AF_INET6, bytes.fromhex('00000000000000000000ffff01020304'), '::ffff:1.2.3.4'),
+        (AF_INET6, bytes.fromhex('20010db8000000000000000000000001'), '2001:db8::1'),
+    ],
+)
+def test_inet_ntop_accepts_bytes(af, packed_ip, expected):
+    assert inet_ntop(af, packed_ip) == expected
+
+
+@pytest.mark.parametrize('af', [AF_INET, AF_INET6])
+def test_inet_ntop_roundtrips_through_inet_pton(af):
+    address = '1.2.3.4' if af == AF_INET else '::ffff:1.2.3.4'
+    assert inet_ntop(af, inet_pton(af, address)) == address
 
 
 def test_inet_pton_ipv4_exceptions():

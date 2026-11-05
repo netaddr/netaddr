@@ -6,6 +6,15 @@ NEXT_NETADDR_VERSION
 
 Date: not released yet
 
+Fixed:
+
+* ``fbsocket.inet_ntoa`` accepted only ``str`` while passing its argument to
+  ``struct.unpack('4B', ...)``, which requires ``bytes``. No value satisfied
+  both, so every IPv4 conversion raised ``TypeError`` on Python 3, including
+  ``fbsocket.inet_ntop`` for ``AF_INET`` and for IPv4-mapped ``AF_INET6``
+  addresses. It now expects ``bytes``, like the standard library ``socket``
+  module and the rest of ``fbsocket``.
+
 --------------
 Release: 1.3.0
 --------------
