@@ -1731,11 +1731,11 @@ def cidr_partition(target, exclude):
     target = IPNetwork(target)
     exclude = IPNetwork(exclude)
 
-    if exclude.last < target.first:
+    if (exclude.version, exclude.last) < (target.version, target.first):
         #   Exclude subnet's upper bound address less than target
         #   subnet's lower bound.
         return [], [], [target.cidr]
-    elif target.last < exclude.first:
+    elif (target.version, target.last) < (exclude.version, exclude.first):
         #   Exclude subnet's lower bound address greater than target
         #   subnet's upper bound.
         return [target.cidr], [], []
